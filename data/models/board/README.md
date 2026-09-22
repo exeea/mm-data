@@ -48,6 +48,16 @@ directory with the game's data. Blender is an authoring dependency only.
   `full-resolution/` subdirectory containing the untouched editable originals.
   Models and materials reference only the small runtime versions. Rebuild those
   after editing originals with `tools/prepare_board_textures.py`.
+- `textures/cliffs/`: the vertical hex sides' 1024 by 1024 color, tangent normal,
+  and packed height/roughness/occlusion maps for rock, sandstone, soil, concrete
+  and snow. These retain full mip resolution and use the board's dedicated
+  parallax material shader. Missing sets fall back to `textures/terrain/`.
+  Rebuild with `tools/prepare_cliff_materials.py`; `--check` verifies all baked
+  pixels. Sources and generation prompts live in `tools/cliff-sources/` and
+  `tools/cliff-texture-prompts.json`. Optional grayscale `NAME-height.png` sources
+  supply authored geometry; otherwise height is an artistic approximation from
+  source luminance. No baking or height estimation runs in the game. These maps
+  are separate from top tiles, upper rims, cornices, buildings and water beds.
 - `textures/bed.png`: a 128 by 128 silt, sand and pebble riverbed albedo;
   water reflections and animation remain in the separate water surface.
 - `textures/*-rim.png`: six 128 by 128 pale material-detail maps for grass,
@@ -134,6 +144,9 @@ Run from the mm-data root (Python requires Pillow and NumPy):
 ```text
 python tools/copy_board_tileset.py
 python tools/prepare_board_textures.py
+python tools/prepare_cliff_materials.py
+python tools/prepare_cliff_materials.py --check
+python tools/test_cliff_materials.py
 python tools/prepare_board_normals.py
 python tools/prepare_board_normals.py --check
 python tools/test_board_normals.py
