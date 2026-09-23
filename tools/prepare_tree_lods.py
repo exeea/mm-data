@@ -164,14 +164,15 @@ def counts(model):
             'vertices': len(mesh['vertices']) // 12}
 
 
-def prepare():
+def prepare(only=None):
+    """Rebuild the detail levels of every tree, or only of the named ones."""
     manifest = json.loads((BOARD / 'manifest.json').read_text())
     old_scene = bpy.context.window.scene
     scene = bpy.data.scenes.new('MegaMek tree detail levels')
     bpy.context.window.scene = scene
     try:
         for name, entry in manifest.items():
-            if 'source' not in entry:
+            if 'source' not in entry or only is not None and name not in only:
                 continue
             source = json.loads((BOARD / (name + '.g3dj')).read_text())
             vertices, faces, corners = geometry(source)
@@ -199,4 +200,4 @@ def prepare():
 
 
 if __name__ == '__main__':
-    prepare()
+    prepare(globals().get('ONLY'))

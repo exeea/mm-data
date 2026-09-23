@@ -358,5 +358,137 @@
         "vertices": 288
       }
     ]
+  },
+  "cactus": {
+    "triangles": 480,
+    "vertices": 1408,
+    "source": "Blends/Cactus_2.blend",
+    "lods": [
+      {
+        "asset": "cactus-lod0",
+        "triangles": 480,
+        "vertices": 1408
+      },
+      {
+        "asset": "cactus-lod1",
+        "triangles": 240,
+        "vertices": 720
+      },
+      {
+        "asset": "cactus-lod2",
+        "triangles": 96,
+        "vertices": 288
+      }
+    ]
+  },
+  "cactus-flowers": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/CactusFlowers_2.blend",
+    "lods": [
+      {
+        "asset": "cactus-flowers-lod0",
+        "triangles": 473,
+        "vertices": 1419
+      },
+      {
+        "asset": "cactus-flowers-lod1",
+        "triangles": 240,
+        "vertices": 720
+      },
+      {
+        "asset": "cactus-flowers-lod2",
+        "triangles": 96,
+        "vertices": 288
+      }
+    ]
+  },
+  "pine-broad": {
+    "triangles": 480,
+    "vertices": 1434,
+    "source": "Blends/PineTree_2.blend",
+    "lods": [
+      {
+        "asset": "pine-broad-lod0",
+        "triangles": 480,
+        "vertices": 1434
+      },
+      {
+        "asset": "pine-broad-lod1",
+        "triangles": 240,
+        "vertices": 714
+      },
+      {
+        "asset": "pine-broad-lod2",
+        "triangles": 96,
+        "vertices": 288
+      }
+    ]
+  },
+  "pine-broad-snow": {
+    "triangles": 480,
+    "vertices": 1434,
+    "source": "Blends/PineTree_Snow_2.blend",
+    "lods": [
+      {
+        "asset": "pine-broad-snow-lod0",
+        "triangles": 480,
+        "vertices": 1434
+      },
+      {
+        "asset": "pine-broad-snow-lod1",
+        "triangles": 240,
+        "vertices": 714
+      },
+      {
+        "asset": "pine-broad-snow-lod2",
+        "triangles": 96,
+        "vertices": 288
+      }
+    ]
+  },
+  "tree-dead": {
+    "triangles": 478,
+    "vertices": 1434,
+    "source": "Blends/CommonTree_Dead_2.blend",
+    "lods": [
+      {
+        "asset": "tree-dead-lod0",
+        "triangles": 478,
+        "vertices": 1434
+      },
+      {
+        "asset": "tree-dead-lod1",
+        "triangles": 238,
+        "vertices": 714
+      },
+      {
+        "asset": "tree-dead-lod2",
+        "triangles": 94,
+        "vertices": 282
+      }
+    ]
+  },
+  "tree-dead-snow": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/CommonTree_Dead_Snow_2.blend",
+    "lods": [
+      {
+        "asset": "tree-dead-snow-lod0",
+        "triangles": 480,
+        "vertices": 1440
+      },
+      {
+        "asset": "tree-dead-snow-lod1",
+        "triangles": 240,
+        "vertices": 720
+      },
+      {
+        "asset": "tree-dead-snow-lod2",
+        "triangles": 96,
+        "vertices": 288
+      }
+    ]
   }
 }

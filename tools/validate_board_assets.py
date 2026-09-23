@@ -77,7 +77,10 @@ for asset in catalog:
                 'leaves-willow' if asset.startswith('willow') else
                 'fronds-palm' if asset.startswith('palm') else 'leaves-broad')
         bark = 'bark-birch' if asset.startswith('birch') else 'bark-palm' if asset.startswith('palm') else 'bark'
-        assert roles == {leaf, bark} | ({'snow'} if family.endswith('-snow') else set()), (asset, roles)
+        # Cacti are a ribbed stem with optional flowers; dead trees are bare wood.
+        expected = ({'cactus', 'leaves-broad'} if asset.startswith('cactus-flowers') else {'cactus'}
+                    if asset.startswith('cactus') else {bark} if asset.startswith('tree-dead') else {leaf, bark})
+        assert roles == expected | ({'snow'} if family.endswith('-snow') else set()), (asset, roles)
         assert {part['id'] for mesh in model['meshes'] for part in mesh['parts']} == roles, asset
         for material in model['materials']:
             assert material['textures'][0]['filename'] == f"textures/foliage/{material['id']}.png", path
@@ -99,11 +102,6 @@ for family in ('buildings', 'terrain'):
     for original in (folder / 'full-resolution').glob('*.png'):
         assert min(Image.open(original).size) > 128, original
         assert Image.open(folder / original.name).size == (128, 128), original
-
-for name in ('bed', 'grass-rim', 'dirt-rim', 'sand-rim', 'rock-rim', 'concrete-rim', 'snow-rim'):
-    with Image.open(BOARD / 'textures' / (name + '.png')) as image:
-        assert image.size == (128, 128), name
-        assert image.convert('RGBA').getchannel('A').getextrema() == (255, 255), name
 
 for path in (BOARD / 'textures/foliage').glob('*.png'):
     with Image.open(path) as image:

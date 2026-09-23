@@ -16,7 +16,7 @@ directory with the game's data. Blender is an authoring dependency only.
   outline, vertex and triangle counts. The largest has 499 triangles. Fuel tanks
   and industrial structures use their selected Saxarba artwork too; generic
   cylinder/factory substitutes have been removed.
-- `bridge`, `field`, and sixteen foliage G3DJ
+- `bridge`, `field`, and twenty-two foliage G3DJ
   files, all at or below 480 triangles. Counts and
   the imported Blender source names are in `manifest.json`.
 - Each tree also has `-lod0`, `-lod1`, and `-lod2` meshes. The near opaque mesh
@@ -26,13 +26,15 @@ directory with the game's data. Blender is an authoring dependency only.
   retaining the source coordinates, bounds, material roles and shared textures.
   The manifest records every level; screen-pixel thresholds live in Java's
   `TreeLod`, so no camera or game state is baked into these assets.
-- `textures/foliage/`: eight shared 64 by 64 detail albedos for broad leaves,
+- `textures/foliage/`: nine shared 64 by 64 detail albedos for broad leaves,
   pine needles, hanging willow leaves, palm fronds, ordinary bark, birch bark,
-  ringed palm bark and snow. Source material boundaries keep snow caps separate
+  ringed palm bark, ribbed cactus stems and snow. Source material boundaries keep snow caps separate
   from green foliage and preserve the birch's pale trunk and dark scars. Existing
   vertex colors tint the pale maps; dominant-axis UVs follow the tree's original
   proportions. Snow variants use their own authored geometry. Texture generation
-  prompts are recorded in `tools/board-foliage-texture-prompts.json`.
+  prompts are recorded in `tools/board-foliage-texture-prompts.json`; the cactus
+  map is procedural (`tools/build_cactus_texture.py`, CC0-1.0), and cactus stems
+  take a pale sage in place of the source's saturated green.
 - `textures/buildings/`: 128 by 128 runtime facade maps. Light buildings retain
   windows; medium uses concrete, hard reinforced concrete, and heavy armored
   panels. Fortresses/gun emplacements use massive sci-fi walls, hangars use
@@ -48,6 +50,14 @@ directory with the game's data. Blender is an authoring dependency only.
   `full-resolution/` subdirectory containing the untouched editable originals.
   Models and materials reference only the small runtime versions. Rebuild those
   after editing originals with `tools/prepare_board_textures.py`.
+- `textures/sculpt/`: the sculpted terrain's thirteen 512 by 512 materials (ground,
+  debris, wall and mantle maps for every surface family): `NAME.png` is sRGB albedo
+  with normalized height in alpha, `NAME-normal.png` a tangent normal (U right, V
+  down) with ambient occlusion in alpha, and `manifest.json` the metres each repeat
+  spans. All are original procedural works (CC0-1.0) generated from fixed seeds by
+  `tools/build_terrain_materials.py`; no photographs or generated images are used.
+  The terrain's rock kit is generated in code (`BoardRocks`), so there are no rock
+  model files; the former `outcrop-*` formations have been removed.
 - `textures/cliffs/`: the vertical hex sides' 1024 by 1024 color, tangent normal,
   and packed height/roughness/occlusion maps for rock, sandstone, soil, concrete
   and snow. These retain full mip resolution and use the board's dedicated
@@ -143,6 +153,7 @@ Run from the mm-data root (Python requires Pillow and NumPy):
 
 ```text
 python tools/copy_board_tileset.py
+python tools/build_terrain_materials.py
 python tools/prepare_board_textures.py
 python tools/prepare_cliff_materials.py
 python tools/prepare_cliff_materials.py --check
@@ -182,7 +193,7 @@ never treated as enclosing solids. Smaller meshes are decimated from the complet
 original, rather than a pruned mesh whose canopy could expose missing faces.
 The script owns a temporary Blender scene and preserves the active scene.
 
-Validation checks all 3,313 base models and 48 tree detail meshes, their budgets and texture dependencies, structure
+Validation checks all 3,319 base models and 66 tree detail meshes, their budgets and texture dependencies, structure
 roof winding, unchanged opaque roof pixels, facade assignments, small runtime
 texture dimensions, preserved source resolution, and independent copied files.
 Native Java integration tests additionally check transparency, lighting,
@@ -195,8 +206,9 @@ headers and original paths are retained. The repository license remains at
 `../../../LICENSE`.
 
 Trees are simplified derivatives of Quaternius's **Ultimate Nature
-Pack (June 2019)**: `CommonTree_1/2/4`, `PineTree_1/3`, `BirchTree_2`,
-`Willow_2`, their corresponding snow models, and `PalmTree_1/2`. The supplied CC0 notice is preserved
+Pack (June 2019)**: `CommonTree_1/2/4`, `CommonTree_Dead_2`, `PineTree_1/2/3`,
+`BirchTree_2`, `Willow_2`, their corresponding snow models, `PalmTree_1/2`,
+`Cactus_2` and `CactusFlowers_2`. The supplied CC0 notice is preserved
 in `QUATERNIUS-LICENSE.txt`.
 
 Bridge and crop models were authored with the Blender script.

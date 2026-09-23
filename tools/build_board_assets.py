@@ -15,6 +15,17 @@ OUT.mkdir(parents=True, exist_ok=True)
 SCENE = bpy.data.scenes.new('MegaMek board assets')
 COLLECTION = SCENE.collection
 STATS = {}
+# Names to rebuild; None rebuilds everything. A caller may pass a set, for example
+# runpy.run_path('tools/build_board_assets.py', init_globals={'ONLY': {'cactus'}}).
+ONLY = globals().get('ONLY')
+
+
+# Display-space colour of cactus bodies.
+CACTUS = (.47, .56, .39)
+
+
+def wanted(name):
+    return ONLY is None or name in ONLY
 
 
 def material(name, color):
@@ -51,6 +62,9 @@ def mesh_object(name, vertices, faces, materials, indices):
 def tree_texture(name, mat):
     """Use the source's material boundaries, especially its authored snow caps."""
     role = mat.name.split('.')[0]
+    if name.startswith('cactus'):
+        # The body takes the ribbed cactus map (tools/build_cactus_texture.py); the flowers take the leaf map.
+        return 'cactus' if role == 'Green' else 'leaves-broad'
     if role == 'Snow':
         return 'snow'
     if role in ('Wood', 'White', 'Black', 'Coconuts'):
@@ -84,6 +98,9 @@ def export(name, objects, normalize=False, foliage=False):
             # Blender stores linear-light colors. libGDX's default shader writes
             # directly to the display framebuffer, so export display-space colors.
             color = tuple(12.92*c if c <= .0031308 else 1.055*c**(1/2.4)-.055 for c in color)
+            if role == 'cactus':
+                # The source's saturated green reads as a dark hedge; desert cacti are a pale sage.
+                color = CACTUS
             if normalize:
                 color = tuple(min(1,max(.12,c*1.15)) for c in color)
             normal = (normal_matrix @ tri.normal).normalized()
@@ -162,23 +179,25 @@ def bridge_beam(name, left, right, bottom, top):
     return beam
 
 
-export('bridge', [bridge_beam('Deck', -11, 11, -.14, 0),
-                  bridge_beam('Left rail', -11, -7.5, 0, .13),
-                  bridge_beam('Right rail', 7.5, 11, 0, .13)])
+if wanted('bridge'):
+    export('bridge', [bridge_beam('Deck', -11, 11, -.14, 0),
+                      bridge_beam('Left rail', -11, -7.5, 0, .13),
+                      bridge_beam('Right rail', 7.5, 11, 0, .13)])
 
 # Crops have one elevation level in the rules. Authored crossed blades preserve
 # that height without lifting a farmland image into a solid block.
-crop = material('dry crop', (.31,.29,.08))
-vertices, faces = [], []
-for row in range(5):
-    for column in range(6):
-        x,y = (column-2.5)*7,(row-2)*10
-        height=.72+((column*7+row*3)%4)*.09
-        for dx,dy in ((2,0),(0,2)):
-            start=len(vertices)
-            vertices += [(x-dx,y-dy,0),(x+dx,y+dy,0),(x,y,height)]
-            faces += [(start,start+1,start+2),(start+2,start+1,start)]
-export('field',[mesh_object('Crop rows',vertices,faces,[crop],[0]*len(faces))])
+if wanted('field'):
+    crop = material('dry crop', (.31,.29,.08))
+    vertices, faces = [], []
+    for row in range(5):
+        for column in range(6):
+            x,y = (column-2.5)*7,(row-2)*10
+            height=.72+((column*7+row*3)%4)*.09
+            for dx,dy in ((2,0),(0,2)):
+                start=len(vertices)
+                vertices += [(x-dx,y-dy,0),(x+dx,y+dy,0),(x,y,height)]
+                faces += [(start,start+1,start+2),(start+2,start+1,start)]
+    export('field',[mesh_object('Crop rows',vertices,faces,[crop],[0]*len(faces))])
 
 # Import the user's CC0 Quaternius source into the isolated asset scene. Keep the
 # authored colors, simplify only when a source exceeds the foliage budget.
@@ -188,12 +207,17 @@ if bpy.context.window:
     bpy.context.window.scene = SCENE
 sources = [('tree','CommonTree_1'),('pine','PineTree_1'),
            ('tree-snow','CommonTree_Snow_1'),('pine-snow','PineTree_Snow_1'),
-           ('palm','PalmTree_1'),('palm-bent','PalmTree_2')]
+           ('palm','PalmTree_1'),('palm-bent','PalmTree_2'),
+           # Desert woods: saguaro-like cacti, one in flower.
+           ('cactus','Cactus_2'),('cactus-flowers','CactusFlowers_2')]
 for name, source in [('tree-broad','CommonTree_4'),('tree-slender','CommonTree_2'),
-                     ('birch','BirchTree_2'),('willow','Willow_2'),('pine-tall','PineTree_3')]:
+                     ('birch','BirchTree_2'),('willow','Willow_2'),('pine-tall','PineTree_3'),
+                     ('pine-broad','PineTree_2'),('tree-dead','CommonTree_Dead_2')]:
     family, number = source.rsplit('_', 1)
     sources += [(name,source),(name+'-snow',family+'_Snow_'+number)]
 for name, source in sources:
+    if not wanted(name):
+        continue
     path = nature / 'Blends' / (source+'.blend')
     if not path.exists():
         raise FileNotFoundError(path)
@@ -221,9 +245,15 @@ if old_scene:
 
 # Terrain, riverbed and rim textures are authored assets. Model rebuilds preserve them.
 
-(OUT/'manifest.json').write_text(json.dumps(STATS,indent=2))
-runpy.run_path(str(ROOT / 'tools/prepare_tree_lods.py'), run_name='__main__')
-# Save only the authored library, never replace the user's open file.
-bpy.data.libraries.write(str(ROOT/'tools/board-assets.blend'), set(SCENE.objects), fake_user=True)
+manifest = STATS
+if ONLY is not None and (OUT/'manifest.json').exists():
+    # A partial rebuild keeps every other asset's entry, including its detail levels.
+    manifest = json.loads((OUT/'manifest.json').read_text())
+    manifest.update(STATS)
+(OUT/'manifest.json').write_text(json.dumps(manifest,indent=2))
+runpy.run_path(str(ROOT / 'tools/prepare_tree_lods.py'), init_globals={'ONLY': ONLY}, run_name='__main__')
+# Save only the authored library, never replace the user's open file. A partial rebuild has only part of it.
+if ONLY is None:
+    bpy.data.libraries.write(str(ROOT/'tools/board-assets.blend'), set(SCENE.objects), fake_user=True)
 result = {'directory':str(OUT),'models':len(STATS), 'max_triangles':max(v['triangles'] for v in STATS.values())}
 print(json.dumps(result),flush=True)

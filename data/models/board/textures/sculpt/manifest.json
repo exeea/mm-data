@@ -1,0 +1,72 @@
+{
+  "generator": "tools/build_terrain_materials.py",
+  "license": "CC0-1.0",
+  "size": 512,
+  "materials": {
+    "sand": {
+      "tile": 6.0,
+      "role": "ground",
+      "seed": 101
+    },
+    "grass": {
+      "tile": 4.0,
+      "role": "ground",
+      "seed": 102
+    },
+    "dirt": {
+      "tile": 5.0,
+      "role": "ground",
+      "seed": 103
+    },
+    "rock": {
+      "tile": 8.0,
+      "role": "ground",
+      "seed": 104
+    },
+    "snow": {
+      "tile": 8.0,
+      "role": "ground",
+      "seed": 105
+    },
+    "concrete": {
+      "tile": 6.0,
+      "role": "ground",
+      "seed": 106
+    },
+    "pavement": {
+      "tile": 3.0,
+      "role": "debris",
+      "seed": 201
+    },
+    "scree": {
+      "tile": 4.0,
+      "role": "debris",
+      "seed": 202
+    },
+    "gravel": {
+      "tile": 3.0,
+      "role": "debris",
+      "seed": 203
+    },
+    "sandstone": {
+      "tile": 12.0,
+      "role": "wall",
+      "seed": 301
+    },
+    "granite": {
+      "tile": 10.0,
+      "role": "wall",
+      "seed": 302
+    },
+    "earth": {
+      "tile": 20.0,
+      "role": "wall",
+      "seed": 303
+    },
+    "cast": {
+      "tile": 8.0,
+      "role": "wall",
+      "seed": 304
+    }
+  }
+}
