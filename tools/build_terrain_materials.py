@@ -456,11 +456,12 @@ def grass(c):
     clump = np.clip(1 - f1 / .85, 0, 1) ** 1.2 * c.per_cell(ident, count, .6, 1)
     patch = smoothstep(-1.0, 1.2, c.spectral(3, 1, 6))
     dry = smoothstep(.4, 1.6, c.spectral(3, 1, 8))
-    rgb = mix(fill(c, '#1f2d11'), fill(c, '#2c2414'), smoothstep(.8, 1.8, c.spectral(2, 3, 30)))
+    # Muted olive greens and straw, the tones of the printed map Grassland #3 rather than a lawn's green.
+    rgb = mix(fill(c, '#2e2f1b'), fill(c, '#2e2b1d'), smoothstep(.8, 1.8, c.spectral(2, 3, 30)))
     height = clump * .45
-    rgb = mix(rgb, fill(c, '#2f4a17'), clump * .8)
-    lush = [colour('#3f6a1f'), colour('#5b8a2a'), colour('#2d5418'), colour('#6f9a35')]
-    dryc = [colour('#8f8a45'), colour('#a59a55'), colour('#7c7a3c'), colour('#b3a867')]
+    rgb = mix(rgb, fill(c, '#4b4e29'), clump * .8)
+    lush = [colour('#6b6f3a'), colour('#8d914c'), colour('#54582d'), colour('#9fa25a')]
+    dryc = [colour('#969061'), colour('#ada674'), colour('#827e55'), colour('#bcb586')]
     def angle(u, v, rng):
         # Blades lean outward from their tussock's centre, with scatter.
         x, y = int(u * c.n) % c.n, int(v * c.n) % c.n

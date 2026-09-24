@@ -8,12 +8,12 @@ import json
 import re
 from pathlib import Path
 
-from unit_infantry_shapes import person, infantry_vehicle, bake_height
+from unit_infantry_shapes import person, infantry_vehicle, TROOP_SCALE, BATTLE_ARMOR_SIZE
 from unit_model_geometry import Geometry, TRIANGLE_LIMIT, TRIANGLE_TARGET, sub
 from unit_weapon_shapes import draw, rule_for
 from unit_equipment_models import build_equipment
 from unit_mek_models import build_meks, fallback_recipes
-from unit_family_models import build_families
+from unit_family_models import build_families, scale_geometry
 
 ROOT = Path(__file__).resolve().parents[1]
 EQUIPMENT_TRIANGLE_TARGET = 100
@@ -97,12 +97,14 @@ def build(output, catalog):
                        side+'Shin': side+'LegShin', side+'Foot': side+'LegFoot'})
     for kind, armored, jump in (('rifle', False, False), ('jump', False, True), ('battle-armor', True, False)):
         key = 'troops/'+kind+'-standing'
-        troop = bake_height(person('standing', armored=armored, jump=jump, modular=True), armored=armored)
+        troop = person('standing', armored=armored, jump=jump, modular=True)
+        scale_geometry(troop, TROOP_SCALE*(BATTLE_ARMOR_SIZE if armored else 1))
         assets[key] = export_asset(troop, output, key, 'troop', 'battle-armor' if armored else 'infantry',
                                    'trooper-v1', joints)
     for kind in ('motorized', 'tracked', 'wheeled', 'hover'):
         key = 'transports/'+kind
-        transport = bake_height(infantry_vehicle(kind, modular=True))
+        transport = infantry_vehicle(kind, modular=True)
+        scale_geometry(transport, TROOP_SCALE)
         joints = {'root': 'root', 'hull': 'vehicle', 'boarding': 'boarding', 'exit': 'boarding', 'cabin': 'cabin'}
         joints.update({node: node for node in transport.pivots if node.startswith('wheel-')})
         assets[key] = export_asset(transport, output, key, 'body', 'infantry-transport', 'transport-v1', joints)

@@ -5,7 +5,7 @@ They are not a catalog of named variants or finished production artwork.
 """
 from math import cos, sin, pi
 
-from unit_model_geometry import Geometry, sub
+from unit_model_geometry import Geometry, sub, MODEL_UNITS_PER_METRE
 from unit_mek_chassis import forward, upright
 from unit_mek_models import aim_rotation
 
@@ -261,8 +261,14 @@ def build_families(output, export_asset, write_json):
         glider.prism([(side*6, 8), (side*25, -9), (side*23, -16), (side*6, -8)], 24, 26, 'hull', 'edge')
     bodies.update({'proto': ('proto', proto()), 'quad-proto': ('proto', proto(True)), 'glider-proto': ('proto', glider)})
     bodies.update({kind: ('static', static_body(kind)) for kind in ('emplacement', 'structure', 'escape-pod', 'missile')})
+    # Canon ProtoMeks stand 6 m. Each is Alpha Strike size 1, which the runtime draws at .78 (FamilyVisual.SIZE_SCALES),
+    # so a ProtoMek body grows to that height with its sockets and weapons, as a Mek recipe's bodyScale does.
+    proto_scale = 6*MODEL_UNITS_PER_METRE/(.78*max(p[2] for tri, _, _ in bodies['proto'][1].faces for p in tri))
     assets = {}
     for name, (family, g) in bodies.items():
+        grown = proto_scale if family == 'proto' else 1
+        if grown != 1:
+            scale_geometry(g, grown)
         xs = [p[0] for tri, _, _ in g.faces for p in tri]
         ys = [p[1] for tri, _, _ in g.faces for p in tri]
         zs = [p[2] for tri, _, _ in g.faces for p in tri]
@@ -283,8 +289,9 @@ def build_families(output, export_asset, write_json):
                               'LA': (-x*.9, y*.3, z*.4), 'RA': (x*.9, y*.3, z*.4),
                               'LL': (-x*.65, -y*.6, z*.3), 'RL': (x*.65, -y*.6, z*.3)})
         if family == 'proto':
-            locations.update({'HD': (0, 7, 32), 'T': (0, 7, 25), 'MG': (0, 2, 32),
-                              'RA': (13, 5, 21), 'LA': (-13, 5, 21), 'L': (5, 4, 12)})
+            locations.update({location: tuple(value*grown for value in point) for location, point in {
+                'HD': (0, 7, 32), 'T': (0, 7, 25), 'MG': (0, 2, 32), 'RA': (13, 5, 21), 'LA': (-13, 5, 21),
+                'L': (5, 4, 12)}.items()})
         hardpoints, mounts = [], []
         for location, position in locations.items():
             for rear in (False, True):
@@ -299,9 +306,9 @@ def build_families(output, export_asset, write_json):
                 key = location+('-rear' if rear else '-front')
                 hardpoints.append({'id': key, 'location': location, 'side': 'rear' if rear else 'front', 'node': node,
                                    'position': sub(position, g.pivots[node]), 'rotation': aim_rotation(direction),
-                                   'size': [18, 12, 18], 'minScale': .25, 'maxScale': 2,
+                                   'size': [18*grown, 12*grown, 18*grown], 'minScale': .25, 'maxScale': 2,
                                    'roles': ['weapon', 'physical', 'misc']})
-                mounts.append({'hardpoint': key, 'scale': .6 if family == 'proto' else .8})
+                mounts.append({'hardpoint': key, 'scale': (.6 if family == 'proto' else .8)*grown})
         for location, node in (('TU', 'turret'), ('RT', 'turret'), ('FT', 'turret2')):
             if node in g.pivots:
                 key = location+'-turret'
@@ -311,9 +318,9 @@ def build_families(output, export_asset, write_json):
                 mounts.append({'hardpoint': key, 'scale': .8})
         hardpoints.append({'id': 'external-searchlight', 'location': 'HULL' if family == 'aircraft' else 'BD',
                            'side': 'front', 'node': 'hull', 'position': sub((x*.3, y*.2, z*.85), g.pivots['hull']),
-                           'rotation': [0, 0, 0, 1], 'size': [8, 8, 8], 'minScale': .4, 'maxScale': 2,
+                           'rotation': [0, 0, 0, 1], 'size': [8*grown, 8*grown, 8*grown], 'minScale': .4, 'maxScale': 2,
                            'roles': ['misc']})
-        mounts.append({'hardpoint': 'external-searchlight', 'family': 'lamp', 'scale': .8})
+        mounts.append({'hardpoint': 'external-searchlight', 'family': 'lamp', 'scale': .8*grown})
         joints = {node: node for node in g.pivots}
         key = 'bodies/family-'+name
         assets[key] = export_asset(g, output, key, 'body', family, family+'-v1', joints, hardpoints)

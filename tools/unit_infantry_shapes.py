@@ -1,25 +1,12 @@
 """Shared low-poly figure and transport artwork; formation assembly belongs to the runtime."""
-from unit_model_geometry import Geometry, normal
+from unit_model_geometry import Geometry, MODEL_UNITS_PER_METRE
 
 
-INFANTRY_HEIGHT_SCALE = 1.10
-BATTLE_ARMOR_HEIGHT_SCALE = 1.50
-
-
-def bake_height(geometry, armored=False):
-    """Bake component proportions before export, keeping rotating wheels round and grounded."""
-    scale = BATTLE_ARMOR_HEIGHT_SCALE if armored else INFANTRY_HEIGHT_SCALE
-
-    def point(value, node):
-        return tuple(value) if node.startswith('wheel-') else (value[0], value[1], value[2]*scale)
-
-    geometry.faces = [(tuple(point(vertex, node) for vertex in triangle), node, material)
-                      for triangle, node, material in geometry.faces]
-    geometry.pivots = {node: point(pivot, node) for node, pivot in geometry.pivots.items()}
-    for emitter in geometry.emitters:
-        emitter['position'] = point(emitter['position'], emitter['node'])
-        emitter['direction'] = normal(point(emitter['direction'], emitter['node']))
-    return geometry
+# person() draws a standing figure 21 units tall and canon makes a soldier 1.8 m. Transports share the factor so they
+# stay in scale with their troops; the runtime assembles them at twice their exported size.
+TROOP_SCALE = 1.8 * MODEL_UNITS_PER_METRE / 21
+# Battle armour is the same figure, evenly larger than a soldier: 2.7 m, within the canonical 2.5 to 3 m.
+BATTLE_ARMOR_SIZE = 1.5
 
 
 def person(pose, armored=False, jump=False, modular=False):

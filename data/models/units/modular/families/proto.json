@@ -7,232 +7,232 @@
   "mounts": [
     {
       "hardpoint": "BD-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "BD-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "FR-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "FR-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "NOS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "NOS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "LS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "LS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "LWG-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "LWG-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RWG-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RWG-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RR-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RR-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "AFT-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "AFT-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "FLS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "FLS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "FRS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "FRS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "ALS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "ALS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "ARS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "ARS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "FRLS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "FRLS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "FRRS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "FRRS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RRLS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RRLS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RRRS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RRRS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "LBS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "LBS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RBS-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RBS-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "HULL-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "HULL-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "FSLG-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "FSLG-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "*-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "*-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "HD-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "HD-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "T-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "T-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "MG-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "MG-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RA-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "RA-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "LA-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "LA-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "L-front",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "L-rear",
-      "scale": 0.6
+      "scale": 0.4680390032502708
     },
     {
       "hardpoint": "external-searchlight",
       "family": "lamp",
-      "scale": 0.8
+      "scale": 0.6240520043336946
     }
   ],
   "forms": {

@@ -10,6 +10,9 @@ import json
 TEXT_SUFFIXES = {'.py', '.json', '.g3dj', '.txt', '.md'}
 TRIANGLE_TARGET = 1000
 TRIANGLE_LIMIT = 1500
+# Mek-standard model units per metre: 27 units make a level, 18 world units at the default level height, and the
+# 30 m hex spans 72 world units, so a level shows 7.5 m. The Atlas then stands 15.2 m (canon: 15.4 m).
+MODEL_UNITS_PER_METRE = 27 / 7.5
 
 
 def content_digest(path):
