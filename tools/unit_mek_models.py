@@ -3,10 +3,13 @@
 There is deliberately no loadout selection or packing here; Java owns both for play and review.
 """
 from math import sqrt
+import json
+import re
 
 from unit_mek_chassis import build_chassis, forward, panel, split_torso_locations, upright
 from unit_model_geometry import Geometry, sub
 from unit_mek_vents import finish_vents
+from unit_weapon_shapes import missile_style_for
 
 # Authored proportions, baked into each body's vertices, joints and sockets; never runtime size multipliers.
 # Width, depth, leg height, torso height. The head keeps a more consistent size across the weight classes.
@@ -225,30 +228,112 @@ def aim_rotation(aim):
     return [z/scale, 0, -x/scale, scale/2]
 
 
+def calf_exhaust(body, leg):
+    """The default jump-jet spot for a leg: on the back of the calf just under the knee, centred across the calf.
+
+    Measured from the body itself: a fifth of the way from the knee down to the ankle, at the middle of the shin's
+    width there, on the shin's rear surface. Returns None when the leg has no shin to measure, so the caller keeps
+    its older default.
+    """
+    shin = leg+'-shin'
+    if shin not in body.pivots:
+        return None
+    triangles = [tri for tri, node, _ in body.faces if node == shin]
+    if not triangles:
+        return None
+    knee = body.pivots[shin]
+    ankle_height = body.pivots[leg+'-foot'][2] if leg+'-foot' in body.pivots else knee[2]*.2
+    height = knee[2] - (knee[2] - ankle_height)*.2
+
+    def depths_at(x):
+        # Where a line running front to back at this x and height crosses the shin's surface.
+        depths = []
+        for (x0, y0, z0), (x1, y1, z1), (x2, y2, z2) in triangles:
+            determinant = (x1-x0)*(z2-z0) - (x2-x0)*(z1-z0)
+            if abs(determinant) < 1e-9:
+                continue
+            u = ((x-x0)*(z2-z0) - (x2-x0)*(height-z0))/determinant
+            v = ((x1-x0)*(height-z0) - (x-x0)*(z1-z0))/determinant
+            if u >= -1e-9 and v >= -1e-9 and u + v <= 1 + 1e-9:
+                depths.append(y0 + u*(y1-y0) + v*(y2-y0))
+        return depths
+
+    low = min(p[0] for tri in triangles for p in tri)
+    high = max(p[0] for tri in triangles for p in tri)
+    steps = [low + (high - low)*index/40 for index in range(41)]
+    covered = [x for x in steps if depths_at(x)]
+    if not covered:
+        return None
+    centre = (min(covered) + max(covered))/2
+    depths = depths_at(centre)
+    if not depths:
+        return None
+    return (centre, min(depths), height)
+
+
+# Recipe keys that shape the body itself. A variant shares its chassis's body, so it cannot change these.
+BODY_KEYS = {'id', 'hip', 'heldWeapons', 'widthScale', 'bodyScale', 'topology', 'form', 'weightProfile',
+             'ventSpares', 'legBends', 'variants'}
+
+
+def with_variants(recipes):
+    """Each recipe, followed by one recipe per variant that places its equipment its own way.
+
+    A chassis's `variants` maps a model to the recipe keys that differ for it, on the same body: the Thunderbolt
+    TDR-60-RLA's crowded side torsos go in rows while every other Thunderbolt stacks. A key holding a dict
+    changes only the entries named (`"sockets": {"LT": [...]}` moves the LT spot alone) and `null` removes an
+    entry or a whole key; any other key is replaced whole.
+    """
+    for recipe in recipes:
+        yield recipe
+        for model, changes in recipe.get('variants', {}).items():
+            fixed = sorted(BODY_KEYS.intersection(changes))
+            if fixed:
+                raise ValueError(recipe['id']+' '+model+': a variant shares the body and cannot change '
+                                 + ', '.join(fixed))
+            variant = {key: value for key, value in recipe.items() if key != 'variants'}
+            for key, value in changes.items():
+                if isinstance(value, dict) and isinstance(recipe.get(key), dict):
+                    value = {entry: setting for entry, setting in {**recipe[key], **value}.items()
+                             if setting is not None}
+                if value is None:
+                    variant.pop(key, None)
+                else:
+                    variant[key] = value
+            variant['id'] = variant_descriptor_id(recipe['id'], model)
+            variant['variantOf'] = recipe['id']
+            yield variant
+
+
 def build_meks(recipes, output, export_asset, write_json):
     assets = {}
-    for recipe in recipes:
+    built = {}
+    for recipe in with_variants(recipes):
         weight = recipe.get('weightProfile')
-        body = fallback_body(recipe['topology'], weight)[0] if 'topology' in recipe else build_chassis(recipe, modular=True)
-        if recipe.get('form') == 'airmek':
-            body = air_mek_body()
-        if weight:
-            body = author_fallback(body, weight)
-        split_torso_locations(body)
-        vents = finish_vents(body, recipe.get('ventSpares', 3)) if 'topology' not in recipe and recipe.get('form') != 'airmek' else []
-        for location in ('HD', 'CT', 'LT', 'RT'):
-            if not any(node == location for _, node, _ in body.faces):
-                raise ValueError(recipe['id']+': no drawable '+location+' surface')
-        # Existing is not enough. A chassis can carry an LT shoulder pod while its whole torso skin
-        # stays labelled CT, which is the joined torso the guide forbids: the side blows off and the
-        # armour over it remains. Catch it by reach - a centre section may not span the torso's width.
-        torso = [tri for tri, node, _ in body.faces if node in ('CT', 'LT', 'RT')]
-        half_width = max(abs(point[0]) for tri in torso for point in tri)
-        centre = [tri for tri, node, _ in body.faces if node == 'CT']
-        reach = max(abs(point[0]) for tri in centre for point in tri)
-        if reach > half_width*.75:
-            raise ValueError('%s: centre torso reaches %.1f of a %.1f half-width; the torso is joined'
-                             % (recipe['id'], reach, half_width))
+        shared = recipe.get('variantOf')
+        if shared:
+            body, vents, chassis_hardpoints = built[shared]
+        else:
+            body = fallback_body(recipe['topology'], weight)[0] if 'topology' in recipe else build_chassis(recipe, modular=True)
+            if recipe.get('form') == 'airmek':
+                body = air_mek_body()
+            if weight:
+                body = author_fallback(body, weight)
+            split_torso_locations(body)
+            vents = finish_vents(body, recipe.get('ventSpares', 3)) if 'topology' not in recipe and recipe.get('form') != 'airmek' else []
+            for location in ('HD', 'CT', 'LT', 'RT'):
+                if not any(node == location for _, node, _ in body.faces):
+                    raise ValueError(recipe['id']+': no drawable '+location+' surface')
+            # Existing is not enough. A chassis can carry an LT shoulder pod while its whole torso skin
+            # stays labelled CT, which is the joined torso the guide forbids: the side blows off and the
+            # armour over it remains. Catch it by reach - a centre section may not span the torso's width.
+            torso = [tri for tri, node, _ in body.faces if node in ('CT', 'LT', 'RT')]
+            half_width = max(abs(point[0]) for tri in torso for point in tri)
+            centre = [tri for tri, node, _ in body.faces if node == 'CT']
+            reach = max(abs(point[0]) for tri in centre for point in tri)
+            if reach > half_width*.75:
+                raise ValueError('%s: centre torso reaches %.1f of a %.1f half-width; the torso is joined'
+                                 % (recipe['id'], reach, half_width))
         hardpoints, mounts = [], []
 
         def mount(identifier, location, pixel, *, rear=False, family='', form='', bay=False, node=None):
@@ -283,6 +368,17 @@ def build_meks(recipes, output, export_asset, write_json):
             style = recipe.get('protrusion', {}).get(location+':'+family, recipe.get('protrusion', {}).get(location))
             if style:
                 settings['style'] = style
+            # Light weapons (small and medium lasers) can stand out differently from the rest at the same mount.
+            light_style = recipe.get('lightProtrusion', {}).get(location+':'+family,
+                                                              recipe.get('lightProtrusion', {}).get(location))
+            if light_style:
+                settings['lightStyle'] = light_style
+            # Room between weapons sharing this mount, when the chassis packs a small pod tighter than the standard .4.
+            if location in recipe.get('stackGap', {}):
+                settings['stackGap'] = recipe['stackGap'][location]*recipe.get('bodyScale', 1)
+            # How wide one row of weapons may run here, when the chassis shapes a group narrower than the face.
+            if location in recipe.get('rowWidth', {}):
+                settings['rowWidth'] = recipe['rowWidth'][location]*recipe.get('bodyScale', 1)
             if location in recipe.get('hangingMounts', []) and not rear and not family:
                 # The socket marks an underside the weapon hangs from, like a Locust's guns under its gun pods.
                 # A socket kept for one family of weapon sits where the recipe puts it and does not hang.
@@ -290,8 +386,12 @@ def build_meks(recipes, output, export_asset, write_json):
             if location in recipe.get('sharedFaces', {}):
                 # This location's weapons pack onto another location's face, beside that location's own.
                 settings['area'] = recipe['sharedFaces'][location]
-            if location in recipe.get('stackRows', []):
+            if family == 'jump-jet':
+                # Jump jets can be drawn smaller than the chassis's weapons, so several fit one torso back.
+                settings['scale'] *= recipe.get('jumpJetScale', 1)
+            if location in recipe.get('stackRows', []) or location+':'+family in recipe.get('stackRows', []):
                 # Weapons sharing this socket sit side by side in rows, centred on the face, not one above another.
+                # An entry names a whole location ("LT") or one family of weapon at it ("LT:jump-jet").
                 settings['stack'] = 'rows'
             if family == 'ppc' and recipe.get('barrelLength'):
                 settings['length'] = recipe['barrelLength']*recipe.get('bodyScale', 1)
@@ -299,8 +399,14 @@ def build_meks(recipes, output, export_asset, write_json):
                 if override.get('location', location) == location and override.get('family') == family:
                     if 'length' in override:
                         settings['length'] = override['length']*recipe['weaponScale']*recipe.get('bodyScale', 1)
-            if bay:
+            if bay and missile_style_for(location, recipe).startswith('drum-'):
+                # The drum profiles are named for their length: drum-short, drum-medium, drum-long.
+                settings['profile'] = missile_style_for(location, recipe)
+            elif bay:
                 settings['profile'] = 'vertical-slope' if recipe.get('missileSlope') else 'columns-4'
+            if bay and recipe.get('missileBayStand'):
+                # The launchers stand on the socket instead of being centred on it, so each rests on the surface.
+                settings['stand'] = True
                 settings['bayColumns'] = recipe.get('missileBayColumns', 1)
             mounts.append(settings)
 
@@ -313,7 +419,17 @@ def build_meks(recipes, output, export_asset, write_json):
             mount(location+'-rear', location, rear, rear=True)
             # Exhaust is a separate rear mounting preference, never a front-facing gun socket.
             exhaust = recipe.get('exhaustSockets', {}).get(location, [rear[0], rear[1], min(rear[2], 29)])
-            mount(location+'-exhaust', location, exhaust, family='jump-jet')
+            calf = None if weight or location in recipe.get('exhaustSockets', {}) or location not in ('LL', 'RL') \
+                else calf_exhaust(body, location)
+            if calf is None:
+                mount(location+'-exhaust', location, exhaust, family='jump-jet')
+            else:
+                # A leg with no authored exhaust carries its jets on the back of the calf just under the knee,
+                # moving with the shin, rather than at the leg weapon socket up on the thigh.
+                grown = recipe.get('bodyScale', 1)
+                measured = [42 + calf[0]/grown, 36 - calf[1]/grown, calf[2]/grown]
+                node = recipe.get('socketNodes', {}).get(location+':jump-jet', location+'-shin')
+                mount(location+'-exhaust', location, measured, family='jump-jet', node=node)
             if recipe.get('barrelLength'):
                 mount(location+'-ppc', location, pixel, family='ppc')
         for location in ('LA', 'RA'):
@@ -393,8 +509,18 @@ def build_meks(recipes, output, export_asset, write_json):
                     joints[location+'Foot'] = location+'-foot'
         key = 'bodies/'+recipe['id']
         topology = recipe.get('topology', 'biped')
-        assets[key] = export_asset(body, output, key, 'body', 'mek-'+topology, topology+'-v1', joints, hardpoints,
-                                   leg_bends=recipe.get('legBends'))
+        if not shared:
+            assets[key] = export_asset(body, output, key, 'body', 'mek-'+topology, topology+'-v1', joints, hardpoints,
+                                       leg_bends=recipe.get('legBends'))
+            built[recipe['id']] = body, vents, hardpoints
+        elif hardpoints == chassis_hardpoints:
+            # The variant puts nothing in a new spot, so it uses the chassis's body as it is.
+            key = 'bodies/'+shared
+        else:
+            # Spots live on the body, so a variant with new ones gets a body file of its own that draws the
+            # chassis's mesh: the same shape, with its own hardpoints.
+            chassis_body = json.loads((output / ('bodies/'+shared+'.json')).read_text(encoding='utf-8'))
+            write_json(output / (key+'.json'), dict(chassis_body, hardpoints=hardpoints))
         descriptor = {
             'schema': 2, 'kind': 'mek', 'body': 'units/modular/'+key+'.json',
             'equipment': 'units/modular/equipment.json', 'mounts': mounts,
@@ -409,3 +535,9 @@ def build_meks(recipes, output, export_asset, write_json):
                 descriptor['ventDefaultSides'] = recipe['ventDefaultSides']
         write_json(output / ('meks/'+recipe['id']+'.json'), descriptor)
     return assets
+
+
+def variant_descriptor_id(chassis_id, model):
+    """The file name of one variant's own descriptor (and body, when it has one): 'thunderbolt' and
+    'TDR-60-RLA' give 'thunderbolt--tdr-60-rla'."""
+    return chassis_id + '--' + re.sub(r'[^a-z0-9]+', '-', model.lower()).strip('-')

@@ -24,12 +24,12 @@
           54.858000000000004
         ]
       ],
-      "sha256": "1bb0a76534f0d6ac79056ee6ddaf94c27304f62dd04c81efca70a935d3ec5a34"
+      "sha256": "c2e955d54e319f7b25bef1e6d7df8ea21b5d26956a8a30af556344ba3e5e0c40"
     },
     "bodies/locust": {
-      "triangles": 896,
+      "triangles": 864,
       "bareUnit": true,
-      "vertices": 1646,
+      "vertices": 1582,
       "bounds": [
         [
           -19.130893469875723,
@@ -44,12 +44,12 @@
           52.05503303901215
         ]
       ],
-      "sha256": "f5f3223cb32823d5c38e82221ffdc0c2de7c004e3c3c29472180226b7ffd3201"
+      "sha256": "a13fbfea9b45250056183189bd7a017279c3cec80e9b2a14a34139820c26e0b6"
     },
     "bodies/warhammer": {
-      "triangles": 490,
+      "triangles": 466,
       "bareUnit": true,
-      "vertices": 940,
+      "vertices": 892,
       "bounds": [
         [
           -23.04,
@@ -64,7 +64,7 @@
           49.92
         ]
       ],
-      "sha256": "227988daa8d9ec49cd244ca526b23d6e6b1d944a638d95d489f680e472f8ce37"
+      "sha256": "ffc98dd74ef24516e644e557b4569fc42c239644ae3ca844a91e7f7999ca3305"
     },
     "bodies/mad-cat": {
       "triangles": 766,
@@ -87,9 +87,9 @@
       "sha256": "5f193f7ee0dde9bac27561b0c22d339d83cfe07185790fb98856e010ef4dbb7b"
     },
     "bodies/marauder": {
-      "triangles": 844,
+      "triangles": 836,
       "bareUnit": true,
-      "vertices": 1608,
+      "vertices": 1592,
       "bounds": [
         [
           -24.01275,
@@ -104,7 +104,7 @@
           50.403
         ]
       ],
-      "sha256": "bd27d206a0d5bf863dde37af9934bfed31f99bbc0f981b0af5212684172c9e31"
+      "sha256": "f18b709ad19383650eabc3cda14c1442861500ec9ea60a8f30e25f257ffbca68"
     },
     "bodies/archer": {
       "triangles": 878,
@@ -147,9 +147,9 @@
       "sha256": "25e8f3ae7e29820029f43c1de280a9679f6a9c660dab569001069971ffc87401"
     },
     "bodies/mackie": {
-      "triangles": 930,
+      "triangles": 922,
       "bareUnit": true,
-      "vertices": 1744,
+      "vertices": 1728,
       "bounds": [
         [
           -27.403,
@@ -164,19 +164,19 @@
           53.169999999999995
         ]
       ],
-      "sha256": "1cf1775050ff1c4eb087b953fae177af092aaa59283b7462f484cf641ce120cc"
+      "sha256": "9bc48357809541bc82eed1c90771b3bd3566c79c3df60ff79936e13c1616f14d"
     },
     "bodies/rifleman": {
-      "triangles": 802,
+      "triangles": 786,
       "bareUnit": true,
-      "vertices": 1500,
+      "vertices": 1468,
       "bounds": [
         [
           -19.78375,
           19.78375
         ],
         [
-          -8.720383499999999,
+          -8.7403835,
           13.034
         ],
         [
@@ -184,7 +184,7 @@
           49.37688477195621
         ]
       ],
-      "sha256": "920da5007046242f8e6098723d1d6bd1c3d2fdf9a51dee1dc9b1a260452f3f20"
+      "sha256": "bf0d024613d61a1872dbccdc0d616b27a69d036f7ae1b9e38b82a41b42516522"
     },
     "bodies/battlemaster": {
       "triangles": 1136,
@@ -225,6 +225,126 @@
         ]
       ],
       "sha256": "8800056aa9abb98007a94d3eefe8f17efe367b2c3779c68b9f4c5e3880afd2a1"
+    },
+    "bodies/urbanmech": {
+      "triangles": 1274,
+      "bareUnit": true,
+      "vertices": 2750,
+      "bounds": [
+        [
+          -12.399999999999999,
+          13.600000000000001
+        ],
+        [
+          -8.254909659385367,
+          8.0
+        ],
+        [
+          0.01,
+          42.51108518190958
+        ]
+      ],
+      "sha256": "143b898d3f076851f547bc2744cb29b1807012ff9d3ae23ab2aa6e8dc8315a44"
+    },
+    "bodies/blackjack": {
+      "triangles": 1068,
+      "bareUnit": true,
+      "vertices": 2309,
+      "bounds": [
+        [
+          -15.149999999999999,
+          15.149999999999999
+        ],
+        [
+          -6.743317073170732,
+          6.6
+        ],
+        [
+          0,
+          46.8262734374717
+        ]
+      ],
+      "sha256": "162f39f5bad9e84ec58e36a537aee9afb0413368ee3a5fece97c608b9912ef34"
+    },
+    "bodies/blackjack-omni": {
+      "triangles": 958,
+      "bareUnit": true,
+      "vertices": 2032,
+      "bounds": [
+        [
+          -15.6,
+          15.6
+        ],
+        [
+          -6.66,
+          6.35
+        ],
+        [
+          0,
+          45.0
+        ]
+      ],
+      "sha256": "55ba0d5b819d2ebf37e1c58b91b50dd4b1e036e49272e4aa832e09426dda8a46"
+    },
+    "bodies/griffin": {
+      "triangles": 1232,
+      "bareUnit": true,
+      "vertices": 2722,
+      "bounds": [
+        [
+          -15.15,
+          15.18
+        ],
+        [
+          -6.79,
+          14.48
+        ],
+        [
+          0,
+          47.29503238151591
+        ]
+      ],
+      "sha256": "bb43ac8fc939e51daaf6ac15965b52dfe3dcbfb602f4e1ce9fd206750d426f67"
+    },
+    "bodies/hatchetman": {
+      "triangles": 1104,
+      "bareUnit": true,
+      "vertices": 2113,
+      "bounds": [
+        [
+          -12.739239999999999,
+          12.739239999999999
+        ],
+        [
+          -7.553188346189806,
+          15.663
+        ],
+        [
+          0.0,
+          47.00037600332214
+        ]
+      ],
+      "sha256": "7543bc646b05ed6c2b84f3ebf5146449d768651c9aa018cd8196098c996ac6a9"
+    },
+    "bodies/thunderbolt": {
+      "triangles": 1144,
+      "bareUnit": true,
+      "vertices": 2238,
+      "bounds": [
+        [
+          -21.2,
+          20.349999999999998
+        ],
+        [
+          -9.06,
+          16.9
+        ],
+        [
+          0,
+          49.0
+        ]
+      ],
+      "sha256": "d16243d85eb6f01db58b5daad06fa8d7d57ebb1c897694d154c21025481f7293"
     },
     "bodies/fallback-biped-light": {
       "triangles": 524,
@@ -2006,26 +2126,6 @@
       ],
       "sha256": "44d21bee8d6739866439b4681f0d0156f36b0ee28fab50d1848ae9b23133d1bb"
     },
-    "equipment/library/1622353f6f182d99ad89": {
-      "triangles": 14,
-      "bareUnit": false,
-      "vertices": 28,
-      "bounds": [
-        [
-          -1.4,
-          1.4
-        ],
-        [
-          -1.0,
-          1.43
-        ],
-        [
-          -2.0,
-          2.0
-        ]
-      ],
-      "sha256": "86e64158b5b2d0f3a9e9fcea204216a372ec4843e1328bbc51e7d4e98cf1e1e3"
-    },
     "equipment/library/60e6f46c71a3deadf49e": {
       "triangles": 22,
       "bareUnit": false,
@@ -3605,6 +3705,86 @@
         ]
       ],
       "sha256": "01ea956ee7e6d4499d84cbfb1381542471dae0d33510a30fa313a94770970704"
+    },
+    "equipment/library/91854996f394b1cea57f": {
+      "triangles": 140,
+      "bareUnit": false,
+      "vertices": 260,
+      "bounds": [
+        [
+          -5.263800000000001,
+          5.115
+        ],
+        [
+          -8.3235,
+          0.6324000000000001
+        ],
+        [
+          -5.012700000000001,
+          5.017945800831245
+        ]
+      ],
+      "sha256": "5176112935f175cb32ee9545507616dfa395eadcceeba526aae95efd51b0a377"
+    },
+    "equipment/library/2131a332db4d70a80127": {
+      "triangles": 140,
+      "bareUnit": false,
+      "vertices": 260,
+      "bounds": [
+        [
+          -5.012700000000001,
+          5.017945800831245
+        ],
+        [
+          -10.62525,
+          2.3617974472256815
+        ],
+        [
+          -5.115,
+          5.263800000000001
+        ]
+      ],
+      "sha256": "ccbcc2f0d793368b14f8dcf46fcf4fba672025da59e55981638f7feb0ee7d545"
+    },
+    "equipment/library/5efadfdcfb7ed8cff810": {
+      "triangles": 140,
+      "bareUnit": false,
+      "vertices": 260,
+      "bounds": [
+        [
+          -5.012700000000001,
+          5.017945800831245
+        ],
+        [
+          -8.3235,
+          0.6324000000000001
+        ],
+        [
+          -5.115,
+          5.263800000000001
+        ]
+      ],
+      "sha256": "571a245b0483ebb4185f2493d9cd5773a0a2dce48e1f441c23715067a771098a"
+    },
+    "equipment/library/36dab7ceaa57246d6edf": {
+      "triangles": 14,
+      "bareUnit": false,
+      "vertices": 28,
+      "bounds": [
+        [
+          -5.115,
+          5.115
+        ],
+        [
+          -8.3235,
+          0.1023
+        ],
+        [
+          -5.012700000000001,
+          3.7293
+        ]
+      ],
+      "sha256": "2bdb1f2e013c00a4b249a5996ba97282374eaf323da254fe6c43e4a6aef5cab2"
     },
     "equipment/library/39a78f4aa09a5c8743be": {
       "triangles": 18,
@@ -8146,26 +8326,6 @@
       ],
       "sha256": "ffb0787518ee1f66bdf7a27a61672f90ef7a4bde62f9c4eafbe68209676ee31a"
     },
-    "equipment/library/a4b58cb61ae0e1ebeaa6": {
-      "triangles": 28,
-      "bareUnit": false,
-      "vertices": 54,
-      "bounds": [
-        [
-          -3,
-          3
-        ],
-        [
-          -0.7071067811865476,
-          9
-        ],
-        [
-          -7.0,
-          10
-        ]
-      ],
-      "sha256": "5bb37ca70a744aa317f2d43719d68e3f7f96198682f80840d5c40adcaee02f81"
-    },
     "equipment/library/380b55a95da716dd35bb": {
       "triangles": 42,
       "bareUnit": false,
@@ -8645,6 +8805,86 @@
         ]
       ],
       "sha256": "c4556780bb15841bb4bb2915c1483f00131ca975ed950c8a18dd2db4812f307c"
+    },
+    "equipment/library/c2ea2abdcf5208f70f1e": {
+      "triangles": 140,
+      "bareUnit": false,
+      "vertices": 260,
+      "bounds": [
+        [
+          -5.66,
+          5.5
+        ],
+        [
+          -8.95,
+          0.68
+        ],
+        [
+          -5.390000000000001,
+          5.395640646055102
+        ]
+      ],
+      "sha256": "a0dcf899a8272198613b8a7126ff75521f75fbfdc189d983ff59f9438f39b90f"
+    },
+    "equipment/library/022d29eb3fae882febf7": {
+      "triangles": 140,
+      "bareUnit": false,
+      "vertices": 260,
+      "bounds": [
+        [
+          -5.390000000000001,
+          5.395640646055102
+        ],
+        [
+          -11.424999999999999,
+          2.5395671475544965
+        ],
+        [
+          -5.5,
+          5.66
+        ]
+      ],
+      "sha256": "500c707b40375ea74ab0b49da14144ad9838ab3e963b8baca252865a222c294a"
+    },
+    "equipment/library/f56d054c8393077bf7a0": {
+      "triangles": 140,
+      "bareUnit": false,
+      "vertices": 260,
+      "bounds": [
+        [
+          -5.390000000000001,
+          5.395640646055102
+        ],
+        [
+          -8.95,
+          0.68
+        ],
+        [
+          -5.5,
+          5.66
+        ]
+      ],
+      "sha256": "89d4942081a92b2c716494523a5776dfb0e5caa49d0f92a5fb7a82118e7b176d"
+    },
+    "equipment/library/8966ab01e4142a76c943": {
+      "triangles": 14,
+      "bareUnit": false,
+      "vertices": 28,
+      "bounds": [
+        [
+          -5.5,
+          5.5
+        ],
+        [
+          -8.95,
+          0.11
+        ],
+        [
+          -5.390000000000001,
+          4.01
+        ]
+      ],
+      "sha256": "d42ef99828ccf1748765bcf64c9bfe6f7e9601c0eeb2709a75719974436b771a"
     },
     "equipment/library/4eb751cd7569bf9e42cd": {
       "triangles": 18,
@@ -10745,6 +10985,3266 @@
         ]
       ],
       "sha256": "7647f843b390bc4b9b9d150147980a3e985605458732cf90f30303be58c08b29"
+    },
+    "equipment/library/02b361ea1f5dea6522d2": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 198,
+      "bounds": [
+        [
+          -5.6125681600060675,
+          5.6125681600060675
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -5.90625,
+          5.612568160006067
+        ]
+      ],
+      "sha256": "1655a76c041d3f923115eace1ac3b926227ac8881798b63ae649731c1acf1134"
+    },
+    "equipment/library/02b42ae42ce17f10a70d": {
+      "triangles": 104,
+      "bareUnit": false,
+      "vertices": 168,
+      "bounds": [
+        [
+          -3.9163253383153447,
+          3.9163253383153442
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -4.12125,
+          3.916325338315344
+        ]
+      ],
+      "sha256": "63ad833be8494c4c755a89d95e05e0017e7b8aa631198924ae64d4622245daea"
+    },
+    "equipment/library/04ca0a3bb18f62b21ba2": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 136,
+      "bounds": [
+        [
+          -2.783049107845748,
+          2.7830491078457475
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.92867424049175,
+          2.783049107845747
+        ]
+      ],
+      "sha256": "28ed776771768dc5f4751b41749638f8f35b9dc69729064d91e5efeb0564988a"
+    },
+    "equipment/library/0533154045d33251c6a0": {
+      "triangles": 86,
+      "bareUnit": false,
+      "vertices": 148,
+      "bounds": [
+        [
+          -2.782475730120539,
+          2.782475730120539
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.9280708603468737,
+          2.7824757301205385
+        ]
+      ],
+      "sha256": "e26f0cc9adbd998bafb8e061746854f40820fb990c2bbb9210352233cda924fc"
+    },
+    "equipment/library/067d0f633f2e5eb1eb54": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 128,
+      "bounds": [
+        [
+          -2.5241096348546836,
+          2.524109634854683
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.6561855652982143,
+          2.5241096348546828
+        ]
+      ],
+      "sha256": "42a08ee60517504103ecf0317432a447aa94ebda325edb75d30311756437997b"
+    },
+    "equipment/library/0873cf03d33e1d79e485": {
+      "triangles": 128,
+      "bareUnit": false,
+      "vertices": 200,
+      "bounds": [
+        [
+          -4.277961181900356,
+          4.277961181900355
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -4.501808710430281,
+          4.277961181900355
+        ]
+      ],
+      "sha256": "c92b43e903618e2929d8a8a931fae7acf8d89f4b81cef4717de7f993b4ca1a2d"
+    },
+    "equipment/library/09ff29778abc18ef2026": {
+      "triangles": 86,
+      "bareUnit": false,
+      "vertices": 148,
+      "bounds": [
+        [
+          -2.782475730120539,
+          2.782475730120539
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.9280708603468737,
+          2.7824757301205385
+        ]
+      ],
+      "sha256": "b0938575e4628773f4da821b542711760fbcbe7e5ba844167dccdb5894e75e84"
+    },
+    "equipment/library/0cee1bc48db55b6f3b74": {
+      "triangles": 136,
+      "bareUnit": false,
+      "vertices": 226,
+      "bounds": [
+        [
+          -5.055471391591109,
+          5.055471391591108
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -5.320002725196785,
+          5.055471391591107
+        ]
+      ],
+      "sha256": "4607ebc146229c5073c2fc15b16cb77e0e9fb55e4a477e29f850fa80273d6f11"
+    },
+    "equipment/library/11874e57a1d0af3f2564": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -1.955668194419892,
+          1.9556681944198917
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.058,
+          1.9556681944198915
+        ]
+      ],
+      "sha256": "0b18ee4f073d92fca93594f6927b3dfd10d50f9c8efa84e83c4229edfbb31b99"
+    },
+    "equipment/library/12ea6f56e6d368b53bab": {
+      "triangles": 140,
+      "bareUnit": false,
+      "vertices": 216,
+      "bounds": [
+        [
+          -4.277961181900356,
+          4.277961181900355
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -4.501808710430281,
+          4.277961181900355
+        ]
+      ],
+      "sha256": "2e7cf7106145c3cfda77994549cee01a2c9f909caf86763dd1b29f74005a8c55"
+    },
+    "equipment/library/14bb08fe3d2358f86714": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 138,
+      "bounds": [
+        [
+          -2.5318288654540226,
+          2.5318288654540226
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.6643087104302814,
+          2.531828865454022
+        ]
+      ],
+      "sha256": "ce06c4b8a5d3d4ced6dbf1122f47a4056641db288a05073505b18d569533015a"
+    },
+    "equipment/library/151b3dc92a5ea0852cb8": {
+      "triangles": 70,
+      "bareUnit": false,
+      "vertices": 132,
+      "bounds": [
+        [
+          -3.616988369781688,
+          3.6169883697816876
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -3.8062500000000004,
+          3.616988369781687
+        ]
+      ],
+      "sha256": "6f2abadb9847d954c0aa39fa190de20e749e66298cb7b13c94e633d4bb69d147"
+    },
+    "equipment/library/192d2d635c263048229b": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 132,
+      "bounds": [
+        [
+          -2.305256826586841,
+          2.305256826586841
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.425881119635937,
+          2.3052568265868407
+        ]
+      ],
+      "sha256": "fe967f9edbf1c1ee37b8e1cd65922ab19c56c0826c13f08e1d60e516f284bc6e"
+    },
+    "equipment/library/1b7d1a3b729f870fcc54": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 122,
+      "bounds": [
+        [
+          -2.4695299904026693,
+          2.4695299904026693
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.59875,
+          2.469529990402669
+        ]
+      ],
+      "sha256": "009e3fdf32af4f93c068244479dfdf069dd1dad2eb2da7c70db54a129be3cfed"
+    },
+    "equipment/library/1d4897906e70fa293730": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -2.4346073440737435,
+          2.434607344073743
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.562,
+          2.4346073440737426
+        ]
+      ],
+      "sha256": "6824cdb3124a3a76c9bf8fd715d1eaee93c995822b39a05a07922764af0bacc2"
+    },
+    "equipment/library/21b0fddb66f845095fb5": {
+      "triangles": 110,
+      "bareUnit": false,
+      "vertices": 178,
+      "bounds": [
+        [
+          -4.051389143033173,
+          4.051389143033172
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -4.2633811196359375,
+          4.051389143033172
+        ]
+      ],
+      "sha256": "f287cfa1c7eb4a98c7f249e94d68ef266efd545e6a87981e5b019e9ac2818908"
+    },
+    "equipment/library/228e55cb36041899eeb8": {
+      "triangles": 86,
+      "bareUnit": false,
+      "vertices": 146,
+      "bounds": [
+        [
+          -3.2042692403045017,
+          3.204269240304501
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -3.371935032416248,
+          3.2042692403045008
+        ]
+      ],
+      "sha256": "90f15e130dbd43effc68efcf8e898ae3930341c04a243ac61395550b47e8ef58"
+    },
+    "equipment/library/23854787214d2d2e7100": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 128,
+      "bounds": [
+        [
+          -3.616988369781688,
+          3.6169883697816876
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -3.8062500000000004,
+          3.616988369781687
+        ]
+      ],
+      "sha256": "d09537df8262b79604f106b382b3ff9c83ace05ef5fa6fb8dfe3ec394d08afca"
+    },
+    "equipment/library/249acd8c7aea288cc6bd": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 154,
+      "bounds": [
+        [
+          -5.063353571899837,
+          5.063353571899837
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -5.328297346504043,
+          5.063353571899836
+        ]
+      ],
+      "sha256": "d49fa4dd82ee2aa9a4c85345294919270ba0a925bf16c41f5a83b5ba36551cab"
+    },
+    "equipment/library/24f51c64a1b90b9dae26": {
+      "triangles": 58,
+      "bareUnit": false,
+      "vertices": 108,
+      "bounds": [
+        [
+          -3.192927664359008,
+          3.1929276643590074
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -3.3600000000000003,
+          3.192927664359007
+        ]
+      ],
+      "sha256": "9fc85ba3840913afb4ae8fbd2d1ec92f5a5194fb9ea04ac492dafe0eaf37d030"
+    },
+    "equipment/library/276241f90d2842cac7d7": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 154,
+      "bounds": [
+        [
+          -5.063353571899837,
+          5.063353571899837
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -5.328297346504043,
+          5.063353571899836
+        ]
+      ],
+      "sha256": "a180e20558dadea8000a24205e77373e5fba458d5c28b0dcca332293d007911e"
+    },
+    "equipment/library/2c517f602ba68b62f958": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 112,
+      "bounds": [
+        [
+          -1.3719611057792611,
+          1.371961105779261
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -1.44375,
+          1.3719611057792607
+        ]
+      ],
+      "sha256": "2346d9f1515f229c36123012b4d8aa00c8c37a2e1f3557a4454e1d42cfce4602"
+    },
+    "equipment/library/2e46c9283cd2170ae428": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 194,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "cc24a6b16f40b84dc5e68531f3c0e8207d36c02bda8881803f4f22da2b5cf4c6"
+    },
+    "equipment/library/308c33279f71b3b90a7f": {
+      "triangles": 128,
+      "bareUnit": false,
+      "vertices": 212,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "b7740296c8eab9581c5bac3b9b7241ffca1aea6010891187c8994fd3183e7e3a"
+    },
+    "equipment/library/31550c275ccc51223762": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 128,
+      "bounds": [
+        [
+          -3.616988369781688,
+          3.6169883697816876
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -3.8062500000000004,
+          3.616988369781687
+        ]
+      ],
+      "sha256": "5dda1ae76b37db429add004178e95e7c4a195a1a55eca0380c802dc393707a92"
+    },
+    "equipment/library/341e2ad8134124bc9250": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -1.7161986195929666,
+          1.7161986195929664
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -1.806,
+          1.7161986195929662
+        ]
+      ],
+      "sha256": "7e8414198acf9c21144aff03339d07270b4e9d3bd35ae9ad834224244d68d1dd"
+    },
+    "equipment/library/345cec7e065edb6e2c79": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 116,
+      "bounds": [
+        [
+          -1.8958008007131606,
+          1.8958008007131604
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -1.995,
+          1.8958008007131602
+        ]
+      ],
+      "sha256": "9ea6b9ce44a24ff233acb1394fa723bb53a7581b72382f0879a5337487e2f880"
+    },
+    "equipment/library/346a166f57587f18b3ae": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 186,
+      "bounds": [
+        [
+          -4.051389143033173,
+          4.051389143033172
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -4.2633811196359375,
+          4.051389143033172
+        ]
+      ],
+      "sha256": "942f655674429102600bcc60cc64ee264c5efddd9fc0f79f662bd252a8f8d333"
+    },
+    "equipment/library/349d571cf8038f18616e": {
+      "triangles": 58,
+      "bareUnit": false,
+      "vertices": 108,
+      "bounds": [
+        [
+          -3.192927664359008,
+          3.1929276643590074
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -3.3600000000000003,
+          3.192927664359007
+        ]
+      ],
+      "sha256": "ce95c78661371025b4dbaf57fd3479c865b03eaaa2c13c34ce6230d6f53b8774"
+    },
+    "equipment/library/3675c53474c5f443fb79": {
+      "triangles": 86,
+      "bareUnit": false,
+      "vertices": 144,
+      "bounds": [
+        [
+          -3.0695026674646235,
+          3.0695026674646235
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -3.230116697539284,
+          3.069502667464623
+        ]
+      ],
+      "sha256": "0e60db2b439eb5d1eab5fb9a949da81fe72039310b1375c213a70210532e6360"
+    },
+    "equipment/library/379998932b166d589451": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 122,
+      "bounds": [
+        [
+          -2.4695299904026693,
+          2.4695299904026693
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.59875,
+          2.469529990402669
+        ]
+      ],
+      "sha256": "87bda9e8a790f4294743843c60f2a46dd7f346c88088b462dab35a02f08edeb4"
+    },
+    "equipment/library/3a03d8218b169cf1f55f": {
+      "triangles": 92,
+      "bareUnit": false,
+      "vertices": 152,
+      "bounds": [
+        [
+          -3.043259180092179,
+          3.0432591800921784
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -3.2024999999999997,
+          3.043259180092178
+        ]
+      ],
+      "sha256": "ef9d1d2fa6bdc57615564d58c2cb34c2d7f92c971c75083a2584c7b74807cefa"
+    },
+    "equipment/library/3aeb89288bb1a6aafda9": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 138,
+      "bounds": [
+        [
+          -2.5318288654540226,
+          2.5318288654540226
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.6643087104302814,
+          2.531828865454022
+        ]
+      ],
+      "sha256": "f3a3ec10c24d2b16fbd64063ad862a5b8fe55f2955014108f5337eba08db8a35"
+    },
+    "equipment/library/3badd7afa8ddaa6ab7a5": {
+      "triangles": 134,
+      "bareUnit": false,
+      "vertices": 208,
+      "bounds": [
+        [
+          -4.277961181900356,
+          4.277961181900355
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -4.501808710430281,
+          4.277961181900355
+        ]
+      ],
+      "sha256": "9c13b4a2c16f78fa685e5ea96390bc80bf3306ee2fa5b1754205895f86ca946e"
+    },
+    "equipment/library/3c59fb60854c6cb7907b": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 198,
+      "bounds": [
+        [
+          -5.6125681600060675,
+          5.6125681600060675
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -5.90625,
+          5.612568160006067
+        ]
+      ],
+      "sha256": "0b72bb214c9f7199a92cbb4997bf1cbc328114f7fcce63a78a7dee3085b550ca"
+    },
+    "equipment/library/44614d06d84f3b4fd3d0": {
+      "triangles": 122,
+      "bareUnit": false,
+      "vertices": 194,
+      "bounds": [
+        [
+          -4.051389143033173,
+          4.051389143033172
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -4.2633811196359375,
+          4.051389143033172
+        ]
+      ],
+      "sha256": "3d637ef5663e96e91e41c1dc4610981f53917ba7e59a9313808a0369ddf0f903"
+    },
+    "equipment/library/4587f3760ca269694b8d": {
+      "triangles": 86,
+      "bareUnit": false,
+      "vertices": 146,
+      "bounds": [
+        [
+          -3.2042692403045017,
+          3.204269240304501
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -3.371935032416248,
+          3.2042692403045008
+        ]
+      ],
+      "sha256": "f0c067ef0209f53bcefe034ee5cd2d60fc3c43ef6ff82cdeba524228c948528b"
+    },
+    "equipment/library/4616aa4f8cb07b1dceca": {
+      "triangles": 92,
+      "bareUnit": false,
+      "vertices": 152,
+      "bounds": [
+        [
+          -3.367540896003642,
+          3.3675408960036415
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -3.543750000000001,
+          3.367540896003641
+        ]
+      ],
+      "sha256": "092064e0f76a1e89d407935675b052fb2ef088490a30d4de9bfff8de9e749726"
+    },
+    "equipment/library/49c6ba0ed4bb60420b50": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 128,
+      "bounds": [
+        [
+          -3.616988369781688,
+          3.6169883697816876
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -3.8062500000000004,
+          3.616988369781687
+        ]
+      ],
+      "sha256": "dd62d326fb1b8fbfaa4cceeeadfd9fb289a5ebf5ac1a089b8e3d24045feaaa2b"
+    },
+    "equipment/library/4a0369f00944fbbb4927": {
+      "triangles": 86,
+      "bareUnit": false,
+      "vertices": 144,
+      "bounds": [
+        [
+          -3.0695026674646235,
+          3.0695026674646235
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -3.230116697539284,
+          3.069502667464623
+        ]
+      ],
+      "sha256": "333770577638992a6274f235fe4c08abf46f243fc51cb99828f42a5e3722e7ca"
+    },
+    "equipment/library/4b5d5a0fbcf839c7e786": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 116,
+      "bounds": [
+        [
+          -1.8958008007131606,
+          1.8958008007131604
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -1.995,
+          1.8958008007131602
+        ]
+      ],
+      "sha256": "ea4773faf4c79e8bfc17b681e2e074cf8478ecf0dfd2773ebf648d23ca626aa9"
+    },
+    "equipment/library/4bd6a69731ef4e8197dc": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 112,
+      "bounds": [
+        [
+          -1.3719611057792611,
+          1.371961105779261
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -1.44375,
+          1.3719611057792607
+        ]
+      ],
+      "sha256": "17dc2fd83fe8de90351d066cb9f2e6b98e4d75bb69a291ac283cd5674af23f91"
+    },
+    "equipment/library/4cbb16f1984d01cce2ea": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 184,
+      "bounds": [
+        [
+          -4.7269653357996635,
+          4.726965335799663
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -4.974307343563125,
+          4.726965335799662
+        ]
+      ],
+      "sha256": "5a17d2fee8d1b45e0db768b99fe49ae79ecb5d60fb1a36836a1271de0d4e3c89"
+    },
+    "equipment/library/5110d907625dc4b57b92": {
+      "triangles": 136,
+      "bareUnit": false,
+      "vertices": 226,
+      "bounds": [
+        [
+          -5.931864034069185,
+          5.931864034069184
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -6.242253270236143,
+          5.931864034069184
+        ]
+      ],
+      "sha256": "7fbe0108c6ab8ce9cd985f40fa2193885bf570c888471f621447bedcf2cd847c"
+    },
+    "equipment/library/513417957c920d7579a8": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 140,
+      "bounds": [
+        [
+          -4.797940612083996,
+          4.797940612083996
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -5.04899645443067,
+          4.797940612083995
+        ]
+      ],
+      "sha256": "154877943094318db8b13e7d8ba928bc40547f14597ba390fbbf4356aff1a984"
+    },
+    "equipment/library/52ad0ca9fe6f6f1480bc": {
+      "triangles": 110,
+      "bareUnit": false,
+      "vertices": 178,
+      "bounds": [
+        [
+          -4.051389143033173,
+          4.051389143033172
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -4.2633811196359375,
+          4.051389143033172
+        ]
+      ],
+      "sha256": "b1511b1f08d9b83f20f82ea1ebcece2cac46fb7a20b240017cadc3a3770b7e77"
+    },
+    "equipment/library/54afb83299a438dca959": {
+      "triangles": 66,
+      "bareUnit": false,
+      "vertices": 128,
+      "bounds": [
+        [
+          -3.311499185529196,
+          3.3114991855291955
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -3.484775864977766,
+          3.311499185529195
+        ]
+      ],
+      "sha256": "0c7c0135a89be122148c9579f659e55e96e81317ef6f7ed2530cb2118ab0324a"
+    },
+    "equipment/library/54ffacf99f5df2a74bb7": {
+      "triangles": 132,
+      "bareUnit": false,
+      "vertices": 218,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "c5e40bd7f30da58cd17d08550554e22dd4fb32f5773a68753a9591f5bf877d5f"
+    },
+    "equipment/library/557b875a7120edba9f44": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -2.4346073440737435,
+          2.434607344073743
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.562,
+          2.4346073440737426
+        ]
+      ],
+      "sha256": "2e1b4859f9f5e01105ce4badc6c017ea2783f4c1773ef7671a158cfcb76d9778"
+    },
+    "equipment/library/5738f6c53f9bc65b1b8c": {
+      "triangles": 132,
+      "bareUnit": false,
+      "vertices": 218,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "a078879dbf0771a3136ac866049f8827bcd1d084fb4505211c196a505ef59a1f"
+    },
+    "equipment/library/57b550bbac4c0591b13d": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 186,
+      "bounds": [
+        [
+          -4.051389143033173,
+          4.051389143033172
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -4.2633811196359375,
+          4.051389143033172
+        ]
+      ],
+      "sha256": "f0705ef4257319a2f4c242cdbfb8684dcec2122bdd99411d84d350eed338b553"
+    },
+    "equipment/library/57d6c84f57a202f6f4ee": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 116,
+      "bounds": [
+        [
+          -1.8958008007131606,
+          1.8958008007131604
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -1.995,
+          1.8958008007131602
+        ]
+      ],
+      "sha256": "5ec1cfd4d556a4e40f828b907d6f46f0ee9f7b3303f34e92d8a29226049a5f29"
+    },
+    "equipment/library/5a525c7c88e30bea458f": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 194,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "35cdad9718163c65a2e26e04c17eff6469b42a1dae0c672572b409243540f7d0"
+    },
+    "equipment/library/60d90f791c27be900701": {
+      "triangles": 128,
+      "bareUnit": false,
+      "vertices": 200,
+      "bounds": [
+        [
+          -4.277961181900356,
+          4.277961181900355
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -4.501808710430281,
+          4.277961181900355
+        ]
+      ],
+      "sha256": "8a26347f3ff5d62169621694f79a62565b7798866b922454b74fc1c522d9b9f0"
+    },
+    "equipment/library/62422f4f42157f222334": {
+      "triangles": 136,
+      "bareUnit": false,
+      "vertices": 226,
+      "bounds": [
+        [
+          -5.055471391591109,
+          5.055471391591108
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -5.320002725196785,
+          5.055471391591107
+        ]
+      ],
+      "sha256": "18c3b34654904adef47ed5a5d13fe6cd5bf069f2a3e3b2b6d7ab6563358bb90c"
+    },
+    "equipment/library/644ba0dc4cd2845dbfb5": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -1.4218506005348703,
+          1.4218506005348701
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -1.4962499999999999,
+          1.4218506005348701
+        ]
+      ],
+      "sha256": "9c6b28c9bd2e7cf396e068b3dadf85340387da2b88e4dff3ae1514bbd04accdd"
+    },
+    "equipment/library/650750b49dc777f88554": {
+      "triangles": 104,
+      "bareUnit": false,
+      "vertices": 168,
+      "bounds": [
+        [
+          -3.9163253383153447,
+          3.9163253383153442
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -4.12125,
+          3.916325338315344
+        ]
+      ],
+      "sha256": "77227543efbc12c956fb16f27a65d07c8fc707325a0388d6e2c8643269358a9d"
+    },
+    "equipment/library/654f28bdc983a1a2dae3": {
+      "triangles": 122,
+      "bareUnit": false,
+      "vertices": 194,
+      "bounds": [
+        [
+          -4.051389143033173,
+          4.051389143033172
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -4.2633811196359375,
+          4.051389143033172
+        ]
+      ],
+      "sha256": "c42c64d72a34dbdd86a2fa582f0d95047667d68c40a5b30313ed329cdb98fb39"
+    },
+    "equipment/library/669eb19444026ea07264": {
+      "triangles": 132,
+      "bareUnit": false,
+      "vertices": 218,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "a3abf9a855813387dc76597141086715d44303990756a1aad105cb779ecc8821"
+    },
+    "equipment/library/67dfb1596957a3e333f6": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 138,
+      "bounds": [
+        [
+          -2.9034930027046815,
+          2.903493002704681
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -3.055420452516337,
+          2.9034930027046806
+        ]
+      ],
+      "sha256": "a50955536c0e4940ba1008d8498677fdd5aa82f2e2d4fcb759e83155281192b8"
+    },
+    "equipment/library/685d9007d3206499a336": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 128,
+      "bounds": [
+        [
+          -2.5241096348546836,
+          2.524109634854683
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.6561855652982143,
+          2.5241096348546828
+        ]
+      ],
+      "sha256": "3d5666e03541141b1b13a598e922caf8d0d093be107d599bad040ac19bf27c18"
+    },
+    "equipment/library/69e727b841f8c5181f1f": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 122,
+      "bounds": [
+        [
+          -2.4695299904026693,
+          2.4695299904026693
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.59875,
+          2.469529990402669
+        ]
+      ],
+      "sha256": "5b16f5d0d8c4a715fdbfb1b8dd904424f5de8d350d36f78fcb88e020a22946b1"
+    },
+    "equipment/library/6a4d161dab7ccf48a55f": {
+      "triangles": 98,
+      "bareUnit": false,
+      "vertices": 160,
+      "bounds": [
+        [
+          -3.043259180092179,
+          3.0432591800921784
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -3.2024999999999997,
+          3.043259180092178
+        ]
+      ],
+      "sha256": "4305df14150c976d477ea7add9ed0b8c288e5d3b7da8b5586305dbb47f79073d"
+    },
+    "equipment/library/6a86b7e658c36522f462": {
+      "triangles": 104,
+      "bareUnit": false,
+      "vertices": 168,
+      "bounds": [
+        [
+          -4.365330791115831,
+          4.36533079111583
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -4.59375,
+          4.36533079111583
+        ]
+      ],
+      "sha256": "321a659f4aaa7dc7b346c6df6dc939d54ce8f061300c98ee92f097a7bb93f732"
+    },
+    "equipment/library/6a8ead11e260fbd1c807": {
+      "triangles": 86,
+      "bareUnit": false,
+      "vertices": 148,
+      "bounds": [
+        [
+          -2.782475730120539,
+          2.782475730120539
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.9280708603468737,
+          2.7824757301205385
+        ]
+      ],
+      "sha256": "7a8879a6e0402889068074edc8a1efb78be45bb3114b60c70f95d4aed8624375"
+    },
+    "equipment/library/7000af2a3a613db1a767": {
+      "triangles": 120,
+      "bareUnit": false,
+      "vertices": 200,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "a791bcc7715368831ade2abb6a76ee3fb2cd52f050181089878b0e62f2346229"
+    },
+    "equipment/library/74939bc3571d070c16fa": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -1.2971268636458466,
+          1.2971268636458464
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -1.3649999999999998,
+          1.2971268636458464
+        ]
+      ],
+      "sha256": "91cbb8e397b0b96b8530eb05c893042e0960edcfa11e2047770c1ae4433aa7c4"
+    },
+    "equipment/library/76a0ff9f619eeb0d7388": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 122,
+      "bounds": [
+        [
+          -2.3697510008914513,
+          2.369751000891451
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.4937500000000004,
+          2.3697510008914504
+        ]
+      ],
+      "sha256": "0ba42022a4dc2708fbd6185cb11d2df9da30f9ec2e5792048945e1c29aad1f89"
+    },
+    "equipment/library/7912d0062edd1a08541a": {
+      "triangles": 92,
+      "bareUnit": false,
+      "vertices": 152,
+      "bounds": [
+        [
+          -3.043259180092179,
+          3.0432591800921784
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -3.2024999999999997,
+          3.043259180092178
+        ]
+      ],
+      "sha256": "44c643b36365850ff9228d4d6c6926a65886b7d849af6b7487db034a0d0b30f1"
+    },
+    "equipment/library/794cc075d983334b1d12": {
+      "triangles": 104,
+      "bareUnit": false,
+      "vertices": 168,
+      "bounds": [
+        [
+          -4.365330791115831,
+          4.36533079111583
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -4.59375,
+          4.36533079111583
+        ]
+      ],
+      "sha256": "31ec052d0afdbd310d4b9b5178d31406b357415243c64c6635ad68329f328427"
+    },
+    "equipment/library/7be576c25093620d380a": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 138,
+      "bounds": [
+        [
+          -2.9034930027046815,
+          2.903493002704681
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -3.055420452516337,
+          2.9034930027046806
+        ]
+      ],
+      "sha256": "e5ae033c3f768cc703343fabece5e4ab86c27266193a51132db4dddbfc7ddce9"
+    },
+    "equipment/library/829e91aa303219ea25b4": {
+      "triangles": 122,
+      "bareUnit": false,
+      "vertices": 194,
+      "bounds": [
+        [
+          -4.051389143033173,
+          4.051389143033172
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -4.2633811196359375,
+          4.051389143033172
+        ]
+      ],
+      "sha256": "76b7c0181f66066ac580a05f8273d421c84f9cd0a0a1fd836e959696d51f8f94"
+    },
+    "equipment/library/83096f3bc1334aefbc6c": {
+      "triangles": 86,
+      "bareUnit": false,
+      "vertices": 146,
+      "bounds": [
+        [
+          -3.2042692403045017,
+          3.204269240304501
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -3.371935032416248,
+          3.2042692403045008
+        ]
+      ],
+      "sha256": "5304c5c5104ea66fc479f87a1ccfd2e494f678a89aec2d635ca2b4e816cf7c25"
+    },
+    "equipment/library/83b24f282686eaa6d10d": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 120,
+      "bounds": [
+        [
+          -2.752471327104007,
+          2.7524713271040064
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.8964964544306695,
+          2.7524713271040064
+        ]
+      ],
+      "sha256": "60adb56dd5eaa052b5f1a1f200ed6d9e48b7f77ed4838b7cda0f77099c0dff25"
+    },
+    "equipment/library/8470685c5d793a551999": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 120,
+      "bounds": [
+        [
+          -2.752471327104007,
+          2.7524713271040064
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.8964964544306695,
+          2.7524713271040064
+        ]
+      ],
+      "sha256": "f8819fc5f701e9f84aa7385ab48efa8f0be9107776c3e06dc051e8517f94a7a3"
+    },
+    "equipment/library/86878344a67e401ed483": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 128,
+      "bounds": [
+        [
+          -2.6316065560640647,
+          2.6316065560640642
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.769307343563125,
+          2.6316065560640642
+        ]
+      ],
+      "sha256": "1acd0db253ecc18f6b942389eebbd8909a5fc922e610ba2bbcc948320135efe9"
+    },
+    "equipment/library/876754ae1bac02892c24": {
+      "triangles": 136,
+      "bareUnit": false,
+      "vertices": 226,
+      "bounds": [
+        [
+          -5.931864034069185,
+          5.931864034069184
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -6.242253270236143,
+          5.931864034069184
+        ]
+      ],
+      "sha256": "f818a742d7e1e9a5263d42d13b78c355d520a0f85ca8f42df34346f834f72344"
+    },
+    "equipment/library/88541c251a9e2aa0ada4": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 120,
+      "bounds": [
+        [
+          -2.1701930218690126,
+          2.170193021869012
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.28375,
+          2.170193021869012
+        ]
+      ],
+      "sha256": "9d0dfbeb7ac38a4b7b636a15fc6ab47f1913234150cedffbed041235ceb2e031"
+    },
+    "equipment/library/8b147f4eccca10220ddd": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 136,
+      "bounds": [
+        [
+          -2.783049107845748,
+          2.7830491078457475
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.92867424049175,
+          2.783049107845747
+        ]
+      ],
+      "sha256": "4c0436f75abadbb84e7ae015bb0712dfe225526130376a75c16b3eced6b94f5f"
+    },
+    "equipment/library/8b515415ad1421deef07": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 198,
+      "bounds": [
+        [
+          -5.6125681600060675,
+          5.6125681600060675
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -5.90625,
+          5.612568160006067
+        ]
+      ],
+      "sha256": "5c841a7aecdc861ea3ce9f4fcd0b7205e0ab1aff7a7eea5de56771e8d4093bba"
+    },
+    "equipment/library/8d32fa829979c86e1b89": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -1.2971268636458466,
+          1.2971268636458464
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -1.3649999999999998,
+          1.2971268636458464
+        ]
+      ],
+      "sha256": "0768ebf91dbd831d32205f4c5f755b206682174ee3e0441c721c168ce914a5d6"
+    },
+    "equipment/library/8dc428570f00dcbb38ff": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 194,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "74de9bd92c0c4ba796eac92f264e54d7dec2bcaa75a64b749566e5d58f0c2694"
+    },
+    "equipment/library/8f3b77c6d66c68f360fa": {
+      "triangles": 128,
+      "bareUnit": false,
+      "vertices": 212,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "abc368402142f74290620295d935bc10f6e82fdcbd7ea67e0454986f9e5328dc"
+    },
+    "equipment/library/94e0691d50ffcda8df0e": {
+      "triangles": 124,
+      "bareUnit": false,
+      "vertices": 206,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "c2a5a6e346ed26585e59046bab2336aea3814e7fafd32e75f1588df78b74b05c"
+    },
+    "equipment/library/95a18405a69c91abea12": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 112,
+      "bounds": [
+        [
+          -1.3719611057792611,
+          1.371961105779261
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -1.44375,
+          1.3719611057792607
+        ]
+      ],
+      "sha256": "ae2a236402bf9d8a33ccc531a3e7e94f48dc66f657dd24b5679efa1261b7f33e"
+    },
+    "equipment/library/95bac5d09bdbbd6387ef": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 120,
+      "bounds": [
+        [
+          -2.1701930218690126,
+          2.170193021869012
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.28375,
+          2.170193021869012
+        ]
+      ],
+      "sha256": "72f96014e493034c068a0d4ecaf29ad015a2a9c1751930b6c3ff3f3644b22e82"
+    },
+    "equipment/library/9b369ec18678e395abf7": {
+      "triangles": 104,
+      "bareUnit": false,
+      "vertices": 168,
+      "bounds": [
+        [
+          -4.365330791115831,
+          4.36533079111583
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -4.59375,
+          4.36533079111583
+        ]
+      ],
+      "sha256": "4cd7fe2cea581da67d699686aae584a2195ba47652e30c1119e1b3487c60fdf7"
+    },
+    "equipment/library/9cb5be82ca1d7879758e": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -1.4218506005348703,
+          1.4218506005348701
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -1.4962499999999999,
+          1.4218506005348701
+        ]
+      ],
+      "sha256": "462f4a1d7dcdde06dbda065ac9b132b822ee3ef4673a2cc886e6307b399dc45c"
+    },
+    "equipment/library/9f07761e24d211119d35": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 184,
+      "bounds": [
+        [
+          -4.7269653357996635,
+          4.726965335799663
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -4.974307343563125,
+          4.726965335799662
+        ]
+      ],
+      "sha256": "646df67cc60646bcb57c36ed41746d013593e30ab757a4f1f208d6103ed6ba9c"
+    },
+    "equipment/library/9f49f3228ed87cca943b": {
+      "triangles": 136,
+      "bareUnit": false,
+      "vertices": 226,
+      "bounds": [
+        [
+          -5.931864034069185,
+          5.931864034069184
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -6.242253270236143,
+          5.931864034069184
+        ]
+      ],
+      "sha256": "08b5b41f5837c4e724d422ca493788f44847a928cab819b1b07744a1b807ddd7"
+    },
+    "equipment/library/a037efabcd15b5dc7cb0": {
+      "triangles": 66,
+      "bareUnit": false,
+      "vertices": 128,
+      "bounds": [
+        [
+          -3.311499185529196,
+          3.3114991855291955
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -3.484775864977766,
+          3.311499185529195
+        ]
+      ],
+      "sha256": "e37fc4e44cb9402ca047dbe6187e833be05aacdf0f9bc20c73b4cf3308456134"
+    },
+    "equipment/library/a0b886d7d0b1f2cbb9a2": {
+      "triangles": 98,
+      "bareUnit": false,
+      "vertices": 160,
+      "bounds": [
+        [
+          -3.043259180092179,
+          3.0432591800921784
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -3.2024999999999997,
+          3.043259180092178
+        ]
+      ],
+      "sha256": "1d493237a80ac1b3608aea6a98ed6cf4423613481ffd364180a074973bd41dad"
+    },
+    "equipment/library/a0c3ccb755e0b107b25f": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 138,
+      "bounds": [
+        [
+          -2.9034930027046815,
+          2.903493002704681
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -3.055420452516337,
+          2.9034930027046806
+        ]
+      ],
+      "sha256": "3f6d0f0ae7d52f4ec349b194224b3b6a70f14c960ad1af0c2933ba137fe7a4df"
+    },
+    "equipment/library/a14d635a1c7928587879": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 140,
+      "bounds": [
+        [
+          -4.797940612083996,
+          4.797940612083996
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -5.04899645443067,
+          4.797940612083995
+        ]
+      ],
+      "sha256": "ee414d712b01aba7e3a14e747988097c153674184758e0f2f6786e8105726080"
+    },
+    "equipment/library/aa9c3abfebe2ff4cd14a": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -1.7161986195929666,
+          1.7161986195929664
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -1.806,
+          1.7161986195929662
+        ]
+      ],
+      "sha256": "3815bb97b96e7c6a3d3ba38772b9556dc8a0359cbe927b01b6de982a10549c8c"
+    },
+    "equipment/library/ac8311d05bac2a6221aa": {
+      "triangles": 92,
+      "bareUnit": false,
+      "vertices": 152,
+      "bounds": [
+        [
+          -3.367540896003642,
+          3.3675408960036415
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -3.543750000000001,
+          3.367540896003641
+        ]
+      ],
+      "sha256": "b5e14d4fb57f2a329899732325489a6d19fde40da59f1636bf8b7c617c855ecb"
+    },
+    "equipment/library/ac8f0c1bc0ca3147b10e": {
+      "triangles": 104,
+      "bareUnit": false,
+      "vertices": 168,
+      "bounds": [
+        [
+          -3.9163253383153447,
+          3.9163253383153442
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -4.12125,
+          3.916325338315344
+        ]
+      ],
+      "sha256": "4aa0d85d7967e77b06d7746a35668febb21e9ef5269ebf1cb8d61b2027fae4e8"
+    },
+    "equipment/library/ac9a2a3ab95b014e55bc": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 138,
+      "bounds": [
+        [
+          -2.5318288654540226,
+          2.5318288654540226
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.6643087104302814,
+          2.531828865454022
+        ]
+      ],
+      "sha256": "7d85dd9de2e26fef7df375af2817ac5853388543890520e4c8a37c6e072e51ed"
+    },
+    "equipment/library/ad93e83d5080e475b1a4": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 122,
+      "bounds": [
+        [
+          -2.3697510008914513,
+          2.369751000891451
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.4937500000000004,
+          2.3697510008914504
+        ]
+      ],
+      "sha256": "107ebbf21d5357a2ebe9be4e5e514df9826f1f33972b07422a7717f87309786b"
+    },
+    "equipment/library/ade4fa4321623938f92e": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 116,
+      "bounds": [
+        [
+          -2.1951377692468177,
+          2.1951377692468177
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.3100000000000005,
+          2.1951377692468172
+        ]
+      ],
+      "sha256": "83a60fcac8b21da324807ae88ad4cde282369e318f83ba50305409827fb954aa"
+    },
+    "equipment/library/b3e4f31884c322a21cb8": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -2.4346073440737435,
+          2.434607344073743
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.562,
+          2.4346073440737426
+        ]
+      ],
+      "sha256": "e1165f83bc9a61dabb8e541ddfcdce514310e07f1fefa23a97fed2ccf1d042b8"
+    },
+    "equipment/library/b59722f423fbdadcebb5": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 122,
+      "bounds": [
+        [
+          -2.3697510008914513,
+          2.369751000891451
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.4937500000000004,
+          2.3697510008914504
+        ]
+      ],
+      "sha256": "9c72b492feb726119fe6c9fdf05a9852cfc246d0c139bee335ceafc5993d55c9"
+    },
+    "equipment/library/b5c49bf3307a42eccd9c": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 120,
+      "bounds": [
+        [
+          -2.1701930218690126,
+          2.170193021869012
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.28375,
+          2.170193021869012
+        ]
+      ],
+      "sha256": "742cfa433b011b3e132397c0f9eccf51f8d9cfb5b9db4a17c0cb38f1a8932c26"
+    },
+    "equipment/library/b81ff3ffcb91c4ca2a20": {
+      "triangles": 140,
+      "bareUnit": false,
+      "vertices": 216,
+      "bounds": [
+        [
+          -4.277961181900356,
+          4.277961181900355
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -4.501808710430281,
+          4.277961181900355
+        ]
+      ],
+      "sha256": "872e6df39ac1cb119266ca22bea03c2c71c8d6df5a9b367bfaf520c047d6044f"
+    },
+    "equipment/library/bc9e742045e661b3254b": {
+      "triangles": 110,
+      "bareUnit": false,
+      "vertices": 178,
+      "bounds": [
+        [
+          -4.051389143033173,
+          4.051389143033172
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -4.2633811196359375,
+          4.051389143033172
+        ]
+      ],
+      "sha256": "bd1c93d1ea72d69f50e0dd1caafe2afe0a8f73ddda611471fbd8bc0ec00f4225"
+    },
+    "equipment/library/be9cd13fbd39214f1333": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 154,
+      "bounds": [
+        [
+          -5.063353571899837,
+          5.063353571899837
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -5.328297346504043,
+          5.063353571899836
+        ]
+      ],
+      "sha256": "e9f8f9fce8be4c0c23b3b0ca7d725f769d12a84a02f38681dfc8dc6fa89ceb86"
+    },
+    "equipment/library/bf12fd0c8fc03e646412": {
+      "triangles": 140,
+      "bareUnit": false,
+      "vertices": 216,
+      "bounds": [
+        [
+          -4.277961181900356,
+          4.277961181900355
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -4.501808710430281,
+          4.277961181900355
+        ]
+      ],
+      "sha256": "c7134290a8b5bde2cbc25affe233fc7cbbe207d9c85642a1442ea4982bb2b992"
+    },
+    "equipment/library/c014aacad2c139f4ccff": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 186,
+      "bounds": [
+        [
+          -4.051389143033173,
+          4.051389143033172
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -4.2633811196359375,
+          4.051389143033172
+        ]
+      ],
+      "sha256": "c2a84a6e520cdead9e07cfe515f726205b4c355a3cbc90d266c8860a1f1d62f0"
+    },
+    "equipment/library/c24123aa41a9167cfb5d": {
+      "triangles": 136,
+      "bareUnit": false,
+      "vertices": 226,
+      "bounds": [
+        [
+          -5.055471391591109,
+          5.055471391591108
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -5.320002725196785,
+          5.055471391591107
+        ]
+      ],
+      "sha256": "5e9c17e97cc4f6500dbe4c40c06440c89392450b0d92b672eebb1b72a989c9fe"
+    },
+    "equipment/library/c28682c9a60a83fac847": {
+      "triangles": 120,
+      "bareUnit": false,
+      "vertices": 200,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "f735198a3efd96838b161a701d0e16dec0cf6b9aadb54144d0789a30a0c4659c"
+    },
+    "equipment/library/c416dc0bd56f1221dc71": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 116,
+      "bounds": [
+        [
+          -2.1951377692468177,
+          2.1951377692468177
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.3100000000000005,
+          2.1951377692468172
+        ]
+      ],
+      "sha256": "010c93ac18f8598ad664e9a91aa3f423a9b549e7cebd8863062cad45fa37dadd"
+    },
+    "equipment/library/c6fb094d60586c671118": {
+      "triangles": 120,
+      "bareUnit": false,
+      "vertices": 200,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "f5d08cbbc35d6128156d4fba9a66fa26eba466f49763aacd9672b05f2be71493"
+    },
+    "equipment/library/c9706282b2c517f7db9d": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 132,
+      "bounds": [
+        [
+          -2.305256826586841,
+          2.305256826586841
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.425881119635937,
+          2.3052568265868407
+        ]
+      ],
+      "sha256": "d7792e3d40df01312ba0216091d63c2735e864b12e6e50e95fdcd569c068f80e"
+    },
+    "equipment/library/c9d5def66a58756e8655": {
+      "triangles": 70,
+      "bareUnit": false,
+      "vertices": 132,
+      "bounds": [
+        [
+          -3.616988369781688,
+          3.6169883697816876
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -3.8062500000000004,
+          3.616988369781687
+        ]
+      ],
+      "sha256": "e6bded87b15db57e3c364025ccebb3d14d2d138dbe94d44c4e58e0cbc0438195"
+    },
+    "equipment/library/ce667f6ff11e494fae65": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 128,
+      "bounds": [
+        [
+          -2.6316065560640647,
+          2.6316065560640642
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.769307343563125,
+          2.6316065560640642
+        ]
+      ],
+      "sha256": "fb07ef0b73af52e426d172a0acbb38ef8356a13390e436b94f094e93f65548bc"
+    },
+    "equipment/library/d37a7fb095c8ab47a739": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 116,
+      "bounds": [
+        [
+          -2.1951377692468177,
+          2.1951377692468177
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.3100000000000005,
+          2.1951377692468172
+        ]
+      ],
+      "sha256": "fde70266d3ec996ac17063f1826b2e76ece23ef0394867a4d105dbb8811f077b"
+    },
+    "equipment/library/d3acc8097a39b42987a0": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -1.955668194419892,
+          1.9556681944198917
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.058,
+          1.9556681944198915
+        ]
+      ],
+      "sha256": "1a6ee04d7112004801670b21b86d758ee78ac766cd8ef853862860a81f39baf6"
+    },
+    "equipment/library/d4bc2ca1178c374f69fc": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -1.2971268636458466,
+          1.2971268636458464
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -1.3649999999999998,
+          1.2971268636458464
+        ]
+      ],
+      "sha256": "2fba3a7d85bc598cdaccf765c519e62c09308861ccea0f38999d0db200401678"
+    },
+    "equipment/library/da45d4110beff1cf4ed6": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 120,
+      "bounds": [
+        [
+          -2.752471327104007,
+          2.7524713271040064
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.8964964544306695,
+          2.7524713271040064
+        ]
+      ],
+      "sha256": "c41dfaf91ce6d9c3bf38aa4061bcb129ddf145f6825b608c42183e8b69566872"
+    },
+    "equipment/library/dc69bcbcba856e6b1b4f": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -1.4218506005348703,
+          1.4218506005348701
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -1.4962499999999999,
+          1.4218506005348701
+        ]
+      ],
+      "sha256": "734ac786295e6afd4bf2c1e0b113b6ec097ff54a64b5116e49c436d860dbb566"
+    },
+    "equipment/library/e016faa9e9eec1b21438": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 184,
+      "bounds": [
+        [
+          -4.7269653357996635,
+          4.726965335799663
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -4.974307343563125,
+          4.726965335799662
+        ]
+      ],
+      "sha256": "1e03e0b35f481614258c55c356420f4b06f54c10105e0e5f3f8cffb72711da34"
+    },
+    "equipment/library/e0af65a3d38f7842320b": {
+      "triangles": 128,
+      "bareUnit": false,
+      "vertices": 200,
+      "bounds": [
+        [
+          -4.277961181900356,
+          4.277961181900355
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -4.501808710430281,
+          4.277961181900355
+        ]
+      ],
+      "sha256": "46d9adaa13c027e3ff5a39a2219b6d061786c5e76b604fa3322352799f50880c"
+    },
+    "equipment/library/e67e72f2818ef969a06d": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 136,
+      "bounds": [
+        [
+          -2.783049107845748,
+          2.7830491078457475
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -2.92867424049175,
+          2.783049107845747
+        ]
+      ],
+      "sha256": "74c8aa216b01087b977bcf9e072351bded85ea0b70a4a6ed2e934b30ea52f3c2"
+    },
+    "equipment/library/e6bd7728ba24d2ffebf8": {
+      "triangles": 124,
+      "bareUnit": false,
+      "vertices": 206,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "652d115f918c70a000e5b7221bb9c52a08e7f687342d8b7429dccb1c3b7679aa"
+    },
+    "equipment/library/e6c3e5b0cbb6be6593e3": {
+      "triangles": 128,
+      "bareUnit": false,
+      "vertices": 212,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "4771fdc8f55be3f76e46e2de31842779cd261684a7a7171beb083fb4e826c326"
+    },
+    "equipment/library/e72563e5273e725f9cf8": {
+      "triangles": 70,
+      "bareUnit": false,
+      "vertices": 132,
+      "bounds": [
+        [
+          -3.616988369781688,
+          3.6169883697816876
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -3.8062500000000004,
+          3.616988369781687
+        ]
+      ],
+      "sha256": "2b69998492b087b8df14de5043ae6c0ebf144851c857d8e16e7061392b17111c"
+    },
+    "equipment/library/e7695ea3e57f1f3ab692": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -1.955668194419892,
+          1.9556681944198917
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.058,
+          1.9556681944198915
+        ]
+      ],
+      "sha256": "5921e60a303f83cf0268fe5dc3a3a6445b4d18d50bf8afd921ac43e8a54772f8"
+    },
+    "equipment/library/ea988fb7a4d2ff3249c9": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 140,
+      "bounds": [
+        [
+          -4.797940612083996,
+          4.797940612083996
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -5.04899645443067,
+          4.797940612083995
+        ]
+      ],
+      "sha256": "eb6fcdd06b231bd84d3f6ba06ada9d2cf9147a74397de85ac30c27fb22a60c2e"
+    },
+    "equipment/library/eb00cb70caa92e29c5c5": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 128,
+      "bounds": [
+        [
+          -2.6316065560640647,
+          2.6316065560640642
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.769307343563125,
+          2.6316065560640642
+        ]
+      ],
+      "sha256": "31933fe3efe926fc2b88a030363bfd7b576b815664e9e0b3eae300b58d39c8e4"
+    },
+    "equipment/library/eda390ccb9302f56b36e": {
+      "triangles": 134,
+      "bareUnit": false,
+      "vertices": 208,
+      "bounds": [
+        [
+          -4.277961181900356,
+          4.277961181900355
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -4.501808710430281,
+          4.277961181900355
+        ]
+      ],
+      "sha256": "5687167f4d3357f28b382aed0219363aef2ebb77322c218baf09affedf2d9fca"
+    },
+    "equipment/library/f0d7fdb7df4a92585f6a": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 132,
+      "bounds": [
+        [
+          -2.305256826586841,
+          2.305256826586841
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -2.425881119635937,
+          2.3052568265868407
+        ]
+      ],
+      "sha256": "141e57fa817d100175d77f0f5ecd2831deecbe70ed64f9f15d30fde514ee979f"
+    },
+    "equipment/library/f39f60092b7faea9763d": {
+      "triangles": 58,
+      "bareUnit": false,
+      "vertices": 108,
+      "bounds": [
+        [
+          -3.192927664359008,
+          3.1929276643590074
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -3.3600000000000003,
+          3.192927664359007
+        ]
+      ],
+      "sha256": "b680ed7523232cb74dcb37a5fe08f3a0a886426ee8c6f051b304cd6df01814e4"
+    },
+    "equipment/library/f3e30d15c87cd8e828ac": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 128,
+      "bounds": [
+        [
+          -2.5241096348546836,
+          2.524109634854683
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -2.6561855652982143,
+          2.5241096348546828
+        ]
+      ],
+      "sha256": "999059d0d2870804fb8da3791d51762570b0b2c1490452625a56e9d2b3ada412"
+    },
+    "equipment/library/f4f3c74b953d0d135178": {
+      "triangles": 124,
+      "bareUnit": false,
+      "vertices": 206,
+      "bounds": [
+        [
+          -4.789391496538511,
+          4.789391496538511
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -5.04,
+          4.78939149653851
+        ]
+      ],
+      "sha256": "38660ac7008e144e5d94f8969af7cffbbf1d4c2ba25eb8cfa8b435d9cb9d250d"
+    },
+    "equipment/library/f66816e030ef28c4a812": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 114,
+      "bounds": [
+        [
+          -1.7161986195929666,
+          1.7161986195929664
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -1.806,
+          1.7161986195929662
+        ]
+      ],
+      "sha256": "2cc446ae779c2678c072f18a3d6dd64b52b0cd0ad4364d1e52a6075314c05e3e"
+    },
+    "equipment/library/f6a1cb4edf3280277e0b": {
+      "triangles": 92,
+      "bareUnit": false,
+      "vertices": 152,
+      "bounds": [
+        [
+          -3.367540896003642,
+          3.3675408960036415
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -3.543750000000001,
+          3.367540896003641
+        ]
+      ],
+      "sha256": "1824303d23ec354ade3b7fdad296a82ac38c933c30553c7409076f30be0ef829"
+    },
+    "equipment/library/f7cde3830a60321c0486": {
+      "triangles": 134,
+      "bareUnit": false,
+      "vertices": 208,
+      "bounds": [
+        [
+          -4.277961181900356,
+          4.277961181900355
+        ],
+        [
+          -9.5,
+          9.52
+        ],
+        [
+          -4.501808710430281,
+          4.277961181900355
+        ]
+      ],
+      "sha256": "9f15a621a725c78d6b160673a4a0cc53eefdda86b30f76c136fbcf89aab41834"
+    },
+    "equipment/library/f87f7df1489f272098e5": {
+      "triangles": 92,
+      "bareUnit": false,
+      "vertices": 152,
+      "bounds": [
+        [
+          -3.043259180092179,
+          3.0432591800921784
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -3.2024999999999997,
+          3.043259180092178
+        ]
+      ],
+      "sha256": "64e10bbc81be049f95d0fe43a4c83a272b1705367d5a404fbb085d774865172e"
+    },
+    "equipment/library/f8c456dc2cfb5b389094": {
+      "triangles": 98,
+      "bareUnit": false,
+      "vertices": 160,
+      "bounds": [
+        [
+          -3.043259180092179,
+          3.0432591800921784
+        ],
+        [
+          -7.75,
+          7.77
+        ],
+        [
+          -3.2024999999999997,
+          3.043259180092178
+        ]
+      ],
+      "sha256": "464f4de20102c0e6ae537de251396996a5aef5cc27fd78b8926a69315a1c4746"
+    },
+    "equipment/library/fbb938bf349d4fa8fbe5": {
+      "triangles": 66,
+      "bareUnit": false,
+      "vertices": 128,
+      "bounds": [
+        [
+          -3.311499185529196,
+          3.3114991855291955
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -3.484775864977766,
+          3.311499185529195
+        ]
+      ],
+      "sha256": "2847fa57e203ffc655e67308ec783da3ecd3f62f4009aa3f2a8efe04db851239"
+    },
+    "equipment/library/fe6a760f676f6e853739": {
+      "triangles": 86,
+      "bareUnit": false,
+      "vertices": 144,
+      "bounds": [
+        [
+          -3.0695026674646235,
+          3.0695026674646235
+        ],
+        [
+          -6.0,
+          6.02
+        ],
+        [
+          -3.230116697539284,
+          3.069502667464623
+        ]
+      ],
+      "sha256": "6d3a1a16277bdd0ba0aa3878ea64ceb78e2f73af8b64ef8d64ff49c9d2fa9565"
+    },
+    "equipment/library/dbdb6d1c18c200772324": {
+      "triangles": 56,
+      "bareUnit": false,
+      "vertices": 102,
+      "bounds": [
+        [
+          -0.6278517870878945,
+          0.6278517870878944
+        ],
+        [
+          1.6721482129121052,
+          8.6
+        ],
+        [
+          -7.0,
+          11.0
+        ]
+      ],
+      "sha256": "63085f05ff80b8ccef1deaebe0608a7b1234cf13df125ae89d6a1815a0a336e3"
+    },
+    "equipment/library/e916dc0a9c0d4001ab53": {
+      "triangles": 100,
+      "bareUnit": false,
+      "vertices": 190,
+      "bounds": [
+        [
+          -1.3451685993364337,
+          1.52
+        ],
+        [
+          -0.4,
+          3.95
+        ],
+        [
+          -1.3451685993364337,
+          1.3451685993364335
+        ]
+      ],
+      "sha256": "2d8eeef7d991727aa900ebd18c86f05c2477dcdf3d1da422558517d6a2d62996"
+    },
+    "bodies/manticore": {
+      "triangles": 946,
+      "bareUnit": true,
+      "vertices": 1702,
+      "bounds": [
+        [
+          -19.830000000000002,
+          19.830000000000002
+        ],
+        [
+          -26.25,
+          26
+        ],
+        [
+          0,
+          23.6
+        ]
+      ],
+      "sha256": "8636d55fba8244b1654a5eb6890ecceaa1587b48d480900635421650d938b6bb"
+    },
+    "equipment/library/e4152dfb98bd7664fdfe": {
+      "triangles": 128,
+      "bareUnit": false,
+      "vertices": 224,
+      "bounds": [
+        [
+          -3.3264,
+          3.3264
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          4.58875
+        ]
+      ],
+      "sha256": "f121dd4572e482fe8a3402a9ad1a6af049af7df36525f437372a63acc5f69605"
+    },
+    "equipment/library/351e16a519835e841eef": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 108,
+      "bounds": [
+        [
+          -3.3264,
+          3.3264
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          3.63875
+        ]
+      ],
+      "sha256": "d1bb163faf71eae01c1be8d3024127415d6baa4255ad3ff582a96f8bac93ff87"
+    },
+    "equipment/library/8c34b0a690e0aede42da": {
+      "triangles": 56,
+      "bareUnit": false,
+      "vertices": 92,
+      "bounds": [
+        [
+          -3.3264,
+          3.3264
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          3.63875
+        ]
+      ],
+      "sha256": "a36e0a553630a013a0dc579b15e6442228cccff401a19008bb37b0b355c93ba8"
+    },
+    "equipment/library/3858219ea66032c43a6e": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 208,
+      "bounds": [
+        [
+          -3.3264,
+          3.3264
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          4.58875
+        ]
+      ],
+      "sha256": "a86ec9e9f9ee5dceda3d589663b54ee7c781f06942d922373bd3d59e200b17c0"
+    },
+    "equipment/library/24dccd0ba24635b7b4d7": {
+      "triangles": 44,
+      "bareUnit": false,
+      "vertices": 76,
+      "bounds": [
+        [
+          -3.3264,
+          3.3264
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          3.63875
+        ]
+      ],
+      "sha256": "fe5d92dcd4053fce9f6ce8c4aefeb2f65ac6e7180c9d9f4b99714ba570ac1832"
+    },
+    "equipment/library/eab85985d639497b8d4e": {
+      "triangles": 104,
+      "bareUnit": false,
+      "vertices": 192,
+      "bounds": [
+        [
+          -3.3264,
+          3.3264
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          4.58875
+        ]
+      ],
+      "sha256": "c8256b2160707020566716ad5955efe95fc897f9fc054307ec646355b9bdd06f"
+    },
+    "equipment/library/197f9c32b6203feca107": {
+      "triangles": 140,
+      "bareUnit": false,
+      "vertices": 248,
+      "bounds": [
+        [
+          -3.3264,
+          5.16
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          4.58875
+        ]
+      ],
+      "sha256": "036c32cd415eccde184887f987f24062eea4a06836681cdebbf663581c22e6cb"
+    },
+    "equipment/library/26c1b235cab545e621f3": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 116,
+      "bounds": [
+        [
+          -5.16,
+          3.3264
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          3.63875
+        ]
+      ],
+      "sha256": "bf3fca012a13e0ba900a1cbb8165d94e978f7ce96982fb618a38a5664105457a"
+    },
+    "equipment/library/2a55afcc8731e59bf244": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 216,
+      "bounds": [
+        [
+          -5.16,
+          3.3264
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          4.58875
+        ]
+      ],
+      "sha256": "af16a8a80dece7d5a576229a225be8a63d49c0623d7f78d59436b2aebb6a65fc"
+    },
+    "equipment/library/3b6249e8ce581cce5bb6": {
+      "triangles": 128,
+      "bareUnit": false,
+      "vertices": 232,
+      "bounds": [
+        [
+          -5.16,
+          3.3264
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          4.58875
+        ]
+      ],
+      "sha256": "8037b7cdfd6e19f05aaef21e74bc214d4314c8b9bbbd80d3fac406ff7ed18d4b"
+    },
+    "equipment/library/42e9efed69c8b287ec47": {
+      "triangles": 140,
+      "bareUnit": false,
+      "vertices": 248,
+      "bounds": [
+        [
+          -5.16,
+          3.3264
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          4.58875
+        ]
+      ],
+      "sha256": "43ae48e81de7710176ee749c31fe8c5572b960aec4bc791172be3372d201b2ef"
+    },
+    "equipment/library/876bfee0c55719cc61f4": {
+      "triangles": 56,
+      "bareUnit": false,
+      "vertices": 100,
+      "bounds": [
+        [
+          -5.16,
+          3.3264
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          3.63875
+        ]
+      ],
+      "sha256": "4e8cc71f6a2e1cef66e3c23e6a2bc68a44de52a28b2d701d957136e1eb7b2b7e"
+    },
+    "equipment/library/8a6b4690580f7ada4595": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 116,
+      "bounds": [
+        [
+          -3.3264,
+          5.16
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          3.63875
+        ]
+      ],
+      "sha256": "28e555ec20672d11c275723554a531ecd17d48abf6fa066c75bea6a2e0f86d90"
+    },
+    "equipment/library/a48826bbef76865fccc8": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 132,
+      "bounds": [
+        [
+          -3.3264,
+          5.16
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          3.63875
+        ]
+      ],
+      "sha256": "f6e69db1e207f115ff2f369b82fe281fca0b0807cef4fce8d016eb5333c5eafa"
+    },
+    "equipment/library/c3f114a6b9f515b481d1": {
+      "triangles": 56,
+      "bareUnit": false,
+      "vertices": 100,
+      "bounds": [
+        [
+          -3.3264,
+          5.16
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          3.63875
+        ]
+      ],
+      "sha256": "0af14c81ab694ce58d4867d147f08f99262778cbe55ea01e86d7fae7cc363c8e"
+    },
+    "equipment/library/cf5544ec89bcc88ca8ca": {
+      "triangles": 80,
+      "bareUnit": false,
+      "vertices": 132,
+      "bounds": [
+        [
+          -5.16,
+          3.3264
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          3.63875
+        ]
+      ],
+      "sha256": "528129837cefe58f90d9028ecdca5d5b57b02b81739247b69e4d3a15abbed7ed"
+    },
+    "equipment/library/e32a4b28a03808911383": {
+      "triangles": 128,
+      "bareUnit": false,
+      "vertices": 232,
+      "bounds": [
+        [
+          -3.3264,
+          5.16
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          4.58875
+        ]
+      ],
+      "sha256": "83e9b0aeb456a170d7ae232fe6a81172f354fe68f61d22cb1527d77712e6521b"
+    },
+    "equipment/library/e670378ef62b3b834a71": {
+      "triangles": 116,
+      "bareUnit": false,
+      "vertices": 216,
+      "bounds": [
+        [
+          -3.3264,
+          5.16
+        ],
+        [
+          -4.24,
+          0.78
+        ],
+        [
+          -2.47435,
+          4.58875
+        ]
+      ],
+      "sha256": "6ea8bca5ed2cdf86759db64227169caa04d0f2c8930848ea52031c6c884d0543"
+    },
+    "bodies/manticore-ii": {
+      "triangles": 1108,
+      "bareUnit": true,
+      "vertices": 2040,
+      "bounds": [
+        [
+          -20.53,
+          20.53
+        ],
+        [
+          -26.03,
+          23.5
+        ],
+        [
+          0,
+          24.5
+        ]
+      ],
+      "sha256": "480ad9e1edcd1edf22b81fe656b12ac049c3d726d19dad08ad9d33ed67599bb2"
     }
   },
   "note": "Reusable components; the Java renderer assembles formations/loadouts."

@@ -221,7 +221,9 @@ limits and accepted roles. Rear ports must actually clear the rear armor; inspec
 | `hip` | Sprite-coordinate waist reference; keep on the centerline under the torso. |
 | `legBends` | Optional per-leg bend direction, keyed by upper-leg rig role: `"leftLeg":"reverse"`, `"rightLeg":"reverse"` for King Crab and Locust. Values are `forward` or `reverse`; omitted legs retain the conventional forward bend. Geometry must match the declared direction. |
 | `sockets`, `rearSockets` | Front/rear placement for each real location. Without explicit rear placement the legacy nine-unit offset is used; author rear sockets where that would bury a barrel. |
-| `exhaustSockets` | Optional jump-jet positions by location, independent of rear weapon ports. Keep the nozzle attached to the hull/leg, especially on a long overhanging torso; its exhaust points down. |
+| `exhaustSockets` | Optional jump-jet positions by location, independent of rear weapon ports. Without an entry, a leg's jets sit centred on the back of the calf a fifth of the way from knee to ankle, on the shin (`calf_exhaust` in `unit_mek_models.py`). Keep the nozzle attached to the hull/leg, especially on a long overhanging torso; its exhaust points down. **One jump jet graphic per location:** it shows that the location has jump jets, not how many; the others share its nozzle and exhaust (MegaMek's `UnitEquipmentAssembly`). `jumpJetScale` draws a chassis's jets smaller than its weapons. |
+| `missileStyle`, `missileBayStand` | Launchers at `missileSockets` as the usual box or a round drum (`drum-short/-medium/-long`), for the whole Mek or per location; `missileBayStand` stands the bay's launchers on the socket so any size rests on the surface there. |
+| `stackRows` | Locations (`"LT"`) or location families (`"LT:jump-jet"`) whose shared-socket items sit side by side in rows. |
 | `armSockets` | Hand/wrist/elbow locations matching the optional actuator geometry. |
 | `socketAim` | +Y-forward replacement direction, by location or `LOC:family`; an arm gun must follow its forearm. |
 | `socketNodes` | Optional parent override by `LOC:family`, e.g. `"LL:jump-jet":"LL-shin"`. Use when equipment moves with a different segment of the same location; positions still use the common authoring coordinates. |
@@ -230,6 +232,9 @@ limits and accepted roles. Rear ports must actually clear the rear armor; inspec
 | `missileSockets`, `missileBayHeight/Width/Columns`, `missileSlope` | Location-specific launcher placement and available bay shape. Tubes remain weapon geometry. |
 | `weaponScale`, `missileScale`, `barrelLength`, `protrusion` | Art fitting preferences; inspect both stock and crowded custom refits. |
 | `weaponOverrides` | Modular exporter supports location/family/length adjustments. Do not depend on unimplemented legacy name filters. |
+| `lightProtrusion` | A `protrusion` for light weapons only (small and medium lasers, marked `light` in `weapons.json`), per location or `LOC:family`. The Blackjack draws its large arm lasers long and its medium ones short from one socket. |
+| `stackGap` | Room between weapons sharing a hard point, per location, instead of the standard .4. Negative nests rounded weapons into each other's bounding boxes: the Blackjack OmniMech packs its arm lasers at -.5 so they nearly touch. |
+| `rowWidth` | With `stackRows`, how wide one row may run before the next starts, per location, without narrowing the face every weapon is fitted to. Shapes a group, such as a large laser alone over a pair. |
 | `searchlightSocket` | Optional physical lamp placement only; having a socket never proves the unit carries a lamp. |
 
 `weapons.json` and `unit_weapon_shapes.py` own reusable weapon looks. Use thin square laser barrels, heavier PPC

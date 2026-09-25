@@ -7,7 +7,7 @@ import hashlib
 import json
 
 from unit_model_geometry import Geometry
-from unit_weapon_shapes import BOOK, draw, held_for, rule_for
+from unit_weapon_shapes import BOOK, draw, held_for, housing_layout, rule_for
 
 
 def fallback_rule(item, low_detail=False):
@@ -75,20 +75,44 @@ def build_equipment(catalog, output, export_asset):
                 choices[style] = module(item, rule, style)
         model = module(item, rule)
         profiles = {}
-        if rule['look'] == 'launcher':
+        if rule['look'] in ('launcher', 'artillery-launcher'):
             profiles['columns-4'] = module(item, rule, options={'maximumColumns': 4})
             profiles['vertical-slope'] = module(item, rule, options={'maximumColumns': 4,
                                              'orientation': 'vertical', 'slope': .45, 'slopeOrigin': 0})
             # Stood on end against an upright face, with no lean.
             profiles['vertical'] = module(item, rule, options={'maximumColumns': 4, 'orientation': 'vertical'})
+            if rule['look'] == 'launcher':
+                # A round drum with the tubes packed on its face, for a chassis whose recipe sets missileStyle, in
+                # three lengths by how far it stands out of the armour.
+                for length in ('short', 'medium', 'long'):
+                    profiles['drum-'+length] = module(item, rule, options={'style': 'drum', 'drumLength': length})
+                if ('SRM' in item['internalName'].upper()
+                        and housing_layout(rule, dict(item, location='mount', rear=False), 1) is not None):
+                    # The SRM family's triangular housing, for a chassis whose mount asks for it. A Streak is always
+                    # guided, so it carries the targeting dome; any other launcher gets the dome only when the game
+                    # finds it linked to Artemis, which picks the -guided profile.
+                    # A housing hung on the side of a turret or body takes the profile with its grey arm reaching
+                    # toward it: housing-arm-left when the body is on the housing's left.
+                    streak = 'STREAK' in item['internalName'].upper()
+                    for arm in ('', 'left', 'right'):
+                        name = 'housing' + ('-arm-' + arm if arm else '')
+                        profiles[name] = module(item, rule, options={'style': 'housing', 'dome': streak, 'arm': arm})
+                        profiles[name+'-guided'] = module(item, rule, options={'style': 'housing', 'dome': True,
+                                                                              'arm': arm})
         if not missing and held_for(dict(item, location='mount', rear=False), rule):
             # A gun gripped in the fist; used only where a recipe asks for it at a hand.
             profiles['held'] = module(item, rule, options={'held': True})
         entry = {'model': model, 'styles': choices, 'profiles': profiles, 'family': item['family'],
                  'bankFamily': 'lamp' if rule['look'] == 'lamp' else rule.get('bankFamily', item['family']),
                  'policy': policy, 'fallback': missing}
+        if rule.get('light'):
+            # Small and medium lasers: a recipe can give these their own style at a mount (lightProtrusion), so one
+            # arm draws its heavy lasers long and its light ones short.
+            entry['light'] = True
         if policy == 'WEAPON':
-            entry['lowDetail'] = module(item, fallback_rule(item, True), low_detail=True)
+            # An artillery launcher keeps its own size at a distance; everything else shares the fallback shape.
+            distant = rule if rule['look'] == 'artillery-launcher' else fallback_rule(item, True)
+            entry['lowDetail'] = module(item, distant, low_detail=True)
         mappings[item['internalName']] = entry
 
     # These assets also cover a weapon type added to the game after this art catalog was exported.

@@ -38,6 +38,8 @@ def _matches(entry, mount):
     families = entry['family'] if isinstance(entry['family'], list) else [entry['family']]
     if mount['family'] not in families:
         return False
+    if 'internalName' in entry and re.search(entry['internalName'], mount.get('internalName', '')) is None:
+        return False
     return 'name' not in entry or re.search(entry['name'], mount['name'], re.IGNORECASE) is not None
 
 
@@ -114,11 +116,21 @@ def footprint(rule, mount, scale, options=None):
     Jump jets sit on the back of the body and hand weapons in the fist, so neither competes for face space.
     """
     look = rule['look']
+    if look == 'launcher' and (options or {}).get('style') == 'drum':
+        side = 2*drum_layout(rule, mount, scale)['lip']
+        return side, side
+    if look == 'launcher' and (options or {}).get('style') == 'housing':
+        layout = housing_layout(rule, mount, scale)
+        arm = HOUSING_ARM*scale if (options or {}).get('arm') else 0
+        return layout['width'] + arm, layout['height']
     if look == 'launcher':
         options = options or {}
         grid = launcher_grid(rule, mount, scale, options.get('maximumColumns', 0),
                              options.get('orientation', 'horizontal'))
         return grid['width'], grid['height']
+    if look == 'artillery-launcher':
+        side = ARTILLERY_WIDTH*scale*rule.get('artilleryScale', 1)
+        return side, side
     if look == 'barrel':
         widest = rule['width']*max([1]+[segment['width']*segment.get('taper', 1)
                                         for segment in rule.get('segments', [])])*scale
@@ -127,6 +139,8 @@ def footprint(rule, mount, scale, options=None):
         if 'housing' in rule:
             return rule['housing'][0]*scale, rule['housing'][2]*scale
         return rule['width']*1.15*scale, rule['width']*1.15*scale
+    if look == 'ecm':
+        return 2.3*rule['radius']*scale, 2.3*rule['radius']*scale
     if look in ('pod', 'lamp'):
         return rule['size'][0]*scale, rule['size'][2]*scale
     return None
@@ -135,6 +149,18 @@ def footprint(rule, mount, scale, options=None):
 def bank_family(mount, rule):
     """Melee weapons share the hatchet's hand socket rather than needing a bank per weapon."""
     return rule.get('bankFamily', mount['family'])
+
+
+def missile_style_for(location, recipe=None):
+    """Whether launchers at this location are drawn as the usual box or as a round drum, and how long a drum.
+
+    A recipe sets missileStyle for the whole Mek ("drum-long") or per location ({"RT": "drum-long",
+    "default": "box"}). A drum is drum-short, drum-medium or drum-long; plain "drum" is drum-medium.
+    """
+    chosen = (recipe or {}).get('missileStyle', 'box')
+    if not isinstance(chosen, str):
+        chosen = chosen.get(location, chosen.get('default', 'box'))
+    return 'drum-medium' if chosen == 'drum' else chosen
 
 
 def orientation_for(mount, rule, recipe=None):
@@ -176,7 +202,179 @@ def _opening(geometry, center, radius, shape, direction, group, material):
     geometry.face(list(reversed(points)) if direction == 1 else points, group, material)
 
 
+# A drum launcher at scale 1: a long drum centred on its mount, lying front to back along the top of a shoulder like
+# the Griffin's TRO launcher, the last .6 of it a lip slightly wider than the drum. The lengths are the whole drum's;
+# at the Griffin's scale the medium drum overhangs its shoulder a little at the front and back.
+# Eight sides keep an LRM 20 under the equipment triangle limit.
+DRUM_LIP = .6
+DRUM_LENGTHS = {'short': 12, 'medium': 15.5, 'long': 19}
+DRUM_SIDES = 8
+# Space between the outer ring of tubes and the drum's side, and how much wider the lip is than the drum.
+DRUM_MARGIN, DRUM_FLARE = .7, 1.08
+
+
+def drum_layout(rule, mount, scale):
+    """Tube centres on a round face, as (across, up) offsets, and the drum's radius and lip radius.
+
+    Up to six tubes form one ring; seven are one in the middle and six round it; more are an inner ring holding about
+    three in ten of them inside an outer ring; past fourteen a single tube also sits in the middle.
+    """
+    tubes = BOOK['tubes'][rule['tubes']]
+    visible = min(MAXIMUM_TUBES, rule.get('tubeCount', max(1, mount['rackSize'])))
+    tube_scale = scale*rule.get('tubeScale', 1)
+    pitch, diameter = tubes['pitch']*tube_scale, tubes['diameter']*tube_scale
+    if visible <= 6:
+        rings = [visible]
+    elif visible == 7:
+        rings = [1, 6]
+    elif visible <= 14:
+        inner = max(2, round(visible*.3))
+        rings = [inner, visible-inner]
+    else:
+        middle = round((visible-1)*.35)
+        rings = [1, middle, visible-1-middle]
+    centres, radius = [], 0
+    for index, count in enumerate(rings):
+        if count == 1:
+            ring_radius = 0
+        else:
+            # Neighbours on a ring are a pitch apart, and each ring clears the one inside it by a pitch.
+            ring_radius = max(pitch/(2*sin(pi/count)), radius + pitch if index else 0)
+        turn = pi/2 + (pi/count if index % 2 else 0)
+        centres.extend((ring_radius*cos(turn + 2*pi*i/count), ring_radius*sin(turn + 2*pi*i/count))
+                       for i in range(count))
+        radius = ring_radius
+    drum = radius + diameter/2 + DRUM_MARGIN*scale
+    return {'centres': centres, 'diameter': diameter, 'shape': tubes['shape'], 'radius': drum,
+            'lip': drum*DRUM_FLARE}
+
+
+def _drum_launcher(geometry, mount, rule, position, scale, options):
+    """A launcher drawn as a short drum lying front to back, its round face packed with tubes, on a small saddle."""
+    x, y, z = position
+    group = mount['location']
+    direction = -1 if mount['rear'] else 1
+    layout = drum_layout(rule, mount, scale)
+    half = DRUM_LENGTHS[options.get('drumLength', 'medium')]/2
+
+    def ring(along, radius):
+        # Wound so the loft's front cap faces the way the launcher points.
+        return [(x + radius*cos(pi/DRUM_SIDES - direction*2*pi*i/DRUM_SIDES), y + direction*along,
+                 z + radius*sin(pi/DRUM_SIDES - direction*2*pi*i/DRUM_SIDES)) for i in range(DRUM_SIDES)]
+    geometry.loft([ring(-half*scale, layout['radius']), ring((half-DRUM_LIP)*scale, layout['radius']),
+                   ring(half*scale, layout['lip'])], group, 'paint')
+    # The saddle it rests on runs most of its length.
+    geometry.box((x, y, z - layout['radius']*.8), (layout['radius']*1.1, 1.2*half*scale, layout['radius']*.5),
+                 group, 'metal')
+    front = y + direction*(half + .02)*scale
+    if options.get('detail') == 'panel':
+        # The last resort: the whole face is one dark disc.
+        corners = [(x + layout['radius']*.8*cos(pi/DRUM_SIDES + 2*pi*i/DRUM_SIDES), front,
+                    z + layout['radius']*.8*sin(pi/DRUM_SIDES + 2*pi*i/DRUM_SIDES)) for i in range(DRUM_SIDES)]
+        geometry.face(list(reversed(corners)) if direction == 1 else corners, group, 'dark')
+        geometry.emitter((x, front, z), (0, direction, 0), group, 'launcher', 'cluster')
+        return
+    reduced = layout['shape'] == 'round' and (options.get('detail') == 'reduced' or len(layout['centres']) >= 15)
+    for across, up in layout['centres']:
+        centre = (x + across, front, z + up)
+        _opening(geometry, centre, layout['diameter']/2, 'hex' if reduced else layout['shape'], direction, group,
+                 'dark')
+        geometry.emitter(centre, (0, direction, 0), group, 'launcher', 'missile')
+
+
+# The SRM family's triangular housing at scale 1, from the TRO art: a block wide across the top that narrows to a
+# blunt point underneath, its bevelled face holding the tubes three over two over one. An SRM 4 keeps the same
+# housing with its tubes two over two, an SRM 2 only the middle pair. A guided launcher (Streak, or one linked to
+# Artemis) carries a round targeting dome on top.
+HOUSING_ROWS = {6: ((-1, 0, 1), (-.5, .5), (0,)), 4: ((-.5, .5), (-.5, .5)), 2: ((-.5, .5),)}
+# How far the housing reaches back from its face, and the armour left between the outer tubes and its edges.
+HOUSING_DEPTH, HOUSING_MARGIN = 5, .55
+# How much of each triangle corner is cut off, as a share of the edges that meet there.
+HOUSING_CHAMFER = .16
+HOUSING_DOME_SIDES = 8
+# A housing hung on the side of a turret or body carries a grey arm reaching sideways into it, this long past the
+# housing's edge at scale 1.
+HOUSING_ARM = 1.2
+
+
+def housing_layout(rule, mount, scale):
+    """Tube centres on the housing's face as (across, up) offsets and the face's outline, both centred on the mount;
+    None for a rack size the housing does not carry."""
+    rack = rule.get('tubeCount', max(1, mount['rackSize']))
+    if rack not in HOUSING_ROWS:
+        return None
+    tubes = BOOK['tubes'][rule['tubes']]
+    tube_scale = scale*rule.get('tubeScale', 1)
+    pitch, diameter = tubes['pitch']*tube_scale, tubes['diameter']*tube_scale
+    rise = pitch*.87
+    # The rows sit where an SRM 6's would, so every rack shares one housing: an SRM 4 fills the top two rows and an
+    # SRM 2 the middle one.
+    heights = {6: (rise, 0, -rise), 4: (rise, 0), 2: (0,)}[rack]
+    clear = diameter/2 + HOUSING_MARGIN*scale
+    half_top, top, bottom = pitch + clear*1.6, rise + clear, -rise - clear*2.1
+    # Centred on the mount: the face spans top to bottom, so everything moves down by half their sum.
+    shift = -(top + bottom)/2
+    corners = [(-half_top, top + shift), (half_top, top + shift), (0, bottom + shift)]
+    outline = []
+    for index, (corner_x, corner_z) in enumerate(corners):
+        for neighbour in (corners[index - 1], corners[(index + 1) % 3]):
+            outline.append((corner_x + HOUSING_CHAMFER*(neighbour[0]-corner_x),
+                            corner_z + HOUSING_CHAMFER*(neighbour[1]-corner_z)))
+    centres = [(across*pitch, up + shift) for row, up in zip(HOUSING_ROWS[rack], heights) for across in row]
+    return {'centres': centres, 'diameter': diameter, 'shape': tubes['shape'], 'outline': outline,
+            'width': 2*half_top, 'height': top - bottom, 'top': top + shift, 'halfTop': half_top}
+
+
+def _housing_launcher(geometry, mount, rule, position, scale, options):
+    """An SRM-family launcher in the triangular housing, with the targeting dome on top when it is guided."""
+    x, y, z = position
+    group = mount['location']
+    direction = -1 if mount['rear'] else 1
+    layout = housing_layout(rule, mount, scale)
+
+    def ring(along, shrink):
+        # Wound clockwise seen from in front, so the loft's front cap faces the way the launcher points.
+        points = [(x + across*shrink, y + direction*along, z + up*shrink) for across, up in layout['outline']]
+        return points if direction == 1 else list(reversed(points))
+    front = .76*scale
+    geometry.loft([ring(-(HOUSING_DEPTH - .76)*scale, 1), ring(front - .35*scale, 1), ring(front, .9)], group,
+                  'paint')
+    face = y + direction*(front + .02*scale)
+    arm = options.get('arm')
+    if arm in ('left', 'right'):
+        # The connector: a grey block from inside the housing's upper half out to the body beside it.
+        side = -1 if arm == 'left' else 1
+        inner, outer = .5*layout['halfTop'], layout['halfTop'] + HOUSING_ARM*scale
+        geometry.box((x + side*(inner + outer)/2, y - direction*2.3*scale, z + layout['top'] - 1.5*scale),
+                     (outer - inner, 3*scale, 1.8*scale), group, 'metal')
+    if options.get('dome'):
+        radius, base = .55*layout['halfTop'], z + layout['top'] - .1*scale
+        middle = y - direction*1.8*scale
+        geometry.loft([[(x + width*cos(pi/HOUSING_DOME_SIDES + 2*pi*i/HOUSING_DOME_SIDES),
+                         middle + width*sin(pi/HOUSING_DOME_SIDES + 2*pi*i/HOUSING_DOME_SIDES), height)
+                        for i in range(HOUSING_DOME_SIDES)]
+                       for height, width in ((base, radius), (base + .45*scale, radius),
+                                             (base + .85*scale, .72*radius), (base + 1.05*scale, .3*radius))],
+                      group, 'edge')
+    if options.get('detail') == 'panel':
+        # The last resort: the face is one dark panel.
+        panel = [(x + across*.75, face, z + up*.75) for across, up in layout['outline']]
+        geometry.face(panel if direction == 1 else list(reversed(panel)), group, 'dark')
+        geometry.emitter((x, face, z), (0, direction, 0), group, 'launcher', 'cluster')
+        return
+    for across, up in layout['centres']:
+        centre = (x + across, face, z + up)
+        _opening(geometry, centre, layout['diameter']/2, layout['shape'], direction, group, 'dark')
+        geometry.emitter(centre, (0, direction, 0), group, 'launcher', 'missile')
+
+
 def _launcher(geometry, mount, rule, position, scale, options):
+    if options.get('style') == 'drum':
+        _drum_launcher(geometry, mount, rule, position, scale, options)
+        return
+    if options.get('style') == 'housing':
+        _housing_launcher(geometry, mount, rule, position, scale, options)
+        return
     x, y, z = position
     group = mount['location']
     direction = -1 if mount['rear'] else 1
@@ -216,6 +414,93 @@ def _launcher(geometry, mount, rule, position, scale, options):
             px, py, pz = emitter['position']
             geometry.emitter((px, py-direction*slope*(pz-origin), pz), emitter['direction'],
                              emitter['node'], emitter['role'], emitter['effect'])
+
+
+# An artillery launcher at scale 1: an 11 wide, 11 tall block about 9 deep (the Inner Sphere Arrow IV, 15 tons).
+ARTILLERY_WIDTH = 11
+# The block's front sits flush on the mount, so only the tube rims stand proud of the armor; it is .05 forward so it
+# covers a limb end in the same plane instead of flickering with it. It is set low by the cylinders' height above
+# it, so the whole launcher, cylinders included, is centered on the mount.
+ARTILLERY_BODY = {'center': (0, -4.45, -.69), 'size': (11, 9, 9.4)}
+# Five tubes in a dice-five pattern: two over one over two, each a short raised rim around a dark bore.
+ARTILLERY_TUBES = ((-2.9, 2.6), (2.9, 2.6), (0, 0), (-2.9, -2.6), (2.9, -2.6))
+ARTILLERY_RIM, ARTILLERY_BORE = 1.5, 1.1
+ARTILLERY_FACE, ARTILLERY_LIP = .05, .65
+
+
+def _artillery_launcher(geometry, mount, rule, position, scale, options):
+    """A large artillery launcher such as the Arrow IV, drawn from its artwork rather than a tube grid.
+
+    It is built facing forward and horizontal, with the two cylinders along the top. The vertical profile turns
+    the whole launcher on its side, so the cylinders run down the outer face; the slope then leans it back.
+    """
+    x, y, z = position
+    group = mount['location']
+    direction = -1 if mount['rear'] else 1
+    size = scale*rule.get('artilleryScale', 1)
+    vertical = options.get('orientation', 'horizontal') == 'vertical'
+    slope = options.get('slope', 0)
+    origin = options.get('slopeOrigin', z)
+    local = Geometry()
+    body_x, body_y, body_z = ARTILLERY_BODY['center']
+    width, depth, height = ARTILLERY_BODY['size']
+    local.box(ARTILLERY_BODY['center'], ARTILLERY_BODY['size'], group, 'paint')
+    face_z = body_z
+    if options.get('detail') == 'panel':
+        half_width, half_height = width/2-1, height/2-1
+        front = ARTILLERY_FACE+.06
+        local.face([(-half_width, front, face_z-half_height), (half_width, front, face_z-half_height),
+                    (half_width, front, face_z+half_height), (-half_width, front, face_z+half_height)][::-1],
+                   group, 'dark')
+        local.emitter((0, front, face_z), (0, 1, 0), group, 'launcher', 'missile')
+    else:
+        sides, turn = TUBE_SHAPES['hex']
+        for across, up in ARTILLERY_TUBES:
+            center_z = face_z+up
+
+            def ring(radius, front):
+                return [(across+radius*cos(turn+2*pi*i/sides), front, center_z+radius*sin(turn+2*pi*i/sides))
+                        for i in range(sides)]
+            back, lip = ring(ARTILLERY_RIM, ARTILLERY_FACE), ring(ARTILLERY_RIM, ARTILLERY_LIP)
+            for i in range(sides):
+                j = (i+1) % sides
+                local.face([lip[i], lip[j], back[j], back[i]], group, 'paint')
+            local.face(lip[::-1], group, 'paint')
+            local.face(ring(ARTILLERY_BORE, ARTILLERY_LIP+.03)[::-1], group, 'dark')
+            local.emitter((across, ARTILLERY_LIP+.03, face_z+up), (0, 1, 0), group, 'launcher', 'missile')
+        # Two cylinders half sunk into the top, front to back. Only the upper half is drawn: three faces and
+        # a half-hexagon cap at each end.
+        top = body_z+height/2
+        for across in (-2.6, 2.6):
+            arc = [(across+1.6*cos(pi*i/3), top+1.6*sin(pi*i/3)) for i in range(4)]
+            rear_end, front_end = body_y-depth/2+.3, ARTILLERY_FACE+.3
+            for i in range(3):
+                local.face([(arc[i][0], front_end, arc[i][1]), (arc[i+1][0], front_end, arc[i+1][1]),
+                            (arc[i+1][0], rear_end, arc[i+1][1]), (arc[i][0], rear_end, arc[i][1])], group, 'paint')
+            local.face([(point_x, front_end, point_z) for point_x, point_z in arc][::-1], group, 'paint')
+            local.face([(point_x, rear_end, point_z) for point_x, point_z in arc], group, 'paint')
+        # A slotted vent on the left side: a dark recess behind three lit fins.
+        side = body_x-width/2
+        vent = [(-6, -3), (-1.5, -3), (-1.5, 1.5), (-6, 1.5)]
+        local.face([(side-.06, vent_y, body_z+vent_z) for vent_y, vent_z in vent][::-1], group, 'dark')
+        for fin in (-4.6, -3.75, -2.9):
+            local.face([(side-.16, fin, body_z+1.5), (side-.16, fin+.35, body_z+1.5),
+                        (side-.16, fin+.35, body_z-3), (side-.16, fin, body_z-3)], group, 'edge')
+
+    def place(point):
+        point_x, point_y, point_z = point
+        if vertical:
+            point_x, point_z = point_z, -point_x
+        placed_y = y+direction*point_y*size
+        placed_z = z+point_z*size
+        return x+point_x*size, placed_y-direction*slope*(placed_z-origin), placed_z
+
+    for triangle, node, material in local.faces:
+        points = [place(point) for point in triangle]
+        geometry.face(points if direction == 1 else points[::-1], node, material)
+    for emitter in local.emitters:
+        geometry.emitter(place(emitter['position']), (0, direction, 0), emitter['node'], emitter['role'],
+                         emitter['effect'])
 
 
 def _barrel(geometry, mount, rule, position, scale):
@@ -323,6 +608,28 @@ def _pod(geometry, mount, rule, position, scale):
             geometry.emitter((x, face_y, z), (0, direction, 0), group, 'beam', 'none')
 
 
+def _ecm(geometry, mount, rule, position, scale):
+    """An ECM suite as the TRO draws it: a drum lying front to back, its dome facing out of the armour, a ribbed
+    collar round its foot against the armour and a small junction box on its side. It has no dark face, so it
+    never reads as a gun port."""
+    x, y, z = position
+    group = mount['location']
+    direction = -1 if mount['rear'] else 1
+    r = rule['radius']
+    # Drawn standing up with its foot at height 0, then tipped so its axis points out of the face.
+    drum = Geometry()
+
+    def ring(height, radius):
+        return [(radius*cos(pi/8 + 2*pi*i/8), radius*sin(pi/8 + 2*pi*i/8), height) for i in range(8)]
+    drum.loft([ring(-.4, 1.12*r), ring(.6, 1.12*r)], group, 'metal')
+    drum.loft([ring(.6, r), ring(2.8, r), ring(3.5, .75*r), ring(3.95, .35*r)], group, 'edge')
+    drum.box((.9*r, 0, 1.6), (.7, 1.0, .7), group, 'metal')
+    for triangle, node, material in drum.faces:
+        # Turning about x keeps the winding: forward (+1) takes up to +y, rearward (-1) to -y.
+        geometry.face([(x + px*scale, y + direction*pz*scale, z - direction*py*scale) for px, py, pz in triangle],
+                      node, material)
+
+
 def _lamp(geometry, mount, rule, position, scale):
     x, y, z = position
     group = mount['location']
@@ -375,13 +682,40 @@ def _gatling(geometry, mount, rule, position, scale):
                group, 'edge', drum_sides)
 
 
+def _slab(geometry, x, half_thickness, outline, group, material):
+    """A flat plate standing on edge, its convex outline given as (y, z) points and its thickness across x."""
+    near = [(x+half_thickness, y, z) for y, z in outline]
+    far = [(x-half_thickness, y, z) for y, z in outline]
+    faces = [near, list(reversed(far))]
+    for i in range(len(outline)):
+        j = (i+1) % len(outline)
+        faces.append([far[i], far[j], near[j], near[i]])
+    middle = [sum(p[axis] for p in near+far)/(2*len(outline)) for axis in range(3)]
+    for points in faces:
+        # Wind each face outward from the plate's middle, whichever way the outline was given.
+        centre = [sum(p[axis] for p in points)/len(points) for axis in range(3)]
+        if sum(a*b for a, b in zip(cross(sub(points[1], points[0]), sub(points[2], points[0])),
+                                    sub(centre, middle))) < 0:
+            points = list(reversed(points))
+        geometry.face(points, group, material)
+
+
+# A hatchet at scale 1, in (forward, up) from its mount: a long handle standing just in front of the fist, and a thin
+# axe head at its top front - a narrow neck that flares into a broad blade with a curved edge, leading forward as the
+# Mek would swing it.
+HATCHET_HANDLE = 2.3
+HATCHET_NECK = ((0, 5.2), (2.5, 4.6), (2.5, 9.2), (0, 8.6))
+HATCHET_BLADE = ((2.5, 4.6), (4.9, 2.6), (6.0, 4.4), (6.3, 6.8), (6.0, 9.2), (4.9, 11.0), (2.5, 9.2))
+
+
 def _hatchet(geometry, mount, position, scale):
     x, y, z = position
     group = mount['location']
-    geometry.beam((x, y, z-7), (x, y, z+8), 2, 2, group, 'metal')
-    # The blade faces forward, edge leading, as the Mek would swing it.
-    geometry.prism([(x+1, y), (x+3, y+7), (x, y+9), (x-3, y+7), (x-1, y)], z+4, z+10, group, 'edge')
-    geometry.emitter((x, y+9, z+7), (0, 1, 0), group, 'contact', 'melee')
+    handle = y + HATCHET_HANDLE
+    geometry.beam((x, handle, z-7), (x, handle, z+9.6), 1.3, 1.3, group, 'metal', 6)
+    _slab(geometry, x, .6, [(handle+forward, z+up) for forward, up in HATCHET_NECK], group, 'metal')
+    _slab(geometry, x, .35, [(handle+forward, z+up) for forward, up in HATCHET_BLADE], group, 'edge')
+    geometry.emitter((x, handle+6.3, z+6.8), (0, 1, 0), group, 'contact', 'melee')
 
 
 def _leaning(position):
@@ -874,10 +1208,14 @@ def _draw_ahead(geometry, mount, rule, position, scale, options):
         _held(geometry, mount, rule, position, scale)
     elif look == 'launcher':
         _launcher(geometry, mount, rule, position, scale, options)
+    elif look == 'artillery-launcher':
+        _artillery_launcher(geometry, mount, rule, position, scale, options)
     elif look == 'barrel':
         _barrel(geometry, mount, rule, position, scale)
     elif look == 'gatling':
         _gatling(geometry, mount, rule, position, scale)
+    elif look == 'ecm':
+        _ecm(geometry, mount, rule, position, scale)
     elif look == 'pod':
         _pod(geometry, mount, rule, position, scale)
     elif look == 'jet':
