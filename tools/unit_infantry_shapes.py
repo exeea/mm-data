@@ -203,9 +203,9 @@ def _facing_forward(g, points, group, material):
            group, material)
 
 
-def _elemental_joints(g):
+def _elemental_joints(g, arm_x=5.8):
     """The Elemental's rig: the fallback trooper's joints at Elemental proportions, shared by both detail levels
-    so the far suit animates exactly like the near one."""
+    so the far suit animates exactly like the near one. `arm_x` is the shoulder's distance from the centre."""
     g.joint('hips', (0, 0, 16))
     g.joint('torso', (0, 0, 16), 'hips')
     g.joint('head', (0, -.5, 25), 'torso')
@@ -215,11 +215,11 @@ def _elemental_joints(g):
         g.joint(leg+'Shin', (sign*3.4, 1, 8.5), leg)
         g.joint(leg+'Foot', (sign*3.4, 0, 1.2), leg+'Shin')
         arm = 'leftArm' if sign == -1 else 'rightArm'
-        g.joint(arm, (sign*5.8, 0, 24), 'torso')
-        g.joint(arm+'Forearm', (sign*6.2, 1.2, 18.8), arm)
+        g.joint(arm, (sign*arm_x, 0, 24), 'torso')
+        g.joint(arm+'Forearm', (sign*(arm_x+.4), 1.2, 18.8), arm)
 
 
-def elemental(modular=True):
+def elemental(modular=True, launchers=True):
     """Elemental battle armour on the trooper rig, drawn in person()'s units (29.6 tall against the armoured
     figure's 31.5) and exported at TROOP_SCALE, which keeps that proportion: about 2.5 m.
 
@@ -228,6 +228,9 @@ def elemental(modular=True):
     on the left. Battle armour weapons are not drawn by the game, so the laser is part of the suit. MegaMek budgets
     battle armour at 330 triangles per suit, whatever the squad size. Faces sealed inside another part of the same
     rigid node are left out. `elemental_far` is the simpler suit shown when the squad is small on screen.
+
+    `launchers` off gives the suit for Elementals that carry no missiles (the Headhunter and Space versions): no
+    shoulder launchers, and the shoulder domes closed on top instead.
     """
     g = Geometry(modular=modular)
     group = lambda role: role if modular else 'soldier'
@@ -271,45 +274,46 @@ def elemental(modular=True):
     g.face(lid, group('torso'), 'edge')
     for i in (0, 1, 3):
         g.face([pack[i], pack[(i+1) % 4], lid[(i+1) % 4], lid[i]], group('torso'), 'edge')
-    # A square missile launcher on each shoulder: the face narrows toward the front for a chamfered look,
-    # with one round missile port in its centre. Held by the torso so it stays level while the arms swing.
-    for sign in (-1, 1):
-        centre = (sign*6.2, 0, 28)
-        _tube(g, (centre[0], -2, centre[2]), (centre[0], 2.1, centre[2]), 4.2, 4.4, 4, group('torso'), 'paint',
-              start_cap=True, taper=.84)
-        # A four-sided _tube's faces sit at cos(45 degrees) of its nominal half size.
-        half_width, half_height, chamfer = 4.2*.84/2*cos(pi/4), 4.4*.84/2*cos(pi/4), .55
-        _facing_forward(g, [(centre[0]+cos(pi*k/4+pi/8)*.72, 2.14, centre[2]+sin(pi*k/4+pi/8)*.72)
-                            for k in range(8)], group('torso'), 'dark')
-        # The ear: a "7"-shaped plate on the outer side, straight out near the top, then slanting back down to
-        # the launcher's foot, with its hole in the wide upper part. Its inner side is buried in the launcher body,
-        # so it has no face.
-        inner = centre[0]+sign*(half_width-.2)
-        ear = [(inner, centre[2]+.7), (centre[0]+sign*(half_width+1.3), centre[2]+.75),
-               (centre[0]+sign*(half_width+.4), centre[2]-1.2), (inner, centre[2]-1.2)]
-        ear_middle = (sum(x for x, _ in ear)/4, 0, sum(z for _, z in ear)/4)
-        back, face = [(x, -1.4, z) for x, z in ear], [(x, 1.9, z) for x, z in ear]
-        _outward(g, face, ear_middle, group('torso'), 'paint')
-        _outward(g, back, ear_middle, group('torso'), 'paint')
-        for i in (0, 1, 2):
-            _outward(g, [back[i], back[i+1], face[i+1], face[i]], ear_middle, group('torso'), 'paint')
-        hole, size = (centre[0]+sign*(half_width+.75), centre[2]+.3), .22
-        _facing_forward(g, [(hole[0]-size, 1.94, hole[1]+size), (hole[0]+size, 1.94, hole[1]+size),
-                            (hole[0]+size, 1.94, hole[1]-size), (hole[0]-size, 1.94, hole[1]-size)], group('torso'), 'dark')
-        # Darker facets across the face's corners make the octagonal frame around the port.
-        for across in (-1, 1):
-            for up in (-1, 1):
-                corner = (centre[0]+across*half_width, centre[2]+up*half_height)
-                _facing_forward(g, [(corner[0], 2.12, corner[1]),
-                                    (corner[0]-across*chamfer, 2.12, corner[1]),
-                                    (corner[0], 2.12, corner[1]-up*chamfer)], group('torso'), 'edge')
+    if launchers:
+        # A square missile launcher on each shoulder: the face narrows toward the front for a chamfered look,
+        # with one round missile port in its centre. Held by the torso so it stays level while the arms swing.
+        for sign in (-1, 1):
+            centre = (sign*6.2, 0, 28)
+            _tube(g, (centre[0], -2, centre[2]), (centre[0], 2.1, centre[2]), 4.2, 4.4, 4, group('torso'), 'paint',
+                  start_cap=True, taper=.84)
+            # A four-sided _tube's faces sit at cos(45 degrees) of its nominal half size.
+            half_width, half_height, chamfer = 4.2*.84/2*cos(pi/4), 4.4*.84/2*cos(pi/4), .55
+            _facing_forward(g, [(centre[0]+cos(pi*k/4+pi/8)*.72, 2.14, centre[2]+sin(pi*k/4+pi/8)*.72)
+                                for k in range(8)], group('torso'), 'dark')
+            # The ear: a "7"-shaped plate on the outer side, straight out near the top, then slanting back down to
+            # the launcher's foot, with its hole in the wide upper part. Its inner side is buried in the launcher body,
+            # so it has no face.
+            inner = centre[0]+sign*(half_width-.2)
+            ear = [(inner, centre[2]+.7), (centre[0]+sign*(half_width+1.3), centre[2]+.75),
+                   (centre[0]+sign*(half_width+.4), centre[2]-1.2), (inner, centre[2]-1.2)]
+            ear_middle = (sum(x for x, _ in ear)/4, 0, sum(z for _, z in ear)/4)
+            back, face = [(x, -1.4, z) for x, z in ear], [(x, 1.9, z) for x, z in ear]
+            _outward(g, face, ear_middle, group('torso'), 'paint')
+            _outward(g, back, ear_middle, group('torso'), 'paint')
+            for i in (0, 1, 2):
+                _outward(g, [back[i], back[i+1], face[i+1], face[i]], ear_middle, group('torso'), 'paint')
+            hole, size = (centre[0]+sign*(half_width+.75), centre[2]+.3), .22
+            _facing_forward(g, [(hole[0]-size, 1.94, hole[1]+size), (hole[0]+size, 1.94, hole[1]+size),
+                                (hole[0]+size, 1.94, hole[1]-size), (hole[0]-size, 1.94, hole[1]-size)], group('torso'), 'dark')
+            # Darker facets across the face's corners make the octagonal frame around the port.
+            for across in (-1, 1):
+                for up in (-1, 1):
+                    corner = (centre[0]+across*half_width, centre[2]+up*half_height)
+                    _facing_forward(g, [(corner[0], 2.12, corner[1]),
+                                        (corner[0]-across*chamfer, 2.12, corner[1]),
+                                        (corner[0], 2.12, corner[1]-up*chamfer)], group('torso'), 'edge')
     for sign in (-1, 1):
         arm = 'leftArm' if sign == -1 else 'rightArm'
         elbow = (sign*6.2, 1.2, 18.8)
-        # A domed shoulder held by the torso, closing under the launcher that covers its open top; the arm hangs
-        # from inside it.
+        # A domed shoulder held by the torso, closing under the launcher that covers its open top (capped when
+        # there is no launcher); the arm hangs from inside it.
         _shell(g, [_hexagon(23.4, 4.6, 4.6, sign*6.1), _hexagon(25.2, 6, 5.6, sign*6.1),
-                   _hexagon(26.6, 2.8, 2.6, sign*6.2)], group('torso'), 'paint')
+                   _hexagon(26.6, 2.8, 2.6, sign*6.2)], group('torso'), 'paint', top=not launchers)
         _tube(g, (sign*6, 0, 24.5), elbow, 5.4, 5.6, 4, group(arm), 'paint', end_cap=False, taper=.72)
     # Right forearm levelled forward with the laser along it.
     _tube(g, (6.2, 1.2, 18.8), (6.2, 6.6, 19.4), 3.6, 3.8, 4, group('rightArmForearm'), 'edge')
@@ -326,12 +330,13 @@ def elemental(modular=True):
     return g
 
 
-def elemental_far(modular=True):
+def elemental_far(modular=True, launchers=True):
     """The Elemental for a squad small on screen: the same rig and silhouette in about 60% of the triangles.
 
     It keeps what reads at a distance (the oval helmet and its V viewport, the tortoise-shell chest, the square
     launchers and their ports, the laser arm, the claw and the heavy legs) and drops the shoulder domes, the
-    launcher ears, the knee pads and the chamfer facets. Six-sided sections replace eight-sided ones.
+    launcher ears, the knee pads and the chamfer facets. Six-sided sections replace eight-sided ones. `launchers`
+    matches the near suit's.
     """
     g = Geometry(modular=modular)
     group = lambda role: role if modular else 'soldier'
@@ -364,13 +369,14 @@ def elemental_far(modular=True):
     for i in (0, 1, 3):
         g.face([pack[i], pack[(i+1) % 4], lid[(i+1) % 4], lid[i]], group('torso'), 'edge')
     for sign in (-1, 1):
-        centre = (sign*6.2, 0, 28)
-        _tube(g, (centre[0], -2, centre[2]), (centre[0], 2.1, centre[2]), 4.2, 4.4, 4, group('torso'), 'paint',
-              start_cap=True, taper=.84)
-        port = .75
-        _facing_forward(g, [(centre[0]-port, 2.14, centre[2]+port), (centre[0]+port, 2.14, centre[2]+port),
-                            (centre[0]+port, 2.14, centre[2]-port), (centre[0]-port, 2.14, centre[2]-port)],
-                        group('torso'), 'dark')
+        if launchers:
+            centre = (sign*6.2, 0, 28)
+            _tube(g, (centre[0], -2, centre[2]), (centre[0], 2.1, centre[2]), 4.2, 4.4, 4, group('torso'), 'paint',
+                  start_cap=True, taper=.84)
+            port = .75
+            _facing_forward(g, [(centre[0]-port, 2.14, centre[2]+port), (centre[0]+port, 2.14, centre[2]+port),
+                                (centre[0]+port, 2.14, centre[2]-port), (centre[0]-port, 2.14, centre[2]-port)],
+                            group('torso'), 'dark')
         arm = 'leftArm' if sign == -1 else 'rightArm'
         # Without the shoulder domes the upper arm rises to the launcher, capped where its top shows.
         _tube(g, (sign*6, 0, 26.3), (sign*6.2, 1.2, 18.8), 5.4, 5.6, 4, group(arm), 'paint', start_cap=True,
@@ -386,3 +392,100 @@ def elemental_far(modular=True):
         for side in (-1, 1):
             g.emitter((side*2.2, -4.6, 18.9), (0, 0, -1), 'torso', 'exhaust', 'exhaust')
     return g
+
+
+ELEMENTAL_II_ARM_X = 7
+
+
+def _elemental_ii_front(z, low, high):
+    """The y of a shell band's flat front at height z, between its lower and upper (z, depth, y) sections."""
+    (z0, d0, y0), (z1, d1, y1) = low, high
+    return y0+d0/2 + (y1+d1/2 - y0-d0/2)*(z-z0)/(z1-z0)
+
+
+def elemental_ii(modular=True, far=False):
+    """Elemental II battle armour, from the line art: one hunched shell over chest and head with a raised chest plate
+    and vents, a visor strip near its top, a segmented belly, big domed pauldrons and no launchers, an AP Gauss barrel
+    slung under the right forearm, an anti-personnel pod on the left, fists, hip fins, and flared boots with knee
+    plates and ankle discs. Drawn in person()'s units on the Elemental rig with the arms set wider.
+
+    `far` gives the simpler suit MegaMek shows while the squad is small on screen: six-sided sections, one pauldron
+    band, four-sided limbs, and no vents, knee plates or ankle discs.
+    """
+    g = Geometry(modular=modular)
+    group = lambda role: role if modular else 'soldier'
+    if modular:
+        _elemental_joints(g, ELEMENTAL_II_ARM_X)
+    section = _hexagon if far else (lambda z, w, d, x=0, y=0: _ring(z, w, d, x=x, y=y, cut=.38))
+    for sign in (-1, 1):
+        leg = 'leftLeg' if sign == -1 else 'rightLeg'
+        x = sign*3.4
+        hip, knee, ankle = (sign*3, 0, 16), (x, 1, 8.5), (x, -.2, 2.2)
+        _tube(g, hip, knee, 6.8, 7.2, 4, group(leg), 'paint', end_cap=False, taper=1.05)
+        # Boots from the knee down, flaring toward the ankle.
+        _tube(g, knee, ankle, 6.8, 7.6, 4 if far else 6, group(leg+'Shin'), 'edge', end_cap=False, taper=1.12)
+        if not far:
+            pad = [(x-2.4, 3.6, 11.2), (x+2.4, 3.6, 11.2), (x, 3.6, 6.8)]
+            for i in range(3):
+                _outward(g, [pad[i], pad[(i+1) % 3], (x, 4.9, 9.6)], (x, 3.6, 9.6), group(leg+'Shin'), 'paint')
+            disc = [(x+sign*3.95, -.2+cos(pi*k/3)*1.1, 3.4+sin(pi*k/3)*1.1) for k in range(6)]
+            _outward(g, disc, (x, -.2, 3.4), group(leg+'Shin'), 'metal')
+        sole = [(x-3, -2.8, 0), (x+3, -2.8, 0), (x+3.3, 4.8, 0), (x-3.3, 4.8, 0)]
+        instep = [(x+(px-x)*.75, 1+(py-1)*.75, 2.8) for px, py, _ in sole]
+        _shell(g, [sole, instep], group(leg+'Foot'), 'metal', top=True)
+        # A pointed fin over each hip, seen from both sides.
+        fin = [(sign*4.2, 2.6, 17.8), (sign*6.8, 1, 17.4), (sign*7.9, .2, 12.2)]
+        g.face(fin, group('hips'), 'paint')
+        g.face(list(reversed(fin)), group('hips'), 'paint')
+    # The segmented belly, darker and narrower than the shell above it.
+    _shell(g, [section(12.6, 4, 3.8, y=.4), section(15.6, 6.8, 5.6, y=.6), section(18.8, 8.4, 6.6, y=.6)],
+           group('torso'), 'edge')
+    # One hunched shell over chest and head, widest across the upper chest and rounding over at the top.
+    low, high = (22.5, 9.4, .6), (26, 8.8, .2)
+    shell = [(18.2, 9.8, 7.2, .5), (22.5, 13.4, 9.4, .6), (26, 12.2, 8.8, .2), (28.2, 6.8, 5, -.4)]
+    if far:
+        shell = [shell[0], shell[1], (28.2, 7.6, 5.6, -.2)]
+        low, high = (22.5, 9.4, .6), (28.2, 5.6, -.2)
+    _shell(g, [section(z, w, d, y=y) for z, w, d, y in shell], group('torso'), 'paint', top=True)
+    # The raised chest plate, an inverted trapezoid on the upper chest's flat front, with angled vents either side.
+    plate_front = lambda z, lift: _elemental_ii_front(z, low, high) + lift
+    plate = [(-4, 25.6), (4, 25.6), (2.4, 22.9), (-2.4, 22.9)] if not far else [(-3.2, 25.2), (3.2, 25.2), (2, 23.2), (-2, 23.2)]
+    _facing_forward(g, [(px, plate_front(pz, .1), pz) for px, pz in plate], group('torso'), 'edge')
+    if not far:
+        for side in (-1, 1):
+            for drop in (0, 1.1):
+                vent = [(side*3.5, 25-drop), (side*2.9, 25-drop), (side*1.2, 23.6-drop), (side*1.8, 23.6-drop)]
+                _facing_forward(g, [(px, plate_front(pz, .14), pz) for px, pz in vent], group('torso'), 'dark')
+    # The visor strip near the top of the shell.
+    visor_low, visor_high = ((26, 8.8, .2), (28.2, 5, -.4)) if not far else ((22.5, 9.4, .6), (28.2, 5.6, -.2))
+    visor = [(-1.4, 27.2), (1.4, 27.2), (1.4, 26.4), (-1.4, 26.4)]
+    _facing_forward(g, [(px, _elemental_ii_front(pz, visor_low, visor_high)+.08, pz) for px, pz in visor],
+                    group('torso'), 'glass')
+    for sign in (-1, 1):
+        arm = 'leftArm' if sign == -1 else 'rightArm'
+        shoulder_x = sign*ELEMENTAL_II_ARM_X
+        # Big domed pauldrons, held by the torso so they stay put while the arms swing beneath.
+        dome = [_hexagon(22.2, 5, 5, shoulder_x), _hexagon(24.6, 6.6, 6, shoulder_x), _hexagon(26.4, 3.6, 3.2, shoulder_x)]
+        _shell(g, [dome[0], dome[2]] if far else dome, group('torso'), 'paint', top=True)
+        _tube(g, (shoulder_x, 0, 24), (shoulder_x, 1.2, 18.8), 5.4, 5.6, 4, group(arm), 'paint', end_cap=False, taper=.75)
+    # Right arm: a thick round forearm with the AP Gauss barrel slung under it, ending in a fist.
+    right = ELEMENTAL_II_ARM_X
+    _tube(g, (right, 1.2, 18.8), (right, 6.8, 19.4), 4.4, 4.4, 4 if far else 6, group('rightArmForearm'), 'edge', taper=.95)
+    _tube(g, (right, 6.6, 19.4), (right, 8.8, 19.4), 3.2, 3.4, 4, group('rightArmForearm'), 'metal')
+    _tube(g, (right, 1.8, 16.6), (right, 10.4, 16.6), 3, 3, 4 if far else 6, group('rightArmForearm'), 'metal',
+          start_cap=True, end_material='dark')
+    # Left arm: forearm and fist, with the anti-personnel pod along the forearm's outer side.
+    left = -ELEMENTAL_II_ARM_X
+    _tube(g, (left, 1.2, 18.8), (left-.2, 4.2, 13.8), 3.8, 4, 4, group('leftArmForearm'), 'edge')
+    _tube(g, (left-.2, 4.4, 13.4), (left-.3, 5.6, 11.4), 3, 3.2, 4, group('leftArmForearm'), 'metal')
+    _tube(g, (left-1.9, 1.8, 18), (left-2.1, 4.4, 13.6), 1.8, 2.8, 4, group('leftArmForearm'), 'edge', start_cap=True)
+    if modular:
+        g.emitter((right, 10.5, 16.6), (0, 1, 0), 'rightArmForearm', 'muzzle', 'bullet')
+        for side in (-1, 1):
+            g.emitter((side*2.2, -4.2, 19), (0, 0, -1), 'torso', 'exhaust', 'exhaust')
+    return g
+
+
+def elemental_ii_far(modular=True):
+    """The Elemental II for a squad small on screen; see `elemental_ii`."""
+    return elemental_ii(modular, far=True)

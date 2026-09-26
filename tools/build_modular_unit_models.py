@@ -8,7 +8,8 @@ import json
 import re
 from pathlib import Path
 
-from unit_infantry_shapes import person, infantry_vehicle, TROOP_SCALE, BATTLE_ARMOR_SIZE, elemental, elemental_far
+from unit_infantry_shapes import (person, infantry_vehicle, TROOP_SCALE, BATTLE_ARMOR_SIZE, elemental, elemental_far,
+                                  elemental_ii, elemental_ii_far)
 from unit_model_geometry import Geometry, TRIANGLE_LIMIT, TRIANGLE_TARGET, sub
 from unit_weapon_shapes import draw, rule_for
 from unit_equipment_models import build_equipment
@@ -103,7 +104,9 @@ def build(output, catalog):
                                    'trooper-v1', joints)
     # Chassis-specific battle armour: its own suit on the trooper rig, named by mekset.txt's chassis line, plus a
     # simpler suit on the same rig that MegaMek shows while the squad is small on screen.
-    for name, suit, far_suit in (('elemental', elemental, elemental_far),):
+    bare, bare_far = (lambda: elemental(launchers=False)), (lambda: elemental_far(launchers=False))
+    for name, suit, far_suit in (('elemental', elemental, elemental_far), ('elemental-no-launchers', bare, bare_far),
+                                 ('elemental-ii', elemental_ii, elemental_ii_far)):
         key, far_key = 'troops/'+name+'-standing', 'troops/'+name+'-far-standing'
         near, far = suit(), far_suit()
         # Drawn beside the armoured figure's old 31.5-unit height; TROOP_SCALE keeps that proportion in metres.

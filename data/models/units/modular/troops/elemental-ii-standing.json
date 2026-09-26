@@ -1,0 +1,87 @@
+{
+  "schema": 2,
+  "kind": "troop",
+  "family": "battle-armor",
+  "mesh": "elemental-ii-standing.g3dj",
+  "bounds": {
+    "min": [
+      -3.178285714285715,
+      -1.307841277644393,
+      0.0
+    ],
+    "max": [
+      3.178285714285715,
+      3.2091428571428575,
+      8.701714285714287
+    ]
+  },
+  "rig": "trooper-v1",
+  "joints": {
+    "root": "root",
+    "hips": "hips",
+    "torso": "torso",
+    "head": "head",
+    "leftArm": "leftArm",
+    "leftForearm": "leftArmForearm",
+    "leftLeg": "leftLeg",
+    "leftShin": "leftLegShin",
+    "leftFoot": "leftLegFoot",
+    "rightArm": "rightArm",
+    "rightForearm": "rightArmForearm",
+    "rightLeg": "rightLeg",
+    "rightShin": "rightLegShin",
+    "rightFoot": "rightLegFoot"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "emitter-0",
+      "node": "rightArmForearm",
+      "position": [
+        -0.12342857142857167,
+        2.869714285714286,
+        -0.6788571428571419
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "emitter-1",
+      "node": "torso",
+      "position": [
+        -0.6788571428571429,
+        -1.2960000000000003,
+        0.9257142857142862
+      ],
+      "direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "role": "exhaust",
+      "effect": "exhaust"
+    },
+    {
+      "id": "emitter-2",
+      "node": "torso",
+      "position": [
+        0.6788571428571429,
+        -1.2960000000000003,
+        0.9257142857142862
+      ],
+      "direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "role": "exhaust",
+      "effect": "exhaust"
+    }
+  ]
+}

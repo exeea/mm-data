@@ -1346,6 +1346,86 @@
       ],
       "sha256": "79c9456190898f69127555199d626b24ed54ae3ef735d6a2f4888f6b309951f3"
     },
+    "troops/elemental-no-launchers-standing": {
+      "triangles": 261,
+      "bareUnit": true,
+      "vertices": 559,
+      "bounds": [
+        [
+          -2.8080000000000003,
+          2.8080000000000003
+        ],
+        [
+          -1.9131428571428575,
+          3.8880000000000003
+        ],
+        [
+          0.0,
+          8.609142857142858
+        ]
+      ],
+      "sha256": "b1ce71d6004be788a04bc54e9b6a26a8d30220e78ab8f52e4c00532038eb28d8"
+    },
+    "troops/elemental-no-launchers-far-standing": {
+      "triangles": 164,
+      "bareUnit": true,
+      "vertices": 348,
+      "bounds": [
+        [
+          -2.4429123157874075,
+          2.4429123157874075
+        ],
+        [
+          -1.9131428571428575,
+          3.8880000000000003
+        ],
+        [
+          0.0,
+          8.609142857142858
+        ]
+      ],
+      "sha256": "b67a800f4e099938183a97a39be641994127e39c1e24a3c6688527b74dcf4edc"
+    },
+    "troops/elemental-ii-standing": {
+      "triangles": 326,
+      "bareUnit": true,
+      "vertices": 696,
+      "bounds": [
+        [
+          -3.178285714285715,
+          3.178285714285715
+        ],
+        [
+          -1.307841277644393,
+          3.2091428571428575
+        ],
+        [
+          0.0,
+          8.701714285714287
+        ]
+      ],
+      "sha256": "a8b4ef22cadd8efa5b461f26ef2866f1748a1b9288b2fe625358171abf5fd976"
+    },
+    "troops/elemental-ii-far-standing": {
+      "triangles": 224,
+      "bareUnit": true,
+      "vertices": 494,
+      "bounds": [
+        [
+          -3.0239500147450924,
+          2.931428571428572
+        ],
+        [
+          -1.0708414141742317,
+          3.2091428571428575
+        ],
+        [
+          0.0,
+          8.701714285714287
+        ]
+      ],
+      "sha256": "56e3310e48cecf3cfbbc9a63494799571a47aca3b111859f6c96ef64b0c86e18"
+    },
     "transports/motorized": {
       "triangles": 172,
       "bareUnit": true,
