@@ -1,0 +1,267 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "missile",
+  "mesh": "ac718332a4010f8210ce.g3dj",
+  "bounds": {
+    "min": [
+      -4.025,
+      -11.0,
+      -7.575
+    ],
+    "max": [
+      4.025,
+      0.76,
+      5.775
+    ]
+  },
+  "rig": "module-v1",
+  "joints": {
+    "root": "root",
+    "aim": "mount"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "emitter-0",
+      "node": "mount",
+      "position": [
+        -1.75,
+        0.76,
+        3.5
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-1",
+      "node": "mount",
+      "position": [
+        0.0,
+        0.76,
+        3.5
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-2",
+      "node": "mount",
+      "position": [
+        1.75,
+        0.76,
+        3.5
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-3",
+      "node": "mount",
+      "position": [
+        -1.75,
+        0.76,
+        1.75
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-4",
+      "node": "mount",
+      "position": [
+        0.0,
+        0.76,
+        1.75
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-5",
+      "node": "mount",
+      "position": [
+        1.75,
+        0.76,
+        1.75
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-6",
+      "node": "mount",
+      "position": [
+        -1.75,
+        0.76,
+        0.0
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-7",
+      "node": "mount",
+      "position": [
+        0.0,
+        0.76,
+        0.0
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-8",
+      "node": "mount",
+      "position": [
+        1.75,
+        0.76,
+        0.0
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-9",
+      "node": "mount",
+      "position": [
+        -1.75,
+        0.76,
+        -1.75
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-10",
+      "node": "mount",
+      "position": [
+        0.0,
+        0.76,
+        -1.75
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-11",
+      "node": "mount",
+      "position": [
+        1.75,
+        0.76,
+        -1.75
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-12",
+      "node": "mount",
+      "position": [
+        -1.75,
+        0.76,
+        -3.5
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-13",
+      "node": "mount",
+      "position": [
+        0.0,
+        0.76,
+        -3.5
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "emitter-14",
+      "node": "mount",
+      "position": [
+        1.75,
+        0.76,
+        -3.5
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    }
+  ]
+}

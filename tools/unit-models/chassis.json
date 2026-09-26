@@ -278,6 +278,30 @@
       "stackGap": {"LA":0.2},
       "variants": {"TDR-60-RLA": {"stackRows": ["LT","RT"], "rowWidth": {"LT":5.4,"RT":5.4}, "stackGap": {"LT":0.2,"RT":0.2}}},
       "weaponScale": 0.9
+    },
+    {
+      "name": "Thunderbolt", "id": "thunderbolt-iic", "referenceVariant": "TDR-5S",
+      "sprite": "meks/Thunderbolt.png", "illustration": "Mek/Thunderbolt.png", "hip": [42.0,36.0,27.17],
+      "silhouette": "Shaped from the TDR-5S line art and the A Game of Armored Combat miniature, as drawn: hooded head sunk in the right chest, the LRM drum over the left shoulder (the unit files put it in the right torso), big angular shoulder pads.",
+      "sockets": {"HD":[46.9,25.38,44.6],"CT":[42.0,25.6,37.6],"LT":[32.2,27.0,39.2],"RT":[51.6,27.0,37.0],"LA":[26.4,26.0,30.4],"RA":[57.6,26.0,30.4],"LL":[33.4,28.41,17.61],"RL":[50.6,28.41,17.61]},
+      "armSockets": {"LA":{"elbow":[26.5,33.0,36.0],"wrist":[26.4,26.0,30.4],"hand":[26.4,26.0,30.4]},"RA":{"elbow":[57.5,33.0,36.0],"wrist":[57.6,26.0,30.4],"hand":[57.6,26.0,30.4]}},
+      "rearSockets": {"HD":[46.9,34.8,46.8],"CT":[42.0,44.9,38.0],"LT":[33.78,44.5,39.4],"RT":[50.22,44.5,39.4],"LA":[26.4,37.6,32.6],"RA":[57.6,37.6,32.6]},
+      "exhaustSockets": {"HD":[46.9,34.8,45.5],"CT":[42.0,44.9,36.5],"LT":[36.0,44.5,36.5],"RT":[48.0,44.5,36.5]},
+      "searchlightSocket": {"location":"LT","position":[31.8,27.0,43.6]},
+      "equipmentRules": [
+        {"match": "^CLStreakLRM15$", "exclude": "", "drawAs": "CLStreakLRM15", "location": "RT", "family": "missile", "profile": "framed-columns-4", "node": "HD", "socket": [46.9, 30.0, 51.8], "size": [8, 13], "note": "The Streak LRM 15 is a tall framed box, 3 tubes across and 5 high, housing and all, tilted back 15 degrees and set into the top of the body over the head, its rear half buried; its base comes off with it."},
+        {"match": "^CLECMSuite$", "exclude": "", "drawAs": "CLECMSuite", "location": "HD", "family": "ecm", "profile": "", "node": "HD", "socket": [52.0, 30.0, 46.4], "size": [4, 4], "note": "The head's ECM stands upright on top of the right torso, to the right of the cockpit, clear of it."}
+      ],
+      "mountAreas": {"HD":{"width":7.1,"height":4.7},"CT":{"width":8.0,"height":10.9},"LT":{"width":4.6,"height":11.2},"RT":{"width":3.0,"height":9.3},"LA":{"width":4.9,"height":5.8},"RA":{"width":4.9,"height":5.8}},
+      "weaponOverrides": [{"location":"LA","family":"laser","length":10},{"location":"LA","family":"ppc","length":10},{"location":"LA","family":"ballistic","length":10},{"location":"RA","family":"laser","length":10},{"location":"RA","family":"ppc","length":10},{"location":"RA","family":"ballistic","length":10}],
+      "ventDefaultSides": [], "ventSpares": 0,
+      "socketAim": {"CT:ecm":[0,0,1],"HD:ecm":[0,0,1],"RT:missile":[0,0.966,0.259]},
+      "lightProtrusion": {"LA":"short","RA":"short"},
+      "protrusion": {"RT":"long"},
+      "variants": {"2":{"sockets":{"RA":[57.6,26.0,31.4]},"armSockets":{"RA":{"elbow":[57.5,33.0,36.0],"wrist":[57.6,26.0,31.4],"hand":[57.6,26.0,31.4]}}}},
+      "stackGap": {"LT":0.45},
+      "locationScale": {"LT":0.8},
+      "weaponScale": 0.9
     }
   ]
 }

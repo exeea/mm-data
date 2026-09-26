@@ -368,6 +368,11 @@ def _housing_launcher(geometry, mount, rule, position, scale, options):
         geometry.emitter(centre, (0, direction, 0), group, 'launcher', 'missile')
 
 
+# A framed box launcher at scale 1: the frame's width round the tube face, the housing's depth, and how far its
+# front stands ahead of the mount (the tube face is at .76).
+FRAME_MARGIN, FRAME_DEPTH, FRAME_FRONT = .9, 11.5, .5
+
+
 def _launcher(geometry, mount, rule, position, scale, options):
     if options.get('style') == 'drum':
         _drum_launcher(geometry, mount, rule, position, scale, options)
@@ -383,7 +388,42 @@ def _launcher(geometry, mount, rule, position, scale, options):
     slope = options.get('slope', 0)
     # A leaning bay is built upright, then sheared about the bay's center so stacked launchers share one face.
     launcher = Geometry() if slope else geometry
-    launcher.box((x, y-direction*2.3*scale, z), (grid['width'], 6*scale, grid['height']), group, 'paint')
+    if options.get('frame'):
+        # A deep housing round the tubes, deeper than it is wide, its front just behind the tube face so the tubes
+        # show inside a thick frame; it replaces the plain launcher box.
+        depth = FRAME_DEPTH*scale
+        frame_width = grid['width']+2*FRAME_MARGIN*scale
+        frame_height = grid['height']+2*FRAME_MARGIN*scale
+        launcher.box((x, y+direction*(FRAME_FRONT*scale-depth/2), z), (frame_width, depth, frame_height), group,
+                     'paint', bevel=.4*scale)
+        # The base slab the block sits on, set back under it.
+        launcher.box((x, y-direction*depth*.45, z-frame_height/2-.8*scale),
+                     (frame_width*.7, depth*.6, 2*scale), group, 'paint')
+        side = {'left': -1, 'right': 1}.get(options.get('frameSide'), 0)
+        if side:
+            # A housing block beside the box on one side, set back from the tube face and a little lower, with a
+            # slot and two vent lines on its front, as the Thunderbolt IIC's launcher carries on its outer side.
+            side_width, side_front, side_depth = 6*scale, (FRAME_FRONT-2)*scale, 10*scale
+            side_height = frame_height-scale
+            inner = x+side*(frame_width/2-.3*scale)
+            middle = inner+side*side_width/2
+            launcher.box((middle, y+direction*(side_front-side_depth/2), z-scale/2),
+                         (side_width, side_depth, side_height), group, 'paint', bevel=.4*scale)
+            face = y+direction*(side_front+.02*scale)
+
+            def recess(across, low, high, wide):
+                # A dark panel on the side housing's front, `across` out from its inner edge.
+                left = inner+side*across*scale
+                right = left+side*wide*scale
+                left, right = min(left, right), max(left, right)
+                corners = [(left, face, z+low*scale), (left, face, z+high*scale),
+                           (right, face, z+high*scale), (right, face, z+low*scale)]
+                launcher.face(corners if direction == 1 else list(reversed(corners)), group, 'dark')
+            recess(1.2, .8, 3.6, 1.6)
+            recess(3.3, -4.2, -1.2, .45)
+            recess(4.3, -4.2, -1.2, .45)
+    else:
+        launcher.box((x, y-direction*2.3*scale, z), (grid['width'], 6*scale, grid['height']), group, 'paint')
     front = y+direction*.76*scale
     if options.get('detail') == 'panel':
         # The last resort: each launcher's tube face is one panel, not tube by tube.

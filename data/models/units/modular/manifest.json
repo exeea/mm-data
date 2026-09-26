@@ -346,6 +346,26 @@
       ],
       "sha256": "d16243d85eb6f01db58b5daad06fa8d7d57ebb1c897694d154c21025481f7293"
     },
+    "bodies/thunderbolt-iic": {
+      "triangles": 1294,
+      "bareUnit": true,
+      "vertices": 2512,
+      "bounds": [
+        [
+          -21.2,
+          21.2
+        ],
+        [
+          -9.06,
+          16.9
+        ],
+        [
+          0,
+          49.9
+        ]
+      ],
+      "sha256": "3d10f53fee8f92fc62d708713624055c948a0e3df6e12e3069bb61b06674e736"
+    },
     "bodies/fallback-biped-light": {
       "triangles": 524,
       "bareUnit": true,
@@ -14365,6 +14385,26 @@
         ]
       ],
       "sha256": "480ad9e1edcd1edf22b81fe656b12ac049c3d726d19dad08ad9d33ed67599bb2"
+    },
+    "equipment/library/ac718332a4010f8210ce": {
+      "triangles": 100,
+      "bareUnit": false,
+      "vertices": 162,
+      "bounds": [
+        [
+          -4.025,
+          4.025
+        ],
+        [
+          -11.0,
+          0.76
+        ],
+        [
+          -7.575,
+          5.775
+        ]
+      ],
+      "sha256": "5e0d768923e7dbc0c7fd73c2d75dd257dc44f99d72e16e00cd8a8829638a114a"
     }
   },
   "note": "Reusable components; the Java renderer assembles formations/loadouts."

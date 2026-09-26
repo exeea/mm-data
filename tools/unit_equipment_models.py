@@ -5,6 +5,8 @@ This exports equipment shapes only. Java selects and fits live Mounted items; it
 from copy import deepcopy
 import hashlib
 import json
+from pathlib import Path
+import re
 
 from unit_model_geometry import Geometry
 from unit_weapon_shapes import BOOK, draw, held_for, housing_layout, rule_for
@@ -24,6 +26,16 @@ def fallback_rule(item, low_detail=False):
 def build_equipment(catalog, output, export_asset):
     assets, mappings, fallback_models, diagnostics = {}, {}, {}, []
     required = ('WEAPON', 'PHYSICAL_WEAPON')
+
+    # Only the framed profiles a chassis rule asks for are built, for the launchers it names, so the library does
+    # not gain a model for every launcher in the catalogue.
+    framed = {}
+    for recipe in json.loads((Path(__file__).parent / 'unit-models' / 'chassis.json').read_text(encoding='utf-8'))['chassis']:
+        for chassis_rule in recipe.get('equipmentRules', []):
+            if chassis_rule.get('profile', '').startswith('framed-columns-4'):
+                for item in catalog['equipment']:
+                    if re.search(chassis_rule['match'], item['internalName']):
+                        framed.setdefault(item['internalName'], set()).add(chassis_rule['profile'])
 
     def module(item, rule, style='default', low_detail=False, options=None):
         mount = dict(item, location='mount', rear=False)
@@ -81,6 +93,11 @@ def build_equipment(catalog, output, export_asset):
                                              'orientation': 'vertical', 'slope': .45, 'slopeOrigin': 0})
             # Stood on end against an upright face, with no lean.
             profiles['vertical'] = module(item, rule, options={'maximumColumns': 4, 'orientation': 'vertical'})
+            for name in sorted(framed.get(item['internalName'], ())):
+                # In a deep housing of its own, for a chassis that carries the launcher as one block, with a side
+                # housing on its left or right when the profile names one (framed-columns-4-left).
+                side = name[len('framed-columns-4-'):] if name != 'framed-columns-4' else ''
+                profiles[name] = module(item, rule, options={'maximumColumns': 4, 'frame': True, 'frameSide': side})
             if rule['look'] == 'launcher':
                 # A round drum with the tubes packed on its face, for a chassis whose recipe sets missileStyle, in
                 # three lengths by how far it stands out of the armour.
