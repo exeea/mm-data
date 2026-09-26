@@ -10,6 +10,8 @@ import json
 TEXT_SUFFIXES = {'.py', '.json', '.g3dj', '.txt', '.md'}
 TRIANGLE_TARGET = 1000
 TRIANGLE_LIMIT = 1500
+# A near body: drawn only up close, with a far body of at most TRIANGLE_LIMIT standing in for it from afar.
+NEAR_TRIANGLE_LIMIT = 3000
 # Mek-standard model units per metre: 27 units make a level, 18 world units at the default level height, and the
 # 30 m hex spans 72 world units, so a level shows 7.5 m. The Atlas then stands 15.2 m (canon: 15.4 m).
 MODEL_UNITS_PER_METRE = 27 / 7.5
@@ -153,10 +155,10 @@ class Geometry:
         for tri, node, material in other.faces:
             self.face([transform(p) for p in tri], group or node, material)
 
-    def export(self, path, name, z_scale=54, bare_unit=True, paint_uv=False):
-        if bare_unit and len(self.faces) > TRIANGLE_LIMIT:
-            raise ValueError(f'{name}: {len(self.faces)} triangles exceeds the hard cap of {TRIANGLE_LIMIT}')
-        if bare_unit and len(self.faces) >= TRIANGLE_TARGET:
+    def export(self, path, name, z_scale=54, bare_unit=True, paint_uv=False, limit=TRIANGLE_LIMIT):
+        if bare_unit and len(self.faces) > limit:
+            raise ValueError(f'{name}: {len(self.faces)} triangles exceeds the hard cap of {limit}')
+        if bare_unit and len(self.faces) >= TRIANGLE_TARGET and limit == TRIANGLE_LIMIT:
             print(f'Art review: {name} has {len(self.faces)} base triangles (target below {TRIANGLE_TARGET}); retaining detail')
         vertices, unique, parts = [], {}, defaultdict(list)
         stride = 12 if paint_uv else 10

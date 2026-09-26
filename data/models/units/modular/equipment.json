@@ -1289,16 +1289,9 @@
       "lowDetail": "units/modular/equipment/library/ab61fd76fd8ff1f6e31b.json"
     },
     "CLBACompactNarc": {
-      "model": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
+      "model": "units/modular/equipment/library/472c4f1830a12a62792c.json",
       "styles": {},
-      "profiles": {
-        "columns-4": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "vertical-slope": "units/modular/equipment/library/e7e006d19df0fb47efc5.json",
-        "vertical": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "drum-short": "units/modular/equipment/library/57d6c84f57a202f6f4ee.json",
-        "drum-medium": "units/modular/equipment/library/4b5d5a0fbcf839c7e786.json",
-        "drum-long": "units/modular/equipment/library/345cec7e065edb6e2c79.json"
-      },
+      "profiles": {},
       "family": "missile",
       "bankFamily": "missile",
       "policy": "WEAPON",
@@ -1370,13 +1363,8 @@
       "lowDetail": "units/modular/equipment/library/6a7da3263b8f45066e0b.json"
     },
     "CLBAFlamer": {
-      "model": "units/modular/equipment/library/8c51690d6b87e308b5fc.json",
-      "styles": {
-        "recessed": "units/modular/equipment/library/a232ea2237570c234f24.json",
-        "short": "units/modular/equipment/library/aa02428754142a7e8551.json",
-        "medium": "units/modular/equipment/library/2652821fe0b155c989ae.json",
-        "long": "units/modular/equipment/library/8c51690d6b87e308b5fc.json"
-      },
+      "model": "units/modular/equipment/library/d1a2fb534776f57f3a71.json",
+      "styles": {},
       "profiles": {},
       "family": "flamer",
       "bankFamily": "flamer",
@@ -1400,13 +1388,8 @@
       "lowDetail": "units/modular/equipment/library/ab61fd76fd8ff1f6e31b.json"
     },
     "CLBAHeavyFlamer": {
-      "model": "units/modular/equipment/library/b3fd1a95473fd3a8155f.json",
-      "styles": {
-        "recessed": "units/modular/equipment/library/7402369109dcbdecf56b.json",
-        "short": "units/modular/equipment/library/9efc5b13333d9192ec59.json",
-        "medium": "units/modular/equipment/library/36cddafc2efb251e90f4.json",
-        "long": "units/modular/equipment/library/b3fd1a95473fd3a8155f.json"
-      },
+      "model": "units/modular/equipment/library/072a7292353381684682.json",
+      "styles": {},
       "profiles": {},
       "family": "flamer",
       "bankFamily": "flamer",
@@ -2075,13 +2058,8 @@
       "fallback": false
     },
     "CLERFlamer": {
-      "model": "units/modular/equipment/library/eae097e34fdc62f96bf4.json",
-      "styles": {
-        "recessed": "units/modular/equipment/library/1d00dc1dbff88bcc4ea3.json",
-        "short": "units/modular/equipment/library/5ab4a8e4619ef40df027.json",
-        "medium": "units/modular/equipment/library/d3f421f9feabb7b1801e.json",
-        "long": "units/modular/equipment/library/eae097e34fdc62f96bf4.json"
-      },
+      "model": "units/modular/equipment/library/9c63ed10b90a7d292e88.json",
+      "styles": {},
       "profiles": {},
       "family": "flamer",
       "bankFamily": "flamer",
@@ -2253,13 +2231,8 @@
       "lowDetail": "units/modular/equipment/library/6a7da3263b8f45066e0b.json"
     },
     "CLFlamer": {
-      "model": "units/modular/equipment/library/8c51690d6b87e308b5fc.json",
-      "styles": {
-        "recessed": "units/modular/equipment/library/a232ea2237570c234f24.json",
-        "short": "units/modular/equipment/library/aa02428754142a7e8551.json",
-        "medium": "units/modular/equipment/library/2652821fe0b155c989ae.json",
-        "long": "units/modular/equipment/library/8c51690d6b87e308b5fc.json"
-      },
+      "model": "units/modular/equipment/library/d1a2fb534776f57f3a71.json",
+      "styles": {},
       "profiles": {},
       "family": "flamer",
       "bankFamily": "flamer",
@@ -2330,13 +2303,8 @@
       "lowDetail": "units/modular/equipment/library/ab61fd76fd8ff1f6e31b.json"
     },
     "CLHeavyFlamer": {
-      "model": "units/modular/equipment/library/b3fd1a95473fd3a8155f.json",
-      "styles": {
-        "recessed": "units/modular/equipment/library/7402369109dcbdecf56b.json",
-        "short": "units/modular/equipment/library/9efc5b13333d9192ec59.json",
-        "medium": "units/modular/equipment/library/36cddafc2efb251e90f4.json",
-        "long": "units/modular/equipment/library/b3fd1a95473fd3a8155f.json"
-      },
+      "model": "units/modular/equipment/library/072a7292353381684682.json",
+      "styles": {},
       "profiles": {},
       "family": "flamer",
       "bankFamily": "flamer",
@@ -3799,16 +3767,9 @@
       "lowDetail": "units/modular/equipment/library/6a7da3263b8f45066e0b.json"
     },
     "CLNarcBeacon": {
-      "model": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
+      "model": "units/modular/equipment/library/472c4f1830a12a62792c.json",
       "styles": {},
-      "profiles": {
-        "columns-4": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "vertical-slope": "units/modular/equipment/library/e7e006d19df0fb47efc5.json",
-        "vertical": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "drum-short": "units/modular/equipment/library/57d6c84f57a202f6f4ee.json",
-        "drum-medium": "units/modular/equipment/library/4b5d5a0fbcf839c7e786.json",
-        "drum-long": "units/modular/equipment/library/345cec7e065edb6e2c79.json"
-      },
+      "profiles": {},
       "family": "missile",
       "bankFamily": "missile",
       "policy": "WEAPON",
@@ -3816,16 +3777,9 @@
       "lowDetail": "units/modular/equipment/library/4388b00934ca20c5b778.json"
     },
     "CLNarcBeacon (I-OS)": {
-      "model": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
+      "model": "units/modular/equipment/library/472c4f1830a12a62792c.json",
       "styles": {},
-      "profiles": {
-        "columns-4": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "vertical-slope": "units/modular/equipment/library/e7e006d19df0fb47efc5.json",
-        "vertical": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "drum-short": "units/modular/equipment/library/57d6c84f57a202f6f4ee.json",
-        "drum-medium": "units/modular/equipment/library/4b5d5a0fbcf839c7e786.json",
-        "drum-long": "units/modular/equipment/library/345cec7e065edb6e2c79.json"
-      },
+      "profiles": {},
       "family": "missile",
       "bankFamily": "missile",
       "policy": "WEAPON",
@@ -3833,16 +3787,9 @@
       "lowDetail": "units/modular/equipment/library/4388b00934ca20c5b778.json"
     },
     "CLNarcBeacon (OS)": {
-      "model": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
+      "model": "units/modular/equipment/library/472c4f1830a12a62792c.json",
       "styles": {},
-      "profiles": {
-        "columns-4": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "vertical-slope": "units/modular/equipment/library/e7e006d19df0fb47efc5.json",
-        "vertical": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "drum-short": "units/modular/equipment/library/57d6c84f57a202f6f4ee.json",
-        "drum-medium": "units/modular/equipment/library/4b5d5a0fbcf839c7e786.json",
-        "drum-long": "units/modular/equipment/library/345cec7e065edb6e2c79.json"
-      },
+      "profiles": {},
       "family": "missile",
       "bankFamily": "missile",
       "policy": "WEAPON",
@@ -3917,6 +3864,15 @@
       "fallback": false,
       "lowDetail": "units/modular/equipment/library/4388b00934ca20c5b778.json"
     },
+    "CLPartialWing": {
+      "model": "units/modular/equipment/library/de0d11d7e8df1edac655.json",
+      "styles": {},
+      "profiles": {},
+      "family": "partial-wing",
+      "bankFamily": "partial-wing",
+      "policy": "OPTIONAL_MISC",
+      "fallback": false
+    },
     "CLPlasmaCannon": {
       "model": "units/modular/equipment/library/3220c2c434c68fcd0a55.json",
       "styles": {
@@ -3925,7 +3881,9 @@
         "medium": "units/modular/equipment/library/587f151d05cad0e0c9fd.json",
         "long": "units/modular/equipment/library/3220c2c434c68fcd0a55.json"
       },
-      "profiles": {},
+      "profiles": {
+        "held": "units/modular/equipment/library/f23335457324ecc7a7e3.json"
+      },
       "family": "energy",
       "bankFamily": "energy",
       "policy": "WEAPON",
@@ -6209,13 +6167,8 @@
       "fallback": false
     },
     "ER Flamer": {
-      "model": "units/modular/equipment/library/eae097e34fdc62f96bf4.json",
-      "styles": {
-        "recessed": "units/modular/equipment/library/1d00dc1dbff88bcc4ea3.json",
-        "short": "units/modular/equipment/library/5ab4a8e4619ef40df027.json",
-        "medium": "units/modular/equipment/library/d3f421f9feabb7b1801e.json",
-        "long": "units/modular/equipment/library/eae097e34fdc62f96bf4.json"
-      },
+      "model": "units/modular/equipment/library/9c63ed10b90a7d292e88.json",
+      "styles": {},
       "profiles": {},
       "family": "flamer",
       "bankFamily": "flamer",
@@ -6394,13 +6347,8 @@
       "lowDetail": "units/modular/equipment/library/2b7aaa848bff6b50282c.json"
     },
     "Flamer": {
-      "model": "units/modular/equipment/library/8c51690d6b87e308b5fc.json",
-      "styles": {
-        "recessed": "units/modular/equipment/library/a232ea2237570c234f24.json",
-        "short": "units/modular/equipment/library/aa02428754142a7e8551.json",
-        "medium": "units/modular/equipment/library/2652821fe0b155c989ae.json",
-        "long": "units/modular/equipment/library/8c51690d6b87e308b5fc.json"
-      },
+      "model": "units/modular/equipment/library/d1a2fb534776f57f3a71.json",
+      "styles": {},
       "profiles": {},
       "family": "flamer",
       "bankFamily": "flamer",
@@ -6409,13 +6357,8 @@
       "lowDetail": "units/modular/equipment/library/7d5a7946a2e0a92f121d.json"
     },
     "Flamer (Heavy)": {
-      "model": "units/modular/equipment/library/b3fd1a95473fd3a8155f.json",
-      "styles": {
-        "recessed": "units/modular/equipment/library/7402369109dcbdecf56b.json",
-        "short": "units/modular/equipment/library/9efc5b13333d9192ec59.json",
-        "medium": "units/modular/equipment/library/36cddafc2efb251e90f4.json",
-        "long": "units/modular/equipment/library/b3fd1a95473fd3a8155f.json"
-      },
+      "model": "units/modular/equipment/library/072a7292353381684682.json",
+      "styles": {},
       "profiles": {},
       "family": "flamer",
       "bankFamily": "flamer",
@@ -6424,13 +6367,8 @@
       "lowDetail": "units/modular/equipment/library/7d5a7946a2e0a92f121d.json"
     },
     "Flamer (Man-Portable)": {
-      "model": "units/modular/equipment/library/8c51690d6b87e308b5fc.json",
-      "styles": {
-        "recessed": "units/modular/equipment/library/a232ea2237570c234f24.json",
-        "short": "units/modular/equipment/library/aa02428754142a7e8551.json",
-        "medium": "units/modular/equipment/library/2652821fe0b155c989ae.json",
-        "long": "units/modular/equipment/library/8c51690d6b87e308b5fc.json"
-      },
+      "model": "units/modular/equipment/library/d1a2fb534776f57f3a71.json",
+      "styles": {},
       "profiles": {},
       "family": "flamer",
       "bankFamily": "flamer",
@@ -6439,13 +6377,8 @@
       "lowDetail": "units/modular/equipment/library/7d5a7946a2e0a92f121d.json"
     },
     "Flamer (Vehicle)": {
-      "model": "units/modular/equipment/library/8c51690d6b87e308b5fc.json",
-      "styles": {
-        "recessed": "units/modular/equipment/library/a232ea2237570c234f24.json",
-        "short": "units/modular/equipment/library/aa02428754142a7e8551.json",
-        "medium": "units/modular/equipment/library/2652821fe0b155c989ae.json",
-        "long": "units/modular/equipment/library/8c51690d6b87e308b5fc.json"
-      },
+      "model": "units/modular/equipment/library/d1a2fb534776f57f3a71.json",
+      "styles": {},
       "profiles": {},
       "family": "flamer",
       "bankFamily": "flamer",
@@ -6941,13 +6874,8 @@
       "fallback": false
     },
     "Heavy Flamer": {
-      "model": "units/modular/equipment/library/b3fd1a95473fd3a8155f.json",
-      "styles": {
-        "recessed": "units/modular/equipment/library/7402369109dcbdecf56b.json",
-        "short": "units/modular/equipment/library/9efc5b13333d9192ec59.json",
-        "medium": "units/modular/equipment/library/36cddafc2efb251e90f4.json",
-        "long": "units/modular/equipment/library/b3fd1a95473fd3a8155f.json"
-      },
+      "model": "units/modular/equipment/library/072a7292353381684682.json",
+      "styles": {},
       "profiles": {},
       "family": "flamer",
       "bankFamily": "flamer",
@@ -8320,16 +8248,9 @@
       "lowDetail": "units/modular/equipment/library/d9d5d4fdc98aa7aa2ec7.json"
     },
     "ISC3RemoteSensorLauncher": {
-      "model": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
+      "model": "units/modular/equipment/library/472c4f1830a12a62792c.json",
       "styles": {},
-      "profiles": {
-        "columns-4": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "vertical-slope": "units/modular/equipment/library/e7e006d19df0fb47efc5.json",
-        "vertical": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "drum-short": "units/modular/equipment/library/57d6c84f57a202f6f4ee.json",
-        "drum-medium": "units/modular/equipment/library/4b5d5a0fbcf839c7e786.json",
-        "drum-long": "units/modular/equipment/library/345cec7e065edb6e2c79.json"
-      },
+      "profiles": {},
       "family": "missile",
       "bankFamily": "missile",
       "policy": "WEAPON",
@@ -8582,7 +8503,9 @@
         "medium": "units/modular/equipment/library/50fe8bc290932156c093.json",
         "long": "units/modular/equipment/library/0ed9901433820bd70939.json"
       },
-      "profiles": {},
+      "profiles": {
+        "held": "units/modular/equipment/library/c2a951d6c25ffc12555b.json"
+      },
       "family": "energy",
       "bankFamily": "energy",
       "policy": "WEAPON",
@@ -8607,16 +8530,9 @@
       "lowDetail": "units/modular/equipment/library/ab61fd76fd8ff1f6e31b.json"
     },
     "ISImprovedNarc": {
-      "model": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
+      "model": "units/modular/equipment/library/472c4f1830a12a62792c.json",
       "styles": {},
-      "profiles": {
-        "columns-4": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "vertical-slope": "units/modular/equipment/library/e7e006d19df0fb47efc5.json",
-        "vertical": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "drum-short": "units/modular/equipment/library/57d6c84f57a202f6f4ee.json",
-        "drum-medium": "units/modular/equipment/library/4b5d5a0fbcf839c7e786.json",
-        "drum-long": "units/modular/equipment/library/345cec7e065edb6e2c79.json"
-      },
+      "profiles": {},
       "family": "missile",
       "bankFamily": "missile",
       "policy": "WEAPON",
@@ -8624,16 +8540,9 @@
       "lowDetail": "units/modular/equipment/library/4388b00934ca20c5b778.json"
     },
     "ISImprovedNarc (OS)": {
-      "model": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
+      "model": "units/modular/equipment/library/472c4f1830a12a62792c.json",
       "styles": {},
-      "profiles": {
-        "columns-4": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "vertical-slope": "units/modular/equipment/library/e7e006d19df0fb47efc5.json",
-        "vertical": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "drum-short": "units/modular/equipment/library/57d6c84f57a202f6f4ee.json",
-        "drum-medium": "units/modular/equipment/library/4b5d5a0fbcf839c7e786.json",
-        "drum-long": "units/modular/equipment/library/345cec7e065edb6e2c79.json"
-      },
+      "profiles": {},
       "family": "missile",
       "bankFamily": "missile",
       "policy": "WEAPON",
@@ -8873,7 +8782,9 @@
         "medium": "units/modular/equipment/library/50fe8bc290932156c093.json",
         "long": "units/modular/equipment/library/0ed9901433820bd70939.json"
       },
-      "profiles": {},
+      "profiles": {
+        "held": "units/modular/equipment/library/c2a951d6c25ffc12555b.json"
+      },
       "family": "energy",
       "bankFamily": "energy",
       "policy": "WEAPON",
@@ -9170,16 +9081,9 @@
       "lowDetail": "units/modular/equipment/library/4388b00934ca20c5b778.json"
     },
     "ISNarcBeacon": {
-      "model": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
+      "model": "units/modular/equipment/library/472c4f1830a12a62792c.json",
       "styles": {},
-      "profiles": {
-        "columns-4": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "vertical-slope": "units/modular/equipment/library/e7e006d19df0fb47efc5.json",
-        "vertical": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "drum-short": "units/modular/equipment/library/57d6c84f57a202f6f4ee.json",
-        "drum-medium": "units/modular/equipment/library/4b5d5a0fbcf839c7e786.json",
-        "drum-long": "units/modular/equipment/library/345cec7e065edb6e2c79.json"
-      },
+      "profiles": {},
       "family": "missile",
       "bankFamily": "missile",
       "policy": "WEAPON",
@@ -9187,16 +9091,9 @@
       "lowDetail": "units/modular/equipment/library/4388b00934ca20c5b778.json"
     },
     "ISNarcBeacon (I-OS)": {
-      "model": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
+      "model": "units/modular/equipment/library/472c4f1830a12a62792c.json",
       "styles": {},
-      "profiles": {
-        "columns-4": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "vertical-slope": "units/modular/equipment/library/e7e006d19df0fb47efc5.json",
-        "vertical": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "drum-short": "units/modular/equipment/library/57d6c84f57a202f6f4ee.json",
-        "drum-medium": "units/modular/equipment/library/4b5d5a0fbcf839c7e786.json",
-        "drum-long": "units/modular/equipment/library/345cec7e065edb6e2c79.json"
-      },
+      "profiles": {},
       "family": "missile",
       "bankFamily": "missile",
       "policy": "WEAPON",
@@ -9204,16 +9101,9 @@
       "lowDetail": "units/modular/equipment/library/4388b00934ca20c5b778.json"
     },
     "ISNarcBeacon (OS)": {
-      "model": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
+      "model": "units/modular/equipment/library/472c4f1830a12a62792c.json",
       "styles": {},
-      "profiles": {
-        "columns-4": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "vertical-slope": "units/modular/equipment/library/e7e006d19df0fb47efc5.json",
-        "vertical": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "drum-short": "units/modular/equipment/library/57d6c84f57a202f6f4ee.json",
-        "drum-medium": "units/modular/equipment/library/4b5d5a0fbcf839c7e786.json",
-        "drum-long": "units/modular/equipment/library/345cec7e065edb6e2c79.json"
-      },
+      "profiles": {},
       "family": "missile",
       "bankFamily": "missile",
       "policy": "WEAPON",
@@ -9221,21 +9111,23 @@
       "lowDetail": "units/modular/equipment/library/4388b00934ca20c5b778.json"
     },
     "ISNarcBeaconPrototype": {
-      "model": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
+      "model": "units/modular/equipment/library/472c4f1830a12a62792c.json",
       "styles": {},
-      "profiles": {
-        "columns-4": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "vertical-slope": "units/modular/equipment/library/e7e006d19df0fb47efc5.json",
-        "vertical": "units/modular/equipment/library/39a78f4aa09a5c8743be.json",
-        "drum-short": "units/modular/equipment/library/57d6c84f57a202f6f4ee.json",
-        "drum-medium": "units/modular/equipment/library/4b5d5a0fbcf839c7e786.json",
-        "drum-long": "units/modular/equipment/library/345cec7e065edb6e2c79.json"
-      },
+      "profiles": {},
       "family": "missile",
       "bankFamily": "missile",
       "policy": "WEAPON",
       "fallback": false,
       "lowDetail": "units/modular/equipment/library/4388b00934ca20c5b778.json"
+    },
+    "ISPartialWing": {
+      "model": "units/modular/equipment/library/de0d11d7e8df1edac655.json",
+      "styles": {},
+      "profiles": {},
+      "family": "partial-wing",
+      "bankFamily": "partial-wing",
+      "policy": "OPTIONAL_MISC",
+      "fallback": false
     },
     "ISPlasmaRifle": {
       "model": "units/modular/equipment/library/0ed9901433820bd70939.json",
@@ -9245,7 +9137,9 @@
         "medium": "units/modular/equipment/library/50fe8bc290932156c093.json",
         "long": "units/modular/equipment/library/0ed9901433820bd70939.json"
       },
-      "profiles": {},
+      "profiles": {
+        "held": "units/modular/equipment/library/c2a951d6c25ffc12555b.json"
+      },
       "family": "energy",
       "bankFamily": "energy",
       "policy": "WEAPON",
@@ -12257,7 +12151,9 @@
         "medium": "units/modular/equipment/library/50fe8bc290932156c093.json",
         "long": "units/modular/equipment/library/0ed9901433820bd70939.json"
       },
-      "profiles": {},
+      "profiles": {
+        "held": "units/modular/equipment/library/c2a951d6c25ffc12555b.json"
+      },
       "family": "energy",
       "bankFamily": "energy",
       "policy": "WEAPON",
@@ -17180,13 +17076,8 @@
       "lowDetail": "units/modular/equipment/library/4388b00934ca20c5b778.json"
     },
     "Total Warfare Flamer": {
-      "model": "units/modular/equipment/library/8c51690d6b87e308b5fc.json",
-      "styles": {
-        "recessed": "units/modular/equipment/library/a232ea2237570c234f24.json",
-        "short": "units/modular/equipment/library/aa02428754142a7e8551.json",
-        "medium": "units/modular/equipment/library/2652821fe0b155c989ae.json",
-        "long": "units/modular/equipment/library/8c51690d6b87e308b5fc.json"
-      },
+      "model": "units/modular/equipment/library/d1a2fb534776f57f3a71.json",
+      "styles": {},
       "profiles": {},
       "family": "flamer",
       "bankFamily": "flamer",

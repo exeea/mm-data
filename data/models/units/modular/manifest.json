@@ -366,6 +366,46 @@
       ],
       "sha256": "3d10f53fee8f92fc62d708713624055c948a0e3df6e12e3069bb61b06674e736"
     },
+    "bodies/phoenix-hawk": {
+      "triangles": 1824,
+      "bareUnit": true,
+      "vertices": 4072,
+      "bounds": [
+        [
+          -14.81,
+          14.83
+        ],
+        [
+          -7.6,
+          11.025
+        ],
+        [
+          0.06,
+          46.7
+        ]
+      ],
+      "sha256": "a44c75d424db51cd1a9ff5d45ef2f5c786b127593739227ee46e60288b8c7d6e"
+    },
+    "bodies/phoenix-hawk-far": {
+      "triangles": 954,
+      "bareUnit": true,
+      "vertices": 2224,
+      "bounds": [
+        [
+          -14.81,
+          14.83
+        ],
+        [
+          -7.6,
+          10.899999999999999
+        ],
+        [
+          0.06,
+          46.7
+        ]
+      ],
+      "sha256": "4395be48acb6079bf3184594419316fbfe12a0bcda575b546f6546d20f037426"
+    },
     "bodies/fallback-biped-light": {
       "triangles": 524,
       "bareUnit": true,
@@ -3926,46 +3966,6 @@
       ],
       "sha256": "2bdb1f2e013c00a4b249a5996ba97282374eaf323da254fe6c43e4a6aef5cab2"
     },
-    "equipment/library/39a78f4aa09a5c8743be": {
-      "triangles": 18,
-      "bareUnit": false,
-      "vertices": 32,
-      "bounds": [
-        [
-          -2.2,
-          2.2
-        ],
-        [
-          -5.3,
-          0.76
-        ],
-        [
-          -2.2,
-          2.2
-        ]
-      ],
-      "sha256": "17d61457fbc31966ce3a987183ab59e2e5ee7095088bdbc608625cc4952d5bb6"
-    },
-    "equipment/library/e7e006d19df0fb47efc5": {
-      "triangles": 18,
-      "bareUnit": false,
-      "vertices": 32,
-      "bounds": [
-        [
-          -2.2,
-          2.2
-        ],
-        [
-          -6.29,
-          1.6900000000000004
-        ],
-        [
-          -2.2,
-          2.2
-        ]
-      ],
-      "sha256": "6a6e616102119c613cb2e8a43bf0a63c7cd082f06e37077c3b52d5541bfb03ea"
-    },
     "equipment/library/ec3201e3bfb96535d179": {
       "triangles": 14,
       "bareUnit": false,
@@ -4206,86 +4206,6 @@
       ],
       "sha256": "7f9b20afb65a6d0577b1db433be2a5aca3255c427cde20296d5f841b94865b35"
     },
-    "equipment/library/a232ea2237570c234f24": {
-      "triangles": 22,
-      "bareUnit": false,
-      "vertices": 40,
-      "bounds": [
-        [
-          -1.6903701960058692,
-          1.6903701960058695
-        ],
-        [
-          -2.0,
-          0.27
-        ],
-        [
-          -1.6903701960058695,
-          1.6903701960058695
-        ]
-      ],
-      "sha256": "3384c3466d85e323515b075870ce271bfd62332daaa03e1ec282c0d1f2ea8232"
-    },
-    "equipment/library/aa02428754142a7e8551": {
-      "triangles": 22,
-      "bareUnit": false,
-      "vertices": 40,
-      "bounds": [
-        [
-          -1.6903701960058692,
-          1.6903701960058695
-        ],
-        [
-          -2.0,
-          1.6300000000000001
-        ],
-        [
-          -1.6903701960058695,
-          1.6903701960058695
-        ]
-      ],
-      "sha256": "520772856a1bda54362d3b722b26c1ab731a86f2be5fd984e5c65aea497afe89"
-    },
-    "equipment/library/2652821fe0b155c989ae": {
-      "triangles": 22,
-      "bareUnit": false,
-      "vertices": 40,
-      "bounds": [
-        [
-          -1.6903701960058692,
-          1.6903701960058695
-        ],
-        [
-          -2.0,
-          2.8299999999999996
-        ],
-        [
-          -1.6903701960058695,
-          1.6903701960058695
-        ]
-      ],
-      "sha256": "ef5b6ac5d714c10bbdea48979647dc37a6edf645b58153d2a7245915c081673a"
-    },
-    "equipment/library/8c51690d6b87e308b5fc": {
-      "triangles": 22,
-      "bareUnit": false,
-      "vertices": 40,
-      "bounds": [
-        [
-          -1.6903701960058692,
-          1.6903701960058695
-        ],
-        [
-          -2.0,
-          4.03
-        ],
-        [
-          -1.6903701960058695,
-          1.6903701960058695
-        ]
-      ],
-      "sha256": "22dd1661531fe7dd6c257586ff15025f463037f05e79a2ba51952abcae2167ef"
-    },
     "equipment/library/7d5a7946a2e0a92f121d": {
       "triangles": 10,
       "bareUnit": false,
@@ -4305,86 +4225,6 @@
         ]
       ],
       "sha256": "3ab497be81d3d3ecd572516c724b519b834deeef4f01fa2de249a40ed6bfe871"
-    },
-    "equipment/library/7402369109dcbdecf56b": {
-      "triangles": 22,
-      "bareUnit": false,
-      "vertices": 40,
-      "bounds": [
-        [
-          -2.0525923808642696,
-          2.05259238086427
-        ],
-        [
-          -2.0,
-          0.32999999999999996
-        ],
-        [
-          -2.05259238086427,
-          2.0525923808642705
-        ]
-      ],
-      "sha256": "9809eabbdbcc42a858179fbae1f3836dca625eeed3e9649ecc2b24aca32cee4b"
-    },
-    "equipment/library/9efc5b13333d9192ec59": {
-      "triangles": 22,
-      "bareUnit": false,
-      "vertices": 40,
-      "bounds": [
-        [
-          -2.0525923808642696,
-          2.05259238086427
-        ],
-        [
-          -2.0,
-          2.03
-        ],
-        [
-          -2.05259238086427,
-          2.0525923808642705
-        ]
-      ],
-      "sha256": "7511076b8c620d3b8437eea45c86403f2a60eee8c81330dd066d4a1d59169888"
-    },
-    "equipment/library/36cddafc2efb251e90f4": {
-      "triangles": 22,
-      "bareUnit": false,
-      "vertices": 40,
-      "bounds": [
-        [
-          -2.0525923808642696,
-          2.05259238086427
-        ],
-        [
-          -2.0,
-          3.53
-        ],
-        [
-          -2.05259238086427,
-          2.0525923808642705
-        ]
-      ],
-      "sha256": "6e91c7954fb256c604725eb5bd85edbaee706cb3238a0ea0cb1ac233b9fa1a4f"
-    },
-    "equipment/library/b3fd1a95473fd3a8155f": {
-      "triangles": 22,
-      "bareUnit": false,
-      "vertices": 40,
-      "bounds": [
-        [
-          -2.0525923808642696,
-          2.05259238086427
-        ],
-        [
-          -2.0,
-          5.03
-        ],
-        [
-          -2.05259238086427,
-          2.0525923808642705
-        ]
-      ],
-      "sha256": "23ed6e9440b1dfd7e819e7e1a5539c470f36f77332bc5dd95263cc70ee6a147b"
     },
     "equipment/library/a5dac4f2e72e1d0c14b5": {
       "triangles": 14,
@@ -5385,86 +5225,6 @@
         ]
       ],
       "sha256": "7d6d2d56f0f795c881d1467e197a94d0edd138cf1b1681d0ac3f054cd6ec55fd"
-    },
-    "equipment/library/1d00dc1dbff88bcc4ea3": {
-      "triangles": 22,
-      "bareUnit": false,
-      "vertices": 40,
-      "bounds": [
-        [
-          -1.5696294677197358,
-          1.5696294677197362
-        ],
-        [
-          -2.0,
-          0.36
-        ],
-        [
-          -1.5696294677197362,
-          1.5696294677197362
-        ]
-      ],
-      "sha256": "ad555e8c67c2a9af33671ed0135e1bcb58e3401637ad9b8a63fb3a14db31bdbd"
-    },
-    "equipment/library/5ab4a8e4619ef40df027": {
-      "triangles": 22,
-      "bareUnit": false,
-      "vertices": 40,
-      "bounds": [
-        [
-          -1.5696294677197358,
-          1.5696294677197362
-        ],
-        [
-          -2.0,
-          2.23
-        ],
-        [
-          -1.5696294677197362,
-          1.5696294677197362
-        ]
-      ],
-      "sha256": "c00104eb6510e3c43bf183937f13cf03a560ad80a595970c1166cf0cf3545bd4"
-    },
-    "equipment/library/d3f421f9feabb7b1801e": {
-      "triangles": 22,
-      "bareUnit": false,
-      "vertices": 40,
-      "bounds": [
-        [
-          -1.5696294677197358,
-          1.5696294677197362
-        ],
-        [
-          -2.0,
-          3.8799999999999994
-        ],
-        [
-          -1.5696294677197362,
-          1.5696294677197362
-        ]
-      ],
-      "sha256": "3a9ae99bf2bbbfd20318816da480cca056787a47bf40ee24d79b197f4fde86e6"
-    },
-    "equipment/library/eae097e34fdc62f96bf4": {
-      "triangles": 22,
-      "bareUnit": false,
-      "vertices": 40,
-      "bounds": [
-        [
-          -1.5696294677197358,
-          1.5696294677197362
-        ],
-        [
-          -2.0,
-          5.53
-        ],
-        [
-          -1.5696294677197362,
-          1.5696294677197362
-        ]
-      ],
-      "sha256": "8c501e39571b7a0a796f3387302b35a1e814397daa3dad33012af179cfb16c16"
     },
     "equipment/library/e5d95fcc22c64693e757": {
       "triangles": 14,
@@ -11646,26 +11406,6 @@
       ],
       "sha256": "7e8414198acf9c21144aff03339d07270b4e9d3bd35ae9ad834224244d68d1dd"
     },
-    "equipment/library/345cec7e065edb6e2c79": {
-      "triangles": 62,
-      "bareUnit": false,
-      "vertices": 116,
-      "bounds": [
-        [
-          -1.8958008007131606,
-          1.8958008007131604
-        ],
-        [
-          -9.5,
-          9.52
-        ],
-        [
-          -1.995,
-          1.8958008007131602
-        ]
-      ],
-      "sha256": "9ea6b9ce44a24ff233acb1394fa723bb53a7581b72382f0879a5337487e2f880"
-    },
     "equipment/library/346a166f57587f18b3ae": {
       "triangles": 116,
       "bareUnit": false,
@@ -11926,26 +11666,6 @@
       ],
       "sha256": "333770577638992a6274f235fe4c08abf46f243fc51cb99828f42a5e3722e7ca"
     },
-    "equipment/library/4b5d5a0fbcf839c7e786": {
-      "triangles": 62,
-      "bareUnit": false,
-      "vertices": 116,
-      "bounds": [
-        [
-          -1.8958008007131606,
-          1.8958008007131604
-        ],
-        [
-          -7.75,
-          7.77
-        ],
-        [
-          -1.995,
-          1.8958008007131602
-        ]
-      ],
-      "sha256": "ea4773faf4c79e8bfc17b681e2e074cf8478ecf0dfd2773ebf648d23ca626aa9"
-    },
     "equipment/library/4bd6a69731ef4e8197dc": {
       "triangles": 62,
       "bareUnit": false,
@@ -12145,26 +11865,6 @@
         ]
       ],
       "sha256": "f0705ef4257319a2f4c242cdbfb8684dcec2122bdd99411d84d350eed338b553"
-    },
-    "equipment/library/57d6c84f57a202f6f4ee": {
-      "triangles": 62,
-      "bareUnit": false,
-      "vertices": 116,
-      "bounds": [
-        [
-          -1.8958008007131606,
-          1.8958008007131604
-        ],
-        [
-          -6.0,
-          6.02
-        ],
-        [
-          -1.995,
-          1.8958008007131602
-        ]
-      ],
-      "sha256": "5ec1cfd4d556a4e40f828b907d6f46f0ee9f7b3303f34e92d8a29226049a5f29"
     },
     "equipment/library/5a525c7c88e30bea458f": {
       "triangles": 116,
@@ -14405,6 +14105,146 @@
         ]
       ],
       "sha256": "5e0d768923e7dbc0c7fd73c2d75dd257dc44f99d72e16e00cd8a8829638a114a"
+    },
+    "equipment/library/072a7292353381684682": {
+      "triangles": 144,
+      "bareUnit": false,
+      "vertices": 260,
+      "bounds": [
+        [
+          -1.5068442890109464,
+          1.5068442890109466
+        ],
+        [
+          -2.88,
+          7.014
+        ],
+        [
+          -1.5068442890109466,
+          4.2
+        ]
+      ],
+      "sha256": "f351a1fad50afbbf238469a119c7812d976180fe8ae2e9c3de81612da027e19f"
+    },
+    "equipment/library/472c4f1830a12a62792c": {
+      "triangles": 114,
+      "bareUnit": false,
+      "vertices": 200,
+      "bounds": [
+        [
+          -1.45,
+          1.9500000000000002
+        ],
+        [
+          -3.8,
+          5.03
+        ],
+        [
+          -2.1,
+          1.45
+        ]
+      ],
+      "sha256": "ef7ecc7a597266d196c4af31473f16ba7bb45cd8376e5dcb449cc951b8f50c41"
+    },
+    "equipment/library/9c63ed10b90a7d292e88": {
+      "triangles": 144,
+      "bareUnit": false,
+      "vertices": 258,
+      "bounds": [
+        [
+          -1.192918395466999,
+          1.1929183954669993
+        ],
+        [
+          -2.28,
+          6.223999999999999
+        ],
+        [
+          -1.1929183954669993,
+          3.3249999999999997
+        ]
+      ],
+      "sha256": "e0528d8c6065c3a1860549343d319c916885e769ec7c54d7188ad32cd6548b84"
+    },
+    "equipment/library/c2a951d6c25ffc12555b": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 136,
+      "bounds": [
+        [
+          -2.5,
+          2.5
+        ],
+        [
+          0.0,
+          7.23
+        ],
+        [
+          -2.221629400464857,
+          2.2216294004648574
+        ]
+      ],
+      "sha256": "0b43004270f54ce0c46d1af4ef74f954166938b7d256559a601824ee311c314a"
+    },
+    "equipment/library/d1a2fb534776f57f3a71": {
+      "triangles": 144,
+      "bareUnit": false,
+      "vertices": 258,
+      "bounds": [
+        [
+          -1.2557035741757887,
+          1.255703574175789
+        ],
+        [
+          -2.4,
+          5.430000000000001
+        ],
+        [
+          -1.255703574175789,
+          3.5
+        ]
+      ],
+      "sha256": "8fbb3d2c5b82bb429865ffc928bfd6a97dd8d71280fd84193e401cde532d2e66"
+    },
+    "equipment/library/de0d11d7e8df1edac655": {
+      "triangles": 96,
+      "bareUnit": false,
+      "vertices": 196,
+      "bounds": [
+        [
+          -30,
+          30
+        ],
+        [
+          -11,
+          0.0
+        ],
+        [
+          -2.0,
+          10.62
+        ]
+      ],
+      "sha256": "0827b01de0fab66989756c937c3426fa7b09ff859536880d05cfcf38d09ad091"
+    },
+    "equipment/library/f23335457324ecc7a7e3": {
+      "triangles": 74,
+      "bareUnit": false,
+      "vertices": 136,
+      "bounds": [
+        [
+          -2.125,
+          2.125
+        ],
+        [
+          0.0,
+          6.33
+        ],
+        [
+          -1.8883849903951284,
+          1.8883849903951286
+        ]
+      ],
+      "sha256": "7b6b18bd70e7b5bc667a0df25feccb8f328000ca19c31e37698c473a0f2402dd"
     }
   },
   "note": "Reusable components; the Java renderer assembles formations/loadouts."

@@ -56,7 +56,8 @@
     {"id": "thunderbolt-10", "family": "missile", "name": "Thunderbolt 10", "look": "launcher", "tubes": "single", "tubeCount": 1, "tubeScale": 1.05},
     {"id": "thunderbolt-15", "family": "missile", "name": "Thunderbolt 15", "look": "launcher", "tubes": "single", "tubeCount": 1, "tubeScale": 1.25},
     {"id": "thunderbolt-20", "family": "missile", "name": "Thunderbolt 20", "look": "launcher", "tubes": "single", "tubeCount": 1, "tubeScale": 1.45},
-    {"id": "narc", "family": "missile", "name": "Narc|Remote Sensor", "look": "launcher", "tubes": "single", "tubeCount": 1},
+    {"id": "narc", "family": "missile", "name": "Narc|Remote Sensor", "look": "narc", "size": 1,
+     "note": "As the TRO draws it: a long tube with an open muzzle, widening to a thicker rear body with a ring at the back, a sight box on its side and a mounting bracket under it."},
     {"id": "cruise-missile", "family": "missile", "name": "Cruise Missile", "look": "launcher", "tubes": "hatch", "tubeCount": 1},
     {"id": "arrow-iv-bomb", "family": "missile", "name": "Arrow IV Bomb", "look": "launcher", "tubes": "hatch", "tubeCount": 1},
     {"id": "arrow-iv-clan", "family": "missile", "name": "Arrow IV", "internalName": "^CL", "look": "artillery-launcher", "artilleryScale": 0.93},
@@ -110,9 +111,10 @@
     {"id": "machine-gun-heavy", "family": "machine-gun", "name": "Heavy", "look": "barrel", "length": 4.5, "width": 1.6, "sides": 4, "tip": "dark", "torsoProtrusion": "short"},
     {"id": "machine-gun", "family": "machine-gun", "look": "barrel", "length": 4, "width": 1.2, "sides": 4, "tip": "dark", "torsoProtrusion": "short"},
 
-    {"id": "flamer-heavy", "family": "flamer", "name": "Heavy", "look": "barrel", "length": 5, "width": 3.4, "sides": 6, "taper": 1.25, "tip": "dark", "tipSize": 0.4},
-    {"id": "flamer-er", "family": "flamer", "name": "^ER ", "look": "barrel", "length": 5.5, "width": 2.6, "sides": 6, "taper": 1.25, "tip": "dark", "tipSize": 0.4},
-    {"id": "flamer", "family": "flamer", "look": "barrel", "length": 4, "width": 2.8, "sides": 6, "taper": 1.25, "tip": "dark", "tipSize": 0.4},
+    {"id": "flamer-heavy", "family": "flamer", "name": "Heavy", "look": "flamer", "size": 1.2, "nozzle": 1.15},
+    {"id": "flamer-er", "family": "flamer", "name": "^ER ", "look": "flamer", "size": 0.95, "nozzle": 1.4},
+    {"id": "flamer", "family": "flamer", "look": "flamer", "size": 1, "nozzle": 1,
+     "note": "As the TRO draws it: a banded cylinder body with a flared collar at the front and a thin nozzle out of it, a fuel tank with a domed top standing on its back and a small box beside the tank."},
 
     {"id": "plasma-cannon", "family": "energy", "name": "Plasma Cannon", "look": "barrel", "length": 7, "width": 3.4, "sides": 6, "tip": "plasma", "tipSize": 0.35},
     {"id": "plasma-rifle", "family": "energy", "name": "Plasma", "look": "barrel", "length": 8, "width": 4, "sides": 6, "tip": "plasma", "tipSize": 0.35},
@@ -185,6 +187,7 @@
     {"id": "held-ppc", "family": "ppc",
      "note": "Weapons that may be drawn as a gun gripped in the fist, when a recipe's heldWeapons names that arm and the arm has a hand. Single large weapons only: machine guns, small and medium lasers, flamers and launchers stay as they are drawn anywhere else."},
     {"id": "held-autocannon-gauss", "family": "ballistic", "name": "^(?!.*(AP Gauss|Magshot)).*(AC|Autocannon|Gauss)"},
-    {"id": "held-large-laser", "family": "laser", "name": "Large"}
+    {"id": "held-large-laser", "family": "laser", "name": "Large"},
+    {"id": "held-plasma", "family": "energy", "name": "Plasma (Rifle|Cannon)"}
   ]
 }

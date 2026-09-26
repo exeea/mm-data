@@ -1,0 +1,43 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "flamer",
+  "mesh": "072a7292353381684682.g3dj",
+  "bounds": {
+    "min": [
+      -1.5068442890109464,
+      -2.88,
+      -1.5068442890109466
+    ],
+    "max": [
+      1.5068442890109466,
+      7.014,
+      4.2
+    ]
+  },
+  "rig": "module-v1",
+  "joints": {
+    "root": "root",
+    "aim": "mount"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "emitter-0",
+      "node": "mount",
+      "position": [
+        0,
+        7.034,
+        0
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "flame"
+    }
+  ]
+}

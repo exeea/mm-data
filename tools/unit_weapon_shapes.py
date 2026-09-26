@@ -141,6 +141,10 @@ def footprint(rule, mount, scale, options=None):
         return rule['width']*1.15*scale, rule['width']*1.15*scale
     if look == 'ecm':
         return 2.3*rule['radius']*scale, 2.3*rule['radius']*scale
+    if look == 'narc':
+        return 2.9*rule['size']*scale, 3.4*rule['size']*scale
+    if look == 'flamer':
+        return 2.6*rule['size']*scale, 3.9*rule['size']*scale
     if look in ('pod', 'lamp'):
         return rule['size'][0]*scale, rule['size'][2]*scale
     return None
@@ -615,6 +619,11 @@ def _held(geometry, mount, rule, position, scale):
         # A broad lens housing at the muzzle.
         sleeve = width*1.2
         geometry.beam((x, muzzle-length*.15, bore), (x, muzzle, bore), sleeve, sleeve, group, 'edge', 6, 1)
+    elif family == 'energy':
+        # A plasma weapon: a boxy containment chamber behind the barrel and a flared muzzle.
+        geometry.box((x, y+length*.3, bore), (width*1.25, length*.25, width*1.1), group, 'edge')
+        sleeve = width*1.15
+        geometry.beam((x, muzzle-length*.12, bore), (x, muzzle, bore), sleeve, sleeve, group, 'metal', 6, 1)
     else:
         # An autocannon: a plain heavy barrel ending in a thick muzzle ring.
         sleeve = width*1.1
@@ -1185,6 +1194,38 @@ def _partial_wing(geometry, group):
             geometry.face(list(reversed(points)) if side < 0 else points, group, material)
 
 
+def _narc(shape, group, rule):
+    """A Narc launcher as the TRO draws it, built facing ahead from the mount: a long tube with a dark open muzzle,
+    widening to a thicker rear body with a ring at the back, a sight box on its right and a bracket beneath."""
+    size = rule['size']
+    shape.beam((0, -1*size, 0), (0, 5*size, 0), 1.8*size, 1.8*size, group, 'edge', 8, 1)
+    shape.beam((0, -3.4*size, 0), (0, -1*size, 0), 2.5*size, 2.5*size, group, 'edge', 8, 1)
+    shape.beam((0, -3.8*size, 0), (0, -3.4*size, 0), 2.9*size, 2.9*size, group, 'metal', 8, 1)
+    muzzle = [(.62*size*cos(pi/8 + 2*pi*i/8), 5.03*size, .62*size*sin(pi/8 + 2*pi*i/8)) for i in range(8)]
+    shape.face(list(reversed(muzzle)), group, 'dark')
+    shape.box((1.55*size, -1.8*size, .5*size), (.8*size, 1.8*size, 1.6*size), group, 'metal')
+    shape.box((0, -1.6*size, -1.6*size), (1.2*size, 2.0*size, 1.0*size), group, 'metal')
+    shape.emitter((0, 5.05*size, 0), (0, 1, 0), group, 'launcher', 'missile')
+
+
+def _flamer(shape, group, rule):
+    """A flamer as the TRO draws it, built facing ahead from the mount: a banded cylinder body with a flared collar at
+    the front and a thin nozzle out of it, and a fuel tank with a domed top standing on the back beside a small box.
+    `nozzle` stretches the nozzle alone, so an ER flamer reaches further than a standard one."""
+    size, reach = rule['size'], rule.get('nozzle', 1)
+    shape.beam((0, -2.4*size, 0), (0, 2.0*size, 0), 2.3*size, 2.3*size, group, 'edge', 8, 1)
+    shape.beam((0, 2.0*size, 0), (0, 2.6*size, 0), 2.6*size, 2.6*size, group, 'metal', 6, 1)
+    shape.beam((0, -.4*size, 0), (0, .2*size, 0), 2.45*size, 2.45*size, group, 'metal', 6, 1)
+    front = (2.6+2.8*reach)*size
+    shape.beam((0, 2.6*size, 0), (0, front, 0), .8*size, .8*size, group, 'metal', 6, 1)
+    tip = [(.3*size*cos(2*pi*i/6), front+.03, .3*size*sin(2*pi*i/6)) for i in range(6)]
+    shape.face(list(reversed(tip)), group, 'dark')
+    shape.beam((0, -1.3*size, .9*size), (0, -1.3*size, 2.9*size), 1.8*size, 1.8*size, group, 'edge', 6, 1)
+    shape.beam((0, -1.3*size, 2.9*size), (0, -1.3*size, 3.5*size), 1.8*size, 1.8*size, group, 'edge', 6, .5)
+    shape.box((.75*size, .1*size, 1.45*size), (.7*size, .8*size, .6*size), group, 'metal')
+    shape.emitter((0, front+.05, 0), (0, 1, 0), group, 'muzzle', 'flame')
+
+
 def _detailed(geometry, mount, rule, position, scale):
     """Author small equipment at one local origin; transform mesh and contacts together."""
     shape, group, look = Geometry(), mount['location'], rule['look']
@@ -1204,6 +1245,10 @@ def _detailed(geometry, mount, rule, position, scale):
         _support(shape, group, rule)
     elif look == 'partial-wing':
         _partial_wing(shape, group)
+    elif look == 'narc':
+        _narc(shape, group, rule)
+    elif look == 'flamer':
+        _flamer(shape, group, rule)
     else:
         raise ValueError('Unknown equipment look: '+look)
     facing = -1 if mount['rear'] else 1

@@ -10,7 +10,7 @@ from pathlib import Path
 
 from unit_infantry_shapes import (person, infantry_vehicle, TROOP_SCALE, BATTLE_ARMOR_SIZE, elemental, elemental_far,
                                   elemental_ii, elemental_ii_far)
-from unit_model_geometry import Geometry, TRIANGLE_LIMIT, TRIANGLE_TARGET, sub
+from unit_model_geometry import Geometry, NEAR_TRIANGLE_LIMIT, TRIANGLE_LIMIT, TRIANGLE_TARGET, sub
 from unit_weapon_shapes import draw, rule_for
 from unit_equipment_models import build_equipment
 from unit_mek_models import build_meks, fallback_recipes
@@ -64,12 +64,15 @@ def archive_superseded_modules(output, assets):
     print(f'Archived {count} superseded generated equipment files')
 
 
-def export_asset(geometry, output, key, kind, family, rig, joints, hardpoints=(), *, leg_bends=None):
+def export_asset(geometry, output, key, kind, family, rig, joints, hardpoints=(), *, leg_bends=None, detail=None):
+    """Writes one asset's mesh and descriptor. `detail='near'` marks a body drawn only up close: it may use
+    NEAR_TRIANGLE_LIMIT, and MegaMek refuses it unless the Mek descriptor names a far body to stand in for it."""
     if kind == 'equipment' and len(geometry.faces) > EQUIPMENT_TRIANGLE_LIMIT:
         raise ValueError(f'{key}: equipment has {len(geometry.faces)} triangles; maximum {EQUIPMENT_TRIANGLE_LIMIT}')
     descriptor = output / (key+'.json')
     mesh = descriptor.with_suffix('.g3dj')
-    stats = geometry.export(mesh, key, z_scale=1, bare_unit=kind != 'equipment', paint_uv=True)
+    limit = NEAR_TRIANGLE_LIMIT if detail == 'near' else TRIANGLE_LIMIT
+    stats = geometry.export(mesh, key, z_scale=1, bare_unit=kind != 'equipment', paint_uv=True, limit=limit)
     emitters = [{**emitter, 'position': sub(emitter['position'], geometry.pivots[emitter['node']])}
                 for emitter in geometry.emitters]
     locations = {node: node.split('-')[0].split('@')[0] for node in geometry.pivots
@@ -82,6 +85,7 @@ def export_asset(geometry, output, key, kind, family, rig, joints, hardpoints=()
         'hardpoints': list(hardpoints), 'emitters': emitters,
         **({'legBends': leg_bends} if leg_bends else {}),
         **({'landingSupports': geometry.landing_supports} if geometry.landing_supports else {}),
+        **({'detail': detail} if detail else {}),
     })
     return stats
 

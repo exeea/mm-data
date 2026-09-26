@@ -302,6 +302,26 @@
       "stackGap": {"LT":0.45},
       "locationScale": {"LT":0.8},
       "weaponScale": 0.9
+    },
+    {
+      "name": "Phoenix Hawk", "id": "phoenix-hawk", "referenceVariant": "PXH-1",
+      "sprite": "meks/PhoenixHawk.png", "illustration": "Mek/Phoenix Hawk.png", "hip": [42.0,36.0,23.34],
+      "silhouette": "Version 1, generated from the Phoenixhawk draft v1: one lofted shape per body segment, fitted to measurements of the HBS model. To be refined against the reference art.",
+      "sockets": {"HD":[42.0,31.0,41.0],"CT":[42.0,30.5,30.5],"LT":[36.7,31.6,36.5],"RT":[47.3,31.6,36.5],"LA":[30.53,28.49,28.81],"RA":[53.48,28.49,28.82],"LL":[36.33,31.04,15.4],"RL":[47.67,31.04,15.4]},
+      "armSockets": {"LA":{"elbow":[30.8,37.36,29.02],"wrist":[30.53,28.49,28.81],"hand":[30.53,28.49,28.81]},"RA":{"elbow":[53.29,37.37,28.89],"wrist":[53.48,28.49,28.82],"hand":[53.48,28.49,28.82]}},
+      "rearSockets": {"HD":[42.0,36.4,40.6],"CT":[42.0,43.5,33.0],"LT":[36.5,43.1,33.5],"RT":[47.5,43.1,33.5]},
+      "mountAreas": {"HD":{"width":3.0,"height":1.4},"CT":{"width":5.5,"height":11.5},"LT":{"width":3.6,"height":5.5},"RT":{"width":3.6,"height":5.5},"LA":{"width":3.5,"height":7.2},"RA":{"width":3.5,"height":7.2}},
+      "exhaustSockets": {"LT":[37.1,40.9,40.0],"RT":[46.9,40.9,40.0],"CT":[42.0,42.3,30.2]}, "ventDefaultSides": [], "stackGap": {"LA": 0, "RA": 0},
+      "farBody": true,
+      "socketNodes": {"LA:ecm": "LA", "RA:ecm": "RA"}, "heldWeapons": ["LA", "RA"],
+      "socketBanks": {"CT:ecm":[[42.0,30.5,34.5]],"LT:ecm":[[36.7,32.4,33.5]],"RT:ecm":[[47.3,32.4,33.5]],
+                      "LA@hand:ecm":[[32.3,33.8,37.2]],"LA@wrist:ecm":[[32.3,33.8,37.2]],"LA@elbow:ecm":[[32.3,33.8,37.2]],"LA:ecm":[[32.3,33.8,37.2]],"RA@hand:ecm":[[51.7,33.8,37.2]],"RA@wrist:ecm":[[51.7,33.8,37.2]],"RA@elbow:ecm":[[51.7,33.8,37.2]],"RA:ecm":[[51.7,33.8,37.2]],
+                      "LA@hand:laser":[[30.2,24.8,31.9],[30.2,27.3,31.9]],"RA@hand:laser":[[53.8,24.8,31.9],[53.8,27.3,31.9]],"LA@hand:machine-gun":[[30.2,28.4,25.9],[30.2,30.9,26.0]],"RA@hand:machine-gun":[[53.8,28.4,25.9],[53.8,30.9,26.0]],"LA@hand:ballistic":[[26.9,27.0,29.1]],"RA@hand:ballistic":[[57.1,27.0,29.1]],"LA@hand:flamer":[[26.9,27.0,29.1]],"RA@hand:flamer":[[57.1,27.0,29.1]],"LA@hand:missile":[[26.9,27.0,29.1]],"RA@hand:missile":[[57.1,27.0,29.1]],
+                      "LA@wrist:laser":[[30.2,24.8,31.9],[30.2,27.3,31.9]],"RA@wrist:laser":[[53.8,24.8,31.9],[53.8,27.3,31.9]],"LA@wrist:machine-gun":[[30.2,28.4,25.9],[30.2,30.9,26.0]],"RA@wrist:machine-gun":[[53.8,28.4,25.9],[53.8,30.9,26.0]],"LA@wrist:ballistic":[[26.9,27.0,29.1]],"RA@wrist:ballistic":[[57.1,27.0,29.1]],"LA@wrist:flamer":[[26.9,27.0,29.1]],"RA@wrist:flamer":[[57.1,27.0,29.1]],"LA@wrist:missile":[[26.9,27.0,29.1]],"RA@wrist:missile":[[57.1,27.0,29.1]]},
+      "weaponOverrides": [{"location": "LT", "family": "ballistic", "length": 4}, {"location": "RT", "family": "ballistic", "length": 4},
+                          {"location": "CT", "family": "ballistic", "length": 4}, {"location": "LT", "family": "laser", "length": 3.5},
+                          {"location": "RT", "family": "laser", "length": 3.5}, {"location": "CT", "family": "laser", "length": 3.5}],
+      "weaponScale": 0.85
     }
   ]
 }

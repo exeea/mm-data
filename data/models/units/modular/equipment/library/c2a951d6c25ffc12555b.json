@@ -1,0 +1,43 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "energy",
+  "mesh": "c2a951d6c25ffc12555b.g3dj",
+  "bounds": {
+    "min": [
+      -2.5,
+      0.0,
+      -2.221629400464857
+    ],
+    "max": [
+      2.5,
+      7.23,
+      2.2216294004648574
+    ]
+  },
+  "rig": "module-v1",
+  "joints": {
+    "root": "root",
+    "aim": "mount"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "emitter-0",
+      "node": "mount",
+      "position": [
+        0,
+        7.23,
+        0
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "energy"
+    }
+  ]
+}

@@ -4528,7 +4528,7 @@ exact "Phoenix PX-1KR" "meks/Phoenix_1KR.png"
 exact "Phoenix PX-1KT" "meks/Phoenix_1KT.png"
 exact "Phoenix PX-4R" "meks/Phoenix_4R.png"
 ##PIXIES
-chassis "Phoenix Hawk" "meks/PhoenixHawk.png"
+chassis "Phoenix Hawk" "meks/PhoenixHawk.png" "units/modular/meks/phoenix-hawk.json"
 exact "Phoenix Hawk PXH-1-EC" "meks/PhoenixHawk_1EC.png"
 exact "Phoenix Hawk PXH-1b 'Special'" "meks/PhoenixHawk_1B.png"
 exact "Phoenix Hawk PXH-1bC" "meks/PhoenixHawk_1BC.png"

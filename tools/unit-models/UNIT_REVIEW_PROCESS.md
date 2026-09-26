@@ -222,7 +222,7 @@ A Mek whose recipe lists an arm in `heldWeapons` holds its large weapons in that
 of growing them out of the forearm. The design is modular: nothing about it is authored per chassis.
 
 - **Which weapons.** Mek-mountable PPCs, autocannons (including LB-X, Ultra, rotary and hypervelocity),
-  Gauss rifles and large lasers, listed under `held` in `weapons.json`. Machine guns, small and medium
+  Gauss rifles, large lasers and plasma rifles and cannons, listed under `held` in `weapons.json`. Machine guns, small and medium
   lasers, flamers and launchers keep their ordinary shape. Infantry and battle armour weapons are
   excluded by requiring `F_MEK_WEAPON`, since name matching alone catches gauss pistols and support PPCs.
 - **The chassis supplies the gun body.** The exporter measures that chassis's own forearm end and hand
@@ -230,7 +230,7 @@ of growing them out of the forearm. The design is modular: nothing about it is a
   where the hand was, with a raised deck and a grip. It is optional anatomy like the hand.
 - **The weapon supplies the barrel.** Each qualifying weapon gets a `held` profile: a collar, a barrel
   and one feature per family - coils on a PPC, twin rails on a Gauss rifle, a thick muzzle ring on an
-  autocannon, a lens housing on a large laser. Sizes come from the weapon, so a Heavy PPC carries a
+  autocannon, a lens housing on a large laser, a containment chamber and flared muzzle on a plasma weapon. Sizes come from the weapon, so a Heavy PPC carries a
   bigger barrel than a Light PPC. It is built at its finished size; barrel length overrides do not
   stretch it.
 - **In game,** an arm holding a gun shows the gun body and loses its hand; any other arm keeps its hand.

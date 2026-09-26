@@ -1,0 +1,867 @@
+{
+  "schema": 2,
+  "kind": "mek",
+  "body": "units/modular/bodies/phoenix-hawk.json",
+  "equipment": "units/modular/equipment.json",
+  "mounts": [
+    {
+      "hardpoint": "HD-front",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "HD-rear",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "HD-exhaust",
+      "family": "jump-jet",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "CT-front",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "CT-rear",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "CT-exhaust",
+      "family": "jump-jet",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "LT-front",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "LT-rear",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "LT-exhaust",
+      "family": "jump-jet",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "RT-front",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "RT-rear",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "RT-exhaust",
+      "family": "jump-jet",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "LA-front",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA-rear",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA-exhaust",
+      "family": "jump-jet",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA-front",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA-rear",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA-exhaust",
+      "family": "jump-jet",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LL-front",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "LL-rear",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "LL-exhaust",
+      "family": "jump-jet",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "RL-front",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "RL-rear",
+      "family": "",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "RL-exhaust",
+      "family": "jump-jet",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "LA-elbow",
+      "family": "",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA-wrist",
+      "family": "",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA-hand",
+      "family": "",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0,
+      "profile": "held",
+      "heldOffset": [
+        -0.04,
+        3.515,
+        0.4
+      ]
+    },
+    {
+      "hardpoint": "RA-elbow",
+      "family": "",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA-wrist",
+      "family": "",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA-hand",
+      "family": "",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0,
+      "profile": "held",
+      "heldOffset": [
+        0.04,
+        3.515,
+        0.395
+      ]
+    },
+    {
+      "hardpoint": "CT:ecm-0",
+      "family": "ecm",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "LT:ecm-0",
+      "family": "ecm",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "RT:ecm-0",
+      "family": "ecm",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
+      "hardpoint": "LA@hand:ecm-0",
+      "family": "ecm",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@wrist:ecm-0",
+      "family": "ecm",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@elbow:ecm-0",
+      "family": "ecm",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA:ecm-0",
+      "family": "ecm",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@hand:ecm-0",
+      "family": "ecm",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@wrist:ecm-0",
+      "family": "ecm",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@elbow:ecm-0",
+      "family": "ecm",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA:ecm-0",
+      "family": "ecm",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@hand:laser-0",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@hand:laser-1",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@hand:laser-0",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@hand:laser-1",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@hand:machine-gun-0",
+      "family": "machine-gun",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@hand:machine-gun-1",
+      "family": "machine-gun",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@hand:machine-gun-0",
+      "family": "machine-gun",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@hand:machine-gun-1",
+      "family": "machine-gun",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@hand:ballistic-0",
+      "family": "ballistic",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@hand:ballistic-0",
+      "family": "ballistic",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@hand:flamer-0",
+      "family": "flamer",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@hand:flamer-0",
+      "family": "flamer",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@hand:missile-0",
+      "family": "missile",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@hand:missile-0",
+      "family": "missile",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@wrist:laser-0",
+      "family": "laser",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@wrist:laser-1",
+      "family": "laser",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@wrist:laser-0",
+      "family": "laser",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@wrist:laser-1",
+      "family": "laser",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@wrist:machine-gun-0",
+      "family": "machine-gun",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@wrist:machine-gun-1",
+      "family": "machine-gun",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@wrist:machine-gun-0",
+      "family": "machine-gun",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@wrist:machine-gun-1",
+      "family": "machine-gun",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@wrist:ballistic-0",
+      "family": "ballistic",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@wrist:ballistic-0",
+      "family": "ballistic",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@wrist:flamer-0",
+      "family": "flamer",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@wrist:flamer-0",
+      "family": "flamer",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LA@wrist:missile-0",
+      "family": "missile",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "RA@wrist:missile-0",
+      "family": "missile",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
+    },
+    {
+      "hardpoint": "LT-ballistic",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 3.4
+    },
+    {
+      "hardpoint": "RT-ballistic",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 3.4
+    },
+    {
+      "hardpoint": "CT-ballistic",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 3.4
+    },
+    {
+      "hardpoint": "LT-laser",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 2.975
+    },
+    {
+      "hardpoint": "RT-laser",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 2.975
+    },
+    {
+      "hardpoint": "CT-laser",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 2.975
+    },
+    {
+      "hardpoint": "CT-front",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 3.4
+    },
+    {
+      "hardpoint": "CT-front",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 2.975
+    },
+    {
+      "hardpoint": "CT-rear",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 3.4
+    },
+    {
+      "hardpoint": "CT-rear",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 2.975
+    },
+    {
+      "hardpoint": "LT-front",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 3.4
+    },
+    {
+      "hardpoint": "LT-front",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 2.975
+    },
+    {
+      "hardpoint": "LT-rear",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 3.4
+    },
+    {
+      "hardpoint": "LT-rear",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 2.975
+    },
+    {
+      "hardpoint": "RT-front",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 3.4
+    },
+    {
+      "hardpoint": "RT-front",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 2.975
+    },
+    {
+      "hardpoint": "RT-rear",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 3.4
+    },
+    {
+      "hardpoint": "RT-rear",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.85,
+      "length": 2.975
+    },
+    {
+      "hardpoint": "external-searchlight",
+      "family": "lamp",
+      "form": "",
+      "bay": false,
+      "scale": 0.85
+    }
+  ],
+  "configuration": "biped",
+  "farBody": "units/modular/bodies/phoenix-hawk-far.json",
+  "vents": [
+    {
+      "node": "LL#vent-front-0",
+      "location": "LL",
+      "side": "front",
+      "authored": true,
+      "min": [
+        -0.94,
+        1.619,
+        -7.34
+      ],
+      "max": [
+        0.86,
+        3.175,
+        -3.94
+      ]
+    },
+    {
+      "node": "LT#vent-rear-1",
+      "location": "LT",
+      "side": "rear",
+      "authored": true,
+      "min": [
+        -0.7,
+        -11.659,
+        -4.9
+      ],
+      "max": [
+        1.3,
+        -11.273,
+        -2.6
+      ]
+    },
+    {
+      "node": "RL#vent-front-2",
+      "location": "RL",
+      "side": "front",
+      "authored": true,
+      "min": [
+        -0.86,
+        1.619,
+        -7.34
+      ],
+      "max": [
+        0.94,
+        3.175,
+        -3.94
+      ]
+    },
+    {
+      "node": "RT#vent-rear-3",
+      "location": "RT",
+      "side": "rear",
+      "authored": true,
+      "min": [
+        -1.3,
+        -11.659,
+        -4.9
+      ],
+      "max": [
+        0.7,
+        -11.273,
+        -2.6
+      ]
+    },
+    {
+      "node": "CT#vent-front-4",
+      "location": "CT",
+      "side": "front",
+      "authored": false,
+      "min": [
+        -0.5,
+        5.56,
+        8.16
+      ],
+      "max": [
+        0.76,
+        5.913,
+        10.88
+      ]
+    },
+    {
+      "node": "CT#vent-front-5",
+      "location": "CT",
+      "side": "front",
+      "authored": false,
+      "min": [
+        -0.5,
+        5.567,
+        11.66
+      ],
+      "max": [
+        0.76,
+        5.882,
+        14.38
+      ]
+    },
+    {
+      "node": "CT#vent-rear-6",
+      "location": "CT",
+      "side": "rear",
+      "authored": false,
+      "min": [
+        -1.0,
+        -7.245,
+        8.16
+      ],
+      "max": [
+        1.0,
+        -6.86,
+        10.46
+      ]
+    },
+    {
+      "node": "CT#vent-rear-7",
+      "location": "CT",
+      "side": "rear",
+      "authored": false,
+      "min": [
+        -1.0,
+        -7.324,
+        11.16
+      ],
+      "max": [
+        1.0,
+        -6.981,
+        13.46
+      ]
+    },
+    {
+      "node": "RT#vent-rear-8",
+      "location": "RT",
+      "side": "rear",
+      "authored": false,
+      "min": [
+        -0.8,
+        -11.603,
+        -1.0
+      ],
+      "max": [
+        1.2,
+        -11.26,
+        1.3
+      ]
+    },
+    {
+      "node": "LT#vent-rear-9",
+      "location": "LT",
+      "side": "rear",
+      "authored": false,
+      "min": [
+        -1.2,
+        -11.603,
+        -1.0
+      ],
+      "max": [
+        0.8,
+        -11.26,
+        1.3
+      ]
+    }
+  ],
+  "ventDefaultSides": []
+}

@@ -311,8 +311,9 @@ def build_meks(recipes, output, export_asset, write_json):
     for recipe in with_variants(recipes):
         weight = recipe.get('weightProfile')
         shared = recipe.get('variantOf')
+        far_key = None
         if shared:
-            body, vents, chassis_hardpoints = built[shared]
+            body, vents, chassis_hardpoints, far_key = built[shared]
         else:
             body = fallback_body(recipe['topology'], weight)[0] if 'topology' in recipe else build_chassis(recipe, modular=True)
             if recipe.get('form') == 'airmek':
@@ -510,9 +511,14 @@ def build_meks(recipes, output, export_asset, write_json):
         key = 'bodies/'+recipe['id']
         topology = recipe.get('topology', 'biped')
         if not shared:
+            has_far_body = recipe.get('farBody', False)
             assets[key] = export_asset(body, output, key, 'body', 'mek-'+topology, topology+'-v1', joints, hardpoints,
-                                       leg_bends=recipe.get('legBends'))
-            built[recipe['id']] = body, vents, hardpoints
+                                       leg_bends=recipe.get('legBends'), detail='near' if has_far_body else None)
+            if has_far_body:
+                far_key = key+'-far'
+                assets[far_key] = export_far_body(recipe, joints, output, far_key, 'mek-'+topology, topology+'-v1',
+                                                  export_asset)
+            built[recipe['id']] = body, vents, hardpoints, far_key
         elif hardpoints == chassis_hardpoints:
             # The variant puts nothing in a new spot, so it uses the chassis's body as it is.
             key = 'bodies/'+shared
@@ -526,6 +532,9 @@ def build_meks(recipes, output, export_asset, write_json):
             'equipment': 'units/modular/equipment.json', 'mounts': mounts,
             'configuration': topology,
         }
+        if far_key:
+            # MegaMek swaps this simpler body in for the near one once the Mek is small on screen.
+            descriptor['farBody'] = 'units/modular/'+far_key+'.json'
         if rules:
             descriptor['rules'] = rules
         if vents:
@@ -535,6 +544,21 @@ def build_meks(recipes, output, export_asset, write_json):
                 descriptor['ventDefaultSides'] = recipe['ventDefaultSides']
         write_json(output / ('meks/'+recipe['id']+'.json'), descriptor)
     return assets
+
+
+def export_far_body(recipe, joints, output, key, family, rig, export_asset):
+    """Builds and exports the far body of a chassis whose recipe says "farBody": its builder called with far=True.
+
+    MegaMek hangs the far body's parts on the near body's nodes of the same name, so every node the near body's rig
+    names must exist here too. Weapons, vents and jump jets use the near body's spots, so the far one carries none.
+    """
+    far = build_chassis(recipe, modular=True, far=True)
+    split_torso_locations(far)
+    finish_vents(far, recipe.get('ventSpares', 3))
+    missing = sorted(node for node in joints.values() if node not in far.pivots)
+    if missing:
+        raise ValueError(recipe['id']+': the far body lacks nodes the near body has: '+', '.join(missing))
+    return export_asset(far, output, key, 'body', family, rig, joints, leg_bends=recipe.get('legBends'))
 
 
 def variant_descriptor_id(chassis_id, model):
