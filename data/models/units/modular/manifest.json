@@ -386,6 +386,46 @@
       ],
       "sha256": "a44c75d424db51cd1a9ff5d45ef2f5c786b127593739227ee46e60288b8c7d6e"
     },
+    "bodies/phoenix-hawk-iic": {
+      "triangles": 1888,
+      "bareUnit": true,
+      "vertices": 4096,
+      "bounds": [
+        [
+          -17.797305625,
+          17.8237895
+        ],
+        [
+          -9.2906,
+          12.802900000000001
+        ],
+        [
+          0.0,
+          52.911100000000005
+        ]
+      ],
+      "sha256": "3459c47ca98b7d605023e630a62a40474960f4d4fc3e34213fa9f4d6f043d2da"
+    },
+    "bodies/phoenix-hawk-iic-far": {
+      "triangles": 968,
+      "bareUnit": true,
+      "vertices": 2220,
+      "bounds": [
+        [
+          -17.797305625,
+          17.8237895
+        ],
+        [
+          -9.2906,
+          12.802900000000001
+        ],
+        [
+          0.0,
+          52.911100000000005
+        ]
+      ],
+      "sha256": "9829ca075139f784a43a99fe39d141994c949c53687c8b71b594f61e8f6161f6"
+    },
     "bodies/phoenix-hawk-far": {
       "triangles": 954,
       "bareUnit": true,

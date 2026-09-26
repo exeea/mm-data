@@ -322,6 +322,24 @@
                           {"location": "CT", "family": "ballistic", "length": 4}, {"location": "LT", "family": "laser", "length": 3.5},
                           {"location": "RT", "family": "laser", "length": 3.5}, {"location": "CT", "family": "laser", "length": 3.5}],
       "weaponScale": 0.85
+    },
+    {
+      "name": "Phoenix Hawk IIC", "id": "phoenix-hawk-iic", "bodyScale": 1.133, "referenceVariant": "",
+      "sprite": "meks/PhoenixHawk_IIC.png", "illustration": "Mek/Phoenix Hawk IIC.png", "hip": [42.0,36.0,23.34],
+      "silhouette": "Phoenix Hawk IIC: started as a copy of the Phoenix Hawk (v28), grown to the assault band (52.9 units, from the 53.3 mm Clan Direct Fire Star miniature), to be reshaped from the IIC art.",
+      "sockets": {"HD":[40.8,32.0,42.6],"CT":[42.0,30.4,29.6],"LT":[36.7,30.0,35.5],"RT":[47.3,30.0,35.5],"LA":[30.53,28.49,28.81],"RA":[53.48,28.49,28.82],"LL":[36.33,31.04,15.4],"RL":[47.67,31.04,15.4]},
+      "armSockets": {"LA":{"elbow":[30.8,37.36,29.02],"wrist":[30.53,28.49,28.81],"hand":[30.53,28.49,28.81]},"RA":{"elbow":[53.29,37.37,28.89],"wrist":[53.48,28.49,28.82],"hand":[53.48,28.49,28.82]}},
+      "rearSockets": {"HD":[42.0,36.4,40.6],"CT":[42.0,44.2,33.0],"LT":[36.5,44.0,33.5],"RT":[47.5,44.0,33.5]},
+      "mountAreas": {"HD":{"width":1.8,"height":1.6},"CT":{"width":5.5,"height":11.5},"LT":{"width":4.4,"height":8.0},"RT":{"width":4.4,"height":8.0},"LA":{"width":3.5,"height":7.2},"RA":{"width":3.5,"height":7.2}},
+      "exhaustSockets": {"LT":[37.0,41.5,40.0],"RT":[47.0,41.5,40.0],"CT":[42.0,42.3,30.2]}, "ventDefaultSides": [], "ventSpares": 0, "stackGap": {"LA": 0, "RA": 0},
+      "farBody": true,
+      "socketNodes": {"LA:ecm": "LA", "RA:ecm": "RA"}, "heldWeapons": ["LA", "RA"],
+      "socketAim": {"LA:hatchet":[0,0.8,-0.6],"RA:hatchet":[0,0.8,-0.6]}, "socketBanks": {"LA@hand:hatchet":[[30.5,26.4,32.7]],"RA@hand:hatchet":[[53.5,26.4,32.7]],"CT:ecm":[[42.0,29.25,34.5]],"LT:ecm":[[36.7,29.9,32.0]],"RT:ecm":[[47.3,29.9,32.0]],
+                      "LA@hand:ecm":[[31.4,32.9,38.0]],"LA@wrist:ecm":[[31.4,32.9,38.0]],"LA@elbow:ecm":[[31.4,32.9,38.0]],"LA:ecm":[[31.4,32.9,38.0]],"RA@hand:ecm":[[52.6,32.9,38.0]],"RA@wrist:ecm":[[52.6,32.9,38.0]],"RA@elbow:ecm":[[52.6,32.9,38.0]],"RA:ecm":[[52.6,32.9,38.0]],
+                      "LA@hand:laser":[[30.2,24.8,31.1],[30.2,27.3,31.1]],"RA@hand:laser":[[53.8,24.8,31.1],[53.8,27.3,31.1]],"LA@hand:machine-gun":[[30.2,28.4,25.9],[30.2,30.9,26.0]],"RA@hand:machine-gun":[[53.8,28.4,25.9],[53.8,30.9,26.0]],"LA@hand:ballistic":[[27.5,29.8,29.9]],"RA@hand:ballistic":[[56.5,29.8,29.9]],"LA@hand:flamer":[[25.7,27.0,29.1]],"RA@hand:flamer":[[58.3,27.0,29.1]],"LA@hand:missile":[[25.7,27.0,29.1]],"RA@hand:missile":[[58.3,27.0,29.1]],
+                      "LA@wrist:laser":[[30.2,24.8,31.1],[30.2,27.3,31.1]],"RA@wrist:laser":[[53.8,24.8,31.1],[53.8,27.3,31.1]],"LA@wrist:machine-gun":[[30.2,28.4,25.9],[30.2,30.9,26.0]],"RA@wrist:machine-gun":[[53.8,28.4,25.9],[53.8,30.9,26.0]],"LA@wrist:ballistic":[[27.5,29.8,29.9]],"RA@wrist:ballistic":[[56.5,29.8,29.9]],"LA@wrist:flamer":[[25.7,27.0,29.1]],"RA@wrist:flamer":[[58.3,27.0,29.1]],"LA@wrist:missile":[[25.7,27.0,29.1]],"RA@wrist:missile":[[58.3,27.0,29.1]]},
+      "protrusion": {"CT": "short", "LT": "short", "RT": "short"}, "lightProtrusion": {"CT": "short", "LT": "short", "RT": "short"},
+      "weaponScale": 0.85
     }
   ]
 }

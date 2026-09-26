@@ -4563,7 +4563,7 @@ exact "Phoenix Hawk PXH-4M" "meks/PhoenixHawk_4M.png"
 exact "Phoenix Hawk PXH-1b (Special)" "meks/PhoenixHawk_1B.png"
 exact "Phoenix Hawk PXH-1c (Special)" "meks/PhoenixHawk_1C.png"
 ##Pixies IIC
-chassis "Phoenix Hawk IIC" "meks/PhoenixHawk_IIC.png"
+chassis "Phoenix Hawk IIC" "meks/PhoenixHawk_IIC.png" "units/modular/meks/phoenix-hawk-iic.json"
 exact "Phoenix Hawk IIC 2" "meks/PhoenixHawk_IIC_2.png"
 exact "Phoenix Hawk IIC 3" "meks/PhoenixHawk_IIC_3.png"
 exact "Phoenix Hawk IIC 4" "meks/PhoenixHawk_IIC_4.png"
