@@ -476,7 +476,7 @@ exact "Dragoon Battle Armor (Advanced)(Sqd4)" "battle armor/DragoonBA_4.png"
 exact "Dragoon Battle Armor (Advanced)(Sqd5)" "battle armor/DragoonBA_5.png"
 exact "Dragoon Battle Armor (Advanced)(Sqd6)" "battle armor/DragoonBA_6.png"
 #Elemental
-chassis "Elemental Battle Armor" "battle armor/Elemental_5-CO.png"
+chassis "Elemental Battle Armor" "battle armor/Elemental_5-CO.png" "units/modular/battle-armor/elemental.json"
 exact "Elemental Battle Armor [AP Gauss](Sqd3)" "battle armor/Elemental_3-CO.png"
 exact "Elemental Battle Armor [ER Laser](Sqd3)" "battle armor/Elemental_3-CO-LA.png"
 exact "Elemental Battle Armor [Flamer](Sqd3)" "battle armor/Elemental_3-CO-FL.png"

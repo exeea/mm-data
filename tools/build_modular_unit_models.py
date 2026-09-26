@@ -8,7 +8,7 @@ import json
 import re
 from pathlib import Path
 
-from unit_infantry_shapes import person, infantry_vehicle, TROOP_SCALE, BATTLE_ARMOR_SIZE
+from unit_infantry_shapes import person, infantry_vehicle, TROOP_SCALE, BATTLE_ARMOR_SIZE, elemental, elemental_far
 from unit_model_geometry import Geometry, TRIANGLE_LIMIT, TRIANGLE_TARGET, sub
 from unit_weapon_shapes import draw, rule_for
 from unit_equipment_models import build_equipment
@@ -101,6 +101,19 @@ def build(output, catalog):
         scale_geometry(troop, TROOP_SCALE*(BATTLE_ARMOR_SIZE if armored else 1))
         assets[key] = export_asset(troop, output, key, 'troop', 'battle-armor' if armored else 'infantry',
                                    'trooper-v1', joints)
+    # Chassis-specific battle armour: its own suit on the trooper rig, named by mekset.txt's chassis line, plus a
+    # simpler suit on the same rig that MegaMek shows while the squad is small on screen.
+    for name, suit, far_suit in (('elemental', elemental, elemental_far),):
+        key, far_key = 'troops/'+name+'-standing', 'troops/'+name+'-far-standing'
+        near, far = suit(), far_suit()
+        # Drawn beside the armoured figure's old 31.5-unit height; TROOP_SCALE keeps that proportion in metres.
+        for figure in (near, far):
+            scale_geometry(figure, TROOP_SCALE)
+        assets[key] = export_asset(near, output, key, 'troop', 'battle-armor', 'trooper-v1', joints)
+        assets[far_key] = export_asset(far, output, far_key, 'troop', 'battle-armor', 'trooper-v1', joints)
+        write_json(output / ('battle-armor/'+name+'.json'), {'schema': 2, 'kind': 'formation', 'family': 'battle-armor',
+                                                             'trooper': 'units/modular/'+key+'.json',
+                                                             'farTrooper': 'units/modular/'+far_key+'.json'})
     for kind in ('motorized', 'tracked', 'wheeled', 'hover'):
         key = 'transports/'+kind
         transport = infantry_vehicle(kind, modular=True)
