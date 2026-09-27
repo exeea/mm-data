@@ -43,8 +43,11 @@ contact glows now use `projectiles.frag` in the same shared quad renderer.
 Its mesh, indices and CPU vertex storage are allocated once and reused;
 animated positions and phases are updated per frame.
 
-Ballistic contacts add shader spark streaks on non-infantry targets, including
-Battle Armor. Conventional-infantry body hits suppress sparks. Terrain misses
+Ballistic contacts produce only shader spark streaks and a brief contact glint,
+with no impact fire or smoke. Spark width and travel scale with the square root
+of rack size. Every MG round has a separate 130 ms pulse in both normal and
+rapid-fire modes; missiles retain their explosions. Battle Armor and other
+solid targets spark; conventional-infantry body hits do not. Terrain misses
 spark only on identified rock/concrete surfaces, rock outcrops or detached
 mech parts; soft ground, water, ice, vegetation and unknown props do not.
 The existing geometry picker supplies that material, cached once per impact.
@@ -53,6 +56,7 @@ Spark motion, cooling and fade share the attack clock.
 `GpuExplosionSmokeTest` checks both cameras, cooling, wind response,
 paused-frame repeatability, opaque occlusion and near/far clipping.
 `GpuProjectileSmokeTest` checks projectile appearance, animation, occlusion,
-end-on tracers and ballistic sparks, including infantry and terrain exceptions.
+end-on tracers, spark size by rack size, and successive MG impacts in both modes,
+including infantry and terrain exceptions and retained missile explosions.
 Geometry and event-capture tests verify surface and unit classification.
 Volley, machine-gun and defensive playback tests cover attack integration.
