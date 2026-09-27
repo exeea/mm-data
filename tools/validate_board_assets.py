@@ -53,8 +53,16 @@ for asset in catalog:
     if asset in buildings:
         assert min(heights) == 0 and max(heights) == 18, f'One-level building: {path}'
     elif asset == 'bridge':
-        assert abs(min(heights) + 2.52) < 1e-5 and abs(max(heights) - 2.34) < 1e-5, path
+        assert abs(min(heights) + 1.5) < 1e-5 and abs(max(heights) - 2.5) < 1e-5, path
         assert 0 in heights, f'Bridge deck must remain at local Z=0: {path}'
+        roles = {m['id']: m for m in model['materials']}
+        for role, texture in {'bridge-deck': 'textures/roads/asphalt.png',
+                              'bridge-structure': 'textures/sculpt/concrete.png'}.items():
+            assert roles[role]['textures'][0]['filename'] == texture, path
+            assert roles[role]['textures'][0]['wrapS'] == roles[role]['textures'][0]['wrapT'] == 10497, path
+        for mesh in model['meshes']:
+            deck = next(part for part in mesh['parts'] if part['id'] == 'bridge-deck')
+            assert all(mesh['vertices'][i * 12 + 2] == 0 for i in deck['indices']), path
     triangles = 0
     for mesh in model['meshes']:
         assert mesh['attributes'] == ['POSITION', 'NORMAL', 'COLOR', 'TEXCOORD0'], path

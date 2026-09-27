@@ -2,8 +2,8 @@
 
 New datablocks live in their own scene; existing scenes are never edited. Runtime
 models use Z up and one hex = 84 x 72 units. Plants retain their natural
-proportions at height 30. Bridges use one default level = 18 units; crops
-retain their legacy height-one convention.
+proportions at height 30. Bridges use physical tile units, independent of
+terrain level height; crops retain their legacy height-one convention.
 """
 import sys
 from pathlib import Path
@@ -22,8 +22,6 @@ OUT.mkdir(parents=True, exist_ok=True)
 SCENE = bpy.data.scenes.new('MegaMek board assets')
 COLLECTION = SCENE.collection
 STATS = {}
-# Same authored units as buildings and the default board level.
-LEVEL_HEIGHT = 18
 # Names to rebuild; None rebuilds everything. A caller may pass a set, for example
 # runpy.run_path('tools/build_board_assets.py', init_globals={'ONLY': {'cactus'}}).
 ONLY = globals().get('ONLY')
@@ -47,12 +45,19 @@ def material(name, color):
     return mat
 
 
-BRIDGE = material('Saxarba bridge', (1, 1, 1))
-BRIDGE.use_nodes = True
-bridge_texture = BRIDGE.node_tree.nodes.new('ShaderNodeTexImage')
-bridge_texture.image = bpy.data.images.load(str(OUT / 'tileset/saxarba/bridges/bridge_09.png'), check_existing=True)
-BRIDGE.node_tree.links.new(bridge_texture.outputs['Color'],
-                          BRIDGE.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
+BRIDGE_TEXTURES = {'bridge-deck': 'textures/roads/asphalt.png',
+                   'bridge-structure': 'textures/sculpt/concrete.png'}
+BRIDGE = {}
+for role, filename in BRIDGE_TEXTURES.items():
+    mat = material(role, (1, 1, 1))
+    mat.use_nodes = True
+    shader = mat.node_tree.nodes.get('Principled BSDF')
+    shader.inputs['Base Color'].default_value = (1, 1, 1, 1)
+    shader.inputs['Roughness'].default_value = .85
+    texture = mat.node_tree.nodes.new('ShaderNodeTexImage')
+    texture.image = bpy.data.images.load(str(OUT / filename), check_existing=True)
+    mat.node_tree.links.new(texture.outputs['Color'], shader.inputs['Base Color'])
+    BRIDGE[role] = mat
 
 
 def mesh_object(name, vertices, faces, materials, indices):
@@ -97,7 +102,8 @@ def export(name, objects, normalize=False, foliage=False):
         normal_matrix = obj.matrix_world.to_3x3().inverted().transposed()
         for tri in mesh.loop_triangles:
             mat = mesh.materials[tri.material_index] if mesh.materials else None
-            role = tree_texture(name, mat) if foliage else 'bridge' if mat == BRIDGE else 'surface'
+            role = tree_texture(name, mat) if foliage else next(
+                (role for role, bridge in BRIDGE.items() if mat == bridge), 'surface')
             indices = parts.setdefault(role, [])
             color = mat.diffuse_color[:3] if mat else (.35, .45, .25)
             if mat and mat.use_nodes:
@@ -126,7 +132,7 @@ def export(name, objects, normalize=False, foliage=False):
                     n = normal
                 uv = (pos.x/24, pos.y/24) if abs(n.z) > .5 else (
                     (pos.x if abs(n.y) > abs(n.x) else pos.y)/24, pos.z)
-                if role == 'bridge':
+                if role in BRIDGE:
                     uv = mesh.uv_layers.active.data[loop].uv
                 elif foliage:
                     # Project in the tree's natural proportions. Dominant-axis mapping
@@ -146,8 +152,8 @@ def export(name, objects, normalize=False, foliage=False):
     materials = []
     for role in parts:
         entry = {'id':role,'diffuse':[1,1,1]}
-        if role == 'bridge':
-            entry['textures'] = [{'id':'bridge','filename':'tileset/saxarba/bridges/bridge_09.png','type':'DIFFUSE'}]
+        if role in BRIDGE_TEXTURES:
+            entry['textures'] = [{'id':role,'filename':BRIDGE_TEXTURES[role],'type':'DIFFUSE'}]
         elif foliage:
             entry['textures'] = [{'id':role,'filename':f'textures/foliage/{role}.png','type':'DIFFUSE'}]
         materials.append(entry)
@@ -164,42 +170,39 @@ def export(name, objects, normalize=False, foliage=False):
             if foliage:
                 texture['filename'] = '../../../data/models/board/' + texture['filename']
             else:
-                texture.update(wrapS=33071, wrapT=33071)
+                wrap = 10497 if name == 'bridge' else 33071
+                texture.update(wrapS=wrap, wrapT=wrap)
     write_glb(path, levels={0: model})
     STATS[name] = {'triangles': sum(len(indices) for indices in parts.values())//3, 'vertices': len(vertices)//12}
 
 
-# A bridge arm runs from the centre towards north; instances rotate for each exit.
-# The deck is at z=0, with underside/girders below and rails just above it.
-def bridge_beam(name, left, right, bottom, top):
+# A bridge arm runs from the centre towards north; instances lengthen it to the exit edge.
+# Deck Z=0 joins the road surface. These dimensions are tile units, never terrain levels:
+# 15-wide carriageway, 1.5-thick slab, 1.5-wide raised sides standing 2.5 above the deck.
+def bridge_beam(name, left, right, bottom, top, deck=False):
     polygon = [(left,0),(right,0),(right,36),(left,36)]
     vertices = [(x,y,z) for z in (bottom,top) for x,y in polygon]
     faces = [(4,5,6,7),(3,2,1,0)] + [(i,(i+1)%4,(i+1)%4+4,i+4) for i in range(4)]
-    beam = mesh_object(name, vertices, faces, [BRIDGE], [0]*6)
+    beam = mesh_object(name, vertices, faces, [BRIDGE['bridge-deck'], BRIDGE['bridge-structure']],
+                       [0 if deck else 1, 1, 1, 1, 1, 1])
     mesh = beam.data
-    mesh.materials.clear()
-    mesh.materials.append(BRIDGE)
-    uv = mesh.uv_layers.new(name='Saxarba bridge')
+    uv = mesh.uv_layers.new(name='Shared road and concrete')
+    repeat = 84 / 5  # Same base scale as road detail and the six-metre concrete material.
     for face in mesh.polygons:
-        face.material_index = 0
         for loop in face.loop_indices:
             p = mesh.vertices[mesh.loops[loop].vertex_index].co
-            if abs(face.normal.x) > .5:
-                # Unwrap the source rail strip over the vertical rail/fascia faces.
-                # This retains its longitudinal bars and supports, without stretching asphalt up the side.
-                height = (p.z-bottom)/(top-bottom)
-                pixel_x = 31.5+2*height if p.x < 0 else 52.5-2*height
+            if abs(face.normal.z) > .5:
+                coords = (p.x, -p.y)
             else:
-                # Original plan-view UVs, limited to opaque texel centres to avoid alpha fringes.
-                pixel_x = min(52.5, max(31.5, 42+p.x))
-            uv.data[loop].uv = (pixel_x/84, .5-p.y/72)
+                coords = (p.y if abs(face.normal.x) > .5 else p.x, -p.z)
+            uv.data[loop].uv = (coords[0] / repeat, coords[1] / repeat)
     return beam
 
 
 if wanted('bridge'):
-    export('bridge', [bridge_beam('Deck', -11, 11, -.14 * LEVEL_HEIGHT, 0),
-                      bridge_beam('Left rail', -11, -7.5, 0, .13 * LEVEL_HEIGHT),
-                      bridge_beam('Right rail', 7.5, 11, 0, .13 * LEVEL_HEIGHT)])
+    export('bridge', [bridge_beam('Deck', -9, 9, -1.5, 0, deck=True),
+                      bridge_beam('Left side', -9, -7.5, 0, 2.5),
+                      bridge_beam('Right side', 7.5, 9, 0, 2.5)])
 
 # Crops have one elevation level in the rules. Authored crossed blades preserve
 # that height without lifting a farmland image into a solid block.

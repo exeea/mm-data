@@ -49,8 +49,8 @@ no rock or scatter geometry is generated in-game.
   the imported Blender source names are in `manifest.json`.
 - Each tree GLB contains `-lod0`, `-lod1`, and `-lod2` groups. The near opaque mesh
   removes only fully enclosed faces and keeps the surviving vertex attributes
-  unchanged (366â€“480 triangles). The original remains available for close
-  transparent trees. The two distant meshes have 238â€“240 and 94â€“96 triangles,
+  unchanged (366Ã¢â‚¬â€œ480 triangles). The original remains available for close
+  transparent trees. The two distant meshes have 238Ã¢â‚¬â€œ240 and 94Ã¢â‚¬â€œ96 triangles,
   retaining the source coordinates, bounds, material roles and shared textures.
   The manifest records every level; screen-pixel thresholds live in Java's
   `TreeLod`, so no camera or game state is baked into these assets.
@@ -149,18 +149,20 @@ Z=18: one default board level, visible at useful proportions in ordinary GLB
 viewers. Placement fits their actual bounds to the game's feature height;
 interior floors/columns share the shell's coordinates and placement. Wall UVs
 and facade repetition remain independent of these authored coordinates.
-Crops retain their legacy height-one convention. A bridge arm is 22 wide and
-36 long, with its deck at Z=0, underside at -2.52 and rails at +2.34. Runtime
-scales its vertical dimensions by the configured level height divided by 18.
-The bridge GLB is still used for elevated decks and rails; the procedural road
-system supplies ground roads and their approaches to those decks. Textures and meshes are shared; translucency changes instance
-materials, not the assets. Snow trees have their own snow geometry/materials.
-The 36-triangle bridge arm samples `tileset/saxarba/bridges/bridge_09.png`.
-Deck and rail tops retain the source artwork's layout, while vertical rail and
-fascia faces unwrap its guardrail strip, including bars and supports. Edit that
-independent image to change the bridge. There is no transverse coping over the
-roadway. Runtime places the deck slightly
-above the riverbank to avoid coplanar depth flicker at zero bridge elevation.
+Crops retain their legacy height-one convention. The bridge is authored in tile
+units: a 15-wide carriageway, a slab 1.5 below deck Z=0 and raised sides 2.5 above
+it, each 1.5 wide. Each 36-triangle arm is 36 long and 18 wide overall.
+The runtime places the deck at the bridge elevation plus the same surface
+clearance as roads. Only the arm's length changes to meet its hex exit; its width
+and thickness scale with the board, never with terrain-level height.
+The deck uses `textures/roads/asphalt.png`, with the road's normal/surface maps,
+lighting and world-space texture phase at runtime. Sides and underside use shared
+`textures/sculpt/concrete.png` with repeating face UVs. The old plan-view
+`tileset/saxarba/bridges/bridge_09.png` is no longer a bridge-model texture.
+The procedural road system supplies ground roads and their approaches; the GLB
+supplies the elevated deck and raised sides. Textures and meshes are shared;
+translucency changes instance materials, not the assets. Snow trees have their
+own snow geometry/materials.
 Rough terrain places the shared GLB rock templates in its terrain mesh.
 Ground image normal maps remain a separate surface detail. `normals/` mirrors ground image paths
 under `tileset/`, appending `.png` to the complete source name (including its
