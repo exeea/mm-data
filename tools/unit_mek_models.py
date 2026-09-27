@@ -511,11 +511,11 @@ def build_meks(recipes, output, export_asset, write_json):
         key = 'bodies/'+recipe['id']
         topology = recipe.get('topology', 'biped')
         if not shared:
-            has_far_body = recipe.get('farBody', False)
+            has_far_body = recipe.get('bodyLod1', False)
             assets[key] = export_asset(body, output, key, 'body', 'mek-'+topology, topology+'-v1', joints, hardpoints,
-                                       leg_bends=recipe.get('legBends'), detail='near' if has_far_body else None)
+                                       leg_bends=recipe.get('legBends'), detail='lod0' if has_far_body else None)
             if has_far_body:
-                far_key = key+'-far'
+                far_key = key+'-lod1'
                 assets[far_key] = export_far_body(recipe, joints, output, far_key, 'mek-'+topology, topology+'-v1',
                                                   export_asset)
             built[recipe['id']] = body, vents, hardpoints, far_key
@@ -534,7 +534,7 @@ def build_meks(recipes, output, export_asset, write_json):
         }
         if far_key:
             # MegaMek swaps this simpler body in for the near one once the Mek is small on screen.
-            descriptor['farBody'] = 'units/modular/'+far_key+'.json'
+            descriptor['bodyLod1'] = 'units/modular/'+far_key+'.json'
         if rules:
             descriptor['rules'] = rules
         if vents:
@@ -547,7 +547,7 @@ def build_meks(recipes, output, export_asset, write_json):
 
 
 def export_far_body(recipe, joints, output, key, family, rig, export_asset):
-    """Builds and exports the far body of a chassis whose recipe says "farBody": its builder called with far=True.
+    """Builds and exports the far body of a chassis whose recipe says "bodyLod1": its builder called with far=True.
 
     MegaMek hangs the far body's parts on the near body's nodes of the same name, so every node the near body's rig
     names must exist here too. Weapons, vents and jump jets use the near body's spots, so the far one carries none.

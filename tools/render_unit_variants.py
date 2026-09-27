@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import bpy
 from mathutils import Matrix, Vector
 from unit_model_geometry import content_digest
+from glb_geometry import read_glb
 
 ROOT = Path(__file__).resolve().parents[1]
 MODELS = ROOT / 'tools/unit-models/references/legacy/units'
@@ -42,10 +43,9 @@ def import_model(path, expected, colors, turn=0, upper_body='CT', z_scale=54):
 
     A non-zero turn shows the upper body turned that many degrees to its right, as the game shows a torso twist.
     """
-    raw = path.read_bytes()
     if content_digest(path) != expected['sha256']:
         raise ValueError('Stale manifest for '+str(path))
-    data = json.loads(raw)
+    data = read_glb(path)
     parts = {}
     for mesh in data['meshes']:
         if mesh['attributes'] not in (['POSITION', 'NORMAL', 'COLOR'],
@@ -196,7 +196,7 @@ def render_infantry(manifest, out):
                 detail = f'{vehicles} vehicle{"s" if vehicles != 1 else ""} + {count-vehicles} troops' if vehicles else f'{count} troops'
                 units.append({'name': name, 'model': title+'\n'+detail, 'equipment': [],
                               'angle': 2.7 if style == 'jump' else -.4})
-                assets[name] = {'asset': 'infantry/'+(style+'/' if style else '')+'squad-'+str(count)+'.g3dj'}
+                assets[name] = {'asset': 'infantry/'+(style+'/' if style else '')+'squad-'+str(count)+'.glb'}
         sheets.append(render({'id': sheet, 'name': 'Infantry' if len(counts) == 1 else 'Infantry slot counts'},
                              units, {'models': manifest['models'], 'variants': assets}, out,
                              3 if len(counts) == 1 else 4, 'formations', formations=True))
@@ -231,7 +231,7 @@ def main():
     elif args.bare:
         units = [{'name': known[k]['name'], 'model': known[k]['name'], 'equipment': []} for k in args.chassis]
         bodies = {'models': manifest['models'], 'variants': {
-            known[k]['name']: {'asset': 'meks/'+k+'/body.g3dj'} for k in args.chassis}}
+            known[k]['name']: {'asset': 'meks/'+k+'/body.glb'} for k in args.chassis}}
         sheets.append(render({'id': 'bare-chassis', 'name': 'Bare chassis'}, units, bodies,
                              args.output, min(args.columns, len(units)), 'unarmed chassis', turn=args.turn))
     else:

@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "machine-gun",
-  "mesh": "a5dac4f2e72e1d0c14b5.g3dj",
+  "mesh": "a5dac4f2e72e1d0c14b5.glb",
   "bounds": {
     "min": [
       -0.5656854249492381,

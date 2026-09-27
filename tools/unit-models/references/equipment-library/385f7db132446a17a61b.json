@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "rock-cutter",
-  "mesh": "385f7db132446a17a61b.g3dj",
+  "mesh": "385f7db132446a17a61b.glb",
   "bounds": {
     "min": [
       -2.25,

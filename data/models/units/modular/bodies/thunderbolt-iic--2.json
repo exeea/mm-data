@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-biped",
-  "mesh": "thunderbolt-iic.g3dj",
+  "mesh": "thunderbolt-iic.glb",
   "bounds": {
     "min": [
       -21.2,

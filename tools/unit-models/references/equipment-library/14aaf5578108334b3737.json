@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "mine",
-  "mesh": "14aaf5578108334b3737.g3dj",
+  "mesh": "14aaf5578108334b3737.glb",
   "bounds": {
     "min": [
       -3.7,

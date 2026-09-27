@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "aircraft",
-  "mesh": "family-aerodyne.g3dj",
+  "mesh": "family-aerodyne.glb",
   "bounds": {
     "min": [
       -33,

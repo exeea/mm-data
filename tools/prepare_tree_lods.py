@@ -5,6 +5,11 @@ triangles strictly enclosed in another closed component, with no intersection
 with that component's surface. Generate the smaller, textured meshes offline;
 the renderer never simplifies geometry or changes tree placement.
 """
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from glb_geometry import read_glb, write_glb
+
 import collections
 import copy
 import json
@@ -30,7 +35,7 @@ def geometry(model):
             face = []
             for vertex in attributes:
                 # Simplification operates in the tree's original proportions.
-                point = (vertex[0], vertex[1], vertex[2] * 30)
+                point = tuple(vertex[:3])
                 if point not in shared:
                     shared[point] = len(vertices)
                     vertices.append(Vector(point))
@@ -138,7 +143,7 @@ def simplified(source, name, budget):
     for triangle in mesh.loop_triangles:
         role, color = roles[triangle.material_index]
         normal = triangle.normal
-        n = Vector((normal.x, normal.y, normal.z * 30)).normalized()
+        n = normal.normalized()
         attributes = []
         for index in triangle.vertices:
             point = mesh.vertices[index].co
@@ -150,7 +155,7 @@ def simplified(source, name, budget):
                 uv = (point.x if abs(normal.y) > abs(normal.x) else point.y, point.z)
             repeat = 4 if role.startswith('bark') else 8 if name.startswith('birch') else 12
             attributes.append(tuple(round(v, 6) for v in
-                                    (point.x, point.y, point.z / 30, *n, *color, uv[0] / repeat, uv[1] / repeat)))
+                                    (point.x, point.y, point.z, *n, *color, uv[0] / repeat, uv[1] / repeat)))
         result.append((role, attributes))
     bpy.data.objects.remove(obj, do_unlink=True)
     bpy.data.meshes.remove(mesh)
@@ -174,23 +179,28 @@ def prepare(only=None):
         for name, entry in manifest.items():
             if 'source' not in entry or only is not None and name not in only:
                 continue
-            source = json.loads((BOARD / (name + '.g3dj')).read_text())
+            source_path = BOARD.parents[2] / 'tools/board-models/foliage' / (name + '.glb')
+            source = read_glb(source_path)
+            for material in source['materials']:
+                for texture in material.get('textures', []):
+                    texture['filename'] = (source_path.parent / texture['filename']).resolve().relative_to(BOARD).as_posix()
             vertices, faces, corners = geometry(source)
             hidden = enclosed_faces(vertices, faces)
             near_name = name + '-lod0'
             near = pack(source, near_name, [corner for index, corner in enumerate(corners) if index not in hidden])
-            entry['lods'] = [{'asset': near_name, **counts(near)}]
-            (BOARD / (near_name + '.g3dj')).write_text(json.dumps(near, separators=(',', ':')))
+            entry['mesh'] = name + '.glb'
+            entry['lods'] = [{'node': near_name, **counts(near)}]
+            levels = {0: near}
             for level, budget in enumerate(BUDGETS, 1):
                 asset = f'{name}-lod{level}'
                 budget = min(budget, entry['triangles'] // (2 if level == 1 else 5))
                 # Simplify the closed original, so enclosed surfaces cannot leave
                 # holes when the distant canopy changes shape.
                 model = simplified(source, asset, budget)
-                (BOARD / (asset + '.g3dj')).write_text(json.dumps(model, separators=(',', ':')))
-                entry['lods'].append({'asset': asset, **counts(model)})
-            # Keep the authored model for close transparent trees: their enclosed
-            # branches can become visible through a faded canopy.
+                levels[level] = model
+                entry['lods'].append({'node': asset, **counts(model)})
+            write_glb(BOARD / (name + '.glb'), levels=levels)
+            # The complete authoring source remains available for geometry and visual review.
             print(name, entry['triangles'], '->',
                   [lod['triangles'] for lod in entry['lods']], flush=True)
         (BOARD / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')

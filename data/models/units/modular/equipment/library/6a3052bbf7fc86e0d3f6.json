@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "flail",
-  "mesh": "6a3052bbf7fc86e0d3f6.g3dj",
+  "mesh": "6a3052bbf7fc86e0d3f6.glb",
   "bounds": {
     "min": [
       -1.1398322934236893,

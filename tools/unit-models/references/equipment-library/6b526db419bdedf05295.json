@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "infantry-melee",
-  "mesh": "6b526db419bdedf05295.g3dj",
+  "mesh": "6b526db419bdedf05295.glb",
   "bounds": {
     "min": [
       -0.4346666218300807,

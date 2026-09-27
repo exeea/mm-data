@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "chain-whip",
-  "mesh": "a66437be6409dc023e47.g3dj",
+  "mesh": "a66437be6409dc023e47.glb",
   "bounds": {
     "min": [
       -1.255736835487436,

@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "laser",
-  "mesh": "cl-er-small-laser-round.g3dj",
+  "mesh": "cl-er-small-laser-round.glb",
   "bounds": {
     "min": [
       -0.699999933771554,

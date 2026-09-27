@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "aircraft",
-  "mesh": "family-spheroid.g3dj",
+  "mesh": "family-spheroid.glb",
   "bounds": {
     "min": [
       -33.0,

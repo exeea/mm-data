@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "vehicle",
-  "mesh": "family-hover.g3dj",
+  "mesh": "family-hover.glb",
   "bounds": {
     "min": [
       -19.5,

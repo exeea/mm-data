@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "static",
-  "mesh": "family-missile.g3dj",
+  "mesh": "family-missile.glb",
   "bounds": {
     "min": [
       -12.0,

@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "aircraft",
-  "mesh": "family-vtol.g3dj",
+  "mesh": "family-vtol.glb",
   "bounds": {
     "min": [
       -31.0,

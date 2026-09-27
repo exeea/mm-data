@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "energy",
-  "mesh": "37f36bb06f9cc85c3256.g3dj",
+  "mesh": "37f36bb06f9cc85c3256.glb",
   "bounds": {
     "min": [
       -0.7071067811865477,

@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-biped",
-  "mesh": "archer.g3dj",
+  "mesh": "archer.glb",
   "bounds": {
     "min": [
       -22.85,

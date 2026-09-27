@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "searchlight",
-  "mesh": "searchlight.g3dj",
+  "mesh": "searchlight.glb",
   "bounds": {
     "min": [
       -2.2,

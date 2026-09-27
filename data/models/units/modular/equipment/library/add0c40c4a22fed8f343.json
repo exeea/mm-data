@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "mining-drill",
-  "mesh": "add0c40c4a22fed8f343.g3dj",
+  "mesh": "add0c40c4a22fed8f343.glb",
   "bounds": {
     "min": [
       -2.25,

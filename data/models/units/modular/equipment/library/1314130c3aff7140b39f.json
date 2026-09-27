@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "sensor",
-  "mesh": "1314130c3aff7140b39f.g3dj",
+  "mesh": "1314130c3aff7140b39f.glb",
   "bounds": {
     "min": [
       -0.636396103067893,

@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "backhoe",
-  "mesh": "4ea369c50864c51c141d.g3dj",
+  "mesh": "4ea369c50864c51c141d.glb",
   "bounds": {
     "min": [
       -3.45,

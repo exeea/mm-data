@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-biped",
-  "mesh": "urbanmech.g3dj",
+  "mesh": "urbanmech.glb",
   "bounds": {
     "min": [
       -12.399999999999999,

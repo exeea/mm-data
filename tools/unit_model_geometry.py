@@ -2,7 +2,7 @@
 from collections import defaultdict
 from math import cos, sin, pi, sqrt
 import hashlib
-import json
+from glb_geometry import write_glb
 
 
 # Git may check these out with either line ending, so their fingerprint must not depend on it.
@@ -10,8 +10,8 @@ import json
 TEXT_SUFFIXES = {'.py', '.json', '.g3dj', '.txt', '.md'}
 TRIANGLE_TARGET = 1000
 TRIANGLE_LIMIT = 1500
-# A near body: drawn only up close, with a far body of at most TRIANGLE_LIMIT standing in for it from afar.
-NEAR_TRIANGLE_LIMIT = 3000
+# Explicit LOD0 bodies may use this allowance; authored LOD1 bodies keep TRIANGLE_LIMIT.
+LOD0_TRIANGLE_LIMIT = 3000
 # Mek-standard model units per metre: 27 units make a level, 18 world units at the default level height, and the
 # 30 m hex spans 72 world units, so a level shows 7.5 m. The Atlas then stands 15.2 m (canon: 15.4 m).
 MODEL_UNITS_PER_METRE = 27 / 7.5
@@ -194,7 +194,9 @@ class Geometry:
                                 'parts': [{'id': g+'-'+r, 'type': 'TRIANGLES', 'indices': indices}
                                           for (g, r), indices in parts.items()]}]
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(model, separators=(',', ':'))+'\n', encoding='utf-8')
+        if path.suffix != '.glb':
+            raise ValueError('Mesh exports must use GLB: '+str(path))
+        write_glb(path, levels={0: model})
         bounds = [[min(p[i] for tri, _, _ in self.faces for p in tri),
                    max(p[i] for tri, _, _ in self.faces for p in tri)] for i in range(3)] if self.faces else []
         return {'triangles': len(self.faces), 'bareUnit': bare_unit, 'vertices': len(vertices)//stride, 'bounds': bounds,

@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "laser",
-  "mesh": "a422de4225ffeb108f48.g3dj",
+  "mesh": "a422de4225ffeb108f48.glb",
   "bounds": {
     "min": [
       -2.1733331091504033,

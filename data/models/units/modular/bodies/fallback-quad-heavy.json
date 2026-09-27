@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-quad",
-  "mesh": "fallback-quad-heavy.g3dj",
+  "mesh": "fallback-quad-heavy.glb",
   "bounds": {
     "min": [
       -24.069,

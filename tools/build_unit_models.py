@@ -437,8 +437,8 @@ def build(args):
         folder = 'meks/'+recipe['id']+'/'
         # The shared unarmed body takes the arm form of the reference variant.
         reference_unit = next((u for u in units if u['model'] == recipe['referenceVariant']), units[0])
-        export(fit_arms(base, reference_unit), folder+'body.g3dj')
-        descriptor = {'schema': 1, 'kind': 'mek', 'chassis': recipe['name'], 'fallback': 'body.g3dj',
+        export(fit_arms(base, reference_unit), folder+'body.glb')
+        descriptor = {'schema': 1, 'kind': 'mek', 'chassis': recipe['name'], 'fallback': 'body.glb',
                       'upperBodyNode': UPPER_BODY, 'variants': {}}
         for unit in units:
             detail = weapons.DETAIL_LEVELS[0]
@@ -448,7 +448,7 @@ def build(args):
                 manifest['needsReview'].append({'name': unit['name'], 'source': unit['source'],
                                                 'reason': attachments if geometry is None else 'body-triangle-hard-cap'})
                 continue
-            name = 'variants/'+slug(unit['model'])+'.g3dj'
+            name = 'variants/'+slug(unit['model'])+'.glb'
             export(geometry, folder+name, bare_unit=False)
             if unit['variantKey'] in descriptor['variants']:
                 raise ValueError('Duplicate variant name '+unit['name'])
@@ -464,26 +464,26 @@ def build(args):
                 examples.append((unit['name'], geometry, recipe['sprite']))
         write_json(out / (folder+'model.json'), descriptor)
     for kind in ('biped', 'quad', 'tripod'):
-        export(fallback(kind), 'fallback/'+kind+'.g3dj')
-        write_json(out / ('fallback/'+kind+'.json'), {'schema': 1, 'kind': 'mek', 'fallback': kind+'.g3dj',
+        export(fallback(kind), 'fallback/'+kind+'.glb')
+        write_json(out / ('fallback/'+kind+'.json'), {'schema': 1, 'kind': 'mek', 'fallback': kind+'.glb',
                                                        'upperBodyNode': UPPER_BODY})
     poses = ('standing', 'aiming', 'kneeling', 'advancing')
     for armored, kind, limit, reference in ((False, 'infantry', 6, 'defaults/default_infantry_platoon.png'),
                                              (True, 'battle-armor', 4, 'defaults/default_ba.png')):
         library = [person(pose, armored) for pose in poses]
         for pose, geometry in zip(poses, library):
-            export(geometry, kind+'/poses/'+pose+'.g3dj')
+            export(geometry, kind+'/poses/'+pose+'.glb')
         formations = {}
         for count in range(limit+1):
             geometry = Geometry()
             for i, (_, (x, y), angle) in enumerate(infantry_slots(count)):
                 geometry.extend(library[i % len(library)], (x, y, 0), angle, group='formation')
-            relative = 'squad-'+str(count)+'.g3dj'
+            relative = 'squad-'+str(count)+'.glb'
             export(geometry, kind+'/'+relative)
             formations[str(count)] = relative
             if count == (3 if armored else 6):
                 examples.append((kind+' formation', geometry, reference))
-        descriptor = {'schema': 1, 'kind': 'formation', 'fallback': 'squad-1.g3dj', 'formations': formations}
+        descriptor = {'schema': 1, 'kind': 'formation', 'fallback': 'squad-1.glb', 'formations': formations}
         if not armored:
             descriptor['movementFormations'] = {}
             for mode, style, sprite in (
@@ -498,13 +498,13 @@ def build(args):
                 troop_library = [person(pose, jump=True) for pose in poses] if style == 'jump' else library
                 if style == 'jump':
                     for pose, trooper in zip(poses, troop_library):
-                        export(trooper, 'infantry/jump/poses/'+pose+'.g3dj')
+                        export(trooper, 'infantry/jump/poses/'+pose+'.glb')
                 else:
                     # Transports are twice the original dimensions, including height.
                     vehicle = Geometry()
                     for triangle, group, material in infantry_vehicle(style).faces:
                         vehicle.face([(x*2, y*2, z*2) for x, y, z in triangle], group, material)
-                    export(vehicle, 'infantry/vehicles/'+style+'.g3dj')
+                    export(vehicle, 'infantry/vehicles/'+style+'.glb')
                 choices = {}
                 for count in range(7):
                     geometry, components, placed = Geometry(), [], []
@@ -512,10 +512,10 @@ def build(args):
                     for role, (x, y), angle in infantry_slots(count, style != 'jump'):
                         if role == 'vehicle':
                             part = vehicle
-                            asset = 'infantry/vehicles/'+style+'.g3dj'
+                            asset = 'infantry/vehicles/'+style+'.glb'
                         else:
                             part = troop_library[troop_index % len(poses)]
-                            asset = 'infantry/'+('jump/' if style == 'jump' else '')+'poses/'+poses[troop_index % len(poses)]+'.g3dj'
+                            asset = 'infantry/'+('jump/' if style == 'jump' else '')+'poses/'+poses[troop_index % len(poses)]+'.glb'
                             troop_index += 1
                         start = len(geometry.faces)
                         geometry.extend(part, (x, y, 0), angle, group='formation')
@@ -528,7 +528,7 @@ def build(args):
                                     raise ValueError(f'{style} / {count} slots: transport intersects {role}')
                             placed.append((role, tree))
                         components.append({'role': role, 'asset': asset, 'position': [x, y, 0], 'angle': angle})
-                    relative = style+'/squad-'+str(count)+'.g3dj'
+                    relative = style+'/squad-'+str(count)+'.glb'
                     export(geometry, 'infantry/'+relative)
                     choices[str(count)] = relative
                     manifest['formations']['infantry/'+relative] = {

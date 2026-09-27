@@ -15,6 +15,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import bpy
+from glb_geometry import read_glb
 from mathutils import Euler, Matrix, Vector
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -66,7 +67,7 @@ def load_body(path, expected, colors, turn=0, upper_body='CT', hidden=()):
     Unlike the legacy bake these carry a paint UV and unnormalized Z, so the stride is read
     from the attribute list rather than assumed. Nodes named in hidden are left out, with their children.
     """
-    data = json.loads(path.read_text(encoding='utf-8'))
+    data = read_glb(path)
     skipped = [0]
     parts, strides = {}, {'POSITION': 3, 'NORMAL': 3, 'COLOR': 4, 'TEXCOORD0': 2}
     for mesh in data['meshes']:
@@ -346,6 +347,11 @@ def gallery(entries, out, name, title, columns=6, rotation=(0, 0, 215)):
     return Path(scene.render.filepath)
 
 
+def mesh_path(key):
+    descriptor = BODIES.parent / (key + '.json')
+    return descriptor.parent / json.loads(descriptor.read_text(encoding='utf-8'))['mesh']
+
+
 def held_guns(manifest):
     """Every distinct held gun, captioned with the weapons that share it, grouped by family."""
     catalog = json.loads((BODIES.parent / 'equipment.json').read_text(encoding='utf-8'))
@@ -370,7 +376,7 @@ def held_guns(manifest):
                                                           or 'Primitive' in weapon, len(weapon), weapon))
         caption = weapons[0] + ('\n+%d more' % (len(weapons) - 1) if len(weapons) > 1 else '')
         key = asset.removeprefix('units/modular/').removesuffix('.json')
-        result.append((key.split('/')[-1], caption, BODIES.parent / (key + '.g3dj'), manifest.get(key)))
+        result.append((key.split('/')[-1], caption, mesh_path(key), manifest.get(key)))
     return result
 
 
@@ -411,7 +417,7 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     colors = {}
     entries = []
-    sources = [(body_id, BODIES / (body_id + '.g3dj'), manifest.get('bodies/' + body_id)) for body_id in args.body]
+    sources = [(body_id, mesh_path('bodies/' + body_id), manifest.get('bodies/' + body_id)) for body_id in args.body]
     if args.equipment:
         catalog = json.loads((BODIES.parent / 'equipment.json').read_text(encoding='utf-8'))
         catalog = catalog.get('equipment', catalog)
@@ -425,7 +431,7 @@ def main():
             key = (asset or entry['model']).removeprefix('units/modular/').removesuffix('.json')
             title = '%s (%s)' % (name, args.profile) if args.profile else name
             titles[title] = title
-            sources.append((title, BODIES.parent / (key + '.g3dj'), manifest.get(key)))
+            sources.append((title, mesh_path(key), manifest.get(key)))
     for body_id, path, expected in sources:
         if not path.exists():
             raise SystemExit('No such model: ' + str(path))

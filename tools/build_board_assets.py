@@ -1,8 +1,15 @@
 """Run in Blender (including via MCP) to rebuild MegaMek's low-poly board assets.
 
 New datablocks live in their own scene; existing scenes are never edited. Runtime
-models use Z up, one hex = 84 x 72 units, and one feature height = 1 unit.
+models use Z up and one hex = 84 x 72 units. Plants retain their natural
+proportions at height 30. Bridges use one default level = 18 units; crops
+retain their legacy height-one convention.
 """
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from glb_geometry import write_glb
+
 import bpy
 import json
 import runpy
@@ -15,6 +22,8 @@ OUT.mkdir(parents=True, exist_ok=True)
 SCENE = bpy.data.scenes.new('MegaMek board assets')
 COLLECTION = SCENE.collection
 STATS = {}
+# Same authored units as buildings and the default board level.
+LEVEL_HEIGHT = 18
 # Names to rebuild; None rebuilds everything. A caller may pass a set, for example
 # runpy.run_path('tools/build_board_assets.py', init_globals={'ONLY': {'cactus'}}).
 ONLY = globals().get('ONLY')
@@ -77,7 +86,7 @@ def tree_texture(name, mat):
 
 
 def export(name, objects, normalize=False, foliage=False):
-    """Small explicit G3DJ exporter: Blender triangulates, runtime only loads."""
+    """Blender triangulates; runtime assets are GLB and foliage sources feed offline LOD generation."""
     vertices, shared, parts = [], {}, {}
     bounds = [obj.matrix_world @ Vector(corner) for obj in objects for corner in obj.bound_box]
     low = Vector(tuple(min(v[i] for v in bounds) for i in range(3)))
@@ -110,9 +119,9 @@ def export(name, objects, normalize=False, foliage=False):
                     span = high.z-low.z
                     horizontal = 30/span
                     pos = Vector(((pos.x-(low.x+high.x)/2)*horizontal,
-                                  (pos.y-(low.y+high.y)/2)*horizontal, (pos.z-low.z)/span))
-                    # Normals for the exported anisotropic normalization.
-                    n = Vector((normal.x/horizontal, normal.y/horizontal, normal.z*span)).normalized()
+                                  (pos.y-(low.y+high.y)/2)*horizontal, (pos.z-low.z)*horizontal))
+                    # Uniform normalization preserves the original proportions and normals.
+                    n = normal
                 else:
                     n = normal
                 uv = (pos.x/24, pos.y/24) if abs(n.z) > .5 else (
@@ -120,10 +129,9 @@ def export(name, objects, normalize=False, foliage=False):
                 if role == 'bridge':
                     uv = mesh.uv_layers.active.data[loop].uv
                 elif foliage:
-                    # Project in the tree's original proportions, before the runtime
-                    # expands its normalized Z. Dominant-axis mapping avoids stretched
-                    # leaves on steep faces; bark and willow retain vertical grain.
-                    point = Vector((pos.x, pos.y, pos.z * 30))
+                    # Project in the tree's natural proportions. Dominant-axis mapping
+                    # avoids stretched leaves; bark and willow retain vertical grain.
+                    point = pos
                     if abs(normal.z) >= max(abs(normal.x), abs(normal.y)):
                         uv = (point.x, point.y)
                     else:
@@ -148,7 +156,16 @@ def export(name, objects, normalize=False, foliage=False):
                          'parts': [{'id':role,'type':'TRIANGLES','indices':indices} for role,indices in parts.items()]}],
              'materials':materials,
              'nodes':[{'id':name,'parts':[{'meshpartid':role,'materialid':role} for role in parts]}]}
-    (OUT / (name+'.g3dj')).write_text(json.dumps(model,separators=(',',':')))
+    # Foliage sources stay in authoring tools; only the packaged GLB is deployed.
+    path = ROOT / 'tools/board-models/foliage' / (name+'.glb') if foliage else OUT / (name+'.glb')
+    path.parent.mkdir(parents=True, exist_ok=True)
+    for entry in model['materials']:
+        for texture in entry.get('textures', []):
+            if foliage:
+                texture['filename'] = '../../../data/models/board/' + texture['filename']
+            else:
+                texture.update(wrapS=33071, wrapT=33071)
+    write_glb(path, levels={0: model})
     STATS[name] = {'triangles': sum(len(indices) for indices in parts.values())//3, 'vertices': len(vertices)//12}
 
 
@@ -180,9 +197,9 @@ def bridge_beam(name, left, right, bottom, top):
 
 
 if wanted('bridge'):
-    export('bridge', [bridge_beam('Deck', -11, 11, -.14, 0),
-                      bridge_beam('Left rail', -11, -7.5, 0, .13),
-                      bridge_beam('Right rail', 7.5, 11, 0, .13)])
+    export('bridge', [bridge_beam('Deck', -11, 11, -.14 * LEVEL_HEIGHT, 0),
+                      bridge_beam('Left rail', -11, -7.5, 0, .13 * LEVEL_HEIGHT),
+                      bridge_beam('Right rail', 7.5, 11, 0, .13 * LEVEL_HEIGHT)])
 
 # Crops have one elevation level in the rules. Authored crossed blades preserve
 # that height without lifting a farmland image into a solid block.

@@ -2,6 +2,9 @@
 over simplified footprint polygons, including disconnected parts and courtyards.
 """
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from glb_geometry import write_glb
 import bpy
 import json
 import math
@@ -11,6 +14,8 @@ from mathutils.geometry import delaunay_2d_cdt
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT/'data/models/board'
+# One default board level in the same units as an 84 by 72 hex.
+LEVEL_HEIGHT = 18
 entries = json.loads((ROOT/'tools/building-footprints.json').read_text())
 scene = bpy.data.scenes.new('Saxarba building library')
 stats = {}
@@ -68,7 +73,7 @@ for entry_index, entry in enumerate(entries):
     scale_x,scale_y=84/width,72/height
     packed,unique,roof_indices,wall_indices=[],{},[],[]
     mesh_vertices,mesh_faces,mesh_uvs,face_materials=[],[],[],[]
-    roof_file=OUT/(entry['asset']+'-roof.png')
+    roof_file=ROOT/'tools/board-models/roofs'/(entry['asset']+'-roof.png')
     source=bpy.data.images.load(str(roof_file),check_existing=True)
     family = entry['facade']
     facade_material, mean = facades[family]
@@ -103,7 +108,7 @@ for entry_index, entry in enumerate(entries):
             triangle=[poly[0],poly[i+1],poly[i]]
             start=len(mesh_vertices)
             for p in triangle:
-                mesh_vertices.append(vertex(p,1,(0,0,1),(1,1,1),(p.x/width,p.y/height),roof_indices))
+                mesh_vertices.append(vertex(p,LEVEL_HEIGHT,(0,0,1),(1,1,1),(p.x/width,p.y/height),roof_indices))
                 mesh_uvs.append((p.x/width,1-p.y/height))
             mesh_faces.append((start,start+1,start+2))
             face_materials.append(0)
@@ -117,7 +122,7 @@ for entry_index, entry in enumerate(entries):
             # Loops are clockwise after the Y flip; this normal faces outside.
             normal=(-dy/length,dx/length,0)
             u0,u1=distance/128,(distance+length)/128
-            wall=[(a,0,(u0,base_v)),(a,1,(u0,top_v)),(b,1,(u1,top_v)),(b,0,(u1,base_v))]
+            wall=[(a,0,(u0,base_v)),(a,LEVEL_HEIGHT,(u0,top_v)),(b,LEVEL_HEIGHT,(u1,top_v)),(b,0,(u1,base_v))]
             start=len(mesh_vertices)
             mesh_vertices += [((p[0]-width/2)*scale_x,(height/2-p[1])*scale_y,z) for p,z,uv in wall]
             mesh_uvs += [(uv[0],1-uv[1]) for p,z,uv in wall]
@@ -128,17 +133,17 @@ for entry_index, entry in enumerate(entries):
                 vertex(p,z,normal,tint,uv,wall_indices)
             distance+=length
     asset=entry['asset']
-    file=OUT/(asset+'.g3dj')
+    file=OUT/(asset+'.glb')
     facade=os.path.relpath(OUT/'textures/buildings'/(family+'.png'),file.parent).replace('\\','/')
     model={'version':[0,1],'id':asset,
            'meshes':[{'attributes':['POSITION','NORMAL','COLOR','TEXCOORD0'],'vertices':packed,
                       'parts':[{'id':'roof','type':'TRIANGLES','indices':roof_indices},
                                {'id':'wall','type':'TRIANGLES','indices':wall_indices}]}],
-           'materials':[{'id':'roof','diffuse':[1,1,1], 'textures':[{'id':'roof','filename':roof_file.name,'type':'DIFFUSE'}]},
+           'materials':[{'id':'roof','diffuse':[1,1,1], 'textures':[{'id':'roof','filename':roof_file.name,'type':'DIFFUSE','wrapS':33071,'wrapT':33071}]},
                         {'id':wall_role,'diffuse':[1,1,1], 'textures':[{'id':'facade','filename':facade,'type':'DIFFUSE'}]}],
            'nodes':[{'id':asset,'parts':[{'meshpartid':'roof','materialid':'roof'},{'meshpartid':'wall','materialid':wall_role}]}]}
     file.parent.mkdir(parents=True,exist_ok=True)
-    file.write_text(json.dumps(model,separators=(',',':')))
+    write_glb(file, levels={0: model}, embedded_images={roof_file.name: roof_file.read_bytes()})
     mesh=bpy.data.meshes.new(asset)
     mesh.from_pydata(mesh_vertices,[],mesh_faces)
     mesh.update()

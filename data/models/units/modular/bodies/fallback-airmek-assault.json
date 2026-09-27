@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-biped",
-  "mesh": "fallback-airmek-assault.g3dj",
+  "mesh": "fallback-airmek-assault.glb",
   "bounds": {
     "min": [
       -53.68,

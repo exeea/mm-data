@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-biped",
-  "mesh": "king-crab.g3dj",
+  "mesh": "king-crab.glb",
   "bounds": {
     "min": [
       -33.3975,

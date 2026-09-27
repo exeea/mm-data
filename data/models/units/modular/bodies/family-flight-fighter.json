@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "aircraft",
-  "mesh": "family-flight-fighter.g3dj",
+  "mesh": "family-flight-fighter.glb",
   "bounds": {
     "min": [
       -30,

@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-biped",
-  "mesh": "battlemaster.g3dj",
+  "mesh": "battlemaster.glb",
   "bounds": {
     "min": [
       -23.182199999999998,

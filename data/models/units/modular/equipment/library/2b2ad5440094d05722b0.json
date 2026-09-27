@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "jump-jet",
-  "mesh": "2b2ad5440094d05722b0.g3dj",
+  "mesh": "2b2ad5440094d05722b0.glb",
   "bounds": {
     "min": [
       -1.4488887394336023,

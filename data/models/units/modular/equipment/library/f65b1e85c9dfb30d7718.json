@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "wrecking-ball",
-  "mesh": "f65b1e85c9dfb30d7718.g3dj",
+  "mesh": "f65b1e85c9dfb30d7718.glb",
   "bounds": {
     "min": [
       -3.232473071737752,

@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "static",
-  "mesh": "family-structure.g3dj",
+  "mesh": "family-structure.glb",
   "bounds": {
     "min": [
       -18.0,

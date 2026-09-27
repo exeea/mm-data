@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "lance",
-  "mesh": "50fe83c27181a59376fa.g3dj",
+  "mesh": "50fe83c27181a59376fa.glb",
   "bounds": {
     "min": [
       -1.642073904691416,

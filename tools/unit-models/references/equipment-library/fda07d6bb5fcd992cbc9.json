@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "screen-launcher",
-  "mesh": "fda07d6bb5fcd992cbc9.g3dj",
+  "mesh": "fda07d6bb5fcd992cbc9.glb",
   "bounds": {
     "min": [
       -4.5,

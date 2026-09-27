@@ -1,4 +1,6 @@
 """Validate the shipped 3D board catalog, roof fidelity and isolated dependencies."""
+from glb_geometry import read_glb
+from io import BytesIO
 from pathlib import Path
 import json
 from PIL import Image, ImageChops
@@ -8,19 +10,23 @@ BOARD = ROOT / 'data/models/board'
 buildings = json.loads((BOARD / 'building-manifest.json').read_text())
 features = json.loads((BOARD / 'manifest.json').read_text())
 catalog = dict(features, **buildings)
+
 for asset, entry in features.items():
     if 'source' in entry:
         assert len(entry['lods']) == 3, asset
         for level, lod in enumerate(entry['lods']):
-            assert lod['asset'] == f'{asset}-lod{level}', asset
+            assert lod['node'] == f'{asset}-lod{level}', asset
             assert 0 < lod['triangles'] <= entry['triangles'] // (1 if level == 0 else 2 if level == 1 else 5), lod
-            catalog[lod['asset']] = lod
-        original = json.loads((BOARD / (asset + '.g3dj')).read_text())['meshes'][0]
+            catalog[lod['node']] = lod
+        original = read_glb(ROOT / 'tools/board-models/foliage' / (asset + '.glb'))['meshes'][0]
+        # Plant GLBs must be correctly proportioned in ordinary viewers, before game placement.
+        assert abs(min(original['vertices'][2::12])) < 1e-5, asset
+        assert abs(max(original['vertices'][2::12]) - 30) < 1e-4, asset
         source_faces = {(part['id'], tuple(tuple(original['vertices'][i * 12:i * 12 + 12])
                                           for i in part['indices'][offset:offset + 3]))
                         for part in original['parts'] for offset in range(0, len(part['indices']), 3)}
         for level, lod in enumerate(entry['lods']):
-            mesh = json.loads((BOARD / (lod['asset'] + '.g3dj')).read_text())['meshes'][0]
+            mesh = read_glb(BOARD / (asset + '.glb'), level)['meshes'][0]
             for axis in range(3):
                 low, high = min(original['vertices'][axis::12]), max(original['vertices'][axis::12])
                 assert all(low - 1e-5 <= value <= high + 1e-5 for value in mesh['vertices'][axis::12]), lod
@@ -29,12 +35,26 @@ for asset, entry in features.items():
                                              for i in part['indices'][offset:offset + 3])) in source_faces
                            for part in mesh['parts'] for offset in range(0, len(part['indices']), 3)), lod
 maximum = 0
-assert not list(BOARD.glob('rock-*.g3dj')), 'Retired rubble meshes must not return'
+assert not list(BOARD.rglob('*.g3dj')), 'All deployed board meshes must use GLB'
 assert not any(name.startswith('rock-') for name in features), 'Retired rocks in manifest'
 assert not {'tank', 'industrial'}.intersection(features), 'Generic structure models must not return'
 for asset in catalog:
-    path = BOARD / (asset + '.g3dj')
-    model = json.loads(path.read_text())
+    if asset in features and 'source' in features[asset]:
+        # The source's full count remains in the manifest for authoring; deployed LOD0 is checked below.
+        continue
+    if '-lod' in asset:
+        name, level = asset.rsplit('-lod', 1)
+        path = BOARD / (name + '.glb')
+        model = read_glb(path, int(level))
+    else:
+        path = BOARD / (asset + '.glb')
+        model = read_glb(path)
+    heights = [z for mesh in model['meshes'] for z in mesh['vertices'][2::12]]
+    if asset in buildings:
+        assert min(heights) == 0 and max(heights) == 18, f'One-level building: {path}'
+    elif asset == 'bridge':
+        assert abs(min(heights) + 2.52) < 1e-5 and abs(max(heights) - 2.34) < 1e-5, path
+        assert 0 in heights, f'Bridge deck must remain at local Z=0: {path}'
     triangles = 0
     for mesh in model['meshes']:
         assert mesh['attributes'] == ['POSITION', 'NORMAL', 'COLOR', 'TEXCOORD0'], path
@@ -55,6 +75,9 @@ for asset in catalog:
     maximum = max(maximum, triangles)
     for material in model['materials']:
         for texture in material.get('textures', []):
+            if 'data' in texture:
+                assert Image.open(BytesIO(texture['data'])).format in ('PNG', 'JPEG'), path
+                continue
             dependency = (path.parent / texture['filename']).resolve()
             assert dependency.is_relative_to(BOARD.resolve()), dependency
             assert dependency.is_file(), dependency
@@ -66,7 +89,13 @@ for asset in catalog:
         assert Image.open(BOARD / facade).size == (128, 128), path
         assert (wall['id'] == 'shell') == buildings[asset]['full_height_facade'], path
         source = Image.open(BOARD / 'tileset' / buildings[asset]['source']).convert('RGBA')
-        roof = Image.open(BOARD / (asset + '-roof.png')).convert('RGB')
+        roof_material = next(material for material in model['materials'] if material['id'] == 'roof')
+        roof_data = roof_material['textures'][0]['data']
+        sibling = path.with_suffix('.png')
+        assert sibling.read_bytes() == (BOARD / 'tileset' / buildings[asset]['source']).read_bytes(), \
+            f'Original building artwork differs: {sibling}'
+        assert not path.with_name(path.stem + '-roof.png').exists(), f'Processed roof sibling: {path}'
+        roof = Image.open(BytesIO(roof_data)).convert('RGB')
         difference = ImageChops.difference(source.convert('RGB'), roof)
         mask = source.getchannel('A').point(lambda alpha: 255 if alpha >= 245 else 0)
         assert ImageChops.multiply(difference.convert('L'), mask).getbbox() is None, path

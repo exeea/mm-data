@@ -95,7 +95,7 @@ existing geometry. Hybrid air-Meks retain their fighter fuselage instead of rece
 
 The current land fallback heights are about 47 / 52 / 53 / 56 / 70 model units, light through superheavy. The
 three lighter classes read as roughly 84% / 93% / 96% of the assault's height; distinguish mass primarily through
-width, depth, limbs and silhouette rather than making light units tiny. Each class exports its own G3DJ and local
+width, depth, limbs and silhouette rather than making light units tiny. Each class exports its own GLB and local
 joints/sockets. These are authoring dimensions, not runtime scale factors. Regenerate all layouts and compare the
 five-class lineup after a recipe change; never patch only a deployed mesh or its bounding box. Moving a hull's
 cockpit or armor panels also requires moving its front/rear hardpoints and optional searchlight socket.
@@ -111,7 +111,11 @@ fill that gap. Use a deliberate intermediate design and compare its body volume 
 
 Author and compare with every `UnitFamilyScale` entry at `UNIT_SCALE=1.0f`, `HEIGHT_SCALE=1.0f`. These multiply
 `BoardGeometry` settings; they are fine-tuning, not compensation for a wrongly proportioned source mesh.
-The normal board unit scale defaults to 0.7; the independent multi-hex default is 0.85 with its own TUNING slider.
+The normal board unit scale defaults to 1.0; the independent multi-hex default is also 1.0 with its own TUNING slider.
+Runtime uses one uniform conversion for every single-hex modular family: the Atlas's 54.858-model-unit bare
+standing height spans two terrain levels at unit scale 1, or 1.8 levels at 0.9. Preserve all authored relative
+sizes around Atlas/Mackie; never normalize each body to two levels. Antennas on another body may extend higher.
+Multi-hex models retain uniform fitting to their occupied footprint. Only explicit height controls stretch Z.
 Both dimensions and movement distance use `GpuUnitModel.horizontalScale()`/`verticalScale()`; do not recreate
 these formulas in a family class. Gameplay `.height()` is not a model-scaling input during prone/conversion.
 
@@ -120,10 +124,15 @@ Do not apply that multiplier in their generator as well. For new **named** non-M
 runtime dimensions under this existing policy; a future change to that policy must update all affected assets
 and their fixtures together. It is not an excuse to use one Mek body for all weights.
 
-Conventional figures/transports already bake +10% height, and Battle Armor figures +50%, through
-`unit_infantry_shapes.bake_height`. Do not apply those changes a second time. Infantry transports retain their
+Infantry is drawn at canonical size in the same model units as every other body (`MODEL_UNITS_PER_METRE`):
+`unit_infantry_shapes.TROOP_SCALE` makes a standing soldier 1.8 m, with the transports in the same scale, and
+`BATTLE_ARMOR_SIZE` makes battle armour an even 1.5 times larger (2.7 m). Scale a figure evenly, never by height
+alone; the runtime draws a formation with the same uniform Atlas conversion as a Mek. Infantry transports retain their
 approved 2× assembly scale in `InfantryVisual`; do not copy it into vehicle vertices. Compare a whole group,
-not raw troop and transport coordinates in isolation.
+not raw troop and transport coordinates in isolation. ProtoMeks stand 6 m: `build_families` grows their bodies,
+sockets and weapon mounts together for Alpha Strike size 1, which the runtime draws at 0.78.
+On the board the runtime draws infantry and battle armour at their `UnitFamilyScale` default of 1.8, so they read
+at play distances; author and compare them at 1.0 like every other family.
 
 ## 3. Mesh, materials and component contract
 
@@ -137,8 +146,8 @@ not raw troop and transport coordinates in isolation.
 - A descriptor names its mesh relative to itself, rest bounds, kind, family, rig roles, location ownership,
   hardpoints and emitters. Paths must stay inside the model root. The runtime loader validates this contract.
 - Use the shared `unit_model_geometry.PALETTE` and exporter material roles. Paint receives camouflage; glass,
-  exposed metal, weapon tips and detail retain their authored identity. Do not embed external texture filenames
-  into G3DJ. The appearance system owns texture loading and inheritance.
+  exposed metal, weapon tips and detail retain their authored identity. GLB may embed authored PNG/JPEG diffuse images or reference shared local images.
+  The appearance system owns camouflage, damage textures and texture inheritance.
 - Paint UVs and damage projection stay in rest space so markings do not crawl during motion. Damage overlays
   blend their alpha over the original opaque surface; do not enable mesh transparency to simulate scratches.
 - Every independently moving part has a stable node, rest pivot and parent. Reuse a family's existing rig roles.
@@ -159,24 +168,25 @@ applies as described in section 2.
 | Tripod Mek | `unit_mek_models.py`, `fallback_body('tripod')` | Three stable support legs. Keep the third leg separate; melee kicks always use side legs. Five authored weight classes. |
 | Quad / QuadVee | `unit_mek_models.py`, `fallback_body('quad')` | Four distinct articulated limbs, broad support footprint; five authored weight classes. QuadVee squats with horizontal folded legs using the same mesh/equipment. |
 | LandAirMek | `air_mek_body()` plus Mek/fighter forms | Hybrid has a pointed cockpit/fuselage, wings, arms, reverse-knee legs and exhaust. Fold using rig joints during conversion; keep loadout modular. No baked fighter weapons. |
-| Conventional infantry | `unit_infantry_shapes.person()` + `build_modular_unit_models.py` pose list | Separate standing/advancing/kneeling figures; standing example 8.65×6.95×23.1 after height bake. Jump figures include a small backpack with jet emitter. Runtime survivor count determines composition. |
-| Battle Armor | Same figure generator, `armored=True` | Broader armored torso, helmet, limbs/backpack; standing example 11.9×12.5×31.5, 214 triangles. Compression is false: six living suits show six figures, one survivor shows one. |
-| Infantry transports | `infantry_vehicle()` for motorized/tracked/wheeled/hover | Motorized jeep/quad; mechanized APC hull with correct drive silhouette. Example motorized 14.6×22.25×13.64 before the approved 2× assembly scale. Separate wheels/hull/boarding/cabin nodes. |
+| Conventional infantry | `unit_infantry_shapes.person()` + `build_modular_unit_models.py` pose list | Separate standing/advancing/kneeling figures; standing example 2.67×2.14×6.48 (1.8 m). Jump figures include a small backpack with jet emitter. Runtime survivor count determines composition. |
+| Battle Armor | Same figure generator, `armored=True` | Broader armored torso, helmet, limbs/backpack; standing example 5.51×5.79×9.72 (2.7 m), 214 triangles. Compression is false: six living suits show six figures, one survivor shows one. |
+| Infantry transports | `infantry_vehicle()` for motorized/tracked/wheeled/hover | Motorized jeep/quad; mechanized APC hull with correct drive silhouette. Example motorized 4.51×6.87×3.83 before the approved 2× assembly scale. Separate wheels/hull/boarding/cabin nodes. |
 | Ground vehicles | `unit_family_models.vehicle()` | Tracked/wheeled/hover/WiGE/rail silhouettes; hull, drives, wheels and independent turret(s). Example tracked 40.5×52×24.5. Do not give turretless vehicles a turret body. |
 | VTOL / airship | `rotorcraft()` | VTOL cockpit, tail, rotor and fixed skids; example rotor envelope about 62×64×27. Airship is a distinct elongated buoyant hull, not an enlarged VTOL. |
 | Fighter / aerodyne | `aircraft()` | Narrow nose, clear wings, engines/exhaust; fighter example 66×59.2×17. Transport/aerodyne is deeper, with retractable supports if landable and multi-hex. |
 | Spheroid / small craft | `spheroid()` | Rounded faceted hull and separate supports, not a squat box; spheroid example 66×66×64. Follow section 7 for terrain support and full hull retraction. |
 | JumpShip / WarShip / station | `capital()` | Elongated ship or radial station silhouettes; separate movable parts only where useful. Preserve actual game footprint; do not invent landing capability or support legs for space-only craft. |
 | Naval / hydrofoil / submarine | `naval()` | Long hull and authored waterline, subtype-specific foils/tower; naval example 23×63×23.5. Do not settle watercraft like an infantry figure. |
-| ProtoMek | `proto()`, including quad/glider forms | Smaller articulated machine: biped example about 30×14×35.5. Use `proto-v1` joint roles for distance-driven gait; no Mek torso twist/prone rules. |
+| ProtoMek | `proto()`, including quad/glider forms | Smaller articulated machine: biped example about 23.4×10.9×27.7, 6 m tall at Alpha Strike size 1. Use `proto-v1` joint roles for distance-driven gait; no Mek torso twist/prone rules. |
 | Emplacement / building / pods / standalone missile | `static_body()` | Distinct static-family bodies, useful facing/working ports where applicable. Mobile structures/buildings have their own ground integration, not Aero struts. |
 | Fighter squadron | `flight_fighter()` + squadron descriptor | Reusable 96-triangle member, about 60×55×11.5 before formation sizing. Runtime uses visible member identities/loadouts; never duplicate a logical weapon group as a physical gun. |
 
 For infantry groups, author **members only**. Conventional headcount is compressed into display slots; transports
 replace one slot when there are at most four slots, otherwise two. Troops usually face outward. They board before
 vehicle travel and unload only after the vehicle stops. Their final positions/headings and movement jitter are
-runtime presentation. Reposition to fit when possible; crowded groups may bleed outside the hex without shrinking
-vehicles. Infantry/BA keep embedded rifle/cannon details; additional dynamic equipment remains deferred.
+runtime presentation. The runtime draws the whole layout in as one shape until it fits the hex, so a crowd is
+never pressed against the edges; one too large for it packs tight without overlapping and only the excess
+overflows. Members never shrink. Infantry/BA keep embedded rifle/cannon details; additional dynamic equipment remains deferred.
 
 ### Required Mek anatomy and damage ownership
 

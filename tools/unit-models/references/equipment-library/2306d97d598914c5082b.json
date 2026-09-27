@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "spikes",
-  "mesh": "2306d97d598914c5082b.g3dj",
+  "mesh": "2306d97d598914c5082b.glb",
   "bounds": {
     "min": [
       -3.5,

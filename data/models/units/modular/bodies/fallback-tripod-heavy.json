@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-tripod",
-  "mesh": "fallback-tripod-heavy.g3dj",
+  "mesh": "fallback-tripod-heavy.glb",
   "bounds": {
     "min": [
       -26.554999999999996,

@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "club",
-  "mesh": "855b3cdb8bcfdcfd1395.g3dj",
+  "mesh": "855b3cdb8bcfdcfd1395.glb",
   "bounds": {
     "min": [
       -3.25,

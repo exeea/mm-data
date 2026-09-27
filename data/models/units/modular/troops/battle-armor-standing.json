@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "troop",
   "family": "battle-armor",
-  "mesh": "battle-armor-standing.g3dj",
+  "mesh": "battle-armor-standing.glb",
   "bounds": {
     "min": [
       -2.7530002706447374,

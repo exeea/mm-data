@@ -8,6 +8,7 @@ from collections import defaultdict, deque
 import json
 import math
 import re
+import shutil
 from PIL import Image, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -132,7 +133,12 @@ for source in sorted(sources):
                 if rgba[ni][3] < 245:
                     rgba[ni] = (*rgba[index][:3],rgba[ni][3])
                 queue.append(ni)
-    roof = OUT / (asset+'-roof.png')
+    # Keep the unprocessed original beside the GLB for inspection, including its alpha/shadow.
+    sibling = OUT / (asset + path.suffix)
+    sibling.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(path, sibling)
+    # Derived filtering-safe RGB is an offline input; only its embedded copy is deployed.
+    roof = ROOT / 'tools/board-models/roofs' / (asset+'-roof.png')
     roof.parent.mkdir(parents=True,exist_ok=True)
     prepared = Image.new('RGB', image.size)
     prepared.putdata([p[:3] for p in rgba])

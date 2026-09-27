@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "combine",
-  "mesh": "ad2b573ca4d7de30e26d.g3dj",
+  "mesh": "ad2b573ca4d7de30e26d.glb",
   "bounds": {
     "min": [
       -7.5,

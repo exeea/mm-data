@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "spot-welder",
-  "mesh": "07cd3ba51169ace19e49.g3dj",
+  "mesh": "07cd3ba51169ace19e49.glb",
   "bounds": {
     "min": [
       -2.852349756503136,

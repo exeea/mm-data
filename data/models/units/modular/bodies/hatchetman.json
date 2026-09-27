@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-biped",
-  "mesh": "hatchetman.g3dj",
+  "mesh": "hatchetman.glb",
   "bounds": {
     "min": [
       -12.739239999999999,

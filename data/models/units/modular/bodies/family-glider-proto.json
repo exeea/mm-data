@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "proto",
-  "mesh": "family-glider-proto.g3dj",
+  "mesh": "family-glider-proto.glb",
   "bounds": {
     "min": [
       -19.501625135427954,

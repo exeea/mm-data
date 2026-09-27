@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "ballistic",
-  "mesh": "0d02482910df3a78569b.g3dj",
+  "mesh": "0d02482910df3a78569b.glb",
   "bounds": {
     "min": [
       -1.062518408917975,

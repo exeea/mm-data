@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "shield",
-  "mesh": "ac0a19c070e1b9de3f99.g3dj",
+  "mesh": "ac0a19c070e1b9de3f99.glb",
   "bounds": {
     "min": [
       -5.0,

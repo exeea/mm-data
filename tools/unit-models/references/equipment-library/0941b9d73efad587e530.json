@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "missile",
-  "mesh": "0941b9d73efad587e530.g3dj",
+  "mesh": "0941b9d73efad587e530.glb",
   "bounds": {
     "min": [
       -4.7,

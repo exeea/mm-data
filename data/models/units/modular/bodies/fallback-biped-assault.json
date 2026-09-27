@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-biped",
-  "mesh": "fallback-biped-assault.g3dj",
+  "mesh": "fallback-biped-assault.glb",
   "bounds": {
     "min": [
       -28.669999999999998,

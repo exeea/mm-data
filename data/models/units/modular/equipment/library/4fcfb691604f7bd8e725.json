@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "saw",
-  "mesh": "4fcfb691604f7bd8e725.g3dj",
+  "mesh": "4fcfb691604f7bd8e725.glb",
   "bounds": {
     "min": [
       -3.863703305156273,

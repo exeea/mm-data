@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "ppc",
-  "mesh": "05909f7763c42e44b7ef.g3dj",
+  "mesh": "05909f7763c42e44b7ef.glb",
   "bounds": {
     "min": [
       -2.8600000000000003,

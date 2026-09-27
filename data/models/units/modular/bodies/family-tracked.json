@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "vehicle",
-  "mesh": "family-tracked.g3dj",
+  "mesh": "family-tracked.glb",
   "bounds": {
     "min": [
       -20.25,

@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-biped",
-  "mesh": "locust.g3dj",
+  "mesh": "locust.glb",
   "bounds": {
     "min": [
       -19.130893469875723,

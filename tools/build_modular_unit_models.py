@@ -3,6 +3,8 @@
 Python authors art only. Unit selection, attachment fitting and formation assembly belong to Java.
 Run with Python (Blender's bundled Python also works); no bpy or Blender process is required.
 """
+from package_unit_lods import package_unit_lods
+
 import argparse
 import json
 import re
@@ -10,7 +12,7 @@ from pathlib import Path
 
 from unit_infantry_shapes import (person, infantry_vehicle, TROOP_SCALE, BATTLE_ARMOR_SIZE, elemental, elemental_far,
                                   elemental_ii, elemental_ii_far)
-from unit_model_geometry import Geometry, NEAR_TRIANGLE_LIMIT, TRIANGLE_LIMIT, TRIANGLE_TARGET, sub
+from unit_model_geometry import Geometry, LOD0_TRIANGLE_LIMIT, TRIANGLE_LIMIT, TRIANGLE_TARGET, sub
 from unit_weapon_shapes import draw, rule_for
 from unit_equipment_models import build_equipment
 from unit_mek_models import build_meks, fallback_recipes
@@ -49,7 +51,7 @@ def archive_superseded_modules(output, assets):
     archive.mkdir(parents=True, exist_ok=True)
     count = 0
     for path in library.iterdir():
-        if not re.fullmatch(r'[0-9a-f]{20}\.(json|g3dj)', path.name) or path.stem in live:
+        if not re.fullmatch(r'[0-9a-f]{20}(?:-lod0)?\.(json|glb)', path.name) or path.stem.removesuffix('-lod0') in live:
             continue
         if not path.resolve().is_relative_to(library):
             raise ValueError('Generated module link escapes its library: '+str(path))
@@ -65,13 +67,13 @@ def archive_superseded_modules(output, assets):
 
 
 def export_asset(geometry, output, key, kind, family, rig, joints, hardpoints=(), *, leg_bends=None, detail=None):
-    """Writes one asset's mesh and descriptor. `detail='near'` marks a body drawn only up close: it may use
-    NEAR_TRIANGLE_LIMIT, and MegaMek refuses it unless the Mek descriptor names a far body to stand in for it."""
+    """Writes one asset's mesh and descriptor. `detail='lod0'` marks a body drawn only up close: it may use
+    LOD0_TRIANGLE_LIMIT. The build finishes by packaging levels into one GLB per component."""
     if kind == 'equipment' and len(geometry.faces) > EQUIPMENT_TRIANGLE_LIMIT:
         raise ValueError(f'{key}: equipment has {len(geometry.faces)} triangles; maximum {EQUIPMENT_TRIANGLE_LIMIT}')
     descriptor = output / (key+'.json')
-    mesh = descriptor.with_suffix('.g3dj')
-    limit = NEAR_TRIANGLE_LIMIT if detail == 'near' else TRIANGLE_LIMIT
+    mesh = descriptor.with_name(descriptor.stem + ('' if re.search(r'-lod[0-9]+$', descriptor.stem) else '-lod0') + '.glb')
+    limit = LOD0_TRIANGLE_LIMIT if detail == 'lod0' else TRIANGLE_LIMIT
     stats = geometry.export(mesh, key, z_scale=1, bare_unit=kind != 'equipment', paint_uv=True, limit=limit)
     emitters = [{**emitter, 'position': sub(emitter['position'], geometry.pivots[emitter['node']])}
                 for emitter in geometry.emitters]
@@ -111,7 +113,7 @@ def build(output, catalog):
     bare, bare_far = (lambda: elemental(launchers=False)), (lambda: elemental_far(launchers=False))
     for name, suit, far_suit in (('elemental', elemental, elemental_far), ('elemental-no-launchers', bare, bare_far),
                                  ('elemental-ii', elemental_ii, elemental_ii_far)):
-        key, far_key = 'troops/'+name+'-standing', 'troops/'+name+'-far-standing'
+        key, far_key = 'troops/'+name+'-standing', 'troops/'+name+'-standing-lod1'
         near, far = suit(), far_suit()
         # Drawn beside the armoured figure's old 31.5-unit height; TROOP_SCALE keeps that proportion in metres.
         for figure in (near, far):
@@ -120,7 +122,7 @@ def build(output, catalog):
         assets[far_key] = export_asset(far, output, far_key, 'troop', 'battle-armor', 'trooper-v1', joints)
         write_json(output / ('battle-armor/'+name+'.json'), {'schema': 2, 'kind': 'formation', 'family': 'battle-armor',
                                                              'trooper': 'units/modular/'+key+'.json',
-                                                             'farTrooper': 'units/modular/'+far_key+'.json'})
+                                                             'trooperLod1': 'units/modular/'+far_key+'.json'})
     for kind in ('motorized', 'tracked', 'wheeled', 'hover'):
         key = 'transports/'+kind
         transport = infantry_vehicle(kind, modular=True)
@@ -141,6 +143,7 @@ def build(output, catalog):
         assets['equipment/'+key] = export_asset(module, output, 'equipment/'+key, 'equipment',
                                                 mount['family'], 'module-v1', {'root': 'root', 'aim': 'mount'})
     assets.update(build_equipment(catalog, output, export_asset))
+    package_unit_lods(output, assets)
     write_json(output / 'manifest.json', {'schema': 2, 'triangleTarget': TRIANGLE_TARGET,
                                          'triangleLimit': TRIANGLE_LIMIT, 'triangleBudgetScope': 'bare-unit',
                                          'equipmentTriangleTarget': EQUIPMENT_TRIANGLE_TARGET,

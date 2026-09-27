@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "extinguisher",
-  "mesh": "2b7aaa848bff6b50282c.g3dj",
+  "mesh": "2b7aaa848bff6b50282c.glb",
   "bounds": {
     "min": [
       -0.9659258262890682,

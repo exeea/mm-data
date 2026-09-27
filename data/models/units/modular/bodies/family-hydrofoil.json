@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "naval",
-  "mesh": "family-hydrofoil.g3dj",
+  "mesh": "family-hydrofoil.glb",
   "bounds": {
     "min": [
       -20.0,

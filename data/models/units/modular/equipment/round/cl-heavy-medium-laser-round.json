@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "laser",
-  "mesh": "cl-heavy-medium-laser-round.g3dj",
+  "mesh": "cl-heavy-medium-laser-round.glb",
   "bounds": {
     "min": [
       -1.2500000332577996,

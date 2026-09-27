@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "mace",
-  "mesh": "fc2436c50b0923b75be2.g3dj",
+  "mesh": "fc2436c50b0923b75be2.glb",
   "bounds": {
     "min": [
       -3.5,

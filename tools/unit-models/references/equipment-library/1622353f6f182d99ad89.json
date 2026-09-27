@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "ecm",
-  "mesh": "1622353f6f182d99ad89.g3dj",
+  "mesh": "1622353f6f182d99ad89.glb",
   "bounds": {
     "min": [
       -1.4,

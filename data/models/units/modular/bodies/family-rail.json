@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "vehicle",
-  "mesh": "family-rail.g3dj",
+  "mesh": "family-rail.glb",
   "bounds": {
     "min": [
       -19.0,

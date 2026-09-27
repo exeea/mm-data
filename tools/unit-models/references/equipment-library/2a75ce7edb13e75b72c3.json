@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "claw",
-  "mesh": "2a75ce7edb13e75b72c3.g3dj",
+  "mesh": "2a75ce7edb13e75b72c3.glb",
   "bounds": {
     "min": [
       -3.896866665979361,

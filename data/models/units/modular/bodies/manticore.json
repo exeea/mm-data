@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "vehicle",
-  "mesh": "manticore.g3dj",
+  "mesh": "manticore.glb",
   "bounds": {
     "min": [
       -19.830000000000002,

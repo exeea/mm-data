@@ -34,7 +34,7 @@ pod still ends at 21.25; only the seam between the two moved.
 |---|---|
 | `body.py` | the `rifleman(g)` function from `tools/unit_mek_chassis.py` |
 | `recipe.json` | the `rifleman` entry from `tools/unit-models/chassis.json`, expanded for readability |
-| `rifleman.g3dj` | the exported mesh |
+| `rifleman.glb` | the exported mesh |
 | `rifleman-body.json` | the exported body descriptor |
 | `rifleman-descriptor.json` | the exported mek descriptor |
 | `final-six-view.png` | bare body, six angles |

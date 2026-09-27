@@ -112,7 +112,7 @@ GPU assets are loaded once per asset/content key. Optional assembly-layout cachi
 
 ### Minimal modular descriptor
 
-Introduce a versioned descriptor for modular assets while retaining a temporary schema-1 loader. Keep G3DJ and libGDX's existing rigid nodes for the proof of concept. Do not switch formats or add a skeletal middleware dependency to obtain capabilities the current stack can provide.
+Introduce a versioned descriptor for modular assets while retaining a temporary schema-1 loader. The original proof of concept used G3DJ; the completed migration uses GLB while retaining libGDX's existing rigid nodes. Do not add a skeletal middleware dependency to obtain capabilities the current stack can provide.
 
 | Record | Required content |
 |---|---|

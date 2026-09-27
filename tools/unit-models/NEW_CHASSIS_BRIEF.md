@@ -317,7 +317,7 @@ chassis list at the end of `verify`.
   renders invisible.
 - **Mount area axes:** `width` is left-right, `height` is vertical. A tall narrow area stacks weapons
   over-under; a wide one sets them abreast.
-- **Vertices are node-relative.** In the exported `.g3dj`, a part's vertices are local to its node;
+- **Vertices are node-relative.** In the exported `.glb`, a part's vertices are local to its node;
   world position is the accumulated chain of node translations.
 - **House rules** from `CLAUDE.md`: no Unicode anywhere in code, no trademarked words in Java
   (`Mech`, `BattleMech`, `MechWarrior`, `AeroTech`), no `@author` tags and no individual named in

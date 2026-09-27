@@ -2772,7 +2772,7 @@ def phoenix_hawk_iic(g, far=False):
 
 def build_chassis(recipe, modular=False, far=False):
     """Builds a chassis's body. With `far`, the builder draws its far body instead: the simpler shape MegaMek
-    shows once the Mek is small on screen, for a recipe with "farBody". Only such a chassis's builder takes `far`."""
+    shows once the Mek is small on screen, for a recipe with "bodyLod1". Only such a chassis's builder takes `far`."""
     g = Geometry(modular=modular)
     hip = recipe['hip']
     g.joint('pelvis', (hip[0]-42, 36-hip[1], hip[2]))

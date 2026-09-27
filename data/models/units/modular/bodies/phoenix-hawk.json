@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-biped",
-  "mesh": "phoenix-hawk.g3dj",
+  "mesh": "phoenix-hawk.glb",
   "bounds": {
     "min": [
       -14.81,
@@ -2288,5 +2288,5 @@
     }
   ],
   "emitters": [],
-  "detail": "near"
+  "detail": "lod0"
 }

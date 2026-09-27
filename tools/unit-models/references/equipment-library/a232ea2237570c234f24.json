@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "flamer",
-  "mesh": "a232ea2237570c234f24.g3dj",
+  "mesh": "a232ea2237570c234f24.glb",
   "bounds": {
     "min": [
       -1.6903701960058692,

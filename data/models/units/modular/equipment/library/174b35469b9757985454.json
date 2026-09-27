@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "talons",
-  "mesh": "174b35469b9757985454.g3dj",
+  "mesh": "174b35469b9757985454.glb",
   "bounds": {
     "min": [
       -3.5,

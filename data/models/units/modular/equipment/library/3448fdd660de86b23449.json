@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "bomb",
-  "mesh": "3448fdd660de86b23449.g3dj",
+  "mesh": "3448fdd660de86b23449.glb",
   "bounds": {
     "min": [
       -3.7,

@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "infantry-transport",
-  "mesh": "tracked.g3dj",
+  "mesh": "tracked.glb",
   "bounds": {
     "min": [
       -2.752457142857143,

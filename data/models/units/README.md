@@ -4,9 +4,59 @@ The game uses reusable assets under `modular/` and assembles each visible unit f
 
 `GpuUnitModels.ENABLED` is **true**. Both GPU camera views share the same models and placement.
 
+## Mesh format
+
+The deployed bodies, troops, transports and equipment are **GLB (binary glTF 2.0)**.
+One file contains one reusable component's geometry and named rigid hierarchy.
+JSON descriptors keep joint roles, location ownership, hardpoints, emitters,
+landing supports and assembly recipes. Camouflage and damage textures remain
+shared renderer resources; they are not embedded into each component.
+
+`tools/glb_geometry.py` is the shared exporter used by `unit_model_geometry.py`.
+Authored coordinates remain +Y forward / +Z up. Export maps `(x,y,z)` to
+`(x,z,-y)` and display-space colors to linear glTF colors. `RigidGlb` reverses
+these conversions on the CPU before existing validation and GPU allocation.
+Preserve node names, pivots, material names (`paint`, `detail`, `bark`), UVs and
+the explicit LOD0/LOD1 groups. Runtime animation still poses the rigid nodes.
+The current profile uses triangle primitives, explicit normals, an explicit
+default scene and opaque materials. Skins, baked animation clips, morphs,
+external geometry buffers and required extensions are rejected. Diffuse images
+may be embedded PNG/JPEG or local relative references within the model directory.
+Sampler filtering and wrapping are respected. `ModelTextures` owns shared image
+caching and GPU upload; the asset library disposes each cached texture once.
+Embedded bytes remain available for context restoration. Unit `detail` materials
+retain authored texture maps; `paint` maps may be replaced by runtime camouflage. Use ordinary uncompressed GLB when editing these assets.
+
+The 718 unit GLBs preserve all 723 authored levels, their 82,128 triangles and
+named bindings. Khronos glTF Validator checked all unit files with zero errors
+and warnings. The historical review meshes under `tools/unit-models/references/` also use
+GLB; custom legacy G3DJ descriptors still load in the game.
+`render_modular_body.py` reads the new GLBs for offline review.
+
+## LOD naming and fallback
+
+Each component has one `<component>.glb` and one descriptor. The GLB contains
+identity groups named `<component>-lod0`, optionally `-lod1` and `-lod2`, with the
+original rigid node hierarchy beneath each group. Joint names stay unchanged.
+For example, `atlas.json` selects `atlas.glb` containing `atlas-lod0`;
+`phoenix-hawk.glb` contains `phoenix-hawk-lod0` and `phoenix-hawk-lod1`.
+Phoenix Hawk IIC has its own separate file and levels. Recipes reference only
+`body` or `trooper`; levels are selected from that component, never another unit.
+
+LOD0 is required. At load time missing LOD2 reuses LOD1, and missing LOD1 reuses
+LOD0. The importer strips the packaging group and only converts geometry under
+that group, so the triangle budget never counts other levels. A malformed group
+reports an asset error. The library owns each distinct GPU mesh exactly once.
+The current unit renderer selects LOD0/LOD1; the file format and importer also
+accept LOD2 for future selection policies. Single-level assets remain valid.
+Only bodies explicitly marked `detail: lod0` receive the 3,000-triangle LOD0
+allowance; simpler body levels retain the ordinary limit. Focused units and
+attack participants retain LOD0. Legacy custom `farBody`, `farTrooper`,
+`bodyLod1`, `trooperLod1` and `detail: near` fields remain readable.
+
 ## Geometry budget
 
-The bare unit before loadout targets **under 1,000 triangles**. Conventional infantry and Battle Armor always qualify for an exception because multiple figure/transport meshes form one game unit. Other families need art review to exceed the target. The **1,500-triangle bare-unit hard cap** applies to all families. Equipment is additional; report body, equipment and total costs separately. Preserve the full-detail 214-triangle BA figure (six suits: 1,284). Distance LoD hides small attached equipment; body meshes remain unchanged.
+The bare body before loadout targets **under 1,000 triangles**. Ordinary bodies have a **1,500-triangle cap**; explicitly marked LOD0 bodies may use **3,000**, while their LOD1 bodies retain the ordinary cap. Battle armour is budgeted at **330 triangles per suit**, with an assembled allowance of at least 1,500 triangles (1,980 for six suits). Conventional infantry formations retain the 1,500-triangle cap. Equipment is additional; report body, equipment and total costs separately. Screen-size LoD hides small attached equipment and selects an authored LOD1 body or suit when available.
 
 Each equipment module has a separate target of **under 100 triangles** and a strict maximum of **149**.
 The exporter and runtime validator check this independently of the bare body and assembled totals.

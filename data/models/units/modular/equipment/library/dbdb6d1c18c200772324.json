@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "equipment",
   "family": "hatchet",
-  "mesh": "dbdb6d1c18c200772324.g3dj",
+  "mesh": "dbdb6d1c18c200772324.glb",
   "bounds": {
     "min": [
       -0.6278517870878945,

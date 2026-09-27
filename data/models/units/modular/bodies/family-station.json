@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "aircraft",
-  "mesh": "family-station.g3dj",
+  "mesh": "family-station.glb",
   "bounds": {
     "min": [
       -31.0,

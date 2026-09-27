@@ -708,7 +708,6 @@
     }
   ],
   "configuration": "biped",
-  "farBody": "units/modular/bodies/phoenix-hawk-far.json",
   "vents": [
     {
       "node": "LL#vent-front-0",

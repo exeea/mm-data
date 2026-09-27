@@ -7,6 +7,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from unit_model_geometry import TRIANGLE_LIMIT, TRIANGLE_TARGET, content_digest
+from glb_geometry import read_glb
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -30,7 +31,7 @@ LOCATIONS = {'biped': {'HD', 'CT', 'LT', 'RT', 'LA', 'RA', 'LL', 'RL'},
 def check_upper_body(path, name, layout='biped'):
     """The game turns the named part on its own to show a torso twist, so it must carry exactly the upper body.
     It also hides or darkens the part named after a lost or destroyed location, so each location needs its part."""
-    model = json.loads(path.read_text(encoding='utf-8'))
+    model = read_glb(path)
     found, names = [], set()
 
     def visit(node, offset, inside):
@@ -78,27 +79,27 @@ def validate(out, catalog_path):
         path = (out / relative).resolve()
         require(path.is_relative_to(out), 'Model escapes asset directory: '+relative)
         require(sha(path) == expected['sha256'], 'Model changed: '+relative)
-        model = json.loads(path.read_text(encoding='utf-8'))
+        model = read_glb(path)
         triangles, ids = 0, set()
         for mesh in model['meshes']:
-            require(mesh['attributes'] == ['POSITION', 'NORMAL', 'COLOR'], relative+': unexpected vertex format')
+            require(mesh['attributes'] == ['POSITION', 'NORMAL', 'COLOR', 'TEXCOORD0'], relative+': unexpected vertex format')
             vertices = mesh['vertices']
-            require(len(vertices) % 10 == 0 and all(math.isfinite(v) for v in vertices), relative+': invalid vertices')
-            for i in range(0, len(vertices), 10):
+            require(len(vertices) % 12 == 0 and all(math.isfinite(v) for v in vertices), relative+': invalid vertices')
+            for i in range(0, len(vertices), 12):
                 require(abs(sum(v*v for v in vertices[i+3:i+6])-1) < 1e-5, relative+': invalid normal')
             for part in mesh['parts']:
                 require(part['id'] not in ids, relative+': duplicate mesh part')
                 ids.add(part['id'])
                 indices = part['indices']
                 require(len(indices) % 3 == 0, relative+': partial triangle')
-                require(all(isinstance(i, int) and 0 <= i < len(vertices)//10 for i in indices), relative+': invalid index')
+                require(all(isinstance(i, int) and 0 <= i < len(vertices)//12 for i in indices), relative+': invalid index')
                 triangles += len(indices)//3
                 for i in range(0, len(indices), 3):
-                    a, b, c = [vertices[j*10:j*10+3] for j in indices[i:i+3]]
+                    a, b, c = [vertices[j*12:j*12+3] for j in indices[i:i+3]]
                     ab, ac = [b[k]-a[k] for k in range(3)], [c[k]-a[k] for k in range(3)]
                     normal = (ab[1]*ac[2]-ab[2]*ac[1], ab[2]*ac[0]-ab[0]*ac[2], ab[0]*ac[1]-ab[1]*ac[0])
                     require(sum(v*v for v in normal) > 1e-15, relative+': degenerate triangle')
-                    stored = vertices[indices[i]*10+3:indices[i]*10+6]
+                    stored = vertices[indices[i]*12+3:indices[i]*12+6]
                     require(sum(normal[k]*stored[k] for k in range(3)) > 0, relative+': inverted normal')
         require(triangles == expected['triangles'], relative+': triangle count does not match manifest')
         # Older manifests predate bareUnit; their variant meshes are complete baked loadouts.
@@ -106,7 +107,7 @@ def validate(out, catalog_path):
             require(triangles <= TRIANGLE_LIMIT, relative+': bare unit exceeds triangle hard cap')
             if triangles >= triangle_target:
                 above_target.append({'model': relative, 'bodyTriangles': triangles})
-        require(triangles > 0 or relative.endswith('/squad-0.g3dj'), relative+': unexpectedly empty model')
+        require(triangles > 0 or relative.endswith('/squad-0.glb'), relative+': unexpectedly empty model')
         referenced, nodes = set(), set()
         materials = {m['id'] for m in model['materials']}
         def visit(node):
@@ -178,7 +179,7 @@ def validate(out, catalog_path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', default=str(ROOT / 'data/models/units'))
+    parser.add_argument('--output', default=str(ROOT / 'tools/unit-models/references/generated'))
     parser.add_argument('--catalog', default=str(ROOT / '.work/mek-models/catalog.json'))
     args = parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else None)
     validate(Path(args.output).resolve(), Path(args.catalog).resolve())

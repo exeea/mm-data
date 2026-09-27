@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "naval",
-  "mesh": "family-submarine.g3dj",
+  "mesh": "family-submarine.glb",
   "bounds": {
     "min": [
       -14.0,

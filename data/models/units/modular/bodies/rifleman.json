@@ -2,7 +2,7 @@
   "schema": 2,
   "kind": "body",
   "family": "mek-biped",
-  "mesh": "rifleman.g3dj",
+  "mesh": "rifleman.glb",
   "bounds": {
     "min": [
       -19.78375,
