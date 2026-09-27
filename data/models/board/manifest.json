@@ -665,8 +665,8 @@
     "bridge_exits": 30
   },
   "bridges/bridge-exits-31": {
-    "triangles": 136,
-    "vertices": 235,
+    "triangles": 728,
+    "vertices": 1150,
     "bridge_exits": 31
   },
   "bridges/bridge-exits-32": {
@@ -745,8 +745,8 @@
     "bridge_exits": 46
   },
   "bridges/bridge-exits-47": {
-    "triangles": 136,
-    "vertices": 236,
+    "triangles": 725,
+    "vertices": 1134,
     "bridge_exits": 47
   },
   "bridges/bridge-exits-48": {
@@ -785,8 +785,8 @@
     "bridge_exits": 54
   },
   "bridges/bridge-exits-55": {
-    "triangles": 136,
-    "vertices": 239,
+    "triangles": 852,
+    "vertices": 1346,
     "bridge_exits": 55
   },
   "bridges/bridge-exits-56": {
@@ -805,8 +805,8 @@
     "bridge_exits": 58
   },
   "bridges/bridge-exits-59": {
-    "triangles": 136,
-    "vertices": 235,
+    "triangles": 790,
+    "vertices": 1252,
     "bridge_exits": 59
   },
   "bridges/bridge-exits-60": {
@@ -815,18 +815,18 @@
     "bridge_exits": 60
   },
   "bridges/bridge-exits-61": {
-    "triangles": 136,
-    "vertices": 235,
+    "triangles": 736,
+    "vertices": 1162,
     "bridge_exits": 61
   },
   "bridges/bridge-exits-62": {
-    "triangles": 136,
-    "vertices": 235,
+    "triangles": 784,
+    "vertices": 1236,
     "bridge_exits": 62
   },
   "bridges/bridge-exits-63": {
-    "triangles": 164,
-    "vertices": 283,
+    "triangles": 810,
+    "vertices": 1278,
     "bridge_exits": 63
   }
 }
