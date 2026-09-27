@@ -4,6 +4,34 @@ This directory is the libGDX board's independent art source. Runtime never reads
 terrain or water from the 2D board's images directory. The Java build stages this
 directory with the game's data. Blender is an authoring dependency only.
 
+## Rock and scatter meshes
+
+- `rocks/block-N.glb` and `rocks/boulder-N.glb` (N = 0..7) are sixteen independently
+  editable rock variants. Each contains three root nodes named `block-N-lod0`,
+  `block-N-lod1`, `block-N-lod2` (or `boulder-N-lod0`, etc.). The library has 48
+  meshes and 1,572 triangles. Rough terrain, rims, slopes and cliffs share these files.
+- `scatter.glb` contains 26 root nodes: `stone-block-N-lod0` and
+  `stone-boulder-N-lod0` (eight triangles each, open base), `bush-N-lod0` (eight
+  shrub masses), `grass-lod0` (six triangles) and `plant-lod0` (sixteen).
+  The complete scatter kit has 498 triangles. Grass and plants have explicit
+  back faces; green and dry grass share geometry.
+
+LOD0 is the most detailed version of that shape. LOD1 and LOD2 are optional;
+the loader resolves missing levels once as LOD2 -> LOD1 -> LOD0, sharing the
+existing mesh. LOD0 is required. Fallback stays within one shape and file,
+so a scatter stone can never select a larger terrain rock. Scatter currently
+uses only LOD0. Terrain's first two sampling bands use rock LOD0; subsequent
+bands use rock LOD1 and LOD2, preserving the established screen-size thresholds.
+
+These files are the editable mesh source, baked from the original Java shapes.
+Import/export one file in Blender as uncompressed GLB, preserving names, triangle
+budgets and flat normals. Each shape is a root node. After Y-up to Z-up import,
+rocks have their base at zero and a largest horizontal extent of one. There
+are no textures or embedded animation clips. Their material is named `geometry`;
+the renderer chooses colors and terrain shading. The importer restores shared
+corners for CPU ground sampling. Placement, picking and batching share the meshes;
+no rock or scatter geometry is generated in-game.
+
 ## Contents and editing
 
 - `tileset/saxarba.tileset`: the forced 3D tileset, with all recursive includes
@@ -16,13 +44,13 @@ directory with the game's data. Blender is an authoring dependency only.
   outline, vertex and triangle counts. The largest has 499 triangles. Fuel tanks
   and industrial structures use their selected Saxarba artwork too; generic
   cylinder/factory substitutes have been removed.
-- `bridge`, `field`, and twenty-two foliage G3DJ
+- `bridge.glb`, `field.glb`, and twenty-two foliage GLB
   files, all at or below 480 triangles. Counts and
   the imported Blender source names are in `manifest.json`.
-- Each tree also has `-lod0`, `-lod1`, and `-lod2` meshes. The near opaque mesh
+- Each tree GLB contains `-lod0`, `-lod1`, and `-lod2` groups. The near opaque mesh
   removes only fully enclosed faces and keeps the surviving vertex attributes
-  unchanged (366–480 triangles). The original remains available for close
-  transparent trees. The two distant meshes have 238–240 and 94–96 triangles,
+  unchanged (366â€“480 triangles). The original remains available for close
+  transparent trees. The two distant meshes have 238â€“240 and 94â€“96 triangles,
   retaining the source coordinates, bounds, material roles and shared textures.
   The manifest records every level; screen-pixel thresholds live in Java's
   `TreeLod`, so no camera or game state is baked into these assets.
@@ -56,8 +84,7 @@ directory with the game's data. Blender is an authoring dependency only.
   down) with ambient occlusion in alpha, and `manifest.json` the metres each repeat
   spans. All are original procedural works (CC0-1.0) generated from fixed seeds by
   `tools/build_terrain_materials.py`; no photographs or generated images are used.
-  The terrain's rock kit is generated in code (`BoardRocks`), so there are no rock
-  model files; the former `outcrop-*` formations have been removed.
+  The former `outcrop-*` formations are replaced by the shared GLB rock kit below.
 - `textures/cliffs/`: the vertical hex sides' 1024 by 1024 color, tangent normal,
   and packed height/roughness/occlusion maps for rock, sandstone, soil, concrete
   and snow. These retain full mip resolution and use the board's dedicated
@@ -105,15 +132,28 @@ directory with the game's data. Blender is an authoring dependency only.
 Edit roof art under `tileset/`, then rebuild the derived roof texture and mesh.
 Opaque source roof pixels and their UV locations are unchanged by the export;
 RGB is extended only outside the roof mask to prevent filtering fringes.
-`buildings/*-roof.png` is generated output. Edit the facade originals under
+Each `buildings/<name>.png` is an exact copy of the original tile artwork,
+including transparency and shadows, for inspection beside `<name>.glb`.
+The processed RGB roof texture is embedded in the GLB; its offline input is
+under `tools/board-models/roofs`. Edit the facade originals under
 `textures/buildings/full-resolution/` to change windows/walls. Edit
 `tools/building-footprints.json` between preparation
 and export to author a silhouette manually.
 
-Models are indexed G3DJ with positions, flat normals, vertex colors and UVs.
-Z is up; X/Y use the 84 by 72 pixel hex dimensions. Local height one scales to
-the game's feature height. Bridge decks sit at local Z=0, with rails above and
-girders below. Textures and meshes are shared; translucency changes instance
+Models are indexed GLB with positions, flat normals, vertex colors and UVs.
+The importer converts glTF Y-up and linear colors back to the board convention.
+In the runtime representation Z is up; X/Y use the 84 by 72 pixel hex dimensions.
+Plants preserve their original proportions at local height 30. Buildings,
+including tanks and industrial structures, stand at Z=0 with their roof at
+Z=18: one default board level, visible at useful proportions in ordinary GLB
+viewers. Placement fits their actual bounds to the game's feature height;
+interior floors/columns share the shell's coordinates and placement. Wall UVs
+and facade repetition remain independent of these authored coordinates.
+Crops retain their legacy height-one convention. A bridge arm is 22 wide and
+36 long, with its deck at Z=0, underside at -2.52 and rails at +2.34. Runtime
+scales its vertical dimensions by the configured level height divided by 18.
+The bridge GLB is still used for elevated decks and rails; the procedural road
+system supplies ground roads and their approaches to those decks. Textures and meshes are shared; translucency changes instance
 materials, not the assets. Snow trees have their own snow geometry/materials.
 The 36-triangle bridge arm samples `tileset/saxarba/bridges/bridge_09.png`.
 Deck and rail tops retain the source artwork's layout, while vertical rail and
@@ -121,8 +161,8 @@ fascia faces unwrap its guardrail strip, including bars and supports. Edit that
 independent image to change the bridge. There is no transverse coping over the
 roadway. Runtime places the deck slightly
 above the riverbank to avoid coplanar depth flicker at zero bridge elevation.
-Rubble and rough terrain retain their painted stones and use faceted normal
-maps instead of separate rock meshes. `normals/` mirrors ground image paths
+Rough terrain places the shared GLB rock templates in its terrain mesh.
+Ground image normal maps remain a separate surface detail. `normals/` mirrors ground image paths
 under `tileset/`, appending `.png` to the complete source name (including its
 original extension and any crop). `normal-manifest.json` records dimensions,
 strength and source pixel hashes. Runtime selects each map through the chosen
@@ -185,7 +225,7 @@ runtime does not need that folder. Export converts Blender's linear colors to
 display-space vertex colors, preserving the green/snow material distinction.
 
 `build_board_assets.py` runs `prepare_tree_lods.py` after exporting the trees.
-To rebuild only the detail levels from the unchanged authored G3DJ files, run
+To rebuild detail levels from GLB authoring sources under `tools/board-models/foliage`, run
 `blender --background --factory-startup --python tools/prepare_tree_lods.py`.
 Near pruning requires an enclosing component to be closed with consistent winding;
 surface intersections and boundary contacts are retained. Open palm fronds are
@@ -221,3 +261,48 @@ references are in `../../../tools/board-rim-texture-prompts.json`. Only the
 128 by 128 runtime maps are shipped. The rim maps are pale detail albedos;
 their final theme colors come from the hex artwork, and geometry supplies
 their uneven lower silhouette.
+
+## Plant GLB packaging
+
+Each of the 22 plant variants has one GLB, for example `pine.glb`, containing
+identity groups `pine-lod0`, `pine-lod1`, `pine-lod2`. Their authored geometry,
+UVs and material roles are preserved. The runtime chooses one level and resolves
+missing optional levels toward LOD0 once while loading. Foliage PNGs remain
+external under `textures/foliage`, shared by all variants and levels.
+All levels have natural proportions and a base at zero, including when inspected
+in an ordinary GLB viewer. Export and LOD preparation never flatten the height.
+The complete source meshes for Blender regeneration and visual regression
+checks are in `tools/board-models/foliage`; they are not deployed game meshes.
+
+## Building GLBs and textures
+
+All 3,295 Saxarba buildings now use one GLB each, with an identity
+`<building>-lod0` group. Each embeds its dedicated roof PNG without changing
+the image bytes, and uses a relative URI for one of eight shared facade PNGs.
+Roof and wall are separate material groups, not two layers over the same mesh.
+Runtime wall materials still scale vertical UVs with building height; `shell`
+materials retain full-height UVs. Roof samplers clamp; facade samplers repeat.
+
+`RigidGlb` supports embedded PNG/JPEG diffuse images and local image references.
+`ModelTextures` caches images with their sampler state, releases native pixels
+after upload, retains encoded bytes for context restoration and gives texture
+disposal to the owning asset library. Unit and plant models use the same path.
+Only the roof belongs inside each building package; the facade stays shared.
+Each building keeps `<building>.png` beside `<building>.glb`: a byte-for-byte
+copy of its original tileset image, retaining alpha and shadows. This is for
+inspection and is not a runtime texture dependency. The processed roof PNG
+stays embedded, with no loose `*-roof.png` under deployed buildings. The
+footprint tool copies the original sibling and prepares the filtering-safe
+RGB roof under `tools/board-models/roofs`; the exporter embeds that prepared
+image. Validation checks the original sibling against its source and the
+embedded roof against the source's opaque pixels. There is no measured
+runtime performance gain claimed from embedding.
+
+`bridge.glb` and `field.glb` also contain a single LOD0 group. No G3DJ remains
+under deployed `data/` or authoring/reference `tools/`. The 475 former tool
+meshes also use GLB, including seven empty squad references. All 4,056 deployed GLBs pass Khronos validation with zero errors. One
+warning remains for ancillary metadata in the existing external bridge PNG;
+its pixels and shared tileset reference were preserved.
+
+See the glTF image specification:
+https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#images
