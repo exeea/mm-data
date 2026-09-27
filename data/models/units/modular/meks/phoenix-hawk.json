@@ -235,8 +235,16 @@
       "heldOffset": [
         0.04,
         3.515,
-        0.395
+        2.675
       ]
+    },
+    {
+      "hardpoint": "RA@hand:ppc-0",
+      "family": "ppc",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85,
+      "stackGap": 0
     },
     {
       "hardpoint": "CT:ecm-0",

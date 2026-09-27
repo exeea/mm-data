@@ -210,7 +210,7 @@
       "profile": "held",
       "heldOffset": [
         0.0,
-        3.339,
+        0.84,
         1.277
       ]
     },
@@ -240,7 +240,7 @@
       "profile": "held",
       "heldOffset": [
         0.0,
-        3.339,
+        0.84,
         1.277
       ]
     },
@@ -263,6 +263,62 @@
       "style": "short",
       "profile": "vertical-slope",
       "bayColumns": 2
+    },
+    {
+      "hardpoint": "LA@hand:laser-0",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.8967599999999999,
+      "style": "long",
+      "length": 3.13866
+    },
+    {
+      "hardpoint": "LA@hand:ppc-0",
+      "family": "ppc",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.8967599999999999,
+      "style": "long"
+    },
+    {
+      "hardpoint": "RA@hand:laser-0",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.8967599999999999,
+      "style": "long",
+      "length": 3.13866
+    },
+    {
+      "hardpoint": "RA@hand:ballistic-0",
+      "family": "ballistic",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.8967599999999999,
+      "style": "long"
+    },
+    {
+      "hardpoint": "RA@hand:ppc-0",
+      "family": "ppc",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.8967599999999999,
+      "style": "long"
+    },
+    {
+      "hardpoint": "RL:ballistic-0",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.8967599999999999
+    },
+    {
+      "hardpoint": "LL:ballistic-0",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.8967599999999999
     },
     {
       "hardpoint": "LT-laser",
@@ -297,24 +353,6 @@
       "bay": false,
       "scale": 0.8967599999999999,
       "length": 2.6902799999999996
-    },
-    {
-      "hardpoint": "LA-laser",
-      "family": "laser",
-      "form": "",
-      "bay": false,
-      "scale": 0.8967599999999999,
-      "style": "long",
-      "length": 3.13866
-    },
-    {
-      "hardpoint": "RA-laser",
-      "family": "laser",
-      "form": "",
-      "bay": false,
-      "scale": 0.8967599999999999,
-      "style": "long",
-      "length": 3.13866
     },
     {
       "hardpoint": "HD-front",
@@ -448,7 +486,7 @@
       "profile": "held",
       "heldOffset": [
         0.0,
-        3.339,
+        0.84,
         1.277
       ],
       "length": 3.13866
@@ -481,7 +519,7 @@
       "profile": "held",
       "heldOffset": [
         0.0,
-        3.339,
+        0.84,
         1.277
       ],
       "length": 3.13866

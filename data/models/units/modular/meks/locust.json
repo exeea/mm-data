@@ -220,6 +220,30 @@
       "stack": "rows"
     },
     {
+      "hardpoint": "RA@elbow:ballistic-0",
+      "family": "ballistic",
+      "form": "elbow",
+      "bay": false,
+      "scale": 1.028,
+      "stack": "rows"
+    },
+    {
+      "hardpoint": "RA@elbow:machine-gun-0",
+      "family": "machine-gun",
+      "form": "elbow",
+      "bay": false,
+      "scale": 1.028,
+      "stack": "rows"
+    },
+    {
+      "hardpoint": "RA@elbow:laser-0",
+      "family": "laser",
+      "form": "elbow",
+      "bay": false,
+      "scale": 1.028,
+      "stack": "rows"
+    },
+    {
       "hardpoint": "external-searchlight",
       "family": "lamp",
       "form": "",

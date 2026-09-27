@@ -297,6 +297,27 @@
       "bayColumns": 1
     },
     {
+      "hardpoint": "HD:sensor-0",
+      "family": "sensor",
+      "form": "",
+      "bay": false,
+      "scale": 0.8559
+    },
+    {
+      "hardpoint": "HD:laser-0",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.8559
+    },
+    {
+      "hardpoint": "RT:laser-0",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.8559
+    },
+    {
       "hardpoint": "RT:ballistic-0",
       "family": "ballistic",
       "form": "",

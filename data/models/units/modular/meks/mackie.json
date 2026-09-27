@@ -218,6 +218,14 @@
       "scale": 0.7770999999999999
     },
     {
+      "hardpoint": "RA@elbow:ballistic-0",
+      "family": "ballistic",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.7770999999999999,
+      "length": 13.210699999999997
+    },
+    {
       "hardpoint": "CT:laser-0",
       "family": "laser",
       "form": "",
@@ -248,14 +256,6 @@
       "bay": false,
       "scale": 0.7770999999999999,
       "length": 12.433599999999998
-    },
-    {
-      "hardpoint": "RA-ballistic",
-      "family": "ballistic",
-      "form": "",
-      "bay": false,
-      "scale": 0.7770999999999999,
-      "length": 13.210699999999997
     },
     {
       "hardpoint": "LA-front",

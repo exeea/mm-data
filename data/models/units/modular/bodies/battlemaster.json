@@ -818,7 +818,7 @@
       "node": "LA-forearm",
       "position": [
         0.0,
-        23.373,
+        25.872479999999996,
         -0.9540000000000006
       ],
       "rotation": [
@@ -905,7 +905,7 @@
       "node": "RA-forearm",
       "position": [
         0.0,
-        23.373,
+        25.872479999999996,
         -0.9540000000000006
       ],
       "rotation": [
@@ -976,6 +976,209 @@
         7.632,
         6,
         11.448
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "LA@hand:laser-0",
+      "location": "LA",
+      "side": "front",
+      "node": "LA-forearm",
+      "position": [
+        0.0,
+        25.872479999999996,
+        -0.9540000000000006
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        7.727399999999999,
+        6,
+        9.54
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "LA@hand:ppc-0",
+      "location": "LA",
+      "side": "front",
+      "node": "LA-forearm",
+      "position": [
+        0.0,
+        25.872479999999996,
+        -0.9540000000000006
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        7.727399999999999,
+        6,
+        9.54
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RA@hand:laser-0",
+      "location": "RA",
+      "side": "front",
+      "node": "RA-forearm",
+      "position": [
+        0.0,
+        25.872479999999996,
+        -0.9540000000000006
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        7.727399999999999,
+        6,
+        9.54
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RA@hand:ballistic-0",
+      "location": "RA",
+      "side": "front",
+      "node": "RA-forearm",
+      "position": [
+        0.0,
+        25.872479999999996,
+        -0.9540000000000006
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        7.727399999999999,
+        6,
+        9.54
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RA@hand:ppc-0",
+      "location": "RA",
+      "side": "front",
+      "node": "RA-forearm",
+      "position": [
+        0.0,
+        25.872479999999996,
+        -0.9540000000000006
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        7.727399999999999,
+        6,
+        9.54
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RL:ballistic-0",
+      "location": "RL",
+      "side": "front",
+      "node": "RL",
+      "position": [
+        1.7763568394002505e-15,
+        0.0,
+        -16.809479999999997
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        9.54,
+        6,
+        9.54
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "LL:ballistic-0",
+      "location": "LL",
+      "side": "front",
+      "node": "LL",
+      "position": [
+        -1.7763568394002505e-15,
+        0.0,
+        -16.809479999999997
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        9.54,
+        6,
+        9.54
       ],
       "minScale": 0.4,
       "maxScale": 1.5,
@@ -1092,64 +1295,6 @@
         5.724,
         6,
         5.724
-      ],
-      "minScale": 0.4,
-      "maxScale": 1.5,
-      "roles": [
-        "weapon",
-        "physical",
-        "misc"
-      ]
-    },
-    {
-      "id": "LA-laser",
-      "location": "LA",
-      "side": "front",
-      "node": "LA-forearm",
-      "position": [
-        0.0,
-        20.034,
-        -0.9540000000000006
-      ],
-      "rotation": [
-        0.0,
-        0,
-        -0.0,
-        1.0
-      ],
-      "size": [
-        7.727399999999999,
-        6,
-        9.54
-      ],
-      "minScale": 0.4,
-      "maxScale": 1.5,
-      "roles": [
-        "weapon",
-        "physical",
-        "misc"
-      ]
-    },
-    {
-      "id": "RA-laser",
-      "location": "RA",
-      "side": "front",
-      "node": "RA-forearm",
-      "position": [
-        0.0,
-        20.034,
-        -0.9540000000000006
-      ],
-      "rotation": [
-        0.0,
-        0,
-        -0.0,
-        1.0
-      ],
-      "size": [
-        7.727399999999999,
-        6,
-        9.54
       ],
       "minScale": 0.4,
       "maxScale": 1.5,

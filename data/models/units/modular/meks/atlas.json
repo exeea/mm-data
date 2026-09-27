@@ -211,6 +211,81 @@
       "style": "medium"
     },
     {
+      "hardpoint": "LA@hand:ballistic-0",
+      "family": "ballistic",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.74036,
+      "style": "medium"
+    },
+    {
+      "hardpoint": "RT:ppc-0",
+      "family": "ppc",
+      "form": "",
+      "bay": false,
+      "scale": 0.74036
+    },
+    {
+      "hardpoint": "LA@hand:ppc-0",
+      "family": "ppc",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.74036,
+      "style": "medium"
+    },
+    {
+      "hardpoint": "RT:ballistic-0",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.74036
+    },
+    {
+      "hardpoint": "LT:laser-0",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.74036
+    },
+    {
+      "hardpoint": "RT:laser-0",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.74036
+    },
+    {
+      "hardpoint": "RT:missile-0",
+      "family": "missile",
+      "form": "",
+      "bay": false,
+      "scale": 0.74036
+    },
+    {
+      "hardpoint": "RA@hand:laser-0",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.74036,
+      "style": "medium"
+    },
+    {
+      "hardpoint": "LA@hand:sensor-0",
+      "family": "sensor",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.74036,
+      "style": "medium"
+    },
+    {
+      "hardpoint": "LA@hand:laser-0",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.74036,
+      "style": "medium"
+    },
+    {
       "hardpoint": "LT:missile-0",
       "family": "missile",
       "form": "",

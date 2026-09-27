@@ -239,6 +239,24 @@
       "lightStyle": "short"
     },
     {
+      "hardpoint": "RA@elbow:laser-0",
+      "family": "laser",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.85,
+      "style": "long",
+      "lightStyle": "short"
+    },
+    {
+      "hardpoint": "LA@elbow:laser-0",
+      "family": "laser",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.85,
+      "style": "long",
+      "lightStyle": "short"
+    },
+    {
       "hardpoint": "LT:missile-0",
       "family": "missile",
       "form": "",

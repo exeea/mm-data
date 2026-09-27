@@ -862,6 +862,93 @@
       ]
     },
     {
+      "id": "RA@elbow:ballistic-0",
+      "location": "RA",
+      "side": "front",
+      "node": "RA",
+      "position": [
+        3.0582999999999956,
+        4.625999999999998,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        4.6259999999999994,
+        6,
+        5.204249999999999
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RA@elbow:machine-gun-0",
+      "location": "RA",
+      "side": "front",
+      "node": "RA",
+      "position": [
+        4.266200000000003,
+        4.625999999999998,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        4.6259999999999994,
+        6,
+        5.204249999999999
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RA@elbow:laser-0",
+      "location": "RA",
+      "side": "front",
+      "node": "RA",
+      "position": [
+        3.6108499999999957,
+        4.625999999999998,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        4.6259999999999994,
+        6,
+        5.204249999999999
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
       "id": "external-searchlight",
       "location": "LT",
       "side": "front",

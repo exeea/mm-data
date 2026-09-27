@@ -1163,9 +1163,9 @@
       "side": "front",
       "node": "LT",
       "position": [
-        -3.8040000000000003,
-        -13.314,
-        11.411999999999999
+        -2.5106400000000004,
+        -12.943109999999997,
+        10.11864
       ],
       "rotation": [
         0.0,
@@ -1216,6 +1216,93 @@
       ]
     },
     {
+      "id": "HD:sensor-0",
+      "location": "HD",
+      "side": "front",
+      "node": "HD",
+      "position": [
+        0.0,
+        2.253870000000001,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        5.7059999999999995,
+        6,
+        5.7059999999999995
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "HD:laser-0",
+      "location": "HD",
+      "side": "front",
+      "node": "HD",
+      "position": [
+        0.0,
+        1.7498400000000007,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        5.7059999999999995,
+        6,
+        5.7059999999999995
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RT:laser-0",
+      "location": "RT",
+      "side": "front",
+      "node": "RT",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        11.411999999999999,
+        6,
+        13.314
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
       "id": "RT:ballistic-0",
       "location": "RT",
       "side": "front",
@@ -1223,7 +1310,7 @@
       "position": [
         -4.755,
         -14.264999999999999,
-        16.167
+        15.311100000000003
       ],
       "rotation": [
         0.0,

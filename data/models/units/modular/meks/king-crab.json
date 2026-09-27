@@ -253,6 +253,56 @@
       "bayColumns": 1
     },
     {
+      "hardpoint": "RT:ecm-0",
+      "family": "ecm",
+      "form": "",
+      "bay": false,
+      "scale": 0.86925,
+      "style": "medium"
+    },
+    {
+      "hardpoint": "RA@hand:laser-0",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.86925
+    },
+    {
+      "hardpoint": "RA@elbow:ppc-0",
+      "family": "ppc",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.86925
+    },
+    {
+      "hardpoint": "RA@elbow:ballistic-0",
+      "family": "ballistic",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.86925
+    },
+    {
+      "hardpoint": "LA@hand:laser-0",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.86925
+    },
+    {
+      "hardpoint": "LA@elbow:ppc-0",
+      "family": "ppc",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.86925
+    },
+    {
+      "hardpoint": "LA@elbow:ballistic-0",
+      "family": "ballistic",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.86925
+    },
+    {
       "hardpoint": "HD:laser-0",
       "family": "laser",
       "form": "",

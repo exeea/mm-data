@@ -238,6 +238,13 @@
       "bayColumns": 1
     },
     {
+      "hardpoint": "RA@hand:laser-0",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.85
+    },
+    {
       "hardpoint": "LA@hand:hatchet-0",
       "family": "hatchet",
       "form": "hand",

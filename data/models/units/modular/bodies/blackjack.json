@@ -862,6 +862,64 @@
       ]
     },
     {
+      "id": "RA@elbow:laser-0",
+      "location": "RA",
+      "side": "front",
+      "node": "RA",
+      "position": [
+        2.6000000000000014,
+        6.3,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        3.8,
+        6,
+        5.6
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "LA@elbow:laser-0",
+      "location": "LA",
+      "side": "front",
+      "node": "LA",
+      "position": [
+        -2.6000000000000014,
+        6.3,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        3.8,
+        6,
+        5.6
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
       "id": "LT:missile-0",
       "location": "LT",
       "side": "front",
