@@ -217,6 +217,43 @@
       "style": "long"
     },
     {
+      "hardpoint": "RT:laser-0",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.88445,
+      "style": "recessed"
+    },
+    {
+      "hardpoint": "LT:laser-0",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.88445,
+      "style": "recessed"
+    },
+    {
+      "hardpoint": "CT:ecm-0",
+      "family": "ecm",
+      "form": "",
+      "bay": false,
+      "scale": 0.88445
+    },
+    {
+      "hardpoint": "CT:laser-0",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.88445
+    },
+    {
+      "hardpoint": "CT:missile-0",
+      "family": "missile",
+      "form": "",
+      "bay": false,
+      "scale": 0.88445
+    },
+    {
       "hardpoint": "LA-ballistic",
       "family": "ballistic",
       "form": "",

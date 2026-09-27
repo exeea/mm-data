@@ -265,6 +265,22 @@
       "bayColumns": 2
     },
     {
+      "hardpoint": "RT:laser-0",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.8967599999999999,
+      "style": "short"
+    },
+    {
+      "hardpoint": "LT:laser-0",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.8967599999999999,
+      "style": "short"
+    },
+    {
       "hardpoint": "LA@hand:laser-0",
       "family": "laser",
       "form": "hand",
@@ -321,24 +337,6 @@
       "scale": 0.8967599999999999
     },
     {
-      "hardpoint": "LT-laser",
-      "family": "laser",
-      "form": "",
-      "bay": false,
-      "scale": 0.8967599999999999,
-      "style": "short",
-      "length": 2.6902799999999996
-    },
-    {
-      "hardpoint": "RT-laser",
-      "family": "laser",
-      "form": "",
-      "bay": false,
-      "scale": 0.8967599999999999,
-      "style": "short",
-      "length": 2.6902799999999996
-    },
-    {
       "hardpoint": "CT-laser",
       "family": "laser",
       "form": "",
@@ -384,42 +382,6 @@
       "form": "",
       "bay": false,
       "scale": 0.8967599999999999,
-      "length": 2.6902799999999996
-    },
-    {
-      "hardpoint": "LT-front",
-      "family": "laser",
-      "form": "",
-      "bay": false,
-      "scale": 0.8967599999999999,
-      "style": "short",
-      "length": 2.6902799999999996
-    },
-    {
-      "hardpoint": "LT-rear",
-      "family": "laser",
-      "form": "",
-      "bay": false,
-      "scale": 0.8967599999999999,
-      "style": "short",
-      "length": 2.6902799999999996
-    },
-    {
-      "hardpoint": "RT-front",
-      "family": "laser",
-      "form": "",
-      "bay": false,
-      "scale": 0.8967599999999999,
-      "style": "short",
-      "length": 2.6902799999999996
-    },
-    {
-      "hardpoint": "RT-rear",
-      "family": "laser",
-      "form": "",
-      "bay": false,
-      "scale": 0.8967599999999999,
-      "style": "short",
       "length": 2.6902799999999996
     },
     {

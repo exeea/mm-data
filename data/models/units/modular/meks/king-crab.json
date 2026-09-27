@@ -253,6 +253,22 @@
       "bayColumns": 1
     },
     {
+      "hardpoint": "RT:ppc-0",
+      "family": "ppc",
+      "form": "",
+      "bay": false,
+      "scale": 0.86925,
+      "style": "medium"
+    },
+    {
+      "hardpoint": "RT:ballistic-0",
+      "family": "ballistic",
+      "form": "",
+      "bay": false,
+      "scale": 0.86925,
+      "style": "medium"
+    },
+    {
       "hardpoint": "RT:ecm-0",
       "family": "ecm",
       "form": "",

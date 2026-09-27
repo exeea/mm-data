@@ -297,6 +297,41 @@
       "bayColumns": 1
     },
     {
+      "hardpoint": "LT:laser-0",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.8559
+    },
+    {
+      "hardpoint": "LT:laser-1",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.8559
+    },
+    {
+      "hardpoint": "HD:flamer-0",
+      "family": "flamer",
+      "form": "",
+      "bay": false,
+      "scale": 0.8559
+    },
+    {
+      "hardpoint": "CT:ecm-0",
+      "family": "ecm",
+      "form": "",
+      "bay": false,
+      "scale": 0.8559
+    },
+    {
+      "hardpoint": "CT:laser-0",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.8559
+    },
+    {
       "hardpoint": "HD:sensor-0",
       "family": "sensor",
       "form": "",
@@ -312,6 +347,13 @@
     },
     {
       "hardpoint": "RT:laser-0",
+      "family": "laser",
+      "form": "",
+      "bay": false,
+      "scale": 0.8559
+    },
+    {
+      "hardpoint": "RT:laser-1",
       "family": "laser",
       "form": "",
       "bay": false,

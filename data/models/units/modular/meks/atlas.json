@@ -211,6 +211,21 @@
       "style": "medium"
     },
     {
+      "hardpoint": "CT:missile-0",
+      "family": "missile",
+      "form": "",
+      "bay": false,
+      "scale": 0.74036
+    },
+    {
+      "hardpoint": "RA@hand:ppc-0",
+      "family": "ppc",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.74036,
+      "style": "medium"
+    },
+    {
       "hardpoint": "LA@hand:ballistic-0",
       "family": "ballistic",
       "form": "hand",
@@ -270,6 +285,22 @@
       "style": "medium"
     },
     {
+      "hardpoint": "RA@hand:laser-1",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.74036,
+      "style": "medium"
+    },
+    {
+      "hardpoint": "RA@hand:laser-2",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.74036,
+      "style": "medium"
+    },
+    {
       "hardpoint": "LA@hand:sensor-0",
       "family": "sensor",
       "form": "hand",
@@ -279,6 +310,22 @@
     },
     {
       "hardpoint": "LA@hand:laser-0",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.74036,
+      "style": "medium"
+    },
+    {
+      "hardpoint": "LA@hand:laser-1",
+      "family": "laser",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.74036,
+      "style": "medium"
+    },
+    {
+      "hardpoint": "LA@hand:laser-2",
       "family": "laser",
       "form": "hand",
       "bay": false,

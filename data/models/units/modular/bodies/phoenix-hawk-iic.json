@@ -926,6 +926,35 @@
       ]
     },
     {
+      "id": "CT:missile-0",
+      "location": "CT",
+      "side": "front",
+      "node": "CT",
+      "position": [
+        0.0,
+        7.137900000000001,
+        7.092579999999998
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        6.2315000000000005,
+        6,
+        13.0295
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
       "id": "LA@hand:hatchet-0",
       "location": "LA",
       "side": "front",

@@ -759,7 +759,7 @@
       "position": [
         -0.27420000000000044,
         7.62276,
-        2.8334000000000046
+        3.2904000000000053
       ],
       "rotation": [
         0.0,
@@ -846,7 +846,7 @@
       "position": [
         0.2741999999999969,
         7.62276,
-        2.8334000000000046
+        3.2904000000000053
       ],
       "rotation": [
         0.0,
@@ -974,6 +974,180 @@
         8.591600000000001,
         6,
         10.054
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RA@elbow:ecm-0",
+      "location": "RA",
+      "side": "front",
+      "node": "RA",
+      "position": [
+        2.924800000000001,
+        1.7365999999999988,
+        -4.4786
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        9.14,
+        6,
+        9.14
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RA@wrist:ecm-0",
+      "location": "RA",
+      "side": "front",
+      "node": "RA-forearm",
+      "position": [
+        0.0,
+        1.2795999999999987,
+        3.747399999999999
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        9.14,
+        6,
+        9.14
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RA@hand:ecm-0",
+      "location": "RA",
+      "side": "front",
+      "node": "RA-forearm",
+      "position": [
+        0.0,
+        1.2795999999999987,
+        3.747399999999999
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        9.14,
+        6,
+        9.14
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "LA@elbow:ecm-0",
+      "location": "LA",
+      "side": "front",
+      "node": "LA",
+      "position": [
+        -2.9247999999999976,
+        1.7365999999999988,
+        -4.4786
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        9.14,
+        6,
+        9.14
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "LA@wrist:ecm-0",
+      "location": "LA",
+      "side": "front",
+      "node": "LA-forearm",
+      "position": [
+        0.0,
+        1.2795999999999987,
+        3.747399999999999
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        9.14,
+        6,
+        9.14
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "LA@hand:ecm-0",
+      "location": "LA",
+      "side": "front",
+      "node": "LA-forearm",
+      "position": [
+        0.0,
+        1.2795999999999987,
+        3.747399999999999
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        9.14,
+        6,
+        9.14
       ],
       "minScale": 0.4,
       "maxScale": 1.5,

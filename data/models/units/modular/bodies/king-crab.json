@@ -935,7 +935,7 @@
       "position": [
         2.7449999999999974,
         -7.320000000000001,
-        5.307000000000002
+        4.666499999999999
       ],
       "rotation": [
         0.0,
@@ -1003,6 +1003,64 @@
       ],
       "size": [
         10.065000000000001,
+        6,
+        8.235
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RT:ppc-0",
+      "location": "RT",
+      "side": "front",
+      "node": "RT",
+      "position": [
+        0.0,
+        0.0,
+        0.7319999999999993
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        10.98,
+        6,
+        8.235
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RT:ballistic-0",
+      "location": "RT",
+      "side": "front",
+      "node": "RT",
+      "position": [
+        0.0,
+        0.0,
+        -0.3202500000000015
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        10.98,
         6,
         8.235
       ],

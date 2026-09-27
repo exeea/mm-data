@@ -233,6 +233,48 @@
       "bayColumns": 2
     },
     {
+      "hardpoint": "RA@elbow:ecm-0",
+      "family": "ecm",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.8226
+    },
+    {
+      "hardpoint": "RA@wrist:ecm-0",
+      "family": "ecm",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.8226
+    },
+    {
+      "hardpoint": "RA@hand:ecm-0",
+      "family": "ecm",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.8226
+    },
+    {
+      "hardpoint": "LA@elbow:ecm-0",
+      "family": "ecm",
+      "form": "elbow",
+      "bay": false,
+      "scale": 0.8226
+    },
+    {
+      "hardpoint": "LA@wrist:ecm-0",
+      "family": "ecm",
+      "form": "wrist",
+      "bay": false,
+      "scale": 0.8226
+    },
+    {
+      "hardpoint": "LA@hand:ecm-0",
+      "family": "ecm",
+      "form": "hand",
+      "bay": false,
+      "scale": 0.8226
+    },
+    {
       "hardpoint": "RA:hatchet-0",
       "family": "hatchet",
       "form": "",

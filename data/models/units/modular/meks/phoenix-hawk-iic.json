@@ -257,6 +257,15 @@
       ]
     },
     {
+      "hardpoint": "CT:missile-0",
+      "family": "missile",
+      "form": "",
+      "bay": false,
+      "scale": 0.96305,
+      "style": "short",
+      "lightStyle": "short"
+    },
+    {
       "hardpoint": "LA@hand:hatchet-0",
       "family": "hatchet",
       "form": "hand",

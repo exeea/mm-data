@@ -1192,9 +1192,9 @@
       "side": "front",
       "node": "RT",
       "position": [
-        3.8040000000000003,
-        -13.314,
-        11.411999999999999
+        3.3285,
+        -13.161840000000002,
+        10.936500000000002
       ],
       "rotation": [
         0.0,
@@ -1206,6 +1206,151 @@
         11.411999999999999,
         6,
         7.608
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "LT:laser-0",
+      "location": "LT",
+      "side": "front",
+      "node": "LT",
+      "position": [
+        0.0,
+        0.9510000000000005,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        11.411999999999999,
+        6,
+        13.314
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "LT:laser-1",
+      "location": "LT",
+      "side": "front",
+      "node": "LT",
+      "position": [
+        -1.426499999999999,
+        0.9510000000000005,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        11.411999999999999,
+        6,
+        13.314
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "HD:flamer-0",
+      "location": "HD",
+      "side": "front",
+      "node": "HD",
+      "position": [
+        0.0,
+        1.5216000000000012,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        5.7059999999999995,
+        6,
+        5.7059999999999995
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "CT:ecm-0",
+      "location": "CT",
+      "side": "front",
+      "node": "CT",
+      "position": [
+        0.0,
+        18.734699999999997,
+        3.804000000000002
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        11.411999999999999,
+        6,
+        13.314
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "CT:laser-0",
+      "location": "CT",
+      "side": "front",
+      "node": "CT",
+      "position": [
+        0.0,
+        20.0661,
+        3.804000000000002
+      ],
+      "rotation": [
+        0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        11.411999999999999,
+        6,
+        13.314
       ],
       "minScale": 0.4,
       "maxScale": 1.5,
@@ -1280,7 +1425,36 @@
       "node": "RT",
       "position": [
         0.0,
+        0.9510000000000005,
+        0.0
+      ],
+      "rotation": [
         0.0,
+        0,
+        -0.0,
+        1.0
+      ],
+      "size": [
+        11.411999999999999,
+        6,
+        13.314
+      ],
+      "minScale": 0.4,
+      "maxScale": 1.5,
+      "roles": [
+        "weapon",
+        "physical",
+        "misc"
+      ]
+    },
+    {
+      "id": "RT:laser-1",
+      "location": "RT",
+      "side": "front",
+      "node": "RT",
+      "position": [
+        1.426499999999999,
+        0.9510000000000005,
         0.0
       ],
       "rotation": [

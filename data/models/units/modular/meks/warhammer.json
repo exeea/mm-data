@@ -271,6 +271,7 @@
       "bay": true,
       "scale": 0.8832,
       "profile": "columns-4",
+      "stand": true,
       "bayColumns": 1
     },
     {
