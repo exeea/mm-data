@@ -45,7 +45,7 @@ no rock or scatter geometry is generated in-game.
   and industrial structures use their selected Saxarba artwork too; generic
   cylinder/factory substitutes have been removed.
 - `bridge.glb`, `field.glb`, and twenty-two foliage GLB
-  files, all at or below 480 triangles. Counts and
+  files, plus 63 additional complete bridge exit patterns, all at or below 480 triangles. Counts and
   the imported Blender source names are in `manifest.json`.
 - Each tree GLB contains `-lod0`, `-lod1`, and `-lod2` groups. The near opaque mesh
   removes only fully enclosed faces and keeps the surviving vertex attributes
@@ -149,18 +149,27 @@ Z=18: one default board level, visible at useful proportions in ordinary GLB
 viewers. Placement fits their actual bounds to the game's feature height;
 interior floors/columns share the shell's coordinates and placement. Wall UVs
 and facade repetition remain independent of these authored coordinates.
-Crops retain their legacy height-one convention. The bridge is authored in tile
-units: a 15-wide carriageway, a slab 1.5 below deck Z=0 and raised sides 2.5 above
-it, each 1.5 wide. Each 36-triangle arm is 36 long and 18 wide overall.
-The runtime places the deck at the bridge elevation plus the same surface
-clearance as roads. Only the arm's length changes to meet its hex exit; its width
-and thickness scale with the board, never with terrain-level height.
-The deck uses `textures/roads/asphalt.png`, with the road's normal/surface maps,
-lighting and world-space texture phase at runtime. Sides and underside use shared
-`textures/sculpt/concrete.png` with repeating face UVs. The old plan-view
-`tileset/saxarba/bridges/bridge_09.png` is no longer a bridge-model texture.
-The procedural road system supplies ground roads and their approaches; the GLB
-supplies the elevated deck and raised sides. Textures and meshes are shared;
+Crops retain their legacy height-one convention. Each bridge is a complete deck
+for one of the 64 six-bit exit patterns. `bridge.glb` is the north/south straight
+span (mask 09); `bridges/bridge-exits-NN.glb` contains every other pattern.
+Each file contains one named LOD0 group. These are connection patterns, not LODs.
+The carriageway is 15 units wide, slab bottom Z=-1.5, deck Z=0 and rail top Z=2.5.
+Rails follow the outside of the joined deck and leave every connected exit open.
+Turns are curved; three-to-six-exit junctions have one open connected center.
+The runtime places one GLB per bridge hex at the bridge elevation plus the road
+surface clearance. Board scale applies uniformly; terrain-level height affects
+only elevation, never slab thickness or rail height.
+The deck uses shared road asphalt and the road's normal/surface maps, lighting
+and world-space texture phase. Sides and underside use shared repeating concrete.
+
+Rebuild only bridges:
+1. In the MegaMek code checkout run `gradlew :megamek:exportBridgeShapes`.
+2. In mm-data run `blender --background --python tools/build_bridge_assets.py`.
+
+The exported `tools/board-models/bridge-shapes.json` comes from `BoardRoad` curves
+and unioned footprints; the Blender tool triangulates/extrudes it into GLBs.
+The main board-asset builder delegates its bridge rebuild to this same tool.
+No separate bridge path algorithm or runtime mesh generator is used. Textures and meshes are shared;
 translucency changes instance materials, not the assets. Snow trees have their
 own snow geometry/materials.
 Rough terrain places the shared GLB rock templates in its terrain mesh.
@@ -253,7 +262,7 @@ Pack (June 2019)**: `CommonTree_1/2/4`, `CommonTree_Dead_2`, `PineTree_1/2/3`,
 `Cactus_2` and `CactusFlowers_2`. The supplied CC0 notice is preserved
 in `QUATERNIUS-LICENSE.txt`.
 
-Bridge and crop models were authored with the Blender script.
+Bridge models are baked from the shared road outlines; crop models are authored with the Blender script.
 Dirt, sandstone, rock, concrete and windowed facade albedos were generated with
 the built-in image_gen tool; exact prompts are in
 `../../../tools/board-texture-prompts.json`. The seven contextual facade prompts
@@ -303,8 +312,9 @@ runtime performance gain claimed from embedding.
 `bridge.glb` and `field.glb` also contain a single LOD0 group. No G3DJ remains
 under deployed `data/` or authoring/reference `tools/`. The 475 former tool
 meshes also use GLB, including seven empty squad references. All 4,056 deployed GLBs pass Khronos validation with zero errors. One
-warning remains for ancillary metadata in the existing external bridge PNG;
-its pixels and shared tileset reference were preserved.
+warning originally came from ancillary metadata in the old external bridge PNG.
+The redesigned bridge uses shared asphalt/concrete instead and now validates
+with zero errors and warnings.
 
 See the glTF image specification:
 https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#images

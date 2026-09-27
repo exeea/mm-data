@@ -45,21 +45,6 @@ def material(name, color):
     return mat
 
 
-BRIDGE_TEXTURES = {'bridge-deck': 'textures/roads/asphalt.png',
-                   'bridge-structure': 'textures/sculpt/concrete.png'}
-BRIDGE = {}
-for role, filename in BRIDGE_TEXTURES.items():
-    mat = material(role, (1, 1, 1))
-    mat.use_nodes = True
-    shader = mat.node_tree.nodes.get('Principled BSDF')
-    shader.inputs['Base Color'].default_value = (1, 1, 1, 1)
-    shader.inputs['Roughness'].default_value = .85
-    texture = mat.node_tree.nodes.new('ShaderNodeTexImage')
-    texture.image = bpy.data.images.load(str(OUT / filename), check_existing=True)
-    mat.node_tree.links.new(texture.outputs['Color'], shader.inputs['Base Color'])
-    BRIDGE[role] = mat
-
-
 def mesh_object(name, vertices, faces, materials, indices):
     mesh = bpy.data.meshes.new(name)
     mesh.from_pydata(vertices, [], faces)
@@ -102,8 +87,7 @@ def export(name, objects, normalize=False, foliage=False):
         normal_matrix = obj.matrix_world.to_3x3().inverted().transposed()
         for tri in mesh.loop_triangles:
             mat = mesh.materials[tri.material_index] if mesh.materials else None
-            role = tree_texture(name, mat) if foliage else next(
-                (role for role, bridge in BRIDGE.items() if mat == bridge), 'surface')
+            role = tree_texture(name, mat) if foliage else 'surface'
             indices = parts.setdefault(role, [])
             color = mat.diffuse_color[:3] if mat else (.35, .45, .25)
             if mat and mat.use_nodes:
@@ -132,9 +116,7 @@ def export(name, objects, normalize=False, foliage=False):
                     n = normal
                 uv = (pos.x/24, pos.y/24) if abs(n.z) > .5 else (
                     (pos.x if abs(n.y) > abs(n.x) else pos.y)/24, pos.z)
-                if role in BRIDGE:
-                    uv = mesh.uv_layers.active.data[loop].uv
-                elif foliage:
+                if foliage:
                     # Project in the tree's natural proportions. Dominant-axis mapping
                     # avoids stretched leaves; bark and willow retain vertical grain.
                     point = pos
@@ -152,9 +134,7 @@ def export(name, objects, normalize=False, foliage=False):
     materials = []
     for role in parts:
         entry = {'id':role,'diffuse':[1,1,1]}
-        if role in BRIDGE_TEXTURES:
-            entry['textures'] = [{'id':role,'filename':BRIDGE_TEXTURES[role],'type':'DIFFUSE'}]
-        elif foliage:
+        if foliage:
             entry['textures'] = [{'id':role,'filename':f'textures/foliage/{role}.png','type':'DIFFUSE'}]
         materials.append(entry)
     model = {'version': [0, 1], 'id': name,
@@ -170,39 +150,16 @@ def export(name, objects, normalize=False, foliage=False):
             if foliage:
                 texture['filename'] = '../../../data/models/board/' + texture['filename']
             else:
-                wrap = 10497 if name == 'bridge' else 33071
+                wrap = 33071
                 texture.update(wrapS=wrap, wrapT=wrap)
     write_glb(path, levels={0: model})
     STATS[name] = {'triangles': sum(len(indices) for indices in parts.values())//3, 'vertices': len(vertices)//12}
 
 
-# A bridge arm runs from the centre towards north; instances lengthen it to the exit edge.
-# Deck Z=0 joins the road surface. These dimensions are tile units, never terrain levels:
-# 15-wide carriageway, 1.5-thick slab, 1.5-wide raised sides standing 2.5 above the deck.
-def bridge_beam(name, left, right, bottom, top, deck=False):
-    polygon = [(left,0),(right,0),(right,36),(left,36)]
-    vertices = [(x,y,z) for z in (bottom,top) for x,y in polygon]
-    faces = [(4,5,6,7),(3,2,1,0)] + [(i,(i+1)%4,(i+1)%4+4,i+4) for i in range(4)]
-    beam = mesh_object(name, vertices, faces, [BRIDGE['bridge-deck'], BRIDGE['bridge-structure']],
-                       [0 if deck else 1, 1, 1, 1, 1, 1])
-    mesh = beam.data
-    uv = mesh.uv_layers.new(name='Shared road and concrete')
-    repeat = 84 / 5  # Same base scale as road detail and the six-metre concrete material.
-    for face in mesh.polygons:
-        for loop in face.loop_indices:
-            p = mesh.vertices[mesh.loops[loop].vertex_index].co
-            if abs(face.normal.z) > .5:
-                coords = (p.x, -p.y)
-            else:
-                coords = (p.y if abs(face.normal.x) > .5 else p.x, -p.z)
-            uv.data[loop].uv = (coords[0] / repeat, coords[1] / repeat)
-    return beam
-
-
+# Whole decks and outside rails share the road layout exported by :megamek:exportBridgeShapes.
 if wanted('bridge'):
-    export('bridge', [bridge_beam('Deck', -9, 9, -1.5, 0, deck=True),
-                      bridge_beam('Left side', -9, -7.5, 0, 2.5),
-                      bridge_beam('Right side', 7.5, 9, 0, 2.5)])
+    from build_bridge_assets import build
+    STATS.update(build(ROOT))
 
 # Crops have one elevation level in the rules. Authored crossed blades preserve
 # that height without lifting a farmland image into a solid block.

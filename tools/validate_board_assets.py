@@ -10,6 +10,7 @@ BOARD = ROOT / 'data/models/board'
 buildings = json.loads((BOARD / 'building-manifest.json').read_text())
 features = json.loads((BOARD / 'manifest.json').read_text())
 catalog = dict(features, **buildings)
+assert sorted(entry['bridge_exits'] for entry in features.values() if 'bridge_exits' in entry) == list(range(64))
 
 for asset, entry in features.items():
     if 'source' in entry:
@@ -52,13 +53,13 @@ for asset in catalog:
     heights = [z for mesh in model['meshes'] for z in mesh['vertices'][2::12]]
     if asset in buildings:
         assert min(heights) == 0 and max(heights) == 18, f'One-level building: {path}'
-    elif asset == 'bridge':
+    elif 'bridge_exits' in catalog[asset]:
         assert abs(min(heights) + 1.5) < 1e-5 and abs(max(heights) - 2.5) < 1e-5, path
         assert 0 in heights, f'Bridge deck must remain at local Z=0: {path}'
         roles = {m['id']: m for m in model['materials']}
         for role, texture in {'bridge-deck': 'textures/roads/asphalt.png',
                               'bridge-structure': 'textures/sculpt/concrete.png'}.items():
-            assert roles[role]['textures'][0]['filename'] == texture, path
+            assert (path.parent / roles[role]['textures'][0]['filename']).resolve() == (BOARD / texture).resolve(), path
             assert roles[role]['textures'][0]['wrapS'] == roles[role]['textures'][0]['wrapT'] == 10497, path
         for mesh in model['meshes']:
             deck = next(part for part in mesh['parts'] if part['id'] == 'bridge-deck')
@@ -107,7 +108,7 @@ for asset in catalog:
         difference = ImageChops.difference(source.convert('RGB'), roof)
         mask = source.getchannel('A').point(lambda alpha: 255 if alpha >= 245 else 0)
         assert ImageChops.multiply(difference.convert('L'), mask).getbbox() is None, path
-    elif asset not in ('bridge', 'field'):
+    elif asset != 'field' and 'bridge_exits' not in catalog[asset]:
         family = asset.rsplit('-lod', 1)[0]
         roles = {material['id'] for material in model['materials']}
         leaf = ('needles-pine' if asset.startswith('pine') else
