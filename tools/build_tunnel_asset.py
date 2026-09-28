@@ -94,13 +94,15 @@ for near,far in zip((0,4,8,12),(4,8,12,18)):
     for a,b in zip(contour,contour[1:]):
         face('tunnel-lining', [(a[0],near,a[1]),(b[0],near,b[1]),(b[0],far,b[1]),(a[0],far,a[1])])
 face('tunnel-lining', [(x,18,z) for x,z in contour])
-# The approach already reaches Y=3 (the shared hex edge). Start there, flush
-# with the deck, avoiding overlapping road planes. Keep the 15-unit carriageway
+# The approach reaches Y=3 (the shared hex edge). Underlap it slightly: this
+# lattice's angled hex edges are not quite perpendicular to the road axis.
+# The tiny recessed lip avoids both cracks and coplanar fighting. Keep the 15-unit carriageway
 # unchanged through the portal; the remaining opening width is concrete verge.
-for near,far in zip((3,6,10,14),(6,10,14,18)):
-    face('tunnel-floor', [(-7.5,near,0),(7.5,near,0),(7.5,far,0),(-7.5,far,0)])
+for near,far in zip((2.75,6,10,14),(6,10,14,18)):
+    lip = -.02 if near == 2.75 else 0
+    face('tunnel-floor', [(-7.5,near,lip),(7.5,near,lip),(7.5,far,0),(-7.5,far,0)])
     for x0,x1 in ((-R,-7.5),(7.5,R)):
-        face('tunnel-lining', [(x0,near,0),(x1,near,0),(x1,far,0),(x0,far,0)])
+        face('tunnel-lining', [(x0,near,lip),(x1,near,lip),(x1,far,0),(x0,far,0)])
 
 packed, parts, materials, objects = [], [], [], []
 for role,p in PARTS.items():
@@ -164,7 +166,7 @@ for name,winged in (('road-tunnel',True),('road-tunnel-bridge',False)):
     write_glb(OUT/(name+'.glb'), levels={0:model})
     stats[name] = {'triangles':sum(len(p['indices'])//3 for p in selected),'vertices':len(vertices)//12,
                   'opening_width':R*2,'opening_height':SPRING+R,'depth':18,'wing_walls':winged,
-                  'road_width':15,'road_start':3,'road_end':18}
+                  'road_width':15,'road_start':2.75,'road_end':18}
     (SOURCE/(name+'.json')).write_text(json.dumps(stats[name],indent=2)+'\n')
     manifest[name] = stats[name]
 manifest_file.write_text(json.dumps(manifest, indent=2)+'\n')

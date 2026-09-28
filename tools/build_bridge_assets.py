@@ -72,6 +72,13 @@ def build(root):
                     if length < 1e-5:
                         continue
                     normal = (-dy/length, dx/length, 0)
+                    # Clipped outer/inner rail loops can coincide on a hex exit.
+                    # That zero-width boundary is not a rail: extruding it would
+                    # put a vertical barrier across an otherwise open deck.
+                    mx, my = (a[0]+b[0])/2, (a[1]+b[1])/2
+                    if inside((mx+normal[0]*1e-4, my+normal[1]*1e-4), loops) == inside(
+                            (mx-normal[0]*1e-4, my-normal[1]*1e-4), loops):
+                        continue
                     points = [(a, low, distance), (a, high, distance),
                               (b, high, distance+length), (b, low, distance+length)]
                     for i in (0, 1, 2, 0, 2, 3):
