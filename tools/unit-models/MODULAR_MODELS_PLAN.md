@@ -1,11 +1,17 @@
 # Modular unit models: implementation plan
 
+> Historical record, kept for reference. It is superseded by [MODELLING_GUIDE.md](MODELLING_GUIDE.md) and the
+> [units README](../../data/models/units/README.md): unit models are now GLB files with `-lod0`, `-lod1` and
+> `-lod2` groups, and the budget is for the whole unit, 5,000 / 2,000 / 500 triangles per level. Facts below
+> describe the pipeline as it was on 2026-09-20; budgets, G3DJ files, baked references and tool names in it may no
+> longer apply. Several evidence documents it cites were never committed and are marked as such.
+
 Status: C0–C8 proof-of-concept behavior has recorded verification, including the C4 landed-Aero support addendum.
 C9 migration, authoring, gallery and resource checks are complete; **production performance sign-off remains open**.
 The C0 component benchmark passes, but full-board stress runs still have excessive draw calls and long frame-time tails.
-See the [completion review and measured limits](MODULAR_MODELS_COMPLETION.md) and the subsequent
-[stride, equipment LoD and tree/rendering review](MODULAR_MODELS_DETAIL.md). The
-[2026-09-20 implementation review](MODULAR_MODELS_REVIEW.md) found five defects; R1–R5 are now corrected with
+See the completion review and measured limits (`MODULAR_MODELS_COMPLETION.md`, not in the repository) and the subsequent
+stride, equipment LoD and tree/rendering review (`MODULAR_MODELS_DETAIL.md`, not in the repository). The
+2026-09-20 implementation review (`MODULAR_MODELS_REVIEW.md`, since removed from the repository) found five defects; R1–R5 are now corrected with
 [verification evidence](MODULAR_MODELS_REVIEW_FIXES.md). The checkpoint list below is the active source of task status;
 dated evidence documents record what was verified at that time.
 Updated: 2026-09-20. Scope: MegaMek's GPU board and the shared mm-data art pipeline.
@@ -29,7 +35,7 @@ footprint/picking. Use projected pixels with hysteresis, not camera distance or 
 author additional chassis/variant meshes, billboards or simplified body LoDs for this approach. The subsequent
 implementation request is now handled: attachment diameter below 4 projected pixels, with 15% hysteresis;
 selected units and participants in active attacks retain full detail. Embedded parts stay visible. See the
-[measured implementation](MODULAR_MODELS_DETAIL.md); the [initial assessment](MODULAR_MODELS_LOD_STUDY.md)
+measured implementation (`MODULAR_MODELS_DETAIL.md`, not in the repository); the initial assessment (`MODULAR_MODELS_LOD_STUDY.md`, not in the repository)
 remains historical context. Runtime LoD does not mutate damage flags, gameplay state, picking or emitters.
 
 Equipment art clarification (2026-09-19, coordinated weapon task): each equipment module should ideally stay **under 100 triangles** and must stay **strictly under 150** (149 maximum), including compact/style/profile exports and fallbacks. Enforce this independently in the exporter and runtime validator. The complete body plus loadout can exceed 1,500; no individual weapon inherits the body's allowance.
@@ -326,7 +332,7 @@ Start with beam/laser, ballistic bullet/shell, single missile and missile-salvo/
 
 Missile cluster results must carry the actual resolved **missile hits**, captured before converting them into damage points or damage clusters. An LRM-20 with twelve cluster hits launches twenty: twelve approach the target and eight visibly miss. Miss paths, including beams and ballistic shots, clear the posed target bounds even for large craft. Never reroll the cluster table in presentation. Indirect missiles use an arc; each smoke trail samples that same flight path. Where aerospace attack-value rules do not resolve individual missiles, keep the count explicitly unknown rather than inventing a cluster result. Logical-group totals may be distributed cosmetically across their captured physical launchers while preserving the total; actual per-mount results take priority.
 
-Adjacent resolved shots from the same unit/pose form one volley with configurable launch jitter (`UnitPlayback.VOLLEY_JITTER_SECONDS`). Apply the shared one-second completion hold once, after the last shot recovers; movement, conversion, another firing unit and physical actions remain queue boundaries. Preserve the captured appearance until the volley reaches its last impact, accept late packets without truncating their animation, and retain Pause/Instant behavior. Per-missile launch jitter has its own constant. Initial implementation and native/packet evidence are in [the broad checkpoint update](MODULAR_MODELS_C6_C9.md).
+Adjacent resolved shots from the same unit/pose form one volley with configurable launch jitter (`UnitPlayback.VOLLEY_JITTER_SECONDS`). Apply the shared one-second completion hold once, after the last shot recovers; movement, conversion, another firing unit and physical actions remain queue boundaries. Preserve the captured appearance until the volley reaches its last impact, accept late packets without truncating their animation, and retain Pause/Instant behavior. Per-missile launch jitter has its own constant. Initial implementation and native/packet evidence are in the broad checkpoint update (`MODULAR_MODELS_C6_C9.md`, not in the repository).
 
 Audit the existing attack/action/report path for a structured, visibility-safe **fired/resolved** event carrying attacker, equipment/member IDs, target/endpoint and outcome information available to that client. Reuse it; if missing, add the smallest typed presentation payload to the existing event/packet path. Do not parse localized report text or fire animations whenever a firing-order overlay changes. Never fabricate hit/damage outcomes or expose hidden attackers/targets through effects or cache loading.
 
@@ -358,7 +364,7 @@ Mandatory fixture: a Union-style seven-hex craft over unequal levels, then takeo
 
 ### Landed multi-hex Aero supports — C4 addendum
 
-This extends the verified highest-support placement; [implementation evidence](MODULAR_MODELS_C4_SUPPORTS.md).
+This extends the verified highest-support placement; implementation evidence (`MODULAR_MODELS_C4_SUPPORTS.md`, not in the repository).
 It applies to multi-hex Aero
 units and their future named/variant/fallback bodies, such as DropShips and other landable spacecraft. Building
 entities/mobile structures use their own placement rules and are explicitly excluded. Do not enable this for
@@ -429,7 +435,7 @@ Review must answer: Are rules/state still owned by existing game code? Is there 
 ### Required fixes from the 2026-09-20 implementation review
 
 These are concrete follow-up defects, not new architecture work. Details, source locations and reproductions are
-in [the review](MODULAR_MODELS_REVIEW.md). Close these before C6–C8 sign-off; C0–C5 evidence remains historical.
+in the review (`MODULAR_MODELS_REVIEW.md`, since removed from the repository). Close these before C6–C8 sign-off; C0–C5 evidence remains historical.
 
 - [x] R1 — Exclude generated aerospace weapon-group mounts from physical geometry while retaining their logical firing membership. Verify one real gun plus one rules group renders one gun, including disabled/empty groups.
 - [x] R2 — Resolve squadron/group firing to actual member and mounted equipment identities once. Recoil and effects must use that same result. Verify a mixed squadron with different equipment ordering.
@@ -449,7 +455,7 @@ All five corrections and the queued-transport completion follow-through have
 
 **Gate:** inventory has no unclassified family/equipment entry, baseline is reproducible, and necessary state/event changes are bounded and named. Required weapon fallback and optional-misc omission are explicit; excluded types allocate nothing.
 
-Completed 2026-09-19. [C0 evidence](MODULAR_MODELS_C0.md) records the reproducible baseline, integrated inventory, native review, draw probe and issues carried forward.
+Completed 2026-09-19. C0 evidence (`MODULAR_MODELS_C0.md`, not in the repository) records the reproducible baseline, integrated inventory, native review, draw probe and issues carried forward.
 
 ### C1 — Contracts, shared assets and state bridge
 
@@ -460,7 +466,7 @@ Completed 2026-09-19. [C0 evidence](MODULAR_MODELS_C0.md) records the reproducib
 
 **Gate:** player/AI deliberate prone, a forced fall, get-up/hull-down, legacy unknown data and multiplayer/save round trips give correct causes without any rule changes. Two identical units can twist, damage and recolor independently. Invalid descriptors fail safely.
 
-Completed 2026-09-19. [C1 evidence and schema contract](MODULAR_MODELS_C1.md) records 114 focused tests, native transform/material/damage review, five independent assets and unchanged geometry hashes for all 261 legacy meshes. Runtime assembly and animation playback remain open below.
+Completed 2026-09-19. C1 evidence and schema contract (`MODULAR_MODELS_C1.md`, not in the repository) records 114 focused tests, native transform/material/damage review, five independent assets and unchanged geometry hashes for all 261 legacy meshes. Runtime assembly and animation playback remain open below.
 
 ### C2 — Runtime infantry assembly
 
@@ -468,13 +474,13 @@ Completed 2026-09-19. [C1 evidence and schema contract](MODULAR_MODELS_C1.md) re
 - [x] Move slot layout/headings into the one runtime assembler, including stable variation, current survivor counts/BA identities and zero strength. Reconcile casualty changes without retaining dead members or reshuffling every survivor. Python exports component meshes only.
 - [x] Make the runtime assembler produce review scene data so Blender/native previews consume the same placements as the game.
 - [x] Bake the requested height changes into component meshes: conventional troops/transports +10%, Battle Armor +50%, preserving detail and matching joints/emitters. Keep per-family `UnitFamilyScale.UNIT_SCALE` and `HEIGHT_SCALE` neutral at `1.0f`, multiplying the shared board tuning for later visual adjustments.
-- [x] Fit infantry positions using the final board/family scale. Preserve requested mesh sizes: reposition where practical, keep parked vehicles apart and troopers clear of them, and allow crowded formations to bleed outside the hex. Keep captured parking positions stable through unloading/casualty updates. [Height and layout evidence](MODULAR_MODELS_C2.md).
+- [x] Fit infantry positions using the final board/family scale. Preserve requested mesh sizes: reposition where practical, keep parked vehicles apart and troopers clear of them, and allow crowded formations to bleed outside the hex. Keep captured parking positions stable through unloading/casualty updates. Height and layout evidence (`MODULAR_MODELS_C2.md`, not in the repository).
 
 **Gate:** 0–6 conventional slots resolve correctly from current survivors. BA defaults to uncompressed: test 0–6 living troopers, especially six alive → five dead → one remaining → zero, with the correct member removed each time. Enabling BA compression restores the shared compressed rule (five alive → three figures) without changing infantry. Armor damage without a casualty does not remove a BA figure. Motorized/mechanized 3/4/5/6 counts match 1+2, 1+3, 2+3, 2+4; casualty-driven slot changes reconcile transports too. Jump packs work; vehicles differ in headings/positions; groups meet the triangle budget, including six BA figures. Fit inside the hex where space permits; oversized formations may bleed beyond it without shrinking members. Casualties do not reshuffle every survivor. The initial gate covers assembly; the later scale/layout addendum also checks boarding playback.
 
 ### C3 — Runtime Mek loadouts and equipment library
 
-Previous gate: [C2 evidence](MODULAR_MODELS_C2.md) records runtime infantry, full-detail 1,284-triangle six-member BA groups, scale-aware placement, shared resources, review views and retained compatibility files.
+Previous gate: C2 evidence (`MODULAR_MODELS_C2.md`, not in the repository) records runtime infantry, full-detail 1,284-triangle six-member BA groups, scale-aware placement, shared resources, review views and retained compatibility files.
 
 - [x] Export bare articulated bodies, optional actuator-dependent anatomy and local hardpoint areas; export/normalize reusable equipment and all emitter profiles.
 - [x] Apply shared type gates before attachment allocation. Reuse existing WeaponType shapes and fallbacks, cover all F_PHYSICAL_WEAPON misc, and only attach explicitly mapped other misc without fallback. StructureType/ArmorType/AmmoType must never reserve hardpoints.
@@ -490,7 +496,7 @@ Previous gate: [C2 evidence](MODULAR_MODELS_C2.md) records runtime infantry, ful
 - [x] Supply the coverage-table family fallbacks and 15 authored Mek topology/weight-class bodies, plus five hybrid air-Mek bodies. Shared generator helpers do not imply shared runtime size profiles.
 - [x] Capture actual occupancy/configuration; render whole large units once and apply independent 0.85 scaling. Separate rest dimensions from gameplay height.
 - [x] Implement highest-support placement, correct airborne/naval alternatives, shared picking/bounds/shadows and live scale tuning. Keep `BoardGeometry.DEFAULT_MULTI_HEX_UNIT_SCALE = 0.85f` and a dedicated **TUNING → Multi-hex unit scale** slider, independent of the normal unit scale.
-- [x] **Landed-Aero support addendum:** extend the body/export/validation contract with independent landing supports; update the Union fallback and future multi-hex Aero authoring requirements. Capture actual grounded elevation/state and extend each support to its own valid surface. Visibly slide supports into the hull before liftoff and deploy them after landing, using authored stowed offsets and the shared timeline. Exclude building entities/mobile structures; reuse the C6 rig/timeline. [Verified implementation and animation](MODULAR_MODELS_C4_SUPPORTS.md).
+- [x] **Landed-Aero support addendum:** extend the body/export/validation contract with independent landing supports; update the Union fallback and future multi-hex Aero authoring requirements. Capture actual grounded elevation/state and extend each support to its own valid surface. Visibly slide supports into the hull before liftoff and deploy them after landing, using authored stowed offsets and the shared timeline. Exclude building entities/mobile structures; reuse the C6 rig/timeline. Verified implementation and animation (`MODULAR_MODELS_C4_SUPPORTS.md`, not in the repository).
 
 **Baseline gate (verified):** each inventory family/configuration loads a recognizable fallback; a superheavy is visibly larger than a 100 t Mek; a grounded seven-hex Union over unequal heights passes both views, picking, shadow and landing tests. Normal 0.7 and large 0.85 scale are independent. No rules/occupancy are changed for visual convenience.
 
@@ -503,7 +509,7 @@ receives none of this behavior. Review the named and fallback rigs before checki
 
 ### C5 — Camouflage materials
 
-Previous gate: [C4 evidence](MODULAR_MODELS_C4.md) records family/configuration coverage, live equipment on other
+Previous gate: C4 evidence (`MODULAR_MODELS_C4.md`, not in the repository) records family/configuration coverage, live equipment on other
 families, whole-Union placement, both cameras, picking/shadows, squadron membership and the independent scale controls.
 
 - [x] Export paint UVs/material roles and resolve current Entity/force/owner camouflage through existing APIs.
@@ -511,7 +517,7 @@ families, whole-Union placement, both cameras, picking/shadows, squadron members
 - [x] Retain glass/metal/lens colors, location damage and applicable marker overlays; add the existing missing-camo fallback.
 - [x] Author the destroyed-armor texture, hide confirmed blown-off locations and display collectable ground limbs through the shared equipment mesh, with flat-marker fallback.
 
-Verified behavior, screenshots and tests: [C5 evidence](MODULAR_MODELS_C5.md).
+Verified behavior, screenshots and tests: C5 evidence (`MODULAR_MODELS_C5.md`, not in the repository).
 
 Damage art addition (2026-09-19): use an authored, opaque 128×128 neutral-gray scorched-metal texture for attached
 destroyed locations and disabled equipment. A confirmed blown-off Mek head, arm or leg must disappear together
@@ -529,7 +535,7 @@ In progress: assembled bodies/formation members carry their authored joint-role 
 a rest-based family pose evaluator and shares unit playback speed with torso twist/airborne wobble. Resolved
 movement waypoints carry optional Mek prone-cause observations, preserving fall/get-up order instead of applying
 the final posture at the beginning of travel. Native walking/crouch/fall and BA heading reviews pass, with fixed
-ankle bindings/contact levels and unchanged mesh detail. [C6 progress evidence](MODULAR_MODELS_C6.md) separates
+ankle bindings/contact levels and unchanged mesh detail. C6 progress evidence (`MODULAR_MODELS_C6.md`, not in the repository) separates
 this verified foundation from the remaining family/action/arrival work.
 
 The later [playback checkpoint](MODULAR_MODELS_PLAYBACK.md) adds bounded capability-based travel time,
@@ -537,8 +543,8 @@ acceleration/braking, distance-driven foot/wheel motion, configurable per-troop 
 timed jump exhaust and the one-second completion hold. Native straight/level contact and six-suit staggered jump
 reviews pass. The later terrain, conversion and interruption evidence is linked below.
 
-The [broad checkpoint update](MODULAR_MODELS_C6_C9.md) records the initial movement matrix. The
-[completion review](MODULAR_MODELS_COMPLETION.md) adds actual ramp-surface renders, target contact across
+The broad checkpoint update (`MODULAR_MODELS_C6_C9.md`, not in the repository) records the initial movement matrix. The
+completion review (`MODULAR_MODELS_COMPLETION.md`, not in the repository) adds actual ramp-surface renders, target contact across
 biped/tripod/quad rigs, both-way conversion clips, visibility interruption, death priority and reload poses.
 Conversion remains a generic fold/switch/deploy; terrain support remains rigid contact without a second solver.
 
@@ -557,7 +563,7 @@ Conversion remains a generic fold/switch/deploy; terrain support remains rigid c
 ### C7 — Infantry boarding travel
 
 The boarding/parking/unloading sequence is in the [playback evidence](MODULAR_MODELS_PLAYBACK.md).
-The [completion review](MODULAR_MODELS_COMPLETION.md) closes the motive/lifecycle matrix, including all four
+The completion review (`MODULAR_MODELS_COMPLETION.md`, not in the repository) closes the motive/lifecycle matrix, including all four
 transport motives, destruction, concealment, queued survivor changes and normal/Instant arrival equivalence.
 
 - [x] Add boarding markers, member assignment and approach/board → drive/park → full stop → disembark/settle on the shared interval. Basic transport review verifies passengers emerge after parking.
@@ -572,7 +578,7 @@ transport motives, destruction, concealment, queued survivor changes and normal/
 Static damaged materials, blown-off location visibility and collectable arm/leg props are verified in C5.
 The [playback checkpoint](MODULAR_MODELS_PLAYBACK.md) implements resolved firing and basic Mek physical-attack
 playback, authored muzzle effects, hit/miss reactions and recovery, with server/client visibility checks.
-The [completion review](MODULAR_MODELS_COMPLETION.md) records observed bay/MGA/AMS/artillery firing, ammunition
+The completion review (`MODULAR_MODELS_COMPLETION.md`, not in the repository) records observed bay/MGA/AMS/artillery firing, ammunition
 impact variants, target contact, optional synchronized sound hooks and family death/crash/wreck poses. Swarm
 secondary flight and attack-value-only cluster counts remain explicit presentation limits; no game resolution is replayed.
 
@@ -588,10 +594,10 @@ secondary flight and attack-value-only cluster counts remain explicit presentati
 ### C9 — Performance, migration and maintainability sign-off
 
 The final 64/256/512 stress matrix, realistic 72/144-unit battalion mix, GL allocation audit and clean staging
-inspection are in the [completion review](MODULAR_MODELS_COMPLETION.md). The exact C0 proxy passes at p95
+inspection are in the completion review (`MODULAR_MODELS_COMPLETION.md`, not in the repository). The exact C0 proxy passes at p95
 11.004 ms. The full 144-unit board is roughly 36–40 ms median on the measured Iris Xe, and the 512-unit stress
 case has tails above 500 ms. These do not constitute production performance sign-off. Bounds, opaque ordering,
-outline culling and depth-pass merging preserve the art. The subsequent [detail review](MODULAR_MODELS_DETAIL.md)
+outline culling and depth-pass merging preserve the art. The subsequent detail review (`MODULAR_MODELS_DETAIL.md`, not in the repository)
 adds equipment hiding, cached tree detail levels and reuse of captured depth instead of another geometry pass.
 
 - [x] Run the agreed mixed-unit benchmark matrix; profile draw calls, frame-time tails, allocation, assembly/loading and memory. Apply only optimizations supported by those measurements.
@@ -640,7 +646,7 @@ Use existing test infrastructure and actual libGDX imports/renders; extend `Unit
 ## 12. Original plan review and deliberate exclusions
 
 The table below records the original proposal review. The current implementation audit is
-[MODULAR_MODELS_REVIEW.md](MODULAR_MODELS_REVIEW.md); neither table substitutes for the checkpoint gates.
+`MODULAR_MODELS_REVIEW.md` (since removed from the repository); neither table substitutes for the checkpoint gates.
 
 | Finding from review | Adjustment included above |
 |---|---|
@@ -671,19 +677,19 @@ Large-unit tactical footprint, physical dimensions and strategic/space-board sca
 ### Tracking
 
 The requested melee, conversion, fall, missed-shot/flamer and intermediate-damage corrections are tracked in
-[the animation and damage polish checklist](MODULAR_MODELS_POLISH.md). Earlier proof-of-concept checks do not
+the animation and damage polish checklist (`MODULAR_MODELS_POLISH.md`, not in the repository). Earlier proof-of-concept checks do not
 constitute sign-off for these new acceptance requirements.
 
 - [x] Inspect the current tools, descriptors, renderer, movement/damage/camo and relevant rules.
 - [x] Incorporate runtime assembly, all-family coverage, superheavy/multi-hex handling and persistent prone cause.
 - [x] Review the plan for missing lifecycle/event cases, duplication and unnecessary frameworks.
-- [x] C0 baseline/inventory complete. See [verification evidence](MODULAR_MODELS_C0.md).
-- [x] C1 contracts/state bridge complete. See [verification evidence](MODULAR_MODELS_C1.md).
-- [x] C2 runtime infantry complete. See [verification evidence](MODULAR_MODELS_C2.md).
-- [x] C3 runtime Meks/equipment complete. See [verification evidence](MODULAR_MODELS_C3.md).
-- [x] C4 family fallback/large placement baseline complete. See [verification evidence](MODULAR_MODELS_C4.md).
+- [x] C0 baseline/inventory complete. See verification evidence (`MODULAR_MODELS_C0.md`, not in the repository).
+- [x] C1 contracts/state bridge complete. See verification evidence (`MODULAR_MODELS_C1.md`, not in the repository).
+- [x] C2 runtime infantry complete. See verification evidence (`MODULAR_MODELS_C2.md`, not in the repository).
+- [x] C3 runtime Meks/equipment complete. See verification evidence (`MODULAR_MODELS_C3.md`, not in the repository).
+- [x] C4 family fallback/large placement baseline complete. See verification evidence (`MODULAR_MODELS_C4.md`, not in the repository).
 - [x] C4 landed multi-hex Aero support addendum complete (independent ground contact, fully stowed in flight; building units excluded).
-- [x] C5 camouflage/damage materials and collectable limb props complete. See [C5 evidence](MODULAR_MODELS_C5.md).
+- [x] C5 camouflage/damage materials and collectable limb props complete. See C5 evidence (`MODULAR_MODELS_C5.md`, not in the repository).
 - [x] C6 family animation proof of concept complete; generic contact/conversion limits recorded.
 - [x] C7 boarding travel complete.
 - [x] C8 firing/damage/death proof of concept complete; specialized-effect limits and silent sound hooks recorded.

@@ -1,75 +1,72 @@
 # Brief: author a new unit chassis
 
-A standing task brief. Read this plus [UNIT_REVIEW_PROCESS.md](UNIT_REVIEW_PROCESS.md) and
-[MODELLING_GUIDE.md](MODELLING_GUIDE.md) and you have everything needed to take a chassis from a name
-to a reviewed, in-game model. Written after building the Rifleman; every trap listed here cost real
-time on that one.
+A standing brief for taking a chassis from a name to a reviewed model in the game. Read it with
+[UNIT_REVIEW_PROCESS.md](UNIT_REVIEW_PROCESS.md) (the review loop and its rules),
+[PRE_BUILD_CHECKLIST.md](PRE_BUILD_CHECKLIST.md) (the questions to settle first) and
+[MODELLING_GUIDE.md](MODELLING_GUIDE.md) (the house rules for the artwork). It was first written after building
+the Rifleman; every trap listed here cost real time.
 
-**Your deliverable is not code, it is a reviewed model.** The reviewer judges the artwork against the
-miniature. Your job is to get it in front of them quickly and iterate.
-
----
+**The deliverable is a reviewed model, not code.** The reviewer judges the artwork against the miniature. Get it
+in front of them quickly and iterate.
 
 ## 1. What this pipeline is
 
-MegaMek's GPU board assembles each unit at runtime from a **bare body** plus the **equipment its actual
-loadout carries**. Nothing is baked per variant. One authored body serves every variant of a chassis:
-the Rifleman body serves all 26, the Atlas body all 31.
+MegaMek assembles each unit in the game from a **bare body** plus the **weapons its actual loadout carries**.
+Nothing is made per variant: one Atlas body serves every Atlas variant, and each variant's own weapons are hung on
+it when the unit is drawn.
 
-Two repositories, both needed:
+Two repositories are involved:
 
-| Repo | Holds |
+| Repository | Holds |
 |---|---|
-| `mm-data` | the Python authoring tools, the recipes, the exported assets, the mekset |
-| `megamek` | the Java runtime that assembles and draws units, and the review/validation tests |
+| `mm-data` | the Python authoring tools, the recipes, the exported models, `mekset.txt` |
+| `megamek` | the Java code that assembles and draws units, the catalog export, the review and validation tests |
 
-**Geometry is authored in Python, not modelled in Blender.** Bodies are boxes, beams and lofted
-cross-sections written as code. Blender is used only to *render review sheets*. The exporter says so
-itself: "no bpy or Blender process is required".
+**Geometry is written in Python, not modelled in Blender.** Bodies are boxes, beams and lofted cross-sections
+written as code. Blender is used only to render review sheets and to look at finished files.
 
-Environment on the machine this was written for: Blender 5.2 at
-`C:\Program Files\Blender Foundation\Blender 5.2\blender.exe`, Python 3.13, working directory
-`D:\MegaMek Projects\mekhq\megamek`.
+**What gets written.** Every component is one `.glb` file beside a `.json` descriptor, for example
+`data/models/units/modular/bodies/atlas.glb` and `bodies/atlas.json`. Inside the GLB, each level of detail is a
+named group: `atlas-lod0` is required, and `atlas-lod1` and `atlas-lod2` are optional. A missing level falls back
+to the next more detailed one. MegaMek refuses a unit GLB whose levels are not named this way, but the exporter
+does it for you. The old G3DJ format is gone.
 
----
+**The budget** covers the whole assembled unit, body plus every weapon: 5,000 triangles at LOD0, 2,000 at LOD1 and
+500 at LOD2. Aim for a LOD0 body under about 4,000 so there is room for the guns. Details are in section 8 of
+UNIT_REVIEW_PROCESS.md.
 
-## 2. Prerequisites, and the trap in them
+Environment on the user's machine: Blender 5.2 at
+`C:\Program Files\Blender Foundation\Blender 5.2\blender.exe`, Python 3.13.
 
-The exporter needs two catalog files. Without them it dies with `FileNotFoundError` and nothing
-downstream runs. Generate both from the megamek checkout:
+## 2. Prerequisites
+
+**The equipment catalog.** The exporter needs `mm-data/.work/modular-models/equipment.json` (every equipment type
+and how it is drawn). Without it the export stops with `FileNotFoundError`. Make it from the megamek checkout:
 
 ```bash
-./gradlew :megamek:exportEquipmentModelCatalog :megamek:exportMekModelCatalog --console=plain
+gradlew :megamek:exportEquipmentModelCatalog -PunitModelDataRoot=<your mm-data folder>
 ```
 
-They land in `mm-data/.work/modular-models/equipment.json` (every registered equipment type and its
-visualisation policy) and `mm-data/.work/mek-models/catalog.json` (every unit, its loadout, and its
-actuators). Re-run only when MegaMek's equipment or unit files change. Takes about six minutes cold.
+Without `-PunitModelDataRoot` it writes into the `mm-data` folder next to the megamek checkout, which from a
+worktree is the main checkout, not yours. Re-run it when MegaMek's equipment changes.
 
-**The documentation trap:** several docs reference `MODULAR_MODELS_C0.md` through `C6.md` and
-`MODULAR_MODELS_C4_SUPPORTS.md`. **None of those files exist** and none are in git history - 28 dead
-links across the doc set. The C1 document was supposed to explain the catalog step above. Do not waste
-time hunting for them.
+**The Mek catalog, for research.** `gradlew :megamek:exportMekModelCatalog -PunitModelDataRoot=<your mm-data
+folder>` writes `.work/mek-models/catalog.json`: every Mek, its loadout and its actuators. The exporter does not
+need it, but the research queries below do.
 
-**Three tools are legacy. Never use them on modular assets:**
+Launcher shortcut: `1 - MegaMek Python (Unified).bat`, main menu `M`, then `4` exports the equipment catalog and
+runs the exporter in one go.
 
-| Tool | Why not |
-|---|---|
-| `build_unit_models.py` | the old baked-variant builder |
-| `render_unit_variants.py` | reads only frozen legacy bakes, rejects schema-2 vertex layouts |
-| `validate_unit_models.py` | demands a schema-1 manifest key and crashes on the current one |
-
-The live validator is the Java `UnitModelDescriptorTest`.
-
----
+The old baked-model tools (`build_unit_models.py`, `render_unit_variants.py`, `validate_unit_models.py`,
+`build_unit_models.ps1`) were retired on 2026-09-28; ignore any older note that mentions them.
 
 ## 3. Research before you model
 
-Do all of this before writing a line of geometry. It decides the design.
+Do this before writing any geometry. It decides the design.
 
-**Loadouts and actuators.** This is the highest-value query. It told us every Rifleman variant lacks
-hands and lower arms, which means the arms are weapon pods rather than limbs - the single most
-important design fact about that chassis.
+**Loadouts and actuators.** The highest-value query. It showed that no Rifleman variant has hands or lower arms,
+so its arms are weapon pods rather than limbs, the single most important fact about that chassis. Run from
+`mm-data`:
 
 ```bash
 python -c "
@@ -86,7 +83,7 @@ for u in sorted(units,key=lambda u:u['model'])[:15]:
 "
 ```
 
-Run from `mm-data`. Also count weapon families per location, and check for rear-facing mounts:
+Then count weapon families per location and look for rear-facing mounts:
 
 ```bash
 python -c "
@@ -102,19 +99,18 @@ print('rear:', [(m['location'],m['name']) for m in live if m['rear']] or 'NONE')
 
 What to take from it:
 
-- **No hands and no lower arms on every variant** means arm weapons mount at the elbow. Author no
-  forearm and no fist; the arm *is* the gun housing.
-- **How many weapons per arm** decides the mount area shape. Two per arm wants a tall narrow area so
-  they stack over-under, or a wide one so they sit abreast.
-- **Jump jets** in the legs ride on the back of the calves, centred, just under the knee, and move with the
-  shin: the exporter measures the spot from the body, so you do not author them. Give torso jets an
-  `exhaustSockets` spot on the back of each torso location. **One jump jet graphic per location**, however
-  many the unit file lists: it shows the location has jets, not how many (UNIT_REVIEW_PROCESS section 5a).
-- **Rear mounts** need `rearSockets` that actually clear the hull. If none exist, still author them for
-  custom refits, but do not spend review time on them.
+- **No hands and no lower arms on any variant** means arm weapons mount at the elbow. Author no forearm and no
+  fist; the arm is the gun housing.
+- **Weapons per arm** decides the mount area shape: tall and narrow to stack two over-under, wide to set them
+  abreast.
+- **Jump jets** in the legs ride on the back of the calves and the exporter finds that spot for you. Give torso
+  jets an `exhaustSockets` spot on the back of each torso location. One graphic per location, however many jets
+  the unit file lists (UNIT_REVIEW_PROCESS.md section 5a).
+- **Rear mounts** need `rearSockets` that clear the hull. Author them even if no variant uses one, for custom
+  refits, but do not spend review time on them.
 
-**The game sprite.** It gives left-right and front-back placement. Dump it as text rather than
-squinting at an 84x72 image:
+**The game sprite** gives left-right and front-back placement. Dump it as text rather than squinting at an 84x72
+image:
 
 ```bash
 python -c "
@@ -129,12 +125,11 @@ for y in range(h):
 "
 ```
 
-Sprite centre is pixel (42, 36). Model x = sprite x - 42, model y = 36 - sprite y. Up on the sprite is
-forward on the model.
+The sprite centre is pixel (42, 36). Model x is sprite x minus 42, model y is 36 minus sprite y, and up on the
+sprite is forward on the model.
 
-**The per-variant sprites.** `data/images/units/meks/` holds roughly 3,500 top-down sprites, and a
-chassis usually has one generic sprite plus a sprite per variant. Do not stop at the generic one.
-Diff them against it to see what the artists varied:
+**The per-variant sprites.** A chassis usually has one generic sprite in `data/images/units/meks/` plus one per
+variant. Compare them against the generic one to see what the artists changed:
 
 ```bash
 python -c "
@@ -155,42 +150,27 @@ for path in sorted(base.glob('<Chassis>*.png')):
 "
 ```
 
-Two patterns come out of it, and they mean different things:
+- **Differences only in the weapon rows** (the top third) mean one body with different guns, and the barrel width
+  tells you how thick that weapon should be. The generic Rifleman sprite draws 4-pixel barrels; the RFL-3C, with
+  twin AC/10s, draws 5-pixel ones.
+- **Differences running down to the legs** mean the artists drew a different machine for that era. The RFL-1N
+  is the original 3025 design and shares almost nothing with the later body.
 
-- **Differences confined to the weapon rows** (the top third) mean one body with different guns. The
-  barrel width is a direct reference for how thick that weapon should be. On the Rifleman the generic
-  sprite draws 4-pixel barrels and the RFL-3C, which carries twin AC/10s, draws 5-pixel ones.
-- **Differences running down to the legs** mean the artists drew a genuinely different machine for that
-  era. Eleven of the nineteen Rifleman sprites do this; the RFL-1N is the original 3025 design and
-  shares almost nothing with the reseen body.
+You cannot satisfy every sprite and are not meant to. In `mekset.txt`, a variant with only a sprite line inherits
+the chassis model, so one body serves every design. Treat the generic sprite as the main reference and the variant
+sprites as a weapon-sizing check, and say in review which design the body follows.
 
-**You cannot satisfy all of them, and you are not meant to.** Check `mekset.txt`: a variant with a
-sprite-only `exact` line inherits the chassis model. All 32 Rifleman variants do, so one body serves
-every design the sprites show. Treat the generic sprite as the primary reference, the variant sprites
-as a weapon-sizing reference and a cross-check, and say in review which design the body follows.
+**The miniature** is what the model is judged against. Ask the reviewer for pictures. When sprite and miniature
+disagree, the miniature usually wins, but say so and let the reviewer rule.
 
-Cross-checking placement across variants is also how you separate a drawing convention from a one-off.
-The Rifleman radar sits right of centre in the generic sprite *and* in the RFL-1N sprite, so that is
-deliberate, not an accident of one drawing - worth raising with the reviewer even if the miniature
-wins in the end.
+## 4. The three files a Mek touches
 
-**The miniature renders on Sarna.** These are what the model is judged against. The old line art is a
-rough guide and is often a different design. Ask the reviewer for links, or fetch them. When the sprite
-and the miniature disagree, the miniature usually wins - but say so and let the reviewer rule.
+### 4.1 The builder: `tools/unit_mek_chassis.py`
 
----
+Add `def <id>(g):` building the body, **and** add `'<id>': <id>` to the `builders` dict inside `build_chassis`.
+A recipe without a builder entry crashes the export with a `KeyError`.
 
-## 4. The three-file change
-
-Adding a chassis touches exactly three files. Miss the second half of the first and you get a
-`KeyError` at export.
-
-### 4.1 `mm-data/tools/unit_mek_chassis.py`
-
-Add `def <id>(g):` building the body, **and** add `'<id>': <id>` to the `builders` dict inside
-`build_chassis`. The dict is a hard lookup; a recipe without a builder entry crashes.
-
-Geometry API on `g` (see `unit_model_geometry.py`):
+Geometry calls on `g` (see `unit_model_geometry.py`):
 
 | Call | Makes |
 |---|---|
@@ -198,160 +178,154 @@ Geometry API on `g` (see `unit_model_geometry.py`):
 | `g.beam(start, end, width, depth, group, material, sides=4, taper=1)` | a beam between two points |
 | `g.prism(ring, bottom, top, group, material, taper=1)` | an extruded polygon |
 | `g.loft(rings, group, material)` | a skin through a list of rings |
-| `g.face(points, group, material)` | one flat polygon; winding sets the normal |
-| `g.joint(name, pivot, parent)` | a rig pivot; geometry is stored local to it |
+| `g.face(points, group, material)` | one flat polygon; the winding sets which way it faces |
+| `g.joint(name, pivot, parent)` | a rig pivot; geometry is stored relative to it |
 | `g.emitter(position, direction, group, role, effect)` | a muzzle or exhaust point |
 
-Module helpers:
+Helpers in `unit_mek_chassis.py`: `upright` (stack cross-sections upward), `forward` (loft front to back), `panel`
+(a flat inset such as cockpit glass), `foot` and `toes`, `lofted_face` and `capped_face` (the surface of a lofted
+torso, for flush detail), `vent`, and `split_torso_locations` (UNIT_REVIEW_PROCESS.md section 6).
 
-| Helper | Use |
-|---|---|
-| `upright(g, sections, group, material, cut)` | stack lofted cross-sections upward; sections are `(z, width, depth, center x, center y)` |
-| `forward(g, sections, group, material, cut)` | loft front-to-back; sections are `(y, width, height, center x, center z)` |
-| `panel(g, points, group, material)` | a flat inset such as cockpit glazing |
-| `foot(g, x, y, width, length, group)` / `toes(...)` | feet; they create the `-foot` joint themselves |
-| `lofted_face(sections, rear)` | surface of an `upright` torso at any height, for flush detail |
-| `capped_face(y, rear)` | surface of a `forward` torso's flat end cap |
-| `vent(g, face, center_x, half_width, low_z, high_z, rear, group)` | a cooling vent lying in the skin |
+Materials: `paint`, `edge`, `metal`, `dark`, `glass`, and the weapon tips `laser`, `ppc`, `tag`, `plasma` and
+`lamp`. `metal` and `dark` read as near-black; use them sparingly on large faces. Camouflage tints `paint` and
+`edge`; everything else stays its own colour.
 
-Materials: `paint`, `edge`, `metal`, `dark`, `glass`, plus weapon tips `laser`, `ppc`, `tag`, `plasma`
-and `lamp`. `metal` and `dark` read as near-black; use them sparingly on large faces.
+A Mek body must produce these rig groups: `pelvis`, `CT`, `HD`, `LT`, `RT`, `LA`, `RA`, `LL`, `RL`, plus `-shin`
+and `-foot` on each leg. Optional arm parts are tagged `LA@elbow`, `LA@forearm`, `LA@wrist` and `LA@hand`, and each
+variant shows the ones its actuators call for.
 
-Rig groups a Mek body must produce: `pelvis`, `CT`, `HD`, `LT`, `RT`, `LA`, `RA`, `LL`, `RL`, plus
-`-shin` and `-foot` on each leg. Optional arm anatomy is tagged `LA@elbow`, `LA@forearm`, `LA@wrist`,
-`LA@hand` and shown per variant according to actuators. `build_chassis` auto-creates `LA-forearm` and
-`RA-forearm` pivots if you do not.
+Hips sit around z 29 to 31 and a tall Mek tops out near 55 before `bodyScale`. Check the calibration table in
+UNIT_REVIEW_PROCESS.md section 9 before trusting your eye on leg mass: a 60-tonner was once authored heavier than
+two 70-tonners.
 
-Height convention: hips sit around z=29 to 31, the top of a tall Mek around 55. Check the Calibration
-table in [UNIT_REVIEW_PROCESS.md](UNIT_REVIEW_PROCESS.md) before trusting your eye on leg mass - legs
-are the easiest thing to overbuild, and a 60-tonner was authored heavier than two 70-tonners before
-the numbers caught it.
+**An optional LOD1 body.** For a chassis whose LOD0 body is detailed enough that it needs a simpler shape at a
+distance, give the builder a `far=False` parameter that draws the simpler shape when true, and set
+`"bodyLod1": true` in the recipe. The Phoenix Hawk and Phoenix Hawk IIC do this. The LOD1 body must carry every
+rig node the LOD0 body has (the export stops and names any that are missing); its weapons, vents and jets use the
+LOD0 body's spots. The whole unit must fit 2,000 triangles at LOD1, and weapons without a LOD1 of their own count
+at full size. LOD2 for units is being added to MegaMek now; there is no recipe key for it yet.
 
-### 4.2 `mm-data/tools/unit-models/chassis.json`
+### 4.2 The recipe: `tools/unit-models/chassis.json`
 
-Append one recipe. **Match the file's compact hand formatting** - several keys per line, no spaces
-after colons in arrays. Do not rewrite the file with `json.dumps(indent=2)`; that reformats all
-existing chassis and produces a 1,100-line diff for a 10-line change.
+Append one recipe, matching the file's compact hand formatting (several keys per line). Do not rewrite the file
+with `json.dumps(indent=2)`; that reformats every existing chassis and turns a ten-line change into a
+thousand-line diff.
 
-Required: `name`, `id`, `referenceVariant`, `sprite`, `illustration`, `hip`, `silhouette`, and
-`sockets` with all eight of `HD CT LT RT LA RA LL RL`. A socket is `[sprite x, sprite y, height]`,
-placed where the barrel leaves the armour.
+Required: `name`, `id`, `referenceVariant`, `sprite`, `illustration`, `hip`, `silhouette`, and `sockets` with all
+eight of `HD CT LT RT LA RA LL RL`. A socket is `[sprite x, sprite y, height]`, placed where the barrel leaves the
+armour.
 
-**Live optional keys**, read by the current exporter:
+Optional keys the exporter reads:
 
 | Key | Purpose |
 |---|---|
 | `rearSockets` | rear-facing mounts; without one the front point is reused nine pixels back, usually inside the hull |
-| `socketBanks` | exact spots for one family in one location, e.g. `"RA:hatchet"`, or per arm form `"LA@wrist:ppc"` |
+| `socketBanks` | exact spots for one family in one location, for example `"RA:hatchet"` or `"LA@wrist:ppc"` |
 | `socketAim` | direction for a location's weapons, so a barrel follows its limb |
-| `protrusion` | how far barrels stand out, per location or `LOC:family`: `recessed` 0.06, `short` 0.4, `medium` 0.7, `long` 1.0 |
-| `mountAreas` | the facing weapons are laid out on: `{"width": x extent, "height": z extent}`, optional `center` |
-| `armSockets` | per-form attach points: `{"LA": {"elbow": [...], "wrist": [...], "hand": [...]}}` |
-| `weaponOverrides` | per-weapon changes matched by `location`, `family`, `name`, `rear`; `length` is scaled by `weaponScale` |
-| `missileSockets`, `missileBayHeight`, `missileBayColumns`, `missileBayWidth`, `missileScale`, `missileSlope` | launcher bays |
+| `protrusion` | how far barrels stand out: `recessed`, `short`, `medium` or `long` |
+| `mountAreas` | the facing weapons are laid out on: `{"width": ..., "height": ...}`, optional `center` |
+| `armSockets` | attach points per arm form: `{"LA": {"elbow": [...], "wrist": [...], "hand": [...]}}` |
+| `weaponOverrides` | per-weapon changes matched by `location`, `family`, `name`, `rear` |
+| `missileSockets`, `missileBayHeight`, `missileBayColumns`, `missileBayWidth`, `missileScale`, `missileSlope` | launcher bays; `missileSlope` stands a bay upright |
 | `barrelLength`, `weaponScale` | gun sizing; `weaponScale` runs 0.83 (Atlas) to 0.95 |
-| `searchlightSocket` | external lamp position, undocumented in the older guide but live |
+| `searchlightSocket` | the external lamp position |
+| `exhaustSockets`, `jumpJetScale` | torso jump jet spots and their size |
+| `heldWeapons`, `hangingMounts`, `stackRows`, `sharedFaces`, `equipmentRules`, `ventDefaultSides` | see UNIT_REVIEW_PROCESS.md sections 4 and 5 |
+| `bodyScale` | sets the body's height for its weight class (section 9 of the process doc) |
+| `bodyLod1` | builds a separate LOD1 body (section 4.1 above) |
 
-**Dead keys.** These appear in existing recipes and in `MODELLING_GUIDE.md` section 3, but **only the
-legacy builder reads them**. Setting them does nothing and produces no warning:
+**Keys that do nothing.** `slotSpacing`, `missileColumns` and `missileOrientation` still appear in some older
+recipes, but the current exporter never reads them from a recipe, and setting them gives no warning. Do not copy
+them into a new one. An upright launcher bay comes from `missileSlope`.
 
-`beltSockets`, `missileOrientation`, `missileColumns`, `slotSpacing`
+### 4.3 The registration: `data/images/units/mekset.txt`
 
-Vertical launcher orientation in the current path comes from `missileSlope`, not `missileOrientation`.
-
-### 4.3 `mm-data/data/images/units/mekset.txt`
-
-One line, placed with the other chassis entries:
+One line, with the other chassis entries:
 
 ```text
 chassis "<Name>" "meks/<Sprite>.png" "units/modular/meks/<id>.json"
 ```
 
-A sprite-only `exact` entry for a variant inherits the chassis model, so per-variant lines need no
-change.
+For example `chassis "Atlas" "meks/Atlas.png" "units/modular/meks/atlas.json"`. A variant's sprite-only line
+inherits the chassis model, so variant lines need no change.
 
----
+## 5. Vehicles
 
-## 5. Build, review, validate
+Named vehicles are built in mm-data the same way. The recipe goes in `tools/unit-models/vehicles.json`, the
+builder in `tools/unit_vehicle_chassis.py` with an entry in its `VEHICLE_BUILDERS` dict, and a builder must make a
+`hull` joint. The exporter writes `bodies/<id>.glb` and a family descriptor `families/<id>.json`, registered in
+`mekset.txt` like `chassis "Manticore Heavy Tank" "vehicles/Manticore.png" "units/modular/families/manticore.json"`.
+The Manticore and Manticore II are the examples.
+
+The BattleTech Unit Viewer (launcher main menu `6`) can draft a first version of a Mek or vehicle with Generate
+MiniMek. It builds in a private sandbox and deploys only that chassis's three files (its Mek or family
+descriptor, `bodies/<id>.json` and `bodies/<id>.glb`) plus its manifest entry. It never commits.
+
+## 6. Build, review, validate
 
 ```bash
-# from mm-data - about 11 seconds, exports every asset
+# from mm-data: exports every asset into data/models/units/modular
 python tools/build_modular_unit_models.py
 
-# bare body, six angles plus the waist-twist gate - about 10 seconds
+# bare body, six angles plus the waist-twist sheet, into .work/body-review/
 "/c/Program Files/Blender Foundation/Blender 5.2/blender.exe" --background --factory-startup \
     --python-exit-code 1 --python tools/render_modular_body.py -- --body <id> --turn 60
 
-# from megamek - asset contract gate, about 6 minutes
-./gradlew :megamek:test --tests "*UnitModelDescriptorTest*" --console=plain
-
-# from megamek - assembles real units and writes review images, about 2 minutes
-./gradlew :megamek:gpuBoardSmoke --tests '*GpuModularUnitModelsSmokeTest*' --console=plain
+# from megamek: stage the data, check the descriptors, then assemble real units and render them
+gradlew :megamek:stageDataFiles
+gradlew :megamek:test --tests "*UnitModelDescriptorTest*"
+gradlew :megamek:gpuBoardSmoke --tests "*GpuModularUnitModelsSmokeTest*"
 ```
 
-Bare-body sheets land in `mm-data/.work/body-review/`. Assembled review images land in
-`megamek/build/gpu-board-review/`.
+The first two commands are the iteration loop. Expect several rounds (the Archer took five, the Rifleman seven)
+and send a sheet each round. Assembled images land in `megamek/build/gpu-board-review/`. Staging copies from the
+`mm-data` folder beside the megamek checkout; from a worktree read UNIT_REVIEW_PROCESS.md section 1a first, or you
+will review someone else's models.
 
-The middle two commands are the iteration loop, about twenty seconds a round. **Expect several rounds.
-The Archer took five, the Rifleman seven.** Send a sheet each round.
+While exporting, watch for `Weapon review:` lines (a weapon piece over 250 triangles) and for a refusal of a body
+over its level's budget. After staging, playing the unit in MegaMek and checking `megamek.log` for `[UnitBudget]`
+shows whether any real loadout goes over.
 
-To get a new chassis into the assembled review, add it to the `cases` array in
-`GpuMekAssemblyReview.java` as `{ label, body descriptor id, unit file path }`. Add a row per variant
-you want rendered; several rows may share one descriptor. To add it to the variant sheets, extend the
-chassis list at the end of `verify`.
+To add the chassis to the assembled review and the variant sheets, see UNIT_REVIEW_PROCESS.md section 2.
 
----
+Other tests that cover the pipeline in megamek: `RigidGlbTest` (reading GLBs and their level groups),
+`UnitEquipmentAssemblyTest` (fitting weapons and the budget warning), and the on-screen `GpuMekLodSmokeTest` and
+`GpuUnitModelBenchmarkSmokeTest`.
 
-## 6. Traps that cost real time
+## 7. Traps that cost real time
 
-- **A stale edit is silent.** Editing a recipe by string replacement against a value an earlier pass
-  already changed does nothing, the build still succeeds, and the render looks unchanged for the wrong
-  reason. **Assert on every edit** and print the value back.
-- **A bevel narrows the flat face.** `section(w, d, cut)` chamfers the corners, so the flat band is
-  `width/2 - min(width, depth)/2 * cut`, not `width/2`. A `cut` of 0.3 on a 17-wide, 13.7-deep section
-  leaves only about +/-6.4 flat. Detail outside that band hangs off the chamfer and reads as stuck on.
-- **A lofted face slopes.** A torso going from 13 deep to 14.5 over six units of height moves its
-  surface 0.125 per unit. Flush detail at one fixed depth is half buried and half floating. Use
-  `lofted_face`.
-- **Winding sets the normal.** A front panel and a back panel need opposite vertex order or one of them
-  renders invisible.
-- **Mount area axes:** `width` is left-right, `height` is vertical. A tall narrow area stacks weapons
-  over-under; a wide one sets them abreast.
-- **Vertices are node-relative.** In the exported `.glb`, a part's vertices are local to its node;
-  world position is the accumulated chain of node translations.
-- **House rules** from `CLAUDE.md`: no Unicode anywhere in code, no trademarked words in Java
-  (`Mech`, `BattleMech`, `MechWarrior`, `AeroTech`), no `@author` tags and no individual named in
-  licensing text, and no `.stream()` inside a conditional - use a plain loop.
-- **Never commit.** The user handles commits. Never push without permission for that specific push.
+- **A stale edit is silent.** Replacing a recipe value that an earlier pass already changed does nothing, the build
+  still succeeds, and the render looks unchanged for the wrong reason. Print the value back after every edit.
+- **A bevel narrows the flat face.** A `cut` of 0.3 on a 17-wide, 13.7-deep section leaves only about +/-6.4 of
+  flat face. Detail outside that band hangs off the chamfer.
+- **A lofted face slopes.** Flush detail at one fixed depth ends up half buried. Use `lofted_face`.
+- **Winding sets the facing.** A front panel and a back panel need opposite vertex order, or one is invisible.
+- **Mount area axes:** `width` is left-right, `height` is vertical.
+- **Positions in the GLB are relative to each part's node**, not to the unit.
+- **Commits.** The person running the work decides whether and when to commit. Tools and agents never push.
 
----
+## 8. Definition of done
 
-## 7. Definition of done
-
-- [ ] Bare body under 1,000 triangles. A thousand is available; there is no virtue in coming in far under.
-- [ ] Each equipment module under 100 triangles, and strictly under 150.
-- [ ] Six-view bare sheet reviewed and accepted by the reviewer.
-- [ ] Waist twist clean at 60 degrees: nothing above the waist cuts the hips or legs, no gap opens.
-- [ ] Rear view confirmed - rear weapons must actually show, not sit inside the hull.
+- [ ] Whole unit within budget: LOD0 body under about 4,000 triangles, the heaviest-armed variant under 5,000,
+      and no `[UnitBudget]` warning in megamek.log for the variants played (UNIT_REVIEW_PROCESS.md section 8).
+      If the chassis has a LOD1 body, the same check against 2,000.
+- [ ] No weapon piece over 250 triangles without the reviewer agreeing to it.
+- [ ] Six-view bare sheet reviewed and accepted.
+- [ ] Waist twist clean at 60 degrees: nothing above the waist cuts the hips or legs, and no gap opens.
+- [ ] Rear view confirmed: rear weapons actually show rather than sitting inside the hull.
 - [ ] `UnitModelDescriptorTest` passes.
-- [ ] `GpuModularUnitModelsSmokeTest` passes, and the assembled render is reviewed with at least two
-      loadouts that differ in weapon family, so a PPC and an autocannon are both seen in the same mount.
+- [ ] `GpuModularUnitModelsSmokeTest` passes, and the assembled render is reviewed for at least two loadouts of
+      different weapon families, so a PPC and an autocannon are both seen in the same mount.
 - [ ] Variant sheet rendered and reviewed.
-- [ ] **Same-family lineup** rendered against two neighbours of similar tonnage
-      (`render_modular_body.py --lineup`) and read for width, depth and limb mass rather than height.
-- [ ] Height checked against the weight-class band using the tallest **structural** part. A wire
-      antenna does not count toward it; a mast, housing or sensor array does.
-- [ ] Vents present: at most two front, at most two back, back on torso locations only.
-- [ ] Jump jets: one graphic per location that has any, on the back of the torso or calf, not hanging
-      below the torso or running down the thigh.
-- [ ] Registered in `mekset.txt` and confirmed present in staged game data.
-- [ ] Nothing committed.
+- [ ] Lineup rendered against two neighbours of similar tonnage and read for width, depth and limb mass.
+- [ ] Height inside the weight-class band, measured to the tallest structural part, not a wire antenna.
+- [ ] Vents: at most two front and two back, back vents on torso locations only.
+- [ ] Jump jets: one graphic per location that has any, on the back of the torso or calf.
+- [ ] Registered in `mekset.txt` and present in the staged game data.
 
----
+## 9. Worked example
 
-## 8. Worked example
-
-The Rifleman is the reference build. Its decisions, and why, are in section 8 of
-[UNIT_REVIEW_PROCESS.md](UNIT_REVIEW_PROCESS.md); its body is `rifleman` in `unit_mek_chassis.py` and
-its recipe is the last entry in `chassis.json`. Read both before starting a new one - the arm-pod
-treatment for a chassis with no hands, and the vent placement, both transfer directly.
+The Rifleman is the reference build. Its decisions are in section 10 of UNIT_REVIEW_PROCESS.md, and its signed-off
+state is kept in [preserved/rifleman-final/](preserved/rifleman-final/README.md). Its body is `rifleman` in
+`unit_mek_chassis.py` and its recipe is in `chassis.json`. The arm-pod treatment for a chassis with no hands, and
+the vent placement, both carry over directly. For a chassis with a LOD1 body, read `phoenix-hawk` instead.

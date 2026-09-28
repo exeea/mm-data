@@ -1,5 +1,11 @@
 # Movement and attack playback
 
+> Historical record, kept for reference. It is superseded by [MODELLING_GUIDE.md](MODELLING_GUIDE.md) and the
+> [units README](../../data/models/units/README.md): unit models are now GLB files with `-lod0`, `-lod1` and
+> `-lod2` groups, and the budget is for the whole unit, 5,000 / 2,000 / 500 triangles per level. Facts below
+> describe the pipeline as it was on 2026-09-20; budgets, G3DJ files, baked references and tool names in it may no
+> longer apply. The review GIFs it lists were never committed.
+
 Playback foundation implemented and reviewed on 2026-09-19. This extends C6/C8 of
 [the model plan](MODULAR_MODELS_PLAN.md); their broader family/terrain/death gates remain open.
 The [2026-09-20 review corrections](MODULAR_MODELS_REVIEW_FIXES.md) fix grouped-weapon identity, recoil direction,
@@ -104,14 +110,11 @@ not a claim of terrain-aware foot locking or universal animation quality.
 - Native sequences are encoded at normal playback speed and 24 frames/second. They are review artifacts only;
   the game does not invoke the encoding script or use these GIFs as animation assets.
 
-[Six Battle Armor suits with start-time jitter](references/reviews/playback/battle-armor-jitter.gif),
-[Atlas walking](references/reviews/playback/atlas-walk.gif),
-[infantry boarding/driving/unloading](references/reviews/playback/infantry-transport.gif),
-[firing](references/reviews/playback/atlas-fire.gif),
-[Mek kick](references/reviews/playback/atlas-kick.gif).
+Review GIFs were recorded of six Battle Armor suits with start-time jitter, Atlas walking, infantry
+boarding/driving/unloading, firing and a Mek kick. They were not committed to the repository.
 
 The implementation is concentrated in `UnitMotion`, `UnitPlayback`, `UnitAnimator`, `InfantryMotion`,
-`GpuJumpJets`, `GpuMeeple`, `UnitAttack` and `GpuAttackEffects`. `BoardScene`, `GpuBoardSource` and `GpuBattleView`
+`GpuJumpJets`, `GpuMeeple` (since removed), `UnitAttack` and `GpuAttackEffects`. `BoardScene`, `GpuBoardSource` and `GpuBattleView`
 carry snapshots and connect the shared queue to both views. `ResolvedAttack`, its game event, the packet/client
 boundary, `TWGameManager` and weapon handlers carry actual visibility-filtered outcomes. No second game-state
 authority or separate per-member timeline was added.

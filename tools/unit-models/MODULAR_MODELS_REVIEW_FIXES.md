@@ -1,7 +1,13 @@
 # Modular models: review corrections
 
+> Historical record, kept for reference. It is superseded by [MODELLING_GUIDE.md](MODELLING_GUIDE.md) and the
+> [units README](../../data/models/units/README.md): unit models are now GLB files with `-lod0`, `-lod1` and
+> `-lod2` groups, and the budget is for the whole unit, 5,000 / 2,000 / 500 triangles per level. Facts below
+> describe the pipeline as it was on 2026-09-20; budgets, G3DJ files, baked references and tool names in it may no
+> longer apply. The review it answers and its posture samples are no longer in the repository.
+
 Date: 2026-09-20. The [main plan](MODULAR_MODELS_PLAN.md) remains the active checklist.
-This closes R1–R5 from the [implementation review](MODULAR_MODELS_REVIEW.md), not the entire model plan.
+This closes R1–R5 from the implementation review (`MODULAR_MODELS_REVIEW.md`, since removed from the repository), not the entire model plan.
 
 ## Corrections
 
@@ -42,7 +48,7 @@ including the paused/queued starting-pose regression. Earlier full-source runs a
 motive/formation combinations), and the native toolbar/input/layout review. The last focused compile included the
 current shared `BoardScene` alongside `UnitPlayback` while another task was updating movement overlays.
 
-Native posture samples are retained in [references/reviews/review-fixes](references/reviews/review-fixes/).
+Native posture samples were recorded under `references/reviews/review-fixes/`; they are not in the repository.
 `forced-004.png` is the half-fall pose, `forced-008.png` is the completed fall, and `none-008.png` is the completed
 get-up. These use production meshes, assembly, placement and animation code, without Blender or a new asset bake.
 

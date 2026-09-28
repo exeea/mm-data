@@ -1,472 +1,471 @@
 # Unit model authoring guide
 
-This is the current authoring specification for **every unit family**, including named designs, custom variants,
-and generic fallbacks. All use the same coordinate, material, rig and runtime-assembly contracts. Historical
-checkpoint reports document what was tested at the time; they do not override this guide. Track unfinished work
-in [the plan](MODULAR_MODELS_PLAN.md) and [the animation/damage follow-up](MODULAR_MODELS_POLISH.md).
+This guide is for anyone building a 3D unit model for MegaMek: a named Mek such as the Atlas, a named vehicle
+such as the Manticore, or one of the generic family bodies the game falls back to. Every unit follows the same
+rules for file format, coordinates, materials, joints, weapon mounting and triangle budget.
 
-Start with sections 1–3, follow your family's row in section 4, then build and review using section 8.
-Existing full-loadout meshes under `references/legacy/units/` are visual references only.
+Related documents in this folder:
 
-## 1. One production workflow
+- [NEW_CHASSIS_BRIEF.md](NEW_CHASSIS_BRIEF.md) walks through adding one new Mek chassis step by step.
+- [UNIT_REVIEW_PROCESS.md](UNIT_REVIEW_PROCESS.md) describes the review loop, the review sheet and how weapon
+  sockets are placed.
+- [PRE_BUILD_CHECKLIST.md](PRE_BUILD_CHECKLIST.md) lists what to gather and ask before building a Mek.
+- [MODULAR_MODELS_PLAN.md](MODULAR_MODELS_PLAN.md) is the design record for the runtime assembly.
 
-1. **Identify the real unit.** Record the chassis/reference variant, movement form and game weight class from
-   the unit definition/catalog. Gameplay data owns classification, equipment, troops, conversions and footprints.
-2. **Gather references.** Inspect the north-facing game sprite for the top silhouette and equipment placement,
-   plus a clear miniature/concept image for depth and articulation. Store source attribution/reference images under
-   `tools/unit-models/references/<id>/`. Distinguish fixed body features from optional equipment. Resolve major
-   silhouette/proportion disagreements before adding detail. Fallbacks need a deliberate family silhouette too.
-3. **Author a bare component and its recipe.** Use the source/helper listed in section 4. Separate rigid moving
-   parts and damage locations while constructing the geometry. Do not generate stock/custom loadout combinations,
-   casualty combinations, terrain-specific leg lengths, or preassembled troop groups.
-   **Mek prerequisite: physically split HD, CT, LT and RT into their correct drawable regions, even when the
-   reference has one continuous carapace.** A joined shell assigned to one location cannot pass review.
-4. **Export schema-2 components.** `build_modular_unit_models.py` runs in ordinary Python. Blender is optional for
-   authoring or inspection; neither Blender, MCP nor Python runs when a map loads. Java assembles the captured unit
-   using the same code for game rendering and native reviews.
-5. **Review at the shared scale.** Compare bare and assembled silhouettes, front/back/side/top views, a same-family
-   size lineup, and actual animation on terrain. Check attachment clearance, damage, camouflage and both cameras.
-6. **Register and validate.** Add the modular model to mekset, run section 8's checks, then stage the reviewed assets
-   into MegaMek. Keep the source recipe, generated descriptor/mesh, manifest and review evidence together.
+When this guide and the code disagree, the code wins; please fix the guide.
+
+## 1. How a unit model is made
+
+The game never loads a finished "Atlas AS7-D with its weapons". It loads a bare Atlas body, then fits the
+weapons the unit actually carries onto that body while the game runs. So a modeller authors two things: a bare
+body with named attachment points, and (only when the look is new) a reusable weapon or equipment piece.
+
+1. **Identify the real unit.** Note the chassis, a reference variant, the movement type and the weight class from
+   the unit file. Gameplay data decides the equipment, troop counts and conversions; the model never does.
+2. **Gather references.** Use the north-facing game sprite for the top silhouette and weapon positions, plus a
+   clear miniature or line-art image for depth and joints. Separate fixed body features from optional
+   equipment. Settle big silhouette and proportion questions before adding detail. Record what you shaped the
+   body from in the recipe's `silhouette` note (see the existing entries in `chassis.json`).
+3. **Write the bare body and its recipe.** A Mek is a builder function in `tools/unit_mek_chassis.py` plus an
+   entry in `tools/unit-models/chassis.json`. A named vehicle is a builder in `tools/unit_vehicle_chassis.py`
+   plus an entry in `tools/unit-models/vehicles.json`. Generic family bodies live in
+   `tools/unit_family_models.py`. Split moving parts and damage locations while you build. Never bake a loadout,
+   a casualty count, a terrain-specific leg length or a preassembled troop group.
+4. **Export.** `python tools/build_modular_unit_models.py` runs in plain Python and writes one `.glb` per
+   component with its `.json` descriptor. Blender is optional, for inspection only. Nothing in Python or
+   Blender runs when a map loads; MegaMek's Java code assembles the unit, and the same code draws the game and
+   the review images.
+5. **Review.** Compare bare and assembled silhouettes from front, back, side and top, a same-family size lineup,
+   and real animation on terrain. Check weapon clearance, damage, camouflage and both cameras.
+6. **Register and stage.** Point the chassis at its descriptor in `data/images/units/mekset.txt`, then stage the
+   data into MegaMek (section 12).
 
 ### Work on related chassis together
 
-Prefer a missing chassis with many variants so one bare model covers many live loadouts. Before authoring, search
-the actual unit definitions and mekset for its related **chassis names**, including numbered successors, IIC, LAM
-and LAM Mk I designs. Review and author those relatives in the same batch; reuse appropriate geometry helpers but
-export **separate body/assembly files and mekset mappings for each chassis**. Do not select by fuzzy name matching
-or assume every relative is just a reskin: weight, proportions, topology and LAM conversion still follow its own
-unit/reference. For example, Hunchback and Hunchback IIC are separate bodies; Wasp, Wasp LAM and Wasp LAM Mk I need
-their own files and conversion review where applicable.
+Prefer a missing chassis with many variants, because one bare body serves every loadout. Before you start,
+search the unit files and `mekset.txt` for related chassis names, including numbered successors, IIC and LAM
+designs, and author those relatives in the same batch. They may share builder helpers, but each chassis gets its
+own body file and its own mekset line. The Phoenix Hawk and Phoenix Hawk IIC are separate bodies; so are the
+Thunderbolt and Thunderbolt IIC. Never pick relatives by fuzzy name matching, and never treat a relative as a
+reskin without checking its weight, proportions and topology.
 
-Distinguish a numbered **model/variant** such as King Crab KGC-001 from a numbered **chassis**. Ordinary loadout
-variants share the chassis body and assemble equipment from the live Entity. Only an actual structural/art
-exception needs an exact modular override. Record the related-chassis search and any such exceptions alongside
-the reference brief; never manufacture a nonexistent relative or pre-generate its weapon combinations.
+A numbered model such as King Crab KGC-001 is usually just a loadout variant of the chassis and uses the chassis
+body. A variant that genuinely needs its own spot for a weapon gets a `variants` entry in the chassis recipe
+(the Thunderbolt TDR-60-RLA is an example); the build then writes a variant body that draws the chassis's mesh
+with its own hardpoints.
 
-Asset ownership: `Geometry`/Python owns authored shape; `MekTileset` selects a model; `UnitModelState` captures visible
-Entity data; `GpuUnitModels` and the existing family assemblers own shared mesh buffers; each displayed instance
-owns its pose/materials. `UnitAnimator`/`UnitPlayback` own one presentation timeline for both cameras. Do not add a
-second loadout resolver, animation clock or mutable copy of game state to an authoring tool.
+### Who owns what
 
-## 2. Coordinates, scale and proportions
+Python authors shape only. On the MegaMek side, `MekTileset` picks a model for a unit, `UnitModelState` captures
+what is visible on the unit, `GpuUnitModels` and the family assemblers share mesh buffers, and each displayed
+instance owns its pose and materials. `UnitAnimator` and `UnitPlayback` run one timeline for both cameras. Do not
+add a second loadout resolver, animation clock or copy of game state to an authoring tool.
 
-**All component meshes:** +X right, +Y forward, +Z up, one model-unit convention on all axes. Ground/sole reference
-is Z=0 for land bodies; naval bodies retain their authored waterline. Apply transforms to exported vertices,
-pivots, sockets, emitters and support metadata together. Do not use legacy Z/54 export scaling.
-The exporter uses `Geometry.export(..., z_scale=1, paint_uv=True)`.
+## 2. Files and format
 
-For sprite-derived Mek recipes, `[pixelX, pixelY, height]` becomes `[pixelX-42, 36-pixelY, height]`.
-Other geometry is authored directly in model coordinates. Exported hardpoints/emitters are **local to their
-parent's rest pivot**; the Python helpers convert from authoring coordinates. Do not subtract the pivot twice.
+- **Every component is one `.glb` file beside its `.json` descriptor.** That covers Mek bodies, vehicle bodies,
+  troops, transports and every weapon or equipment piece. G3DJ is gone: MegaMek no longer reads it and the
+  exporter no longer writes it.
+- **Levels of detail live inside that one file** as top-level groups named after the file: `atlas.glb` holds a
+  group `atlas-lod0`, and `phoenix-hawk.glb` holds `phoenix-hawk-lod0` and `phoenix-hawk-lod1`. Each group is an
+  empty node with an identity transform; the rig hangs beneath it. `-lod0` is required. MegaMek refuses a unit
+  GLB whose levels are not named this way, with the message "Name the levels of X as groups X-lod0 ...", and
+  also refuses unknown or duplicate group names, a group with a transform, skins, animations and external
+  buffers (`RigidGlb.loadLods`).
+- **Descriptors are schema 2.** A descriptor names its mesh relative to itself, and the mesh must end in `.glb`.
+  Kinds are `body`, `equipment`, `troop`, `family`, `formation`, and the Mek descriptors under `meks/`. Paths must
+  stay inside the model folder. You rarely write these by hand; the exporter does.
+- **Where the output goes.** The default output is `data/models/units/modular/`: `bodies/`, `meks/`,
+  `families/`, `troops/`, `transports/`, `battle-armor/`, `equipment/`, plus `equipment.json` and `manifest.json`.
+  The manifest records, per component, the triangle and vertex counts, a checksum and a `lods` list with each
+  level's group name and triangle count. It is the place to check what a build actually produced.
+- The board scatter kit (`scatter.glb`) follows a different rule: it holds many shapes in one file, each named
+  `<shape>-lodN`. That is correct for scatter and does not apply to units.
 
-### Mek weight standard: authored bodies, not runtime size profiles
+## 3. Levels of detail
 
-Named chassis and fallbacks follow one standard: **their resting dimensions and proportions are baked into the
-asset**. There is no runtime `sizeScales`/`superHeavyScale` enlargement for Mek bodies. Reuse authoring helpers,
-but export distinct light, medium, heavy, assault and superheavy bodies for biped, tripod and quad layouts.
-The generic hybrid air-Mek also has these five body classes. QuadVee uses its quad body in both modes.
+MegaMek chooses a level by how tall the unit is on screen, so a Mek seen across the map costs far less to draw
+than one filling the view.
 
-Selection uses `Entity.getWeightClass()` and `Mek.isSuperHeavy()` (currently weight >100t). Ultra-light units use
-the light fallback. Do not duplicate tonnage cutoffs in Python or introduce an Alpha Strike size-to-mesh scale.
-Named chassis and exact modular variant mappings still take precedence. The default mekset paths use the supported
-`{weightClass}` token, for example `units/modular/meks/fallback-tripod-{weightClass}.json`; Java resolves it to
-`light`, `medium`, `heavy`, `assault` or `superheavy` before loading.
+| Unit | LOD0 (full detail) | LOD1 | LOD2 |
+|---|---|---|---|
+| Meks, vehicles and other units | taller than 96 px | 32 to 96 px | shorter than 32 px |
+| Infantry and battle armour (one figure measured) | taller than 48 px | 16 to 48 px | shorter than 16 px |
 
-| Body class | Proportion brief | Starting bare-body height range, model units |
+What each level is for:
+
+- **LOD0** is the model as designed: panel lines, vents, weapon detail. Every component has it.
+- **LOD1** keeps the silhouette and the joints but drops the detail that no longer reads at a hand's width on
+  screen, roughly halving the count. The Phoenix Hawk's LOD0 is 1,824 triangles and its LOD1 is 954.
+- **LOD2** is a blocky stand-in for a unit that is a few dozen pixels tall. Suggested sizes: a Mek 150 to 250
+  triangles, a weapon 10 to 30, a battle armour suit 40 to 60, an infantry figure 20 to 40.
+
+LOD1 and LOD2 are optional. A missing level uses the next more detailed one, so a body with only LOD0 simply
+draws LOD0 at every distance. Level switches use a small margin so a unit sitting on a boundary does not flicker.
+
+Current state: MegaMek switches between LOD0 and LOD1 today (`FormationLod`). LOD2 for units is still being
+added by the renderer author; you can already author a `-lod2` group, but do not expect to see it in the game
+yet. Separately, a fitted weapon smaller than about 4 pixels on screen is hidden (`GpuUnitInstance`), whatever
+level the body is at.
+
+### Giving a Mek a LOD1 body
+
+Set `"bodyLod1": true` in the chassis recipe and teach the builder a `far=True` mode that draws the simpler shape.
+The Phoenix Hawk and Phoenix Hawk IIC do this today. The build exports the simpler shape as `bodies/<id>-lod1`,
+holds it to the LOD1 budget, and packs it into `bodies/<id>.glb` as the `-lod1` group. Two rules apply:
+
+- The LOD1 body must have every node the LOD0 body's rig names (pelvis, CT, arms, shins, feet and so on). The
+  build stops with "the far body lacks nodes the near body has" if one is missing.
+- The LOD1 body carries no weapon spots, vents or jump jet spots of its own. Weapons stay on the LOD0 body's
+  sockets, which is why the node names must match.
+
+Battle armour suits can have a LOD1 figure too: the Elemental and Elemental II suits are exported with a
+`-standing-lod1` figure packed into the same GLB.
+
+## 4. Triangle budgets
+
+The budget covers the **whole assembled unit at each level**: the bare body plus every weapon fitted to it.
+
+| Level | Whole-unit budget |
+|---|---:|
+| LOD0 | 5,000 |
+| LOD1 | 2,000 |
+| LOD2 | 500 |
+
+These numbers are `LOD_TRIANGLE_BUDGETS` in `tools/unit_model_geometry.py` and `UNIT_TRIANGLE_BUDGETS` in
+MegaMek's `UnitModelDescriptor`. In practice:
+
+- **Bodies.** The exporter refuses a bare body over its level's whole budget: a LOD0 body over 5,000 triangles, or
+  a `-lod1` body over 2,000, fails the build. Aim for a LOD0 body under about 4,000, so roughly 1,000 is left for
+  weapons. For scale, the Atlas body is 767 triangles and the King Crab 1,496.
+- **Weapons and equipment.** One piece over 250 triangles prints a "Weapon review:" line during the build; one
+  over 1,000 fails it (`EQUIPMENT_TRIANGLE_TARGET` and `EQUIPMENT_TRIANGLE_LIMIT` in
+  `tools/build_modular_unit_models.py`). Heavy pieces are allowed, but they eat the unit's budget, so make them a
+  deliberate choice.
+- **In the game.** A unit whose real loadout goes over its level's budget is still drawn in full. MegaMek writes a
+  warning tagged `[UnitBudget]` to megamek.log naming the unit, the level, the body count and the fitted pieces
+  (`UnitEquipmentAssembly.warnOverUnitBudget`). Search the log for that tag after a test game. Formations and
+  squadrons are not covered by this warning.
+- **Hard limits.** MegaMek's own ceiling of 1,000,000 triangles per asset is only a sanity check. The real
+  technical limit is 65,535 vertices in one mesh (16-bit indices), about 21,000 flat-shaded triangles.
+
+Report body, equipment and assembled totals separately when you hand a model in.
+
+## 5. Coordinates, scale and proportions
+
+**Axes.** Author with +x right, +y forward, +z up, in one model unit on every axis. The GLB itself is glTF Y-up;
+the writer converts. The ground or sole of a land body is z = 0; naval bodies keep their authored waterline.
+Pivots, sockets, emitters and support data move with the vertices. The exporter calls
+`Geometry.export(..., z_scale=1, paint_uv=True)`; do not reintroduce the old divide-by-54 height scaling.
+
+**Sprite coordinates.** Mek recipes place points in sprite pixels. `[pixelX, pixelY, height]` becomes
+`[pixelX - 42, 36 - pixelY, height]` in model space (`build_chassis`). Exported hardpoints and emitters are local
+to their parent's rest pivot; the helpers convert them for you, so do not subtract the pivot twice.
+
+### Mek weight classes are authored, not scaled
+
+Every Mek body carries its own size. There is no runtime enlargement by weight. The fallback bodies exist in five
+classes (light, medium, heavy, assault, superheavy) for biped, tripod and quad layouts, plus the hybrid air-Mek.
+A QuadVee uses its quad body in both modes. MegaMek picks the class from the unit's weight class, and the mekset
+paths use a `{weightClass}` token, for example `units/modular/meks/fallback-tripod-{weightClass}.json`. Do not
+repeat tonnage cutoffs in Python.
+
+| Class | Proportion brief | Starting bare-body height, model units |
 |---|---|---:|
-| Light | Narrow chest/hips, thin limbs, compact shoulder masses; long scout legs are allowed | 46–54 |
-| Medium | Balanced torso and legs; visibly more volume than a light with comparable posture | 50–57 |
-| Heavy | Broad chest and substantial limbs; preserve specialized pod/reverse-leg silhouettes | 53–62 |
-| Assault | Deep armor masses, thick thighs/gauntlets, broad planted feet; larger volume than a heavy | 55–66 |
-| Superheavy | Clearly larger hull, supports and feet than a 100t assault; substantial depth as well as height | 68–84 |
+| Light | Narrow chest and hips, thin limbs, compact shoulders; long scout legs are fine | 46 to 54 |
+| Medium | Balanced torso and legs; visibly more volume than a light | 50 to 57 |
+| Heavy | Broad chest and substantial limbs | 53 to 62 |
+| Assault | Deep armour masses, thick thighs, broad planted feet | 55 to 66 |
+| Superheavy | Clearly larger hull, supports and feet than a 100-ton assault | 68 to 84 |
 
-These are **art review starting ranges**, not gameplay measurements or an automatic normalization rule. A tall,
-thin Locust may rival a hunched heavy's height; it must still read as much lighter in width, depth and armored
-volume. Weapons, launchers and antennas must not be used to inflate a bare body's apparent weight class. Review
-with optional equipment hidden as well as attached. Record deliberate reference-driven exceptions with images.
+These are review starting points, not rules. A tall thin Locust can be as tall as a hunched heavy; it must still
+read as much lighter through width, depth and armour volume. Weapons and antennas must not be used to make a body
+look heavier; review with equipment hidden as well as attached. The current biped fallbacks stand about 47, 52,
+54, 56 and 70 units tall, light to superheavy (from the manifest); their proportions are `FALLBACK_PROPORTIONS`
+in `tools/unit_mek_models.py`. After changing a fallback recipe, rebuild every layout and compare the whole
+five-class lineup. Moving a hull's cockpit or armour plates means moving its hardpoints and searchlight socket
+too.
 
-The fallback proportions live in `FALLBACK_PROPORTIONS` in `unit_mek_models.py`: width, depth, leg span and torso
-height vary independently. `fallback_hull()` authors a different hull for each of the three lighter classes;
-`fallback_body()` supplies the matching limbs and shared articulation contract. Light is a low cockpit-pod scout
-with thin reverse-knee legs; medium has an angular tapered chest, distinct helmet and balanced shoulders; heavy
-has broad slab shoulders and a low inset cockpit. The approved boxy assault and enlarged superheavy retain their
-existing geometry. Hybrid air-Meks retain their fighter fuselage instead of receiving a humanoid hull.
+Reference weights from the unit files: Locust LCT-1V is 20 tons (light); Warhammer WHM-6R and Archer ARC-2R are
+70 tons (heavy); Marauder MAD-3R is 75 tons (heavy); Atlas AS7-D and King Crab KGC-000 are 100 tons (assault).
 
-The current land fallback heights are about 47 / 52 / 53 / 56 / 70 model units, light through superheavy. The
-three lighter classes read as roughly 84% / 93% / 96% of the assault's height; distinguish mass primarily through
-width, depth, limbs and silhouette rather than making light units tiny. Each class exports its own GLB and local
-joints/sockets. These are authoring dimensions, not runtime scale factors. Regenerate all layouts and compare the
-five-class lineup after a recipe change; never patch only a deployed mesh or its bounding box. Moving a hull's
-cockpit or armor panels also requires moving its front/rear hardpoints and optional searchlight socket.
+### Board scale
 
-Verified reference units in `data/mekfiles/meks/`: Locust LCT-1V is 20t/light; Warhammer WHM-6R and Archer ARC-2R
-are 70t/heavy; Marauder MAD-3R and Mad Cat Prime are 75t/heavy; Atlas AS7-D, Mackie MSK-6S and King Crab KGC-000
-are 100t/assault. The King Crab review uses one shared classic-style shell for all 14 current refits, with rear
-carapace launcher mounts and equipment inside the claws; see [its reference brief](references/king-crab/README.md).
-There is no named medium in the current authored set. Do not label one of the heavy examples as medium to
-fill that gap. Use a deliberate intermediate design and compare its body volume with both neighboring classes.
+Author and compare with every family scale at 1.0. The board's scale sliders are fine-tuning, not a fix for a
+body with the wrong proportions. At unit scale 1 the Atlas's bare standing height of about 54.9 model units spans
+two terrain levels (`GpuUnitModel`), and every other single-hex body is drawn with that same conversion, so
+relative sizes are preserved. Do not normalise each body to two levels. Multi-hex units are fitted to their
+footprint; the multi-hex unit scale defaults to 1.0. Movement and size both use
+`GpuUnitModel.horizontalScale()` and `verticalScale()`; do not recreate those formulas in a family class.
 
-### Board/family fine-tuning
+Non-Mek fallback families use a small size table in `FamilyVisual` for their game size. Do not apply it again in
+the generator.
 
-Author and compare with every `UnitFamilyScale` entry at `UNIT_SCALE=1.0f`, `HEIGHT_SCALE=1.0f`. These multiply
-`BoardGeometry` settings; they are fine-tuning, not compensation for a wrongly proportioned source mesh.
-The normal board unit scale defaults to 1.0; the independent multi-hex default is also 1.0 with its own TUNING slider.
-Runtime uses one uniform conversion for every single-hex modular family: the Atlas's 54.858-model-unit bare
-standing height spans two terrain levels at unit scale 1, or 1.8 levels at 0.9. Preserve all authored relative
-sizes around Atlas/Mackie; never normalize each body to two levels. Antennas on another body may extend higher.
-Multi-hex models retain uniform fitting to their occupied footprint. Only explicit height controls stretch Z.
-Both dimensions and movement distance use `GpuUnitModel.horizontalScale()`/`verticalScale()`; do not recreate
-these formulas in a family class. Gameplay `.height()` is not a model-scaling input during prone/conversion.
+**Infantry** is authored at real size in the same units (`MODEL_UNITS_PER_METRE`): a standing soldier is 1.8 m
+(`TROOP_SCALE`) and battle armour is 1.5 times that, 2.7 m (`BATTLE_ARMOR_SIZE`). Scale a figure evenly, never
+by height alone. On the board MegaMek draws infantry at 2.0 and battle armour at 1.8 by default
+(`UnitFamilyScale`) so they read at play distance, and draws infantry transports at twice their authored size
+(`InfantryVisual`); do not copy either factor into the vertices. ProtoMeks are authored 6 m tall and drawn at
+1.3 by default.
 
-Other family fallbacks currently use the small `FamilyVisual.SIZE_SCALES` table for their game size profile.
-Do not apply that multiplier in their generator as well. For new **named** non-Mek bodies, review their actual
-runtime dimensions under this existing policy; a future change to that policy must update all affected assets
-and their fixtures together. It is not an excuse to use one Mek body for all weights.
+## 6. Materials and surfaces
 
-Infantry is drawn at canonical size in the same model units as every other body (`MODEL_UNITS_PER_METRE`):
-`unit_infantry_shapes.TROOP_SCALE` makes a standing soldier 1.8 m, with the transports in the same scale, and
-`BATTLE_ARMOR_SIZE` makes battle armour an even 1.5 times larger (2.7 m). Scale a figure evenly, never by height
-alone; the runtime draws a formation with the same uniform Atlas conversion as a Mek. Infantry transports retain their
-approved 2× assembly scale in `InfantryVisual`; do not copy it into vehicle vertices. Compare a whole group,
-not raw troop and transport coordinates in isolation. ProtoMeks stand 6 m: `build_families` grows their bodies,
-sockets and weapon mounts together for Alpha Strike size 1, which the runtime draws at 0.78.
-On the board the runtime draws infantry and battle armour at their `UnitFamilyScale` default of 1.8, so they read
-at play distances; author and compare them at 1.0 like every other family.
+- Colour with the shared `PALETTE` in `tools/unit_model_geometry.py`. The exporter sorts every face into one of
+  three material roles: `paint` and `edge` colours become the **paint** role, which camouflage tints; `bark` is
+  the **bark** role, used by tree-like shapes; everything else (metal, glass, weapon tips, skin, lamp) becomes the
+  **detail** role, which keeps its authored colour. More roles can be requested from the renderer author. PBR
+  materials are not implemented.
+- Colours are authored in display space and stored linear by the writer.
+- Keep the weapon-tip colours: red laser, blue PPC, green TAG, orange plasma. Cockpits use glass.
+- Paint UVs and damage projection stay in rest space so markings do not crawl as the unit moves. Damage overlays
+  blend over the opaque surface; never make a mesh transparent to fake scratches.
+- Use flat-shaded broad shapes, consistent winding and valid normals. No degenerate faces, duplicate surfaces,
+  hidden ornamental shells or extra materials. Cap any cut surface that a removable part exposes.
 
-## 3. Mesh, materials and component contract
+## 7. Joints, rigs and anatomy
 
-- **Bare-unit target:** under 1,000 triangles before loadout; 1,000–1,500 requires art review. Infantry/BA formations
-  have a standing exception to the 1,000 target because they contain multiple figures. **1,500 is the hard cap**
-  for any bare effective unit. Count all displayed members and supports. Report body, equipment and total separately.
-- **Equipment:** target under 100 triangles, hard maximum 149 for every exported style/profile/fallback. No hidden
-  high-detail version may exceed it. Preserve useful silhouette detail rather than chasing an arbitrary minimum.
-- Use flat-shaded broad shapes, consistent face winding and valid normals. No degenerate faces, duplicate surfaces,
-  invisible ornamental shells or gratuitous materials. Closed cut faces matter where removable parts expose them.
-- A descriptor names its mesh relative to itself, rest bounds, kind, family, rig roles, location ownership,
-  hardpoints and emitters. Paths must stay inside the model root. The runtime loader validates this contract.
-- Use the shared `unit_model_geometry.PALETTE` and exporter material roles. Paint receives camouflage; glass,
-  exposed metal, weapon tips and detail retain their authored identity. GLB may embed authored PNG/JPEG diffuse images or reference shared local images.
-  The appearance system owns camouflage, damage textures and texture inheritance.
-- Paint UVs and damage projection stay in rest space so markings do not crawl during motion. Damage overlays
-  blend their alpha over the original opaque surface; do not enable mesh transparency to simulate scratches.
-- Every independently moving part has a stable node, rest pivot and parent. Reuse a family's existing rig roles.
-  Parts must rotate about physical joints, not their bounding-box centers. Child geometry and equipment follow
-  the same joint, including while damaged or hidden. Instances never mutate/dispose a shared source mesh.
-- There is no chassis billboard or replacement body for distance LoD. The current renderer hides small attached
-  equipment using projected size/hysteresis. Keep bare silhouettes, shadow geometry and embedded troop detail.
+Every independently moving part has a stable node, a rest pivot at its physical joint (not its bounding-box
+centre) and a parent. Reuse the family's existing rig roles. Child geometry and equipment follow the same joint,
+including while damaged or hidden. Instances never change a shared source mesh.
 
-## 4. Family recipes and proportions
+### Mek damage locations must be real regions
 
-All dimensions below are **examples from current authored components**, not real-world meters. The generated
-`modular/manifest.json` is the current measurement/count record. Rendered family size/footprint fitting still
-applies as described in section 2.
+Every Mek, fallbacks included, must be physically split into drawable `HD`, `CT`, `LT` and `RT` regions plus its
+arms and legs, even when the reference shows one continuous carapace. The seam can be invisible, but the
+triangles must belong to separate location nodes, because damage is drawn per location. Empty nodes, token
+triangles or colour changes do not count. Every visible surface needs the right owner.
 
-| Family | Source and recipe | Shape, articulation and scale review |
-|---|---|---|
-| Biped Mek | `unit_mek_chassis.py` + `chassis.json`; `unit_mek_models.py` exports | Recognizable head/chest/limbs; waist, shoulder/elbow, hip/knee/foot controls. Match section 2's weight-class lineage. |
-| Tripod Mek | `unit_mek_models.py`, `fallback_body('tripod')` | Three stable support legs. Keep the third leg separate; melee kicks always use side legs. Five authored weight classes. |
-| Quad / QuadVee | `unit_mek_models.py`, `fallback_body('quad')` | Four distinct articulated limbs, broad support footprint; five authored weight classes. QuadVee squats with horizontal folded legs using the same mesh/equipment. |
-| LandAirMek | `air_mek_body()` plus Mek/fighter forms | Hybrid has a pointed cockpit/fuselage, wings, arms, reverse-knee legs and exhaust. Fold using rig joints during conversion; keep loadout modular. No baked fighter weapons. |
-| Conventional infantry | `unit_infantry_shapes.person()` + `build_modular_unit_models.py` pose list | Separate standing/advancing/kneeling figures; standing example 2.67×2.14×6.48 (1.8 m). Jump figures include a small backpack with jet emitter. Runtime survivor count determines composition. |
-| Battle Armor | Same figure generator, `armored=True` | Broader armored torso, helmet, limbs/backpack; standing example 5.51×5.79×9.72 (2.7 m), 214 triangles. Compression is false: six living suits show six figures, one survivor shows one. |
-| Infantry transports | `infantry_vehicle()` for motorized/tracked/wheeled/hover | Motorized jeep/quad; mechanized APC hull with correct drive silhouette. Example motorized 4.51×6.87×3.83 before the approved 2× assembly scale. Separate wheels/hull/boarding/cabin nodes. |
-| Ground vehicles | `unit_family_models.vehicle()` | Tracked/wheeled/hover/WiGE/rail silhouettes; hull, drives, wheels and independent turret(s). Example tracked 40.5×52×24.5. Do not give turretless vehicles a turret body. |
-| VTOL / airship | `rotorcraft()` | VTOL cockpit, tail, rotor and fixed skids; example rotor envelope about 62×64×27. Airship is a distinct elongated buoyant hull, not an enlarged VTOL. |
-| Fighter / aerodyne | `aircraft()` | Narrow nose, clear wings, engines/exhaust; fighter example 66×59.2×17. Transport/aerodyne is deeper, with retractable supports if landable and multi-hex. |
-| Spheroid / small craft | `spheroid()` | Rounded faceted hull and separate supports, not a squat box; spheroid example 66×66×64. Follow section 7 for terrain support and full hull retraction. |
-| JumpShip / WarShip / station | `capital()` | Elongated ship or radial station silhouettes; separate movable parts only where useful. Preserve actual game footprint; do not invent landing capability or support legs for space-only craft. |
-| Naval / hydrofoil / submarine | `naval()` | Long hull and authored waterline, subtype-specific foils/tower; naval example 23×63×23.5. Do not settle watercraft like an infantry figure. |
-| ProtoMek | `proto()`, including quad/glider forms | Smaller articulated machine: biped example about 23.4×10.9×27.7, 6 m tall at Alpha Strike size 1. Use `proto-v1` joint roles for distance-driven gait; no Mek torso twist/prone rules. |
-| Emplacement / building / pods / standalone missile | `static_body()` | Distinct static-family bodies, useful facing/working ports where applicable. Mobile structures/buildings have their own ground integration, not Aero struts. |
-| Fighter squadron | `flight_fighter()` + squadron descriptor | Reusable 96-triangle member, about 60×55×11.5 before formation sizing. Runtime uses visible member identities/loadouts; never duplicate a logical weapon group as a physical gun. |
+Example: on the King Crab, `HD` is the whole visor band with its glass and framing. The roof behind it is split
+into centre, left and right torso shells. Losing HD removes the visor without taking the torsos, and damage to one
+torso does not stain the others. The helper `split_torso_locations()` can split an old joined shell, but new
+builders should label regions explicitly. Before accepting a Mek, look at a colour-coded ownership render and
+damage HD, CT, LT and RT one at a time, then remove HD alone.
 
-For infantry groups, author **members only**. Conventional headcount is compressed into display slots; transports
-replace one slot when there are at most four slots, otherwise two. Troops usually face outward. They board before
-vehicle travel and unload only after the vehicle stops. Their final positions/headings and movement jitter are
-runtime presentation. The runtime draws the whole layout in as one shape until it fits the hex, so a crowd is
-never pressed against the edges; one too large for it packs tight without overlapping and only the excess
-overflows. Members never shrink. Infantry/BA keep embedded rifle/cannon details; additional dynamic equipment remains deferred.
+- The chain is root, pelvis, then CT at the waist. Head, side torsos and shoulders follow CT; hips and legs follow
+  the pelvis. Keep the upper and lower body cleanly separated through a 60-degree torso twist either way.
+- Legs: bipeds use `LL` and `RL`, tripods add `CL`, quads use `FLL`, `FRL`, `RLL`, `RRL`. Each needs hip, shin
+  and foot controls, and the feet must carry the model while the knees bend.
+- Arms run shoulder to forearm, with optional `LA@hand`, `LA@wrist`, `LA@forearm` and `LA@elbow` (and the RA
+  equivalents). The unit's actual actuators decide which parts show. A missing arm must not leave floating
+  weapons.
+- A detachable head or limb needs a capped cut. A destroyed side torso takes its arm with it.
 
-### Required Mek anatomy and damage ownership
+### Leg bends
 
-**Mandatory prerequisite for every authored Mek, including fallbacks:** physically partition the body into
-actual drawable `HD`, `CT`, `LT`, `RT` regions, plus its appropriate arms and legs. This applies even when the
-reference shows one continuous carapace. The split may be visually seamless, but the exported triangles must
-belong to separate location nodes so the native damage renderer can affect each region independently.
-
-**Empty nodes, sockets, token triangles or cosmetic color divisions do not satisfy this requirement.** Every
-visible surface must have the correct damage owner. Do not assign the whole joined shell to CT or HD. Keep
-attachment parents and location tags consistent, and cap the cuts exposed by detachable parts.
-
-For the **King Crab**, `HD` is the **entire visor/front band**, including all its glass and framing. It is part
-of the carapace, not a hanging chin. The roof and hull behind/above it are split into central `CT`, left `LT` and
-right `RT` shells; side-shell hardpoints belong to their corresponding torso. Losing HD removes the complete
-visor without taking the three torso shells with it. Damaging one torso must not stain either of the others.
-
-The migration helper `split_torso_locations()` can partition old joined shells, but its presence is not proof
-of correct ownership. New body functions must label their regions explicitly. Before acceptance, inspect a
-color-coded ownership render and native previews damaging HD/CT/LT/RT **one at a time**, plus an HD-only removal.
-Named nodes passing descriptor validation do not replace this visual check.
-
-- Root → pelvis → CT at the waist. Head, side torsos and shoulder joints follow CT; hips/legs follow pelvis.
-  Keep upper/lower-body separation clean through ±60° torso twist.
-- Biped: `LL/RL`; tripod adds `CL`; quad uses `FLL/FRL/RLL/RRL`. Each needs hip, shin and foot controls exported
-  under the existing semantic rig roles. The feet must support the model while knees bend; do not lock whole legs.
-- Arms: shoulder → forearm, with optional `LA@hand`, `LA@wrist`, `LA@forearm`, `LA@elbow` (and RA equivalents).
-  Actual actuators select the retained anatomy and hand/wrist/elbow attachment. A missing arm must not leave
-  floating weapons or a replacement strike limb.
-- A detachable head/limb needs a sensible capped cut surface. Validate visibility using the location-damage
-  path and the native contact test, including a destroyed side torso taking its arm with it.
-
-## 5. Hardpoints and equipment recipes
-
-Every location capable of carrying modeled equipment needs a front/rear mounting preference. Default biped
-recipes cover `HD CT LT RT LA RA LL RL`; tripod/quad recipes use their matching limb tags. A hardpoint contains
-stable ID, game location/side, parent, local position, normalized XYZW rotation, positive fitting area, scale
-limits and accepted roles. Rear ports must actually clear the rear armor; inspect the rear view.
-
-| Mek recipe field | Current modular meaning |
-|---|---|
-| `hip` | Sprite-coordinate waist reference; keep on the centerline under the torso. |
-| `legBends` | Optional per-leg bend direction, keyed by upper-leg rig role: `"leftLeg":"reverse"`, `"rightLeg":"reverse"` for King Crab and Locust. Values are `forward` or `reverse`; omitted legs retain the conventional forward bend. Geometry must match the declared direction. |
-| `sockets`, `rearSockets` | Front/rear placement for each real location. Without explicit rear placement the legacy nine-unit offset is used; author rear sockets where that would bury a barrel. |
-| `exhaustSockets` | Optional jump-jet positions by location, independent of rear weapon ports. Without an entry, a leg's jets sit centred on the back of the calf a fifth of the way from knee to ankle, on the shin (`calf_exhaust` in `unit_mek_models.py`). Keep the nozzle attached to the hull/leg, especially on a long overhanging torso; its exhaust points down. **One jump jet graphic per location:** it shows that the location has jump jets, not how many; the others share its nozzle and exhaust (MegaMek's `UnitEquipmentAssembly`). `jumpJetScale` draws a chassis's jets smaller than its weapons. |
-| `missileStyle`, `missileBayStand` | Launchers at `missileSockets` as the usual box or a round drum (`drum-short/-medium/-long`), for the whole Mek or per location; `missileBayStand` stands the bay's launchers on the socket so any size rests on the surface there. |
-| `stackRows` | Locations (`"LT"`) or location families (`"LT:jump-jet"`) whose shared-socket items sit side by side in rows. |
-| `armSockets` | Hand/wrist/elbow locations matching the optional actuator geometry. |
-| `socketAim` | +Y-forward replacement direction, by location or `LOC:family`; an arm gun must follow its forearm. |
-| `socketNodes` | Optional parent override by `LOC:family`, e.g. `"LL:jump-jet":"LL-shin"`. Use when equipment moves with a different segment of the same location; positions still use the common authoring coordinates. |
-| `socketBanks` | Authored positions for a weapon family, including actuator-specific keys such as `LA@wrist:ppc`. |
-| `mountAreas` | Available width/height for packing each location. Java performs live packing, not Python. |
-| `missileSockets`, `missileBayHeight/Width/Columns`, `missileSlope` | Location-specific launcher placement and available bay shape. Tubes remain weapon geometry. |
-| `weaponScale`, `missileScale`, `barrelLength`, `protrusion` | Art fitting preferences; inspect both stock and crowded custom refits. |
-| `weaponOverrides` | Modular exporter supports location/family/length adjustments. Do not depend on unimplemented legacy name filters. |
-| `lightProtrusion` | A `protrusion` for light weapons only (small and medium lasers, marked `light` in `weapons.json`), per location or `LOC:family`. The Blackjack draws its large arm lasers long and its medium ones short from one socket. |
-| `stackGap` | Room between weapons sharing a hard point, per location, instead of the standard .4. Negative nests rounded weapons into each other's bounding boxes: the Blackjack OmniMech packs its arm lasers at -.5 so they nearly touch. |
-| `rowWidth` | With `stackRows`, how wide one row may run before the next starts, per location, without narrowing the face every weapon is fitted to. Shapes a group, such as a large laser alone over a pair. |
-| `searchlightSocket` | Optional physical lamp placement only; having a socket never proves the unit carries a lamp. |
-
-`weapons.json` and `unit_weapon_shapes.py` own reusable weapon looks. Use thin square laser barrels, heavier PPC
-emitters, recognizably different ballistic/rotary/gauss weapons and correct launcher families. Preserve existing
-weapon-tip colors: red laser, blue PPC, green TAG, orange plasma/TSEMP. Cockpits use glass. A physical weapon's
-contact point belongs at its striking tip/edge, not its grip. Prefer silhouette over ornamental surface cuts.
-
-Equipment visibility is one shared policy: StructureType/ArmorType/AmmoType never allocate a module. WeaponType
-needs a visual or family fallback. MiscType with `F_PHYSICAL_WEAPON` needs a physical module. Optional misc such
-as ECM/searchlight requires an explicit mapping; it has no generic fallback. Logical grouped weapons are not
-extra hardware. Generic gameplay searchlight capability alone must not create a searchlight housing.
-
-To add future equipment globally, register it in the game's normal equipment system, refresh the catalog and
-add a broad shape recipe or a canonical internal-ID mapping to `weapons.json`. Example using an existing module:
-
-```json
-{"models": {"ExampleWeaponInternalID": {"model": "units/modular/equipment/custom/example.json", "bankFamily": "laser"}}}
-```
-
-Explicit mapping wins over the broad recipe; mandatory exclusions still win. Do not edit generated
-`modular/equipment.json` by hand. A new shape needs one geometry recipe; reassigning an existing shape needs no
-new renderer or chassis-specific code.
-
-## 6. Animation, effects and damage requirements
-
-Use existing family rig roles and one runtime timeline. Author enough joint clearance for walking/running,
-jump/idle/shoot/death and the family's actual conversion. Infantry members remain independently articulated.
-Mek punch/kick: walk into reach, plant feet, strike, recover and run back. Push raises arms during the run-in;
-overhead weapons raise on approach and strike at contact; lance/spear can thrust. Center tripod legs never kick.
-Review at half/normal/double/Instant speed, including skip, pause and final rest pose.
-
-### Leg anatomy and reusable gait
-
-Author each leg as a **hip → knee → ankle/foot** node chain, with pivots at the actual joints and the sole at Z=0.
-In +Y-forward coordinates, a reverse knee sits **behind** the hip-to-ankle line: the upper segment slopes back and
-the lower segment returns forward. Keep the foot independent so it stays level during support. Move leg-mounted
-equipment/exhaust sockets with the anatomy; check that exhaust clears the knee throughout the jump tuck.
-
-Declare the bend in the chassis recipe, which exports it unchanged into the bare body descriptor:
+Author each leg as hip, knee, then ankle and foot, with pivots at the real joints and the sole at z = 0. A reverse
+knee sits behind the hip-to-ankle line. If a chassis has reverse knees, say so in the recipe; the exporter copies
+it into the body descriptor:
 
 ```json
 "legBends": {"leftLeg": "reverse", "rightLeg": "reverse"}
 ```
 
-Keys are upper-leg **roles**, not node names: `leftLeg`, `rightLeg`, `CL` for bipeds/tripods; `FLL`, `FRL`, `RLL`,
-`RRL` for quads; `leg0`–`leg3` for rigs using numbered legs. This allows mixed front/rear anatomy. The descriptor
-validates the direction, roles and joint chain before loading. Missing metadata preserves existing forward-bend
-behavior; do not infer anatomy from chassis names, weight or equipment. It is presentation data, not a new Entity
-game rule or a second unit catalog.
-An authored reverse-knee rest shape alone is insufficient: without `legBends`, the animator can bend it forward
-once movement starts. Locust keeps its existing 358-triangle geometry and declares both reverse legs in its recipe.
+Keys are rig roles, not node names: `leftLeg`, `rightLeg`, `CL` for bipeds and tripods; `FLL`, `FRL`, `RLL`,
+`RRL` for quads. Legs without an entry bend forward. A reverse-knee rest shape alone is not enough: without
+`legBends` the animator bends it forward as soon as it walks. The Locust and King Crab both declare reverse legs.
+Never infer the bend from the chassis name or weight.
 
-The shared distance-driven foot path and cadence serve both bend directions; the rig chooses the knee branch of
-the same two-segment solve. Crouch/jump and recovery also respect the declared bend. Do not add a second gait,
-chassis-specific animator, or reverse the movement direction to reverse a knee. Review front and side views of
-walk/run, backwards/lateral movement, acceleration/deceleration, jump/tuck and crouch/recovery. Measure actual
-planted-foot drift against ground travel, and check the knee never flips across the hip-to-ankle line.
+## 8. Family bodies
 
-Forced Mek falls use the engine's stored `FallSide` and final facing, fall inside the occupied hex, then get up
-through bracing/kneeling. Voluntary prone is a controlled crouch. Infantry poses are cosmetic and do not use
-Mek prone state. Do not bake a single fall direction or a default facedown texture into the body.
+All sizes below come from the current manifest, in model units. Board fitting from section 5 still applies.
 
-Each firing exit has an emitter node, local position, normalized direction, role and effect (`laser`, `ppc`,
-`bullet`, `missile`, `cluster`, `flame`, etc.). Flame exits sit at the nozzle; larger flamer housings yield larger
-plumes. Missiles use the game's rack count (one for `F_LARGE_MISSILE`) and resolved cluster hits; emitter count is
-not ammunition count. Smoke, indirect arcs, irregular terrain misses and straight laser rays are runtime VFX,
-never baked projectiles or explosions. Jump packs need exhaust emitters for blue flame and dissipating smoke.
+| Family | Source | What to get right |
+|---|---|---|
+| Biped Mek | `unit_mek_chassis.py` builders, `chassis.json` recipes, exported by `unit_mek_models.py` | Recognisable head, chest and limbs; waist, shoulder, elbow, hip, knee and foot controls. |
+| Tripod Mek | `fallback_body('tripod')` in `unit_mek_models.py` | Three stable legs; the centre leg is separate and never kicks. Five weight classes. |
+| Quad and QuadVee | `fallback_body('quad')` | Four articulated legs and a broad stance. A QuadVee folds its legs flat and keeps the same mesh. |
+| LandAirMek | `air_mek_body()` | Hybrid with cockpit, wings, arms, reverse-knee legs and exhaust. Converts by rig joints; no baked fighter weapons. |
+| Named vehicle | `unit_vehicle_chassis.py` builders, `vehicles.json` recipes, exported by `unit_vehicle_models.py` | Hull, drives and turret. Manticore: body 946 triangles, about 40 x 52 x 24. |
+| Generic ground vehicle | `vehicle()` in `unit_family_models.py` | Tracked, wheeled, hover, WiGE and rail silhouettes. Turretless vehicles get no turret. |
+| Conventional infantry | `person()` in `unit_infantry_shapes.py` | Standing soldier about 2.7 x 2.1 x 6.5 (1.8 m). Jump troops carry a small backpack with a jet emitter. |
+| Battle armour | `person(armored=True)`, plus named suits such as `elemental()` | About 5.5 x 5.8 x 9.7 (2.7 m). Six living suits show six figures. |
+| Infantry transports | `infantry_vehicle()` | Motorised, tracked, wheeled, hover; separate hull, wheel, boarding and cabin nodes. |
+| VTOL and airship | `rotorcraft()` | Cockpit, tail, rotor and skids. An airship is its own elongated hull, not a big VTOL. |
+| Fighter and aerodyne | `aircraft()` | Narrow nose, clear wings, engines. Landable aerodynes get landing supports (section 11). |
+| Spheroid and small craft | `spheroid()` | Rounded faceted hull and separate supports. |
+| JumpShip, WarShip, station | `capital()` | Long ship or radial station; no invented landing gear for space-only craft. |
+| Naval, hydrofoil, submarine | `naval()` | Long hull and authored waterline; subtype foils or tower. |
+| ProtoMek | `proto()`, quad and glider forms | Small articulated machine, 6 m tall; `proto-v1` joint roles, no Mek torso twist. |
+| Emplacement, building, pod, missile | `static_body()` | Distinct static bodies with useful facing and ports. |
+| Fighter squadron | `flight_fighter()` plus a squadron descriptor | One reusable 96-triangle member; the runtime lays out the squadron. |
 
-Damage artwork is 128×128 RGBA in `data/models/units/textures/`; full-resolution authoring references remain under
-`references/damage-textures/`. Mek thresholds, owned by `UnitDamageDisplay`, are `ARMOR_WORN_LOSS=.5`,
-`ARMOR_STRIPPED_LOSS=1`, `STRUCTURE_BATTERED_LOSS=.5`, followed by the existing destroyed-location texture.
-Whole-body families use `BODY_DAMAGE_1..4=.25/.5/.75/1` on combined armor/internal loss. Intact paint/camo shows
-through alpha holes. Infantry/BA never receive these overlays; use living figure counts. Do not replace the
-approved darker `destroyed-armor.png` while adding intermediate stages.
+For infantry, author members only. MegaMek compresses the head count into display slots; transports take one slot
+when there are at most four, otherwise two. Troops board before a vehicle moves and unload after it stops. Their
+final spacing and headings are decided at runtime, and members never shrink to fit a hex.
 
-## 7. Multi-hex Aero landing supports
+## 9. Hardpoints and Mek recipe fields
 
-Required for future landable multi-hex Aero bodies, including named ships, dedicated variants and family
-fallbacks. A Union DropShip is the first review fixture. Building entities/mobile structures are excluded;
-their ground integration is separate. Space-only craft do not acquire a new ability to land through this artwork.
-The runtime behavior and acceptance gate are specified in the
-[plan's landed-support addendum](MODULAR_MODELS_PLAN.md#landed-multi-hex-aero-supports--c4-addendum).
+Every location that can carry a weapon needs a front and a rear mounting spot. Biped recipes cover
+`HD CT LT RT LA RA LL RL`; tripods and quads use their own leg tags. Rear ports must actually clear the rear armour;
+check the rear view. Java packs the weapons into each spot while the game runs; Python only says where the spots
+are and how much room they have.
 
-At terrain-relative **elevation 0**, the hull keeps its highest-occupied-support placement and each authored foot
-reaches the surface below it. Elevated/flying units have **no protruding struts or legs**. Terrain level and unit
-elevation are different: a landed ship above a level-1 hex still deploys its supports.
-
-### Asset contract
-
-| Part/data | Authoring requirement |
+| Recipe field | What it does |
 |---|---|
-| Support identity and ownership | Give each physical support a stable ID and bind it to the hull's existing rig. Supports are bare-body geometry, not equipment mounts. Their number and arrangement follow the craft reference, not the number of occupied hexes. |
-| Deployment joint / upper brace | A rigid attachment at the proper hull position, with an authored flat-ground deployed pose and a fully stowed/hidden flight pose. Stowing must remove protrusions; simply rotating visible legs is insufficient. |
-| Extendable shaft | Separate the length-changing section from the hull, upper brace and foot. Prefer a simple telescoping lower section with downward travel. It must gain reach without scaling its thickness or stretching the whole support assembly. |
-| Foot/pad and contact marker | A separate rigid foot with a contact point on its sole in the nominal flat-ground pose. The marker follows that foot's own support. Feet keep their dimensions when shafts extend. |
-| Rest transforms and fitting bounds | Supply consistent rest axes and deployed contact points in the existing +Y-forward/+Z-up convention. Stable body/footprint dimensions drive fitting; runtime extension must not change the ship's nominal size or lift/lower its hull again. |
-| Materials and budget | Use existing paint/detail/camouflage/damage roles. Count all support geometry in the bare-unit budget: target under 1,000 triangles, reviewed exceptions up to the unchanged 1,500 hard cap. Reuse geometry and pose it; do not export a mesh for every terrain difference or leg length. |
+| `hip` | Waist reference in sprite coordinates; keep it on the centre line. |
+| `sockets`, `rearSockets` | Front and rear spot for each location. Author rear spots wherever the default offset would bury a barrel. |
+| `mountAreas` | Width and height available at each location for packing weapons. |
+| `armSockets` | Hand, wrist and elbow spots matching the optional arm actuators. |
+| `heldWeapons` | Arms whose gun is held in the hand; the build adds a housing that replaces the hand while the arm holds a gun. |
+| `socketBanks` | Positions for one weapon family, including actuator keys such as `LA@wrist:ppc`. |
+| `socketAim` | A replacement +y-forward direction by location or `LOC:family`; an arm gun follows its forearm. |
+| `socketNodes` | Parent override by `LOC:family`, for example `"LL:jump-jet": "LL-shin"`. |
+| `stackRows`, `rowWidth`, `stackGap` | Put weapons sharing a spot side by side, set how wide a row runs, and set the gap (negative nests rounded weapons; the Blackjack OmniMech uses -.5). |
+| `weaponScale`, `missileScale`, `barrelLength`, `protrusion`, `lightProtrusion` | Fitting preferences. `lightProtrusion` applies only to small and medium lasers, so the Blackjack draws long large lasers and short medium ones from one spot. |
+| `weaponOverrides` | Location, family and length adjustments. |
+| `missileSockets`, `missileBayHeight`, `missileBayWidth`, `missileBayColumns`, `missileSlope` | Launcher placement and bay shape. |
+| `missileStyle`, `missileBayStand` | Box or round drum launchers; stand the bay's launchers on the spot. |
+| `exhaustSockets`, `jumpJetScale` | Jump jet positions by location, and a smaller jet size. Without an entry a leg's jet sits on the back of the calf. One jet graphic per location shows that it has jets, not how many. |
+| `legBends` | Reverse knees, see section 7. |
+| `searchlightSocket` | Where a lamp goes if the unit carries one. A socket never proves the unit has a lamp. |
+| `ventSpares`, `ventDefaultSides` | Heat sink vents: spare vent count, and which faces keep vents on a variant without torso heat sinks. |
+| `variants` | Per-variant overrides of any of the above, keyed by model, such as `"TDR-60-RLA"`. |
+| `bodyLod1` | This chassis has a LOD1 body (section 3). |
 
-The schema-2 body descriptor now accepts an optional `landingSupports` list. Each entry has `id`, `node`
-(deployment parent), `shaft`, `foot`, `length`, `contact` (three coordinates local to the foot) and `stowedOffset`
-(three coordinates translating the deployment node in its parent's frame). Every control
-must belong to the rig. The shaft and foot are separate, direct children of the deployment node; neither has
-children. Author the shaft with identity rotation/scale, its pivot at the top and its length along local **-Z**.
-The foot pivot is exactly `length` below the shaft pivot. Keep the deployed parent upright in world space.
-The contact marker is on the sole, usually `[0, 0, -halfFootThickness]`. The shaft stretches only along Z;
-its sibling foot translates down without changing its scale. Upper braces remain rigid.
+Other fields (`bodyScale`, `locationScale`, `sharedFaces`, `slotSpacing`, `equipmentRules`) are read in
+`build_meks` in `tools/unit_mek_models.py`; check the code and an existing recipe before using them.
 
-Author `stowedOffset` upward, and inward where necessary, so **all** support geometry is inside the opaque hull
-at full retraction. Check the pad's outer corners and the upper brace as well as the shaft. The runtime smoothly
-slides the deployment node between these poses while extending/shortening the lower shaft for local ground.
-It hides the subtree only after full retraction; hiding must not conceal an incorrectly placed stowed pose.
+Named vehicles use the generic vehicle hardpoints, placed from the body's size, plus their own recipe keys:
+`turretSocket`, `turretSockets` per weapon family, `turretSocketScale`, `turretSocketStyle`,
+`turretSocketLength`, `turretSocketProfile`, `turretRules` for named weapons, and `hullSockets` with
+`stackRows`. The Manticore entry in `vehicles.json` uses all of them; the docstring of `hardpoints_and_mounts` in
+`tools/unit_vehicle_models.py` explains each.
 
-`Geometry.landing_supports` is exported by `build_modular_unit_models.py`; the reusable `landing_support()`
-authoring helper in `unit_family_models.py` builds compatible parts. Descriptor validation rejects missing,
-shared or incorrectly parented controls and inconsistent rest lengths before allocating GPU resources.
-Existing bodies without this optional field continue to load. The deployed spheroid/small-spheroid bodies
-have four supports and use **468 triangles** each; the aerodyne has three supports and uses **312 triangles**.
-No mesh is generated per terrain level, and no external program runs when the map opens.
+## 10. Weapons and equipment
 
-Takeoff reserves a grounded phase for visible withdrawal into the hull before flight starts; landing reserves
-a grounded phase for the reverse motion. Each support phase adds 0.45 animation-clock seconds without reducing
-travel time (0.9 real seconds at normal playback). The whole transition uses the shared movement
-clock, including state-only takeoff/landing updates, queueing, playback speed and skip. Captured ground footprints
-keep the fitting stable while the legs move. Newly loaded/revealed units start directly in their current pose.
-Ground contact uses existing road/bank/ground
-surfaces or solid ice. A contact over open liquid, outside the board or with invalid axes hides that support;
-elevation-0 feet do not attach themselves to roofs/bridges above the unit. This does not change landing legality.
+`weapons.json` and `tools/unit_weapon_shapes.py` own the reusable weapon looks. Lasers have thin square barrels,
+PPCs heavier emitters, and ballistic, rotary and gauss weapons must look different from each other. A physical
+weapon's contact point is its striking edge, not its grip. Prefer a clear silhouette to surface detail.
 
-Contact points must work after footprint fitting, facing and the live **Multi-hex unit scale** (default **0.85**).
-They are sampled at their actual transformed positions, not assigned to fixed hex indices. Author supports with
-enough separation and hull clearance to remain credible on uneven terrain; retain the full silhouette when the
-unit is viewed from above and from the side. Extended geometry must be available to normal bounds, picking and
-shadow rendering, while retracted/hidden geometry must not leave detached feet or shadows in flight.
+What gets a model is one shared policy. Structure, armour and ammunition never get one. A weapon needs its own
+visual or a family fallback. A physical weapon (`F_PHYSICAL_WEAPON`) needs a physical module. Optional
+equipment such as ECM or a searchlight needs an explicit mapping and has no generic fallback. Grouped logical
+weapons are not extra hardware.
 
-### Required review checklist for each new body
+To give new equipment a look, register it in the game's equipment system, refresh the catalog (section 12) and add
+either a broad shape recipe or a mapping by internal name in `weapons.json`:
 
-- [ ] Flat-ground deployed pose: every sole meets the same support level, with the hull clear of the ground.
-- [ ] Seven-hex Union over one level-1 hex and six level-0 hexes: hull stays at the level-1 base; feet above level 0
-  gain exactly one terrain level of extra reach, and any foot above level 1 retains its normal reach.
-- [ ] Mixed ground under different feet: independent extension, no floating pads, hull sinking, widened shafts or
-  stretched feet. Rotate the craft and adjust hex/multi-hex scale to check contact conversion.
-- [ ] Elevation 0 on raised or negative-level terrain still deploys; positive elevation and airborne altitude
-  fully stow/hide the supports. Review takeoff, landing at another site, skip and restored/revealed state.
-- [ ] Terrain edits, map edges and supported/unsupported water/bridge/roof surfaces follow the existing surface
-  rules without invalid lengths. Buildings/mobile structures never receive this support behavior.
-- [ ] Both cameras, picking and shadows match the same extended/stowed geometry. Record body triangle counts and
-  native images of actual unit selection and its family fallback before accepting the new body.
-- [ ] Retraction/extension visibly slides from/to the hull while the hull remains grounded. At full retraction,
-  forcing the support parts visible must not change the rendered hull or its shadow in either camera.
+```json
+{"models": {"ExampleWeaponInternalID": {"model": "units/modular/equipment/custom/example.json", "bankFamily": "laser"}}}
+```
 
-The current Union selection and three updated family bodies are covered by the
-[C4 support implementation review](MODULAR_MODELS_C4_SUPPORTS.md). Repeat this checklist for new named or variant art.
+An explicit mapping beats the broad recipe, and mandatory exclusions beat both. Never edit the generated
+`equipment.json` by hand. Keep each piece inside the equipment budget in section 4. When a rebuild stops using a
+generated equipment file, the build moves it to `tools/unit-models/references/equipment-library/` rather than
+deleting it.
 
+## 11. Animation, effects and damage
 
-## 8. Build, register and review
+**Animation.** Use the family's rig roles and the one runtime timeline. Leave enough joint clearance for walking,
+running, jumping, idling, shooting, dying and the family's real conversion. A Mek punch or kick walks into reach,
+plants, strikes, recovers and walks back. Review walk and run from the front and side, including backwards and
+sideways movement, and check the planted foot does not slide and the knee never flips across the hip-to-ankle
+line. Forced falls use the engine's fall side inside the occupied hex; never bake one fall direction into a body.
 
-Sources live in mm-data; Java lives in the MegaMek checkout. Use ordinary Python for the exporter; Pillow is
-needed only when packaging review images. Run from the indicated repository, adjusting paths to your checkout:
+**Firing exits.** Each exit is an emitter with a node, a local position, a direction, a role and an effect such
+as `laser`, `ppc`, `bullet`, `missile`, `cluster` or `flame`. Flame exits sit at the nozzle. Emitter count is not
+ammunition count. Smoke, arcs, misses and laser rays are runtime effects, never baked geometry. Jump packs need
+exhaust emitters.
+
+**Damage.** Damage artwork is 128 x 128 RGBA in `data/models/units/textures/`. Meks show worn armour at half
+armour loss, stripped armour at full loss, battered structure at half structure loss, then the destroyed-location
+texture; other families show four stages at 25, 50, 75 and 100 percent combined loss (`UnitDamageDisplay`).
+Intact paint shows through the holes. Infantry and battle armour get no overlays; their figure count shows damage.
+
+### Landing supports for multi-hex aerospace units
+
+Landable multi-hex aerospace bodies (spheroid DropShips, aerodynes) get legs that deploy when the unit is at
+elevation 0 and disappear in flight. Space-only craft and buildings do not get them. The generic spheroid and small
+spheroid have four supports (468 triangles each body) and the aerodyne three (312 triangles). The runtime rules
+are in [MODULAR_MODELS_PLAN.md](MODULAR_MODELS_PLAN.md), under the landed multi-hex Aero supports addendum.
+
+Build supports with `landing_support()` in `tools/unit_family_models.py`, which writes a compatible entry in the
+body's `landingSupports` list:
+
+- Each support has an `id`, a deployment `node`, a `shaft` and a `foot`, a `length`, a `contact` point local to the
+  foot (usually `[0, 0, -halfFootThickness]`) and a `stowedOffset` that moves the deployment node into the hull.
+- The shaft and foot are separate childless children of the deployment node. The shaft's pivot is at its top and
+  its length runs down local -z; the foot's pivot is exactly `length` below. The shaft stretches only along z to
+  reach uneven ground, and the foot moves down without changing size.
+- `stowedOffset` must hide all support geometry, pad corners and braces included, inside the opaque hull.
+- Supports count in the body's triangle budget. Never export a mesh per terrain height.
+
+Review a new body on flat ground, on mixed-level ground under different feet, rotated, in flight, and through
+takeoff and landing, in both cameras, including picking and shadows.
+
+## 12. Build, stage and review
+
+Sources and the exporter live in mm-data; the game code lives in the megamek checkout. Run each command from the
+repository noted beside it.
 
 ```powershell
-# MegaMek: refresh the equipment inventory from the authoritative registry.
-.\gradlew.bat :megamek:exportEquipmentModelCatalog
-# mm-data: make a candidate first; no live assembly or unit variants are generated here.
+# megamek: refresh the equipment catalog the exporter reads. It writes
+# <mm-data>/.work/modular-models/equipment.json; without the property it writes into ../mm-data.
+.\gradlew.bat :megamek:exportEquipmentModelCatalog -PunitModelDataRoot=<mm-data folder>
+
+# mm-data: build a candidate into a scratch folder first.
 python tools/build_modular_unit_models.py --output .work/model-review/units/modular
-# After inspecting the candidate, rebuild deployable components.
+
+# mm-data: after inspecting the candidate, rebuild the deployed library (default output data/models/units/modular).
 python tools/build_modular_unit_models.py
-# MegaMek: copy reviewed mm-data into the game and validate the actual loader/assembler.
-.\gradlew.bat :megamek:stageDataFiles :megamek:test --tests '*UnitModelDescriptorTest' --tests '*UnitEquipmentModelsTest' --tests '*UnitModelSelectionTest'
-.\gradlew.bat :megamek:gpuBoardSmoke --tests '*GpuModularUnitModelsSmokeTest' --tests '*GpuPolishSmokeTest' --tests '*GpuPhysicalContactSmokeTest' --tests '*GpuPlaybackSmokeTest'
-# mm-data: package the Java renderer's frames; this script does no model assembly.
-python tools/build_unit_review_gallery.py --frames ../megamek_temp/megamek/build/gpu-board-review --output tools/unit-models/references/reviews/my-review
+
+# megamek: copy mm-data into the game data folder.
+.\gradlew.bat :megamek:stageDataFiles
 ```
 
-The exporter defaults to `.work/modular-models/equipment.json`; use `--catalog` if your refreshed registry is
-elsewhere. The Gradle export supports `-PunitModelDataRoot=<mm-data path>`. A checkout with relocated build
-outputs must pass its actual native screenshot folder to the gallery packager. The legacy
-`validate_unit_models.py` validates old reference-format assets, not the live schema-2 library.
+One build exports the Meks from `chassis.json`, the generic families, the named vehicles from `vehicles.json`,
+troops, battle armour, transports and every equipment module. It then packs each component's levels into one GLB
+and writes `manifest.json`. Watch the output for "Weapon review:" lines and for a body over budget, which stops
+the build. `--catalog <file>` points at a catalog somewhere other than the default.
 
-### Adding a Mek or another family member
+Staging copies from the `mm-data` folder next to the megamek checkout. In a worktree that folder is a junction to
+the main mm-data checkout, which may be on a different branch; either run from matching checkouts, or stage and
+then copy your built models over.
 
-For a named Mek, add its bare geometry function and `build_chassis` mapping in `unit_mek_chassis.py`, then a
-`chassis.json` entry with `name/id/referenceVariant/sprite/illustration/hip/sockets/weaponScale` and useful optional
-fields from section 5. Add the mandatory HD/CT/LT/RT geometry split and existing limb roles. Follow the chosen class's
-fallback lineup for scale while preserving the reference silhouette. Do not copy another chassis's dimensions
-and simply rename it.
+Tests in megamek that cover the models: `UnitModelDescriptorTest`, `RigidGlbTest`, `UnitEquipmentAssemblyTest`,
+`UnitEquipmentModelsTest` and `UnitModelSelectionTest` in the normal test run, and
+`GpuModularUnitModelsSmokeTest` and `GpuUnitModelBenchmarkSmokeTest` under the `gpuBoardSmoke` task, which needs
+a real desktop graphics context. `GpuModularUnitModelsSmokeTest` calls `GpuMekAssemblyReview`, which assembles
+real units with the game's own code and renders them.
 
-For another family, extend its existing generator function and `build_families()` entry in `unit_family_models.py`.
-Use an existing family's rig/assembler when the behavior is the same; a new visual body is not a reason to create
-a Java subclass. Body descriptor: `kind=body`, existing family/rig and joints, appropriate hardpoints/emitters.
-Assembly descriptor: `kind=family`, that body path, global equipment catalog and mounting preferences. Add new
-behavior only if the existing family contract truly cannot represent it. A trooper or infantry transport goes
-through the existing pose/vehicle entries in `build_modular_unit_models.py`, not `build_families()`.
+Review tools in mm-data:
 
-Registration examples:
+- `tools/render_modular_body.py` renders labelled Blender review sheets of deployed bare bodies, for example
+  `blender --background --factory-startup --python-exit-code 1 --python tools/render_modular_body.py -- --body locust --body atlas --turn 60`.
+- `tools/build_unit_review_gallery.py --frames <folder> --output <folder>` packages the review frames the GPU
+  review tests write (by default under `build/gpu-board-review` in the megamek project).
+- `tools/render_fallback_catalog.py` draws Blender contact sheets of the deployed generic bodies.
+- The BattleTech Unit Viewer can build and review a single chassis with this same exporter, including its LOD1.
+
+Retired: `build_unit_models.ps1`, `build_unit_models.py`, `render_unit_variants.py` and `validate_unit_models.py`
+served the old baked model format and were removed on 2026-09-28.
+
+### Registering a model
+
+Add or change the chassis line in `data/images/units/mekset.txt`:
 
 ```text
-chassis "Example Chassis" "meks/Example.png" "units/modular/meks/example.json"
-chassis "Example Vehicle" "vehicles/Example.png" "units/modular/families/example.json"
-exact "Example Chassis EX-1" "meks/Example.png" "units/custom/example-ex-1.json"
+chassis "Phoenix Hawk" "meks/PhoenixHawk.png" "units/modular/meks/phoenix-hawk.json"
+chassis "Manticore Heavy Tank" "vehicles/Manticore.png" "units/modular/families/manticore.json"
 ```
 
-A dedicated variant's modular descriptor may use its own body/mounting preferences. Its loadout still comes
-from the current Entity. Use a `compatibility` fingerprint only when the design truly depends on one loadout;
-an incompatible custom refit must fall back safely. Custom assets must not share a generated filename.
+Meks point at `meks/<id>.json`; vehicles and other families point at `families/<id>.json`. The loadout always
+comes from the live unit, so one line covers every variant.
 
-### Acceptance checklist for every delivered model
+## 13. Acceptance checklist
 
-- [ ] Reference sprite and useful front/side/concept image, source attribution, and short silhouette brief.
-- [ ] Bare mesh, reproducible source recipe, descriptor and manifest agree; no loadout/group combinations in data.
-- [ ] Same-family lineup at shared board/family tuning; correct weight/size proportions and no double scaling.
-- [ ] Report bare/equipment/assembled triangle counts; all hard caps respected.
-- [ ] **Mek acceptance gate:** HD/CT/LT/RT are the correct physical regions, including continuous carapaces.
-      Inspect color-coded ownership, separate native damage previews for each region and HD-only removal.
-      Empty/token nodes fail. Detached limbs leave no floating attachments; rig controls/ports resolve to real nodes.
-- [ ] Stock/custom loadout and hand/wrist/elbow/rear mounting checks; no baked searchlights or generic hidden guns.
-- [ ] Camouflage and every applicable damage stage in the native shader; intact areas stay readable.
-- [ ] Walk/run/jump/attack/idle/death as applicable, foot contact and correct facing; pause/skip/restored state.
-- [ ] Conversion uses the correct body/pose without replacing QuadVee geometry. Five Mek fallback classes select
-      distinct assets; superheavy is larger than assault.
-- [ ] Terrain, footprint, supports and shadows match in both camera views. Multi-hex Aero also passes section 7.
-- [ ] Runtime loader/native checks pass; inspect rendered frames and record remaining limitations honestly.
-
-Keep the generated review under `references/reviews/` and link it from the relevant checkpoint. Current review
-sets: [C6–C9](references/reviews/c6-c9/index.html) and [animation/damage polish](references/reviews/polish/index.html).
-Do not call a screenshot an animation test or claim a dense-battle performance gain without measurement.
+- [ ] Reference sprite and a useful front or side image, with a short silhouette note in the recipe.
+- [ ] Bare body, recipe, descriptor and manifest agree; no loadouts or troop groups baked into data.
+- [ ] Same-family lineup at scale 1.0 shows the right weight and size; nothing is scaled twice.
+- [ ] Body, equipment and assembled triangle counts reported for each level; the whole unit fits 5,000 / 2,000 /
+      500 with a typical loadout, and a test game shows no `[UnitBudget]` warning for it.
+- [ ] Every level is a named `-lodN` group; any LOD1 body keeps every rig node of LOD0.
+- [ ] Meks: HD, CT, LT and RT are real regions. Checked with an ownership render, one-at-a-time damage and HD-only
+      removal. Detached limbs leave no floating weapons.
+- [ ] Stock and custom loadouts, including hand, wrist, elbow and rear mounts; no baked searchlights or hidden guns.
+- [ ] Camouflage and every damage stage in the game shader; intact areas stay readable.
+- [ ] Walk, run, jump, attack, idle and death as applicable, with feet planted and correct facing.
+- [ ] Terrain, footprint, supports and shadows match in both cameras. Landable multi-hex aerospace units also
+      pass the landing-support review.
+- [ ] Rendered frames inspected, and remaining limitations written down honestly. A screenshot is not an animation
+      test, and no performance gain is claimed without a measurement.

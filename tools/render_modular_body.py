@@ -1,8 +1,8 @@
 """Render labelled review sheets of the deployed modular bare bodies.
 
-The variant renderer reads the frozen legacy bakes; this one reads the live schema-2 bodies
-under data/models/units/modular/bodies, so a newly authored chassis can be reviewed before
-any game data is staged. Bare bodies only: weapons and troops are assembled by Java.
+Reads the live schema-2 body GLBs (their LOD0 level) under data/models/units/modular/bodies,
+so a newly authored chassis can be reviewed before any game data is staged. Bare bodies only:
+weapons and troops are assembled by Java.
 
 blender --background --factory-startup --python-exit-code 1 \
     --python tools/render_modular_body.py -- --body locust --body atlas --turn 60
