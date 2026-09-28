@@ -850,5 +850,501 @@
     "road_width": 15,
     "road_start": 2.75,
     "road_end": 18
+  },
+  "rough/dragon-tooth": {
+    "triangles": 28,
+    "vertices": 48
+  },
+  "rough/felled-trunk": {
+    "triangles": 91,
+    "vertices": 159
+  },
+  "rough/charred-stump": {
+    "triangles": 112,
+    "vertices": 264
+  },
+  "foliage-temperate": {
+    "mesh": "foliage-temperate.glb",
+    "triangles": 460,
+    "vertices": 1338,
+    "generator": "tools/build_foliage_assets.py",
+    "texture": "textures/foliage/shrubs/temperate.png",
+    "lods": [
+      {
+        "node": "foliage-temperate-lod0",
+        "triangles": 460,
+        "vertices": 1338
+      },
+      {
+        "node": "foliage-temperate-lod1",
+        "triangles": 236,
+        "vertices": 690
+      },
+      {
+        "node": "foliage-temperate-lod2",
+        "triangles": 92,
+        "vertices": 276
+      }
+    ]
+  },
+  "foliage-highland": {
+    "mesh": "foliage-highland.glb",
+    "triangles": 460,
+    "vertices": 1338,
+    "generator": "tools/build_foliage_assets.py",
+    "texture": "textures/foliage/shrubs/highland.png",
+    "lods": [
+      {
+        "node": "foliage-highland-lod0",
+        "triangles": 460,
+        "vertices": 1338
+      },
+      {
+        "node": "foliage-highland-lod1",
+        "triangles": 236,
+        "vertices": 690
+      },
+      {
+        "node": "foliage-highland-lod2",
+        "triangles": 92,
+        "vertices": 276
+      }
+    ]
+  },
+  "foliage-rocky": {
+    "mesh": "foliage-rocky.glb",
+    "triangles": 460,
+    "vertices": 1338,
+    "generator": "tools/build_foliage_assets.py",
+    "texture": "textures/foliage/shrubs/rocky.png",
+    "lods": [
+      {
+        "node": "foliage-rocky-lod0",
+        "triangles": 460,
+        "vertices": 1338
+      },
+      {
+        "node": "foliage-rocky-lod1",
+        "triangles": 236,
+        "vertices": 690
+      },
+      {
+        "node": "foliage-rocky-lod2",
+        "triangles": 92,
+        "vertices": 276
+      }
+    ]
+  },
+  "foliage-wetland": {
+    "mesh": "foliage-wetland.glb",
+    "triangles": 460,
+    "vertices": 1338,
+    "generator": "tools/build_foliage_assets.py",
+    "texture": "textures/foliage/shrubs/wetland.png",
+    "lods": [
+      {
+        "node": "foliage-wetland-lod0",
+        "triangles": 460,
+        "vertices": 1338
+      },
+      {
+        "node": "foliage-wetland-lod1",
+        "triangles": 236,
+        "vertices": 690
+      },
+      {
+        "node": "foliage-wetland-lod2",
+        "triangles": 92,
+        "vertices": 276
+      }
+    ]
+  },
+  "foliage-desert": {
+    "mesh": "foliage-desert.glb",
+    "triangles": 478,
+    "vertices": 1434,
+    "generator": "tools/build_foliage_assets.py",
+    "texture": "textures/foliage/shrubs/desert.png",
+    "lods": [
+      {
+        "node": "foliage-desert-lod0",
+        "triangles": 478,
+        "vertices": 1434
+      },
+      {
+        "node": "foliage-desert-lod1",
+        "triangles": 238,
+        "vertices": 714
+      },
+      {
+        "node": "foliage-desert-lod2",
+        "triangles": 94,
+        "vertices": 282
+      }
+    ]
+  },
+  "foliage-jungle": {
+    "mesh": "foliage-jungle.glb",
+    "triangles": 472,
+    "vertices": 1378,
+    "generator": "tools/build_foliage_assets.py",
+    "texture": "textures/foliage/shrubs/jungle.png",
+    "lods": [
+      {
+        "node": "foliage-jungle-lod0",
+        "triangles": 472,
+        "vertices": 1378
+      },
+      {
+        "node": "foliage-jungle-lod1",
+        "triangles": 228,
+        "vertices": 662
+      },
+      {
+        "node": "foliage-jungle-lod2",
+        "triangles": 96,
+        "vertices": 284
+      }
+    ]
+  },
+  "foliage-barren": {
+    "mesh": "foliage-barren.glb",
+    "triangles": 456,
+    "vertices": 1114,
+    "generator": "tools/build_foliage_assets.py",
+    "texture": "textures/foliage/shrubs/barren.png",
+    "lods": [
+      {
+        "node": "foliage-barren-lod0",
+        "triangles": 456,
+        "vertices": 1114
+      },
+      {
+        "node": "foliage-barren-lod1",
+        "triangles": 232,
+        "vertices": 668
+      },
+      {
+        "node": "foliage-barren-lod2",
+        "triangles": 96,
+        "vertices": 272
+      }
+    ]
+  },
+  "foliage-snow": {
+    "mesh": "foliage-snow.glb",
+    "triangles": 460,
+    "vertices": 1338,
+    "generator": "tools/build_foliage_assets.py",
+    "texture": "textures/foliage/shrubs/snow.png",
+    "lods": [
+      {
+        "node": "foliage-snow-lod0",
+        "triangles": 460,
+        "vertices": 1338
+      },
+      {
+        "node": "foliage-snow-lod1",
+        "triangles": 236,
+        "vertices": 690
+      },
+      {
+        "node": "foliage-snow-lod2",
+        "triangles": 92,
+        "vertices": 276
+      }
+    ]
+  },
+  "rough/fallen-stump": {
+    "triangles": 112,
+    "vertices": 264
+  },
+  "orchard-round": {
+    "mesh": "orchard-round.glb",
+    "triangles": 408,
+    "vertices": 1212,
+    "generator": "tools/build_orchard_assets.py",
+    "texture": "textures/foliage/orchard/orchard-round.png",
+    "lods": [
+      {
+        "node": "orchard-round-lod0",
+        "triangles": 408,
+        "vertices": 1212
+      },
+      {
+        "node": "orchard-round-lod1",
+        "triangles": 216,
+        "vertices": 636
+      },
+      {
+        "node": "orchard-round-lod2",
+        "triangles": 72,
+        "vertices": 216
+      }
+    ]
+  },
+  "orchard-round-snow": {
+    "mesh": "orchard-round-snow.glb",
+    "triangles": 408,
+    "vertices": 1212,
+    "generator": "tools/build_orchard_assets.py",
+    "texture": "textures/foliage/orchard/orchard-round.png",
+    "lods": [
+      {
+        "node": "orchard-round-snow-lod0",
+        "triangles": 408,
+        "vertices": 1212
+      },
+      {
+        "node": "orchard-round-snow-lod1",
+        "triangles": 216,
+        "vertices": 636
+      },
+      {
+        "node": "orchard-round-snow-lod2",
+        "triangles": 72,
+        "vertices": 216
+      }
+    ]
+  },
+  "orchard-spreading": {
+    "mesh": "orchard-spreading.glb",
+    "triangles": 408,
+    "vertices": 1212,
+    "generator": "tools/build_orchard_assets.py",
+    "texture": "textures/foliage/orchard/orchard-spreading.png",
+    "lods": [
+      {
+        "node": "orchard-spreading-lod0",
+        "triangles": 408,
+        "vertices": 1212
+      },
+      {
+        "node": "orchard-spreading-lod1",
+        "triangles": 216,
+        "vertices": 636
+      },
+      {
+        "node": "orchard-spreading-lod2",
+        "triangles": 72,
+        "vertices": 216
+      }
+    ]
+  },
+  "orchard-spreading-snow": {
+    "mesh": "orchard-spreading-snow.glb",
+    "triangles": 408,
+    "vertices": 1212,
+    "generator": "tools/build_orchard_assets.py",
+    "texture": "textures/foliage/orchard/orchard-spreading.png",
+    "lods": [
+      {
+        "node": "orchard-spreading-snow-lod0",
+        "triangles": 408,
+        "vertices": 1212
+      },
+      {
+        "node": "orchard-spreading-snow-lod1",
+        "triangles": 216,
+        "vertices": 636
+      },
+      {
+        "node": "orchard-spreading-snow-lod2",
+        "triangles": 72,
+        "vertices": 216
+      }
+    ]
+  },
+  "orchard-upright": {
+    "mesh": "orchard-upright.glb",
+    "triangles": 408,
+    "vertices": 1208,
+    "generator": "tools/build_orchard_assets.py",
+    "texture": "textures/foliage/orchard/orchard-upright.png",
+    "lods": [
+      {
+        "node": "orchard-upright-lod0",
+        "triangles": 408,
+        "vertices": 1208
+      },
+      {
+        "node": "orchard-upright-lod1",
+        "triangles": 216,
+        "vertices": 632
+      },
+      {
+        "node": "orchard-upright-lod2",
+        "triangles": 72,
+        "vertices": 216
+      }
+    ]
+  },
+  "orchard-upright-snow": {
+    "mesh": "orchard-upright-snow.glb",
+    "triangles": 408,
+    "vertices": 1208,
+    "generator": "tools/build_orchard_assets.py",
+    "texture": "textures/foliage/orchard/orchard-upright.png",
+    "lods": [
+      {
+        "node": "orchard-upright-snow-lod0",
+        "triangles": 408,
+        "vertices": 1208
+      },
+      {
+        "node": "orchard-upright-snow-lod1",
+        "triangles": 216,
+        "vertices": 632
+      },
+      {
+        "node": "orchard-upright-snow-lod2",
+        "triangles": 72,
+        "vertices": 216
+      }
+    ]
+  },
+  "orchard-vase": {
+    "mesh": "orchard-vase.glb",
+    "triangles": 388,
+    "vertices": 1158,
+    "generator": "tools/build_orchard_assets.py",
+    "texture": "textures/foliage/orchard/orchard-vase.png",
+    "lods": [
+      {
+        "node": "orchard-vase-lod0",
+        "triangles": 388,
+        "vertices": 1158
+      },
+      {
+        "node": "orchard-vase-lod1",
+        "triangles": 196,
+        "vertices": 582
+      },
+      {
+        "node": "orchard-vase-lod2",
+        "triangles": 64,
+        "vertices": 192
+      }
+    ]
+  },
+  "orchard-vase-snow": {
+    "mesh": "orchard-vase-snow.glb",
+    "triangles": 388,
+    "vertices": 1158,
+    "generator": "tools/build_orchard_assets.py",
+    "texture": "textures/foliage/orchard/orchard-vase.png",
+    "lods": [
+      {
+        "node": "orchard-vase-snow-lod0",
+        "triangles": 388,
+        "vertices": 1158
+      },
+      {
+        "node": "orchard-vase-snow-lod1",
+        "triangles": 196,
+        "vertices": 582
+      },
+      {
+        "node": "orchard-vase-snow-lod2",
+        "triangles": 64,
+        "vertices": 192
+      }
+    ]
+  },
+  "orchard-leaning": {
+    "mesh": "orchard-leaning.glb",
+    "triangles": 408,
+    "vertices": 1208,
+    "generator": "tools/build_orchard_assets.py",
+    "texture": "textures/foliage/orchard/orchard-leaning.png",
+    "lods": [
+      {
+        "node": "orchard-leaning-lod0",
+        "triangles": 408,
+        "vertices": 1208
+      },
+      {
+        "node": "orchard-leaning-lod1",
+        "triangles": 216,
+        "vertices": 632
+      },
+      {
+        "node": "orchard-leaning-lod2",
+        "triangles": 72,
+        "vertices": 216
+      }
+    ]
+  },
+  "orchard-leaning-snow": {
+    "mesh": "orchard-leaning-snow.glb",
+    "triangles": 408,
+    "vertices": 1208,
+    "generator": "tools/build_orchard_assets.py",
+    "texture": "textures/foliage/orchard/orchard-leaning.png",
+    "lods": [
+      {
+        "node": "orchard-leaning-snow-lod0",
+        "triangles": 408,
+        "vertices": 1208
+      },
+      {
+        "node": "orchard-leaning-snow-lod1",
+        "triangles": 216,
+        "vertices": 632
+      },
+      {
+        "node": "orchard-leaning-snow-lod2",
+        "triangles": 72,
+        "vertices": 216
+      }
+    ]
+  },
+  "orchard-young": {
+    "mesh": "orchard-young.glb",
+    "triangles": 408,
+    "vertices": 1208,
+    "generator": "tools/build_orchard_assets.py",
+    "texture": "textures/foliage/orchard/orchard-young.png",
+    "lods": [
+      {
+        "node": "orchard-young-lod0",
+        "triangles": 408,
+        "vertices": 1208
+      },
+      {
+        "node": "orchard-young-lod1",
+        "triangles": 216,
+        "vertices": 632
+      },
+      {
+        "node": "orchard-young-lod2",
+        "triangles": 72,
+        "vertices": 216
+      }
+    ]
+  },
+  "orchard-young-snow": {
+    "mesh": "orchard-young-snow.glb",
+    "triangles": 408,
+    "vertices": 1208,
+    "generator": "tools/build_orchard_assets.py",
+    "texture": "textures/foliage/orchard/orchard-young.png",
+    "lods": [
+      {
+        "node": "orchard-young-snow-lod0",
+        "triangles": 408,
+        "vertices": 1208
+      },
+      {
+        "node": "orchard-young-snow-lod1",
+        "triangles": 216,
+        "vertices": 632
+      },
+      {
+        "node": "orchard-young-snow-lod2",
+        "triangles": 72,
+        "vertices": 216
+      }
+    ]
   }
 }

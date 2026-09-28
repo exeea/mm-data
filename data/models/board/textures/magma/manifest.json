@@ -1,0 +1,23 @@
+{
+  "generator": "tools/build_magma_materials.py",
+  "size": 1024,
+  "repeat_metres": 12.0,
+  "reference": "tools/magma-reference/concept.png",
+  "height_source": "estimated basalt relief and recessed heat mask",
+  "sources_sha256": {
+    "crust": "ddc2bc09b2526d5b8cd10cabaa5da37176d6f0d16f336e75fc2dcfdee7ced310",
+    "lava": "26004a2730c2c3f99f7ebea86d31590337393f4881acc4a835d07f6b79f86a62"
+  },
+  "maps": {
+    "albedo": "sRGB reflectance",
+    "normal": "linear tangent normal: U right, V down",
+    "surface": "R height, G roughness, B occlusion, A relief UV / .1",
+    "heat": "R emission intensity, GB signed flow * .5 + .5, A crack-wall glow"
+  },
+  "metalness": 0,
+  "opacity": 1,
+  "materials": [
+    "crust",
+    "lava"
+  ]
+}

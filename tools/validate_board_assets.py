@@ -13,6 +13,12 @@ catalog = dict(features, **buildings)
 assert sorted(entry['bridge_exits'] for entry in features.values() if 'bridge_exits' in entry) == list(range(64))
 
 for asset, entry in features.items():
+    if asset.startswith(('foliage-', 'orchard-')):
+        assert len(entry['lods']) == 3, asset
+        for level, lod in enumerate(entry['lods']):
+            assert lod['node'] == f'{asset}-lod{level}', asset
+            assert 0 < lod['triangles'] <= (480, 240, 96)[level], lod
+            catalog[lod['node']] = lod
     if 'source' in entry:
         assert len(entry['lods']) == 3, asset
         for level, lod in enumerate(entry['lods']):
@@ -53,6 +59,12 @@ for asset in catalog:
     heights = [z for mesh in model['meshes'] for z in mesh['vertices'][2::12]]
     if asset in buildings:
         assert min(heights) == 0 and max(heights) == 18, f'One-level building: {path}'
+    elif asset.startswith('foliage-'):
+        assert abs(min(heights)) < 1e-5, f'Floating understory root: {path}'
+        assert 17 < max(heights) < 18.1, f'Understory LOD silhouette: {path}'
+    elif asset.startswith('orchard-'):
+        assert abs(min(heights)) < 1e-5, f'Floating orchard root: {path}'
+        assert 29 < max(heights) < 31, f'Orchard LOD silhouette: {path}'
     elif 'bridge_exits' in catalog[asset]:
         assert abs(min(heights) + 1.5) < 1e-5 and abs(max(heights) - 2.5) < 1e-5, path
         assert 0 in heights, f'Bridge deck must remain at local Z=0: {path}'
@@ -108,6 +120,16 @@ for asset in catalog:
         difference = ImageChops.difference(source.convert('RGB'), roof)
         mask = source.getchannel('A').point(lambda alpha: 255 if alpha >= 245 else 0)
         assert ImageChops.multiply(difference.convert('L'), mask).getbbox() is None, path
+    elif asset.startswith('foliage-'):
+        family = asset.removeprefix('foliage-').rsplit('-lod', 1)[0]
+        roles = {material['id'] for material in model['materials']}
+        expected = {'cactus'} if family == 'desert' else {'leaves', 'bark'}
+        assert roles == expected | ({'snow'} if family == 'snow' else set()), (asset, roles)
+        assert {part['id'] for mesh in model['meshes'] for part in mesh['parts']} == roles, asset
+        for material in model['materials']:
+            texture = material['textures'][0]
+            assert texture['filename'] == f'textures/foliage/shrubs/{family}.png', path
+            assert texture['wrapS'] == texture['wrapT'] == 33071, path
     elif asset != 'field' and 'bridge_exits' not in catalog[asset]:
         family = asset.rsplit('-lod', 1)[0]
         roles = {material['id'] for material in model['materials']}
@@ -144,6 +166,11 @@ for family in ('buildings', 'terrain'):
 for path in (BOARD / 'textures/foliage').glob('*.png'):
     with Image.open(path) as image:
         assert image.size == (64, 64), path
+        assert image.convert('RGBA').getchannel('A').getextrema() == (255, 255), path
+
+for path in (BOARD / 'textures/foliage/shrubs').glob('*.png'):
+    with Image.open(path) as image:
+        assert image.width == image.height and image.width >= 1024, path
         assert image.convert('RGBA').getchannel('A').getextrema() == (255, 255), path
 
 sources = json.loads((BOARD / 'tileset/sources.json').read_text())['files']
