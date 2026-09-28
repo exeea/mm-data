@@ -830,10 +830,25 @@
     "bridge_exits": 63
   },
   "road-tunnel": {
+    "triangles": 289,
+    "vertices": 867,
+    "opening_width": 19.0,
+    "opening_height": 15.5,
+    "depth": 18,
+    "wing_walls": true,
+    "road_width": 15,
+    "road_start": 3,
+    "road_end": 18
+  },
+  "road-tunnel-bridge": {
     "triangles": 273,
     "vertices": 819,
     "opening_width": 19.0,
     "opening_height": 15.5,
-    "depth": 18
+    "depth": 18,
+    "wing_walls": false,
+    "road_width": 15,
+    "road_start": 3,
+    "road_end": 18
   }
 }

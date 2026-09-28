@@ -45,8 +45,9 @@ def part(name, color, texture):
 
 
 part('tunnel-portal', (.94, .94, .92), 'tunnel-concrete.png')
+part('tunnel-wings', (.94, .94, .92), 'tunnel-concrete.png')
 part('tunnel-lining', (.72, .72, .70), 'tunnel-concrete.png')
-part('tunnel-floor', (.50, .50, .50), 'roads/asphalt.png')
+part('tunnel-floor', (1, 1, 1), 'roads/asphalt.png')
 
 
 def face(role, points, shade=1):
@@ -86,14 +87,20 @@ for s in (-1,1):
     a,b,c,d = (s*11.25,.3,0),(s*16,-6,0),(s*16,-6,3.5),(s*11.25,.3,8)
     back = [(x+s*1.4,y,z) for x,y,z in (a,b,c,d)]
     for points in ((a,b,c,d), back[::-1], (d,c,back[2],back[3]), (b,back[1],back[2],c)):
-        face('tunnel-portal', list(points) if s == 1 else list(points)[::-1])
+        face('tunnel-wings', list(points) if s == 1 else list(points)[::-1])
 # Four bays interpolate a continuous fade into the unlit interior.
 contour = [(R,0)] + inner + [(-R,0)]
 for near,far in zip((0,4,8,12),(4,8,12,18)):
     for a,b in zip(contour,contour[1:]):
         face('tunnel-lining', [(a[0],near,a[1]),(b[0],near,b[1]),(b[0],far,b[1]),(a[0],far,a[1])])
-    face('tunnel-floor', [(-R,near,.025),(R,near,.025),(R,far,.025),(-R,far,.025)])
 face('tunnel-lining', [(x,18,z) for x,z in contour])
+# The approach already reaches Y=3 (the shared hex edge). Start there, flush
+# with the deck, avoiding overlapping road planes. Keep the 15-unit carriageway
+# unchanged through the portal; the remaining opening width is concrete verge.
+for near,far in zip((3,6,10,14),(6,10,14,18)):
+    face('tunnel-floor', [(-7.5,near,0),(7.5,near,0),(7.5,far,0),(-7.5,far,0)])
+    for x0,x1 in ((-R,-7.5),(7.5,R)):
+        face('tunnel-lining', [(x0,near,0),(x1,near,0),(x1,far,0),(x0,far,0)])
 
 packed, parts, materials, objects = [], [], [], []
 for role,p in PARTS.items():
@@ -113,7 +120,10 @@ for role,p in PARTS.items():
             v = mesh.vertices[mesh.loops[loop].vertex_index].co
             uv.data[loop].uv = ((v.y if abs(n.x) > .7 else v.x)/6, (v.y if abs(n.z) > .7 else v.z)/6)
             shade = p['colors'][polygon.index]
-            if role != 'tunnel-portal':
+            if role == 'tunnel-floor':
+                # The visible road enters the arch before fading into darkness.
+                shade *= .015 + .985 * (1 - min(1, max(0, (v.y - 6) / 12)))**1.65
+            elif role == 'tunnel-lining':
                 shade *= .015 + .9 * (1 - min(1, max(0, v.y / 18)))**1.65
             color = tuple(c * shade for c in p['color'])
             display_colors.append((*color, 1))
@@ -127,20 +137,35 @@ for role,p in PARTS.items():
     parts.append({'id':role,'type':'TRIANGLES','indices':indices})
     materials.append({'id':role,'diffuse':[1,1,1], 'textures':[{'id':role,'filename':'textures/'+p['texture'],
                       'type':'DIFFUSE','wrapS':10497,'wrapT':10497}]})
-model = {'id':'road-tunnel','version':[0,1],'materials':materials,
-         'meshes':[{'attributes':['POSITION','NORMAL','COLOR','TEXCOORD0'],'vertices':packed,'parts':parts}],
-         'nodes':[{'id':'road-tunnel','parts':[{'meshpartid':p['id'],'materialid':p['id']} for p in parts]}]}
 OUT.mkdir(parents=True, exist_ok=True)
-write_glb(OUT/'road-tunnel.glb', levels={0:model})
 SOURCE.mkdir(parents=True, exist_ok=True)
 # Initialize the new view layer before Blender copies it into the source file.
 SCENE.view_layers[0].update()
 bpy.data.libraries.write(str(SOURCE/'road-tunnel.blend'), {SCENE}, path_remap='RELATIVE_ALL')
-stats = {'triangles':sum(len(p['indices'])//3 for p in parts),'vertices':len(packed)//12,
-         'opening_width':R*2,'opening_height':SPRING+R,'depth':18}
-(SOURCE/'road-tunnel.json').write_text(json.dumps(stats,indent=2)+'\n')
 manifest_file = OUT / 'manifest.json'
 manifest = json.loads(manifest_file.read_text())
-manifest['road-tunnel'] = stats
+stats = {}
+# Both exports share the same editable geometry. Only the freestanding wing
+# walls are omitted at suspended bridge ends; there is no second asset builder.
+for name,winged in (('road-tunnel',True),('road-tunnel-bridge',False)):
+    selected = [p for p in parts if winged or p['id'] != 'tunnel-wings']
+    vertices, export_parts = [], []
+    for p in selected:
+        indices = []
+        for i in p['indices']:
+            indices.append(len(vertices)//12)
+            vertices.extend(packed[i*12:(i+1)*12])
+        export_parts.append({**p, 'indices':indices})
+    model = {'id':name,'version':[0,1],
+             'materials':[m for m in materials if winged or m['id'] != 'tunnel-wings'],
+             'meshes':[{'attributes':['POSITION','NORMAL','COLOR','TEXCOORD0'],
+                        'vertices':vertices,'parts':export_parts}],
+             'nodes':[{'id':name,'parts':[{'meshpartid':p['id'],'materialid':p['id']} for p in selected]}]}
+    write_glb(OUT/(name+'.glb'), levels={0:model})
+    stats[name] = {'triangles':sum(len(p['indices'])//3 for p in selected),'vertices':len(vertices)//12,
+                  'opening_width':R*2,'opening_height':SPRING+R,'depth':18,'wing_walls':winged,
+                  'road_width':15,'road_start':3,'road_end':18}
+    (SOURCE/(name+'.json')).write_text(json.dumps(stats[name],indent=2)+'\n')
+    manifest[name] = stats[name]
 manifest_file.write_text(json.dumps(manifest, indent=2)+'\n')
 print(json.dumps(stats))
