@@ -14,7 +14,7 @@ import bpy
 from mathutils import Vector
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from glb_geometry import write_glb
+from glb_geometry import linear, write_glb
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'data/models/board'
@@ -33,12 +33,19 @@ def part(name, color, texture):
     image = bpy.data.images.load(str(OUT / 'textures' / texture), check_existing=True)
     node = mat.node_tree.nodes.new('ShaderNodeTexImage')
     node.image = image
-    mat.node_tree.links.new(node.outputs['Color'], shader.inputs['Base Color'])
+    colors = mat.node_tree.nodes.new('ShaderNodeVertexColor')
+    colors.layer_name = 'Color'
+    multiply = mat.node_tree.nodes.new('ShaderNodeMixRGB')
+    multiply.blend_type = 'MULTIPLY'
+    multiply.inputs[0].default_value = 1
+    mat.node_tree.links.new(node.outputs['Color'], multiply.inputs[1])
+    mat.node_tree.links.new(colors.outputs['Color'], multiply.inputs[2])
+    mat.node_tree.links.new(multiply.outputs[0], shader.inputs['Base Color'])
     PARTS[name] = {'mat': mat, 'texture': texture, 'color': color, 'verts': [], 'faces': [], 'colors': []}
 
 
-part('tunnel-portal', (.80, .79, .75), 'sculpt/concrete.png')
-part('tunnel-lining', (.48, .47, .44), 'sculpt/concrete.png')
+part('tunnel-portal', (.94, .94, .92), 'tunnel-concrete.png')
+part('tunnel-lining', (.72, .72, .70), 'tunnel-concrete.png')
 part('tunnel-floor', (.50, .50, .50), 'roads/asphalt.png')
 
 
@@ -80,13 +87,13 @@ for s in (-1,1):
     back = [(x+s*1.4,y,z) for x,y,z in (a,b,c,d)]
     for points in ((a,b,c,d), back[::-1], (d,c,back[2],back[3]), (b,back[1],back[2],c)):
         face('tunnel-portal', list(points) if s == 1 else list(points)[::-1])
-# Four darkening bays give the mouth depth even without dynamic local lights.
+# Four bays interpolate a continuous fade into the unlit interior.
 contour = [(R,0)] + inner + [(-R,0)]
-for j,(near,far) in enumerate(zip((0,4,8,12),(4,8,12,18))):
+for near,far in zip((0,4,8,12),(4,8,12,18)):
     for a,b in zip(contour,contour[1:]):
-        face('tunnel-lining', [(a[0],near,a[1]),(b[0],near,b[1]),(b[0],far,b[1]),(a[0],far,a[1])], .82-.19*j)
-    face('tunnel-floor', [(-R,near,.025),(R,near,.025),(R,far,.025),(-R,far,.025)], .9-.21*j)
-face('tunnel-lining', [(x,18,z) for x,z in contour], .015)
+        face('tunnel-lining', [(a[0],near,a[1]),(b[0],near,b[1]),(b[0],far,b[1]),(a[0],far,a[1])])
+    face('tunnel-floor', [(-R,near,.025),(R,near,.025),(R,far,.025),(-R,far,.025)])
+face('tunnel-lining', [(x,18,z) for x,z in contour])
 
 packed, parts, materials, objects = [], [], [], []
 for role,p in PARTS.items():
@@ -98,18 +105,25 @@ for role,p in PARTS.items():
     SCENE.collection.objects.link(obj)
     objects.append(obj)
     uv = mesh.uv_layers.new(name='UVMap')
+    colors = mesh.color_attributes.new(name='Color', type='FLOAT_COLOR', domain='CORNER')
+    display_colors = []
     for polygon in mesh.polygons:
         n = polygon.normal
         for loop in polygon.loop_indices:
             v = mesh.vertices[mesh.loops[loop].vertex_index].co
-            uv.data[loop].uv = ((v.y if abs(n.x) > .7 else v.x)/8, (v.y if abs(n.z) > .7 else v.z)/8)
+            uv.data[loop].uv = ((v.y if abs(n.x) > .7 else v.x)/6, (v.y if abs(n.z) > .7 else v.z)/6)
+            shade = p['colors'][polygon.index]
+            if role != 'tunnel-portal':
+                shade *= .015 + .9 * (1 - min(1, max(0, v.y / 18)))**1.65
+            color = tuple(c * shade for c in p['color'])
+            display_colors.append((*color, 1))
+            colors.data[loop].color = (*(linear(c) for c in color), 1)
     mesh.calc_loop_triangles()
     indices = []
     for t in mesh.loop_triangles:
-        shade = p['colors'][t.polygon_index]
         for v,l in zip(t.vertices,t.loops):
             indices.append(len(packed)//12)
-            packed.extend((*mesh.vertices[v].co, *t.normal, *(c*shade for c in p['color']), 1, *uv.data[l].uv))
+            packed.extend((*mesh.vertices[v].co, *t.normal, *display_colors[l], *uv.data[l].uv))
     parts.append({'id':role,'type':'TRIANGLES','indices':indices})
     materials.append({'id':role,'diffuse':[1,1,1], 'textures':[{'id':role,'filename':'textures/'+p['texture'],
                       'type':'DIFFUSE','wrapS':10497,'wrapT':10497}]})
