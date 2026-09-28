@@ -84,7 +84,7 @@ def render(output):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import bpy
     from mathutils import Vector
-    from render_unit_variants import import_model
+    from unit_model_blender import import_model
 
     entries = inventory()
     output.mkdir(parents=True, exist_ok=True)

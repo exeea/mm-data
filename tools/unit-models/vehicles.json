@@ -1,0 +1,27 @@
+{
+  "vehicles": [
+    {
+      "name": "Manticore Heavy Tank", "id": "manticore", "mode": "tracked", "referenceVariant": "",
+      "sprite": "vehicles/Manticore.png", "weaponScale": 0.8, "turretSocket": [5.5,-0.5,8.0],
+      "turretSockets": {"ppc": [0,19.2,3.5], "laser": [0,19.2,3.5], "ballistic": [0,19.2,3.5], "missile": [16.3,-6.5,4.4]},
+      "turretSocketScale": {"missile": 1.25},
+      "turretSocketProfile": {"missile": "housing-arm-left"},
+      "turretSocketStyle": {"ppc": "long", "laser": "long", "ballistic": "long"},
+      "turretSocketLength": {"ppc": 14, "laser": 14, "ballistic": 14},
+      "turretRules": [
+        {"names": ["LRM 10", "Enhanced LRM 10", "Improved LRM 10", "Extended LRM 10", "ISMML7"], "socket": [-3,-4.0,13.0], "size": [12,8], "scale": 1.9},
+        {"names": ["ISAntiMissileSystem"], "socket": [5.5,-0.5,8.0], "size": [6,6]}
+      ],
+      "hullSockets": {"FR": [0,16.4,7.6]}, "stackRows": ["FR"]
+    },
+    {
+      "name": "Manticore II Heavy Tank", "id": "manticore-ii", "mode": "tracked", "referenceVariant": "",
+      "sprite": "vehicles/ManticoreII.png", "weaponScale": 0.8, "turretSocket": [5.5,-0.5,5.6],
+      "turretSockets": {"ppc": [0,16.9,3.5], "laser": [0,16.9,3.5], "ballistic": [0,16.9,3.5],
+                        "missile": [[-9.2,-3.7,7.5], [9.2,-3.7,7.5]]},
+      "turretSocketStyle": {"ppc": "long", "laser": "long", "ballistic": "long"},
+      "turretSocketLength": {"ppc": 20, "laser": 20, "ballistic": 20},
+      "hullSockets": {"FR": [0,20.2,5.2]}, "stackRows": ["FR"]
+    }
+  ]
+}

@@ -12,8 +12,6 @@ TEXT_SUFFIXES = {'.py', '.json', '.g3dj', '.txt', '.md'}
 # checked here against its level's whole budget; MegaMek warns when a real loadout takes the assembled unit past it.
 LOD_TRIANGLE_BUDGETS = (5000, 2000, 500)
 TRIANGLE_LIMIT = LOD_TRIANGLE_BUDGETS[0]
-# The retired baked-reference tools still import a target; it is simply the LOD0 budget now.
-TRIANGLE_TARGET = TRIANGLE_LIMIT
 # Mek-standard model units per metre: 27 units make a level, 18 world units at the default level height, and the
 # 30 m hex spans 72 world units, so a level shows 7.5 m. The Atlas then stands 15.2 m (canon: 15.4 m).
 MODEL_UNITS_PER_METRE = 27 / 7.5

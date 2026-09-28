@@ -17,6 +17,7 @@ from unit_weapon_shapes import draw, rule_for
 from unit_equipment_models import build_equipment
 from unit_mek_models import build_meks, fallback_recipes
 from unit_family_models import build_families, scale_geometry
+from unit_vehicle_models import build_vehicles
 
 ROOT = Path(__file__).resolve().parents[1]
 # One weapon or equipment piece: over the target is printed for review, over the limit fails the build. The pieces
@@ -105,6 +106,7 @@ def build(output, catalog):
     recipes = json.loads((ROOT / 'tools/unit-models/chassis.json').read_text(encoding='utf-8'))['chassis']
     assets.update(build_meks(recipes+fallback_recipes(), output, export_asset, write_json))
     assets.update(build_families(output, export_asset, write_json))
+    assets.update(build_vehicles(output, export_asset, write_json))
 
     joints = {role: node for role, node in [('root', 'root'), ('hips', 'hips'), ('torso', 'torso'), ('head', 'head')]}
     for side in ('left', 'right'):
