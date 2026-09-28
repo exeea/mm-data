@@ -156,7 +156,7 @@ def export(name, objects, normalize=False, foliage=False):
     STATS[name] = {'triangles': sum(len(indices) for indices in parts.values())//3, 'vertices': len(vertices)//12}
 
 
-# Whole decks and outside rails share the road layout exported by :megamek:exportBridgeShapes.
+# Whole decks and outside rails use the saved outlines in tools/board-models/bridge-shapes.json.
 if wanted('bridge'):
     from build_bridge_assets import build
     STATS.update(build(ROOT))

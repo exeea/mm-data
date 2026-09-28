@@ -1,6 +1,6 @@
-"""Run in Blender after :megamek:exportBridgeShapes. Bake one complete bridge per exit mask.
+"""Run in Blender to bake one complete bridge per exit mask from the saved outlines.
 
-Curves and junction outlines come from BoardRoad, not a second Python path algorithm.
+Authoring outlines live in tools/board-models/bridge-shapes.json; no Java export is required.
 Each GLB has a single LOD0 group and references the shared road/concrete textures.
 """
 from pathlib import Path
