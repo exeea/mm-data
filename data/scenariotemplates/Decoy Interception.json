@@ -75,7 +75,7 @@
       "generationMethod" : 1,
       "forceMultiplier" : 1.0,
       "deploymentZones" : [ 11 ],
-      "destinationZone" : 1,
+      "destinationZone" : 6,
       "retreatThreshold" : 50,
       "allowedUnitType" : -2,
       "canReinforceLinked" : false,
