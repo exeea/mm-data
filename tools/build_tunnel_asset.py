@@ -69,14 +69,14 @@ for i in range(N):
 # One shell, without box faces overlapping the interior lining. The external
 # sides and roof extend the full depth so the portal also slots into sloped rock.
 for s in (-1,1):
-    for x0,x1,z0,z1 in ((9.5,13,0,6),(11.25,13,6,18.5)):
-        points = [(s*x0,.3,z0),(s*x1,.3,z0),(s*x1,.3,z1),(s*x0,.3,z1)]
+    for x0,x1,y0,z1 in ((9.5,11.25,0,6),(11.25,13,.3,18.5)):
+        points = [(s*x0,y0,0),(s*x1,.3,0),(s*x1,.3,z1),(s*x0,y0,z1)]
         face('tunnel-portal', points if s == 1 else points[::-1])
     face('tunnel-portal', [(s*13,.3,0),(s*13,18,0),(s*13,18,18.5),(s*13,.3,18.5)][::s])
 box(-13.3,13.3,-.05,18,18.5,19.2)
 # Flared wing walls carry the cut into the approach, outside the unchanged road width.
 for s in (-1,1):
-    a,b,c,d = (s*11.25,0,0),(s*16,-6,0),(s*16,-6,3.5),(s*11.25,0,8)
+    a,b,c,d = (s*11.25,.3,0),(s*16,-6,0),(s*16,-6,3.5),(s*11.25,.3,8)
     back = [(x+s*1.4,y,z) for x,y,z in (a,b,c,d)]
     for points in ((a,b,c,d), back[::-1], (d,c,back[2],back[3]), (b,back[1],back[2],c)):
         face('tunnel-portal', list(points) if s == 1 else list(points)[::-1])

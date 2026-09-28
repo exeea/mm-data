@@ -63,6 +63,10 @@ no rock or scatter geometry is generated in-game.
   prompts are recorded in `tools/board-foliage-texture-prompts.json`; the cactus
   map is procedural (`tools/build_cactus_texture.py`, CC0-1.0), and cactus stems
   take a pale sage in place of the source's saturated green.
+- `textures/foliage/marsh-sedge.png`: the editable 1254 by 1254 RGBA sedge/cattail
+  cutout for marsh vegetation. The renderer filters it to one shared 512 by 512
+  texture with mipmaps; all three plant LODs use this same image. Ground peat,
+  moss and pools are shaded separately using the existing sculpt earth maps.
 - `textures/buildings/`: 128 by 128 runtime facade maps. Light buildings retain
   windows; medium uses concrete, hard reinforced concrete, and heavy armored
   panels. Fortresses/gun emplacements use massive sci-fi walls, hangars use
