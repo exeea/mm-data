@@ -828,5 +828,12 @@
     "triangles": 810,
     "vertices": 1278,
     "bridge_exits": 63
+  },
+  "road-tunnel": {
+    "triangles": 273,
+    "vertices": 819,
+    "opening_width": 19.0,
+    "opening_height": 15.5,
+    "depth": 18
   }
 }

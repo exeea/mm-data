@@ -125,4 +125,8 @@ bpy.data.libraries.write(str(SOURCE/'road-tunnel.blend'), {SCENE}, path_remap='R
 stats = {'triangles':sum(len(p['indices'])//3 for p in parts),'vertices':len(packed)//12,
          'opening_width':R*2,'opening_height':SPRING+R,'depth':18}
 (SOURCE/'road-tunnel.json').write_text(json.dumps(stats,indent=2)+'\n')
+manifest_file = OUT / 'manifest.json'
+manifest = json.loads(manifest_file.read_text())
+manifest['road-tunnel'] = stats
+manifest_file.write_text(json.dumps(manifest, indent=2)+'\n')
 print(json.dumps(stats))
