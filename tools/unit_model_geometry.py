@@ -8,10 +8,12 @@ from glb_geometry import write_glb
 # Git may check these out with either line ending, so their fingerprint must not depend on it.
 # Unit files (.mtf) are left out: the Java catalog fingerprints their raw bytes, and this must agree with it.
 TEXT_SUFFIXES = {'.py', '.json', '.g3dj', '.txt', '.md'}
-TRIANGLE_TARGET = 1000
-TRIANGLE_LIMIT = 1500
-# Explicit LOD0 bodies may use this allowance; authored LOD1 bodies keep TRIANGLE_LIMIT.
-LOD0_TRIANGLE_LIMIT = 3000
+# The art budget for one assembled unit, bare body plus every fitted weapon, at LOD0, LOD1 and LOD2. A body is
+# checked here against its level's whole budget; MegaMek warns when a real loadout takes the assembled unit past it.
+LOD_TRIANGLE_BUDGETS = (5000, 2000, 500)
+TRIANGLE_LIMIT = LOD_TRIANGLE_BUDGETS[0]
+# The retired baked-reference tools still import a target; it is simply the LOD0 budget now.
+TRIANGLE_TARGET = TRIANGLE_LIMIT
 # Mek-standard model units per metre: 27 units make a level, 18 world units at the default level height, and the
 # 30 m hex spans 72 world units, so a level shows 7.5 m. The Atlas then stands 15.2 m (canon: 15.4 m).
 MODEL_UNITS_PER_METRE = 27 / 7.5
@@ -157,9 +159,7 @@ class Geometry:
 
     def export(self, path, name, z_scale=54, bare_unit=True, paint_uv=False, limit=TRIANGLE_LIMIT):
         if bare_unit and len(self.faces) > limit:
-            raise ValueError(f'{name}: {len(self.faces)} triangles exceeds the hard cap of {limit}')
-        if bare_unit and len(self.faces) >= TRIANGLE_TARGET and limit == TRIANGLE_LIMIT:
-            print(f'Art review: {name} has {len(self.faces)} base triangles (target below {TRIANGLE_TARGET}); retaining detail')
+            raise ValueError(f'{name}: {len(self.faces)} triangles exceeds its level budget of {limit}')
         vertices, unique, parts = [], {}, defaultdict(list)
         stride = 12 if paint_uv else 10
         for tri, group, material in self.faces:

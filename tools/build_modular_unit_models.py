@@ -12,15 +12,17 @@ from pathlib import Path
 
 from unit_infantry_shapes import (person, infantry_vehicle, TROOP_SCALE, BATTLE_ARMOR_SIZE, elemental, elemental_far,
                                   elemental_ii, elemental_ii_far)
-from unit_model_geometry import Geometry, LOD0_TRIANGLE_LIMIT, TRIANGLE_LIMIT, TRIANGLE_TARGET, sub
+from unit_model_geometry import Geometry, LOD_TRIANGLE_BUDGETS, sub
 from unit_weapon_shapes import draw, rule_for
 from unit_equipment_models import build_equipment
 from unit_mek_models import build_meks, fallback_recipes
 from unit_family_models import build_families, scale_geometry
 
 ROOT = Path(__file__).resolve().parents[1]
-EQUIPMENT_TRIANGLE_TARGET = 100
-EQUIPMENT_TRIANGLE_LIMIT = 149
+# One weapon or equipment piece: over the target is printed for review, over the limit fails the build. The pieces
+# on a unit share its level budget with the body (LOD_TRIANGLE_BUDGETS), so heavy pieces should be a deliberate choice.
+EQUIPMENT_TRIANGLE_TARGET = 250
+EQUIPMENT_TRIANGLE_LIMIT = 1000
 
 
 def write_json(path, value):
@@ -67,13 +69,19 @@ def archive_superseded_modules(output, assets):
 
 
 def export_asset(geometry, output, key, kind, family, rig, joints, hardpoints=(), *, leg_bends=None, detail=None):
-    """Writes one asset's mesh and descriptor. `detail='lod0'` marks a body drawn only up close: it may use
-    LOD0_TRIANGLE_LIMIT. The build finishes by packaging levels into one GLB per component."""
+    """Writes one asset's mesh and descriptor. A key ending in -lod1 or -lod2 is that level of its component and is
+    held to that level's budget; `detail='lod0'` marks a body that has a LOD1 of its own. The build finishes by
+    packaging levels into one GLB per component."""
     if kind == 'equipment' and len(geometry.faces) > EQUIPMENT_TRIANGLE_LIMIT:
         raise ValueError(f'{key}: equipment has {len(geometry.faces)} triangles; maximum {EQUIPMENT_TRIANGLE_LIMIT}')
+    if kind == 'equipment' and len(geometry.faces) > EQUIPMENT_TRIANGLE_TARGET:
+        print(f'Weapon review: {key} has {len(geometry.faces)} triangles (target {EQUIPMENT_TRIANGLE_TARGET}); '
+              f'it shares its unit\'s budget with the body')
+    level_suffix = re.search(r'-lod([0-9]+)$', key)
+    level = int(level_suffix.group(1)) if level_suffix else 0
     descriptor = output / (key+'.json')
     mesh = descriptor.with_name(descriptor.stem + ('' if re.search(r'-lod[0-9]+$', descriptor.stem) else '-lod0') + '.glb')
-    limit = LOD0_TRIANGLE_LIMIT if detail == 'lod0' else TRIANGLE_LIMIT
+    limit = LOD_TRIANGLE_BUDGETS[min(level, len(LOD_TRIANGLE_BUDGETS) - 1)]
     stats = geometry.export(mesh, key, z_scale=1, bare_unit=kind != 'equipment', paint_uv=True, limit=limit)
     emitters = [{**emitter, 'position': sub(emitter['position'], geometry.pivots[emitter['node']])}
                 for emitter in geometry.emitters]
@@ -144,8 +152,8 @@ def build(output, catalog):
                                                 mount['family'], 'module-v1', {'root': 'root', 'aim': 'mount'})
     assets.update(build_equipment(catalog, output, export_asset))
     package_unit_lods(output, assets)
-    write_json(output / 'manifest.json', {'schema': 2, 'triangleTarget': TRIANGLE_TARGET,
-                                         'triangleLimit': TRIANGLE_LIMIT, 'triangleBudgetScope': 'bare-unit',
+    write_json(output / 'manifest.json', {'schema': 2, 'triangleBudgets': list(LOD_TRIANGLE_BUDGETS),
+                                         'triangleBudgetScope': 'assembled unit per level: body plus fitted equipment',
                                          'equipmentTriangleTarget': EQUIPMENT_TRIANGLE_TARGET,
                                          'equipmentTriangleLimit': EQUIPMENT_TRIANGLE_LIMIT, 'assets': assets,
                                          'note': 'Reusable components; the Java renderer assembles formations/loadouts.'})
