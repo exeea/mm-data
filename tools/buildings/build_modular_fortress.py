@@ -189,12 +189,11 @@ def roof(lod):
         else:
             crenels.face([(*point,4.15) for point in inside],'root','fortress-dark')
     g.extend(crenels, offset=(*a, 0), angle=atan2(b[1]-a[1],b[0]-a[0]), group='root')
-    for x, y in ((-20, -9), (17, -12), (6, 15)):
-        box(g, (x, y, 1.04), (3.5, 3.1, .78), 'fortress-steel', .1 if lod == 0 else 0)
-        if lod == 0:
+    if lod == 0:
+        for x, y in ((-20, -9), (17, -12), (6, 15)):
+            box(g, (x, y, 1.04), (3.5, 3.1, .78), 'fortress-steel', .1)
             for offset in (-1, -.5, 0, .5, 1):
                 box(g, (x+offset, y, 1.46), (.18, 2.7, .07), 'fortress-dark')
-    if lod == 0:
         # Narrow irregular bitumen repair seams, modeled so they survive the real GLB export.
         paths = [[(-31,-5),(-22,-4),(-15,-7),(-6,-4),(3,-6),(12,-1),(21,0),(33,3)],
                  [(-6,-4),(-8,4),(-3,11),(-5,19),(1,24),(0,29)],
@@ -260,6 +259,7 @@ materials = {}
 for role, (color, texture, roughness) in MATERIALS.items():
     mat = bpy.data.materials.new(role)
     mat.use_nodes = True
+    mat.use_backface_culling = True
     shader = mat.node_tree.nodes.get('Principled BSDF')
     shader.inputs['Base Color'].default_value = (*[linear(c) for c in color], 1)
     shader.inputs['Roughness'].default_value = roughness
