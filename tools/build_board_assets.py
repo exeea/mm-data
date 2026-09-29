@@ -81,6 +81,15 @@ def export(name, objects, normalize=False, foliage=False):
     bounds = [obj.matrix_world @ Vector(corner) for obj in objects for corner in obj.bound_box]
     low = Vector(tuple(min(v[i] for v in bounds) for i in range(3)))
     high = Vector(tuple(max(v[i] for v in bounds) for i in range(3)))
+    # The board places, grounds and clears roads for a plant at its origin, so that is where its trunk stands;
+    # a leaning trunk would otherwise hang over a rim. Textures keep their bounding-box projection.
+    foot = Vector((0, 0, 0))
+    if normalize:
+        span = high.z - low.z
+        ground = [p for obj in objects for p in (obj.matrix_world @ v.co for v in obj.data.vertices)
+                  if p.z < low.z + .02 * span]
+        foot = Vector((sum(p.x for p in ground) / len(ground) - (low.x + high.x) / 2,
+                       sum(p.y for p in ground) / len(ground) - (low.y + high.y) / 2, 0)) * (30 / span)
     for obj in objects:
         mesh = obj.data
         mesh.calc_loop_triangles()
@@ -126,7 +135,7 @@ def export(name, objects, normalize=False, foliage=False):
                         uv = (point.x if abs(normal.y) > abs(normal.x) else point.y, point.z)
                     repeat = 4 if role.startswith('bark') else 8 if name.startswith('birch') else 12
                     uv = (uv[0] / repeat, uv[1] / repeat)
-                vertex = tuple(round(v, 6) for v in (*pos, *n, *color, 1, *uv))
+                vertex = tuple(round(v, 6) for v in (*(pos - foot), *n, *color, 1, *uv))
                 if vertex not in shared:
                     shared[vertex] = len(vertices)//12
                     vertices.extend(vertex)

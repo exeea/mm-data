@@ -149,8 +149,8 @@ def write_glb(path, model=None, *, levels=None, embedded_images=None):
     if levels is None:
         document['scenes'][0]['nodes'] = emit(model)
     else:
-        if 0 not in levels or not set(levels) <= {0, 1, 2}:
-            raise ValueError('LOD0 is required; supported levels are 0, 1, 2')
+        if 0 not in levels or not set(levels) <= {0, 1, 2, 3}:
+            raise ValueError('LOD0 is required; supported levels are 0, 1, 2, 3')
         for level, geometry in sorted(levels.items()):
             children = emit(geometry)
             index = len(document['nodes'])

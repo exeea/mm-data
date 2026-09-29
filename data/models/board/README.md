@@ -55,8 +55,18 @@ no rock or scatter geometry is generated in-game.
   unchanged (366Ã¢â‚¬â€œ480 triangles). The original remains available for close
   transparent trees. The two distant meshes have 238Ã¢â‚¬â€œ240 and 94Ã¢â‚¬â€œ96 triangles,
   retaining the source coordinates, bounds, material roles and shared textures.
+  A `-lod3` group holds the plant's impostor: two crossed vertical cards and a
+  horizontal cap through the crown, 12 triangles with their backs, textured by
+  `textures/foliage/impostors/<name>.png` (three 128 by 128 unlit renders of
+  LOD0 from the front, the side and above, the game's raw albedo before lighting,
+  with edge colours dilated for the cutout). Shrubs and orchard trees carry the
+  same level; `prepare_tree_lods.py -- impostors` refreshes it for all of them.
   The manifest records every level; screen-pixel thresholds live in Java's
   `TreeLod`, so no camera or game state is baked into these assets.
+- Every plant's origin is the foot of its trunk, where the board places, grounds and
+  clears roads for it; a leaning crown (bent palm, willow) overhangs to one side.
+  `tools/build_board_assets.py` centres plants there, and textures keep their
+  bounding-box projection.
 - `textures/foliage/`: nine shared 64 by 64 detail albedos for broad leaves,
   pine needles, hanging willow leaves, palm fronds, ordinary bark, birch bark,
   ringed palm bark, ribbed cactus stems and snow. Source material boundaries keep snow caps separate
@@ -101,7 +111,7 @@ no rock or scatter geometry is generated in-game.
   `tools/cliff-texture-prompts.json`. Optional grayscale `NAME-height.png` sources
   supply authored geometry; otherwise height is an artistic approximation from
   source luminance. No baking or height estimation runs in the game. These maps
-  are separate from top tiles, upper rims, cornices, buildings and water beds.
+  are separate from top tiles, upper rims, buildings and water beds.
 - `textures/bed.png`: a 128 by 128 silt, sand and pebble riverbed albedo;
   water reflections and animation remain in the separate water surface.
 - `textures/*-rim.png`: six 128 by 128 pale material-detail maps for grass,
@@ -283,7 +293,7 @@ their uneven lower silhouette.
 ## Plant GLB packaging
 
 Each of the 22 plant variants has one GLB, for example `pine.glb`, containing
-identity groups `pine-lod0`, `pine-lod1`, `pine-lod2`. Their authored geometry,
+identity groups `pine-lod0`, `pine-lod1`, `pine-lod2` and the impostor `pine-lod3`. Their authored geometry,
 UVs and material roles are preserved. The runtime chooses one level and resolves
 missing optional levels toward LOD0 once while loading. Foliage PNGs remain
 external under `textures/foliage`, shared by all variants and levels.

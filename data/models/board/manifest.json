@@ -27,6 +27,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "tree-lod2"
+      },
+      {
+        "node": "tree-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "tree.glb"
@@ -50,6 +55,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "pine-lod2"
+      },
+      {
+        "node": "pine-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "pine.glb"
@@ -73,6 +83,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "tree-snow-lod2"
+      },
+      {
+        "node": "tree-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "tree-snow.glb"
@@ -96,6 +111,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "pine-snow-lod2"
+      },
+      {
+        "node": "pine-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "pine-snow.glb"
@@ -119,6 +139,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "palm-lod2"
+      },
+      {
+        "node": "palm-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "palm.glb"
@@ -142,6 +167,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "palm-bent-lod2"
+      },
+      {
+        "node": "palm-bent-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "palm-bent.glb"
@@ -165,6 +195,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "tree-broad-lod2"
+      },
+      {
+        "node": "tree-broad-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "tree-broad.glb"
@@ -188,6 +223,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "tree-broad-snow-lod2"
+      },
+      {
+        "node": "tree-broad-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "tree-broad-snow.glb"
@@ -211,6 +251,11 @@
         "triangles": 94,
         "vertices": 282,
         "node": "tree-slender-lod2"
+      },
+      {
+        "node": "tree-slender-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "tree-slender.glb"
@@ -234,6 +279,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "tree-slender-snow-lod2"
+      },
+      {
+        "node": "tree-slender-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "tree-slender-snow.glb"
@@ -257,6 +307,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "birch-lod2"
+      },
+      {
+        "node": "birch-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "birch.glb"
@@ -280,6 +335,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "birch-snow-lod2"
+      },
+      {
+        "node": "birch-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "birch-snow.glb"
@@ -303,6 +363,11 @@
         "triangles": 94,
         "vertices": 282,
         "node": "willow-lod2"
+      },
+      {
+        "node": "willow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "willow.glb"
@@ -326,6 +391,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "willow-snow-lod2"
+      },
+      {
+        "node": "willow-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "willow-snow.glb"
@@ -349,6 +419,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "pine-tall-lod2"
+      },
+      {
+        "node": "pine-tall-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "pine-tall.glb"
@@ -372,6 +447,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "pine-tall-snow-lod2"
+      },
+      {
+        "node": "pine-tall-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "pine-tall-snow.glb"
@@ -395,6 +475,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "cactus-lod2"
+      },
+      {
+        "node": "cactus-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "cactus.glb"
@@ -418,6 +503,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "cactus-flowers-lod2"
+      },
+      {
+        "node": "cactus-flowers-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "cactus-flowers.glb"
@@ -441,6 +531,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "pine-broad-lod2"
+      },
+      {
+        "node": "pine-broad-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "pine-broad.glb"
@@ -464,6 +559,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "pine-broad-snow-lod2"
+      },
+      {
+        "node": "pine-broad-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "pine-broad-snow.glb"
@@ -487,6 +587,11 @@
         "triangles": 94,
         "vertices": 282,
         "node": "tree-dead-lod2"
+      },
+      {
+        "node": "tree-dead-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "tree-dead.glb"
@@ -510,6 +615,11 @@
         "triangles": 96,
         "vertices": 288,
         "node": "tree-dead-snow-lod2"
+      },
+      {
+        "node": "tree-dead-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ],
     "mesh": "tree-dead-snow.glb"
@@ -884,6 +994,11 @@
         "node": "foliage-temperate-lod2",
         "triangles": 92,
         "vertices": 276
+      },
+      {
+        "node": "foliage-temperate-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -908,6 +1023,11 @@
         "node": "foliage-highland-lod2",
         "triangles": 92,
         "vertices": 276
+      },
+      {
+        "node": "foliage-highland-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -932,6 +1052,11 @@
         "node": "foliage-rocky-lod2",
         "triangles": 92,
         "vertices": 276
+      },
+      {
+        "node": "foliage-rocky-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -956,6 +1081,11 @@
         "node": "foliage-wetland-lod2",
         "triangles": 92,
         "vertices": 276
+      },
+      {
+        "node": "foliage-wetland-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -980,6 +1110,11 @@
         "node": "foliage-desert-lod2",
         "triangles": 94,
         "vertices": 282
+      },
+      {
+        "node": "foliage-desert-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1004,6 +1139,11 @@
         "node": "foliage-jungle-lod2",
         "triangles": 96,
         "vertices": 284
+      },
+      {
+        "node": "foliage-jungle-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1028,6 +1168,11 @@
         "node": "foliage-barren-lod2",
         "triangles": 96,
         "vertices": 272
+      },
+      {
+        "node": "foliage-barren-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1052,6 +1197,11 @@
         "node": "foliage-snow-lod2",
         "triangles": 92,
         "vertices": 276
+      },
+      {
+        "node": "foliage-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1080,6 +1230,11 @@
         "node": "orchard-round-lod2",
         "triangles": 72,
         "vertices": 216
+      },
+      {
+        "node": "orchard-round-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1104,6 +1259,11 @@
         "node": "orchard-round-snow-lod2",
         "triangles": 72,
         "vertices": 216
+      },
+      {
+        "node": "orchard-round-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1128,6 +1288,11 @@
         "node": "orchard-spreading-lod2",
         "triangles": 72,
         "vertices": 216
+      },
+      {
+        "node": "orchard-spreading-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1152,6 +1317,11 @@
         "node": "orchard-spreading-snow-lod2",
         "triangles": 72,
         "vertices": 216
+      },
+      {
+        "node": "orchard-spreading-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1176,6 +1346,11 @@
         "node": "orchard-upright-lod2",
         "triangles": 72,
         "vertices": 216
+      },
+      {
+        "node": "orchard-upright-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1200,6 +1375,11 @@
         "node": "orchard-upright-snow-lod2",
         "triangles": 72,
         "vertices": 216
+      },
+      {
+        "node": "orchard-upright-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1224,6 +1404,11 @@
         "node": "orchard-vase-lod2",
         "triangles": 64,
         "vertices": 192
+      },
+      {
+        "node": "orchard-vase-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1248,6 +1433,11 @@
         "node": "orchard-vase-snow-lod2",
         "triangles": 64,
         "vertices": 192
+      },
+      {
+        "node": "orchard-vase-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1272,6 +1462,11 @@
         "node": "orchard-leaning-lod2",
         "triangles": 72,
         "vertices": 216
+      },
+      {
+        "node": "orchard-leaning-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1296,6 +1491,11 @@
         "node": "orchard-leaning-snow-lod2",
         "triangles": 72,
         "vertices": 216
+      },
+      {
+        "node": "orchard-leaning-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1320,6 +1520,11 @@
         "node": "orchard-young-lod2",
         "triangles": 72,
         "vertices": 216
+      },
+      {
+        "node": "orchard-young-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   },
@@ -1344,6 +1549,11 @@
         "node": "orchard-young-snow-lod2",
         "triangles": 72,
         "vertices": 216
+      },
+      {
+        "node": "orchard-young-snow-lod3",
+        "triangles": 12,
+        "vertices": 12
       }
     ]
   }

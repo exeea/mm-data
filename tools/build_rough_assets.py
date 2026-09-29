@@ -53,7 +53,7 @@ def export(name, geometry):
              'materials': materials,
              'nodes': [{'id': name, 'parts': [{'meshpartid': role, 'materialid': role} for role in parts]}]}
     OUT.mkdir(parents=True, exist_ok=True)
-    write_glb(OUT / (name + '.glb'), model)
+    write_glb(OUT / (name + '.glb'), levels={0: model})
     print(f'{name}: {len(geometry.faces)} triangles')
     return {'triangles': len(geometry.faces), 'vertices': len(vertices) // 12}
 
