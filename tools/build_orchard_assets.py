@@ -123,6 +123,9 @@ def build():
     manifest_path.write_text(json.dumps(manifest, indent=2) + '\n')
     bpy.context.window.scene = scene
     bpy.context.view_layer.update()
+    for image in bpy.data.images:
+        if image.source == 'FILE':
+            image.filepath = bpy.path.relpath(image.filepath, start=str(ROOT / 'tools'))
     bpy.ops.wm.save_as_mainfile(filepath=str(ROOT / 'tools/board-orchards.blend'), copy=True)
     print(json.dumps(summary), flush=True)
 

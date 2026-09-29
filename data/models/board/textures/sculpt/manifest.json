@@ -67,6 +67,26 @@
       "tile": 8.0,
       "role": "wall",
       "seed": 304
+    },
+    "soil-contact": {
+      "tile": 2.0,
+      "role": "mantle",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/soil.png",
+      "source_sha256": "80380cf74f06c683bdeb1b67473adc6e0b8e95adf7f1f5aa9f82b1350a7b8cf3",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.012
+    },
+    "granite-contact": {
+      "tile": 4.0,
+      "role": "wall",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/granite.png",
+      "source_sha256": "52aac005ca460fe821593290b188b21dce48f75a3cb3d1238c23f9f7cf63f590",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.04
     }
   }
 }

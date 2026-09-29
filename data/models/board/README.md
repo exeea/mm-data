@@ -10,18 +10,21 @@ directory with the game's data. Blender is an authoring dependency only.
   editable rock variants. Each contains three root nodes named `block-N-lod0`,
   `block-N-lod1`, `block-N-lod2` (or `boulder-N-lod0`, etc.). The library has 48
   meshes and 1,572 triangles. Rough terrain, rims, slopes and cliffs share these files.
-- `scatter.glb` contains 26 root nodes: `stone-block-N-lod0` and
-  `stone-boulder-N-lod0` (eight triangles each, open base), `bush-N-lod0` (eight
-  shrub masses), `grass-lod0` (six triangles) and `plant-lod0` (sixteen).
+- `scatter/` contains 26 independently editable GLBs: `stone-block-N.glb` and
+  `stone-boulder-N.glb` (N = 0..7, eight triangles each, open base), `bush-N.glb`
+  (N = 0..7, shrub masses), `grass.glb` (six triangles) and `plant.glb` (sixteen).
+  Each file contains only its `<shape>-lod0` root mesh (for example, `grass-lod0`)
+  and that mesh's vertices.
   The complete scatter kit has 498 triangles. Grass and plants have explicit
   back faces; green and dry grass share geometry.
 
-LOD0 is the most detailed version of that shape. LOD1 and LOD2 are optional;
+For terrain rocks, LOD0 is the most detailed version. LOD1 and LOD2 are optional;
 the loader resolves missing levels once as LOD2 -> LOD1 -> LOD0, sharing the
 existing mesh. LOD0 is required. Fallback stays within one shape and file,
-so a scatter stone can never select a larger terrain rock. Scatter currently
-uses only LOD0. Terrain's first two sampling bands use rock LOD0; subsequent
-bands use rock LOD1 and LOD2, preserving the established screen-size thresholds.
+so a scatter stone can never select a larger terrain rock. Scatter uses only
+LOD0 and does not load additional levels. Terrain's first two sampling bands use
+rock LOD0; subsequent bands use rock LOD1 and LOD2, preserving the established
+screen-size thresholds.
 
 These files are the editable mesh source, baked from the original Java shapes.
 Import/export one file in Blender as uncompressed GLB, preserving names, triangle
