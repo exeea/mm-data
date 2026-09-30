@@ -53,14 +53,24 @@ no rock or scatter geometry is generated in-game.
 - Each tree GLB contains `-lod0`, `-lod1`, and `-lod2` groups. The near opaque mesh
   removes only fully enclosed faces and keeps the surviving vertex attributes
   unchanged (366Ã¢â‚¬â€œ480 triangles). The original remains available for close
-  transparent trees. The two distant meshes have 238Ã¢â‚¬â€œ240 and 94Ã¢â‚¬â€œ96 triangles,
+  transparent trees. The two distant meshes have up to 240 and 96 triangles,
   retaining the source coordinates, bounds, material roles and shared textures.
+  Pines and palms, whose jagged skirts and fronds collapse decimation would
+  file away, simplify each compact part as its convex hull instead; each hull
+  triangle takes the material of the original surface it replaces, so the
+  snow stays on the skirts.
   A `-lod3` group holds the plant's impostor: two crossed vertical cards and a
   horizontal cap through the crown, 12 triangles with their backs, textured by
   `textures/foliage/impostors/<name>.png` (three 128 by 128 unlit renders of
-  LOD0 from the front, the side and above, the game's raw albedo before lighting,
-  with edge colours dilated for the cutout). Shrubs and orchard trees carry the
-  same level; `prepare_tree_lods.py -- impostors` refreshes it for all of them.
+  LOD0 from the front and the side, both 30 degrees above the plant, and from
+  above: the game's raw albedo before lighting, the detail texel times the
+  display-space vertex colour, with edge colours dilated for the cutout). Each
+  card side's normal is the mean normal of the surfaces its render shows, so the
+  cards take the light as the plant does. The cards' vertex colour carries how
+  the plant takes the sun: red, the share of direct light its own leaves let
+  through; green, the share of bark, cactus or snow the card shows. Shrubs and
+  orchard trees carry the same level; `prepare_tree_lods.py -- impostors`
+  refreshes it for all of them.
   The manifest records every level; screen-pixel thresholds live in Java's
   `TreeLod`, so no camera or game state is baked into these assets.
 - Every plant's origin is the foot of its trunk, where the board places, grounds and

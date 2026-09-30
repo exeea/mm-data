@@ -3,7 +3,9 @@
 Keep the near mesh's visible triangles and their exact attributes. Remove only
 triangles strictly enclosed in another closed component, with no intersection
 with that component's surface. Generate the smaller, textured meshes offline;
-the renderer never simplifies geometry or changes tree placement.
+the renderer never simplifies geometry or changes tree placement. Pines and
+palms, whose jagged outlines collapse decimation files away, simplify each
+compact part as its convex hull instead.
 
 The impostor stage adds LOD3 to every plant with detail levels (trees, shrubs
 and orchard trees): three textured cards carrying unlit renders of LOD0.
@@ -11,7 +13,7 @@ and orchard trees): three textured cards carrying unlit renders of LOD0.
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from glb_geometry import linear, read_glb, write_glb
+from glb_geometry import read_glb, write_glb
 
 import collections
 import copy
@@ -19,9 +21,10 @@ import json
 import math
 from pathlib import Path
 
+import bmesh
 import bpy
 import numpy
-from mathutils import Euler, Vector
+from mathutils import Euler, Matrix, Vector
 from mathutils.bvhtree import BVHTree
 
 BOARD = Path(__file__).resolve().parents[1] / 'data/models/board'
@@ -121,21 +124,18 @@ def pack(source, name, corners):
     return model
 
 
-def simplified(source, name, budget):
-    vertices, faces, corners = geometry(source)
-    mesh = bpy.data.meshes.new(name)
+def decimated(vertices, faces, keys, budget):
+    """Blender's collapse decimation of faces to about budget triangles, each as its corners, material key and normal."""
+    mesh = bpy.data.meshes.new('Tree screen-size detail')
     mesh.from_pydata(vertices, [], faces)
     mesh.update()
-    obj = bpy.data.objects.new(name, mesh)
+    obj = bpy.data.objects.new(mesh.name, mesh)
     bpy.context.scene.collection.objects.link(obj)
-    materials, roles = {}, []
-    for polygon, (role, attributes) in zip(mesh.polygons, corners):
-        key = (role, tuple(attributes[0][6:10]))
-        if key not in materials:
-            materials[key] = len(roles)
-            roles.append(key)
-            mesh.materials.append(bpy.data.materials.new(role))
-        polygon.material_index = materials[key]
+    order = {key: index for index, key in enumerate(dict.fromkeys(keys))}
+    for role, color in order:
+        mesh.materials.append(bpy.data.materials.new(role))
+    for polygon, key in zip(mesh.polygons, keys):
+        polygon.material_index = order[key]
     bpy.context.view_layer.objects.active = obj
     obj.select_set(True)
     modifier = obj.modifiers.new('Tree screen-size detail', 'DECIMATE')
@@ -144,16 +144,116 @@ def simplified(source, name, budget):
     bpy.ops.object.modifier_apply(modifier=modifier.name)
     mesh = obj.data
     mesh.calc_loop_triangles()
+    keys = list(order)
+    result = [([mesh.vertices[index].co.copy() for index in triangle.vertices], keys[triangle.material_index],
+               triangle.normal.copy()) for triangle in mesh.loop_triangles]
+    bpy.data.objects.remove(obj, do_unlink=True)
+    bpy.data.meshes.remove(mesh)
+    return result
+
+
+def parts(count, faces):
+    """The faces of each connected part of a plant: its trunk, a skirt of needles, a frond."""
+    root = list(range(count))
+
+    def find(vertex):
+        while root[vertex] != vertex:
+            root[vertex] = root[root[vertex]]
+            vertex = root[vertex]
+        return vertex
+
+    for face in faces:
+        for vertex in face[1:]:
+            root[find(vertex)] = find(face[0])
+    groups = {}
+    for index, face in enumerate(faces):
+        groups.setdefault(find(face[0]), []).append(index)
+    return list(groups.values())
+
+
+def hull(vertices, faces):
+    """The triangulated convex hull of the corners of faces: its positions and triangles."""
+    bm = bmesh.new()
+    made = bmesh.ops.convex_hull(bm, input=[bm.verts.new(vertices[v]) for v in sorted({v for f in faces for v in f})])
+    inside = {element for element in made['geom_interior'] + made['geom_unused'] if isinstance(element, bmesh.types.BMVert)}
+    bmesh.ops.delete(bm, geom=list(inside), context='VERTS')
+    bmesh.ops.triangulate(bm, faces=bm.faces[:])
+    index = {vertex: i for i, vertex in enumerate(bm.verts)}
+    result = [vertex.co.copy() for vertex in bm.verts], [[index[vertex] for vertex in face.verts] for face in bm.faces]
+    bm.free()
+    return result
+
+
+def area(vertices, faces):
+    return sum((vertices[f[1]] - vertices[f[0]]).cross(vertices[f[2]] - vertices[f[0]]).length for f in faces) / 2
+
+
+# The board camera's views of a plant: from 35 degrees above on four sides, and from straight above.
+OUTLINE = [Vector((math.cos(turn) * math.cos(math.radians(35)), math.sin(turn) * math.cos(math.radians(35)),
+                   math.sin(math.radians(35)))) for turn in (0, math.pi / 2, math.pi, 3 * math.pi / 2)] + [Vector((0, 0, 1))]
+
+
+def outline(triangles):
+    """How much of a plant the board camera sees: the area its triangles turn toward the camera's views."""
+    return sum(max(0, (b - a).cross(c - a).dot(view)) for a, b, c in triangles for view in OUTLINE) / 2
+
+
+def keeps_outline(source, budget):
+    """Whether collapse decimation to budget keeps two thirds of the plant's outline. The jagged skirts of pines and
+    the fronds of palms lose half theirs, and the snow on them with it; broad crowns, trunks and cacti keep most."""
+    vertices, faces, corners = geometry(source)
+    keys = [(role, tuple(attributes[0][6:10])) for role, attributes in corners]
+    kept = outline([points for points, key, normal in decimated(vertices, faces, keys, budget)])
+    return kept >= outline([[vertices[v] for v in face] for face in faces]) * 2 / 3
+
+
+def surface_keys(vertices, faces, keys, triangles):
+    """Gives each new triangle the material of the original surface it replaces: the nearest original face turned the
+    same way, at its centre and toward its corners, so a skirt's top keeps its snow and its underside its needles."""
+    tree = BVHTree.FromPolygons(vertices, faces, all_triangles=True)
+    normals = [(vertices[f[1]] - vertices[f[0]]).cross(vertices[f[2]] - vertices[f[0]]).normalized() for f in faces]
+    reach = max(max(point[i] for point in vertices) - min(point[i] for point in vertices) for i in range(3)) * .15
+    result = []
+    for points, key, normal in triangles:
+        centre = sum(points, Vector()) / 3
+        votes = collections.Counter()
+        for sample in [centre] + [(centre + point) / 2 for point in points]:
+            near = sorted(tree.find_nearest_range(sample, reach), key=lambda hit: hit[3])
+            hit = next((hit for hit in near if normals[hit[2]].dot(normal) > 0), None) or tree.find_nearest(sample)
+            votes[keys[hit[2]]] += 1
+        result.append((points, votes.most_common(1)[0][0], normal))
+    return result
+
+
+def simplified(source, name, budget, hulled):
+    vertices, faces, corners = geometry(source)
+    keys = [(role, tuple(attributes[0][6:10])) for role, attributes in corners]
+    if not hulled:
+        triangles = decimated(vertices, faces, keys, budget)
+    else:
+        # Each compact part (a pine skirt, a palm frond) keeps its outline as its decimated convex hull, which holds
+        # the tips decimation files away. Parts whose hull would bloat (trunks, branches) decimate together.
+        triangles, rest = [], []
+        for part in parts(len(vertices), faces):
+            part_faces = [faces[i] for i in part]
+            positions, shell = hull(vertices, part_faces)
+            if area(positions, shell) < 1.3 * area(vertices, part_faces):
+                share = max(4, budget * len(part) // len(faces))
+                # Any key will do: the surface decides each hull triangle's material below.
+                triangles += decimated(positions, shell, [keys[part[0]]] * len(shell), share)
+            else:
+                rest += part
+        triangles = surface_keys(vertices, faces, keys, triangles)
+        if rest:
+            triangles += decimated(vertices, [faces[i] for i in rest], [keys[i] for i in rest],
+                                   budget * len(rest) // len(faces))
     result = []
     low = Vector(tuple(min(point[i] for point in vertices) for i in range(3)))
     high = Vector(tuple(max(point[i] for point in vertices) for i in range(3)))
-    for triangle in mesh.loop_triangles:
-        role, color = roles[triangle.material_index]
-        normal = triangle.normal
+    for points, (role, color), normal in triangles:
         n = normal.normalized()
         attributes = []
-        for index in triangle.vertices:
-            point = mesh.vertices[index].co
+        for point in points:
             # All levels share the near model's coordinate system and bounds.
             point = Vector(tuple(max(low[i], min(high[i], point[i])) for i in range(3)))
             if abs(normal.z) >= max(abs(normal.x), abs(normal.y)):
@@ -164,8 +264,6 @@ def simplified(source, name, budget):
             attributes.append(tuple(round(v, 6) for v in
                                     (point.x, point.y, point.z, *n, *color, uv[0] / repeat, uv[1] / repeat)))
         result.append((role, attributes))
-    bpy.data.objects.remove(obj, do_unlink=True)
-    bpy.data.meshes.remove(mesh)
     assert len(result) <= budget, (name, len(result), budget)
     return pack(source, name, result)
 
@@ -198,12 +296,15 @@ def prepare(only=None):
             entry['mesh'] = name + '.glb'
             entry['lods'] = [{'node': near_name, **counts(near)}]
             levels = {0: near}
-            for level, budget in enumerate(BUDGETS, 1):
+            budgets = [min(budget, entry['triangles'] // (2 if level == 1 else 5))
+                       for level, budget in enumerate(BUDGETS, 1)]
+            # Decided once from the farthest level, so every level of a plant keeps one shape.
+            hulled = not keeps_outline(source, budgets[-1])
+            for level, budget in enumerate(budgets, 1):
                 asset = f'{name}-lod{level}'
-                budget = min(budget, entry['triangles'] // (2 if level == 1 else 5))
                 # Simplify the closed original, so enclosed surfaces cannot leave
                 # holes when the distant canopy changes shape.
-                model = simplified(source, asset, budget)
+                model = simplified(source, asset, budget, hulled)
                 levels[level] = model
                 entry['lods'].append({'node': asset, **counts(model)})
             write_glb(BOARD / (name + '.glb'), levels=levels)
@@ -269,7 +370,9 @@ def unlit_mesh(model, name, images):
             for index in part['indices'][offset:offset + 3]:
                 vertex = source[index * 12:index * 12 + 12]
                 vertices.append(vertex[:3])
-                colors.append([linear(c) for c in vertex[6:9]] + [vertex[9]])
+                # terrain-foliage.frag multiplies the texel by the display-space colour before converting to linear;
+                # the float attribute and the Raw render pass it through unchanged, so it stays display-space here.
+                colors.append(vertex[6:10])
                 uvs.append((vertex[10], 1 - vertex[11]))
     data = bpy.data.meshes.new(name)
     data.from_pydata(vertices, [], faces)
@@ -305,8 +408,10 @@ def crown(model, low, high):
 # The board camera looks down at trees, so the vertical cards show the plant from this elevation: the canopy then
 # covers the trunk as it would in three dimensions, while the cap alone shows from straight above.
 ELEVATION = math.radians(30)
-# The turns that bring each card's face toward a camera at -y: the front and side faces, then the top.
-FACES = (Euler((ELEVATION, 0, 0)), Euler((ELEVATION, 0, -math.pi / 2)), Euler((math.pi / 2, 0, 0)))
+# The turns that bring each card's face toward a camera at -y: the front and side faces, each turned about the
+# plant's axis before it tips toward the camera (tipping first would roll the side view), then the top.
+FACES = tuple((Matrix.Rotation(ELEVATION, 3, 'X') @ Matrix.Rotation(turn, 3, 'Z')).to_euler()
+              for turn in (0, -math.pi / 2)) + (Euler((math.pi / 2, 0, 0)),)
 
 
 def framing(turn, low, high):
@@ -367,6 +472,57 @@ def render_faces(scene, model, name, images, panels):
     bpy.data.images.remove(atlas)
 
 
+def shown_normal(model, toward):
+    """The mean lighting normal of the surfaces LOD0 turns toward a camera, weighted by their projected area."""
+    mesh = model['meshes'][0]
+    vertices = mesh['vertices']
+    total = Vector()
+    for part in mesh['parts']:
+        for offset in range(0, len(part['indices']), 3):
+            corners = [vertices[i * 12:i * 12 + 12] for i in part['indices'][offset:offset + 3]]
+            a, b, c = (Vector(corner[:3]) for corner in corners)
+            shown = (b - a).cross(c - a).dot(toward) / 2
+            if shown > 0:
+                total += sum((Vector(corner[3:6]) for corner in corners), Vector()) * shown
+    return total.normalized()
+
+
+# The sun directions the board's lighting spans: three elevations all round.
+SUNS = [Vector((math.cos(turn) * math.cos(elevation), math.sin(turn) * math.cos(elevation), math.sin(elevation)))
+        for elevation in map(math.radians, (30, 50, 70)) for turn in (i * math.pi / 4 for i in range(8))]
+
+
+def lighting(model, toward):
+    """How the surfaces LOD0 shows toward a camera take the sun, as terrain-foliage.frag lights them over the board's
+    sun directions: the share of direct light that gets past the plant's own leaves and branches, and the share of
+    what shows that is bark, cactus or snow, which take light straight on where leaves scatter it around. A card
+    standing inside its crown cannot take that shade from the shadow map, which would shade it with its own cards."""
+    vertices, faces, corners = geometry(model)
+    tree = BVHTree.FromPolygons(vertices, faces, all_triangles=True)
+    lit = total = hard = seen = 0
+    for face, (role, attributes) in zip(faces, corners):
+        a, b, c = (vertices[i] for i in face)
+        normal = (b - a).cross(c - a)
+        shown = normal.dot(toward) / 2
+        if shown <= 0:
+            continue
+        normal.normalize()
+        leaves = not solid(role) and role != 'snow'
+        for u, v in ((1 / 3, 1 / 3), (2 / 3, 1 / 6), (1 / 6, 2 / 3), (1 / 6, 1 / 6)):
+            point = a + (b - a) * u + (c - a) * v + normal * .01
+            # A point behind the plant's nearer parts does not show on the card.
+            if tree.ray_cast(point, toward)[0] is not None:
+                continue
+            seen += shown
+            hard += 0 if leaves else shown
+            for sun in SUNS:
+                weight = shown * max(0, .6 * normal.dot(sun) + .4 if leaves else normal.dot(sun))
+                total += weight
+                if weight and tree.ray_cast(point, sun)[0] is None:
+                    lit += weight
+    return (lit / total if total else 1), (hard / seen if seen else 0)
+
+
 def impostor(scene, model, name, images):
     """LOD3: two crossed vertical cards and a horizontal cap through the crown, textured with unlit orthographic
     renders of LOD0 from the front, the side and above. Fixed in the plant's frame, it draws, shadows and picks like
@@ -380,19 +536,27 @@ def impostor(scene, model, name, images):
                ((0, low[1], low[2]), (0, high[1], low[2]), (0, high[1], high[2]), (0, low[1], high[2])),
                ((low[0], low[1], cap), (high[0], low[1], cap), (high[0], high[1], cap), (low[0], high[1], cap)))
     for panel, (quad, turn, (size, centre)) in enumerate(zip(corners, FACES, panels)):
-        base = len(vertices) // 12
         rotation = turn.to_matrix()
-        for point in quad:
-            # Every card is lit as the top of one canopy: a normal that varied across a flat card would darken the
-            # half turned from the light while it stays in view, and one within the card's plane grazes every light.
-            normal = Vector((0, 0, 1))
-            # Each corner maps to where the render placed it, in the camera's right and up axes.
-            seen = rotation @ Vector(point)
-            u = (panel + .5 + (seen.x - centre.x) / size) / 3
-            v = .5 - (seen.z - centre.z) / size
-            vertices.extend(round(value, 6) for value in (*point, *normal, 1, 1, 1, 1, u, v))
-        indices.extend((base, base + 1, base + 2, base, base + 2, base + 3,
-                        base, base + 2, base + 1, base, base + 3, base + 2))
+        # Each side is lit like the surfaces its render shows, by their mean normal: not straight up (a sky-facing
+        # card outshines a cactus's walls) and constant across the side (a normal that varied across a flat card
+        # would darken the half turned from the light while it stays in view). The back shows the same render
+        # mirrored, so its normal mirrors through the card.
+        toward = rotation.transposed() @ Vector((0, -1, 0))
+        front = shown_normal(model, toward)
+        # The colour carries how the card takes the sun: the share its plant's own leaves let through, and how much of
+        # what it shows is bark, cactus or snow.
+        sunlit, hard = lighting(model, toward)
+        plane = (Vector(quad[1]) - Vector(quad[0])).cross(Vector(quad[2]) - Vector(quad[0])).normalized()
+        for side, normal in enumerate((front, front - 2 * front.dot(plane) * plane)):
+            base = len(vertices) // 12
+            for point in quad:
+                # Each corner maps to where the render placed it, in the camera's right and up axes.
+                seen = rotation @ Vector(point)
+                u = (panel + .5 + (seen.x - centre.x) / size) / 3
+                v = .5 - (seen.z - centre.z) / size
+                vertices.extend(round(value, 6) for value in (*point, *normal, sunlit, hard, 1, 1, u, v))
+            indices.extend((base, base + 2, base + 1, base, base + 3, base + 2) if side
+                           else (base, base + 1, base + 2, base, base + 2, base + 3))
     asset = f'{name}-lod3'
     return {'id': asset,
             'meshes': [{'attributes': ['POSITION', 'NORMAL', 'COLOR', 'TEXCOORD0'], 'vertices': vertices,
