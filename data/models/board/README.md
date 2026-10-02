@@ -10,6 +10,10 @@ directory with the game's data. Blender is an authoring dependency only.
   editable rock variants. Each contains three root nodes named `block-N-lod0`,
   `block-N-lod1`, `block-N-lod2` (or `boulder-N-lod0`, etc.). The library has 48
   meshes and 1,572 triangles. Rough terrain, rims, slopes and cliffs share these files.
+- `rocks/outcrop-N.glb` (N = 0..7) are the bedrock formations zero-gravity rough
+  shows instead of boulders, in the same layout (`outcrop-N-lod0` to `-lod2`; 92, 44
+  and 22 triangles). Unlike the other rocks they are generated: rebuild them with
+  `blender -b --factory-startup --python tools/build_outcrop_assets.py`.
 - `scatter/` contains 26 independently editable GLBs: `stone-block-N.glb` and
   `stone-boulder-N.glb` (N = 0..7, eight triangles each, open base), `bush-N.glb`
   (N = 0..7, shrub masses), `grass.glb` (six triangles) and `plant.glb` (sixteen).

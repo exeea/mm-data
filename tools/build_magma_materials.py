@@ -23,15 +23,16 @@ from prepare_cliff_materials import blur, normal_map, periodic, pixels
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / 'data/models/board/textures/magma'
+SOURCES = ROOT / 'tools/magma-reference'
 SIZE = 1024
 REPEAT = 12.0
 
 
-def prepare(name):
+def prepare(name, sources=SOURCES):
     molten = name == 'lava'
     canvas = Canvas(SIZE, REPEAT, 92817 if molten else 92816)
     broad = canvas.spectral(3, 1, 7)
-    source = ROOT / 'tools/magma-reference' / f'{name}-source.png'
+    source = sources / f'{name}-source.png'
     with Image.open(source) as image:
         rgb = np.asarray(image.convert('RGB').resize((SIZE, SIZE), Image.Resampling.LANCZOS)) / 255.0
     # Colour, rather than brightness, identifies heat. A bright gray mineral stays cold,
@@ -104,7 +105,13 @@ def validate(name, maps):
     assert np.array_equal(expected, maps[f'{name}-normal.png']), f'{name}: normal/height mismatch'
     assert np.ptp(surface[..., 1]) > 40 and surface[..., 2].min() < 240
     heat = maps[f'{name}-heat.png'][..., 0] / 255
-    assert .02 < np.mean(heat > .2) < .6, f'{name}: preserve both cold basalt and readable hot fissures'
+    coverage = np.mean(heat > .2)
+    if name == 'lava':
+        # Active molten rivers may be mostly incandescent. Keep some cooled skin,
+        # without imposing the solid crust's fissure-dominated coverage on liquid.
+        assert .15 < coverage < .95, 'lava: preserve broad hot melt and some cooled rafts'
+    else:
+        assert .02 < coverage < .6, f'{name}: preserve both cold basalt and readable hot fissures'
     if name == 'crust':
         assert np.mean(heat == 0) > .7, 'crust: most of the solid basalt must remain cold'
         assert np.mean(heat > .05) < .22, 'crust: heat belongs in fissures, not across the plate faces'
@@ -121,11 +128,16 @@ def validate(name, maps):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--source-dir', type=Path, default=SOURCES,
+                        help='Input crust/lava sources; defaults to the checked-in references')
+    parser.add_argument('--output-dir', type=Path, default=OUTPUT,
+                        help='Destination maps; allows reviewing a candidate without replacing runtime assets')
     args = parser.parse_args()
     manifest = {
         'generator': 'tools/build_magma_materials.py', 'size': SIZE, 'repeat_metres': REPEAT,
-        'reference': 'tools/magma-reference/concept.png', 'height_source': 'estimated basalt relief and recessed heat mask',
-        'sources_sha256': {name: hashlib.sha256((ROOT / 'tools/magma-reference' / f'{name}-source.png').read_bytes()).hexdigest()
+        'references': ['tools/magma-reference/crust-source.png', 'tools/magma-reference/lava-source.png'],
+        'height_source': 'estimated basalt relief and recessed heat mask',
+        'sources_sha256': {name: hashlib.sha256((args.source_dir / f'{name}-source.png').read_bytes()).hexdigest()
                            for name in ('crust', 'lava')},
         'maps': {'albedo': 'sRGB reflectance', 'normal': 'linear tangent normal: U right, V down',
                  'surface': 'R height, G roughness, B occlusion, A relief UV / .1',
@@ -133,19 +145,21 @@ def main():
         'metalness': 0, 'opacity': 1, 'materials': ['crust', 'lava'],
     }
     if not args.check:
-        OUTPUT.mkdir(parents=True, exist_ok=True)
+        args.output_dir.mkdir(parents=True, exist_ok=True)
     for name in manifest['materials']:
-        maps = prepare(name)
+        maps = prepare(name, args.source_dir)
         validate(name, maps)
         for filename, data in maps.items():
-            path = OUTPUT / filename
+            path = args.output_dir / filename
             if args.check:
                 with Image.open(path) as image:
                     assert np.array_equal(np.asarray(image), data), f'Stale material: {path}'
             else:
                 Image.fromarray(data).save(path, optimize=True)
-        print(f'{name}: validated albedo, normal, height, roughness, AO, emission and flow ({SIZE}px)')
-    path = OUTPUT / 'manifest.json'
+        coverage = np.mean(maps[f'{name}-heat.png'][..., 0] / 255 > .2)
+        print(f'{name}: validated albedo, normal, height, roughness, AO, emission and flow '
+              f'({SIZE}px, {coverage:.1%} hot coverage)')
+    path = args.output_dir / 'manifest.json'
     if args.check:
         assert json.loads(path.read_text()) == manifest, 'Stale magma manifest'
     else:
