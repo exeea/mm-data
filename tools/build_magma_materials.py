@@ -74,13 +74,13 @@ def prepare(name, sources=SOURCES):
         # almost vertical corrugations that make solid rock resemble a liquid skin.
         # Dark, cold fracture walls also descend into the fissure; using heat alone
         # would leave those walls level with the broad gray faces of the slabs.
-        rock_face = smoothstep(.035, .23, blur(basalt, 4))
-        height = .15 + plate * (.15 + .53 * rock_face) + detail * (.055 * plate + .012)
+        rock_face = smoothstep(.035, .23, blur(basalt, 16))
+        height = .15 + plate * (.15 + .53 * rock_face) + detail * (.022 * plate + .006)
     height = pixels(np.clip(blur(height, 1.1), .04, .96)) / 255.0
     # The shader and baked normals decode exactly the same quantized relief range.
     # Active lava carries thin cooling skins. Giving those skins rock-slab depth
     # over-perturbs normals and folds their parallax UVs into artificial marbling.
-    relief = round((.06 if molten else .42) / REPEAT / .1 * 255) / 255
+    relief = round((.06 if molten else .95) / REPEAT / .1 * 255) / 255
     halo = np.clip(blur(heat, 7) * 1.9, 0, 1) if molten else np.clip(blur(heat, 2.5) * 1.2, 0, 1)
     # Pigment is deliberately dark and neutral; all incandescent orange comes from the
     # emission map in the renderer, independent of sun, shadows, weather and occlusion.
