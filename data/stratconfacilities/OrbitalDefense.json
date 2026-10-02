@@ -16,16 +16,29 @@
 # affiliated with Microsoft.
 
 {
-"owner": "Opposing",
-"displayableName": "Space Port",
-"facilityType": "SpacePort",
-"userDescription": "Hostile forces on this track are significantly larger due to improved logistics.",
-"visible": false,
-"sharedModifiers": [
-"HostileBVBudgetIncrease.json"
-],
-"localModifiers": [
-"HostileBVBudgetIncrease.json"
-],
-"capturedDefinition": "AlliedSpacePort.json"
+  "id": "OrbitalDefense",
+  "displayableName": "Orbital Defense",
+  "facilityType": "OrbitalDefense",
+  "alliedProfile": {
+    "description": "No air or space battles take place in this sector.",
+    "effects": [
+      {
+        "effect": "preventAerospace"
+      }
+    ]
+  },
+  "hostileProfile": {
+    "description": "No air or space battles take place in this sector, and an additional hostile Mek joins ground scenarios.",
+    "effects": [
+      {
+        "effect": "sharedModifiers",
+        "modifiers": [
+          "EnemyOfficerMek.json"
+        ]
+      },
+      {
+        "effect": "preventAerospace"
+      }
+    ]
+  }
 }

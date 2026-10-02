@@ -16,11 +16,31 @@
 # affiliated with Microsoft.
 
 {
-"owner": "Allied",
-"displayableName": "Orbital Defense",
-"facilityType": "OrbitalDefense",
-"userDescription": "Prevents hostile air units from operating on this track.",
-"visible": true,
-"capturedDefinition": "HostileOrbitalDefense.json",
-"preventAerospace": true
+  "id": "DataCenter",
+  "displayableName": "Data Center",
+  "facilityType": "DataCenter",
+  "alliedProfile": {
+    "description": "Increases the scan range of all friendly forces by 1.",
+    "effects": [
+      {
+        "effect": "scanRange",
+        "value": 1
+      }
+    ]
+  },
+  "hostileProfile": {
+    "description": "An additional hostile Mek patrol will sweep through scenarios in this sector.",
+    "effects": [
+      {
+        "effect": "sharedModifiers",
+        "modifiers": [
+          "EnemyMekPatrol.json"
+        ]
+      },
+      {
+        "effect": "scenarioOdds",
+        "value": 5
+      }
+    ]
+  }
 }

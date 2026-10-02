@@ -16,16 +16,31 @@
 # affiliated with Microsoft.
 
 {
-"owner": "Allied",
-"displayableName": "Mek Base",
-"facilityType": "MekBase",
-"userDescription": "Allied Meks will participate in scenarios on this track and defend this facility.",
-"visible": true,
-"sharedModifiers": [
-"AlliedMekReinforcements.json"
-],
-"localModifiers": [
-"AlliedMekGarrison.json"
-],
-"capturedDefinition": "HostileMekBase.json"
+  "id": "SensorPost",
+  "displayableName": "Sensor Post",
+  "facilityType": "SensorPost",
+  "alliedProfile": {
+    "description": "A small listening post. Increases the scan range of all friendly forces in this sector by 1.",
+    "effects": [
+      {
+        "effect": "scanRange",
+        "value": 1
+      }
+    ]
+  },
+  "hostileProfile": {
+    "description": "Enemy spotters watch this sector: your forces run into the enemy more often here, and fights at the post may begin with an ambush.",
+    "effects": [
+      {
+        "effect": "localModifiers",
+        "modifiers": [
+          "EnemyAmbush.json"
+        ]
+      },
+      {
+        "effect": "scenarioOdds",
+        "value": 5
+      }
+    ]
+  }
 }

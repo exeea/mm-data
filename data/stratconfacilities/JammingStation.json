@@ -16,13 +16,25 @@
 # affiliated with Microsoft.
 
 {
-"owner": "Opposing",
-"displayableName": "Comms Center",
-"facilityType": "CommandCenter",
-"userDescription": "Coordinates additional hostile reinforcements for scenarios on this track.",
-"visible": true,
-"sharedModifiers": [
-"EnemyReinforcements.json"
-],
-"capturedDefinition": "AlliedCommsCenter.json"
+  "id": "JammingStation",
+  "displayableName": "Jamming Station",
+  "facilityType": "JammingStation",
+  "alliedProfile": {
+    "description": "Floods the sector with interference, hiding friendly movements: your forces run into the enemy less often here.",
+    "effects": [
+      {
+        "effect": "scenarioOdds",
+        "value": -5
+      }
+    ]
+  },
+  "hostileProfile": {
+    "description": "Jams your sensors: the scan range of all friendly forces in this sector is reduced by 1.",
+    "effects": [
+      {
+        "effect": "scanRange",
+        "value": -1
+      }
+    ]
+  }
 }

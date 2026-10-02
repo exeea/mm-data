@@ -16,16 +16,15 @@
 # affiliated with Microsoft.
 
 {
-"owner": "Opposing",
-"displayableName": "Artillery Base",
-"facilityType": "ArtilleryBase",
-"userDescription": "Hostile artillery will participate in scenarios on this track and defend this facility.",
-"visible": false,
-"sharedModifiers": [
-"EnemyArty.json"
-],
-"localModifiers": [
-"EnemyArtyGarrison.json"
-],
-"capturedDefinition": "AlliedArtilleryBase.json"
+  "id": "SupplyDepot",
+  "displayableName": "Supply Depot",
+  "facilityType": "SupplyDepot",
+  "alliedProfile": {
+    "description": "Keeps friendly facilities within 3 hexes supplied, road or no road. Losing it can cut them off.",
+    "effects": []
+  },
+  "hostileProfile": {
+    "description": "Keeps enemy facilities within 3 hexes supplied, road or no road. Taking or destroying it can starve them.",
+    "effects": []
+  }
 }

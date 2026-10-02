@@ -16,16 +16,33 @@
 # affiliated with Microsoft.
 
 {
-"owner": "Opposing",
-"displayableName": "Early Warning Center",
-"facilityType": "EarlyWarningSystem",
-"userDescription": "Reduces hostile reinforcement arrival time for scenarios on this track.",
-"visible": true,
-"sharedModifiers": [
-"ReinforcementDelayReductionHostile.json"
-],
-"localModifiers": [
-"ReinforcementDelayReductionHostile.json"
-],
-"capturedDefinition": "AlliedEarlyWarningSystem.json"
+  "id": "SpacePort",
+  "displayableName": "Space Port",
+  "facilityType": "SpacePort",
+  "alliedProfile": {
+    "description": "Provides 2 Employer Support each month.",
+    "effects": [
+      {
+        "effect": "monthlySupportPoints",
+        "value": 2
+      }
+    ]
+  },
+  "hostileProfile": {
+    "description": "Hostile forces in this sector are significantly larger due to improved logistics.",
+    "effects": [
+      {
+        "effect": "localModifiers",
+        "modifiers": [
+          "HostileBVBudgetIncrease.json"
+        ]
+      },
+      {
+        "effect": "sharedModifiers",
+        "modifiers": [
+          "HostileBVBudgetIncrease.json"
+        ]
+      }
+    ]
+  }
 }

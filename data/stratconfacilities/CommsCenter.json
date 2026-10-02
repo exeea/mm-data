@@ -16,16 +16,29 @@
 # affiliated with Microsoft.
 
 {
-"owner": "Allied",
-"displayableName": "Early Warning Center",
-"facilityType": "EarlyWarningSystem",
-"userDescription": "Reduces reinforcement arrival times for allied and player forces.",
-"visible": true,
-"sharedModifiers": [
-"ReinforcementDelayReductionAllied.json"
-],
-"localModifiers": [
-"ReinforcementDelayReductionAllied.json"
-],
-"capturedDefinition": "HostileEarlyWarningSystem.json"
+  "id": "CommsCenter",
+  "displayableName": "Comms Center",
+  "facilityType": "CommandCenter",
+  "alliedProfile": {
+    "description": "This facility will coordinate additional allied reinforcements to scenarios in this sector.",
+    "effects": [
+      {
+        "effect": "sharedModifiers",
+        "modifiers": [
+          "AlliedReinforcements.json"
+        ]
+      }
+    ]
+  },
+  "hostileProfile": {
+    "description": "Coordinates additional hostile reinforcements for scenarios in this sector.",
+    "effects": [
+      {
+        "effect": "sharedModifiers",
+        "modifiers": [
+          "EnemyReinforcements.json"
+        ]
+      }
+    ]
+  }
 }
