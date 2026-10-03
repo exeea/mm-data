@@ -1,0 +1,655 @@
+
+== biped armor (biped-armor.svg)
+  armor     RA    area   3335.3 parts 2 holes 0 anchor  154.2   80.8 r  14.8 triangles 69
+  armor     LA    area   3327.7 parts 2 holes 0 anchor   27.7   81.4 r  14.8 triangles 69
+  armor     RL    area   4233.1 parts 1 holes 0 anchor  132.0  232.2 r  19.0 triangles 35
+  armor     LL    area   4233.1 parts 1 holes 0 anchor   48.9  233.2 r  19.1 triangles 35
+  armor     LT    area   2251.0 parts 1 holes 0 anchor   59.2   88.6 r  14.7 triangles 13
+  armor     RT    area   2250.7 parts 1 holes 0 anchor  121.8   88.6 r  14.6 triangles 13
+  armor     CT    area   2766.2 parts 1 holes 0 anchor   91.0  106.8 r  15.9 triangles 40
+  armor     HD    area   1302.1 parts 1 holes 0 anchor   90.5   56.9 r  16.0 triangles 35
+  largest overlap 0.01 RL/RT
+  biped armor armor mirror axis 90.6: LA/RA 0.966 LT/RT 1.000 LL/RL 1.000
+  seeds own/other/none: LT 2/0/0 HD 2/0/0 CT 2/0/0 RT 2/0/0 LA 2/0/0 RA 2/0/0 LL 2/0/0 RL 2/0/0
+  white art 718.6, outside every region 0.08
+  variant LA DCLA   area   1449.0 anchor   15.4   38.0 r  13.2
+  variant LA DALA   area    576.2 anchor    7.2   68.5 r   6.0
+  variant LA LA     area   3250.9 anchor   27.4   82.9 r  14.5
+  variant LA panel anchors 15.3 15.8 r 11.9; 14.8 43.0 r 12.2;
+  largest overlap 0.01 RL/RT
+  seeds own/other/none: DCLA 8/0/0 DALA 1/0/0
+  variant RA DCRA   area   1449.0 anchor  166.2   38.0 r  13.4
+  variant RA DARA   area    576.1 anchor  174.2   69.1 r   6.0
+  variant RA RA     area   3237.3 anchor  154.2   82.4 r  14.7
+  variant RA panel anchors 166.1 15.8 r 11.9; 166.0 42.4 r 12.2;
+  largest overlap 0.01 RL/RT
+  seeds own/other/none: DCRA 8/0/0 DARA 1/0/0
+  biped armor shields mirror axis 90.7: DCLA/DCRA 1.000 DALA/DARA 1.000 LA/RA 0.990
+
+== biped armor-rear (biped-armor-back.svg)
+  armor     LT    area   1304.7 parts 1 holes 0 anchor   20.3   46.3 r  16.6 triangles 31
+  armor     RT    area   1281.2 parts 1 holes 0 anchor   82.0   46.4 r  16.2 triangles 12
+  armor     CT    area   2518.1 parts 1 holes 0 anchor   50.9   66.4 r  18.9 triangles 38
+  largest overlap 0.00 RT/CT
+  biped armor-rear armor mirror axis 51.1: LT/RT 0.981
+  seeds own/other/none: CT 2/0/0 LT 2/0/0 RT 2/0/0
+  white art 0.0, outside every region 0.00
+
+== biped structure (biped-structure.svg)
+  structure CT    area   1386.0 parts 1 holes 0 anchor   57.3   51.0 r  11.3 triangles 59
+  structure RT    area    962.0 parts 1 holes 0 anchor   79.4   34.5 r  10.3 triangles 67
+  structure RA    area    997.1 parts 1 holes 0 anchor  101.5   29.9 r   7.8 triangles 78
+  structure LA    area   1001.9 parts 1 holes 0 anchor   11.4   30.7 r   7.6 triangles 78
+  structure HD    area    413.9 parts 1 holes 0 anchor   56.6   15.9 r   9.3 triangles 37
+  structure RL    area   1360.1 parts 1 holes 0 anchor   86.1  139.9 r   9.2 triangles 63
+  structure LL    area   1360.1 parts 1 holes 0 anchor   27.3  139.9 r   9.3 triangles 63
+  structure LT    area    961.9 parts 1 holes 0 anchor   34.3   34.0 r  10.2 triangles 67
+  largest overlap 0.00 RT/RA
+  biped structure structure mirror axis 56.9: LA/RA 0.957 LT/RT 0.964 LL/RL 0.944
+  seeds own/other/none: HD 1/0/0 CT 2/0/0 LT 1/0/1 RT 2/0/0 LA 2/0/0 RA 1/0/1 LL 1/0/1 RL 1/0/1
+  white art 0.0, outside every region 0.00
+
+== quad armor (quad-armor.svg)
+  armor     RRL   area   2982.9 parts 1 holes 0 anchor  121.8  201.7 r  12.8 triangles 45
+  armor     RLL   area   2982.9 parts 1 holes 0 anchor   69.4  201.1 r  12.8 triangles 43
+  armor     CT    area   3584.4 parts 1 holes 1 anchor   95.9  107.7 r  22.2 triangles 30
+  armor     FLL   area   4665.6 parts 1 holes 0 anchor   40.0  187.3 r  17.7 triangles 59
+  armor     HD    area   1528.2 parts 1 holes 0 anchor   95.6   64.3 r  17.5 triangles 16
+  armor     LT    area   3550.8 parts 1 holes 0 anchor   49.5   74.9 r  23.0 triangles 33
+  armor     FRL   area   4665.6 parts 1 holes 0 anchor  150.4  187.3 r  17.4 triangles 59
+  armor     RT    area   3544.2 parts 1 holes 0 anchor  141.6   74.9 r  23.4 triangles 33
+  largest overlap 0.15 RRL/CT
+  quad armor armor mirror axis 95.4: LT/RT 0.998 FLL/FRL 1.000 RLL/RRL 1.000
+  seeds own/other/none: HD 3/0/0 CT 11/0/0 RT 12/0/0 LT 12/0/0 FRL 23/0/0 FLL 23/0/0 RRL 22/0/0 RLL 22/0/0
+  white art 0.0, outside every region 0.00
+
+== quad armor-rear (quad-armor-back.svg)
+  armor     LT    area   1202.4 parts 1 holes 0 anchor   65.1  309.8 r  14.8 triangles 5
+  armor     RT    area   1202.4 parts 1 holes 0 anchor  125.6  309.8 r  14.8 triangles 5
+  armor     CT    area   1655.9 parts 1 holes 0 anchor   95.4  308.5 r  15.4 triangles 2
+  largest overlap 0.00 
+  quad armor-rear armor mirror axis 95.4: LT/RT 1.000
+  seeds own/other/none: CT 8/0/0 RT 7/0/0 LT 7/0/0
+  white art 0.0, outside every region 0.00
+
+== quad structure (quad-structure.svg)
+  structure RLL   area   1243.1 parts 1 holes 0 anchor   62.7  123.4 r   7.8 triangles 67
+  structure FLL   area   1398.5 parts 1 holes 0 anchor   44.2  127.6 r   7.7 triangles 66
+  structure RRL   area   1243.1 parts 1 holes 0 anchor  102.9  123.4 r   7.8 triangles 67
+  structure LT    area   1410.5 parts 1 holes 0 anchor   51.4   50.0 r  15.4 triangles 21
+  structure RT    area   1410.5 parts 1 holes 0 anchor  114.0   50.0 r  15.0 triangles 21
+  structure CT    area   1823.2 parts 1 holes 1 anchor   83.3   64.9 r  15.7 triangles 52
+  structure HD    area    488.0 parts 1 holes 0 anchor   82.7   37.3 r   9.8 triangles 22
+  structure FRL   area   1398.5 parts 1 holes 0 anchor  121.7  127.6 r   7.7 triangles 66
+  largest overlap 0.00 RT/FRL
+  quad structure structure mirror axis 82.9: LT/RT 1.000 FLL/FRL 1.000 RLL/RRL 1.000
+  seeds own/other/none: CT 9/0/0 RT 10/0/0 LT 10/0/0 FRL 20/0/0 FLL 20/0/0 RRL 18/0/0 RLL 18/0/0
+  white art 3709.8, outside every region 0.00
+
+== quadvee armor (quadvee-armor.svg)
+  armor     RLL   area   2782.9 parts 1 holes 0 anchor   72.7  216.7 r  11.7 triangles 33
+  armor     FLL   area   4503.6 parts 1 holes 0 anchor   49.7  154.2 r  17.5 triangles 46
+  armor     RRL   area   2949.1 parts 1 holes 0 anchor  120.2  207.7 r  12.1 triangles 34
+  armor     FRL   area   4505.9 parts 1 holes 0 anchor  144.7  154.2 r  17.5 triangles 45
+  armor     LT    area   3055.6 parts 1 holes 0 anchor   41.5   62.3 r  20.5 triangles 16
+  armor     RT    area   3068.7 parts 1 holes 0 anchor  152.5   62.3 r  20.6 triangles 15
+  armor     CT    area   2997.8 parts 1 holes 0 anchor   97.0   86.8 r  19.9 triangles 10
+  armor     HD    area    698.9 parts 1 holes 0 anchor   96.9   50.0 r  11.8 triangles 4
+  largest overlap 0.00 
+  quadvee armor armor mirror axis 96.9: LT/RT 0.996 FLL/FRL 0.973 RLL/RRL 0.937
+  seeds own/other/none: HD 3/0/0 CT 11/0/0 RT 15/0/0 LT 15/0/0 FRL 25/0/0 FLL 25/0/0 RRL 23/0/0 RLL 23/0/0
+  white art 0.0, outside every region 0.00
+
+== quadvee armor-rear (quadvee-armor-back.svg)
+  armor     LT    area   1275.1 parts 1 holes 0 anchor   65.5  303.9 r  15.0 triangles 10
+  armor     RT    area   1279.7 parts 1 holes 0 anchor  126.8  303.9 r  15.0 triangles 11
+  armor     CT    area   1642.7 parts 1 holes 0 anchor   96.1  309.7 r  14.9 triangles 6
+  largest overlap 0.00 
+  quadvee armor-rear armor mirror axis 95.9: LT/RT 0.996
+  seeds own/other/none: CT 9/0/0 RT 8/0/0 LT 8/0/0
+  white art 0.0, outside every region 0.00
+
+== quadvee structure (quadvee-structure.svg)
+  structure RLL   area   1159.2 parts 1 holes 0 anchor   60.8  131.1 r   6.7 triangles 53
+  structure FLL   area   1364.7 parts 1 holes 0 anchor   42.1  131.1 r   6.8 triangles 58
+  structure RRL   area   1159.2 parts 1 holes 0 anchor  102.6  131.1 r   6.7 triangles 53
+  structure FRL   area   1362.4 parts 1 holes 0 anchor  121.5  131.4 r   6.6 triangles 58
+  structure LT    area   1594.3 parts 1 holes 0 anchor   41.8   42.5 r  14.8 triangles 16
+  structure RT    area   1601.2 parts 1 holes 0 anchor  122.0   42.5 r  14.9 triangles 14
+  structure CT    area   1564.1 parts 1 holes 0 anchor   81.9   60.2 r  14.4 triangles 10
+  structure HD    area    364.7 parts 1 holes 0 anchor   81.8   33.6 r   8.5 triangles 4
+  largest overlap 0.00 
+  quadvee structure structure mirror axis 81.7: LT/RT 0.985 FLL/FRL 0.998 RLL/RRL 1.000
+  seeds own/other/none: CT 8/0/0 RT 11/0/0 LT 11/0/0 FRL 2/0/0 FLL 2/0/0 RRL 2/0/0 RLL 2/0/0
+  white art 30.1, outside every region 0.00
+
+== tripod armor (tripod-armor.svg)
+  armor     LA    area   2963.1 parts 1 holes 0 anchor   37.9   61.2 r  13.3 triangles 72
+  armor     CL    area   3184.3 parts 1 holes 0 anchor   96.6  223.7 r  16.7 triangles 33
+  armor     LL    area   4080.3 parts 1 holes 0 anchor   42.5  227.2 r  19.2 triangles 34
+  armor     RL    area   4088.2 parts 1 holes 0 anchor  150.7  227.1 r  19.2 triangles 34
+  armor     LT    area   2193.1 parts 1 holes 0 anchor   65.4   94.7 r  13.6 triangles 27
+  armor     RA    area   2963.1 parts 1 holes 0 anchor  154.7   61.2 r  13.3 triangles 72
+  armor     RT    area   2196.8 parts 1 holes 0 anchor  126.9   94.5 r  13.3 triangles 26
+  armor     CT    area   3020.8 parts 1 holes 0 anchor   96.5  100.0 r  16.5 triangles 23
+  armor     HD    area   1126.7 parts 1 holes 0 anchor   95.8   57.1 r  16.1 triangles 32
+  largest overlap 0.00 LT/CT
+  tripod armor armor mirror axis 96.3: LA/RA 1.000 LT/RT 0.998 LL/RL 0.970
+  seeds own/other/none: HD 4/0/0 CT 17/0/0 RT 18/0/0 LT 18/0/0 RA 18/0/0 LA 18/0/0 RL 22/0/0 LL 22/0/0 CL 20/0/0
+  white art 685.2, outside every region 0.09
+  variant LA DCLA   area   1354.8 anchor   17.8   33.9 r  13.0
+  variant LA DALA   area    576.3 anchor    9.9   62.2 r   6.0
+  variant LA panel anchors 17.2 12.9 r 12.0; 17.9 38.4 r 12.0;
+  largest overlap 0.00 LT/CT
+  seeds own/other/none: DCLA 8/0/0 DALA 1/0/0
+  variant RA DCRA   area   1354.8 anchor  174.7   34.2 r  13.2
+  variant RA DARA   area    576.2 anchor  182.6   61.2 r   6.0
+  variant RA panel anchors 175.4 12.6 r 12.0; 175.2 38.0 r 12.3;
+  largest overlap 0.00 LT/CT
+  seeds own/other/none: DCRA 8/0/0 DARA 1/0/0
+  tripod armor shields mirror axis 96.3: DCLA/DCRA 0.983 DALA/DARA 0.978
+
+== tripod armor-rear (tripod-armor-back.svg)
+  armor     LT    area   1088.6 parts 1 holes 0 anchor   59.6  315.1 r  13.4 triangles 21
+  armor     RT    area   1133.1 parts 1 holes 0 anchor  121.2  313.7 r  13.7 triangles 13
+  armor     CT    area   1895.3 parts 1 holes 0 anchor   90.4  301.2 r  19.3 triangles 36
+  largest overlap 0.00 
+  tripod armor-rear armor mirror axis 90.3: LT/RT 0.959
+  seeds own/other/none: CT 10/0/0 RT 7/0/0 LT 7/0/0
+  white art 0.0, outside every region 0.00
+
+== tripod structure (tripod-structure.svg)
+  structure CL    area   1127.8 parts 1 holes 0 anchor   85.3  143.8 r   9.0 triangles 34
+  structure LL    area   1327.1 parts 2 holes 0 anchor   46.2  145.6 r   9.1 triangles 81
+  structure RL    area   1330.2 parts 1 holes 0 anchor  124.5  145.2 r   9.0 triangles 85
+  structure CT    area   1306.1 parts 1 holes 0 anchor   85.7   59.6 r  11.7 triangles 50
+  structure RA    area    949.4 parts 1 holes 0 anchor  128.7   39.3 r   7.5 triangles 77
+  structure LA    area    948.2 parts 1 holes 0 anchor   42.1   39.7 r   7.5 triangles 77
+  structure LT    area    974.6 parts 1 holes 0 anchor   63.1   41.7 r   9.8 triangles 59
+  structure RT    area    976.5 parts 1 holes 0 anchor  107.7   41.6 r   9.9 triangles 56
+  structure HD    area    555.8 parts 1 holes 0 anchor   85.0   28.8 r  11.3 triangles 21
+  largest overlap 0.02 CT/HD
+  tripod structure structure mirror axis 85.4: LA/RA 0.972 LT/RT 0.984 LL/RL 0.990
+  seeds own/other/none: CT 12/0/0 RT 12/0/0 LT 12/0/0 RA 15/0/0 LA 15/0/0 RL 17/0/0 LL 17/0/0 CL 15/0/0
+  white art 27.3, outside every region 0.00
+
+== vehicle-noturret armor (vehicle-noturret.svg)
+  armor     FR    area   6263.7 parts 1 holes 0 anchor   94.0   89.8 r  35.1 triangles 7
+  armor     RR    area   4356.1 parts 1 holes 0 anchor   95.0  297.3 r  15.7 triangles 27
+  armor     LS    area   6316.5 parts 1 holes 1 anchor   42.9  123.6 r  21.3 triangles 19
+  armor     RS    area   6214.7 parts 1 holes 0 anchor  144.9  124.0 r  20.8 triangles 12
+  structure RR    area   1275.0 parts 1 holes 0 anchor   94.6  275.4 r   6.2 triangles 2
+  structure LS    area   1555.1 parts 1 holes 0 anchor   49.4  186.6 r   9.1 triangles 2
+  structure RS    area   1578.5 parts 1 holes 0 anchor  140.2  192.8 r   9.5 triangles 2
+  structure FR    area   1021.8 parts 1 holes 0 anchor   93.7  137.3 r   9.6 triangles 6
+  largest overlap 0.00 RS/RS
+  vehicle-noturret armor armor mirror axis 94.1: LS/RS 0.935
+  vehicle-noturret armor structure mirror axis 94.4: LS/RS 0.930
+  seeds own/other/none: FR 11/0/0 RS 38/0/0 LS 38/0/0 RR 4/0/0
+  white art 38121.5, outside every region 9540.48
+
+== vehicle-turret armor (vehicle-turret.svg)
+  armor     FR    area   6263.7 parts 1 holes 0 anchor   94.0   90.9 r  35.1 triangles 7
+  armor     RR    area   4356.1 parts 1 holes 0 anchor   95.0  298.4 r  15.7 triangles 27
+  armor     LS    area   6316.5 parts 1 holes 1 anchor   42.9  124.7 r  21.3 triangles 19
+  armor     RS    area   6214.7 parts 1 holes 0 anchor  144.9  125.0 r  20.8 triangles 12
+  armor     TU    area   4744.8 parts 1 holes 1 anchor   95.0  237.8 r  26.4 triangles 33
+  structure RR    area   1275.0 parts 1 holes 0 anchor   94.6  276.5 r   6.2 triangles 2
+  structure LS    area   1555.1 parts 1 holes 0 anchor   49.4  187.6 r   9.1 triangles 2
+  structure RS    area   1578.5 parts 1 holes 0 anchor  140.2  193.9 r   9.5 triangles 2
+  structure FR    area   1021.8 parts 1 holes 0 anchor   93.7  138.4 r   9.6 triangles 6
+  structure TU    area   1034.0 parts 1 holes 0 anchor   95.0  201.8 r   9.6 triangles 2
+  largest overlap 0.00 TU/TU
+  vehicle-turret armor armor mirror axis 94.1: LS/RS 0.935
+  vehicle-turret armor structure mirror axis 94.4: LS/RS 0.930
+  seeds own/other/none: FR 11/0/0 RS 38/0/0 LS 38/0/0 RR 4/0/0 TU 9/0/0
+  white art 38121.5, outside every region 3761.70
+
+== vehicle-dualturret armor (vehicle-dualturret.svg)
+  armor     FR    area   5491.7 parts 1 holes 1 anchor   78.2   77.2 r  22.9 triangles 38
+  armor     RR    area   3623.8 parts 1 holes 1 anchor   99.2  300.7 r  14.8 triangles 28
+  armor     LS    area   5643.3 parts 1 holes 1 anchor   51.6  151.9 r  18.3 triangles 9
+  armor     RS    area   5643.3 parts 1 holes 0 anchor  147.0  152.8 r  17.7 triangles 7
+  armor     RT    area   3702.5 parts 1 holes 1 anchor   99.0  247.4 r  23.3 triangles 33
+  armor     FT    area   2190.4 parts 1 holes 1 anchor   99.6  117.6 r  16.8 triangles 32
+  structure RT    area    806.8 parts 1 holes 0 anchor   99.0  215.6 r   8.5 triangles 2
+  structure RR    area    795.9 parts 1 holes 0 anchor   99.0  281.0 r   4.7 triangles 2
+  structure LS    area    842.2 parts 1 holes 0 anchor   62.8  200.6 r   5.9 triangles 2
+  structure FR    area    816.5 parts 1 holes 0 anchor   99.1  159.8 r   8.7 triangles 6
+  structure RS    area    842.2 parts 1 holes 0 anchor  135.3  200.6 r   5.9 triangles 2
+  structure FT    area    689.7 parts 1 holes 0 anchor   98.8  141.0 r   6.7 triangles 2
+  largest overlap 0.00 RT/RT
+  vehicle-dualturret armor armor mirror axis 99.0: LS/RS 1.000
+  vehicle-dualturret armor structure mirror axis 99.0: LS/RS 1.000
+  seeds own/other/none: FR 6/0/0 RS 41/0/0 LS 41/0/0 RR 4/0/0 RT 9/0/0 FT 6/0/0
+  white art 33994.1, outside every region 2906.25
+
+== vehicle-superheavy-noturret armor (vehicle-superheavy-noturret.svg)
+  armor     FR    area   3424.0 parts 1 holes 0 anchor   93.4   72.4 r  16.7 triangles 8
+  armor     FRLS  area   3318.3 parts 1 holes 0 anchor   41.7  102.4 r  15.2 triangles 3
+  armor     RRLS  area   2600.7 parts 1 holes 0 anchor   35.9  256.0 r  15.7 triangles 4
+  armor     FRRS  area   3286.4 parts 1 holes 0 anchor  145.6  101.4 r  15.1 triangles 3
+  armor     RRRS  area   2588.6 parts 1 holes 0 anchor  151.5  255.1 r  15.7 triangles 4
+  armor     RR    area   4153.1 parts 1 holes 0 anchor  141.2  300.1 r  17.6 triangles 14
+  structure FR    area   1960.8 parts 1 holes 0 anchor   94.1  103.2 r  13.1 triangles 2
+  structure FRLS  area   3654.0 parts 1 holes 0 anchor   71.2  156.3 r  23.6 triangles 2
+  structure FRRS  area   3491.4 parts 1 holes 0 anchor  117.9  159.4 r  22.6 triangles 3
+  structure RRLS  area   3599.2 parts 1 holes 0 anchor   71.2  229.8 r  23.5 triangles 3
+  structure RRRS  area   3412.8 parts 1 holes 0 anchor  117.8  227.0 r  22.4 triangles 3
+  structure RR    area   1865.8 parts 1 holes 0 anchor   93.8  283.0 r  13.3 triangles 2
+  largest overlap 0.00 
+  vehicle-superheavy-noturret armor armor mirror axis 93.7: FRLS/FRRS 0.990 RRLS/RRRS 0.995
+  vehicle-superheavy-noturret armor structure mirror axis 94.3: FRLS/FRRS 0.956 RRLS/RRRS 0.948
+  seeds own/other/none: FR 8/0/1 FRRS 28/0/0 FRLS 28/0/0 RRRS 23/0/0 RRLS 23/0/0 RR 9/0/0
+  white art 0.0, outside every region 0.00
+
+== vehicle-superheavy-turret armor (vehicle-superheavy-turret.svg)
+  armor     FRLS  area   3322.1 parts 1 holes 0 anchor   42.2  100.4 r  15.1 triangles 3
+  armor     RRLS  area   2601.6 parts 1 holes 0 anchor   35.8  255.6 r  15.7 triangles 3
+  armor     RR    area   4221.2 parts 1 holes 0 anchor  141.6  300.2 r  17.8 triangles 16
+  armor     RRRS  area   2547.2 parts 1 holes 0 anchor  151.4  254.7 r  15.7 triangles 3
+  armor     FR    area   3443.0 parts 1 holes 0 anchor   93.9   72.5 r  16.7 triangles 8
+  armor     FRRS  area   3291.0 parts 1 holes 0 anchor  145.4  100.5 r  15.3 triangles 4
+  structure FRLS  area   2514.7 parts 1 holes 0 anchor   70.0  138.1 r  19.1 triangles 10
+  structure RR    area   1848.9 parts 1 holes 0 anchor   93.1  283.4 r  13.2 triangles 2
+  structure RRLS  area   2178.8 parts 1 holes 0 anchor   69.5  251.8 r  18.2 triangles 6
+  structure RRRS  area   2116.6 parts 1 holes 0 anchor  117.9  251.8 r  17.7 triangles 6
+  structure FRRS  area   2354.5 parts 1 holes 0 anchor  121.1  140.7 r  16.1 triangles 19
+  structure FR    area   1975.0 parts 1 holes 0 anchor   93.4  103.5 r  13.2 triangles 2
+  structure TU    area   1223.9 parts 1 holes 0 anchor   93.7  175.5 r  11.4 triangles 2
+  armor     TU    area   3728.7 parts 1 holes 1 anchor   94.3  210.1 r  23.3 triangles 33
+  largest overlap 0.00 
+  vehicle-superheavy-turret armor armor mirror axis 93.4: FRLS/FRRS 0.950 RRLS/RRRS 0.979
+  vehicle-superheavy-turret armor structure mirror axis 94.2: FRLS/FRRS 0.906 RRLS/RRRS 0.936
+  seeds own/other/none: FR 8/0/1 FRRS 28/0/0 FRLS 28/0/0 RRRS 23/0/0 RRLS 23/0/0 RR 9/0/0 TU 10/0/0
+  white art 0.0, outside every region 0.00
+
+== vehicle-superheavy-dualturret armor (vehicle-superheavy-dualturret.svg)
+  armor     FR    area   3424.0 parts 1 holes 0 anchor   93.4   72.4 r  16.7 triangles 8
+  armor     FRLS  area   3318.3 parts 1 holes 0 anchor   41.7  102.4 r  15.2 triangles 3
+  armor     RRLS  area   2600.7 parts 1 holes 0 anchor   35.9  256.0 r  15.7 triangles 4
+  armor     FRRS  area   3286.4 parts 1 holes 0 anchor  145.6  101.4 r  15.1 triangles 3
+  armor     RRRS  area   2588.6 parts 1 holes 0 anchor  151.5  255.1 r  15.7 triangles 4
+  armor     RR    area   4153.1 parts 1 holes 0 anchor  141.2  300.1 r  17.6 triangles 14
+  structure FR    area   1572.6 parts 1 holes 0 anchor   71.4  101.7 r  12.1 triangles 20
+  structure FRLS  area   1282.2 parts 1 holes 0 anchor   54.3  158.9 r   6.8 triangles 8
+  structure FRRS  area   1298.8 parts 1 holes 0 anchor  133.0  157.3 r   7.0 triangles 9
+  structure RRLS  area   1256.2 parts 1 holes 0 anchor   53.9  226.1 r   6.7 triangles 7
+  structure RRRS  area   1244.6 parts 1 holes 0 anchor  133.2  227.6 r   6.7 triangles 7
+  structure RR    area   1424.5 parts 1 holes 0 anchor  114.0  285.9 r  10.8 triangles 24
+  structure FT    area   1223.9 parts 1 holes 0 anchor   93.7  131.6 r  11.4 triangles 2
+  structure RT    area   1223.9 parts 1 holes 0 anchor   93.7  256.2 r  11.4 triangles 2
+  armor     FT    area   3728.7 parts 1 holes 1 anchor   94.3  166.2 r  23.3 triangles 33
+  armor     RT    area   3728.6 parts 1 holes 1 anchor   93.2  222.1 r  22.7 triangles 33
+  largest overlap 0.00 
+  vehicle-superheavy-dualturret armor armor mirror axis 93.7: FRLS/FRRS 0.990 RRLS/RRRS 0.995
+  vehicle-superheavy-dualturret armor structure mirror axis 94.3: FRLS/FRRS 0.881 (asymmetric drawing, at least 0.85) RRLS/RRRS 0.861 (asymmetric drawing, at least 0.85)
+  seeds own/other/none: FR 7/1/1 FRRS 28/0/0 FRLS 28/0/0 RRRS 23/0/0 RRLS 23/0/0 RR 6/3/0 RT 10/0/0 FT 10/0/0
+  white art 0.0, outside every region 0.00
+
+== vtol-noturret armor (vtol-noturret.svg)
+  armor     RR    area   1238.0 parts 2 holes 0 anchor   95.7  268.6 r   8.8 triangles 12
+  structure RR    area    719.3 parts 1 holes 0 anchor   95.3  231.8 r   9.6 triangles 2
+  structure LS    area    840.9 parts 1 holes 0 anchor   88.4  182.5 r   6.6 triangles 5
+  structure RS    area    819.1 parts 1 holes 0 anchor  101.4  182.5 r   6.4 triangles 5
+  armor     FR    area   2136.1 parts 1 holes 0 anchor   94.4   84.5 r  24.4 triangles 20
+  armor     LS    area   2439.6 parts 2 holes 0 anchor   67.3  116.5 r  13.6 triangles 36
+  armor     RS    area   2423.1 parts 2 holes 0 anchor  122.1  117.0 r  13.3 triangles 35
+  structure RO    area   1884.2 parts 1 holes 0 anchor  108.5  146.3 r   6.6 triangles 10
+  structure FR    area    842.9 parts 1 holes 0 anchor   94.6  125.3 r  13.0 triangles 5
+  armor     RO    area    600.8 parts 2 holes 0 anchor   11.5  146.5 r   6.9 triangles 4
+  largest overlap 0.00 FR/RS
+  vtol-noturret armor armor mirror axis 94.7: LS/RS 0.964
+  vtol-noturret armor structure mirror axis 94.9: LS/RS 0.974
+  seeds own/other/none: FR 12/0/0 RS 22/0/0 LS 22/0/0 RR 14/0/0 RO 2/0/0
+  white art 0.0, outside every region 0.00
+
+== vtol-turret armor (vtol-turret.svg)
+  armor     RR    area   1320.4 parts 1 holes 0 anchor   93.2  308.3 r   9.2 triangles 15
+  structure RR    area    551.2 parts 1 holes 0 anchor   93.0  264.7 r   9.9 triangles 2
+  armor     FR    area   3917.2 parts 1 holes 0 anchor   92.3  121.5 r  29.1 triangles 21
+  armor     LS    area   3293.8 parts 2 holes 0 anchor   61.3  159.5 r  18.4 triangles 40
+  armor     RS    area   3197.3 parts 3 holes 0 anchor  124.6  159.6 r  18.0 triangles 35
+  structure LS    area    727.1 parts 1 holes 0 anchor   87.0  221.4 r   6.0 triangles 5
+  structure RS    area    767.8 parts 1 holes 0 anchor   99.3  221.2 r   6.3 triangles 5
+  structure FR    area    759.0 parts 1 holes 0 anchor   93.1  167.1 r  12.4 triangles 7
+  structure RO    area   1696.4 parts 1 holes 0 anchor  106.3  187.0 r   6.2 triangles 10
+  structure TU    area    579.7 parts 1 holes 0 anchor   92.7   84.3 r   7.7 triangles 2
+  armor     RO    area    541.0 parts 2 holes 0 anchor   14.2  187.2 r   6.5 triangles 4
+  armor     TU    area   1240.3 parts 1 holes 0 anchor   93.2   61.2 r  15.4 triangles 22
+  largest overlap 0.00 FR/TU
+  vtol-turret armor armor mirror axis 93.0: LS/RS 0.952
+  vtol-turret armor structure mirror axis 93.2: LS/RS 0.944
+  seeds own/other/none: FR 14/0/0 RS 22/0/0 LS 22/0/0 RR 13/0/0 RO 2/0/0 TU 6/0/0
+  white art 0.0, outside every region 0.00
+
+== naval-noturret armor (naval-noturret.svg)
+  armor     FR    area   9410.3 parts 1 holes 0 anchor   94.0  113.3 r  40.6 triangles 34
+  armor     RR    area  13270.9 parts 1 holes 0 anchor   93.2  620.7 r  47.2 triangles 28
+  armor     LS    area  14643.0 parts 1 holes 0 anchor   28.8  359.6 r  19.1 triangles 15
+  armor     RS    area  15108.4 parts 1 holes 0 anchor  156.7  360.5 r  19.5 triangles 17
+  structure RS    area  15626.2 parts 1 holes 0 anchor  115.5  363.8 r  21.8 triangles 3
+  structure LS    area  15622.0 parts 1 holes 0 anchor   69.7  363.8 r  21.8 triangles 3
+  structure FR    area   4475.0 parts 1 holes 0 anchor   92.5  171.1 r  17.2 triangles 2
+  structure RR    area   3485.1 parts 1 holes 0 anchor   92.1  556.3 r  17.2 triangles 2
+  largest overlap 0.00 
+  naval-noturret armor armor mirror axis 92.9: LS/RS 0.968
+  naval-noturret armor structure mirror axis 92.6: LS/RS 1.000
+  seeds own/other/none: FR 11/0/0 RS 87/0/0 LS 87/0/0 RR 12/0/0
+  white art 0.0, outside every region 0.00
+
+== naval-turret armor (naval-turret.svg)
+  armor     FR    area   9410.3 parts 1 holes 0 anchor   94.0  113.3 r  40.6 triangles 34
+  armor     RR    area  13270.9 parts 1 holes 0 anchor   93.2  620.7 r  47.2 triangles 28
+  armor     LS    area  14640.7 parts 1 holes 0 anchor   28.8  359.6 r  19.1 triangles 15
+  armor     RS    area  15106.1 parts 1 holes 0 anchor  156.7  360.5 r  19.5 triangles 17
+  armor     TU    area   7250.1 parts 1 holes 1 anchor   93.1  397.6 r  23.8 triangles 44
+  structure RS    area  10925.0 parts 1 holes 0 anchor  115.5  444.2 r  21.8 triangles 23
+  structure LS    area  10921.0 parts 1 holes 0 anchor   69.7  444.2 r  21.8 triangles 23
+  structure FR    area   4475.0 parts 1 holes 0 anchor   92.5  171.1 r  17.2 triangles 2
+  structure RR    area   3485.1 parts 1 holes 0 anchor   92.1  556.3 r  17.2 triangles 2
+  structure TU    area   2156.7 parts 1 holes 0 anchor   92.8  338.5 r  15.3 triangles 2
+  largest overlap 0.01 TU/LS
+  naval-turret armor armor mirror axis 92.9: LS/RS 0.969
+  naval-turret armor structure mirror axis 92.6: LS/RS 1.000
+  seeds own/other/none: FR 11/0/0 RS 70/0/0 LS 70/0/0 RR 12/0/0 TU 18/0/0
+  white art 0.0, outside every region 0.00
+
+== naval-dualturret armor (naval-dualturret.svg)
+  armor     FR    area   9410.3 parts 1 holes 0 anchor   94.0  113.3 r  40.6 triangles 34
+  armor     RR    area  13270.9 parts 1 holes 0 anchor   93.2  620.7 r  47.2 triangles 28
+  armor     LS    area  10272.3 parts 1 holes 0 anchor   27.8  283.7 r  18.8 triangles 35
+  armor     RS    area  10678.5 parts 1 holes 0 anchor  157.7  283.4 r  19.5 triangles 37
+  structure RS    area  10576.6 parts 1 holes 0 anchor  114.4  444.2 r  21.8 triangles 23
+  structure LS    area  10513.1 parts 1 holes 0 anchor   70.8  444.2 r  21.8 triangles 34
+  structure FR    area   4475.0 parts 1 holes 0 anchor   92.5  171.1 r  17.2 triangles 2
+  structure RR    area   3485.1 parts 1 holes 0 anchor   92.1  556.3 r  17.2 triangles 2
+  armor     RT    area   7322.8 parts 1 holes 1 anchor  134.8  397.7 r  23.8 triangles 44
+  structure RT    area   2156.7 parts 1 holes 0 anchor  135.1  338.5 r  15.3 triangles 2
+  armor     FT    area   7322.8 parts 1 holes 1 anchor   51.2  397.7 r  23.8 triangles 44
+  structure FT    area   2156.7 parts 1 holes 0 anchor   51.5  338.5 r  15.3 triangles 2
+  largest overlap 0.00 LS/FT
+  naval-dualturret armor armor mirror axis 92.9: LS/RS 0.961
+  naval-dualturret armor structure mirror axis 92.6: LS/RS 0.994
+  seeds own/other/none: FR 14/0/0 RS 56/0/0 LS 56/0/0 RR 12/0/0 FT 18/0/0 RT 18/0/0
+  white art 0.0, outside every region 0.00
+
+== naval-superheavy-noturret armor (naval-superheavy-noturret.svg)
+  armor     FR    area   9410.3 parts 1 holes 0 anchor   94.0  113.3 r  40.6 triangles 34
+  armor     RR    area  13270.9 parts 1 holes 0 anchor   93.2  620.7 r  47.2 triangles 28
+  armor     FRLS  area   7481.6 parts 1 holes 0 anchor   27.8  267.2 r  18.8 triangles 8
+  armor     FRRS  area   7702.3 parts 1 holes 0 anchor  157.7  267.4 r  19.5 triangles 8
+  armor     RRLS  area   7161.4 parts 1 holes 0 anchor   29.0  456.5 r  19.0 triangles 9
+  armor     RRRS  area   7406.2 parts 1 holes 0 anchor  156.7  457.2 r  19.5 triangles 11
+  structure FRRS  area   7788.3 parts 1 holes 0 anchor  115.5  276.8 r  21.8 triangles 2
+  structure RRRS  area   7837.9 parts 1 holes 0 anchor  115.5  451.3 r  21.8 triangles 3
+  structure FRLS  area   7788.3 parts 1 holes 0 anchor   70.2  276.5 r  22.3 triangles 2
+  structure RRLS  area   7833.8 parts 1 holes 0 anchor   69.7  451.3 r  21.8 triangles 3
+  structure FR    area   4475.0 parts 1 holes 0 anchor   92.5  171.1 r  17.2 triangles 2
+  structure RR    area   3485.1 parts 1 holes 0 anchor   92.1  556.3 r  17.2 triangles 2
+  largest overlap 0.00 
+  naval-superheavy-noturret armor armor mirror axis 92.9: FRLS/FRRS 0.970 RRLS/RRRS 0.966
+  naval-superheavy-noturret armor structure mirror axis 92.6: FRLS/FRRS 1.000 RRLS/RRRS 0.999
+  seeds own/other/none: FR 14/0/0 FRRS 43/0/0 RRRS 42/0/0 FRLS 43/0/0 RRLS 42/0/0 RR 12/0/0
+  white art 0.0, outside every region 0.00
+
+== naval-superheavy-turret armor (naval-superheavy-turret.svg)
+  armor     FR    area   9410.3 parts 1 holes 0 anchor   94.0  113.3 r  40.6 triangles 34
+  armor     RR    area  13270.9 parts 1 holes 0 anchor   93.2  620.7 r  47.2 triangles 28
+  armor     FRLS  area   7480.4 parts 1 holes 0 anchor   27.8  267.2 r  18.8 triangles 8
+  armor     FRRS  area   7701.1 parts 1 holes 0 anchor  157.7  267.4 r  19.5 triangles 8
+  armor     RRLS  area   7160.3 parts 1 holes 0 anchor   29.0  456.5 r  19.0 triangles 9
+  armor     RRRS  area   7405.0 parts 1 holes 0 anchor  156.7  457.2 r  19.5 triangles 11
+  armor     TU    area   7250.1 parts 1 holes 1 anchor   93.1  397.6 r  23.8 triangles 44
+  structure FRRS  area   5392.2 parts 1 holes 0 anchor  115.5  251.1 r  21.8 triangles 12
+  structure RRRS  area   5532.9 parts 1 holes 0 anchor  115.5  475.8 r  21.8 triangles 13
+  structure FRLS  area   5392.2 parts 1 holes 0 anchor   69.7  251.1 r  21.8 triangles 12
+  structure RRLS  area   5528.8 parts 1 holes 0 anchor   69.7  475.8 r  21.8 triangles 13
+  structure FR    area   4475.0 parts 1 holes 0 anchor   92.5  171.1 r  17.2 triangles 2
+  structure RR    area   3485.1 parts 1 holes 0 anchor   92.1  556.3 r  17.2 triangles 2
+  structure TU    area   2156.7 parts 1 holes 0 anchor   92.8  338.5 r  15.3 triangles 2
+  largest overlap 0.01 TU/RRLS
+  naval-superheavy-turret armor armor mirror axis 92.9: FRLS/FRRS 0.971 RRLS/RRRS 0.966
+  naval-superheavy-turret armor structure mirror axis 92.6: FRLS/FRRS 1.000 RRLS/RRRS 0.999
+  seeds own/other/none: FR 14/0/0 FRRS 35/0/0 RRRS 34/0/0 FRLS 35/0/0 RRLS 34/0/0 RR 12/0/0 TU 18/0/0
+  white art 0.0, outside every region 0.00
+
+== naval-superheavy-dualturret armor (naval-superheavy-dualturret.svg)
+  armor     FR    area   9410.3 parts 1 holes 0 anchor   94.0  113.3 r  40.6 triangles 34
+  armor     RR    area  13270.9 parts 1 holes 0 anchor   93.2  620.7 r  47.2 triangles 28
+  armor     FRLS  area   5253.9 parts 1 holes 0 anchor   27.8  239.0 r  18.8 triangles 18
+  armor     FRRS  area   5444.4 parts 1 holes 0 anchor  157.7  239.4 r  19.5 triangles 18
+  armor     RRLS  area   5018.4 parts 1 holes 0 anchor   29.0  484.7 r  19.0 triangles 19
+  armor     RRRS  area   5234.1 parts 1 holes 0 anchor  156.7  484.2 r  19.5 triangles 21
+  structure FRRS  area   5214.6 parts 1 holes 0 anchor  114.4  247.8 r  21.8 triangles 12
+  structure RRRS  area   5362.0 parts 1 holes 0 anchor  114.4  479.2 r  21.8 triangles 13
+  structure FRLS  area   5184.3 parts 1 holes 0 anchor   70.8  247.8 r  21.8 triangles 27
+  structure RRLS  area   5328.8 parts 1 holes 0 anchor   70.8  479.2 r  21.8 triangles 13
+  structure FR    area   4475.0 parts 1 holes 0 anchor   92.5  171.1 r  17.2 triangles 2
+  structure RR    area   3485.1 parts 1 holes 0 anchor   92.1  556.3 r  17.2 triangles 2
+  armor     RT    area   7322.8 parts 1 holes 1 anchor  134.8  397.7 r  23.8 triangles 44
+  structure RT    area   2156.7 parts 1 holes 0 anchor  135.1  338.5 r  15.3 triangles 2
+  armor     FT    area   7322.8 parts 1 holes 1 anchor   51.2  397.7 r  23.8 triangles 44
+  structure FT    area   2156.7 parts 1 holes 0 anchor   51.5  338.5 r  15.3 triangles 2
+  largest overlap 0.00 FRLS/FT
+  naval-superheavy-dualturret armor armor mirror axis 92.9: FRLS/FRRS 0.964 RRLS/RRRS 0.958
+  naval-superheavy-dualturret armor structure mirror axis 92.6: FRLS/FRRS 0.994 RRLS/RRRS 0.994
+  seeds own/other/none: FR 14/0/0 FRRS 28/0/0 RRRS 28/0/0 FRLS 28/0/0 RRLS 28/0/0 RR 12/0/0 FT 18/0/0 RT 18/0/0
+  white art 0.0, outside every region 0.00
+
+== wige-noturret armor (wige-noturret.svg)
+  armor     FR    area   4445.4 parts 1 holes 0 anchor   93.4  106.8 r  30.0 triangles 26
+  armor     RR    area   4423.7 parts 1 holes 0 anchor   93.6  284.9 r  19.4 triangles 47
+  armor     LS    area   4777.6 parts 1 holes 0 anchor   30.7  234.3 r  19.0 triangles 33
+  armor     RS    area   4786.6 parts 1 holes 0 anchor  157.2  235.3 r  19.5 triangles 32
+  structure FR    area    650.3 parts 1 holes 0 anchor   93.6  148.2 r   7.0 triangles 2
+  structure LS    area    815.4 parts 1 holes 0 anchor   59.9  218.6 r   4.8 triangles 2
+  structure RS    area    815.4 parts 1 holes 0 anchor  127.1  218.4 r   4.8 triangles 2
+  structure RR    area    827.9 parts 1 holes 0 anchor   93.5  260.7 r   4.9 triangles 2
+  largest overlap 0.00 FR/RS
+  wige-noturret armor armor mirror axis 93.6: LS/RS 0.998
+  wige-noturret armor structure mirror axis 93.6: LS/RS 1.000
+  seeds own/other/none: FR 13/0/0 RS 32/0/0 LS 32/0/0 RR 5/0/0
+  white art 26973.7, outside every region 5431.78
+
+== wige-turret armor (wige-turret.svg)
+  armor     FR    area   4445.4 parts 1 holes 0 anchor   93.4  106.8 r  30.0 triangles 26
+  armor     RR    area   4423.7 parts 1 holes 0 anchor   93.6  284.9 r  19.4 triangles 47
+  armor     LS    area   4777.6 parts 1 holes 0 anchor   30.7  234.3 r  19.0 triangles 33
+  armor     RS    area   4786.6 parts 1 holes 0 anchor  157.2  235.3 r  19.5 triangles 32
+  structure FR    area    650.3 parts 1 holes 0 anchor   93.6  148.2 r   7.0 triangles 2
+  structure LS    area    815.4 parts 1 holes 0 anchor   59.9  218.6 r   4.8 triangles 2
+  structure RS    area    815.4 parts 1 holes 0 anchor  127.1  218.4 r   4.8 triangles 2
+  structure RR    area    827.9 parts 1 holes 0 anchor   93.5  260.7 r   4.9 triangles 2
+  armor     TU    area   2907.2 parts 1 holes 1 anchor   94.2  231.8 r  18.4 triangles 24
+  structure TU    area    517.2 parts 1 holes 0 anchor   93.6  205.6 r   7.8 triangles 2
+  largest overlap 0.00 FR/RS
+  wige-turret armor armor mirror axis 93.6: LS/RS 0.998
+  wige-turret armor structure mirror axis 93.6: LS/RS 1.000
+  seeds own/other/none: FR 13/0/0 RS 32/0/0 LS 32/0/0 RR 5/0/0 TU 8/0/0
+  white art 26973.7, outside every region 2007.39
+
+== wige-dualturret armor (wige-dualturret.svg)
+  armor     FR    area   2315.8 parts 1 holes 1 anchor   95.2   75.1 r  15.2 triangles 49
+  armor     RR    area   4423.7 parts 1 holes 0 anchor   93.6  284.9 r  19.4 triangles 47
+  armor     LS    area   4497.9 parts 1 holes 0 anchor   30.7  234.7 r  18.9 triangles 32
+  armor     RS    area   4504.9 parts 1 holes 0 anchor  157.3  234.8 r  19.0 triangles 31
+  structure FR    area    616.2 parts 1 holes 0 anchor   93.6  162.2 r   6.4 triangles 2
+  structure LS    area    815.4 parts 1 holes 0 anchor   59.9  218.6 r   4.8 triangles 2
+  structure RS    area    815.4 parts 1 holes 0 anchor  127.1  218.4 r   4.8 triangles 2
+  structure RR    area    827.9 parts 1 holes 0 anchor   93.5  260.7 r   4.9 triangles 2
+  armor     RT    area   2776.6 parts 1 holes 1 anchor   93.8  233.0 r  18.2 triangles 24
+  structure RT    area    517.2 parts 1 holes 0 anchor   93.6  207.0 r   7.8 triangles 2
+  armor     FT    area   2574.9 parts 1 holes 1 anchor   93.4  141.1 r  10.4 triangles 24
+  structure FT    area    517.2 parts 1 holes 0 anchor   93.6  122.8 r   7.8 triangles 2
+  largest overlap 0.00 FR/RS
+  wige-dualturret armor armor mirror axis 93.6: LS/RS 0.998
+  wige-dualturret armor structure mirror axis 93.6: LS/RS 1.000
+  seeds own/other/none: FR 8/1/0 RS 30/0/0 LS 30/0/0 RR 5/0/0 RT 7/0/0 FT 8/0/0
+  white art 26973.7, outside every region 1770.49
+
+== protomek-biped armor (protomek-biped.svg)
+  armor     L     area   1656.8 parts 3 holes 0 anchor   32.0  102.8 r   8.6 triangles 90
+  structure L     area    283.8 parts 1 holes 0 anchor   51.7   74.6 r   3.8 triangles 9
+  armor     RA    area    436.4 parts 2 holes 0 anchor   81.7   51.4 r   6.5 triangles 42
+  structure RA    area     80.3 parts 1 holes 0 anchor   67.8   37.3 r   2.5 triangles 6
+  armor     LA    area    449.7 parts 2 holes 0 anchor   12.4   53.3 r   6.6 triangles 43
+  structure LA    area     82.0 parts 1 holes 0 anchor   26.6   37.0 r   2.6 triangles 5
+  structure T     area    134.2 parts 1 holes 0 anchor   47.3   56.9 r   2.6 triangles 6
+  armor     T     area   1102.1 parts 2 holes 1 anchor   52.3   46.0 r   8.2 triangles 106
+  armor     HD    area     98.4 parts 2 holes 0 anchor   47.4   35.6 r   3.2 triangles 13
+  structure HD    area     26.8 parts 1 holes 0 anchor   47.5   31.1 r   1.3 triangles 2
+  armor     MG    area     59.8 parts 2 holes 0 anchor   35.6   16.2 r   3.4 triangles 12
+  structure MG    area     31.8 parts 1 holes 0 anchor   35.6   21.5 r   2.0 triangles 4
+  largest overlap 0.00 T/MG
+  protomek-biped armor armor mirror axis 47.2: LA/RA 0.928
+  protomek-biped armor structure mirror axis 47.2: LA/RA 0.911
+  seeds own/other/none: HD 7/0/0 T 7/1/0 RA 7/0/0 LA 7/0/0 L 2/0/10 MG 7/0/0
+  white art 4442.2, outside every region 0.00
+
+== protomek-glider armor (protomek-glider.svg)
+  armor     L     area   1656.8 parts 3 holes 0 anchor   32.0  102.8 r   8.6 triangles 90
+  structure L     area    283.8 parts 1 holes 0 anchor   51.7   74.6 r   3.8 triangles 9
+  armor     RA    area    436.4 parts 2 holes 0 anchor   81.7   51.4 r   6.5 triangles 42
+  structure RA    area     80.3 parts 1 holes 0 anchor   67.8   37.3 r   2.5 triangles 6
+  armor     LA    area    449.7 parts 2 holes 0 anchor   12.4   53.3 r   6.6 triangles 43
+  structure LA    area     82.0 parts 1 holes 0 anchor   26.6   37.0 r   2.6 triangles 5
+  structure T     area    134.2 parts 1 holes 0 anchor   47.3   56.9 r   2.6 triangles 6
+  armor     T     area   1102.1 parts 2 holes 1 anchor   52.3   46.0 r   8.2 triangles 106
+  armor     HD    area     98.4 parts 2 holes 0 anchor   47.4   35.6 r   3.2 triangles 13
+  structure HD    area     26.8 parts 1 holes 0 anchor   47.5   31.1 r   1.3 triangles 2
+  armor     MG    area     59.8 parts 2 holes 0 anchor   35.6   16.2 r   3.4 triangles 12
+  structure MG    area     31.8 parts 1 holes 0 anchor   35.6   21.5 r   2.0 triangles 4
+  largest overlap 0.00 T/MG
+  protomek-glider armor armor mirror axis 47.2: LA/RA 0.928
+  protomek-glider armor structure mirror axis 47.2: LA/RA 0.911
+  seeds own/other/none: HD 7/0/0 T 7/1/0 RA 7/0/0 LA 7/0/0 L 2/0/10 MG 7/0/0
+  white art 4442.2, outside every region 0.00
+
+== protomek-quad armor (protomek-quad.svg)
+  armor     L     area   1871.3 parts 3 holes 0 anchor   64.8   92.6 r   8.5 triangles 113
+  structure L     area    412.4 parts 1 holes 0 anchor   41.4   79.3 r   3.6 triangles 19
+  armor     T     area   1703.6 parts 3 holes 0 anchor   62.2   49.2 r   9.3 triangles 90
+  structure T     area    225.1 parts 1 holes 0 anchor   47.1   61.3 r   2.4 triangles 7
+  armor     MG    area    121.7 parts 2 holes 0 anchor   28.1   16.8 r   4.1 triangles 16
+  structure MG    area     45.9 parts 1 holes 0 anchor   28.0   22.7 r   1.8 triangles 4
+  armor     HD    area    288.3 parts 2 holes 0 anchor   47.2   39.5 r   4.5 triangles 17
+  structure HD    area     40.3 parts 1 holes 0 anchor   47.2   33.6 r   1.2 triangles 2
+  largest overlap 0.01 L/T
+  seeds own/other/none: HD 7/0/0 T 8/0/0 L 1/0/11 MG 7/0/0
+  white art 4708.9, outside every region 0.00
+
+== fighter-aerospace armor (fighter-aerospace.svg)
+  armor     NOS   area  19996.6 parts 1 holes 0 anchor  160.8  172.0 r  54.2 triangles 99
+  armor     LWG   area  12396.5 parts 1 holes 0 anchor   79.9  381.5 r  42.5 triangles 85
+  armor     RWG   area  12426.1 parts 1 holes 0 anchor  240.6  381.3 r  42.2 triangles 82
+  armor     AFT   area  12168.1 parts 1 holes 0 anchor  160.2  362.8 r  35.4 triangles 67
+  structure SI    area   3960.4 parts 1 holes 0 anchor  160.5  257.2 r  28.2 triangles 34
+  largest overlap 0.02 AFT/SI
+  fighter-aerospace armor armor mirror axis 160.1: LWG/RWG 0.983
+  seeds own/other/none: NOS 11/0/0 RWG 19/0/0 LWG 19/0/0 AFT 3/0/0 SI 3/0/0
+  white art 60985.3, outside every region 37.81
+
+== fighter-conventional armor (fighter-conventional.svg)
+  armor     NOS   area  17144.6 parts 1 holes 0 anchor  170.8  174.0 r  39.5 triangles 64
+  armor     LWG   area   8892.3 parts 1 holes 0 anchor   95.7  375.2 r  39.0 triangles 13
+  armor     RWG   area   8927.2 parts 1 holes 0 anchor  241.1  373.8 r  39.4 triangles 15
+  armor     AFT   area  11058.9 parts 1 holes 0 anchor  169.7  335.0 r  33.9 triangles 66
+  structure SI    area   4334.7 parts 1 holes 0 anchor  169.7  245.6 r  29.8 triangles 34
+  largest overlap 0.00 NOS/SI
+  fighter-conventional armor armor mirror axis 169.6: LWG/RWG 0.983
+  seeds own/other/none: NOS 16/3/0 RWG 15/0/0 LWG 15/0/0 AFT 20/0/0 SI 3/0/0
+  white art 50358.3, outside every region 0.03
+
+== smallcraft-aerodyne armor (smallcraft-aerodyne.svg)
+  armor     NOS   area  13815.2 parts 1 holes 0 anchor  163.3  134.8 r  50.6 triangles 22
+  armor     LS    area  16587.5 parts 1 holes 0 anchor   76.9  355.1 r  48.7 triangles 12
+  armor     RS    area  16587.5 parts 1 holes 0 anchor  254.2  355.3 r  49.9 triangles 12
+  armor     AFT   area  15051.8 parts 1 holes 1 anchor  164.0  310.9 r  38.4 triangles 76
+  structure SI    area   4028.2 parts 1 holes 0 anchor  165.0  231.4 r  28.4 triangles 34
+  largest overlap 0.01 AFT/SI
+  smallcraft-aerodyne armor armor mirror axis 165.0: LS/RS 1.000
+  seeds own/other/none: NOS 17/0/0 RS 29/0/0 LS 29/0/0 AFT 19/0/0 SI 3/0/0
+  white art 66070.6, outside every region 0.01
+
+== smallcraft-spheroid armor (smallcraft-spheroid.svg)
+  armor     NOS   area  16038.5 parts 1 holes 0 anchor  162.7  116.8 r  56.9 triangles 61
+  armor     LS    area  22561.1 parts 1 holes 0 anchor   72.4  223.7 r  54.7 triangles 34
+  armor     RS    area  22681.8 parts 1 holes 0 anchor  255.8  224.4 r  54.7 triangles 34
+  armor     AFT   area  21226.2 parts 1 holes 0 anchor  163.1  369.5 r  62.0 triangles 67
+  structure SI    area   3893.2 parts 1 holes 0 anchor  164.4  235.2 r  28.0 triangles 34
+  largest overlap 0.01 AFT/SI
+  smallcraft-spheroid armor armor mirror axis 164.5: LS/RS 0.989
+  seeds own/other/none: NOS 19/0/0 RS 37/0/0 LS 37/0/0 AFT 19/0/0 SI 3/0/0
+  white art 86399.5, outside every region 0.77
+
+== dropship-aerodyne armor (dropship-aerodyne.svg)
+  armor     NOS   area  20479.1 parts 1 holes 0 anchor  175.6  138.0 r  68.3 triangles 72
+  armor     LS    area  15430.8 parts 1 holes 0 anchor   91.0  365.2 r  40.5 triangles 42
+  armor     RS    area  15438.4 parts 1 holes 0 anchor  261.3  370.2 r  40.4 triangles 42
+  armor     AFT   area  15348.3 parts 1 holes 0 anchor  175.4  349.0 r  43.5 triangles 12
+  structure SI    area   5998.5 parts 1 holes 0 anchor  175.3  234.1 r  27.7 triangles 34
+  largest overlap 0.00 LS/SI
+  dropship-aerodyne armor armor mirror axis 175.8: LS/RS 0.982
+  seeds own/other/none: NOS 20/0/0 RS 39/0/0 LS 39/0/0 AFT 24/0/0 SI 7/0/0
+  white art 72695.2, outside every region 0.40
+
+== dropship-spheroid armor (dropship-spheroid.svg)
+  armor     NOS   area  21021.9 parts 1 holes 0 anchor  173.9  161.9 r  58.3 triangles 43
+  armor     LS    area  17759.5 parts 1 holes 0 anchor   76.8  297.2 r  38.8 triangles 71
+  armor     RS    area  18634.0 parts 1 holes 0 anchor  273.7  297.1 r  39.8 triangles 63
+  armor     AFT   area  17007.0 parts 1 holes 0 anchor  175.4  369.1 r  58.2 triangles 74
+  structure SI    area   5800.8 parts 1 holes 0 anchor  175.3  276.9 r  27.2 triangles 34
+  largest overlap 0.00 AFT/SI
+  dropship-spheroid armor armor mirror axis 175.2: LS/RS 0.928
+  seeds own/other/none: NOS 27/0/0 RS 42/0/0 LS 42/0/0 AFT 19/0/0 SI 6/0/0
+  white art 80248.6, outside every region 23.90
+
+== jumpship armor (jumpship.svg)
+  structure SI    area   4043.0 parts 1 holes 0 anchor  172.5  221.1 r  27.9 triangles 18
+  structure KF    area   3237.1 parts 1 holes 0 anchor  172.5  271.1 r  22.1 triangles 2
+  structure SAIL  area   2175.7 parts 1 holes 0 anchor  172.5  308.0 r  14.8 triangles 2
+  structure DC    area   2522.0 parts 1 holes 0 anchor  172.3  340.0 r  17.1 triangles 18
+  armor     NOS   area  13476.8 parts 2 holes 0 anchor  173.7  148.6 r  44.6 triangles 53
+  armor     FLS   area   5009.3 parts 2 holes 0 anchor   29.5  168.8 r  19.8 triangles 14
+  armor     FRS   area   5260.5 parts 2 holes 0 anchor  307.0  168.8 r  19.8 triangles 16
+  armor     ALS   area   4987.6 parts 2 holes 0 anchor   29.5  327.3 r  19.8 triangles 21
+  armor     ARS   area   5196.7 parts 2 holes 0 anchor  307.0  327.3 r  19.8 triangles 23
+  armor     AFT   area   9332.2 parts 2 holes 0 anchor  172.2  470.0 r  19.8 triangles 54
+  largest overlap 0.00 
+  jumpship armor armor mirror axis 170.4: FLS/FRS 0.718 (asymmetric drawing, at least 0.7) ALS/ARS 0.717 (asymmetric drawing, at least 0.7)
+  seeds own/other/none: NOS 1/0/0 FLS 1/0/0 FRS 1/0/0 ALS 1/0/0 ARS 1/0/0 AFT 1/0/0 SI 1/0/0 KF 1/0/0 SAIL 1/0/0 DC 1/0/0
+  white art 26967.7, outside every region 6.89
+
+== warship armor (warship.svg)
+  structure SI    area   3946.6 parts 1 holes 0 anchor  184.2  210.1 r  29.1 triangles 18
+  structure KF    area   3052.3 parts 1 holes 0 anchor  184.2  261.3 r  22.2 triangles 2
+  structure SAIL  area   1629.7 parts 1 holes 0 anchor  184.2  295.4 r  11.9 triangles 2
+  structure DC    area   1878.9 parts 1 holes 0 anchor  184.2  321.3 r  14.0 triangles 18
+  armor     NOS   area  13406.4 parts 2 holes 0 anchor  183.3   89.5 r  37.1 triangles 22
+  armor     FLS   area  11904.9 parts 2 holes 0 anchor   69.2  177.7 r  36.2 triangles 44
+  armor     FRS   area  12027.4 parts 2 holes 0 anchor  299.3  179.6 r  36.2 triangles 55
+  armor     ALS   area  11864.8 parts 2 holes 0 anchor   69.2  333.6 r  36.2 triangles 38
+  armor     ARS   area  11879.9 parts 2 holes 0 anchor  299.3  335.5 r  36.2 triangles 40
+  armor     AFT   area  12359.1 parts 2 holes 0 anchor  183.3  405.1 r  37.1 triangles 17
+  largest overlap 0.00 
+  warship armor armor mirror axis 183.8: FLS/FRS 0.957 ALS/ARS 0.966
+  seeds own/other/none: NOS 1/0/0 FLS 1/0/0 FRS 1/0/0 ALS 1/0/0 ARS 1/0/0 AFT 1/0/0 SI 1/0/0 KF 1/0/0 SAIL 1/0/0 DC 1/0/0
+  white art 17793.1, outside every region 0.27
+
+== spacestation armor (spacestation.svg)
+  structure SI    area   2885.8 parts 1 holes 0 anchor  179.8  188.8 r  19.9 triangles 18
+  structure SAIL  area   1802.5 parts 1 holes 0 anchor  179.7  221.1 r  12.5 triangles 2
+  structure DC    area   2147.1 parts 1 holes 0 anchor  179.9  248.5 r  14.9 triangles 18
+  armor     NOS   area  13676.0 parts 2 holes 0 anchor  178.8   92.8 r  39.0 triangles 25
+  armor     FLS   area  12694.2 parts 2 holes 0 anchor   57.9  186.4 r  39.0 triangles 21
+  armor     FRS   area  12748.2 parts 2 holes 0 anchor  299.7  186.4 r  39.0 triangles 21
+  armor     ALS   area  12481.9 parts 2 holes 0 anchor   57.9  350.2 r  39.0 triangles 20
+  armor     ARS   area  12527.1 parts 2 holes 0 anchor  299.7  350.2 r  39.0 triangles 20
+  armor     AFT   area  18125.9 parts 2 holes 3 anchor  178.8  424.3 r  39.0 triangles 92
+  largest overlap 0.00 
+  spacestation armor armor mirror axis 179.3: FLS/FRS 0.966 ALS/ARS 0.967
+  seeds own/other/none: NOS 1/0/0 FLS 1/0/0 FRS 1/0/0 ALS 1/0/0 ARS 1/0/0 AFT 1/0/0 SI 1/0/0 SAIL 1/0/0 DC 1/0/0
+  white art 9288.3, outside every region 2.84
+
+All families valid.
