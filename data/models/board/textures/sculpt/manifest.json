@@ -23,6 +23,26 @@
       "role": "ground",
       "seed": 104
     },
+    "lunar": {
+      "tile": 8.0,
+      "role": "ground",
+      "seed": 104
+    },
+    "lunar-scree": {
+      "tile": 4.0,
+      "role": "debris",
+      "seed": 202
+    },
+    "lunar-cliff": {
+      "tile": 4.0,
+      "role": "wall",
+      "size": 512,
+      "copied_from": "granite-contact",
+      "source": "tools/terrain-contact-sources/granite.png",
+      "source_sha256": "52aac005ca460fe821593290b188b21dce48f75a3cb3d1238c23f9f7cf63f590",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.04
+    },
     "snow": {
       "tile": 8.0,
       "role": "ground",

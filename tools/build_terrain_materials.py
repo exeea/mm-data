@@ -677,6 +677,8 @@ MATERIALS = {
     'grass': (grass, 4.0, 'ground', 102),
     'dirt': (dirt, 5.0, 'ground', 103),
     'rock': (rock, 8.0, 'ground', 104),
+    'lunar': (rock, 8.0, 'ground', 104),
+    'lunar-scree': (scree, 4.0, 'debris', 202),
     'snow': (snow, 8.0, 'ground', 105),
     'concrete': (concrete, 6.0, 'ground', 106),
     'pavement': (pavement, 3.0, 'debris', 201),
@@ -733,9 +735,11 @@ def main():
         results[name] = save(name, canvas, rgb, height, strength, ao, args.out)
         print(f'{name}: {tile} m, {role}')
     if not args.only:
+        path = args.out / 'manifest.json'
+        existing = json.loads(path.read_text())['materials'] if path.exists() else {}
         manifest = {'generator': 'tools/build_terrain_materials.py', 'license': 'CC0-1.0', 'size': args.size,
-                    'materials': {n: {'tile': t, 'role': r, 'seed': s} for n, (_, t, r, s) in MATERIALS.items()}}
-        (args.out / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+                    'materials': existing | {n: {'tile': t, 'role': r, 'seed': s} for n, (_, t, r, s) in MATERIALS.items()}}
+        path.write_text(json.dumps(manifest, indent=2) + '\n')
     if args.preview:
         preview(results, args.preview)
 
