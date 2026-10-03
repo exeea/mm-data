@@ -92,13 +92,14 @@ repositories {
 // build; see each consumer's build.gradle for the split, incremental sync tasks.
 
 tasks.register<Zip>("unitFilesZip") {
-    description = "Creates zip archives of all the unit file folders (excluding loose .txt and .xml files)."
+    description = "Creates zip archives of all the unit file folders (excluding loose .txt, .xml and .csv files)."
     group = "build"
     destinationDirectory.set(File(stagingFolder, "mekfiles"))
     archiveFileName.set("unit_files.zip")
     from("data/mekfiles") {
         exclude("*.txt")
         exclude("*.xml")
+        exclude("*.csv")
         exclude("*.cache")
     }
 }
