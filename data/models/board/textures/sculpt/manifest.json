@@ -6,77 +6,109 @@
     "sand": {
       "tile": 6.0,
       "role": "ground",
-      "seed": 101
+      "seed": 101,
+      "relief_metres": 0.043452,
+      "source": "tools/ground-sources/sand-v2.png",
+      "source_sha256": "b87d2c88341113b80ca5c9c4ab9b24561d7ebe1b838b407e78dc53f22d50a84f",
+      "height_source": "tools/ground-sources/sand-v2-height.png",
+      "height_sha256": "b3b8243ab04bc6dc9e264aa1c1650b4b1a3c313cbe70a9ae3ccc499171a1f7af"
     },
     "grass": {
       "tile": 4.0,
       "role": "ground",
-      "seed": 102
+      "seed": 102,
+      "relief_metres": 0.060753,
+      "source": "tools/ground-sources/grass-v2.png",
+      "source_sha256": "7d911aed17488a5b7d21fbcf91dab448f7e680575e82226cda184a8a82838279",
+      "height_source": "tools/ground-sources/grass-v2-height.png",
+      "height_sha256": "49b66102d8223049dc47a9258e6faf249a82d35fbcc54ad2b54c874aacbcde20"
     },
     "dirt": {
       "tile": 5.0,
       "role": "ground",
-      "seed": 103
+      "seed": 103,
+      "relief_metres": 0.122685,
+      "source": "tools/ground-sources/dirt-v2.png",
+      "source_sha256": "974df480a642e13732b8e6055e9ce3749b907d8ae550554ca10663d1ba63eed8",
+      "height_source": "tools/ground-sources/dirt-v2-height.png",
+      "height_sha256": "f5de015554b6b16a587e81343e960cefe89a4c461096ceb8b8e5288e2bea0304"
     },
     "rock": {
       "tile": 8.0,
       "role": "ground",
-      "seed": 104
+      "seed": 104,
+      "relief_metres": 0.135946,
+      "source": "tools/ground-sources/rock.png",
+      "source_sha256": "a3a2fd5f7a7319aaef200c7eb71adfc487f98389d3db0737b9f8859811faebfd",
+      "height_source": "estimated multiscale relief from existing imagegen source"
     },
     "snow": {
       "tile": 8.0,
       "role": "ground",
-      "seed": 105
+      "seed": 105,
+      "relief_metres": 0.667745
     },
     "concrete": {
       "tile": 6.0,
       "role": "ground",
-      "seed": 106
+      "seed": 106,
+      "relief_metres": 0.111331
     },
     "pavement": {
       "tile": 3.0,
       "role": "debris",
-      "seed": 201
+      "seed": 201,
+      "relief_metres": 0.04174
     },
     "scree": {
       "tile": 4.0,
       "role": "debris",
-      "seed": 202
+      "seed": 202,
+      "relief_metres": 0.39896
     },
     "gravel": {
       "tile": 3.0,
       "role": "debris",
-      "seed": 203
+      "seed": 203,
+      "relief_metres": 0.038967
     },
     "sandstone": {
       "tile": 12.0,
       "role": "wall",
-      "seed": 301
+      "seed": 301,
+      "relief_metres": 0.379747
     },
     "granite": {
-      "tile": 10.0,
+      "tile": 12.0,
       "role": "wall",
-      "seed": 302
+      "seed": 302,
+      "relief_metres": 0.454413,
+      "source": "tools/cliff-sources/rock-relief-v4.png",
+      "source_sha256": "ada66f894b2abb82196a475b3a7cd269eb228cefde7f671a0dada29e3449ca67",
+      "height_source": "tools/cliff-sources/rock-relief-v4-height.png",
+      "height_sha256": "28c72ffde3edf7bc2fe3a1d7370d2359bbbd73afc57d8cfe236b60b86a25e7df"
     },
     "earth": {
       "tile": 20.0,
       "role": "wall",
-      "seed": 303
+      "seed": 303,
+      "relief_metres": 0.163801
     },
     "cast": {
       "tile": 8.0,
       "role": "wall",
-      "seed": 304
+      "seed": 304,
+      "relief_metres": 0.024329
     },
     "soil-contact": {
-      "tile": 2.0,
+      "tile": 5.0,
       "role": "mantle",
       "size": 512,
       "generator": "tools/prepare_terrain_contact.py",
       "source": "tools/terrain-contact-sources/soil.png",
       "source_sha256": "80380cf74f06c683bdeb1b67473adc6e0b8e95adf7f1f5aa9f82b1350a7b8cf3",
       "height_source": "estimated multiscale luminance",
-      "relief_metres": 0.012
+      "relief_metres": 0.09
     },
     "granite-contact": {
       "tile": 4.0,
@@ -87,6 +119,42 @@
       "source_sha256": "52aac005ca460fe821593290b188b21dce48f75a3cb3d1238c23f9f7cf63f590",
       "height_source": "estimated multiscale luminance",
       "relief_metres": 0.04
+    },
+    "lunar": {
+      "tile": 8.0,
+      "role": "ground",
+      "seed": 104,
+      "relief_metres": 0.503089,
+      "source_revision": "47748386b4224151fde1780b1401e6644f9a36b3",
+      "source": "data/models/board/textures/sculpt/rock.png",
+      "source_sha256": "ae924e222d00cd0e9175f31090b612d1e5e4d27f3aabc2c10a8a15ca0b39141a",
+      "normal_source": "data/models/board/textures/sculpt/rock-normal.png",
+      "normal_source_sha256": "1bcd31bd86c88b6caaf4e8fd9516144e930c3fb597fa823c110a61fda6a9c312",
+      "height_source": "Original procedural height range from the preserved source revision; maps kept byte-for-byte"
+    },
+    "lunar-cliff": {
+      "tile": 10.0,
+      "role": "wall",
+      "seed": 302,
+      "relief_metres": 0.859993,
+      "source_revision": "47748386b4224151fde1780b1401e6644f9a36b3",
+      "source": "data/models/board/textures/sculpt/granite.png",
+      "source_sha256": "9deb12c927cd3007baf5bae5811f3421c5e14d177ab6e5634517cdb746b2d9bd",
+      "normal_source": "data/models/board/textures/sculpt/granite-normal.png",
+      "normal_source_sha256": "aac6566f80999caca8ff6f2947be83f82a4870b81bacfb099985bd2c85775012",
+      "height_source": "Original procedural height range from the preserved source revision; maps kept byte-for-byte"
+    },
+    "lunar-scree": {
+      "tile": 4.0,
+      "role": "debris",
+      "seed": 202,
+      "relief_metres": 0.32689,
+      "source_revision": "47748386b4224151fde1780b1401e6644f9a36b3",
+      "source": "data/models/board/textures/sculpt/scree.png",
+      "source_sha256": "be64cee44e7acf83e7101a19d98790e95aa4999fd8bc54fa9d921f4210da4628",
+      "normal_source": "data/models/board/textures/sculpt/scree-normal.png",
+      "normal_source_sha256": "86c40ff12916315269591da907439cb26bb79afc57c0df070fc308b4ac955068",
+      "height_source": "Original procedural height range from the preserved source revision; maps kept byte-for-byte"
     }
   }
 }

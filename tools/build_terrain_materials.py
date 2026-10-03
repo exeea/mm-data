@@ -2,9 +2,9 @@
 # Copyright (C) 2026 The MegaMek Team. SPDX-License-Identifier: GPL-3.0-or-later
 """Procedural, tileable materials for the sculpted 3D board.
 
-Every map is synthesized from fixed seeds with NumPy and Pillow only: no photographs, no downloaded or generated
-images, so the outputs are original works (CC0-1.0, as recorded in the manifest). Each material is authored from a
-height field in metres, so its normals and occlusion agree with its relief, and its colour is delit (no baked sun).
+Materials use fixed seeds with NumPy and Pillow. Natural ground and granite reuse the project's imagegen sources;
+their estimated relief is artistic, not a measured scan. Other maps are original procedural works (CC0-1.0).
+Each material uses a height field in metres, so its normals and occlusion agree with its relief.
 
 Outputs, per material NAME in data/models/board/textures/sculpt/:
   NAME.png         sRGB albedo in RGB, normalized height in A (for height-based layer blending)
@@ -15,6 +15,7 @@ Usage (from the mm-data root, or pass --out):
   python tools/build_terrain_materials.py [--size 512] [--only sand,grass] [--preview preview.png]
 """
 import argparse
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -22,8 +23,17 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw
 
+from prepare_cliff_materials import periodic
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'data/models/board/textures/sculpt'
+IMAGE_SOURCES = {
+    'rock': 'tools/ground-sources/rock.png',
+    'granite': 'tools/cliff-sources/rock-relief-v4.png',
+    'grass': 'tools/ground-sources/grass-v2.png',
+    'dirt': 'tools/ground-sources/dirt-v2.png',
+    'sand': 'tools/ground-sources/sand-v2.png',
+}
 
 
 # ---- Periodic fields -------------------------------------------------------------------------------------------
@@ -267,9 +277,14 @@ def save(name, canvas, rgb, height, normal_strength, ao, out):
     out.mkdir(parents=True, exist_ok=True)
     h = height - height.min()
     h = h / (h.max() + 1e-9)
-    albedo = np.concatenate([np.clip(rgb, 0, 1), h[..., None]], -1)
-    Image.fromarray(np.round(albedo * 255).astype(np.uint8), 'RGBA').save(out / f'{name}.png', optimize=True)
-    n = normals(canvas, height, normal_strength)
+    encoded_height = np.round(h * 255).astype(np.uint8)
+    encoded_rgb = np.round(np.clip(rgb, 0, 1) * 255).astype(np.uint8)
+    encoded = np.concatenate([encoded_rgb, encoded_height[..., None]], -1)
+    Image.fromarray(encoded, 'RGBA').save(out / f'{name}.png', optimize=True)
+    albedo = encoded.astype(np.float32) / 255
+    # The GPU traces the quantized alpha field. Derive normals from that same field and physical range.
+    traced_height = encoded_height.astype(np.float32) / 255 * float(np.ptp(height))
+    n = normals(canvas, traced_height, normal_strength)
     packed = np.concatenate([n * .5 + .5, ao[..., None]], -1)
     Image.fromarray(np.round(np.clip(packed, 0, 1) * 255).astype(np.uint8), 'RGBA').save(
         out / f'{name}-normal.png', optimize=True)
@@ -280,32 +295,8 @@ def save(name, canvas, rgb, height, normal_strength, ao, out):
 # Heights are metres. Colours are sRGB. Roles: ground (tops), debris (talus, rims, wear), wall (cliffs, rocks).
 
 def sand(c):
-    """Warm desert sand: broad swells and trains of wind ripples that fork, fade and bend; a few small pebbles."""
-    swell = c.spectral(4, 1, 4) * .06
-    bend = c.spectral(3, 1, 5) * .35 + c.spectral(2.5, 3, 10) * .08
-    ripple = np.zeros_like(swell)
-    choice = smoothstep(-.4, .4, c.spectral(3, 1, 4))
-    for (ku, kv), weight in (((14, 5), 1 - choice), ((13, 7), choice)):
-        phase = ku * c.u + kv * c.v + bend
-        t = phase - np.floor(phase)
-        # Gentle windward slope, steep lee face.
-        ripple += weight * np.where(t < .75, smoothstep(0, .75, t), 1 - smoothstep(.75, 1, t))
-    presence = smoothstep(-.8, .6, c.spectral(3, 1, 5))
-    grains = c.spectral(.5, 150) * .0006
-    f1, f2, ident, _, _ = c.worley(60, warp=.25)
-    stone = c.per_cell(ident, 3600) < .05
-    radius = c.per_cell(ident, 3600, .12, .3)
-    pebble = np.where(stone, np.sqrt(np.clip(1 - (f1 / radius) ** 2, 0, 1)), 0)
-    height = swell + ripple * presence * .012 + grains + pebble * .006
-    tone = c.spectral(3, 1, 6)
-    rgb = mix(fill(c, '#d69c66'), fill(c, '#c58352'), smoothstep(-1.8, 1.8, tone))
-    rgb = mix(rgb, fill(c, '#e2b17f'), smoothstep(1.0, 2.4, c.spectral(3, 2, 10)) * .35)
-    # Coarser, darker grains gather in the troughs.
-    rgb = shade(rgb, 1 + (ripple - .5) * presence * .08)
-    speck = c.child().random((c.n, c.n)).astype(np.float32)
-    rgb = shade(rgb, np.where(speck < .02, .8, np.where(speck > .985, 1.06, 1)))
-    rgb = mix(rgb, mix(fill(c, '#7d4a33'), fill(c, '#b08766'), c.per_cell(ident, 3600)), (pebble > 0) * .85)
-    return rgb, height, 2.0
+    """Fine beige sand with sparse grains and interrupted shallow wind relief."""
+    return ground_source(c, 'sand', 0.08)
 
 
 def pavement(c):
@@ -343,7 +334,7 @@ def sandstone(c):
         thickness.append(float(rng.uniform(1.4, 3.6)))
     bounds = np.cumsum([0] + thickness) / sum(thickness)
     beds = len(thickness)
-    parted = rng.random(beds) < .7
+    parted = rng.random(beds) < .45
     hardness = rng.uniform(-1, 1, beds).astype(np.float32)
     depth = (c.v + c.spectral(3, 1, 5, stretch=(1, 6)) * .008 + c.spectral(2.5, 4, 16, stretch=(1, 3)) * .002) % 1.0
     bed = np.clip(np.searchsorted(bounds, depth, side='right') - 1, 0, beds - 1)
@@ -388,7 +379,9 @@ def sandstone(c):
     arris = smoothstep(0, 1, (edge - width) / worn)
     proud = c.per_cell(ident, count, 0, .07) + .02 * hardness[bed]
     height = (.05 + proud + spall + c.spectral(2.5, 3, 14) * .012) * (.35 + .65 * arris)
-    crack = 1 - smoothstep(width * .5, width, edge)
+    # Cohesive clay retains broad faces: joints fade or fill in locally instead of outlining every block.
+    joint_open = smoothstep(-.7, .5, c.spectral(3, 1, 8, stretch=(1, 3)))
+    crack = (1 - smoothstep(width * .5, width, edge)) * (.35 + .65 * joint_open)
     fine = (1 - smoothstep(.008, .022, minor)) * .8
     faint = (1 - smoothstep(.004, .012, np.minimum(below_top, above_bottom))) * .5
     height -= crack * .07 + fine * .02 + faint * .006 + scarp * .004
@@ -398,6 +391,11 @@ def sandstone(c):
     pit = (c.per_cell(pid, 40 * 40) < .07) * np.clip(1 - p1 / .45, 0, 1)
     height -= pit * .01
     height += c.spectral(2, 6, 220) * .003 + c.spectral(.5, 180) * .001
+    # Narrow downhill rills cross the mineral grain but stop in firmer patches. They belong to the same physical
+    # height field as the joints, so POM, normals and cavities remain aligned without another runtime sampler.
+    rill = smoothstep(.45, 1.6, c.spectral(2.4, 8, 65, stretch=(1, 12)))
+    rill *= smoothstep(-.5, .8, c.spectral(3, 1, 5))
+    height -= rill * .035
     # Colour: red-brown columns, each block and each spall its own tone; broad bleached and deeper zones cross the beds.
     rgb = mix(fill(c, '#9c5637'), fill(c, '#b56c41'), c.per_cell(ident, count))
     rgb = shade(rgb, (1 + .05 * hardness[bed]) * c.per_cell(facet, facets, .94, 1.06))
@@ -410,84 +408,89 @@ def sandstone(c):
     streak = smoothstep(.4, 1.6, c.spectral(2.2, 2, 40, stretch=(1, 9))) * smoothstep(-.2, .9, c.spectral(3, 1, 4))
     streak *= 1 - smoothstep(.2, 1.6, below_top)
     rgb = mix(rgb, fill(c, '#4a2a1d'), streak * .45)
-    rgb = shade(rgb, 1 - crack * .4 - fine * .3 - faint * .12 - pit * .3)
+    rgb = shade(rgb, 1 - crack * .28 - fine * .20 - faint * .08 - pit * .3 - rill * .06)
     return rgb, height, 1.6
 
 
+def image_source(c, name):
+    """Resolve paired authored maps onto the same periodic runtime grid, retaining their physical alignment."""
+    source = Path(IMAGE_SOURCES[name])
+    with Image.open(ROOT / source) as image:
+        rgb = np.asarray(image.convert('RGB').resize((c.n, c.n), Image.Resampling.LANCZOS), np.float32) / 255
+    rgb = np.clip(periodic(rgb), .015, .985)
+    authored = ROOT / source.with_stem(source.stem + '-height')
+    height = None
+    if authored.exists():
+        with Image.open(authored) as image:
+            height = np.asarray(image.convert('L').resize((c.n, c.n), Image.Resampling.LANCZOS), np.float32) / 255
+        height = np.clip(periodic(height), 0, 1)
+    return rgb, height
+
+
+def ground_source(c, name, depth):
+    """Short grass, compacted soil and sand: shallow authored relief, without unrelated procedural swells."""
+    rgb, height = image_source(c, name)
+    if height is None:
+        raise ValueError(f'{name} requires its paired height source')
+    # Remove illumination/coverage sweeps larger than local clumps. The shader supplies world-scale variation;
+    # embedding it in a small repeated tile produces bands even with POM and normals disabled.
+    broad = np.stack([c.blur(rgb[..., i], c.tile / 16) for i in range(3)], -1)
+    rgb -= broad - rgb.mean(axis=(0, 1))
+    # Calibrate the ground under the renderer's daylight, preserving local contrast instead of washing it
+    # into a pale average. These are pigment corrections; height, lighting and wetness remain independent.
+    mean = rgb.mean(axis=(0, 1))
+    tone = {'grass': (-.07, -.045, -.035), 'dirt': (-.06, -.075, -.055), 'sand': (-.05, -.065, -.08)}[name]
+    rgb = mean + (rgb - mean) * (1.0 if name == 'sand' else 1.1) + np.asarray(tone)
+    return rgb, height * depth, 1.0
+
+
+def stone_source(c, name, depth, grain):
+    """Source-aligned stone relief. Recess coherent dark joints, not individual dark mineral grains.
+    Preserve the source's small chipped arrises without converting pigment speckles into deep spikes."""
+    rgb, authored = image_source(c, name)
+    light = rgb @ np.array([.2126, .7152, .0722])
+    face = c.blur(light, .055)
+    local = c.blur(light, .24)
+    fracture = 1 - smoothstep(.42, .82, face / np.maximum(local, .04))
+    broad = c.blur(light, .13)
+    low, high = np.percentile(broad, (2, 98))
+    planes = np.clip((broad - low) / max(high - low, .01), 0, 1)
+    chips = c.blur(light, .018) - c.blur(light, .07)
+    height = depth * (.40 * planes - .60 * fracture) + chips * grain
+    if authored is not None:
+        # The paired generated sculpt encodes the broken faces instead of using mineral colour as depth.
+        # It is an artistic estimate; periodic filtering and one resolved field keep every runtime map aligned.
+        height = authored * depth
+    # Reduce baked illumination while retaining mineral colour. Directional light, cavities and ray shadows
+    # come from the renderer; the remaining fine colour is not a second, unrelated procedural normal field.
+    rgb *= (np.mean(light) / np.maximum(c.blur(light, .10), .04))[..., None] ** .65
+    rgb *= np.array([1.045, 1.015, .965])
+    return rgb, height, 1.0
+
+
 def granite(c):
-    """Fractured granite: two or three long joint sets cut the face into tilted slabs that step at each joint;
-    broad weathering tones, lichen and water streaks. No courses: nothing reads as masonry."""
-    height = np.zeros((c.n, c.n), np.float32)
-    joint = np.zeros((c.n, c.n), np.float32)
-    rng = c.child()
-    for angle, spacing, step in ((math.pi / 2 + rng.normal(0, .12), 3.2, .14),
-                                 (rng.uniform(.35, .7), 4.5, .1),
-                                 (math.pi - rng.uniform(.3, .6), 6.0, .08)):
-        distance, fraction = c.fractures(angle, spacing, .1)
-        # Joints open only in stretches; between them the slab steps down across the set.
-        open_part = smoothstep(.25, .9, c.spectral(2.5, 1, 8))
-        width = .02 + .05 * smoothstep(-1, 1.5, c.spectral(2.5, 2, 16))
-        crack = (1 - smoothstep(width * .5, width, distance)) * open_part
-        height += fraction * step - (1 - smoothstep(width, width + .15, distance)) * .06 * open_part
-        joint = np.maximum(joint, crack)
-    g1, g2, gid, _, _ = c.worley(15, 12, warp=.35)
-    fine = (1 - smoothstep(.0, .015, g2 - g1)) * smoothstep(.7, 1.3, c.spectral(2.5, 2, 20))
-    height -= fine * .012
-    height += c.spectral(2.5, 1, 12) * .08 + c.spectral(2, 5, 120) * .012 + c.spectral(.5, 150) * .0015
-    tone = c.spectral(2.8, 1, 10)
-    rgb = mix(fill(c, '#8c8a85'), fill(c, '#aeaaa2'), smoothstep(-1.4, 1.4, tone))
-    rgb = mix(rgb, fill(c, '#9a8c82'), smoothstep(.8, 1.8, c.spectral(3, 1, 8)) * .5)
-    speck = c.child().random((c.n, c.n)).astype(np.float32)
-    rgb = shade(rgb, np.where(speck < .05, .7, np.where(speck > .92, 1.08, 1)))
-    lichen = smoothstep(1.3, 1.9, c.spectral(2.2, 3, 40)) * (1 - joint) * smoothstep(-.3, .8, c.spectral(3, 1, 4))
-    hue = c.spectral(2, 2, 10)
-    rgb = mix(rgb, mix(fill(c, '#9c9c72'), fill(c, '#b08a5c'), smoothstep(-.3, .3, hue)), lichen * .6)
-    # Broad weathering: darker, water-stained zones and paler fresh breaks.
-    rgb = shade(rgb, 1 + .12 * c.spectral(3, 1, 5, stretch=(1, 2)))
-    streak = smoothstep(.2, 1.5, c.spectral(2.2, 2, 40, stretch=(1, 9))) * smoothstep(-.2, 1, c.spectral(3, 1, 4))
-    rgb = mix(rgb, fill(c, '#4f4d49'), streak * .4)
-    rgb = shade(rgb, 1 - joint * .5 - fine * .2)
-    return rgb, height, 1.3
+    """Angular chipped cliff stone with a matching generated sculpt, guided by the visual reference."""
+    rgb, height, strength = stone_source(c, 'granite', .50, .32)
+    # Generated depth still carries some face illumination. Compress the exposed fronts toward a plane while
+    # retaining the deep joints and short chipped arrises; otherwise every lit patch becomes a swollen bump.
+    height = .50 * (.70 * smoothstep(.08, .67, height / .50) + .30 * height / .50)
+    # The mesh carries large slabs; retain their authored joints without making every mineral chip a deep spall.
+    # A physical filter keeps the shape consistent across bake resolutions and leaves fine albedo detail intact.
+    height = c.blur(height, .09) * .7 + height * .3
+    # Pale weathered stone: keep mineral variation without the source's ochre cast dominating shaded walls.
+    neutral = (rgb @ np.array([.2126, .7152, .0722]))[..., None]
+    return (neutral * .28 + rgb * .72) * 1.03, height, strength
 
 def grass(c):
-    """A meadow seen from above: tussocks of radiating blades over dark thatch, drier and lusher patches."""
-    f1, f2, ident, ou, ov = c.worley(26)
-    count = 26 * 26
-    clump = np.clip(1 - f1 / .85, 0, 1) ** 1.2 * c.per_cell(ident, count, .6, 1)
-    patch = smoothstep(-1.0, 1.2, c.spectral(3, 1, 6))
-    dry = smoothstep(.4, 1.6, c.spectral(3, 1, 8))
-    # Muted olive greens and straw, the tones of the printed map Grassland #3 rather than a lawn's green.
-    rgb = mix(fill(c, '#2e2f1b'), fill(c, '#2e2b1d'), smoothstep(.8, 1.8, c.spectral(2, 3, 30)))
-    height = clump * .45
-    rgb = mix(rgb, fill(c, '#4b4e29'), clump * .8)
-    lush = [colour('#6b6f3a'), colour('#8d914c'), colour('#54582d'), colour('#9fa25a')]
-    dryc = [colour('#969061'), colour('#ada674'), colour('#827e55'), colour('#bcb586')]
-    def angle(u, v, rng):
-        # Blades lean outward from their tussock's centre, with scatter.
-        x, y = int(u * c.n) % c.n, int(v * c.n) % c.n
-        return math.atan2(-float(ov[y, x]), -float(ou[y, x])) + rng.normal(0, .6)
-
-    def blade(u, v, rng):
-        x, y = int(u * c.n) % c.n, int(v * c.n) % c.n
-        source = dryc if rng.random() < dry[y, x] * .8 else lush
-        base = source[rng.integers(0, 4)] * (.75 + .5 * rng.random())
-        return np.clip(base * (.85 + .35 * patch[y, x]), 0, 1)
-
-    c.strokes(int(80000 * (c.n / 1024) ** 2), (3 * c.n / 1024, 11 * c.n / 1024), max(1, c.n // 1024),
-              angle, blade, lambda rng: .5 + .5 * rng.random(), rgb, height)
-    flower = c.child().random((c.n, c.n)).astype(np.float32)
-    rgb = np.where((flower < .0012)[..., None], mix(fill(c, '#f2efe0'), fill(c, '#e8cf4a'), flower > .0006), rgb)
-    rgb = shade(rgb, .9 + .2 * patch)
-    # A meadow in sun is brighter than its individual blades suggest: lift the whole palette.
-    rgb = np.clip(rgb * 1.3, 0, 1)
-    return rgb, height * .03 + clump * .02, 1.2
+    """Muted meadow grass: fine blades and shallow thatch over quiet soil."""
+    return ground_source(c, 'grass', 0.075)
 
 
 def scree(c):
     """Angular rock fragments of three sizes, heaped over dark grit: tilted faceted stones with open gaps."""
-    rgb = shade(fill(c, '#4f4c47'), 1 + .18 * c.spectral(1, 60))
+    rgb = shade(fill(c, '#595246'), 1 + .18 * c.spectral(1, 60))
     height = c.spectral(2, 10, 200) * .005
-    for cells, presence, size in ((8, .6, .16), (18, .65, .08), (40, .6, .035)):
+    for cells, presence, size in ((7, .72, .23), (17, .68, .10), (40, .6, .035)):
         f1, f2, ident, ou, ov = c.worley(cells, warp=.08)
         count = cells * cells
         present = c.per_cell(ident, count) < presence
@@ -499,8 +502,8 @@ def scree(c):
         stone = present & (edge > .02) & (top > height)
         height = np.where(stone, top, height)
         pick = c.per_cell(ident, count)
-        face = mix(fill(c, '#85827b'), fill(c, '#a9a59b'), smoothstep(.2, .8, pick))
-        face = mix(face, fill(c, '#71675d'), smoothstep(.82, .95, pick))
+        face = mix(fill(c, '#948b79'), fill(c, '#b3a78f'), smoothstep(.2, .8, pick))
+        face = mix(face, fill(c, '#84745f'), smoothstep(.82, .95, pick))
         face = shade(face, (.8 + .3 * c.per_cell(ident, count)) * (.75 + .25 * edge))
         rgb = np.where(stone[..., None], face, rgb)
     rgb = shade(rgb, 1 + .06 * c.spectral(3, 1, 6))
@@ -527,56 +530,30 @@ def gravel(c):
 
 
 def dirt(c):
-    """Bare soil: clods, faint drying cracks that come and go, a few pebbles, humus patches and straw."""
-    height = c.spectral(3, 1, 12) * .02
-    f1, f2, ident, _, _ = c.worley(34, warp=.3)
-    clod = np.clip(1 - f1 / .8, 0, 1) ** .7 * (c.per_cell(ident, 34 * 34) < .6)
-    height += clod * .008
-    k1, k2, _, _, _ = c.worley(7, warp=.35)
-    open_crack = smoothstep(.1, .9, c.spectral(2.5, 2, 20))
-    crack = (1 - smoothstep(0, .02 + .03 * open_crack, k2 - k1)) * open_crack
-    height -= crack * .008
-    p1, p2, pid, _, _ = c.worley(60, warp=.3)
-    pebble = (c.per_cell(pid, 3600) < .04) * np.sqrt(np.clip(1 - (p1 / .4) ** 2, 0, 1))
-    height += pebble * .01
-    height += c.spectral(1, 60) * .0015
-    rgb = mix(fill(c, '#6e5038'), fill(c, '#8a6a4c'), smoothstep(-1, 1.2, c.spectral(3, 1, 6)))
-    rgb = mix(rgb, fill(c, '#503a26'), smoothstep(.2, 2.2, c.spectral(3, 1, 8)) * .5)
-    rgb = shade(rgb, 1 + clod * .08 - crack * .18 + .08 * c.spectral(1, 40))
-    rgb = mix(rgb, mix(fill(c, '#7d7264'), fill(c, '#9c8a72'), c.per_cell(pid, 3600)), (pebble > 0) * .8)
-    straw_rgb = rgb.copy()
-    straw_h = np.zeros((c.n, c.n), np.float32)
-    c.strokes(int(1500 * (c.n / 1024) ** 2), (4 * c.n / 1024, 12 * c.n / 1024), 1,
-              lambda u, v, rng: rng.random() * math.pi * 2,
-              lambda u, v, rng: colour('#a8966a') * (.8 + .3 * rng.random()), lambda rng: 1.0, straw_rgb, straw_h)
-    rgb = np.where((straw_h > .5)[..., None], straw_rgb, rgb)
-    return rgb, height + straw_h * .002, 1.5
+    """Compacted earth with shallow clods, mineral gravel and local fissures."""
+    return ground_source(c, 'dirt', 0.15)
 
 
 def rock(c):
-    """Exposed bedrock: slabs of uneven size split by winding, soil-filled joints; weathered tops and lichen."""
-    f1, f2, ident, ou, ov = c.worley(6, 6, .95, warp=.18)
-    count = 36
-    su = c.per_cell(ident, count, -.1, .1)
-    sv = c.per_cell(ident, count, -.1, .1)
-    width = .02 + .05 * smoothstep(-1, 1.5, c.spectral(2.5, 2, 16))
-    gap = f2 - f1
-    # Rounded slab edges falling into the joint.
-    height = c.per_cell(ident, count, 0, .1) + (su * ou + sv * ov) / 6 * c.tile
-    height -= (1 - smoothstep(width, width + .12, gap)) * .06
-    joint = 1 - smoothstep(width * .4, width, gap)
-    g1, g2, gid, _, _ = c.worley(18, warp=.25)
-    crack = (1 - smoothstep(0, .02, g2 - g1)) * smoothstep(.2, .8, c.spectral(2.5, 2, 20))
-    height -= crack * .012
-    height += c.spectral(2, 4, 100) * .012 + c.spectral(.5, 150) * .001
-    rgb = mix(fill(c, '#7d786f'), fill(c, '#9b958a'), c.per_cell(ident, count))
-    rgb = shade(rgb, 1 + .09 * c.spectral(2.5, 2, 30))
-    lichen = smoothstep(1.0, 1.5, c.spectral(2.2, 3, 60)) * (1 - joint)
-    rgb = mix(rgb, mix(fill(c, '#9a9c68'), fill(c, '#b6b2a0'), smoothstep(-.2, .4, c.spectral(2, 2, 10))), lichen * .7)
-    soil = mix(fill(c, '#3b3127'), fill(c, '#62574a'), c.child().random((c.n, c.n)).astype(np.float32))
-    rgb = mix(rgb, soil, joint * .9)
-    rgb = shade(rgb, 1 - crack * .3)
-    return rgb, height, 1.2
+    """Weathered, almost level bedrock with thin joints, granular wear and sparse loose chips.
+    Deep, densely packed fragments are the separate scree material used at cliff feet."""
+    rgb, height, _ = stone_source(c, 'rock', .10, .045)
+    # Dust fills the smaller crevices on open ground. Sparse loose chips retain stronger local relief.
+    rgb = mix(rgb, fill(c, '#a49b88'), .12)
+    for cells, presence, size in ((16, .15, .07), (45, .3, .022), (110, .2, .006)):
+        f1, f2, chip, du, dv = c.worley(cells, warp=.035)
+        count = cells * cells
+        radius = c.per_cell(chip, count, .15, .34)
+        # Truncated angular chips with a quiet flat face and a few bevelled sides, seated into the ground.
+        shape = np.maximum(np.abs(du + dv * .4), np.abs(dv - du * .3)) / radius
+        bevel = np.clip((1 - shape) * 3, 0, 1)
+        present = c.per_cell(chip, count) < presence
+        stone = present * bevel * smoothstep(0, .08, f2 - f1)
+        height += stone * c.per_cell(chip, count, .45, 1) * size
+        pigment = mix(fill(c, '#847e71'), fill(c, '#b6ad9d'), c.per_cell(chip, count))
+        rgb = mix(rgb, pigment, stone)
+    height += c.spectral(.7, 160) * .0004
+    return rgb, height, 1.0
 
 
 def snow(c):
@@ -616,12 +593,18 @@ def aggregate(c, paste, clouds):
 
 
 def concrete(c):
-    """Pavement: the slabs' concrete, weathered darker and warmer than a wall, with float marks and a faint broom
-    finish; no joints or cracks to fight the hex grid."""
+    """Weathered paving with recessed staggered joints and chipped arrises, all in one physical height field."""
     rgb, height = aggregate(c, '#abaaa5', '#8f8d88')
     height += c.spectral(3, 1, 8) * .002 + c.spectral(1.5, 30, 200, stretch=(1, 8), angle=.3) * .0008
     rgb = mix(rgb, fill(c, '#7f7b74'), smoothstep(.8, 2.2, c.spectral(3, 2, 12)) * .3)
-    return rgb, height, 3.0
+    # Metre-scale slabs remain legible in the tactical camera; joints, chips and normals agree with POM.
+    edge, ident, across, down = c.joints((1.1, 1.5), (1.5, 2.2), .008)
+    width = .012 + .015 * smoothstep(.3, 1.8, c.spectral(2, 8, 90))
+    gap = 1 - smoothstep(width, width + .035, edge)
+    height = height * 2 + c.per_cell(ident, int(ident.max()) + 1, -.015, .015) - .055 * gap
+    rgb = shade(rgb, c.per_cell(ident, int(ident.max()) + 1, .91, 1.07))
+    rgb = mix(rgb, fill(c, '#59544b'), gap * .55)
+    return rgb, height, 1.0
 
 
 def earth(c):
@@ -683,7 +666,7 @@ MATERIALS = {
     'scree': (scree, 4.0, 'debris', 202),
     'gravel': (gravel, 3.0, 'debris', 203),
     'sandstone': (sandstone, 12.0, 'wall', 301),
-    'granite': (granite, 10.0, 'wall', 302),
+    'granite': (granite, 12.0, 'wall', 302),
     'earth': (earth, 20.0, 'wall', 303),
     'cast': (cast, 8.0, 'wall', 304),
 }
@@ -723,19 +706,39 @@ def main():
     args = parser.parse_args()
     names = [n for n in args.only.split(',') if n] or list(MATERIALS)
     results = {}
+    relief = {}
     for name in names:
         generator, tile, role, seed = MATERIALS[name]
         canvas = Canvas(args.size, tile, seed)
         rgb, height, strength = generator(canvas)
+        # Resolve the relief before recording its physical range and deriving its normal/AO maps.
+        height = canvas.blur(height, canvas.tile / canvas.n * .8)
+        # Alpha stores normalized height; retain the metre range used by the matching normals.
+        relief[name] = round(float(np.ptp(height)) * strength, 6)
         if role != 'wall':
             rgb = flatten_tone(canvas, rgb)
         ao = occlusion(canvas, height, (tile / 200, tile / 40), (60 / tile * 8, 12 / tile * 8))
         results[name] = save(name, canvas, rgb, height, strength, ao, args.out)
         print(f'{name}: {tile} m, {role}')
+    # A partial bake must update its depth too; retain separately authored contact-map entries.
+    manifest_path = args.out / 'manifest.json'
+    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {
+        'generator': 'tools/build_terrain_materials.py', 'license': 'CC0-1.0', 'size': args.size, 'materials': {}}
     if not args.only:
-        manifest = {'generator': 'tools/build_terrain_materials.py', 'license': 'CC0-1.0', 'size': args.size,
-                    'materials': {n: {'tile': t, 'role': r, 'seed': s} for n, (_, t, r, s) in MATERIALS.items()}}
-        (args.out / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+        manifest['size'] = args.size
+    for name in names:
+        _, tile, role, seed = MATERIALS[name]
+        manifest['materials'][name] = {'tile': tile, 'role': role, 'seed': seed, 'relief_metres': relief[name]}
+        if name in IMAGE_SOURCES:
+            source = IMAGE_SOURCES[name]
+            manifest['materials'][name].update(source=source,
+                source_sha256=hashlib.sha256((ROOT / source).read_bytes()).hexdigest(),
+                height_source='estimated multiscale relief from existing imagegen source')
+            authored = Path(source).with_stem(Path(source).stem + '-height')
+            if (ROOT / authored).exists():
+                manifest['materials'][name].update(height_source=authored.as_posix(),
+                    height_sha256=hashlib.sha256((ROOT / authored).read_bytes()).hexdigest())
+    manifest_path.write_text(json.dumps(manifest, indent=2) + '\n')
     if args.preview:
         preview(results, args.preview)
 

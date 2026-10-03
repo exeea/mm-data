@@ -48,7 +48,10 @@
 
 #####SUPER TERRAINS#####
 
-include "saxarba/Transitions/Transitions.tileinc"
+# Native ground materials supply continuous surface variation. The classic transition overlays contain
+# entire low-resolution ground textures; importing them here both forces the fallback surface and paints
+# that texture over the native material. Cosmetic ground_fluff uses the transparent catch-all below.
+# Meaningful ground artwork (for example cleared rubble gravel) keeps its explicit mapping.
 include "Incline/Inclines2.tileinc"
 include "High_Incline/High_Inclines.tileinc"
 include "Cliff/Cliffs.tileinc"
