@@ -16,7 +16,12 @@
     "dirt": {
       "tile": 5.0,
       "role": "ground",
-      "seed": 103
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/dirt.png",
+      "source_sha256": "3765cb9445c0955f2cb7a07c28809dc65ea59699f22481b87feb5ffbda3d5e30",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.045
     },
     "rock": {
       "tile": 8.0,
@@ -89,14 +94,14 @@
       "seed": 304
     },
     "soil-contact": {
-      "tile": 2.0,
+      "tile": 4.0,
       "role": "mantle",
       "size": 512,
       "generator": "tools/prepare_terrain_contact.py",
       "source": "tools/terrain-contact-sources/soil.png",
-      "source_sha256": "80380cf74f06c683bdeb1b67473adc6e0b8e95adf7f1f5aa9f82b1350a7b8cf3",
+      "source_sha256": "3c8aa3d481df70ea6abef684900213f7705cb00c2a958b2d6cb003132684b06f",
       "height_source": "estimated multiscale luminance",
-      "relief_metres": 0.012
+      "relief_metres": 0.095
     },
     "granite-contact": {
       "tile": 4.0,

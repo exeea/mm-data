@@ -1,4 +1,4 @@
-"""Bake generated soil and granite into the existing sculpt material layout.
+"""Bake generated dirt, soil and granite into the existing sculpt material layout.
 
 Uses the shared periodic filtering and sculpt normal/AO baker. Estimated relief
 is artistic, not measured. Run from any directory; --check verifies every pixel.
@@ -16,34 +16,38 @@ from build_terrain_materials import Canvas, OUT, flatten_tone, occlusion, save
 from prepare_cliff_materials import blur, periodic
 
 SOURCES = Path(__file__).resolve().parent / 'terrain-contact-sources'
-PROFILES = {'soil': (2.0, .012, 'mantle'), 'granite': (4.0, .04, 'wall')}
+PROFILES = {'soil': (4.0, .095, 'mantle', 'soil-contact'),
+            'granite': (4.0, .04, 'wall', 'granite-contact'),
+            'dirt': (5.0, .045, 'ground', 'dirt')}
 SIZE = 512
 
 
 def bake(name, out):
-    tile, relief, _ = PROFILES[name]
+    tile, relief, _, runtime_name = PROFILES[name]
     with Image.open(SOURCES / (name + '.png')) as image:
         rgb = np.asarray(image.convert('RGB').resize((SIZE, SIZE), Image.Resampling.LANCZOS)) / 255.0
     rgb = np.clip(periodic(rgb), .015, .985)
     canvas = Canvas(SIZE, tile, 0)
     light = rgb @ np.array([.2126, .7152, .0722])
     # Gentle, source-aligned grain; pigment variation must not become deep relief.
-    height = blur(light, 1.6) * .7 + blur(light, 6) * .3
+    height = (blur(light, 1.6) * .7 + blur(light, 6) * .3 if name == 'granite'
+              else blur(light, 1.2) * .2 + blur(light, 4) * .55 + blur(light, 14) * .25)
     low, high = np.percentile(height, [1, 99])
     height = np.clip((height - low) / max(high - low, .01), 0, 1) * relief
     albedo = flatten_tone(canvas, rgb, keep=.2)
     ao = occlusion(canvas, height, (.02, .08), (40, 18))
-    save(name + '-contact', canvas, albedo, height, 1.0, ao, out)
+    save(runtime_name, canvas, albedo, height, 1.0, ao, out)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--only', nargs='+', choices=PROFILES, default=list(PROFILES))
     args = parser.parse_args()
     manifest_path = OUT / 'manifest.json'
     manifest = json.loads(manifest_path.read_text())
-    for name, (tile, relief, role) in PROFILES.items():
-        runtime_name = name + '-contact'
+    for name in args.only:
+        tile, relief, role, runtime_name = PROFILES[name]
         entry = {'tile': tile, 'role': role, 'size': SIZE,
                  'generator': 'tools/prepare_terrain_contact.py',
                  'source': f'tools/terrain-contact-sources/{name}.png',
