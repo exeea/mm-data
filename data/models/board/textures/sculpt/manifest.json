@@ -132,6 +132,76 @@
       "source_sha256": "1bd753aad8ff8a0cf4a7dcc7ca31d044bdfa9e3df69c48eb69af2e6951c5cc44",
       "height_source": "estimated multiscale luminance",
       "relief_metres": 0.08
+    },
+    "fungus-ground": {
+      "tile": 18.0,
+      "role": "ground",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/fungus-ground.png",
+      "source_sha256": "ece64db5e35eee9c4c73da7aa56b64b429cf796a569781f7d5d75e11611371ca",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.025
+    },
+    "fungus-mat": {
+      "tile": 10.0,
+      "role": "debris",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/fungus-mat.png",
+      "source_sha256": "c3b191ee24f53cc7a35d1d1bb82e44891743cd45ca22e1850dfc4e55167e72d1",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.035
+    },
+    "fungus-cliff": {
+      "tile": 12.0,
+      "role": "wall",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/fungus-cliff.png",
+      "source_sha256": "3545263b62ac02b0fa8f02bc9f06d4367802f04e14a93d543314a4bb09eb59f2",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.06
+    },
+    "desert-hardpan": {
+      "tile": 6.0,
+      "role": "ground",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/desert-hardpan.png",
+      "source_sha256": "332e6badd7cf66f1f5a177276e1c858392de285eb1b9c3e0b5d3c2bd3d38324c",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.025
+    },
+    "loose-sand": {
+      "tile": 6.0,
+      "role": "ground",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/loose-sand.png",
+      "source_sha256": "ea86d105e48a3c4814e8b1a2662d8ecea2acdb70fd454e8df045d8e66bdd7d33",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.035
+    },
+    "mars-hardpan": {
+      "tile": 6.0,
+      "role": "ground",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/mars-hardpan.png",
+      "source_sha256": "0f869deac41ba0d0cd8cb82c50d588fa78ad75085c8284c2c18bd2f5f127f5ea",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.03
+    },
+    "mars-bedrock": {
+      "tile": 10.0,
+      "role": "wall",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/mars-bedrock.png",
+      "source_sha256": "868c74365dbdd3ede94a6a85fbe7e209f267d94782bd6026eb58dc7839e169f6",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.12
     }
   }
 }

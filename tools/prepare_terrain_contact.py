@@ -22,7 +22,14 @@ PROFILES = {'soil': (4.0, .095, 'mantle', 'soil-contact'),
             'sandstone': (12.0, .16, 'wall', 'sandstone'),
             'sand-ground': (6.0, .025, 'ground', 'sand'),
             'granite-scree': (4.0, .10, 'debris', 'scree'),
-            'meadow-ground': (4.0, .025, 'ground', 'grass')}
+            'meadow-ground': (4.0, .025, 'ground', 'grass'),
+            'desert-hardpan': (6.0, .025, 'ground', 'desert-hardpan'),
+            'loose-sand': (6.0, .035, 'ground', 'loose-sand'),
+            'mars-hardpan': (6.0, .03, 'ground', 'mars-hardpan'),
+            'mars-bedrock': (10.0, .12, 'wall', 'mars-bedrock'),
+            'fungus-ground': (18.0, .025, 'ground', 'fungus-ground'),
+            'fungus-mat': (10.0, .035, 'debris', 'fungus-mat'),
+            'fungus-cliff': (12.0, .06, 'wall', 'fungus-cliff')}
 SIZE = 512
 
 
