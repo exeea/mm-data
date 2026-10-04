@@ -134,24 +134,24 @@
       "relief_metres": 0.08
     },
     "fungus-ground": {
-      "tile": 18.0,
+      "tile": 22.0,
       "role": "ground",
       "size": 512,
       "generator": "tools/prepare_terrain_contact.py",
       "source": "tools/terrain-contact-sources/fungus-ground.png",
-      "source_sha256": "ece64db5e35eee9c4c73da7aa56b64b429cf796a569781f7d5d75e11611371ca",
+      "source_sha256": "26a21454070f5c559c418cde30371971983fb46c80ddaee998977a3cf6783ef2",
       "height_source": "estimated multiscale luminance",
-      "relief_metres": 0.025
+      "relief_metres": 0.05
     },
     "fungus-mat": {
-      "tile": 10.0,
+      "tile": 8.0,
       "role": "debris",
       "size": 512,
       "generator": "tools/prepare_terrain_contact.py",
       "source": "tools/terrain-contact-sources/fungus-mat.png",
-      "source_sha256": "c3b191ee24f53cc7a35d1d1bb82e44891743cd45ca22e1850dfc4e55167e72d1",
+      "source_sha256": "3b6ec06d393ddc1355e61c62803f9627816438095566380a9c7480e6ec472a2d",
       "height_source": "estimated multiscale luminance",
-      "relief_metres": 0.035
+      "relief_metres": 0.12
     },
     "fungus-cliff": {
       "tile": 12.0,
@@ -159,9 +159,9 @@
       "size": 512,
       "generator": "tools/prepare_terrain_contact.py",
       "source": "tools/terrain-contact-sources/fungus-cliff.png",
-      "source_sha256": "3545263b62ac02b0fa8f02bc9f06d4367802f04e14a93d543314a4bb09eb59f2",
+      "source_sha256": "5d540b777b26ad2da1bf15bf4bd686de068b46cc01e882d1fe9ebd64af087a9d",
       "height_source": "estimated multiscale luminance",
-      "relief_metres": 0.06
+      "relief_metres": 0.14
     },
     "desert-hardpan": {
       "tile": 6.0,
@@ -202,6 +202,46 @@
       "source_sha256": "868c74365dbdd3ede94a6a85fbe7e209f267d94782bd6026eb58dc7839e169f6",
       "height_source": "estimated multiscale luminance",
       "relief_metres": 0.12
+    },
+    "fungus-fibres": {
+      "tile": 10.0,
+      "role": "mantle",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/fungus-fibres.png",
+      "source_sha256": "d944c4ba80d1af91c9992407273b311aca2688a533a609c7b8a4a47bb7d58cc2",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.14
+    },
+    "volcano-ground": {
+      "tile": 6.0,
+      "role": "ground",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/volcano-ground.png",
+      "source_sha256": "3c72785d91e0c2dc0533b4e05e7ad93d4e96309e4a005daa37cffcc527e97f13",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.045
+    },
+    "volcano-basalt": {
+      "tile": 12.0,
+      "role": "wall",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/volcano-basalt.png",
+      "source_sha256": "de352754563eec1e6aadaab589ae9f9705a3ddd2b06c7a253d988ccc7b451b3a",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.14
+    },
+    "tropical-ground": {
+      "tile": 4.0,
+      "role": "ground",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/tropical-ground.png",
+      "source_sha256": "0c81898c2d596ed91baed0d84cbc53bf38a234ed4d99287d0c8262a0dccbb077",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.035
     }
   }
 }

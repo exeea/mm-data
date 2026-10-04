@@ -192,6 +192,14 @@ def spore(g, center, radii, phase=0, lod=0, pear=False):
     bm.free()
 
 
+def shelf_point(center, width, reach, phase, r, z, a):
+    """Shared bracket surface for the shell and the attached mycelium roots."""
+    scallop = 1 + .075*sin(a*7+phase) + .025*cos(a*13+phase) + .013*sin(a*23)
+    return Vector((cos(a)*width*.5*r*scallop,
+                   -sin(a)*reach*r*scallop + .12,
+                   z*reach*.60 + r*r*.16*sin(a*5+phase))) + Vector(center)
+
+
 def shelf(g, center, width=9, reach=5, phase=0, lod=0):
     """Thick semicircular bracket; the straight rear edge embeds into a cliff."""
     n = (48, 16, 8)[lod]
@@ -204,10 +212,7 @@ def shelf(g, center, width=9, reach=5, phase=0, lod=0):
         ring = []
         for j in range(n+1):
             a = pi*j/n
-            scallop = 1 + .075*sin(a*7+phase) + .025*cos(a*13+phase) + .013*sin(a*23)
-            ring.append(Vector((cos(a)*width*.5*r*scallop,
-                                -sin(a)*reach*r*scallop + .12,
-                                z*reach*.60 + r*r*.16*sin(a*5+phase))) + Vector(center))
+            ring.append(shelf_point(center, width, reach, phase, r, z, a))
         rings.append(ring)
     for i in range(len(rings)-1):
         for j in range(n):
@@ -259,19 +264,23 @@ def shape(name, lod):
             cup(g, base, height=4.7+j*.6, radius=2.9, phase=j*1.7,
                 lod=min(lod+1, 2), lean=.045, short=True)
     elif name == 'cliff-mycelium':
-        for i in range((17, 10, 5)[lod]):
-            x = (i/((17, 10, 5)[lod]-1)-.5)*10
+        center, width, reach, phase = (0, 0, -.5), 7.7, 2.9, 2.2
+        shelf(g, center, width, reach, phase, lod=min(lod+1, 2))
+        # The same curved gill surface owns every root. Lower LODs retain a subset of these exact roots.
+        for i in range(0, 17, (1, 2, 4)[lod]):
+            a = pi*(.12 + .76*i/16)
+            root = shelf_point(center, width, reach, phase, .72, -.19, a)
+            root.z += .13  # Start inside the flesh, never above it or beside its outline.
             drop = 4.8 + 3.4*(.5+.5*sin(i*2.3))
-            points = [(x, .08, 0), (x+.35*sin(i), -.32, -drop*.25),
-                      (x+.6*sin(i+1), -.55, -drop*.65),
-                      (x+.9*sin(i+2), -.4, -drop)]
+            points = [root, root+Vector((.22*sin(i), -.12, -drop*.25)),
+                      root+Vector((.4*sin(i+1), -.28, -drop*.65)),
+                      root+Vector((.55*sin(i+2), -.20, -drop))]
             tube(g, points, [.14, .13, .075, .018], 'cyan-tip' if i % 3 else 'cyan',
                  (5, 4, 3)[lod])
             if lod == 0 and i % 2 == 0:
                 start = Vector(points[1])
-                tube(g, [start, start+Vector((.8, -.10, -.5)), start+Vector((1.1, -.18, -1.6))],
+                tube(g, [start, start+Vector((.55, -.10, -.5)), start+Vector((.8, -.18, -1.6))],
                      [.10, .075, .015], 'cyan', 4)
-        shelf(g, (0, 0, -.5), width=7.7, reach=2.9, phase=2.2, lod=min(lod+1, 2))
     elif name == 'scatter-cups':
         for i, (x, y, h) in enumerate([(-.55, 0, 1.7), (.5, .18, 2.4), (.05, -.55, 1.1)]):
             cup(g, (x, y, 0), h, h*.40, i*1.8, lod=2, short=True, tiny=True)

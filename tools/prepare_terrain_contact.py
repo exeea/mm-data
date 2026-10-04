@@ -27,9 +27,13 @@ PROFILES = {'soil': (4.0, .095, 'mantle', 'soil-contact'),
             'loose-sand': (12.0, .22, 'ground', 'loose-sand'),
             'mars-hardpan': (6.0, .03, 'ground', 'mars-hardpan'),
             'mars-bedrock': (10.0, .12, 'wall', 'mars-bedrock'),
-            'fungus-ground': (18.0, .025, 'ground', 'fungus-ground'),
-            'fungus-mat': (10.0, .035, 'debris', 'fungus-mat'),
-            'fungus-cliff': (12.0, .06, 'wall', 'fungus-cliff')}
+            'volcano-ground': (6.0, .045, 'ground', 'volcano-ground'),
+            'volcano-basalt': (12.0, .14, 'wall', 'volcano-basalt'),
+            'tropical-ground': (4.0, .035, 'ground', 'tropical-ground'),
+            'fungus-ground': (22.0, .05, 'ground', 'fungus-ground'),
+            'fungus-mat': (8.0, .12, 'debris', 'fungus-mat'),
+            'fungus-cliff': (12.0, .14, 'wall', 'fungus-cliff'),
+            'fungus-fibres': (10.0, .14, 'mantle', 'fungus-fibres')}
 SIZE = 512
 
 
@@ -45,7 +49,8 @@ def bake(name, out):
               else blur(light, 1.2) * .2 + blur(light, 4) * .55 + blur(light, 14) * .25)
     low, high = np.percentile(height, [1, 99])
     height = np.clip((height - low) / max(high - low, .01), 0, 1) * relief
-    albedo = flatten_tone(canvas, rgb, keep=.2)
+    # Retain the broad fungal pigment colonies; their shader breaks repetition with translated samples.
+    albedo = flatten_tone(canvas, rgb, keep=.8 if name.startswith('fungus-') else .2)
     ao = occlusion(canvas, height, (.02, .08), (40, 18))
     save(runtime_name, canvas, albedo, height, 1.0, ao, out)
 
