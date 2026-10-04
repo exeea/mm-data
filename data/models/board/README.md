@@ -109,12 +109,17 @@ no rock or scatter geometry is generated in-game.
   `full-resolution/` subdirectory containing the untouched editable originals.
   Models and materials reference only the small runtime versions. Rebuild those
   after editing originals with `tools/prepare_board_textures.py`.
-- `textures/sculpt/`: the sculpted terrain's thirteen 512 by 512 materials (ground,
+- `textures/sculpt/`: the sculpted terrain's 512 by 512 materials (ground,
   debris, wall and mantle maps for every surface family): `NAME.png` is sRGB albedo
   with normalized height in alpha, `NAME-normal.png` a tangent normal (U right, V
   down) with ambient occlusion in alpha, and `manifest.json` the metres each repeat
-  spans. All are original procedural works (CC0-1.0) generated from fixed seeds by
-  `tools/build_terrain_materials.py`; no photographs or generated images are used.
+  spans. `tools/build_terrain_materials.py` builds the original procedural set
+  (CC0-1.0). Afterward,
+  `tools/prepare_terrain_contact.py` bakes the authored ground, soil, stone and
+  scree sources into those same slots; `--check` verifies pixels and metadata.
+  ImageGen sources and exact prompts are in `tools/terrain-contact-sources/`;
+  their height/normal relief is an artistic estimate, not a measured scan. See
+  `tools/terrain-realism/README.md` for the stone sources and visual references.
   The former `outcrop-*` formations are replaced by the shared GLB rock kit below.
 - `textures/cliffs/`: the vertical hex sides' 1024 by 1024 color, tangent normal,
   and packed height/roughness/occlusion maps for rock, sandstone, soil, concrete
@@ -236,6 +241,8 @@ Run from the mm-data root (Python requires Pillow and NumPy):
 ```text
 python tools/copy_board_tileset.py
 python tools/build_terrain_materials.py
+python tools/prepare_terrain_contact.py
+python tools/prepare_terrain_contact.py --check
 python tools/prepare_board_textures.py
 python tools/prepare_cliff_materials.py
 python tools/prepare_cliff_materials.py --check

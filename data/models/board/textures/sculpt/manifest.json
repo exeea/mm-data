@@ -6,12 +6,22 @@
     "sand": {
       "tile": 6.0,
       "role": "ground",
-      "seed": 101
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/sand-ground.png",
+      "source_sha256": "9c1bb10acc123e68b6ee5d2cfbc72ebb438af7c9bfd94d18cfbc64cbf9409fea",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.025
     },
     "grass": {
       "tile": 4.0,
       "role": "ground",
-      "seed": 102
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/meadow-ground.png",
+      "source_sha256": "8316f79c29447049db7889f86ee3b7700c0b53315ba18599a2d65a3bc60cc321",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.025
     },
     "dirt": {
       "tile": 5.0,
@@ -66,7 +76,12 @@
     "scree": {
       "tile": 4.0,
       "role": "debris",
-      "seed": 202
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/granite-scree.png",
+      "source_sha256": "df038dd9f704a3666e6fc7057cf1c8bedb45c2013c8f36778d55a462690bba91",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.1
     },
     "gravel": {
       "tile": 3.0,
@@ -76,7 +91,12 @@
     "sandstone": {
       "tile": 12.0,
       "role": "wall",
-      "seed": 301
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/sandstone.png",
+      "source_sha256": "02439e02944c0e5a0aa7bef5154322a1bdf35c88347da4de46279003a2a109fe",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.16
     },
     "granite": {
       "tile": 10.0,
@@ -104,14 +124,14 @@
       "relief_metres": 0.095
     },
     "granite-contact": {
-      "tile": 4.0,
+      "tile": 8.0,
       "role": "wall",
       "size": 512,
       "generator": "tools/prepare_terrain_contact.py",
-      "source": "tools/terrain-contact-sources/granite.png",
-      "source_sha256": "52aac005ca460fe821593290b188b21dce48f75a3cb3d1238c23f9f7cf63f590",
+      "source": "tools/terrain-contact-sources/granite-bedrock.png",
+      "source_sha256": "1bd753aad8ff8a0cf4a7dcc7ca31d044bdfa9e3df69c48eb69af2e6951c5cc44",
       "height_source": "estimated multiscale luminance",
-      "relief_metres": 0.04
+      "relief_metres": 0.08
     }
   }
 }
