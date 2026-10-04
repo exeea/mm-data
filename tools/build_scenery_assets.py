@@ -7,7 +7,7 @@ existing Blender scenes are preserved. Run build() via execute_blender_code.
 from collections import defaultdict
 from copy import deepcopy
 from functools import lru_cache
-from math import cos, sin, pi, radians
+from math import cos, sin, pi, radians, ceil
 from pathlib import Path
 import json
 import os
@@ -41,8 +41,11 @@ class Mesh:
         self.vertices, self.parts = [], defaultdict(list)
         self.materials = {'scenery': {'id': 'scenery', 'diffuse': [1, 1, 1]}}
         self.transform = Matrix.Identity(4)
+        self.role = 'scenery'
 
-    def face(self, points, color, role='scenery', uv=None):
+    def face(self, points, color, role=None, uv=None):
+        role = role or self.role
+        self.materials.setdefault(role, {'id':role, 'diffuse':[1,1,1]})
         p = [self.transform @ Vector(v) for v in points]
         n = (p[1]-p[0]).cross(p[2]-p[0]).normalized()
         if n.length < .5: return
@@ -106,11 +109,12 @@ class Mesh:
             self.face([p(inner,b,0),p(inner,a,0),p(inner,a,height),p(inner,b,height)],color)
             self.face([p(outer,a,height),p(outer,b,height),p(inner,b,height),p(inner,a,height)],color)
 
-    def place(self, function, x=0, y=0, z=0, angle=0, scale=1, **kwargs):
-        old=self.transform.copy()
+    def place(self, function, x=0, y=0, z=0, angle=0, scale=1, role=None, **kwargs):
+        old=self.transform.copy(); old_role=self.role
+        if role is not None:self.role=role
         self.transform @= Matrix.Translation((x,y,z)) @ Matrix.Rotation(radians(angle),4,'Z') @ Matrix.Scale(scale,4)
         function(self, **kwargs)
-        self.transform=old
+        self.transform=old; self.role=old_role
 
     def tree(self, x, y, size=12, variant=0):
         # Reuse the shipped tree kit, including its source UVs/materials.
@@ -189,28 +193,59 @@ def container(g, color=(.44,.19,.14)):
     g.box((6.70,0,3.2),(.12,.15,6.1),DARK)
 
 
-def crane(g, gantry=False, tip=False):
-    if gantry or tip:
-        if not tip:
-            for x in (-10,10):
-                for y in (-7,7):
-                    g.box((x,y,1),(4,7,2),DARK)
-                    g.beam((x,y,1),(x*.75,y,25),1.8,STEEL,4)
-                g.beam((x,-7,20),(x,7,25),.9,YELLOW,4)
-            g.box((0,0,25),(22,17,3),STEEL)
-            g.box((-7,9,27),(5,5,5),WHITE)
-            g.box((-7,11.6,27),(4,.1,2.4),GLASS)
-        start,end,height=-32,34,28
-        for x in (-4,4):
-            g.beam((x,start,height),(x,end,height),1.0,YELLOW,4)
-            g.beam((x,start,height+5),(x,end,height+5),.7,YELLOW,4)
-            for y in range(-32,32,6):
-                g.beam((x,y,height),(x,y+6,height+5),.5,YELLOW,4)
-                g.beam((x,y,height+5),(x,y+6,height),.5,YELLOW,4)
-        for y in range(-32,35,6):g.beam((-4,y,height),(4,y,height),.7,YELLOW,4)
-        for x in (-2,2):g.beam((x,17,height),(x,17,13),.2,DARK)
-        g.box((0,17,12.5),(6,4,1),YELLOW)
-        return
+def container_grabber(g):
+    # Horizontal spreader, with four corner twistlocks. Its origin is the bottom
+    # of the locks, so the entire assembly stays above the selected roof.
+    for y in (-2.35,2.35):g.box((0,y,.92),(12.5,.48,.65),YELLOW)
+    for x in (-5.9,5.9):
+        g.box((x,0,.92),(.6,5.2,.65),YELLOW)
+        for y in (-2.35,2.35):
+            g.box((x,y,.35),(.55,.55,.7),DARK)
+            g.box((x,y,.82),(.8,.8,.4),YELLOW)
+    g.box((0,0,1.05),(4.8,1.2,.75),YELLOW)
+    for x in (-1.65,1.65):g.box((x,0,1.62),(.55,.8,.4),STEEL)
+
+
+def gantry_support(g):
+    for x in (-6,6):
+        for y in (9,17):
+            g.box((x,y,.6),(2.3,3.8,1.2),DARK)
+            g.beam((x,y,1.2),(x*.88,y,23.5),1.05,STEEL,4)
+        g.beam((x,9,7.5),(x*.88,17,22),.6,YELLOW,4)
+    g.box((0,13,23.8),(14,11,1.6),STEEL)
+    g.box((0,11.5,26),(9,6,3.4),WHITE)
+    g.box((0,14.55,26.4),(7,.15,1.8),GLASS)
+    g.box((0,11.5,27.85),(9.5,6.5,.3),STEEL)
+    for x in (-6.5,6.5):
+        g.beam((x,17,24.6),(x,33,24.6),.5,YELLOW,4)
+        g.beam((x,17,24.6),(x,23,30.5),.5,YELLOW,4)
+    g.beam((-6.5,33,24.6),(6.5,33,24.6),.5,YELLOW,4)
+
+
+def gantry_boom(g, half_span, tip):
+    # Both sections use the same rail section and elevation. The joint's crossbar
+    # belongs to the tip only; there are no duplicate faces along the exposed joint.
+    start,end,height=(-half_span if tip else 1.5),half_span,28
+    segments=ceil((end-start)/6)
+    for x in (-1.65,1.65):
+        for z,width in ((height,.48),(height+3,.40)):
+            g.beam((x,start,z),(x,end,z),width,YELLOW,4)
+        for i in range(segments):
+            a=start+(end-start)*i/segments; b=start+(end-start)*(i+1)/segments
+            g.beam((x,a,height),(x,b,height+3),.27,YELLOW,4)
+            g.beam((x,a,height+3),(x,b,height),.27,YELLOW,4)
+    for i in range(segments+(1 if tip else 0)):
+        y=start+(end-start)*i/segments
+        g.beam((-1.65,y,height),(1.65,y,height),.35,YELLOW,4)
+    if tip:
+        g.box((0,14,27.7),(4.2,3,.6),DARK)
+        # The suspended grabber lies along the boom; cables attach to its lifting eyes.
+        for y in (12.35,15.65):
+            for x in (-.35,.35):g.beam((x,y,27.4),(x,y,12.1),.13,DARK,4)
+        g.place(container_grabber,y=14,z=10.28,angle=90)
+
+
+def crane(g):
     # Compact crawler-mounted construction crane with a triangular lattice boom.
     for x in (-4.5,4.5):
         g.box((x,0,1.3),(2.6,12,2.6),DARK)
@@ -555,6 +590,67 @@ def maglev(g, station=False, train=False, variant=0):
         for i in range(3):g.place(car,x=15,y=-18+i*15,scale=.75,color=(.15+i*.15,.38,.38-i*.1))
 
 
+def geyser(g, magma=False):
+    rng=random.Random(51)
+    count=80
+    angles=[i*2*pi/count for i in range(count)]
+    uneven=[1+.10*sin(a*3+.4)+.075*sin(a*7-1)+.035*sin(a*19) for a in angles]
+    # Shallow irregular deposits meet the terrain at zero height. Detailed albedo,
+    # smooth mineral slopes and the terrain's own rock materials replace flat-colored facets.
+    profile=([(20,0),(17,.45),(13,1.7),(8.5,4.2),(5.4,5.4),(3.7,1.7)] if magma else
+             [(20,0),(17,.25),(14,.65),(11.5,1.1),(9.4,1.65),(7.8,.55)])
+    rings=[[(r*f*cos(a),r*f*sin(a),z*(1+.21*sin(5*a+.8)+.13*sin(11*a)))
+            for a,f in zip(angles,uneven)] for r,z in profile]
+    def texture(role,filename):
+        g.materials[role]={'id':role,'diffuse':[1,1,1],
+                           'textures':[{'id':role,'type':'DIFFUSE','filename':'textures/'+filename,
+                                        'minFilter':9987,'magFilter':9729,'wrapS':10497,'wrapT':10497}]}
+    texture('geyser-mineral','scenery/geyser-travertine.png')
+    texture('geyser-rock','sculpt/volcano-basalt.png' if magma else 'sculpt/rock.png')
+    texture('geyser-water','pool-water.png')
+    texture('geyser-lava','magma/lava.png')
+    for band,(outer,inner) in enumerate(zip(rings,rings[1:])):
+        for i in range(count):
+            j=(i+1)%count
+            color=(.93,.93,.93) if magma else ((.76,.72,.63) if band==0 else (.94,.92,.85))
+            points=[outer[i],outer[j],inner[j],inner[i]]
+            g.face(points,color,'geyser-rock' if magma else 'geyser-mineral',
+                   [(x/32+.5,y/32+.5) for x,y,z in points])
+    liquid_z=1.85 if magma else .84
+    water=[(p[0],p[1],liquid_z) for p in rings[-1]]
+    for i in range(count):
+        points=[(0,0,liquid_z),water[i],water[(i+1)%count]]
+        g.face(points,(1,1,1) if magma else (.52,.76,.78),'geyser-lava' if magma else 'geyser-water',
+               [(x/35+.5,y/35+.5) for x,y,z in points])
+    if magma:
+        # Narrow branching fissures follow the same sculpted surface, raised only
+        # enough to avoid coplanar faces. Runtime applies the shared animated lava material.
+        for start in (4,29,57):
+            for band in range(1,len(rings)-1):
+                i=(start+band%2)%count;j=(i+1)%count
+                k=(start+(band+1)%2)%count;l=(k+1)%count
+                points=[rings[band][i],rings[band][j],rings[band+1][l],rings[band+1][k]]
+                g.face([(x,y,z+.035) for x,y,z in points],(1,1,1),'geyser-lava')
+    for i in range(12):
+        a=i*2.39996+rng.uniform(-.25,.25);r=rng.uniform(11.5,18)
+        size=(rng.uniform(1.1,3.2),rng.uniform(1,2.7),rng.uniform(.7,2.7))
+        g.place(lambda mesh:mesh.ellipsoid((0,0,size[2]*.55),size,(.94,.94,.94),11,5,floor=0),
+                x=r*cos(a),y=r*sin(a),angle=rng.uniform(0,360),role='geyser-rock')
+    # Average coincident face normals within each stone/mineral part, preserving
+    # the rim/liquid boundary. The dynamic jet is owned by GpuGeysers, never baked.
+    for role in ('geyser-mineral','geyser-rock'):
+        indices=set(g.parts[role]);normals=defaultdict(lambda:Vector((0,0,0)))
+        for index in indices:
+            at=index*12;key=tuple(round(v,5) for v in g.vertices[at:at+3])
+            normals[key]+=Vector(g.vertices[at+3:at+6])
+        for index in indices:
+            at=index*12;key=tuple(round(v,5) for v in g.vertices[at:at+3])
+            g.vertices[at+3:at+6]=normals[key].normalized()
+    # Avoid unused textures/materials in the water and magma variants.
+    g.parts={role:indices for role,indices in g.parts.items() if indices}
+    g.materials={role:g.materials[role] for role in g.parts}
+
+
 def build_mesh(name, layouts):
     g=Mesh(); stem=Path(name).stem; layout=layouts.get(name,{})
     if name.startswith('fluff/skylight'):
@@ -670,16 +766,15 @@ def build_mesh(name, layouts):
                         color=(.70,.56,.46) if i%2==0 else (.56,.42,.32),
                         pattern=(.23,.18,.14) if i in (0,3) else None)
     elif '/SMV_Seaport/' in name:
-        for x,y,angle,color in layout.get('containers',[]):g.place(container,x=x,y=y,angle=angle,color=color)
-        if 'CraneTip' in stem:g.place(crane,gantry=True,tip=True,angle=(int(stem[-2:])-1)*60)
-        elif 'GantryCrane' in stem:
-            # Four source layout orientations; one continuous-height crane system including the tip tiles.
-            n=int(stem[-2:]);group=int(stem.split('-')[-2]);angle=(0,-60,60,90)[group-1]+(180 if n>6 else 0)
-            g.place(crane,x=16 if n<=6 else -16,y=0,gantry=True,angle=angle)
-        else:
-            for x,y in layout.get('hoists',[])[:1]:
-                for dx in (-3,3):g.beam((x+dx,y-5,0),(x+dx,y-5,8),.55,YELLOW,4)
-                g.box((x,y-5,8),(7,2,1),YELLOW)
+        for x,y,angle,color in layout.get('containers',[]):
+            g.place(container,x=x,y=y,angle=angle,color=color,role='containers')
+        for index in layout['grabbers']:
+            x,y,angle,_=layout['containers'][index]
+            g.place(container_grabber,x=x,y=y,z=6.43,angle=angle,role='container-grabbers')
+        if 'crane' in layout:
+            c=layout['crane']
+            if not c['tip']:g.place(gantry_support,angle=c['angle'],role='crane-support')
+            g.place(gantry_boom,angle=c['angle'],half_span=c['half_span'],tip=c['tip'],role='crane-boom')
     elif 'road_trees' in stem:
         for i,(x,y) in enumerate(layout.get('trees',[])):g.tree(x,y,12,i)
     elif '/SMV_Fluff/' in name:
@@ -729,18 +824,7 @@ def build_mesh(name, layouts):
         rubble(g,variant,path='path' in stem)
     elif stem=='fortified':fortified(g)
     elif stem.startswith('geyser'):
-        rng=random.Random(51)
-        for i in range(14):
-            a=i*2*pi/14;r=9+rng.random()*5
-            g.ellipsoid((r*cos(a),r*sin(a),1.3),(4,2.5,2.5),CONCRETE,6,3)
-        g.cylinder(0,0,.05,7,.5,WATER if 'water' in stem else (.91,.29,.02))
-        if 'on' in stem:
-            for i in range(9):
-                a=i*2*pi/9
-                for j in range(5):
-                    t,u=j/5,(j+1)/5
-                    def p(t):return (cos(a)*t*t*11,sin(a)*t*t*11,1+30*t*(1-.68*t))
-                    g.beam(p(t),p(u),1.2,(.48,.72,.77),5)
+        geyser(g,magma='magma' in stem)
     else:return None
     return g if g.vertices else None
 

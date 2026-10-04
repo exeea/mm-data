@@ -136,15 +136,46 @@ def main():
                         along = (i-(count-1)/2)*13.7
                         candidates.append((len(group)/count, [round(x+along*math.cos(a), 2),
                                                              round(y+along*math.sin(a), 2), angle, color]))
+            yellow = components(image, lambda r, g, b, a: a > 128 and r > 165 and g > 145 and b < 85,
+                                diagonal=True)
             boxes = []
+            if 'CraneTip' not in name:
+                # The spreader obscures/splits its gray roof in the source. Measure that
+                # complete footprint first, before accepting partially visible neighbors.
+                angle = 30 if '-20Footer-2-' in name else -30 if '-20Footer-3-' in name else 0 if '-20Footer-4-' in name else 90
+                a = math.radians(angle)
+                for group in yellow:
+                    if not 35 <= len(group) <= 80: continue
+                    along = [(px-42)*math.cos(a)+(36-py)*math.sin(a) for px,py in group]
+                    across = [-(px-42)*math.sin(a)+(36-py)*math.cos(a) for px,py in group]
+                    u,v = (min(along)+max(along))/2,(min(across)+max(across))/2
+                    boxes.append([round(u*math.cos(a)-v*math.sin(a),2),
+                                  round(u*math.sin(a)+v*math.cos(a),2),angle,[.46,.47,.47]])
+                if len(boxes)!=1: raise ValueError('Expected one measured lifting frame: '+name)
+            layout['grabbers'] = list(range(len(boxes)))
             # Hue masks overlap for brown/yellow paint and often find both a lit roof and its side.
             # Retain the best supported physical footprint once. No two exported boxes may intersect.
             for _, candidate in sorted(candidates, key=lambda value: -value[0]):
                 if not any(containers_overlap(candidate, other) for other in boxes): boxes.append(candidate)
-            layout['container_candidates_removed'] = len(candidates)-len(boxes)
+            layout['container_candidates_removed'] = len(candidates)-len(boxes)+len(layout['grabbers'])
             layout['containers'] = boxes
-            yellow = components(image, lambda r, g, b, a: a > 128 and r > 140 and g > 125 and b < 105)
-            layout['hoists'] = [center(group) for group in yellow if len(group) > 8]
+            # The large yellow portal points toward the adjacent boom tile. Container-row
+            # orientation is independent of this direction. Use the actual hex lattice so
+            # separately exported base/tip sections meet at exactly the same coordinates.
+            directions = ((0, 72), (63, 36), (63, -36), (0, -72), (-63, -36), (-63, 36))
+            if 'CraneTip' in name:
+                direction = int(Path(name).stem[-2:])-1
+            elif 'GantryCrane' in name:
+                portal = center(max(yellow, key=len))
+                direction = max(range(6), key=lambda i: sum(a*b for a,b in zip(portal,directions[i]))
+                                / math.hypot(*directions[i]))
+            else:
+                direction = None
+            if direction is not None:
+                dx, dy = directions[direction]
+                layout['crane'] = {'direction':direction+1, 'neighbor':[dx,dy],
+                                   'angle':math.degrees(math.atan2(-dx,dy)),
+                                   'half_span':math.hypot(dx,dy)/2, 'tip':'CraneTip' in name}
         layouts[name] = layout
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT/'layouts.json').write_text(json.dumps(layouts, indent=2)+'\n')
