@@ -58,9 +58,11 @@ no rock or scatter geometry is generated in-game.
   of 480, 240 and 96 triangles including explicit back faces. Sixteen leafy
   variants retain their authored trunks and crown envelopes but replace closed
   leaf shells with cutout branch clusters. Standard glTF `MASK` materials use
-  a 0.5 alpha threshold in color, depth and shadow passes. Cacti retain their
-  geometry with smooth stem normals. Palms and dead trees keep their existing
-  near meshes and decimated or component-hull distant meshes. The original CC0
+  a 0.5 alpha threshold in color, depth and shadow passes. Pine branch roots
+  follow the authored curved trunk. Palms use curved, folded cutout fronds;
+  cacti retain their stem silhouettes with smooth normals, mapped ribs and
+  cutout flowers. Dead trees keep their existing near meshes and decimated or
+  component-hull distant meshes. The original CC0
   sources remain in `tools/board-models/foliage/`; the runtime uses these GLBs.
   A `-lod3` group holds the plant's impostor: two crossed vertical cards and a
   horizontal cap through the crown, 12 triangles with their backs, textured by
@@ -79,12 +81,17 @@ no rock or scatter geometry is generated in-game.
 - Every plant's origin is the foot of its trunk, where the board places, grounds and
   clears roads for it; a leaning crown (bent palm, willow) overhangs to one side.
   `tools/build_board_assets.py` centres plants there, and textures keep their
-  bounding-box projection.
-- `textures/foliage/*-cutout.png`: four shared 512 by 512 RGBA branch textures
-  for broadleaf/conifer and their snow variants. Near, medium and far crowns
+  bark projection. Cactus skin wraps around each stem, following bent arms.
+- `textures/foliage/*-cutout.png`: six shared 512 by 512 RGBA textures
+  for broadleaf/conifer and their snow variants, palm fronds and cactus flowers. Near, medium and far crowns
   share these clamped images; impostors are baked from the same alpha-tested
   geometry. Source images, exact ImageGen prompts and reproduction instructions
-  are in `tools/foliage-sources/README.md`. Bark textures os shared.
+  are in `tools/foliage-sources/README.md`. Bark textures remain shared.
+- `textures/foliage/cactus-skin.png` and `cactus-skin-normal.png`: 512-square
+  albedo and estimated shallow normal relief, shared by both cactus variants
+  at all three mesh levels. Standard glTF `normalTexture` supplies the normal
+  detail; the instanced foliage shader uses the existing dielectric light model
+  for waxy skin. The normal-map tuning switch applies to these maps too.
 - `textures/foliage/`: nine shared 64 by 64 detail albedos for broad leaves,
   pine needles, hanging willow leaves, palm fronds, ordinary bark, birch bark,
   ringed palm bark, ribbed cactus stems and snow. Source material boundaries keep snow caps separate
@@ -92,8 +99,14 @@ no rock or scatter geometry is generated in-game.
   vertex colors tint the pale maps; dominant-axis UVs follow the tree's original
   proportions. Snow variants use their own authored geometry. Texture generation
   prompts are recorded in `tools/board-foliage-texture-prompts.json`; the cactus
-  map is procedural (`tools/build_cactus_texture.py`, CC0-1.0), and cactus stems
-  take a pale sage in place of the source's saturated green.
+  old cactus map is procedural (`tools/build_cactus_texture.py`, CC0-1.0).
+  These small legacy leaf/cactus maps remain available to original authoring
+  models; converted runtime plants use the cutouts and skin maps above.
+- `orchard-*.glb`: six fruit-tree forms and their snow variants reuse the shared
+  branch-cutout baker. Their authored branch and apple counts stay intact at
+  each level; leaf cards use the remaining budget (480/240/84/12 triangles per
+  tree). Bark and fruit retain their orchard atlases. Rebuild with
+  `tools/build_orchard_assets.py`, then `tools/prepare_tree_lods.py -- impostors`.
 - `textures/foliage/marsh-sedge.png`: the editable 1254 by 1254 RGBA sedge/cattail
   cutout for marsh vegetation. The renderer filters it to one shared 512 by 512
   texture with mipmaps; all three plant LODs use this same image. Ground peat,

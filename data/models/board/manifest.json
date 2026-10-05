@@ -1211,25 +1211,25 @@
   },
   "orchard-round": {
     "mesh": "orchard-round.glb",
-    "triangles": 408,
-    "vertices": 1212,
+    "triangles": 480,
+    "vertices": 788,
     "generator": "tools/build_orchard_assets.py",
     "texture": "textures/foliage/orchard/orchard-round.png",
     "lods": [
       {
         "node": "orchard-round-lod0",
-        "triangles": 408,
-        "vertices": 1212
+        "triangles": 480,
+        "vertices": 788
       },
       {
         "node": "orchard-round-lod1",
-        "triangles": 216,
-        "vertices": 636
+        "triangles": 240,
+        "vertices": 420
       },
       {
         "node": "orchard-round-lod2",
-        "triangles": 72,
-        "vertices": 216
+        "triangles": 84,
+        "vertices": 132
       },
       {
         "node": "orchard-round-lod3",
@@ -1240,25 +1240,25 @@
   },
   "orchard-round-snow": {
     "mesh": "orchard-round-snow.glb",
-    "triangles": 408,
-    "vertices": 1212,
+    "triangles": 480,
+    "vertices": 788,
     "generator": "tools/build_orchard_assets.py",
     "texture": "textures/foliage/orchard/orchard-round.png",
     "lods": [
       {
         "node": "orchard-round-snow-lod0",
-        "triangles": 408,
-        "vertices": 1212
+        "triangles": 480,
+        "vertices": 788
       },
       {
         "node": "orchard-round-snow-lod1",
-        "triangles": 216,
-        "vertices": 636
+        "triangles": 240,
+        "vertices": 420
       },
       {
         "node": "orchard-round-snow-lod2",
-        "triangles": 72,
-        "vertices": 216
+        "triangles": 84,
+        "vertices": 132
       },
       {
         "node": "orchard-round-snow-lod3",
@@ -1269,25 +1269,25 @@
   },
   "orchard-spreading": {
     "mesh": "orchard-spreading.glb",
-    "triangles": 408,
-    "vertices": 1212,
+    "triangles": 480,
+    "vertices": 788,
     "generator": "tools/build_orchard_assets.py",
     "texture": "textures/foliage/orchard/orchard-spreading.png",
     "lods": [
       {
         "node": "orchard-spreading-lod0",
-        "triangles": 408,
-        "vertices": 1212
+        "triangles": 480,
+        "vertices": 788
       },
       {
         "node": "orchard-spreading-lod1",
-        "triangles": 216,
-        "vertices": 636
+        "triangles": 240,
+        "vertices": 420
       },
       {
         "node": "orchard-spreading-lod2",
-        "triangles": 72,
-        "vertices": 216
+        "triangles": 84,
+        "vertices": 132
       },
       {
         "node": "orchard-spreading-lod3",
@@ -1298,25 +1298,25 @@
   },
   "orchard-spreading-snow": {
     "mesh": "orchard-spreading-snow.glb",
-    "triangles": 408,
-    "vertices": 1212,
+    "triangles": 480,
+    "vertices": 788,
     "generator": "tools/build_orchard_assets.py",
     "texture": "textures/foliage/orchard/orchard-spreading.png",
     "lods": [
       {
         "node": "orchard-spreading-snow-lod0",
-        "triangles": 408,
-        "vertices": 1212
+        "triangles": 480,
+        "vertices": 788
       },
       {
         "node": "orchard-spreading-snow-lod1",
-        "triangles": 216,
-        "vertices": 636
+        "triangles": 240,
+        "vertices": 420
       },
       {
         "node": "orchard-spreading-snow-lod2",
-        "triangles": 72,
-        "vertices": 216
+        "triangles": 84,
+        "vertices": 132
       },
       {
         "node": "orchard-spreading-snow-lod3",
@@ -1327,25 +1327,25 @@
   },
   "orchard-upright": {
     "mesh": "orchard-upright.glb",
-    "triangles": 408,
-    "vertices": 1208,
+    "triangles": 480,
+    "vertices": 784,
     "generator": "tools/build_orchard_assets.py",
     "texture": "textures/foliage/orchard/orchard-upright.png",
     "lods": [
       {
         "node": "orchard-upright-lod0",
-        "triangles": 408,
-        "vertices": 1208
+        "triangles": 480,
+        "vertices": 784
       },
       {
         "node": "orchard-upright-lod1",
-        "triangles": 216,
-        "vertices": 632
+        "triangles": 240,
+        "vertices": 416
       },
       {
         "node": "orchard-upright-lod2",
-        "triangles": 72,
-        "vertices": 216
+        "triangles": 84,
+        "vertices": 132
       },
       {
         "node": "orchard-upright-lod3",
@@ -1356,25 +1356,25 @@
   },
   "orchard-upright-snow": {
     "mesh": "orchard-upright-snow.glb",
-    "triangles": 408,
-    "vertices": 1208,
+    "triangles": 480,
+    "vertices": 784,
     "generator": "tools/build_orchard_assets.py",
     "texture": "textures/foliage/orchard/orchard-upright.png",
     "lods": [
       {
         "node": "orchard-upright-snow-lod0",
-        "triangles": 408,
-        "vertices": 1208
+        "triangles": 480,
+        "vertices": 784
       },
       {
         "node": "orchard-upright-snow-lod1",
-        "triangles": 216,
-        "vertices": 632
+        "triangles": 240,
+        "vertices": 416
       },
       {
         "node": "orchard-upright-snow-lod2",
-        "triangles": 72,
-        "vertices": 216
+        "triangles": 84,
+        "vertices": 132
       },
       {
         "node": "orchard-upright-snow-lod3",
@@ -1385,25 +1385,25 @@
   },
   "orchard-vase": {
     "mesh": "orchard-vase.glb",
-    "triangles": 388,
-    "vertices": 1158,
+    "triangles": 480,
+    "vertices": 794,
     "generator": "tools/build_orchard_assets.py",
     "texture": "textures/foliage/orchard/orchard-vase.png",
     "lods": [
       {
         "node": "orchard-vase-lod0",
-        "triangles": 388,
-        "vertices": 1158
+        "triangles": 480,
+        "vertices": 794
       },
       {
         "node": "orchard-vase-lod1",
-        "triangles": 196,
-        "vertices": 582
+        "triangles": 240,
+        "vertices": 426
       },
       {
         "node": "orchard-vase-lod2",
-        "triangles": 64,
-        "vertices": 192
+        "triangles": 84,
+        "vertices": 132
       },
       {
         "node": "orchard-vase-lod3",
@@ -1414,25 +1414,25 @@
   },
   "orchard-vase-snow": {
     "mesh": "orchard-vase-snow.glb",
-    "triangles": 388,
-    "vertices": 1158,
+    "triangles": 480,
+    "vertices": 794,
     "generator": "tools/build_orchard_assets.py",
     "texture": "textures/foliage/orchard/orchard-vase.png",
     "lods": [
       {
         "node": "orchard-vase-snow-lod0",
-        "triangles": 388,
-        "vertices": 1158
+        "triangles": 480,
+        "vertices": 794
       },
       {
         "node": "orchard-vase-snow-lod1",
-        "triangles": 196,
-        "vertices": 582
+        "triangles": 240,
+        "vertices": 426
       },
       {
         "node": "orchard-vase-snow-lod2",
-        "triangles": 64,
-        "vertices": 192
+        "triangles": 84,
+        "vertices": 132
       },
       {
         "node": "orchard-vase-snow-lod3",
@@ -1443,25 +1443,25 @@
   },
   "orchard-leaning": {
     "mesh": "orchard-leaning.glb",
-    "triangles": 408,
-    "vertices": 1208,
+    "triangles": 480,
+    "vertices": 784,
     "generator": "tools/build_orchard_assets.py",
     "texture": "textures/foliage/orchard/orchard-leaning.png",
     "lods": [
       {
         "node": "orchard-leaning-lod0",
-        "triangles": 408,
-        "vertices": 1208
+        "triangles": 480,
+        "vertices": 784
       },
       {
         "node": "orchard-leaning-lod1",
-        "triangles": 216,
-        "vertices": 632
+        "triangles": 240,
+        "vertices": 416
       },
       {
         "node": "orchard-leaning-lod2",
-        "triangles": 72,
-        "vertices": 216
+        "triangles": 84,
+        "vertices": 132
       },
       {
         "node": "orchard-leaning-lod3",
@@ -1472,25 +1472,25 @@
   },
   "orchard-leaning-snow": {
     "mesh": "orchard-leaning-snow.glb",
-    "triangles": 408,
-    "vertices": 1208,
+    "triangles": 480,
+    "vertices": 784,
     "generator": "tools/build_orchard_assets.py",
     "texture": "textures/foliage/orchard/orchard-leaning.png",
     "lods": [
       {
         "node": "orchard-leaning-snow-lod0",
-        "triangles": 408,
-        "vertices": 1208
+        "triangles": 480,
+        "vertices": 784
       },
       {
         "node": "orchard-leaning-snow-lod1",
-        "triangles": 216,
-        "vertices": 632
+        "triangles": 240,
+        "vertices": 416
       },
       {
         "node": "orchard-leaning-snow-lod2",
-        "triangles": 72,
-        "vertices": 216
+        "triangles": 84,
+        "vertices": 132
       },
       {
         "node": "orchard-leaning-snow-lod3",
@@ -1501,25 +1501,25 @@
   },
   "orchard-young": {
     "mesh": "orchard-young.glb",
-    "triangles": 408,
-    "vertices": 1208,
+    "triangles": 480,
+    "vertices": 784,
     "generator": "tools/build_orchard_assets.py",
     "texture": "textures/foliage/orchard/orchard-young.png",
     "lods": [
       {
         "node": "orchard-young-lod0",
-        "triangles": 408,
-        "vertices": 1208
+        "triangles": 480,
+        "vertices": 784
       },
       {
         "node": "orchard-young-lod1",
-        "triangles": 216,
-        "vertices": 632
+        "triangles": 240,
+        "vertices": 416
       },
       {
         "node": "orchard-young-lod2",
-        "triangles": 72,
-        "vertices": 216
+        "triangles": 84,
+        "vertices": 132
       },
       {
         "node": "orchard-young-lod3",
@@ -1530,25 +1530,25 @@
   },
   "orchard-young-snow": {
     "mesh": "orchard-young-snow.glb",
-    "triangles": 408,
-    "vertices": 1208,
+    "triangles": 480,
+    "vertices": 784,
     "generator": "tools/build_orchard_assets.py",
     "texture": "textures/foliage/orchard/orchard-young.png",
     "lods": [
       {
         "node": "orchard-young-snow-lod0",
-        "triangles": 408,
-        "vertices": 1208
+        "triangles": 480,
+        "vertices": 784
       },
       {
         "node": "orchard-young-snow-lod1",
-        "triangles": 216,
-        "vertices": 632
+        "triangles": 240,
+        "vertices": 416
       },
       {
         "node": "orchard-young-snow-lod2",
-        "triangles": 72,
-        "vertices": 216
+        "triangles": 84,
+        "vertices": 132
       },
       {
         "node": "orchard-young-snow-lod3",

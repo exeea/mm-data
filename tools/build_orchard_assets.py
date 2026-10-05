@@ -1,7 +1,8 @@
 """Build six apple-tree forms and their snow forms with the board's three mesh LODs.
 
 Run Blender --background --python tools/build_orchard_assets.py.
-ImageGen's unmodified 2x2 atlases supply canopy, leaf, bark and apple-skin panels.
+ImageGen's unmodified 2x2 atlases supply bark and apple-skin panels. The shared
+branch-cutout baker replaces the closed crown envelopes with realistic foliage.
 Reuse the understory authoring primitives and rigid GLB exporter; no runtime generator.
 """
 from math import cos, sin, pi
@@ -15,6 +16,7 @@ from mathutils import Vector
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_foliage_assets import Plant, blender_mesh, export_model
 from glb_geometry import write_glb
+from prepare_tree_lods import branch_crowns, counts as mesh_counts
 
 ROOT = Path(__file__).resolve().parents[1]
 BOARD = ROOT / 'data/models/board'
@@ -115,6 +117,8 @@ def build():
                 obj.location = (index*44, -(lod + (3 if snow else 0))*44, 0)
                 obj['lod'] = lod
                 obj['variant'] = asset
+            levels = branch_crowns(levels[0], asset, retained_levels=levels)
+            counts = [{'node': f'{asset}-lod{lod}', **mesh_counts(model)} for lod, model in levels.items()]
             write_glb(BOARD / f'{asset}.glb', levels=levels)
             manifest[asset] = {'mesh': f'{asset}.glb', 'triangles': counts[0]['triangles'],
                 'vertices': counts[0]['vertices'], 'generator': 'tools/build_orchard_assets.py',

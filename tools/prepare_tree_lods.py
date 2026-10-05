@@ -311,14 +311,14 @@ def append_cutout(result, role, points, uvs, triangles, normals=None, tint=1):
         result.append((role, list(reversed(attributes))))
 
 
-def branch_crowns(source, name):
+def branch_crowns(source, name, retained_levels=None):
     """Replace closed leaf shells with bounded branch cards, keeping the authored trunk and crown envelopes.
 
     All three mesh levels use the same source silhouette and seed. The original
     CC0 authoring file stays untouched. Explicit backs work in every existing
     depth/shadow pass. Standard glTF MASK materials keep every level opaque.
     """
-    if not name.startswith(('tree', 'pine', 'birch', 'willow')) or name.startswith('tree-dead'):
+    if not name.startswith(('tree', 'pine', 'birch', 'willow', 'orchard-')) or name.startswith('tree-dead'):
         return None
     vertices, faces, corners = geometry(source)
     leaves = [face for face, (role, _) in zip(faces, corners) if not solid(role)]
@@ -343,7 +343,16 @@ def branch_crowns(source, name):
     levels = {}
     for level, (budget, cards) in enumerate(((480, 88), (240, 42), (96, 15))):
         rng = random.Random(seed)
-        model = simplified(bark, f'{name}-lod{level}', budget - cards * 4, False)
+        if retained_levels is None:
+            model = simplified(bark, f'{name}-lod{level}', budget - cards * 4, False)
+        else:
+            # Orchard LODs already author their own branch and fruit counts. Keep those exactly,
+            # assigning only the remaining budget to leaves instead of decimating individual apples.
+            retained = retained_levels[level]
+            _, _, parts_to_keep = geometry(retained)
+            model = pack(retained, f'{name}-lod{level}', [p for p in parts_to_keep if solid(p[0])])
+            cards = min(cards, (budget - counts(model)['triangles']) // 4)
+            assert cards > 0, (name, level, 'No remaining foliage budget')
         _, _, result = geometry(model)
         for i in range(cards):
             if pine:
