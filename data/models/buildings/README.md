@@ -19,13 +19,10 @@ one base, N-1 floors and a roof. All variants preserve the same horizontal norma
 the full roof projection intersected with the selected modules' closed mid-storey wall sections defines generated
 interior floors and struts. Keep notches and courtyards in those surfaces.
 
-Heavy industrial terrain (`misc/heavy_industrial_a.glb` through `d.glb`) uses the same module naming but represents
-height-only cover. It has no generated interior, no building cutaway, and ground-level pointer selection. The kits
-are a power generator, bulk silo cluster, chemical reactor rack, and distillation plant. Each contains `base0..1`,
-`floor0..3` and `roof0..1` in both LODs. The open ground lane remains clear through every variant.
+The four heavy-industrial terrain uses `BoardIndustrial` procedural generator. It assembles
+different equipment families with independently chosen heights, distinct domed/conical/flat caps, and pipes
+connected to actual neighboring industrial hexes. Industrial height is cover: there are no generated interior
+floors, building cutaways, or elevated pointer selections. Ordinary buildings still use the modular contract above.
 
-Six supported base pipes end at `(0, ±36)`, `(±31.5, ±18)`, at Z=4, in authored Z-up coordinates. At default
-orientation, equal ground elevation and zero hex padding, adjacent kits share endpoints regardless of family,
-height or chosen variants. Upper segments use continuous equipment/service spines, with no outward floating stubs.
-See `tools/buildings/build_heavy_industrial.py` and `tools/buildings/heavy-industrial/` for the generator,
-Blender library, concept prompt/image, exported counts and assembled preview.
+The active industrial materials live in `models/board/textures/industrial/paint.png` and `steel.png`. 
+`tools/buildings/heavy-industrial/` preserves the first prototypes but are superseded by the runtime generator.
