@@ -1,4 +1,4 @@
-"""Bake preserved ImageGen plant sources: alpha cutouts and aligned cactus color/normal maps."""
+"""Bake preserved plant sources: cutouts, estimated relief normals and packed leaf surface maps."""
 import argparse
 from pathlib import Path
 
@@ -42,11 +42,36 @@ def cactus_maps():
             'cactus-skin-normal': normal_map(height, .035)}
 
 
+def leaf_maps(name, pixels):
+    """Source-aligned shallow relief and AO/roughness/transmission; no displacement or baked sunlight.
+
+    These are artistic estimates from the preserved source, not measured scan data.
+    Broad source lighting is removed before estimating relief, and bark-colored veins
+    transmit less than green leaf tissue. Alpha remains in the original color map.
+    """
+    color = pixels[:, :, :3] / 255.0
+    alpha = pixels[:, :, 3] / 255.0
+    light = color @ np.array([.2126, .7152, .0722])
+    detail = blur(light, 1.2) - blur(light, 6)
+    height = detail * .35 + blur(alpha, 1.4) * .12
+    cavity = np.clip(np.exp(-np.maximum(blur(light, 4) - light, 0) * 1.8), .65, 1)
+    green = np.clip((color[:, :, 1] - color[:, :, 0] * .6 - color[:, :, 2] * .4)
+                    / np.maximum(color[:, :, 1], .05) * 3, 0, 1)
+    snow = '-snow-' in name
+    roughness = np.full_like(light, .85) if snow else np.clip(.62 - .15 * green + .1 * (1 - light), .4, .85)
+    transmission = np.zeros_like(light) if snow else green * .65
+    surface = np.stack((cavity, roughness, transmission), axis=-1)
+    return {name + '-normal': normal_map(height, .012 if snow else .018),
+            name + '-surface': np.rint(surface * 255).astype(np.uint8)}
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
     maps = {source.stem: bake(source) for source in sorted(SOURCES.glob('*-cutout.png'))}
+    for name, pixels in list(maps.items()):
+        maps.update(leaf_maps(name, pixels))
     maps.update(cactus_maps())
     for name, pixels in maps.items():
         destination = OUT / (name + '.png')

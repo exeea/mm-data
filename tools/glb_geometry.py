@@ -74,8 +74,8 @@ def write_glb(path, model=None, *, levels=None, embedded_images=None):
             if len({t['type'] for t in textures}) != len(textures):
                 raise ValueError('Duplicate material texture role')
             for texture in textures:
-                if texture['type'] not in ('DIFFUSE', 'NORMAL'):
-                    raise ValueError('Expected diffuse or normal texture')
+                if texture['type'] not in ('DIFFUSE', 'NORMAL', 'AMBIENT'):
+                    raise ValueError('Expected diffuse, normal or occlusion texture')
                 index = len(document.setdefault('images', []))
                 filename = texture['filename']
                 encoded_image = texture.get('data', (embedded_images or {}).get(filename))
@@ -97,8 +97,10 @@ def write_glb(path, model=None, *, levels=None, embedded_images=None):
                 document.setdefault('textures', []).append({'source': index, 'sampler': samplers.index(sampler)})
                 if texture['type'] == 'DIFFUSE':
                     document['materials'][-1]['pbrMetallicRoughness']['baseColorTexture'] = {'index': index}
-                else:
+                elif texture['type'] == 'NORMAL':
                     document['materials'][-1]['normalTexture'] = {'index': index}
+                else:
+                    document['materials'][-1]['occlusionTexture'] = {'index': index}
 
         parts = {}
         for mesh in model['meshes']:
@@ -261,7 +263,8 @@ def read_glb(path, level=0):
         result = {'id': source['name'], 'diffuse': [display(v) for v in pbr['baseColorFactor'][:3]]}
         if source.get('alphaMode') == 'MASK':
             result['alphaTest'] = source.get('alphaCutoff', .5)
-        for kind, info in (('DIFFUSE', pbr.get('baseColorTexture')), ('NORMAL', source.get('normalTexture'))):
+        for kind, info in (('DIFFUSE', pbr.get('baseColorTexture')), ('NORMAL', source.get('normalTexture')),
+                           ('AMBIENT', source.get('occlusionTexture'))):
             if info is None:
                 continue
             if kind == 'NORMAL' and info.get('scale', 1) != 1:

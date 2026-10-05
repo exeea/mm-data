@@ -307,8 +307,9 @@ def stem_section(vertices, faces, height):
 
 def cutout_material(role, texture):
     return {'id': role, 'diffuse': [1, 1, 1], 'alphaTest': .5, 'textures': [
-        {'id': role, 'type': 'DIFFUSE', 'filename': f'textures/foliage/{texture}.png',
-         'wrapS': 33071, 'wrapT': 33071}]}
+        {'id': role, 'type': kind, 'filename': f'textures/foliage/{texture}{suffix}.png',
+         'wrapS': 33071, 'wrapT': 33071}
+        for kind, suffix in (('DIFFUSE', ''), ('NORMAL', '-normal'), ('AMBIENT', '-surface'))]}
 
 
 def append_cutout(result, role, points, uvs, triangles, normals=None, tint=1):
