@@ -15,7 +15,7 @@ import random
 import sys
 
 import bpy
-from mathutils import Matrix, Vector
+from mathutils import Euler, Matrix, Vector
 from mathutils.bvhtree import BVHTree
 from mathutils.geometry import tessellate_polygon
 
@@ -116,6 +116,20 @@ class Mesh:
         function(self, **kwargs)
         self.transform=old; self.role=old_role
 
+    def texture(self, role, filename):
+        self.materials[role]={'id':role,'diffuse':[1,1,1],
+                              'textures':[{'id':role,'type':'DIFFUSE','filename':'textures/'+filename,
+                                           'minFilter':9987,'magFilter':9729,'wrapS':10497,'wrapT':10497}]}
+
+    def smooth(self, role):
+        indices=set(self.parts[role]);normals=defaultdict(lambda:Vector((0,0,0)))
+        for index in indices:
+            at=index*12;key=tuple(round(v,5) for v in self.vertices[at:at+3])
+            normals[key]+=Vector(self.vertices[at+3:at+6])
+        for index in indices:
+            at=index*12;key=tuple(round(v,5) for v in self.vertices[at:at+3])
+            self.vertices[at+3:at+6]=normals[key].normalized()
+
     def tree(self, x, y, size=12, variant=0):
         # Reuse the shipped tree kit, including its source UVs/materials.
         data=library('tree-broad',2)
@@ -138,7 +152,7 @@ class Mesh:
         parts=[{'id':r,'type':'TRIANGLES','indices':indices} for r,indices in self.parts.items()]
         return {'id':name,'meshes':[{'attributes':['POSITION','NORMAL','COLOR','TEXCOORD0'],
                                     'vertices':self.vertices,'parts':parts}],
-                'materials':deepcopy(list(self.materials.values())),
+                'materials':deepcopy([self.materials[role] for role in self.parts if self.parts[role]]),
                 'nodes':[{'id':name,'parts':[{'meshpartid':r,'materialid':r} for r in self.parts]}]}
 
 
@@ -549,25 +563,194 @@ def animal(g, species='cattle', color=(.74,.72,.65), mane=(.12,.075,.045),
             if eye is not None:g.ellipsoid(eye+normal*.035,(.09,.12,.10),palette['Eye_Black'],4,2)
 
 
+def debris_face(g, points, role, color=(.93,.93,.93)):
+    """Dominant-plane UVs keep fracture cuts textured too; atlas islands never bleed into each other."""
+    normal=(Vector(points[1])-Vector(points[0])).cross(Vector(points[2])-Vector(points[0]))
+    axis=max(range(3),key=lambda k:abs(normal[k]));axes=[k for k in range(3) if k!=axis]
+    uv=[(p[axes[0]],p[axes[1]]) for p in points]
+    atlas={'rubble-timber':(0,0),'rubble-brick':(1,0),'rubble-steel':(0,1),
+           'fortified-bags':(1,1),'fortified-seams':(1,1)}
+    if role in atlas:
+        column,row=atlas[role]
+        low=[min(p[k] for p in uv) for k in (0,1)];high=[max(p[k] for p in uv) for k in (0,1)]
+        uv=[(column*.5+.015+.47*(p[0]-low[0])/max(.001,high[0]-low[0]),
+             row*.5+.015+.47*(p[1]-low[1])/max(.001,high[1]-low[1])) for p in uv]
+    else:uv=[(u/10,v/10) for u,v in uv]
+    g.face(points,color,role,uv)
+
+
 def rubble(g, variant=0, path=False):
+    """Structure-type debris: timber, masonry, reinforced slabs, hardened slabs, wall remnants."""
     rng=random.Random(119+variant)
-    color=(.55,.49,.39) if variant==0 else (.38,.42,.44) if variant==1 else (.43,.23,.16)
-    for i in range(70):
-        x,y=rng.uniform(-28,28),rng.uniform(-27,27)
-        if x*x+y*y>29**2 or path and abs(x)<9:continue
-        h=rng.uniform(.7,4)
-        g.box((x,y,h/2),(rng.uniform(2,6),rng.uniform(1,3),h),tuple(c*rng.uniform(.8,1.2) for c in color),rng.uniform(0,180))
-        if i%9==0:g.beam((x,y,h),(x+5,y+4,h+3),.45,STEEL,4)
+    for role in ('timber','brick','steel'):g.texture('rubble-'+role,'scenery/demolition-materials.png')
+    g.texture('rubble-concrete','sculpt/concrete.png')
+    for role in ('rubble-fines','rubble-fracture'):g.texture(role,'scenery/demolition-fines.png')
+    # Loose fines form irregular shallow heaps, never a hex plinth. Cleared variants
+    # have two independent heaps and an actual 18-pixel corridor through every mesh.
+    lobes=[(-20,0,10,28),(20,0,10,28)] if path else [(0,0,32,30)]
+    peak=(3.0,4.0,5.4,6.2,3.8)[variant]*(.65 if path else 1)
+    def ground(x,y):
+        return max(peak*max(0,1-((x-cx)/rx)**2-((y-cy)/ry)**2)**1.5 for cx,cy,rx,ry in lobes)
+    for cx,cy,rx,ry in lobes:
+        rings=[]
+        for fraction in (.025,.3,.6,.82,1):
+            ring=[]
+            for i in range(48):
+                angle=i*2*pi/48;edge=1-.045*sin(angle*7+.3)-.025*cos(angle*13)
+                x=cx+rx*fraction*edge*cos(angle);y=cy+ry*fraction*edge*sin(angle)
+                ring.append((x,y,max(0,ground(x,y)) if fraction<1 else 0))
+            rings.append(ring)
+        for inner,outer in zip(rings,rings[1:]):
+            for i in range(48):
+                j=(i+1)%48;debris_face(g,[inner[i],outer[i],outer[j],inner[j]],'rubble-fines',(.88,.87,.85))
+        debris_face(g,rings[0],'rubble-fines',(.88,.87,.85))
+
+    def fragment(x,y,size,role,tilt=None,rebar=0,lift=0):
+        length,width,depth=size
+        turn=Euler(tilt or (rng.uniform(-.35,.35),rng.uniform(-.4,.4),rng.uniform(0,2*pi))).to_matrix()
+        # Chipped corners retain a slab/plank silhouette, with independently broken ends.
+        fractured=role=='rubble-concrete' and length>5
+        outline=([(-.5,-.24),(-.27,-.5),(.36,-.46),(.5,.04),(.14,.5),(-.4,.38)] if fractured else
+                 [(-.5,-.30),(-.38,-.5),(.34,-.5),(.5,-.31),(.5,.30),(.35,.5),(-.35,.5),(-.5,.30)])
+        outline=[(a*length*rng.uniform(.86,1.06),b*width*rng.uniform(.9,1.05)) for a,b in outline]
+        if fractured:
+            jagged=[]
+            for a,b in zip(outline,outline[1:]+outline[:1]):
+                jagged.extend([a,((a[0]+b[0])*.5+rng.uniform(-.3,.3)*depth,
+                                   (a[1]+b[1])*.5+rng.uniform(-.3,.3)*depth)])
+            outline=jagged
+        count=len(outline)
+        local=[Vector((a,b,z*depth+rng.uniform(-.10,.10)*depth)) for z in (-.5,.5) for a,b in outline]
+        points=[turn@p for p in local]
+        # Both the corridor and the tile envelope constrain the complete transformed fragment.
+        if path:
+            margin=depth*.35 if fractured else 0
+            if x<0:x=min(x,-9.15-margin-max(p.x for p in points))
+            else:x=max(x,9.15+margin-min(p.x for p in points))
+        if any((x+p.x)**2/38**2+(y+p.y)**2/33**2>1 for p in points):return
+        base=lift+max(ground(x+p.x,y+p.y)-p.z for p in points[:count])
+        points=[p+Vector((x,y,base)) for p in points]
+        tint=rng.uniform(.72,1.03);color=(tint,tint,tint)
+        for cap in (list(reversed(points[:count])),points[count:]):
+            for triangle in tessellate_polygon([cap]):debris_face(g,[cap[i] for i in triangle],role,color)
+        middle=[(points[i]+points[i+count])*.5+turn@Vector((rng.uniform(-.22,.22)*depth,
+                rng.uniform(-.22,.22)*depth,rng.uniform(-.1,.1)*depth)) for i in range(count)] if fractured else None
+        for i in range(count):
+            j=(i+1)%count
+            if fractured:
+                for a,b in ((points[:count],middle),(middle,points[count:])):
+                    for triangle in ([a[i],a[j],b[j]],[a[i],b[j],b[i]]):
+                        debris_face(g,triangle,'rubble-fracture',tuple(v*.92 for v in color))
+            else:debris_face(g,[points[i],points[j],points[j+count],points[i+count]],role,tuple(v*.9 for v in color))
+        if rebar:
+            old=g.role;g.role='rubble-steel'
+            for n in range(rebar):
+                yy=(n-(rebar-1)/2)*width/(rebar+1)
+                rod=[Vector((length*.20,yy,0)),Vector((length*.64,yy,.1)),Vector((length*.80,yy+.35,.65))]
+                rod=[turn@p+Vector((x,y,base)) for p in rod]
+                for p in rod:p.z=max(p.z,ground(p.x,p.y)+.12)
+                if path and any(abs(p.x)<9.15 for p in rod):continue
+                for a,b in zip(rod,rod[1:]):
+                    # A fixed point inside the steel island avoids bleeding other atlas materials onto thin rods.
+                    first=len(g.vertices)
+                    g.beam(a,b,.16,(.34,.22,.13),5)
+                    for at in range(first,len(g.vertices),12):g.vertices[at+10:at+12]=(.24,.73)
+            g.role=old
+
+    # A few large, recognisable broken members establish the pile's construction origin.
+    for i in range((11,14,17,15,7)[variant]):
+        angle=i*2.399963;radius=6+12*(i%5)/4
+        x,y=radius*cos(angle),radius*sin(angle)
+        if path:x=(-1 if i%2 else 1)*rng.uniform(18,22);y=rng.uniform(-20,20)
+        role='rubble-concrete';rebar=0
+        if variant==0:
+            role='rubble-timber' if i<8 else 'rubble-concrete'
+            size=(rng.uniform(11,19),rng.uniform(1.3,2.5),rng.uniform(.7,1.3)) if i<8 else (9,6,1)
+        elif variant==1:size=(rng.uniform(7,12),rng.uniform(4,8),rng.uniform(.9,1.8))
+        elif variant==2:size=(rng.uniform(10,18),rng.uniform(5,10),rng.uniform(1.4,2.4));rebar=3
+        elif variant==3:size=(rng.uniform(11,19),rng.uniform(6,11),rng.uniform(2.6,4.1));rebar=4
+        else:size=(rng.uniform(8,13),rng.uniform(3,6),rng.uniform(.7,1.2))
+        fragment(x,y,size,role,rebar=rebar)
+    # Chipped masonry and aggregate, with a broad size distribution rather than uniform boxes.
+    for i in range(125):
+        x,y=rng.uniform(-31,31),rng.uniform(-29,29)
+        if (x/31)**2+(y/29)**2>1 or path and abs(x)<11:continue
+        size=rng.uniform(.5,2.6)
+        role='rubble-brick' if variant in (0,1,4) and i%3 else 'rubble-concrete'
+        fragment(x,y,(size*1.7,size,size*.65),role)
+    # Torn I-section flanges and webs distinguish the reinforced building/bridge families.
+    if variant in (2,3):
+        positions=[g.vertices[i:i+3] for i in range(0,len(g.vertices),12)]
+        solid=[indices[i:i+3] for role,indices in g.parts.items() if role!='rubble-steel'
+               for i in range(0,len(indices),3)]
+        support=BVHTree.FromPolygons(positions,solid,all_triangles=True)
+        for i in range(4):
+            x,y=(-18+12*i,rng.uniform(-13,13)) if not path else ((-1 if i%2 else 1)*21,-13+8*i)
+            heading=rng.uniform(0,2*pi) if not path else pi/2+rng.uniform(-.18,.18)
+            turn=Euler((rng.uniform(-.3,.3),rng.uniform(-.2,.2),heading)).to_matrix()
+            length=rng.uniform(13,19)
+            cross=[(-1.4,-1.3),(1.4,-1.3),(1.4,-.98),(.18,-.98),(.18,.98),(1.4,.98),
+                   (1.4,1.3),(-1.4,1.3),(-1.4,.98),(-.18,.98),(-.18,-.98),(-1.4,-.98)]
+            points=[turn@Vector((xx,b,c)) for xx in (-length/2,length/2) for b,c in cross]
+            def support_height(p):
+                hit,_,_,_=support.ray_cast(Vector((x+p.x,y+p.y,100)),Vector((0,0,-1)))
+                return max(ground(x+p.x,y+p.y),hit.z if hit is not None else 0)-p.z
+            base=max(support_height(p) for p in points)
+            points=[p+Vector((x,y,base)) for p in points]
+            for cap in (list(reversed(points[:12])),points[12:]):
+                for triangle in tessellate_polygon([cap]):debris_face(g,[cap[i] for i in triangle],'rubble-steel')
+            for j in range(12):
+                k=(j+1)%12;debris_face(g,[points[j],points[k],points[k+12],points[j+12]],'rubble-steel')
+    # Remaining bonded courses make wall rubble distinct from the slab-heavy families.
+    if variant in (1,4):
+        for segment in range(3 if variant==4 else 2):
+            x,y=(-14+14*segment,(-1 if segment%2 else 1)*13) if not path else ((-1 if segment%2 else 1)*22,-12+12*segment)
+            rows=(5 if variant==4 else 3)-segment%2
+            for row in range(rows):
+                for brick in range(max(1,5-row)):
+                    fragment(x+(brick-2)*3.2+(row%2)*1.6,y+row*.45,
+                             (3.15,1.65,1.4),'rubble-brick',tilt=(.12,.05,0),lift=row*1.3)
+    g.smooth('rubble-fines')
+
+
+def sandbag(g, length=6.8, width=3.8, height=1.6, tint=.9):
+    rings=[]
+    for x,bulge in ((-.5,.55),(-.38,.94),(0,1),(.38,.94),(.5,.55)):
+        ring=[]
+        for i in range(8):
+            angle=i*2*pi/8;c,s=cos(angle),sin(angle)
+            ring.append((x*length,(1 if c>=0 else -1)*abs(c)**.60*width*.5*bulge,
+                         height*.5+(1 if s>=0 else -1)*abs(s)**.65*height*.5*bulge))
+        rings.append(ring)
+    color=(tint,tint,tint)
+    debris_face(g,list(reversed(rings[0])),'fortified-bags',color)
+    debris_face(g,rings[-1],'fortified-bags',color)
+    for a,b in zip(rings,rings[1:]):
+        for i in range(8):
+            j=(i+1)%8;debris_face(g,[a[i],a[j],b[j],b[i]],'fortified-bags',color)
+    # A thin pinched lip follows the seam on either side; it is not a second coplanar skin.
+    for side in (-1,1):
+        for a,b in zip(rings,rings[1:]):
+            i=0 if side>0 else 4
+            p,q=Vector(a[i]),Vector(b[i]);p.y+=side*.025;q.y+=side*.025
+            debris_face(g,[p,q,q+Vector((0,0,.08)),p+Vector((0,0,.08))],'fortified-seams',(tint*.72,)*3)
 
 
 def fortified(g):
+    rng=random.Random(217)
+    for role in ('fortified-bags','fortified-seams'):g.texture(role,'scenery/demolition-materials.png')
+    # The source depicts a low sandbag perimeter with open terrain in the middle.
+    # Alternate courses use half bags at their ends, avoiding aligned vertical joints.
     for i in range(6):
         a,b=i*pi/3,(i+1)*pi/3
-        p,q=Vector((27*cos(a),27*sin(a),0)),Vector((27*cos(b),27*sin(b),0))
+        p,q=Vector((28*cos(a),28*sin(a),0)),Vector((28*cos(b),28*sin(b),0))
         for row in range(3):
-            for n in range(6):
-                v=p.lerp(q,(n+.5+(row%2)*.15)/6)
-                g.box((v.x,v.y,.65+row*1.2),(4.5,2.8,1.3),(.52,.44,.29),i*60+120)
+            slots=[(3.5+7*n,6.8) for n in range(4)] if row%2==0 else [(1.75,3.3),(7,6.8),(14,6.8),(21,6.8),(26.25,3.3)]
+            for distance,length in slots:
+                v=p.lerp(q,distance/28)
+                g.place(sandbag,x=v.x,y=v.y,z=row*1.5,angle=i*60+120+rng.uniform(-1.1,1.1),
+                        length=length,width=3.8,height=1.6,tint=rng.uniform(.76,1.02))
+    g.smooth('fortified-bags')
 
 
 def maglev(g, station=False, train=False, variant=0):
@@ -601,14 +784,10 @@ def geyser(g, magma=False):
              [(20,0),(17,.25),(14,.65),(11.5,1.1),(9.4,1.65),(7.8,.55)])
     rings=[[(r*f*cos(a),r*f*sin(a),z*(1+.21*sin(5*a+.8)+.13*sin(11*a)))
             for a,f in zip(angles,uneven)] for r,z in profile]
-    def texture(role,filename):
-        g.materials[role]={'id':role,'diffuse':[1,1,1],
-                           'textures':[{'id':role,'type':'DIFFUSE','filename':'textures/'+filename,
-                                        'minFilter':9987,'magFilter':9729,'wrapS':10497,'wrapT':10497}]}
-    texture('geyser-mineral','scenery/geyser-travertine.png')
-    texture('geyser-rock','sculpt/volcano-basalt.png' if magma else 'sculpt/rock.png')
-    texture('geyser-water','pool-water.png')
-    texture('geyser-lava','magma/lava.png')
+    g.texture('geyser-mineral','scenery/geyser-travertine.png')
+    g.texture('geyser-rock','sculpt/volcano-basalt.png' if magma else 'sculpt/rock.png')
+    g.texture('geyser-water','pool-water.png')
+    g.texture('geyser-lava','magma/lava.png')
     for band,(outer,inner) in enumerate(zip(rings,rings[1:])):
         for i in range(count):
             j=(i+1)%count
@@ -638,14 +817,7 @@ def geyser(g, magma=False):
                 x=r*cos(a),y=r*sin(a),angle=rng.uniform(0,360),role='geyser-rock')
     # Average coincident face normals within each stone/mineral part, preserving
     # the rim/liquid boundary. The dynamic jet is owned by GpuGeysers, never baked.
-    for role in ('geyser-mineral','geyser-rock'):
-        indices=set(g.parts[role]);normals=defaultdict(lambda:Vector((0,0,0)))
-        for index in indices:
-            at=index*12;key=tuple(round(v,5) for v in g.vertices[at:at+3])
-            normals[key]+=Vector(g.vertices[at+3:at+6])
-        for index in indices:
-            at=index*12;key=tuple(round(v,5) for v in g.vertices[at:at+3])
-            g.vertices[at+3:at+6]=normals[key].normalized()
+    for role in ('geyser-mineral','geyser-rock'):g.smooth(role)
     # Avoid unused textures/materials in the water and magma variants.
     g.parts={role:indices for role,indices in g.parts.items() if indices}
     g.materials={role:g.materials[role] for role in g.parts}
@@ -820,7 +992,7 @@ def build_mesh(name, layouts):
                 else:g.tree(x,y,10,i)
     elif '/orbitalguns/' in name:g.place(orbital_gun,angle={'E':0,'N':90,'S':-90,'W':180}[stem[-1]])
     elif 'rubble' in stem and 'cleared' not in stem:
-        variant=0 if 'light' in stem else 1 if 'medium' in stem else 2
+        variant=next(i for i,kind in enumerate(('light','medium','heavy','hardened','wall')) if kind in stem)
         rubble(g,variant,path='path' in stem)
     elif stem=='fortified':fortified(g)
     elif stem.startswith('geyser'):
@@ -836,7 +1008,10 @@ def blender_mesh(scene, name, mesh, location):
     colors=data.color_attributes.new(name='Color',type='FLOAT_COLOR',domain='POINT')
     colors.data.foreach_set('color',[v for i in range(0,len(values),12) for v in (*[linear(c) for c in values[i+6:i+9]],values[i+9])])
     uv=data.uv_layers.new(name='UVMap')
-    for loop in data.loops:uv.data[loop.index].uv=values[loop.vertex_index*12+10:loop.vertex_index*12+12]
+    for loop in data.loops:
+        u,v=values[loop.vertex_index*12+10:loop.vertex_index*12+12]
+        uv.data[loop.index].uv=(u,1-v) # glTF/runtime images use a top-left UV origin.
+    data.normals_split_custom_set_from_vertices([values[i+3:i+6] for i in range(0,len(values),12)])
     offset=0
     for role,indices in mesh.parts.items():
         source=mesh.materials[role]
