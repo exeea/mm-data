@@ -103,7 +103,7 @@ def wall(g, a, b, variant, lod, edge_index):
                 box(local, (mid, .71, (bottom+top)/2), (.11, .22, top-bottom), 'fortress-steel')
                 box(local, (mid, .55, bottom-.18), (width+.8, 1.1, .35), 'fortress-trim', .09)
             else:
-                # Canopy and ribbed industrial door only on floor0.
+                # Canopy and ribbed industrial door only on base0.
                 box(local, (mid, -.85, top+.6), (width+1.7, 2.4, .55), 'fortress-trim', .1)
                 for rib in range(1, 25):
                     z = .3 + rib*.34
@@ -311,7 +311,7 @@ def export_level(lod):
     group = bpy.data.objects.new(NAME+'-lod'+str(lod), None)
     scene.collection.objects.link(group)
     counts = {}
-    for suffix, g in [('roof0',roof(lod)), ('floor0',floor(0,lod)), ('floor1',floor(1,lod)), ('floor2',floor(2,lod))]:
+    for suffix, g in [('roof0',roof(lod)), ('base0',floor(0,lod)), ('floor0',floor(1,lod)), ('floor1',floor(2,lod))]:
         node_id = NAME+'-lod'+str(lod)+'-'+suffix
         mesh_points, mesh_faces, mesh_uv, mesh_color, mesh_roles = [], [], [], [], []
         by_material = defaultdict(list)
@@ -322,7 +322,7 @@ def export_level(lod):
                 shade, uv = appearance(p,n,role)
                 if role == 'fortress-facade':
                     shade, _ = appearance(p,n,'fortress-concrete')
-                    uv = facade_uv(p, int(group_id), suffix == 'floor0')
+                    uv = facade_uv(p, int(group_id), suffix == 'base0')
                 # Concrete, coping and base-course tints share one albedo/material in the GLB.
                 # Baking their tint into existing vertex colours avoids duplicate embedded images and draw parts.
                 concrete = role in ('fortress-concrete','fortress-trim','fortress-plinth')
@@ -342,7 +342,7 @@ def export_level(lod):
             part_id = node_id+'-'+role
             parts.append({'id':part_id,'type':'TRIANGLES','indices':indices})
             node_parts.append({'meshpartid':part_id,'materialid':role})
-        display_z = {'floor0':0, 'floor1':18, 'floor2':36, 'roof0':54}[suffix]
+        display_z = {'base0':0, 'floor0':18, 'floor1':36, 'roof0':54}[suffix]
         nodes.append({'id':node_id,'translation':[lod*110,0,display_z],'parts':node_parts})
         mesh = bpy.data.meshes.new(node_id)
         mesh.from_pydata(mesh_points, [], mesh_faces)
@@ -363,7 +363,7 @@ def export_level(lod):
         obj.parent = group
         obj.location = (lod*110,0,display_z)
         obj['module'] = suffix
-        obj['authored_height'] = LEVEL if suffix.startswith('floor') else 4.15
+        obj['authored_height'] = 4.15 if suffix.startswith('roof') else LEVEL
         obj.hide_render = lod != 0
         obj.hide_set(lod != 0)
         counts[suffix] = len(g.faces)
@@ -401,7 +401,7 @@ review.world.node_tree.nodes['Background'].inputs[0].default_value = (.3,.33,.38
 review.world.node_tree.nodes['Background'].inputs[1].default_value = .45
 review.view_settings.view_transform = 'AgX'
 review.view_settings.look = 'AgX - Medium High Contrast'
-for level, suffix in enumerate(('floor0','floor1','floor2','roof0')):
+for level, suffix in enumerate(('base0','floor0','floor1','roof0')):
     source = next(o for o in scene.objects if o.name == NAME+'-lod0-'+suffix)
     obj = bpy.data.objects.new(suffix+'-preview-'+str(level),source.data)
     review.collection.objects.link(obj)
