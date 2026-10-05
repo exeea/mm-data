@@ -23,10 +23,12 @@ from glb_geometry import linear, read_glb, write_glb
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'data/models/board/mars'
 REVIEW = ROOT / 'tools/board-models/mars'
-SOURCE = ROOT / 'tools/board-mars-corals.blend'
+SOURCE = ROOT / 'tools/board-mars-corals-expanded.blend'
 TEXTURE = ROOT / 'data/models/board/textures/foliage/mars/coral-mineral-atlas.png'
 FORMS = ('finger-spires', 'fan-scalloped', 'tube-grove',
-         'finger-crown', 'fan-folded', 'tube-crown')
+         'finger-crown', 'fan-folded', 'tube-crown',
+         'antler-crown', 'plate-terraces', 'brain-lobes',
+         'organ-pipes', 'spiral-whorls', 'lattice-spires')
 BUDGETS = (16000, 4200, 1000, 240)
 
 
@@ -45,6 +47,19 @@ def smooth_path(points, radii, steps=5):
 def strand(g, points, radii):
     path, sizes = smooth_path(points, radii)
     tube(g, path, sizes, 'coral', 12)
+
+
+def shell(g, rings):
+    """Join a closed mineral profile, including its small end caps."""
+    sides = len(rings[0])
+    for row in range(len(rings)-1):
+        for j in range(sides):
+            k = (j+1) % sides
+            quad(g, rings[row][j], rings[row][k], rings[row+1][k], rings[row+1][j], 'coral')
+    for ring, reverse in ((rings[0], True), (rings[-1], False)):
+        for j in range(1, sides-1):
+            pts = (ring[0], ring[j], ring[j+1])
+            tri(g, *(reversed(pts) if reverse else pts), 'coral')
 
 
 def fingers(g, variant):
@@ -166,23 +181,174 @@ def trumpets(g, variant):
                 ring.append(origin + bend*z*z + Vector((radius*r*cos(a)*ripple,
                             radius*r*sin(a)*ripple, h*(z+wave))))
             rings.append(ring)
-        for row in range(len(rings)-1):
-            for j in range(sides):
-                k = (j+1) % sides
-                quad(g, rings[row][j], rings[row][k], rings[row+1][k], rings[row+1][j], 'coral')
-        for ring, reverse in ((rings[0], True), (rings[-1], False)):
-            for j in range(1, sides-1):
-                pts = (ring[0], ring[j], ring[j+1])
-                tri(g, *(reversed(pts) if reverse else pts), 'coral')
+        shell(g, rings)
         mouths.append((origin + bend + Vector((0, 0, h)), radius, h, origin, bend))
     return [], mouths
+
+
+def antlers(g):
+    """Open, twice-forked staghorns rather than the original blunt finger thicket."""
+    tips = []
+    for i in range(5):
+        a = i*2.39996 + .3
+        axis = Vector((cos(a), sin(a), 0))
+        side = Vector((-sin(a), cos(a), 0))
+        start = axis*1.6 + Vector((0, 0, .3))
+        fork = axis*(3.6+i*.55) + Vector((0, 0, (12, 10, 9, 7, 8)[i]))
+        top = axis*(6+i*.75) + Vector((0, 0, (29, 24, 21, 18, 22)[i]))
+        strand(g, [start, start.lerp(fork, .55)-side*.7, fork, fork.lerp(top, .55), top],
+               [2.0, 1.65, 1.2, .75, .08])
+        tips.append(top)
+        for j in range(3):
+            root = fork.lerp(top, .12+j*.23)
+            direction = side*(1 if j % 2 else -1)
+            tip = root + direction*(4.6-j*.65) + axis*1.0 + Vector((0, 0, 4.8-j*.3))
+            joint = root.lerp(tip, .55)
+            strand(g, [root, joint, tip], [.9-j*.13, .60-j*.08, .06])
+            twig = joint + axis*1.8 + Vector((0, 0, 3.2))
+            strand(g, [joint, joint.lerp(twig, .5), twig], [.46, .30, .05])
+            tips.extend((tip, twig))
+    return tips, []
+
+
+def plates(g):
+    """Thick ruffled shelves with radial mineral ribs and staggered heights."""
+    for i, (x, y, h, radius) in enumerate(((0, 1, 25, 8.2), (-4, 0, 17, 9),
+                                          (4, 3, 21, 8), (5, -3, 12, 9),
+                                          (-5, -3, 8, 7.5), (0, 5, 6, 6))):
+        origin = Vector((x, y, h))
+        strand(g, [(x*.25, y*.25, .5), (x*.7, y*.7, h*.55), origin], [2.5, 1.9, 2.3])
+        # Underside grows out of the stem; the upper surface returns to the centre.
+        profile = ((.06, -.55), (.24, -.48), (.45, -.42), (.68, -.38), (.86, -.34),
+                   (1, -.22), (1.02, 0), (1, .26), (.85, .32), (.65, .32),
+                   (.42, .32), (.20, .32), (.015, .30))
+        rings = []
+        for r, z in profile:
+            ring = []
+            for j in range(112):
+                a = j*2*pi/112
+                scallop = 1+.075*sin(a*7+i)+.028*sin(a*13-i)
+                wave = (1.0*sin(a*5+i)+.42*sin(a*11-i))*r**3
+                ribs = .20*sin(a*29 + r*3)*r
+                ring.append(origin + Vector((radius*r*cos(a)*scallop,
+                                             radius*r*sin(a)*scallop*.88,
+                                             z + 1.3*r*r + wave + ribs)))
+            rings.append(ring)
+        shell(g, rings)
+    return [], []
+
+
+def brains(g):
+    """Three fused domes with an actual sculpted labyrinth, visible without a normal map."""
+    for i, (center, radii) in enumerate((((0, 2.5, 12), (6.8, 6, 13)),
+                                       ((-5.2, -3, 7.5), (5.6, 5, 8.2)),
+                                       ((6, -.5, 9), (5.3, 4.8, 10)))):
+        rings = []
+        for row in range(97):
+            t = .001 + (pi-.002)*row/96
+            ring = []
+            for col in range(144):
+                a = col*2*pi/144
+                field = sin(t*13 + 2.6*sin(a*3+t*1.5+i) + .7*sin(a*7-t*3))
+                ridge = 1.15*exp(-field*field*6)*sin(t)**.35
+                ripple = .05*sin(a*9+t*13+i)
+                ring.append(Vector(center) + Vector(((radii[0]+ridge+ripple)*sin(t)*cos(a),
+                                                     (radii[1]+ridge+ripple)*sin(t)*sin(a),
+                                                     (radii[2]+ridge)*cos(t))))
+            rings.append(ring)
+        shell(g, rings)
+    return [], []
+
+
+def organs(g):
+    """Narrow open chimneys; cylindrical walls distinguish them from the trumpet kit."""
+    mouths = []
+    for i, h in enumerate((28, 22, 24, 19, 15, 23, 12, 17, 10, 14, 8)):
+        a = i*2.39996
+        spread = 0 if i == 0 else 3.5+(i % 3)*1.8
+        origin = Vector((cos(a)*spread, sin(a)*spread, .25))
+        bend = Vector((cos(a)*1.7, sin(a)*1.7, 0))
+        radius = 2.05+(i % 3)*.18
+        profile = ((1.2, 0), (1.02, .08), (.92, .25), (.88, .50), (.94, .75),
+                   (1, .96), (1.02, 1), (.98, 1.025), (.78, 1.025), (.74, .99),
+                   (.68, .87), (.62, .70), (.02, .60))
+        rings = []
+        for r, z in profile:
+            ring = []
+            for j in range(64):
+                angle = j*2*pi/64
+                flutes = 1+.035*sin(angle*13+i)+.018*sin(angle*21+z*4)
+                rim = .010*sin(angle*5+i)*z**4
+                ring.append(origin+bend*z*z+Vector((radius*r*cos(angle)*flutes,
+                                                    radius*r*sin(angle)*flutes, h*(z+rim))))
+            rings.append(ring)
+        shell(g, rings)
+        mouths.append((origin+bend+Vector((0, 0, h)), radius, h, origin, bend))
+    return [], mouths
+
+
+def spirals(g):
+    """Three open crozier curls with a continuous tapered mineral body."""
+    tips = []
+    for scale, turn, offset in ((1, .10, (0, 2, 0)), (.72, -.65, (-5, -2, 0)),
+                                (.60, 1.20, (5, -1, 0))):
+        axis = Vector((cos(turn), sin(turn), 0))
+        side = Vector((-sin(turn), cos(turn), 0))
+        base = Vector(offset)
+        points = [base+Vector((0, 0, .3)), base+axis*3*scale+Vector((0, 0, 7*scale)),
+                  base+axis*6.7*scale+Vector((0, 0, 13*scale))]
+        radii = [3*scale, 2.75*scale, 2.55*scale]
+        for j in range(81):
+            t = j/80
+            angle = t*1.85*pi
+            radius = (7.4-6.2*t)*scale
+            points.append(base + axis*(cos(angle)*radius) + side*(.7*sin(angle)*scale)
+                          + Vector((0, 0, 18*scale+sin(angle)*radius)))
+            radii.append(scale*(2.5*(1-t)**.70+.06))
+        tube(g, points, radii, 'coral', 24)
+        tips.append(points[-1])
+    return tips, []
+
+
+def lattice(g, lod=0):
+    """A volumetric basket with jagged spires and irregular cellular windows."""
+    outline = [Vector(p) for p in ((0, 1), (8, 0), (15, 1), (16, 17), (13, 23),
+                                  (11, 18), (8, 29), (5, 21), (2, 25), (0, 18))]
+    rng = random.Random(771)
+    seeds = [Vector((rng.uniform(.3, 15.7), rng.uniform(1, 25))) for _ in range((34, 20, 10, 5)[lod])]
+    for panel in range(3):
+        turn = panel*2*pi/3
+
+        def point(p):
+            u, z = p
+            x, y = u-8, 4.8 + .65*sin(u*.5+z*.3+panel)
+            taper = .70+.30*sin(min(1, z/25)*pi)
+            return Vector(((x*cos(turn)-y*sin(turn))*taper,
+                           (x*sin(turn)+y*cos(turn))*taper, z+1))
+
+        for polygon in fan_cells(outline, seeds):
+            # Shared Voronoi edges fuse into rounded ribs, leaving genuinely open windows.
+            for j, a in enumerate(polygon):
+                b = polygon[(j+1) % len(polygon)]
+                middle = a.lerp(b, .5)
+                radius = (.58, .75, .92, 1.12)[lod]
+                strand(g, [point(a), point(middle), point(b)], [radius, radius*.88, radius])
+    return [], []
 
 
 def shape(name, lod=0):
     g = Plant()
     variant = FORMS.index(name)//3
     family = name.split('-')[0]
-    tips, mouths = fan(g, variant, lod) if family == 'fan' else {'finger': fingers, 'tube': trumpets}[family](g, variant)
+    if family == 'fan':
+        tips, mouths = fan(g, variant, lod)
+    elif family in ('finger', 'tube'):
+        tips, mouths = {'finger': fingers, 'tube': trumpets}[family](g, variant)
+    elif family == 'lattice':
+        tips, mouths = lattice(g, lod)
+    else:
+        tips, mouths = {'antler': antlers, 'plate': plates, 'brain': brains,
+                        'organ': organs, 'spiral': spirals}[family](g)
     # Fused low encrustation, without a woody trunk or a circular display base in the export.
     rng = random.Random(121 + variant)
     g.lobe((0, 0, .48), (5.7, 5.0, .95), role='coral')
@@ -241,10 +407,11 @@ def color_at(p, family, tips, mouths):
     blend = lambda a, b, t: tuple(x*(1-t)+y*t for x, y in zip(a, b))
     # Pigment and fine pores come from the atlas. Vertex tint supplies gentle growth/crevice variation only.
     base = (.98, .97, .94)
-    if family == 'finger':
+    if family in ('finger', 'antler', 'spiral'):
         distance = min((p-tip).length for tip in tips)
-        base = blend(base, (1, .82, .66), max(0, 1-distance/3.0)*.75)
-    elif family == 'fan':
+        pigment = (.57, .83, .78) if family == 'spiral' else (1, .82, .66)
+        base = blend(base, pigment, max(0, 1-distance/3.0)*.75)
+    elif family in ('fan', 'plate', 'lattice'):
         base = blend((.83, .80, .83), base, max(0, min(1, p.z/30)))
     else:
         for center, radius, height, origin, bend in mouths:
@@ -273,7 +440,8 @@ def finish(obj, family, tips, mouths, normalization):
         axes = (0, 1) if dominant == 2 else (0, 2) if dominant == 1 else (1, 2)
         center = face.center
         basal = center.z < 3.9 + .65*sin(center.x*1.7+center.y*2.1)
-        panel = 3 if basal else {'finger': 0, 'fan': 1, 'tube': 2}[family]
+        panel = 3 if basal else {'finger': 0, 'antler': 0, 'brain': 0, 'spiral': 0,
+                                'fan': 1, 'plate': 1, 'lattice': 1, 'tube': 2, 'organ': 2}[family]
         for loop in face.loop_indices:
             p = mesh.vertices[mesh.loops[loop].vertex_index].co
             source = p/scale + Vector((0, 0, low))
@@ -310,6 +478,7 @@ def mesh_model(obj):
 
 def review(scene, assets):
     sand = solid_material('Mars / display soil', (.48, .24, .13))
+    center = Vector((0, (len(assets)-1)//3*22.5, 10))
     for index, objects in enumerate(assets.values()):
         x, y = (index % 3-1)*38, (index//3)*45
         for obj in objects:
@@ -329,22 +498,22 @@ def review(scene, assets):
         light.energy, light.shape, light.size = energy, 'DISK', size
         obj = bpy.data.objects.new(light.name, light)
         scene.collection.objects.link(obj)
-        obj.location = location
-        obj.rotation_euler = (Vector((0, 20, 10))-obj.location).to_track_quat('-Z', 'Y').to_euler()
+        obj.location = Vector(location) + Vector((0, center.y-20, 0))
+        obj.rotation_euler = (center-obj.location).to_track_quat('-Z', 'Y').to_euler()
     camera = bpy.data.objects.new('Mars / kit overview', bpy.data.cameras.new('Mars / kit overview'))
     scene.collection.objects.link(camera)
-    camera.location = (60, -140, 105)
-    camera.rotation_euler = (Vector((0, 23, 9))-camera.location).to_track_quat('-Z', 'Y').to_euler()
-    camera.data.type, camera.data.ortho_scale, camera.data.clip_end = 'ORTHO', 137, 1000
+    camera.location = center + Vector((35, -155, 165))
+    camera.rotation_euler = (center-camera.location).to_track_quat('-Z', 'Y').to_euler()
+    camera.data.type, camera.data.ortho_scale, camera.data.clip_end = 'ORTHO', 195, 1000
     scene.camera = camera
     scene.render.engine = 'CYCLES'
     scene.cycles.samples = 24
     scene.cycles.use_denoising = True
-    scene.render.resolution_x, scene.render.resolution_y = 1600, 1120
+    scene.render.resolution_x, scene.render.resolution_y = 1800, 1800
     scene.render.resolution_percentage = 100
     scene.render.image_settings.file_format = 'PNG'
     scene.view_settings.view_transform = 'Standard'
-    scene.render.filepath = str(REVIEW/'coral-library.png')
+    scene.render.filepath = str(REVIEW/'coral-library-expanded.png')
 
 
 def weather_surface(obj, seed):
@@ -410,6 +579,7 @@ def build():
         collections.append(collection)
     assets, report = {}, {}
     for name in FORMS:
+        print('Authoring Mars coral: '+name, flush=True)
         obj, family, tips, mouths = sculpt(scene, name, mat)
         low = min(v.co.z for v in obj.data.vertices)
         high = max(v.co.z for v in obj.data.vertices)
@@ -420,8 +590,8 @@ def build():
         simplify(obj, BUDGETS[0])
         objects = [obj]
         for lod in range(1, 4):
-            if family == 'fan':
-                # Fewer pores at distance preserve the fan silhouette without a topology floor on decimation.
+            if family in ('fan', 'lattice'):
+                # Fewer pores at distance preserve open silhouettes without a topology floor on decimation.
                 child, _, _, _ = sculpt(scene, name, mat, lod)
                 for v in child.data.vertices:
                     v.co.z -= low

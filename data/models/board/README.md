@@ -10,8 +10,8 @@ directory with the game's data. Blender is an authoring dependency only.
   editable rock variants. Each contains three root nodes named `block-N-lod0`,
   `block-N-lod1`, `block-N-lod2` (or `boulder-N-lod0`, etc.). The library has 48
   meshes and 1,572 triangles. Rough terrain, rims, slopes and cliffs share these files.
-- `rocks/outcrop-N.glb` (N = 0..7) are the bedrock formations zero-gravity rough
-  shows instead of boulders, in the same layout (`outcrop-N-lod0` to `-lod2`; 92, 44
+- `rocks/outcrop-N.glb` (N = 0..7) are bedrock formations used by zero-gravity
+  rough and dry natural rough on exposed ridges, in the same layout (`outcrop-N-lod0` to `-lod2`; 92, 44
   and 22 triangles). Unlike the other rocks they are generated: rebuild them with
   `blender -b --factory-startup --python tools/build_outcrop_assets.py`.
 - `scatter/` contains 26 independently editable GLBs: `stone-block-N.glb` and
@@ -54,15 +54,14 @@ no rock or scatter geometry is generated in-game.
 - `bridge.glb`, `field.glb`, and twenty-two foliage GLB
   files, plus 63 additional complete bridge exit patterns, all at or below 480 triangles. Counts and
   the imported Blender source names are in `manifest.json`.
-- Each tree GLB contains `-lod0`, `-lod1`, and `-lod2` groups. The near opaque mesh
-  removes only fully enclosed faces and keeps the surviving vertex attributes
-  unchanged (366Ã¢â‚¬â€œ480 triangles). The original remains available for close
-  transparent trees. The two distant meshes have up to 240 and 96 triangles,
-  retaining the source coordinates, bounds, material roles and shared textures.
-  Pines and palms, whose jagged skirts and fronds collapse decimation would
-  file away, simplify each compact part as its convex hull instead; each hull
-  triangle takes the material of the original surface it replaces, so the
-  snow stays on the skirts.
+- Each tree GLB contains `-lod0`, `-lod1`, and `-lod2` groups, with budgets
+  of 480, 240 and 96 triangles including explicit back faces. Sixteen leafy
+  variants retain their authored trunks and crown envelopes but replace closed
+  leaf shells with cutout branch clusters. Standard glTF `MASK` materials use
+  a 0.5 alpha threshold in color, depth and shadow passes. Cacti retain their
+  geometry with smooth stem normals. Palms and dead trees keep their existing
+  near meshes and decimated or component-hull distant meshes. The original CC0
+  sources remain in `tools/board-models/foliage/`; the runtime uses these GLBs.
   A `-lod3` group holds the plant's impostor: two crossed vertical cards and a
   horizontal cap through the crown, 12 triangles with their backs, textured by
   `textures/foliage/impostors/<name>.png` (three 128 by 128 unlit renders of
@@ -81,6 +80,11 @@ no rock or scatter geometry is generated in-game.
   clears roads for it; a leaning crown (bent palm, willow) overhangs to one side.
   `tools/build_board_assets.py` centres plants there, and textures keep their
   bounding-box projection.
+- `textures/foliage/*-cutout.png`: four shared 512 by 512 RGBA branch textures
+  for broadleaf/conifer and their snow variants. Near, medium and far crowns
+  share these clamped images; impostors are baked from the same alpha-tested
+  geometry. Source images, exact ImageGen prompts and reproduction instructions
+  are in `tools/foliage-sources/README.md`. Bark textures os shared.
 - `textures/foliage/`: nine shared 64 by 64 detail albedos for broad leaves,
   pine needles, hanging willow leaves, palm fronds, ordinary bark, birch bark,
   ringed palm bark, ribbed cactus stems and snow. Source material boundaries keep snow caps separate

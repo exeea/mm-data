@@ -416,8 +416,10 @@ def inside_outline(x,y,outline):
 def ledge(g):
     # Tapered parapet at one hex edge; the adjacent variants rotate this exact profile.
     p=[(-37,-8,0),(37,-8,0),(21,-36,0),(-21,-36,0),(-37,-8,10),(37,-8,10),(30,-20,10),(-30,-20,10)]
+    # This edge outline runs clockwise, opposite to box(). Keep every face outward
+    # so backface culling draws the body as well as its narrow cap trim.
     for ids in ((3,2,1,0),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7),(4,5,6,7)):
-        g.face([p[i] for i in ids],CONCRETE)
+        g.face([p[i] for i in reversed(ids)],CONCRETE)
     g.beam((-37,-8,10.3),(37,-8,10.3),.8,WHITE,4)
 
 

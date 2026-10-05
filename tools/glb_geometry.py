@@ -68,12 +68,15 @@ def write_glb(path, model=None, *, levels=None, embedded_images=None):
             document['materials'].append({'name': material['id'], 'pbrMetallicRoughness': {
                 'baseColorFactor': [*(linear(c) for c in color[:3]), material.get('opacity', 1)],
                 'metallicFactor': 0, 'roughnessFactor': 1}})
+            if 'alphaTest' in material:
+                document['materials'][-1].update(alphaMode='MASK', alphaCutoff=material['alphaTest'])
             textures = material.get('textures', [])
-            if textures:
-                if len(textures) != 1 or textures[0]['type'] != 'DIFFUSE':
-                    raise ValueError('Expected a single diffuse texture')
+            if len({t['type'] for t in textures}) != len(textures):
+                raise ValueError('Duplicate material texture role')
+            for texture in textures:
+                if texture['type'] not in ('DIFFUSE', 'NORMAL'):
+                    raise ValueError('Expected diffuse or normal texture')
                 index = len(document.setdefault('images', []))
-                texture = textures[0]
                 filename = texture['filename']
                 encoded_image = texture.get('data', (embedded_images or {}).get(filename))
                 if encoded_image is None:
@@ -92,7 +95,10 @@ def write_glb(path, model=None, *, levels=None, embedded_images=None):
                 if sampler not in samplers:
                     samplers.append(sampler)
                 document.setdefault('textures', []).append({'source': index, 'sampler': samplers.index(sampler)})
-                document['materials'][-1]['pbrMetallicRoughness']['baseColorTexture'] = {'index': index}
+                if texture['type'] == 'DIFFUSE':
+                    document['materials'][-1]['pbrMetallicRoughness']['baseColorTexture'] = {'index': index}
+                else:
+                    document['materials'][-1]['normalTexture'] = {'index': index}
 
         parts = {}
         for mesh in model['meshes']:
@@ -253,17 +259,23 @@ def read_glb(path, level=0):
     def material(source):
         pbr = source['pbrMetallicRoughness']
         result = {'id': source['name'], 'diffuse': [display(v) for v in pbr['baseColorFactor'][:3]]}
-        if 'baseColorTexture' in pbr:
-            texture = document['textures'][pbr['baseColorTexture']['index']]
+        if source.get('alphaMode') == 'MASK':
+            result['alphaTest'] = source.get('alphaCutoff', .5)
+        for kind, info in (('DIFFUSE', pbr.get('baseColorTexture')), ('NORMAL', source.get('normalTexture'))):
+            if info is None:
+                continue
+            if kind == 'NORMAL' and info.get('scale', 1) != 1:
+                raise ValueError('Bake normal strength into the map')
+            texture = document['textures'][info['index']]
             image = document['images'][texture['source']]
-            entry = {'id': source['name'], 'type': 'DIFFUSE', 'filename': image.get('uri', image.get('name'))}
+            entry = {'id': source['name'], 'type': kind, 'filename': image.get('uri', image.get('name'))}
             if 'bufferView' in image:
                 view = document['bufferViews'][image['bufferView']]
                 offset = view.get('byteOffset', 0)
                 entry['data'] = bytes(binary[offset:offset + view['byteLength']])
             if 'sampler' in texture:
                 entry.update(document['samplers'][texture['sampler']])
-            result['textures'] = [entry]
+            result.setdefault('textures', []).append(entry)
         return result
 
     return {'id': Path(path).stem,

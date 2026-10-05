@@ -14,19 +14,19 @@
     "source": "Blends/CommonTree_1.blend",
     "lods": [
       {
-        "triangles": 418,
-        "vertices": 1254,
-        "node": "tree-lod0"
+        "node": "tree-lod0",
+        "triangles": 480,
+        "vertices": 736
       },
       {
+        "node": "tree-lod1",
         "triangles": 240,
-        "vertices": 720,
-        "node": "tree-lod1"
+        "vertices": 384
       },
       {
+        "node": "tree-lod2",
         "triangles": 96,
-        "vertices": 288,
-        "node": "tree-lod2"
+        "vertices": 168
       },
       {
         "node": "tree-lod3",
@@ -43,18 +43,18 @@
     "lods": [
       {
         "node": "pine-lod0",
-        "triangles": 480,
-        "vertices": 1434
+        "triangles": 392,
+        "vertices": 466
       },
       {
         "node": "pine-lod1",
-        "triangles": 222,
-        "vertices": 666
+        "triangles": 208,
+        "vertices": 282
       },
       {
         "node": "pine-lod2",
-        "triangles": 92,
-        "vertices": 276
+        "triangles": 96,
+        "vertices": 162
       },
       {
         "node": "pine-lod3",
@@ -70,19 +70,19 @@
     "source": "Blends/CommonTree_Snow_1.blend",
     "lods": [
       {
-        "triangles": 423,
-        "vertices": 1269,
-        "node": "tree-snow-lod0"
+        "node": "tree-snow-lod0",
+        "triangles": 478,
+        "vertices": 730
       },
       {
+        "node": "tree-snow-lod1",
         "triangles": 240,
-        "vertices": 720,
-        "node": "tree-snow-lod1"
+        "vertices": 384
       },
       {
+        "node": "tree-snow-lod2",
         "triangles": 96,
-        "vertices": 288,
-        "node": "tree-snow-lod2"
+        "vertices": 168
       },
       {
         "node": "tree-snow-lod3",
@@ -99,18 +99,18 @@
     "lods": [
       {
         "node": "pine-snow-lod0",
-        "triangles": 480,
-        "vertices": 1434
+        "triangles": 392,
+        "vertices": 466
       },
       {
         "node": "pine-snow-lod1",
-        "triangles": 222,
-        "vertices": 666
+        "triangles": 208,
+        "vertices": 282
       },
       {
         "node": "pine-snow-lod2",
-        "triangles": 92,
-        "vertices": 276
+        "triangles": 96,
+        "vertices": 162
       },
       {
         "node": "pine-snow-lod3",
@@ -127,18 +127,18 @@
     "lods": [
       {
         "node": "palm-lod0",
-        "triangles": 480,
-        "vertices": 1440
+        "triangles": 402,
+        "vertices": 608
       },
       {
         "node": "palm-lod1",
-        "triangles": 232,
-        "vertices": 696
+        "triangles": 222,
+        "vertices": 326
       },
       {
         "node": "palm-lod2",
-        "triangles": 82,
-        "vertices": 246
+        "triangles": 96,
+        "vertices": 182
       },
       {
         "node": "palm-lod3",
@@ -155,18 +155,18 @@
     "lods": [
       {
         "node": "palm-bent-lod0",
-        "triangles": 480,
-        "vertices": 1434
+        "triangles": 322,
+        "vertices": 570
       },
       {
         "node": "palm-bent-lod1",
-        "triangles": 234,
-        "vertices": 702
+        "triangles": 202,
+        "vertices": 372
       },
       {
         "node": "palm-bent-lod2",
-        "triangles": 86,
-        "vertices": 258
+        "triangles": 96,
+        "vertices": 182
       },
       {
         "node": "palm-bent-lod3",
@@ -182,19 +182,19 @@
     "source": "Blends/CommonTree_4.blend",
     "lods": [
       {
-        "triangles": 442,
-        "vertices": 1326,
-        "node": "tree-broad-lod0"
+        "node": "tree-broad-lod0",
+        "triangles": 480,
+        "vertices": 736
       },
       {
+        "node": "tree-broad-lod1",
         "triangles": 240,
-        "vertices": 720,
-        "node": "tree-broad-lod1"
+        "vertices": 384
       },
       {
+        "node": "tree-broad-lod2",
         "triangles": 96,
-        "vertices": 288,
-        "node": "tree-broad-lod2"
+        "vertices": 168
       },
       {
         "node": "tree-broad-lod3",
@@ -210,19 +210,19 @@
     "source": "Blends/CommonTree_Snow_4.blend",
     "lods": [
       {
-        "triangles": 444,
-        "vertices": 1332,
-        "node": "tree-broad-snow-lod0"
+        "node": "tree-broad-snow-lod0",
+        "triangles": 480,
+        "vertices": 736
       },
       {
+        "node": "tree-broad-snow-lod1",
         "triangles": 240,
-        "vertices": 720,
-        "node": "tree-broad-snow-lod1"
+        "vertices": 384
       },
       {
+        "node": "tree-broad-snow-lod2",
         "triangles": 96,
-        "vertices": 288,
-        "node": "tree-broad-snow-lod2"
+        "vertices": 168
       },
       {
         "node": "tree-broad-snow-lod3",
@@ -238,19 +238,19 @@
     "source": "Blends/CommonTree_2.blend",
     "lods": [
       {
-        "triangles": 424,
-        "vertices": 1272,
-        "node": "tree-slender-lod0"
+        "node": "tree-slender-lod0",
+        "triangles": 478,
+        "vertices": 730
       },
       {
-        "triangles": 238,
-        "vertices": 714,
-        "node": "tree-slender-lod1"
+        "node": "tree-slender-lod1",
+        "triangles": 240,
+        "vertices": 384
       },
       {
-        "triangles": 94,
-        "vertices": 282,
-        "node": "tree-slender-lod2"
+        "node": "tree-slender-lod2",
+        "triangles": 96,
+        "vertices": 168
       },
       {
         "node": "tree-slender-lod3",
@@ -266,19 +266,19 @@
     "source": "Blends/CommonTree_Snow_2.blend",
     "lods": [
       {
-        "triangles": 419,
-        "vertices": 1257,
-        "node": "tree-slender-snow-lod0"
+        "node": "tree-slender-snow-lod0",
+        "triangles": 480,
+        "vertices": 736
       },
       {
+        "node": "tree-slender-snow-lod1",
         "triangles": 240,
-        "vertices": 720,
-        "node": "tree-slender-snow-lod1"
+        "vertices": 384
       },
       {
+        "node": "tree-slender-snow-lod2",
         "triangles": 96,
-        "vertices": 288,
-        "node": "tree-slender-snow-lod2"
+        "vertices": 168
       },
       {
         "node": "tree-slender-snow-lod3",
@@ -294,19 +294,19 @@
     "source": "Blends/BirchTree_2.blend",
     "lods": [
       {
-        "triangles": 367,
-        "vertices": 1101,
-        "node": "birch-lod0"
+        "node": "birch-lod0",
+        "triangles": 478,
+        "vertices": 730
       },
       {
+        "node": "birch-lod1",
         "triangles": 240,
-        "vertices": 720,
-        "node": "birch-lod1"
+        "vertices": 384
       },
       {
+        "node": "birch-lod2",
         "triangles": 96,
-        "vertices": 288,
-        "node": "birch-lod2"
+        "vertices": 168
       },
       {
         "node": "birch-lod3",
@@ -322,19 +322,19 @@
     "source": "Blends/BirchTree_Snow_2.blend",
     "lods": [
       {
-        "triangles": 366,
-        "vertices": 1098,
-        "node": "birch-snow-lod0"
+        "node": "birch-snow-lod0",
+        "triangles": 480,
+        "vertices": 736
       },
       {
+        "node": "birch-snow-lod1",
         "triangles": 240,
-        "vertices": 720,
-        "node": "birch-snow-lod1"
+        "vertices": 384
       },
       {
+        "node": "birch-snow-lod2",
         "triangles": 96,
-        "vertices": 288,
-        "node": "birch-snow-lod2"
+        "vertices": 168
       },
       {
         "node": "birch-snow-lod3",
@@ -350,19 +350,19 @@
     "source": "Blends/Willow_2.blend",
     "lods": [
       {
-        "triangles": 419,
-        "vertices": 1257,
-        "node": "willow-lod0"
+        "node": "willow-lod0",
+        "triangles": 480,
+        "vertices": 736
       },
       {
-        "triangles": 238,
-        "vertices": 714,
-        "node": "willow-lod1"
+        "node": "willow-lod1",
+        "triangles": 240,
+        "vertices": 384
       },
       {
-        "triangles": 94,
-        "vertices": 282,
-        "node": "willow-lod2"
+        "node": "willow-lod2",
+        "triangles": 96,
+        "vertices": 168
       },
       {
         "node": "willow-lod3",
@@ -378,19 +378,19 @@
     "source": "Blends/Willow_Snow_2.blend",
     "lods": [
       {
-        "triangles": 426,
-        "vertices": 1278,
-        "node": "willow-snow-lod0"
+        "node": "willow-snow-lod0",
+        "triangles": 480,
+        "vertices": 736
       },
       {
+        "node": "willow-snow-lod1",
         "triangles": 240,
-        "vertices": 720,
-        "node": "willow-snow-lod1"
+        "vertices": 384
       },
       {
+        "node": "willow-snow-lod2",
         "triangles": 96,
-        "vertices": 288,
-        "node": "willow-snow-lod2"
+        "vertices": 168
       },
       {
         "node": "willow-snow-lod3",
@@ -407,18 +407,18 @@
     "lods": [
       {
         "node": "pine-tall-lod0",
-        "triangles": 480,
-        "vertices": 1440
+        "triangles": 398,
+        "vertices": 490
       },
       {
         "node": "pine-tall-lod1",
-        "triangles": 228,
-        "vertices": 684
+        "triangles": 214,
+        "vertices": 306
       },
       {
         "node": "pine-tall-lod2",
-        "triangles": 90,
-        "vertices": 270
+        "triangles": 96,
+        "vertices": 168
       },
       {
         "node": "pine-tall-lod3",
@@ -435,18 +435,18 @@
     "lods": [
       {
         "node": "pine-tall-snow-lod0",
-        "triangles": 480,
-        "vertices": 1440
+        "triangles": 398,
+        "vertices": 490
       },
       {
         "node": "pine-tall-snow-lod1",
-        "triangles": 228,
-        "vertices": 684
+        "triangles": 214,
+        "vertices": 306
       },
       {
         "node": "pine-tall-snow-lod2",
-        "triangles": 90,
-        "vertices": 270
+        "triangles": 96,
+        "vertices": 168
       },
       {
         "node": "pine-tall-snow-lod3",
@@ -462,19 +462,19 @@
     "source": "Blends/Cactus_2.blend",
     "lods": [
       {
+        "node": "cactus-lod0",
         "triangles": 480,
-        "vertices": 1408,
-        "node": "cactus-lod0"
+        "vertices": 310
       },
       {
+        "node": "cactus-lod1",
         "triangles": 240,
-        "vertices": 720,
-        "node": "cactus-lod1"
+        "vertices": 170
       },
       {
+        "node": "cactus-lod2",
         "triangles": 96,
-        "vertices": 288,
-        "node": "cactus-lod2"
+        "vertices": 80
       },
       {
         "node": "cactus-lod3",
@@ -490,19 +490,19 @@
     "source": "Blends/CactusFlowers_2.blend",
     "lods": [
       {
-        "triangles": 473,
-        "vertices": 1419,
-        "node": "cactus-flowers-lod0"
+        "node": "cactus-flowers-lod0",
+        "triangles": 262,
+        "vertices": 227
       },
       {
+        "node": "cactus-flowers-lod1",
         "triangles": 240,
-        "vertices": 720,
-        "node": "cactus-flowers-lod1"
+        "vertices": 203
       },
       {
+        "node": "cactus-flowers-lod2",
         "triangles": 96,
-        "vertices": 288,
-        "node": "cactus-flowers-lod2"
+        "vertices": 104
       },
       {
         "node": "cactus-flowers-lod3",
@@ -519,18 +519,18 @@
     "lods": [
       {
         "node": "pine-broad-lod0",
-        "triangles": 480,
-        "vertices": 1434
+        "triangles": 404,
+        "vertices": 502
       },
       {
         "node": "pine-broad-lod1",
-        "triangles": 214,
-        "vertices": 642
+        "triangles": 220,
+        "vertices": 318
       },
       {
         "node": "pine-broad-lod2",
-        "triangles": 90,
-        "vertices": 270
+        "triangles": 96,
+        "vertices": 162
       },
       {
         "node": "pine-broad-lod3",
@@ -547,18 +547,18 @@
     "lods": [
       {
         "node": "pine-broad-snow-lod0",
-        "triangles": 480,
-        "vertices": 1434
+        "triangles": 404,
+        "vertices": 502
       },
       {
         "node": "pine-broad-snow-lod1",
-        "triangles": 214,
-        "vertices": 642
+        "triangles": 220,
+        "vertices": 318
       },
       {
         "node": "pine-broad-snow-lod2",
-        "triangles": 90,
-        "vertices": 270
+        "triangles": 96,
+        "vertices": 162
       },
       {
         "node": "pine-broad-snow-lod3",

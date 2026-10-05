@@ -1,11 +1,11 @@
 """Run with Blender --background --python tools/prepare_tree_lods.py -- [trees|impostors] [names...].
 
-Keep the near mesh's visible triangles and their exact attributes. Remove only
-triangles strictly enclosed in another closed component, with no intersection
-with that component's surface. Generate the smaller, textured meshes offline;
-the renderer never simplifies geometry or changes tree placement. Pines and
-palms, whose jagged outlines collapse decimation files away, simplify each
-compact part as its convex hull instead.
+Leafy trees keep their authored trunks and crown envelopes, with alpha-tested
+branch clusters replacing closed leaf shells. Three bounded mesh levels and the
+impostor are generated offline; the renderer does not change tree placement.
+Palms use curved frond strips; cacti keep their stem silhouettes with smooth
+normals, mapped ribs and cutout flowers. Bare trees retain their visible near
+triangles; their lower levels use collapse decimation or component hulls.
 
 The impostor stage adds LOD3 to every plant with detail levels (trees, shrubs
 and orchard trees): three textured cards carrying unlit renders of LOD0.
@@ -19,6 +19,7 @@ import collections
 import copy
 import json
 import math
+import random
 from pathlib import Path
 
 import bmesh
@@ -274,6 +275,271 @@ def counts(model):
             'vertices': len(mesh['vertices']) // 12}
 
 
+def stem_section(vertices, faces, height):
+    """Centre of the authored stem at a height, including its bends, not its overall bounding box."""
+    low = min(p.z for p in vertices)
+    high = max(p.z for p in vertices)
+    z = max(low + .0001, min(high - .0001, height))
+    crossing = []
+    for face in faces:
+        for i in range(3):
+            a, b = vertices[face[i]], vertices[face[(i + 1) % 3]]
+            if min(a.z, b.z) <= z <= max(a.z, b.z) and abs(a.z - b.z) > 1e-6:
+                crossing.append(a.lerp(b, (z - a.z) / (b.z - a.z)))
+    assert crossing, ('Stem has no section', height)
+    return Vector(((min(p.x for p in crossing) + max(p.x for p in crossing)) / 2,
+                   (min(p.y for p in crossing) + max(p.y for p in crossing)) / 2, height))
+
+
+def cutout_material(role, texture):
+    return {'id': role, 'diffuse': [1, 1, 1], 'alphaTest': .5, 'textures': [
+        {'id': role, 'type': 'DIFFUSE', 'filename': f'textures/foliage/{texture}.png',
+         'wrapS': 33071, 'wrapT': 33071}]}
+
+
+def append_cutout(result, role, points, uvs, triangles, normals=None, tint=1):
+    for indices in triangles:
+        normal = (points[indices[1]] - points[indices[0]]).cross(points[indices[2]] - points[indices[0]])
+        if normal.length < 1e-6:
+            continue
+        normal.normalize()
+        attributes = [tuple(round(v, 6) for v in
+                            (*points[j], *(normals[j] if normals else normal), tint, tint, tint, 1, *uvs[j]))
+                      for j in indices]
+        result.append((role, attributes))
+        # Explicit backs retain the same botanical normal, as the existing canopy lighting expects.
+        result.append((role, list(reversed(attributes))))
+
+
+def branch_crowns(source, name):
+    """Replace closed leaf shells with bounded branch cards, keeping the authored trunk and crown envelopes.
+
+    All three mesh levels use the same source silhouette and seed. The original
+    CC0 authoring file stays untouched. Explicit backs work in every existing
+    depth/shadow pass. Standard glTF MASK materials keep every level opaque.
+    """
+    if not name.startswith(('tree', 'pine', 'birch', 'willow')) or name.startswith('tree-dead'):
+        return None
+    vertices, faces, corners = geometry(source)
+    leaves = [face for face, (role, _) in zip(faces, corners) if not solid(role)]
+    if not leaves:
+        return None
+    envelopes = []
+    for group in parts(len(vertices), leaves):
+        points = [vertices[i] for j in group for i in leaves[j]]
+        low = Vector(tuple(min(p[k] for p in points) for k in range(3)))
+        high = Vector(tuple(max(p[k] for p in points) for k in range(3)))
+        if (high - low).length > .5:
+            envelopes.append(((low + high) / 2, (high - low) / 2))
+    low = Vector(tuple(min(p[k] for face in leaves for p in (vertices[i] for i in face)) for k in range(3)))
+    high = Vector(tuple(max(p[k] for face in leaves for p in (vertices[i] for i in face)) for k in range(3)))
+    bark = pack(source, name, [corner for corner in corners if solid(corner[0])])
+    stem_vertices, stem_faces, _ = geometry(bark)
+    pine = name.startswith('pine')
+    texture = ('conifer' if pine else 'broadleaf') + ('-snow' if name.endswith('-snow') else '') + '-cutout'
+    role = 'canopy-snow-cutout' if name.endswith('-snow') else 'canopy-cutout'
+    material = cutout_material(role, texture)
+    seed = sum((i + 1) * ord(c) for i, c in enumerate(name.removesuffix('-snow')))
+    levels = {}
+    for level, (budget, cards) in enumerate(((480, 88), (240, 42), (96, 15))):
+        rng = random.Random(seed)
+        model = simplified(bark, f'{name}-lod{level}', budget - cards * 4, False)
+        _, _, result = geometry(model)
+        for i in range(cards):
+            if pine:
+                t = (i + .5) / cards
+                angle = i * 2.399963 + rng.uniform(-.12, .12)
+                radius = max(high.x - low.x, high.y - low.y) * .49 * (1 - t) ** .75
+                outward = Vector((math.cos(angle), math.sin(angle), 0))
+                right = Vector((-outward.y, outward.x, rng.uniform(-.55, .55))).normalized()
+                up = (outward + Vector((0, 0, .25 + t * .7))).normalized()
+                length = radius * 1.15 + .8
+                centre = stem_section(stem_vertices, stem_faces, low.z + t * (high.z - low.z))
+                centre += up * length * .4
+                width = length * (1.05 if level == 0 else 1.4 if level == 1 else 2.2)
+                normal = (outward * .45 + Vector((0, 0, .8))).normalized()
+            else:
+                centre, extent = rng.choices(envelopes, weights=[e.length_squared for _, e in envelopes])[0]
+                angle = i * 2.399963
+                z = rng.uniform(-.85, .95)
+                radial = Vector((math.cos(angle) * math.sqrt(1 - z * z),
+                                 math.sin(angle) * math.sqrt(1 - z * z), z))
+                centre = centre + Vector(tuple(radial[k] * extent[k] * .65 for k in range(3)))
+                normal = (radial + Vector((0, 0, .45))).normalized()
+                right = Vector((-math.sin(angle), math.cos(angle), rng.uniform(-.3, .3))).normalized()
+                up = normal.cross(right).normalized()
+                # Broadleaf sprays form lobes; willow cards droop from those same authored lobes.
+                if name.startswith('willow'):
+                    up = Vector((radial.x * .25, radial.y * .25, -1)).normalized()
+                width = max(2.5, extent.length * (.8 if level == 0 else 1.05 if level == 1 else 1.5))
+                length = width * (1.25 if name.startswith(('willow', 'birch')) else .95)
+            # Fewer distant branches cover the same envelope; length as well as width must bridge their gaps.
+            if pine and level == 2:
+                length *= 1.3
+            points = [centre + right * x * width + up * y * length
+                      for x, y in ((-.5, -.5), (.5, -.5), (.5, .5), (-.5, .5))]
+            # Never expand foliage beyond the captured source bounds or its route/structure clearance.
+            points = [Vector(tuple(max(low[k], min(high[k], p[k])) for k in range(3))) for p in points]
+            tint = rng.uniform(.88, 1.0)
+            append_cutout(result, role, points, ((0, 1), (1, 1), (1, 0), (0, 0)),
+                          ((0, 1, 2), (0, 2, 3)), [normal] * 4, tint)
+        model['materials'] = [m for m in source['materials'] if solid(m['id'])] + [material]
+        model['nodes'] = [{'id': f'{name}-lod{level}', 'parts': [
+            {'meshpartid': m['id'], 'materialid': m['id']} for m in model['materials']]}]
+        levels[level] = pack(model, f'{name}-lod{level}', result)
+        # A clipped branch tip must not shorten the normalized catalog height, which placement uses at every LOD.
+        data = levels[level]['meshes'][0]['vertices']
+        bottom = min(data[2::12])
+        scale = high.z / (max(data[2::12]) - bottom)
+        for vertex in range(0, len(data), 12):
+            data[vertex + 2] = (data[vertex + 2] - bottom) * scale
+        assert counts(levels[level])['triangles'] <= budget
+    return levels
+
+
+def palm_crowns(source, name):
+    """Curved, folded fronds attach to the original palm's terminal stem, including the leaning palm."""
+    vertices, faces, corners = geometry(source)
+    leaves = [face for face, (role, _) in zip(faces, corners) if not solid(role)]
+    bark = pack(source, name, [corner for corner in corners if solid(corner[0])])
+    stem_vertices, stem_faces, _ = geometry(bark)
+    root = stem_section(stem_vertices, stem_faces, max(p.z for p in stem_vertices) - .15)
+    low = Vector(tuple(min(p[k] for p in vertices) for k in range(3)))
+    high = Vector(tuple(max(p[k] for p in vertices) for k in range(3)))
+    fronds = []
+    for group in parts(len(vertices), leaves):
+        points = [vertices[i] for j in group for i in leaves[j]]
+        tip = max(points, key=lambda p: (p - root).length_squared).copy()
+        along = Vector((tip.x - root.x, tip.y - root.y, 0)).normalized()
+        right = Vector((-along.y, along.x, 0))
+        width = max(1.5, max(abs((p - root).dot(right)) for p in points) * 2.2)
+        control = (root + tip) / 2
+        control.z = 2 * max(p.z for p in points) - (root.z + tip.z) / 2
+        fronds.append((math.atan2(along.y, along.x), tip, right, width, control))
+    fronds.sort(key=lambda f: f[0])
+    material = cutout_material('canopy-cutout', 'palm-frond-cutout')
+    levels = {}
+    for level, budget in enumerate((480, 240, 96)):
+        selected = fronds if level < 2 else [fronds[i * len(fronds) // 7] for i in range(7)]
+        segments, columns = (3, 3) if level == 0 else (3, 2) if level == 1 else (2, 2)
+        leaf_budget = len(selected) * segments * (columns - 1) * 4
+        model = simplified(bark, f'{name}-lod{level}', budget - leaf_budget, False)
+        _, _, result = geometry(model)
+        for _, tip, right, width, control in selected:
+            points, uvs, triangles = [], [], []
+            width *= 1.65 if level == 2 else 1
+            for row in range(segments + 1):
+                t = row / segments
+                centre = (1 - t) ** 2 * root + 2 * t * (1 - t) * control + t * t * tip
+                for column in range(columns):
+                    u = column / (columns - 1)
+                    p = centre + right * ((u - .5) * width)
+                    if columns == 3 and column == 1:
+                        p.z += .10 * width * math.sin(math.pi * t)
+                    points.append(Vector(tuple(max(low[k], min(high[k], p[k])) for k in range(3))))
+                    uvs.append((u, 1 - t))
+            for row in range(segments):
+                for column in range(columns - 1):
+                    a = row * columns + column
+                    triangles.extend(((a, a + 1, a + columns + 1), (a, a + columns + 1, a + columns)))
+            append_cutout(result, material['id'], points, uvs, triangles)
+        model['materials'] = [m for m in source['materials'] if solid(m['id'])] + [material]
+        model['nodes'] = [{'id': f'{name}-lod{level}', 'parts': [
+            {'meshpartid': m['id'], 'materialid': m['id']} for m in model['materials']]}]
+        levels[level] = pack(model, f'{name}-lod{level}', result)
+        data = levels[level]['meshes'][0]['vertices']
+        scale = high.z / max(data[2::12])
+        for offset in range(2, len(data), 12):
+            data[offset] *= scale
+        assert counts(levels[level])['triangles'] <= budget
+    return levels
+
+
+def cactus_levels(source, name):
+    """Keep stem topology, wrap ribs around each arm, and replace angular flower shells with shallow cutout cups."""
+    vertices, faces, corners = geometry(source)
+    body = pack(source, name, [corner for corner in corners if corner[0] == 'cactus'])
+    flower_faces = [face for face, (role, _) in zip(faces, corners) if role != 'cactus']
+    flowers = []
+    for group in parts(len(vertices), flower_faces):
+        points = [vertices[i] for j in group for i in flower_faces[j]]
+        low = Vector(tuple(min(p[k] for p in points) for k in range(3)))
+        high = Vector(tuple(max(p[k] for p in points) for k in range(3)))
+        # Each original flower has overlapping inner and outer petal shells.
+        overlap = next((i for i, (a, b) in enumerate(flowers)
+                        if all(a[k] <= high[k] and low[k] <= b[k] for k in range(3))), None)
+        if overlap is None:
+            flowers.append((low, high))
+        else:
+            a, b = flowers[overlap]
+            flowers[overlap] = (Vector(tuple(min(a[k], low[k]) for k in range(3))),
+                                Vector(tuple(max(b[k], high[k]) for k in range(3))))
+    materials = [{'id': 'cactus', 'diffuse': [1, 1, 1], 'textures': [
+        {'id': 'cactus', 'type': 'DIFFUSE', 'filename': 'textures/foliage/cactus-skin.png'},
+        {'id': 'cactus-normal', 'type': 'NORMAL', 'filename': 'textures/foliage/cactus-skin-normal.png'}]}]
+    if flowers:
+        materials.append(cutout_material('flower-cutout', 'cactus-flower-cutout'))
+    levels = {}
+    for level, budget in enumerate((480, 240, 96)):
+        petals = (8, 6, 4)[level]
+        body_budget = budget - len(flowers) * petals * 2
+        if level == 0:
+            vs, fs, cs = geometry(body)
+            hidden = enclosed_faces(vs, fs)
+            model = pack(body, f'{name}-lod{level}', [c for i, c in enumerate(cs) if i not in hidden])
+        else:
+            model = simplified(body, f'{name}-lod{level}', body_budget, False)
+        round_cactus(model)
+        vs, fs, cs = geometry(model)
+        result = []
+        for group in parts(len(vs), fs):
+            arm_faces = [fs[i] for i in group]
+            arm_points = [vs[i] for face in arm_faces for i in face]
+            arm_low = min(p.z for p in arm_points)
+            arm_high = max(p.z for p in arm_points)
+            # Sections follow the existing elbow and upright stem, keeping bark/ribs attached to the arm.
+            section_vertices = arm_points
+            section_faces = [list(range(i, i + 3)) for i in range(0, len(arm_points), 3)]
+            for index in group:
+                attributes, us = [], []
+                for vertex in cs[index][1]:
+                    p = Vector(vertex[:3])
+                    centre = stem_section(section_vertices, section_faces, max(arm_low, min(arm_high, p.z)))
+                    u = math.atan2(p.y - centre.y, p.x - centre.x) / (2 * math.pi)
+                    us.append(u)
+                    attributes.append([*vertex[:6], 1, 1, 1, 1, u * 2, p.z / 4])
+                # Do not interpolate across the cylindrical UV seam through the middle of a face.
+                if max(us) - min(us) > .5:
+                    for vertex, u in zip(attributes, us):
+                        if u < 0:
+                            vertex[10] += 2
+                result.append(('cactus', [tuple(v) for v in attributes]))
+        for low, high in flowers:
+            centre = (low + high) / 2
+            centre.z = low.z
+            points, uvs = [centre], [(.5, .5)]
+            for i in range(petals):
+                angle = 2 * math.pi * i / petals
+                p = Vector((centre.x + (high.x - low.x) * .5 * math.cos(angle),
+                            centre.y + (high.y - low.y) * .5 * math.sin(angle),
+                            low.z + (high.z - low.z) * .4))
+                points.append(p)
+                uvs.append((.5 + .5 * math.cos(angle), .5 + .5 * math.sin(angle)))
+            append_cutout(result, 'flower-cutout', points, uvs,
+                          [(0, i + 1, (i + 1) % petals + 1) for i in range(petals)])
+        model['materials'] = materials
+        model['nodes'] = [{'id': f'{name}-lod{level}', 'parts': [
+            {'meshpartid': m['id'], 'materialid': m['id']} for m in materials]}]
+        levels[level] = pack(model, f'{name}-lod{level}', result)
+        if flowers:
+            data = levels[level]['meshes'][0]['vertices']
+            scale = max(p.z for p in vertices) / max(data[2::12])
+            for offset in range(2, len(data), 12):
+                data[offset] *= scale
+        assert counts(levels[level])['triangles'] <= budget
+    return levels
+
+
 def prepare(only=None):
     """Rebuild the detail levels of every tree, or only of the named ones."""
     manifest = json.loads((BOARD / 'manifest.json').read_text())
@@ -289,6 +555,14 @@ def prepare(only=None):
             for material in source['materials']:
                 for texture in material.get('textures', []):
                     texture['filename'] = (source_path.parent / texture['filename']).resolve().relative_to(BOARD).as_posix()
+            crowns = (cactus_levels(source, name) if name.startswith('cactus') else
+                      palm_crowns(source, name) if name.startswith('palm') else branch_crowns(source, name))
+            if crowns is not None:
+                entry['mesh'] = name + '.glb'
+                entry['lods'] = [{'node': f'{name}-lod{level}', **counts(model)} for level, model in crowns.items()]
+                write_glb(BOARD / (name + '.glb'), levels=crowns)
+                print(name, 'plant surfaces', [lod['triangles'] for lod in entry['lods']], flush=True)
+                continue
             vertices, faces, corners = geometry(source)
             hidden = enclosed_faces(vertices, faces)
             near_name = name + '-lod0'
@@ -317,6 +591,26 @@ def prepare(only=None):
         bpy.data.scenes.remove(scene)
 
 
+def round_cactus(model):
+    """Shade the cactus's round stems smoothly; retain every joint, silhouette and texture seam."""
+    mesh = model['meshes'][0]
+    data, normals = mesh['vertices'], {}
+    for part in mesh['parts']:
+        if part['id'] != 'cactus':
+            continue
+        for offset in range(0, len(part['indices']), 3):
+            indices = part['indices'][offset:offset + 3]
+            points = [Vector(data[i * 12:i * 12 + 3]) for i in indices]
+            normal = (points[1] - points[0]).cross(points[2] - points[0])
+            for point in points:
+                normals.setdefault(tuple(point), Vector())
+                normals[tuple(point)] += normal
+        for index in set(part['indices']):
+            start = index * 12
+            normal = normals[tuple(Vector(data[start:start + 3]))].normalized()
+            data[start + 3:start + 6] = list(normal)
+
+
 def solid(role):
     """Roles the game lights as solid rather than as a canopy (GpuTerrain.foliage)."""
     return role.startswith('bark') or role in ('cactus', 'fruit')
@@ -342,7 +636,7 @@ def unlit_material(role, filename, images):
     links.new(texture.outputs['Color'], product.inputs[0])
     links.new(color.outputs['Color'], product.inputs[1])
     albedo = product.outputs[0]
-    if role == 'snow':
+    if role in ('snow', 'canopy-snow-cutout'):
         grey = nodes.new('ShaderNodeRGBToBW')
         links.new(albedo, grey.inputs['Color'])
         tint = nodes.new('ShaderNodeVectorMath')
@@ -353,7 +647,23 @@ def unlit_material(role, filename, images):
     emission = nodes.new('ShaderNodeEmission')
     links.new(albedo, emission.inputs['Color'])
     output = nodes.new('ShaderNodeOutputMaterial')
-    links.new(emission.outputs[0], output.inputs['Surface'])
+    if role.endswith('-cutout'):
+        threshold = nodes.new('ShaderNodeMath')
+        threshold.operation = 'GREATER_THAN'
+        threshold.inputs[1].default_value = .5
+        links.new(texture.outputs['Alpha'], threshold.inputs[0])
+        transparent = nodes.new('ShaderNodeBsdfTransparent')
+        mix = nodes.new('ShaderNodeMixShader')
+        links.new(threshold.outputs[0], mix.inputs[0])
+        links.new(transparent.outputs[0], mix.inputs[1])
+        links.new(emission.outputs[0], mix.inputs[2])
+        links.new(mix.outputs[0], output.inputs['Surface'])
+        if hasattr(material, 'surface_render_method'):
+            material.surface_render_method = 'DITHERED'
+        elif hasattr(material, 'blend_method'):
+            material.blend_method = 'CLIP'
+    else:
+        links.new(emission.outputs[0], output.inputs['Surface'])
     return material
 
 
@@ -499,26 +809,63 @@ def lighting(model, toward):
     standing inside its crown cannot take that shade from the shadow map, which would shade it with its own cards."""
     vertices, faces, corners = geometry(model)
     tree = BVHTree.FromPolygons(vertices, faces, all_triangles=True)
+    cutouts = {}
+    for material in model['materials']:
+        if not material['id'].endswith('-cutout'):
+            continue
+        image = bpy.data.images.load(str(BOARD / material['textures'][0]['filename']), check_existing=True)
+        pixels = numpy.empty(len(image.pixels), dtype=numpy.float32)
+        image.pixels.foreach_get(pixels)
+        cutouts[material['id']] = pixels.reshape(image.size[1], image.size[0], 4)[:, :, 3]
+
+    def covered(index, point):
+        role, attributes = corners[index]
+        if role not in cutouts:
+            return True
+        a, b, c = (vertices[v] for v in faces[index])
+        ab, ac, ap = b - a, c - a, point - a
+        denominator = ab.dot(ab) * ac.dot(ac) - ab.dot(ac) ** 2
+        if abs(denominator) < 1e-9:
+            return False
+        u = (ac.dot(ac) * ap.dot(ab) - ab.dot(ac) * ap.dot(ac)) / denominator
+        v = (ab.dot(ab) * ap.dot(ac) - ab.dot(ac) * ap.dot(ab)) / denominator
+        uv = [attributes[0][k] * (1 - u - v) + attributes[1][k] * u + attributes[2][k] * v for k in (10, 11)]
+        alpha = cutouts[role]
+        x = max(0, min(alpha.shape[1] - 1, int(uv[0] * alpha.shape[1])))
+        y = max(0, min(alpha.shape[0] - 1, int((1 - uv[1]) * alpha.shape[0])))
+        return alpha[y, x] > .5
+
+    def blocked(point, direction):
+        # Offline alpha-aware rays prevent transparent card rectangles from darkening the distant impostor.
+        for _ in range(len(faces)):
+            hit, _, index, _ = tree.ray_cast(point, direction)
+            if hit is None:
+                return False
+            if covered(index, hit):
+                return True
+            point = hit + direction * .002
+        return False
+
     lit = total = hard = seen = 0
-    for face, (role, attributes) in zip(faces, corners):
+    for index, (face, (role, attributes)) in enumerate(zip(faces, corners)):
         a, b, c = (vertices[i] for i in face)
         normal = (b - a).cross(c - a)
         shown = normal.dot(toward) / 2
         if shown <= 0:
             continue
         normal.normalize()
-        leaves = not solid(role) and role != 'snow'
+        leaves = not solid(role) and role not in ('snow', 'canopy-snow-cutout')
         for u, v in ((1 / 3, 1 / 3), (2 / 3, 1 / 6), (1 / 6, 2 / 3), (1 / 6, 1 / 6)):
             point = a + (b - a) * u + (c - a) * v + normal * .01
             # A point behind the plant's nearer parts does not show on the card.
-            if tree.ray_cast(point, toward)[0] is not None:
+            if not covered(index, point) or blocked(point, toward):
                 continue
             seen += shown
             hard += 0 if leaves else shown
             for sun in SUNS:
                 weight = shown * max(0, .6 * normal.dot(sun) + .4 if leaves else normal.dot(sun))
                 total += weight
-                if weight and tree.ray_cast(point, sun)[0] is None:
+                if weight and not blocked(point, sun):
                     lit += weight
     return (lit / total if total else 1), (hard / seen if seen else 0)
 
@@ -562,7 +909,7 @@ def impostor(scene, model, name, images):
             'meshes': [{'attributes': ['POSITION', 'NORMAL', 'COLOR', 'TEXCOORD0'], 'vertices': vertices,
                         'parts': [{'id': 'impostor', 'type': 'TRIANGLES', 'indices': indices}]}],
             'nodes': [{'id': asset, 'parts': [{'meshpartid': 'impostor', 'materialid': 'impostor'}]}],
-            'materials': [{'id': 'impostor', 'diffuse': [1, 1, 1], 'textures': [
+            'materials': [{'id': 'impostor', 'diffuse': [1, 1, 1], 'alphaTest': .5, 'textures': [
                 {'id': 'impostor', 'type': 'DIFFUSE', 'filename': f'{IMPOSTORS}/{name}.png',
                  'wrapS': 33071, 'wrapT': 33071}]}]}
 
@@ -594,7 +941,8 @@ def impostors(only=None):
         # Texels store what the game's shader multiplies before lighting, so no display transform applies.
         scene.view_settings.view_transform = 'Raw'
         scene.view_settings.look = 'None'
-        scene.eevee.taa_render_samples = 16
+        if hasattr(scene, 'eevee'):
+            scene.eevee.taa_render_samples = 16
         images = {}
         for name, entry in manifest.items():
             if 'lods' not in entry or only is not None and name not in only:
