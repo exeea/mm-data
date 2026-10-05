@@ -34,6 +34,20 @@ IMPOSTORS = 'textures/foliage/impostors'
 # Pixels per card face; the game draws the cards only below TreeLod's smallest threshold.
 PANEL = 128
 
+# Subtle species pigments separate crowns from the olive meadow without new textures
+# or materials. Baked vertex colour is also captured by the distant impostor.
+CROWN_TINTS = {
+    'tree': (.74, .91, .84), 'tree-broad': (.69, .86, .82),
+    'tree-slender': (.85, .97, .89), 'tree-forked': (.77, .94, .97),
+    'tree-layered': (.80, .87, .73),
+    'birch': (.87, .98, .91), 'birch-tall': (.78, .94, 1.0),
+    'birch-spreading': (.94, .97, .82), 'birch-young': (.84, 1.0, .87),
+    'willow': (.78, .88, .97), 'willow-broad': (.87, .94, 1.0),
+    'pine': (.80, .93, 1.0), 'pine-tall': (.76, .90, .95),
+    'pine-broad': (.90, .97, .88), 'pine-slender': (.75, .90, 1.0),
+    'pine-layered': (.86, .92, .92),
+}
+
 
 def geometry(model):
     """Weld positions for topology only; retain the authored per-corner data."""
@@ -298,13 +312,14 @@ def cutout_material(role, texture):
 
 
 def append_cutout(result, role, points, uvs, triangles, normals=None, tint=1):
+    color = (tint, tint, tint) if isinstance(tint, (int, float)) else tint
     for indices in triangles:
         normal = (points[indices[1]] - points[indices[0]]).cross(points[indices[2]] - points[indices[0]])
         if normal.length < 1e-6:
             continue
         normal.normalize()
         attributes = [tuple(round(v, 6) for v in
-                            (*points[j], *(normals[j] if normals else normal), tint, tint, tint, 1, *uvs[j]))
+                            (*points[j], *(normals[j] if normals else normal), *color, 1, *uvs[j]))
                       for j in indices]
         result.append((role, attributes))
         # Explicit backs retain the same botanical normal, as the existing canopy lighting expects.
@@ -389,7 +404,9 @@ def branch_crowns(source, name, retained_levels=None):
                       for x, y in ((-.5, -.5), (.5, -.5), (.5, .5), (-.5, .5))]
             # Never expand foliage beyond the captured source bounds or its route/structure clearance.
             points = [Vector(tuple(max(low[k], min(high[k], p[k])) for k in range(3))) for p in points]
-            tint = rng.uniform(.88, 1.0)
+            shade = rng.uniform(.88, 1.0)
+            pigment = (1, 1, 1) if name.endswith('-snow') else CROWN_TINTS.get(name, (1, 1, 1))
+            tint = tuple(shade * channel for channel in pigment)
             append_cutout(result, role, points, ((0, 1), (1, 1), (1, 0), (0, 0)),
                           ((0, 1, 2), (0, 2, 3)), [normal] * 4, tint)
         model['materials'] = [m for m in source['materials'] if solid(m['id'])] + [material]

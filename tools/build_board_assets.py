@@ -198,7 +198,12 @@ sources = [('tree','CommonTree_1'),('pine','PineTree_1'),
            ('cactus','Cactus_2'),('cactus-flowers','CactusFlowers_2')]
 for name, source in [('tree-broad','CommonTree_4'),('tree-slender','CommonTree_2'),
                      ('birch','BirchTree_2'),('willow','Willow_2'),('pine-tall','PineTree_3'),
-                     ('pine-broad','PineTree_2'),('tree-dead','CommonTree_Dead_2')]:
+                     ('pine-broad','PineTree_2'),('tree-dead','CommonTree_Dead_2'),
+                     # Distinct authored trunks and crown envelopes, not rescaled copies.
+                     ('tree-forked','CommonTree_3'),('tree-layered','CommonTree_5'),
+                     ('birch-tall','BirchTree_1'),('birch-spreading','BirchTree_3'),
+                     ('birch-young','BirchTree_4'),('willow-broad','Willow_1'),
+                     ('pine-slender','PineTree_4'),('pine-layered','PineTree_5')]:
     family, number = source.rsplit('_', 1)
     sources += [(name,source),(name+'-snow',family+'_Snow_'+number)]
 for name, source in sources:

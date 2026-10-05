@@ -1556,5 +1556,453 @@
         "vertices": 24
       }
     ]
+  },
+  "tree-forked": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/CommonTree_3.blend",
+    "mesh": "tree-forked.glb",
+    "lods": [
+      {
+        "node": "tree-forked-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "tree-forked-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "tree-forked-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "tree-forked-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "tree-forked-snow": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/CommonTree_Snow_3.blend",
+    "mesh": "tree-forked-snow.glb",
+    "lods": [
+      {
+        "node": "tree-forked-snow-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "tree-forked-snow-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "tree-forked-snow-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "tree-forked-snow-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "tree-layered": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/CommonTree_5.blend",
+    "mesh": "tree-layered.glb",
+    "lods": [
+      {
+        "node": "tree-layered-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "tree-layered-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "tree-layered-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "tree-layered-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "tree-layered-snow": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/CommonTree_Snow_5.blend",
+    "mesh": "tree-layered-snow.glb",
+    "lods": [
+      {
+        "node": "tree-layered-snow-lod0",
+        "triangles": 478,
+        "vertices": 730
+      },
+      {
+        "node": "tree-layered-snow-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "tree-layered-snow-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "tree-layered-snow-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "birch-tall": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/BirchTree_1.blend",
+    "mesh": "birch-tall.glb",
+    "lods": [
+      {
+        "node": "birch-tall-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "birch-tall-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "birch-tall-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "birch-tall-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "birch-tall-snow": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/BirchTree_Snow_1.blend",
+    "mesh": "birch-tall-snow.glb",
+    "lods": [
+      {
+        "node": "birch-tall-snow-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "birch-tall-snow-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "birch-tall-snow-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "birch-tall-snow-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "birch-spreading": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/BirchTree_3.blend",
+    "mesh": "birch-spreading.glb",
+    "lods": [
+      {
+        "node": "birch-spreading-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "birch-spreading-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "birch-spreading-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "birch-spreading-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "birch-spreading-snow": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/BirchTree_Snow_3.blend",
+    "mesh": "birch-spreading-snow.glb",
+    "lods": [
+      {
+        "node": "birch-spreading-snow-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "birch-spreading-snow-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "birch-spreading-snow-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "birch-spreading-snow-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "birch-young": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/BirchTree_4.blend",
+    "mesh": "birch-young.glb",
+    "lods": [
+      {
+        "node": "birch-young-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "birch-young-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "birch-young-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "birch-young-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "birch-young-snow": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/BirchTree_Snow_4.blend",
+    "mesh": "birch-young-snow.glb",
+    "lods": [
+      {
+        "node": "birch-young-snow-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "birch-young-snow-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "birch-young-snow-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "birch-young-snow-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "willow-broad": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/Willow_1.blend",
+    "mesh": "willow-broad.glb",
+    "lods": [
+      {
+        "node": "willow-broad-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "willow-broad-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "willow-broad-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "willow-broad-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "willow-broad-snow": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/Willow_Snow_1.blend",
+    "mesh": "willow-broad-snow.glb",
+    "lods": [
+      {
+        "node": "willow-broad-snow-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "willow-broad-snow-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "willow-broad-snow-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "willow-broad-snow-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "pine-slender": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/PineTree_4.blend",
+    "mesh": "pine-slender.glb",
+    "lods": [
+      {
+        "node": "pine-slender-lod0",
+        "triangles": 422,
+        "vertices": 562
+      },
+      {
+        "node": "pine-slender-lod1",
+        "triangles": 238,
+        "vertices": 378
+      },
+      {
+        "node": "pine-slender-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "pine-slender-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "pine-slender-snow": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/PineTree_Snow_4.blend",
+    "mesh": "pine-slender-snow.glb",
+    "lods": [
+      {
+        "node": "pine-slender-snow-lod0",
+        "triangles": 422,
+        "vertices": 562
+      },
+      {
+        "node": "pine-slender-snow-lod1",
+        "triangles": 238,
+        "vertices": 378
+      },
+      {
+        "node": "pine-slender-snow-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "pine-slender-snow-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "pine-layered": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/PineTree_5.blend",
+    "mesh": "pine-layered.glb",
+    "lods": [
+      {
+        "node": "pine-layered-lod0",
+        "triangles": 402,
+        "vertices": 502
+      },
+      {
+        "node": "pine-layered-lod1",
+        "triangles": 218,
+        "vertices": 318
+      },
+      {
+        "node": "pine-layered-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "pine-layered-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "pine-layered-snow": {
+    "triangles": 480,
+    "vertices": 1440,
+    "source": "Blends/PineTree_Snow_5.blend",
+    "mesh": "pine-layered-snow.glb",
+    "lods": [
+      {
+        "node": "pine-layered-snow-lod0",
+        "triangles": 402,
+        "vertices": 502
+      },
+      {
+        "node": "pine-layered-snow-lod1",
+        "triangles": 218,
+        "vertices": 318
+      },
+      {
+        "node": "pine-layered-snow-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "pine-layered-snow-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
   }
 }
