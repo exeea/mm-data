@@ -41,22 +41,32 @@
     "lunar": {
       "tile": 8.0,
       "role": "ground",
-      "seed": 104
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/lunar-regolith.png",
+      "source_sha256": "fc2c81ddc6d16773ec771f6c2eec1d935b84f0f016b80d3aa3a59f68925dd82e",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.025
     },
     "lunar-scree": {
       "tile": 4.0,
       "role": "debris",
-      "seed": 202
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/lunar-scree.png",
+      "source_sha256": "05ec70b367a484f01ba2053bf218e0ffbf16f5b3f88c0fdc6e7df7ad828f8e0e",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.08
     },
     "lunar-cliff": {
-      "tile": 4.0,
+      "tile": 12.0,
       "role": "wall",
       "size": 512,
-      "copied_from": "granite-contact",
-      "source": "tools/terrain-contact-sources/granite.png",
-      "source_sha256": "52aac005ca460fe821593290b188b21dce48f75a3cb3d1238c23f9f7cf63f590",
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/lunar-bedrock.png",
+      "source_sha256": "c2b0d5db4ac269f99ddaaf6f2e83d6b3685ccbc874abcbd63a59e07604fa8452",
       "height_source": "estimated multiscale luminance",
-      "relief_metres": 0.04
+      "relief_metres": 0.12
     },
     "snow": {
       "tile": 8.0,
