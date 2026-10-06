@@ -545,7 +545,7 @@
   ],
   "scenery/fluff/pool1": [
     {
-      "asset": "scenery/components/pool-basin-2ccd5c12",
+      "asset": "scenery/components/pool-garden-freeform",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -569,7 +569,7 @@
   ],
   "scenery/fluff/square1": [
     {
-      "asset": "scenery/components/pool-2bb54cb1",
+      "asset": "scenery/components/fountain-round",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -940,7 +940,7 @@
   ],
   "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-01": [
     {
-      "asset": "scenery/components/pool-basin-edd50154",
+      "asset": "scenery/components/pool-sport-01-main",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -951,7 +951,7 @@
       "scale": 1.0
     },
     {
-      "asset": "scenery/components/pool-basin-e927252f",
+      "asset": "scenery/components/pool-sport-01-wading",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -975,7 +975,7 @@
   ],
   "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-02": [
     {
-      "asset": "scenery/components/pool-basin-25f5aa48",
+      "asset": "scenery/components/pool-sport-02",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -988,7 +988,7 @@
   ],
   "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-03": [
     {
-      "asset": "scenery/components/pool-basin-730d5d6b",
+      "asset": "scenery/components/pool-sport-03-main",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -999,7 +999,7 @@
       "scale": 1.0
     },
     {
-      "asset": "scenery/components/pool-basin-6c975b46",
+      "asset": "scenery/components/pool-sport-03-wading",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -1056,7 +1056,7 @@
   ],
   "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-04": [
     {
-      "asset": "scenery/components/pool-basin-b791ed43",
+      "asset": "scenery/components/pool-sport-04",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -1102,7 +1102,7 @@
   ],
   "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-05": [
     {
-      "asset": "scenery/components/pool-basin-85bbbf38",
+      "asset": "scenery/components/pool-sport-05",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -4259,7 +4259,7 @@
   ],
   "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-01": [
     {
-      "asset": "scenery/components/pool-basin-b594e561",
+      "asset": "scenery/components/lake-freeform-01",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -4283,7 +4283,7 @@
   ],
   "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-02": [
     {
-      "asset": "scenery/components/pool-basin-c213f821",
+      "asset": "scenery/components/lake-freeform-02",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -4296,7 +4296,7 @@
   ],
   "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-03": [
     {
-      "asset": "scenery/components/pool-basin-b594e561",
+      "asset": "scenery/components/lake-freeform-01",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -4320,7 +4320,7 @@
   ],
   "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-04": [
     {
-      "asset": "scenery/components/pool-basin-02c42a73",
+      "asset": "scenery/components/lake-freeform-04",
       "kind": "SCENERY",
       "position": [
         0.0,
@@ -4355,7 +4355,7 @@
   ],
   "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-05": [
     {
-      "asset": "scenery/components/pool-basin-b594e561",
+      "asset": "scenery/components/lake-freeform-01",
       "kind": "SCENERY",
       "position": [
         0.0,

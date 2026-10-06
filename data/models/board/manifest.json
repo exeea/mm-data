@@ -2004,5 +2004,121 @@
         "vertices": 24
       }
     ]
+  },
+  "tree-volcano-crown": {
+    "mesh": "tree-volcano-crown.glb",
+    "triangles": 480,
+    "vertices": 736,
+    "generator": "tools/build_volcano_foliage.py",
+    "source": "tools/board-models/volcano/concept.png",
+    "lods": [
+      {
+        "node": "tree-volcano-crown-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "tree-volcano-crown-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "tree-volcano-crown-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "tree-volcano-crown-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "tree-volcano-forked": {
+    "mesh": "tree-volcano-forked.glb",
+    "triangles": 480,
+    "vertices": 736,
+    "generator": "tools/build_volcano_foliage.py",
+    "source": "tools/board-models/volcano/concept.png",
+    "lods": [
+      {
+        "node": "tree-volcano-forked-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "tree-volcano-forked-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "tree-volcano-forked-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "tree-volcano-forked-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "tree-volcano-spire": {
+    "mesh": "tree-volcano-spire.glb",
+    "triangles": 480,
+    "vertices": 736,
+    "generator": "tools/build_volcano_foliage.py",
+    "source": "tools/board-models/volcano/concept.png",
+    "lods": [
+      {
+        "node": "tree-volcano-spire-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "tree-volcano-spire-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "tree-volcano-spire-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "tree-volcano-spire-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "foliage-volcano": {
+    "mesh": "foliage-volcano.glb",
+    "triangles": 480,
+    "vertices": 736,
+    "generator": "tools/build_volcano_foliage.py",
+    "source": "tools/board-models/volcano/concept.png",
+    "lods": [
+      {
+        "node": "foliage-volcano-lod0",
+        "triangles": 480,
+        "vertices": 736
+      },
+      {
+        "node": "foliage-volcano-lod1",
+        "triangles": 240,
+        "vertices": 384
+      },
+      {
+        "node": "foliage-volcano-lod2",
+        "triangles": 96,
+        "vertices": 168
+      },
+      {
+        "node": "foliage-volcano-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
   }
 }
