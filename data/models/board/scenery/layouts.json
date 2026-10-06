@@ -1,6 +1,61 @@
 {
   "scenery/fluff/cars_2b": [
     {
+      "asset": "scenery/components/car-silver",
+      "kind": "SCENERY",
+      "position": [
+        -25.0,
+        6.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-green",
+      "kind": "SCENERY",
+      "position": [
+        -4.5,
+        12.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-purple",
+      "kind": "SCENERY",
+      "position": [
+        12.5,
+        2.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-steel",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        -13.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-orange",
+      "kind": "SCENERY",
+      "position": [
+        19.5,
+        -20.5,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.8
+    },
+    {
       "asset": "scenery/components/shelter",
       "kind": "SCENERY",
       "position": [
@@ -9,22 +64,66 @@
         0.0
       ],
       "rotation": -30.000008,
-      "scale": 1.0
-    },
-    {
-      "asset": "scenery/fluff/cars_2b",
-      "kind": "SCENERY",
-      "position": [
-        0.0,
-        0.0,
-        0.0
-      ],
-      "rotation": 0.0,
       "scale": 1.0
     }
   ],
   "scenery/fluff/cars_7": [
     {
+      "asset": "scenery/components/car-silver",
+      "kind": "SCENERY",
+      "position": [
+        -25.0,
+        6.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-green",
+      "kind": "SCENERY",
+      "position": [
+        -4.5,
+        12.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-purple",
+      "kind": "SCENERY",
+      "position": [
+        12.5,
+        2.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-steel",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        -13.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-orange",
+      "kind": "SCENERY",
+      "position": [
+        19.5,
+        -20.5,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.8
+    },
+    {
       "asset": "scenery/components/shelter",
       "kind": "SCENERY",
       "position": [
@@ -33,17 +132,6 @@
         0.0
       ],
       "rotation": -30.000008,
-      "scale": 1.0
-    },
-    {
-      "asset": "scenery/fluff/cars_7",
-      "kind": "SCENERY",
-      "position": [
-        0.0,
-        0.0,
-        0.0
-      ],
-      "rotation": 0.0,
       "scale": 1.0
     }
   ],
@@ -571,7 +659,7 @@
   ],
   "scenery/fluff/suburb1": [
     {
-      "asset": "scenery/components/pool-987e05b8",
+      "asset": "scenery/components/pool-round-no-deck",
       "kind": "SCENERY",
       "position": [
         -10.0,
@@ -582,20 +670,53 @@
       "scale": 0.75
     },
     {
-      "asset": "scenery/fluff/suburb1",
+      "asset": "scenery/components/grandstand",
       "kind": "SCENERY",
       "position": [
-        0.0,
-        0.0,
+        22.700001,
+        6.0,
         0.0
       ],
-      "rotation": 0.0,
+      "rotation": 30.000008,
       "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/car-mustard",
+      "kind": "SCENERY",
+      "position": [
+        -4.0,
+        -22.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-turquoise",
+      "kind": "SCENERY",
+      "position": [
+        3.0,
+        -20.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-red",
+      "kind": "SCENERY",
+      "position": [
+        10.0,
+        -18.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.75
     }
   ],
   "scenery/fluff/suburb2": [
     {
-      "asset": "scenery/components/shelter",
+      "asset": "scenery/components/shelter-no-floor",
       "kind": "SCENERY",
       "position": [
         -11.0,
@@ -604,6 +725,39 @@
       ],
       "rotation": -30.000008,
       "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        -3.0,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 1.3
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        9.4,
+        -7.503332,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 1.3
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        14.6,
+        1.503332,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 1.3
     },
     {
       "asset": "tree-broad",
@@ -694,39 +848,94 @@
       "scale": 0.3
     },
     {
-      "asset": "scenery/fluff/suburb2",
+      "asset": "scenery/components/car-magenta",
       "kind": "SCENERY",
       "position": [
-        0.0,
+        -12.0,
+        6.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/car-magenta",
+      "kind": "SCENERY",
+      "position": [
+        -7.0,
         0.0,
         0.0
       ],
-      "rotation": 0.0,
-      "scale": 1.0
+      "rotation": 30.000008,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/car-magenta",
+      "kind": "SCENERY",
+      "position": [
+        -2.0,
+        -6.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.65
     }
   ],
   "scenery/fluff/suburb3": [
     {
-      "asset": "scenery/components/pool",
+      "asset": "scenery/components/pool-rectangular-no-deck",
       "kind": "SCENERY",
       "position": [
         -8.0,
         0.0,
-        0.9
+        0.0
       ],
       "rotation": 30.000008,
       "scale": 0.5
     },
     {
-      "asset": "scenery/fluff/suburb3",
+      "asset": "scenery/components/concrete-pipe",
       "kind": "SCENERY",
       "position": [
-        0.0,
-        0.0,
+        10.0,
+        -7.0,
         0.0
       ],
       "rotation": 0.0,
       "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/concrete-pipe",
+      "kind": "SCENERY",
+      "position": [
+        14.0,
+        -5.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/concrete-pipe",
+      "kind": "SCENERY",
+      "position": [
+        18.0,
+        -3.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/car-red",
+      "kind": "SCENERY",
+      "position": [
+        5.0,
+        22.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.65
     }
   ],
   "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-01": [
@@ -8001,6 +8210,726 @@
       ],
       "rotation": 129.878929,
       "scale": 0.4
+    }
+  ],
+  "scenery/fluff/cars_1": [
+    {
+      "asset": "scenery/components/car-silver",
+      "kind": "SCENERY",
+      "position": [
+        -28.5,
+        1.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-blue",
+      "kind": "SCENERY",
+      "position": [
+        -23.0,
+        3.5,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-orange",
+      "kind": "SCENERY",
+      "position": [
+        -10.5,
+        11.5,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-olive",
+      "kind": "SCENERY",
+      "position": [
+        -5.5,
+        14.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-teal",
+      "kind": "SCENERY",
+      "position": [
+        1.0,
+        18.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-pink",
+      "kind": "SCENERY",
+      "position": [
+        11.5,
+        22.5,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-gray",
+      "kind": "SCENERY",
+      "position": [
+        3.5,
+        -13.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-yellow",
+      "kind": "SCENERY",
+      "position": [
+        -10.0,
+        -22.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-silver",
+      "kind": "SCENERY",
+      "position": [
+        26.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-orange",
+      "kind": "SCENERY",
+      "position": [
+        32.5,
+        5.5,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    }
+  ],
+  "scenery/fluff/cars_2": [
+    {
+      "asset": "scenery/components/car-maroon",
+      "kind": "SCENERY",
+      "position": [
+        -2.5,
+        16.0,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-red",
+      "kind": "SCENERY",
+      "position": [
+        -22.5,
+        -2.5,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-silver",
+      "kind": "SCENERY",
+      "position": [
+        -14.5,
+        -6.0,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-teal",
+      "kind": "SCENERY",
+      "position": [
+        20.0,
+        0.5,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-gray",
+      "kind": "SCENERY",
+      "position": [
+        29.5,
+        -3.5,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-orange",
+      "kind": "SCENERY",
+      "position": [
+        4.5,
+        -17.0,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    }
+  ],
+  "scenery/fluff/cars_3": [
+    {
+      "asset": "scenery/components/car-gray",
+      "kind": "SCENERY",
+      "position": [
+        -12.0,
+        21.5,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-orange",
+      "kind": "SCENERY",
+      "position": [
+        -13.0,
+        6.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-yellow",
+      "kind": "SCENERY",
+      "position": [
+        -12.0,
+        -2.5,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-steel",
+      "kind": "SCENERY",
+      "position": [
+        -12.0,
+        -10.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-green",
+      "kind": "SCENERY",
+      "position": [
+        -13.5,
+        -28.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-orange",
+      "kind": "SCENERY",
+      "position": [
+        13.5,
+        29.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-red",
+      "kind": "SCENERY",
+      "position": [
+        16.0,
+        21.5,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-silver",
+      "kind": "SCENERY",
+      "position": [
+        11.0,
+        -7.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-purple",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        -15.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-red",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        -27.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    }
+  ],
+  "scenery/fluff/cars_3b": [
+    {
+      "asset": "scenery/components/car-orange",
+      "kind": "SCENERY",
+      "position": [
+        -8.0,
+        26.5,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-yellow",
+      "kind": "SCENERY",
+      "position": [
+        -8.5,
+        13.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-blue",
+      "kind": "SCENERY",
+      "position": [
+        -8.0,
+        -16.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-pink",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        27.5,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-maroon",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        -8.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-teal",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        -22.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/parking-barrier",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "scenery/fluff/cars_4": [
+    {
+      "asset": "scenery/components/car-teal",
+      "kind": "SCENERY",
+      "position": [
+        -30.0,
+        -3.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-orange",
+      "kind": "SCENERY",
+      "position": [
+        -21.5,
+        2.5,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-red",
+      "kind": "SCENERY",
+      "position": [
+        -11.0,
+        8.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-pink",
+      "kind": "SCENERY",
+      "position": [
+        8.5,
+        18.5,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-green",
+      "kind": "SCENERY",
+      "position": [
+        20.0,
+        25.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-blue",
+      "kind": "SCENERY",
+      "position": [
+        -9.0,
+        -20.5,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-olive",
+      "kind": "SCENERY",
+      "position": [
+        -1.5,
+        -15.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-steel",
+      "kind": "SCENERY",
+      "position": [
+        6.0,
+        -12.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-silver",
+      "kind": "SCENERY",
+      "position": [
+        13.0,
+        -6.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-white",
+      "kind": "SCENERY",
+      "position": [
+        19.5,
+        -1.5,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-gray",
+      "kind": "SCENERY",
+      "position": [
+        26.5,
+        1.5,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.8
+    }
+  ],
+  "scenery/fluff/cars_5": [
+    {
+      "asset": "scenery/components/car-purple",
+      "kind": "SCENERY",
+      "position": [
+        -32.0,
+        5.0,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-blue",
+      "kind": "SCENERY",
+      "position": [
+        -5.0,
+        17.5,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-gray",
+      "kind": "SCENERY",
+      "position": [
+        1.5,
+        13.5,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-silver",
+      "kind": "SCENERY",
+      "position": [
+        14.0,
+        7.0,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-red",
+      "kind": "SCENERY",
+      "position": [
+        -4.5,
+        -11.5,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-orange",
+      "kind": "SCENERY",
+      "position": [
+        1.5,
+        -15.0,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-green",
+      "kind": "SCENERY",
+      "position": [
+        17.0,
+        -23.0,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 0.8
+    }
+  ],
+  "scenery/fluff/cars_6": [
+    {
+      "asset": "scenery/components/car-silver",
+      "kind": "SCENERY",
+      "position": [
+        -12.0,
+        23.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-pink",
+      "kind": "SCENERY",
+      "position": [
+        -12.5,
+        -2.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-steel",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        17.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-azure",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        0.5,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-gray",
+      "kind": "SCENERY",
+      "position": [
+        13.0,
+        -15.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-olive",
+      "kind": "SCENERY",
+      "position": [
+        13.0,
+        -21.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.8
+    }
+  ],
+  "scenery/fluff/cars_8": [
+    {
+      "asset": "scenery/components/car-orange",
+      "kind": "SCENERY",
+      "position": [
+        -8.0,
+        26.5,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-yellow",
+      "kind": "SCENERY",
+      "position": [
+        -8.5,
+        13.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-blue",
+      "kind": "SCENERY",
+      "position": [
+        -8.0,
+        -16.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-pink",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        27.5,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-maroon",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        -8.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/car-teal",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        -22.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.8
+    },
+    {
+      "asset": "scenery/components/parking-barrier",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
     }
   ]
 }

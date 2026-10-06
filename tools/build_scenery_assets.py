@@ -35,6 +35,16 @@ GLASS = (.13, .30, .50)
 WHITE = (.80, .82, .79)
 WOOD = (.43, .26, .13)
 WATER = (.13, .49, .65)
+# Authored identities are independent of their current paint values.
+CAR_PAINT = {
+    'silver': (.72, .72, .72), 'gray': (.44, .44, .44), 'white': (.82, .82, .82),
+    'blue': (.08, .17, .65), 'steel': (.33, .41, .52), 'azure': (.14, .36, .60),
+    'orange': (.60, .38, .13), 'olive': (.48, .44, .10), 'yellow': (.72, .69, .08),
+    'teal': (.14, .56, .54), 'pink': (.48, .24, .36), 'purple': (.56, .14, .51),
+    'green': (.08, .67, .10), 'red': (.65, .08, .04), 'maroon': (.33, .07, .06),
+    'mustard': (.5, .42, .1), 'turquoise': (.15, .45, .5), 'magenta': (.56, .13, .35),
+    'deep-teal': (.15, .38, .38), 'sage': (.30, .38, .28), 'ochre': (.45, .38, .18),
+}
 
 
 class Mesh:
@@ -112,15 +122,18 @@ class Mesh:
             self.face([p(inner,b,0),p(inner,a,0),p(inner,a,height),p(inner,b,height)],color)
             self.face([p(outer,a,height),p(outer,b,height),p(inner,b,height),p(inner,a,height)],color)
 
-    def place(self, function, x=0, y=0, z=0, angle=0, scale=1, role=None, **kwargs):
+    def place(self, function, x=0, y=0, z=0, angle=0, scale=1, role=None, asset_name=None, **kwargs):
         old=self.transform.copy(); old_role=self.role
         if role is not None:self.role=role
         self.transform @= Matrix.Translation((x,y,z)) @ Matrix.Rotation(radians(angle),4,'Z') @ Matrix.Scale(scale,4)
-        if self.shared is not None and function in (table_frame, bench, shelter, garden_bed, pool, pool_basin):
-            # A plain mesh pool: identical helper parameters produce one asset, reused by every composition.
+        if self.shared is not None and function in (car, parking_barrier, grandstand, concrete_pipe,
+                                                  table_frame, bench, shelter, garden_bed, pool, pool_basin):
+            # Explicit authoring names survive palette/geometry edits. The
+            # parameter suffix remains only for older unnamed furniture kits.
             signature=json.dumps(kwargs,sort_keys=True,separators=(',',':'))
-            key=function.__name__.replace('_','-')
-            if kwargs:key+='-'+hashlib.sha256(signature.encode()).hexdigest()[:8]
+            key=asset_name or function.__name__.replace('_','-')
+            if function is car:key='car-'+kwargs.get('paint','red')
+            elif kwargs and asset_name is None:key+='-'+hashlib.sha256(signature.encode()).hexdigest()[:8]
             if self.role!='scenery':key+='-'+self.role
             asset='scenery/components/'+key
             if asset not in self.shared:
@@ -218,7 +231,8 @@ def skylight(g, width=34, length=60, rows=5):
         g.face([(-width/2,y,1.5),(width/2,y,1.5),(width/2,y,2),(0,y,5.4),(-width/2,y,2)],GLASS)
 
 
-def car(g, color=(.58,.22,.15)):
+def car(g, paint='red'):
+    color=CAR_PAINT[paint]
     g.box((0,0,1.5),(4.3,9.0,2),color)
     g.box((0,-.2,2.8),(3.8,4.3,1.6),GLASS)
     g.box((0,-.2,3.65),(3.9,2.6,.4),color)
@@ -227,6 +241,43 @@ def car(g, color=(.58,.22,.15)):
     for x in (-1.5,1.5):
         g.box((x,4.52,1.8),(1.0,.15,.6),WHITE)
         g.box((x,-4.52,1.8),(.85,.15,.5),(.65,.06,.03))
+
+
+def parking_barrier(g):
+    # Fixed roadside concrete barrier, seated on its broad foot. The source's
+    # hazard markings are paint on the prism, not separate hovering panels.
+    profile=[(-1.4,0),(1.4,0),(1.4,.28),(.55,2.1),(-.55,2.1),(-1.4,.28)]
+    role='parking-barrier'
+    g.texture(role,'sculpt/concrete.png')
+
+    def face(points,color):
+        g.face(points,color,role,[((y+x-24)/8,(x-24+z)/3) for x,y,z in points])
+
+    def cut(points,level,side):
+        result=[]
+        for a,b in zip(points,points[1:]+points[:1]):
+            da=a[0]-24+a[1]+a[2]-level;db=b[0]-24+b[1]+b[2]-level
+            inside=da*side>=0
+            if inside:result.append(a)
+            if inside!=(db*side>=0):
+                t=da/(da-db)
+                result.append(tuple(a[i]+(b[i]-a[i])*t for i in range(3)))
+        return result
+
+    ends=[[(24+x,y,z) for x,z in profile] for y in (-12.5,12.5)]
+    face(ends[0],CONCRETE);face(list(reversed(ends[1])),CONCRETE)
+    for i in range(len(profile)):
+        j=(i+1)%len(profile)
+        points=[ends[0][i],ends[1][i],ends[1][j],ends[0][j]]
+        if i not in (2,3,4):
+            face(points,CONCRETE)
+            continue
+        # Clip alternating color regions into the existing three upper faces;
+        # every paint vertex remains exactly on the concrete surface.
+        phase=[x-24+y+z for x,y,z in points]
+        for stripe in range(int(min(phase)//3.1),int(max(phase)//3.1)+1):
+            painted=cut(cut(points,stripe*3.1,1),(stripe+1)*3.1,-1)
+            if len(painted)>=3:face(painted,DARK if stripe%2 else YELLOW)
 
 
 def container(g, color=(.44,.19,.14)):
@@ -338,13 +389,38 @@ def excavation(g):
     for i in range(3):g.box((-14+i*2,-17,1),(1.3,12,1.3),(.7,.28,.07),35)
 
 
-def shelter(g):
+def shelter(g, floor=True):
     for x in (-11,11):
         for y in (-4,4):g.beam((x,y,0),(x,y,7),.65,STEEL,4)
-    g.box((0,0,.3),(26,12,.6),CONCRETE)
+    if floor:g.box((0,0,.3),(26,12,.6),CONCRETE)
     g.box((0,0,7),(26,12,.7),WHITE)
     for x in range(-12,13,4):g.beam((x,-6,7.6),(x,6,7.6),.4,STEEL,4)
     g.box((0,2,1.8),(19,2,.5),WOOD)
+
+
+def grandstand(g):
+    # Four open tiers face local -X, toward the pool. Only the frame touches
+    # the ground; there is no platform hiding the underlying biome.
+    seats=(.50,.57,.62)
+    for row in range(4):
+        x=-3+row*1.8;height=.3+row*1.1
+        g.box((x-.55,0,height),(.95,28.5,.25),STEEL)
+        g.box((x+.15,0,height+.9),(.9,27,.28),seats)
+        for y in (-10,10):
+            g.beam((x+.15,y,.2+(x+3.95)*.6),(x+.15,y,height+.76),.3,STEEL,4)
+    for y in (-10,0,10):
+        g.beam((-3.8,y,.2),(3.2,y,4.4),.38,STEEL,4)
+        g.beam((3.2,y,.2),(3.2,y,4.4),.38,STEEL,4)
+        g.box((-.3,y,.19),(7,.38,.38),STEEL)
+        g.beam((3.2,y,4.2),(3.2,y,6),.25,STEEL,4)
+    g.beam((3.2,-14,6),(3.2,14,6),.25,STEEL,4)
+    for y in (-14,14):
+        g.beam((-3.8,y,2),(3.2,y,6),.25,STEEL,4)
+        g.beam((-3.8,y,.15),(-3.8,y,2),.25,STEEL,4)
+
+
+def concrete_pipe(g):
+    g.ring(0,0,0,2.6,1.8,4,CONCRETE,12)
 
 
 def garden_bed(g):
@@ -809,7 +885,8 @@ def maglev(g, station=False, train=False, variant=0):
         g.box((0,32.1,8),(7,.2,3),GLASS)
         g.box((0,0,6),(7,3,4),DARK)
     if station or train:
-        for i in range(3):g.place(car,x=15,y=-18+i*15,scale=.75,color=(.15+i*.15,.38,.38-i*.1))
+        for i,paint in enumerate(('deep-teal','sage','ochre')):
+            g.place(car,x=15,y=-18+i*15,scale=.75,paint=paint)
 
 
 def geyser(g, magma=False):
@@ -892,12 +969,9 @@ def build_mesh(name, layouts, shared=None):
             g.ellipsoid((x,y,.65),(1.2,.8,.6),CONCRETE,5,3)
     elif name.startswith('fluff/cars'):
         # Only roadside objects belong in the GLB. The board's shared road engine supplies the road.
-        for x,y,angle,color in layout['cars']:g.place(car,x=x,y=y,angle=angle,color=color,scale=.8)
+        for x,y,angle,paint in layout['cars']:g.place(car,x=x,y=y,angle=angle,paint=paint,scale=.8)
         if stem in ('cars_7','cars_2b'):g.place(shelter,x=-7,y=-22,angle=-30)
-        if stem in ('cars_8','cars_3b'):
-            for y in (-11,11):g.beam((24,y,0),(24,y,3.5),.8,STEEL,4)
-            g.box((24,0,3.5),(2,25,3),YELLOW)
-            for y in range(-10,13,5):g.box((24, y,5.05),(2,2,.1),DARK,25)
+        if stem in ('cars_8','cars_3b'):g.place(parking_barrier)
     elif name.startswith('fluff/square'):garden(g,int(stem[-1])-1)
     elif name.startswith('fluff/pillars'):
         for x,y in layout['pillars']:
@@ -914,20 +988,21 @@ def build_mesh(name, layouts, shared=None):
     elif name.startswith('fluff/suburb'):
         n=int(stem[-1])
         if n==1:
-            g.place(pool,x=-10,y=4,scale=.75,circular=True)
-            for i in range(4):g.box((20+i*1.8,6,1.5+i),(2,29,3+i*2),CONCRETE,30)
+            g.place(pool_basin,x=-10,y=4,scale=.75,deck=False,asset_name='pool-round-no-deck',
+                    outline=[(18*cos(i*pi/16),18*sin(i*pi/16)) for i in range(32)])
+            g.place(grandstand,x=22.7,y=6,angle=30)
             for i in range(3):g.place(car,x=-4+i*7,y=-22+i*2,scale=.75,angle=30,
-                                   color=((.5,.42,.1),(.15,.45,.5),(.65,.08,.04))[i])
+                                   paint=('mustard','turquoise','red')[i])
         elif n==2:
-            g.cylinder(0,-3,0,24,.6,CONCRETE,16)
-            g.place(shelter,x=-11,y=18,angle=-30)
+            g.place(shelter,x=-11,y=18,angle=-30,floor=False,asset_name='shelter-no-floor')
+            g.place(table,x=12,y=-3,angle=-30,scale=1.3)
             for i,(x,y) in enumerate(layout['trees']):g.tree(x,y,9,i)
-            for i in range(3):g.place(car,x=-12+i*5,y=6-i*6,scale=.65,angle=30,color=(.56,.13,.35))
+            for i in range(3):g.place(car,x=-12+i*5,y=6-i*6,scale=.65,angle=30,paint='magenta')
         else:
-            g.box((0,0,.4),(43,43,.8),(.56,.44,.25),30)
-            g.place(pool,x=-8,y=0,z=.9,angle=30,scale=.5)
-            for i in range(3):g.ring(10+i*4,-7+i*2,1,2.6,1.8,4,CONCRETE,12)
-            g.place(car,x=5,y=22,angle=30,scale=.65,color=(.65,.08,.04))
+            g.place(pool_basin,x=-8,y=0,angle=30,scale=.5,outline=round_rectangle(25,45,2),deck=False,
+                    asset_name='pool-rectangular-no-deck')
+            for i in range(3):g.place(concrete_pipe,x=10+i*4,y=-7+i*2)
+            g.place(car,x=5,y=22,angle=30,scale=.65,paint='red')
     elif name.startswith('fluff/beacon'):
         g.cylinder(0,0,0,22,3,DARK,6 if stem[-1]=='1' else 24)
         g.ring(0,0,3,9,6,1.5,STEEL)

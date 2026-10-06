@@ -11,6 +11,40 @@ from PIL import Image
 from audit_board_tiles import declarations, OUT, TILES
 
 
+# The ten fixed parking sprites need explicit body centres: curb highlights are
+# blue-gray too, and adjacent orange/yellow or red/orange cars share paint pixels.
+# Pixel coordinates are measured from the unchanged 84x72 source artwork, before
+# the common tile-centre/Y-up conversion. Road-free 2b/3b reuse 7/8 exactly.
+CAR_PIXELS = {
+    '1': [(13.5,35,'silver'), (19,32.5,'blue'), (31.5,24.5,'orange'), (36.5,22,'olive'),
+          (43,18,'teal'), (53.5,13.5,'pink'), (45.5,49,'gray'), (32,58,'yellow'),
+          (68,36,'silver'), (74.5,30.5,'orange')],
+    '2': [(39.5,20,'maroon'), (19.5,38.5,'red'), (27.5,42,'silver'), (62,35.5,'teal'),
+          (71.5,39.5,'gray'), (46.5,53,'orange')],
+    '3': [(30,14.5,'gray'), (29,30,'orange'), (30,38.5,'yellow'), (30,46,'steel'),
+          (28.5,64,'green'), (55.5,7,'orange'), (58,14.5,'red'), (53,43,'silver'),
+          (54,51,'purple'), (54,63,'red')],
+    '4': [(12,39,'teal'), (20.5,33.5,'orange'), (31,28,'red'), (50.5,17.5,'pink'),
+          (62,11,'green'), (33,56.5,'blue'), (40.5,51,'olive'), (48,48,'steel'),
+          (55,42,'silver'), (61.5,37.5,'white'), (68.5,34.5,'gray')],
+    '5': [(10,31,'purple'), (37,18.5,'blue'), (43.5,22.5,'gray'), (56,29,'silver'),
+          (37.5,47.5,'red'), (43.5,51,'orange'), (59,59,'green')],
+    '6': [(30,13,'silver'), (29.5,38,'pink'), (54,19,'steel'), (54,35.5,'azure'),
+          (55,51,'gray'), (55,57,'olive')],
+    '7': [(17,30,'silver'), (37.5,24,'green'), (54.5,34,'purple'), (49,49,'steel'),
+          (61.5,56.5,'orange')],
+    '8': [(34,9.5,'orange'), (33.5,23,'yellow'), (34,52,'blue'), (49,8.5,'pink'),
+          (49,44,'maroon'), (49,58,'teal')],
+}
+
+
+def car_layout(name):
+    variant = Path(name).stem.split('_')[1]
+    variant = {'2b': '7', '3b': '8'}.get(variant, variant)
+    angle = {'1': 30, '4': 30, '2': -30, '5': -30, '3': 90, '6': 90, '7': 60, '8': 0}[variant]
+    return [[x-42,36-y,angle,paint] for x,y,paint in CAR_PIXELS[variant]]
+
+
 def components(image, predicate, diagonal=False):
     pixels = image.load()
     remaining = {(x, y) for y in range(image.height) for x in range(image.width)
@@ -70,31 +104,7 @@ def main():
             layout['pillars'] = [center(group) for group in components(image, lambda r, g, b, a: a > 128)
                                  if len(group) > 10]
         if cars:
-            n = int(Path(name).stem.split('_')[1][0])
-            road_angle = math.radians(-60 if n in (1, 4) else 60 if n in (2, 5, 7) else 0)
-            # Paint colours separate bodies from road pixels, glazing and cast shadows.
-            body = components(image, lambda r, g, b, a: a > 128 and max(r, g, b) > 65
-                              and max(r, g, b)-min(r, g, b) > 40, diagonal=True)
-            neutral = components(image, lambda r, g, b, a: a > 128 and min(r, g, b) > 110
-                                 and max(r, g, b)-min(r, g, b) < 22, diagonal=True)
-            vehicles = []
-            for group in body + neutral:
-                if not 5 <= len(group) <= 90: continue
-                x, y = center(group)
-                across = x*math.cos(road_angle)+y*math.sin(road_angle)
-                if not 6 < abs(across) < 23: continue
-                color = [round(sum(image.getpixel(p)[k] for p in group)/len(group)/255, 3) for k in range(3)]
-                duplicate = next((v for v in vehicles if (x-v[0])**2+(y-v[1])**2 < 81
-                                  and sum((color[k]-v[3][k])**2 for k in range(3)) < .10), None)
-                if duplicate:
-                    duplicate[0] = round((duplicate[0]+x)/2, 2)
-                    duplicate[1] = round((duplicate[1]+y)/2, 2)
-                    continue
-                angle = 30 if n in (1, 4) else -30 if n in (2, 5) else 60 if n == 7 else 0 if n == 8 else 90
-                if Path(name).stem == 'cars_2b': angle = 60
-                if Path(name).stem == 'cars_3b': angle = 0
-                vehicles.append([x, y, angle, color])
-            layout['cars'] = vehicles
+            layout['cars'] = car_layout(name)
         if trees:
             groups = components(image, lambda r, g, b, a: a > 128 and g > r*1.10 and g > b*1.25 and 25 < g < 165)
             layout['trees'] = [center(group) for group in groups if len(group) > 16]
