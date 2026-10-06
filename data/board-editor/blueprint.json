@@ -24,11 +24,6 @@
           "optional": true
         },
         {
-          "terrain": "rubble",
-          "label": "Rubble",
-          "optional": true
-        },
-        {
           "terrain": "swamp",
           "label": "Swamp",
           "optional": true
@@ -80,31 +75,6 @@
           "id": "quicksand",
           "label": "Quicksand",
           "terrain": "swamp:2"
-        },
-        {
-          "id": "rubble-light",
-          "label": "Light rubble",
-          "terrain": "rubble:1"
-        },
-        {
-          "id": "rubble-medium",
-          "label": "Medium rubble",
-          "terrain": "rubble:2"
-        },
-        {
-          "id": "rubble-heavy",
-          "label": "Heavy rubble",
-          "terrain": "rubble:3"
-        },
-        {
-          "id": "rubble-hardened",
-          "label": "Hardened rubble",
-          "terrain": "rubble:4"
-        },
-        {
-          "id": "rubble-wall",
-          "label": "Rubble wall",
-          "terrain": "rubble:5"
         }
       ]
     },
@@ -197,6 +167,72 @@
           "terrain": "rough:2"
         }
       ]
+    },
+    {
+      "id": "rubble",
+      "label": "Rubble",
+      "category": "Features",
+      "present": [
+        "rubble"
+      ],
+      "defaults": "rubble:1",
+      "fields": [
+        {
+          "terrain": "rubble",
+          "label": "Rubble",
+          "optional": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Light"
+            },
+            {
+              "value": 2,
+              "label": "Medium"
+            },
+            {
+              "value": 3,
+              "label": "Heavy"
+            },
+            {
+              "value": 4,
+              "label": "Hardened"
+            },
+            {
+              "value": 5,
+              "label": "Wall debris"
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "id": "rubble-light",
+          "label": "Light rubble",
+          "terrain": "rubble:1"
+        },
+        {
+          "id": "rubble-medium",
+          "label": "Medium rubble",
+          "terrain": "rubble:2"
+        },
+        {
+          "id": "rubble-heavy",
+          "label": "Heavy rubble",
+          "terrain": "rubble:3"
+        },
+        {
+          "id": "rubble-hardened",
+          "label": "Hardened rubble",
+          "terrain": "rubble:4"
+        },
+        {
+          "id": "rubble-wall",
+          "label": "Rubble wall",
+          "terrain": "rubble:5"
+        }
+      ],
+      "receiver": "ground"
     },
     {
       "id": "vegetation",
@@ -307,7 +343,8 @@
         {
           "terrain": "water",
           "label": "Depth",
-          "optional": false
+          "optional": false,
+          "brush": true
         },
         {
           "terrain": "rapids",
@@ -453,7 +490,8 @@
           "optional": false,
           "min": 0,
           "max": 200,
-          "step": 1
+          "step": 1,
+          "brush": true
         },
         {
           "terrain": "bldg_elev",
@@ -461,7 +499,8 @@
           "optional": false,
           "min": 0,
           "max": 20,
-          "step": 1
+          "step": 1,
+          "brush": true
         },
         {
           "terrain": "bldg_basement_type",
@@ -574,7 +613,8 @@
           "optional": false,
           "min": 0,
           "max": 200,
-          "step": 1
+          "step": 1,
+          "brush": true
         },
         {
           "terrain": "bridge_elev",
@@ -582,7 +622,8 @@
           "optional": false,
           "min": 0,
           "max": 20,
-          "step": 1
+          "step": 1,
+          "brush": true
         }
       ],
       "category": "Structures",
@@ -616,7 +657,8 @@
           "optional": false,
           "min": 0,
           "max": 200,
-          "step": 1
+          "step": 1,
+          "brush": true
         },
         {
           "terrain": "fuel_tank_elev",
@@ -624,12 +666,14 @@
           "optional": false,
           "min": 0,
           "max": 20,
-          "step": 1
+          "step": 1,
+          "brush": true
         },
         {
           "terrain": "fuel_tank_magn",
           "label": "Explosion strength",
-          "optional": false
+          "optional": false,
+          "brush": true
         }
       ],
       "category": "Structures",
@@ -652,7 +696,8 @@
         {
           "terrain": "heavy_industrial",
           "label": "Height",
-          "optional": false
+          "optional": false,
+          "brush": true
         }
       ],
       "category": "Structures",
@@ -742,7 +787,8 @@
           "terrain": "black_ice:1"
         }
       ],
-      "replaceExisting": false
+      "replaceExisting": false,
+      "category": "Features"
     },
     {
       "id": "hazards",
@@ -852,7 +898,8 @@
           "terrain": "ultra_sublevel:1"
         }
       ],
-      "replaceExisting": false
+      "replaceExisting": false,
+      "category": "Features"
     },
     {
       "id": "scenario",
@@ -907,7 +954,8 @@
           "terrain": "deployment_zone:1"
         }
       ],
-      "replaceExisting": false
+      "replaceExisting": false,
+      "category": "Features"
     },
     {
       "id": "salvage",
@@ -942,7 +990,8 @@
           "terrain": "legs:1"
         }
       ],
-      "replaceExisting": false
+      "replaceExisting": false,
+      "category": "Features"
     },
     {
       "id": "elevators",
