@@ -10,7 +10,6 @@ from functools import lru_cache
 from math import cos, sin, pi, radians, ceil
 from pathlib import Path
 import json
-import hashlib
 import os
 import random
 import sys
@@ -128,12 +127,11 @@ class Mesh:
         self.transform @= Matrix.Translation((x,y,z)) @ Matrix.Rotation(radians(angle),4,'Z') @ Matrix.Scale(scale,4)
         if self.shared is not None and function in (car, parking_barrier, grandstand, concrete_pipe,
                                                   table_frame, bench, shelter, garden_bed, pool, pool_basin):
-            # Explicit authoring names survive palette/geometry edits. The
-            # parameter suffix remains only for older unnamed furniture kits.
-            signature=json.dumps(kwargs,sort_keys=True,separators=(',',':'))
+            # Shared identities are authored, never derived from mutable geometry or paint values.
             key=asset_name or function.__name__.replace('_','-')
             if function is car:key='car-'+kwargs.get('paint','red')
-            elif kwargs and asset_name is None:key+='-'+hashlib.sha256(signature.encode()).hexdigest()[:8]
+            elif kwargs and asset_name is None:
+                raise ValueError('Parameterized shared '+key+' requires an explicit asset_name')
             if self.role!='scenery':key+='-'+self.role
             asset='scenery/components/'+key
             if asset not in self.shared:
@@ -558,7 +556,7 @@ def garden(g, variant=0, pillars=False):
     if not pillars:
         g.cylinder(0,0,.05,25,.8,(.22,.34,.12),6)
         g.ring(0,0,0,26,24,1.4,CONCRETE,6)
-    if variant==0 and not pillars:g.place(pool,z=.9,circular=True,small=True)
+    if variant==0 and not pillars:g.place(pool,z=.9,circular=True,small=True,asset_name='fountain-round')
     if variant==3 and not pillars:
         g.ring(0,0,.8,14,12,1.5,CONCRETE,6)
         g.cylinder(0,0,1,12,.2,WATER,6)
@@ -983,7 +981,7 @@ def build_mesh(name, layouts, shared=None):
         for i,(x,y) in enumerate(((-9,-6),(10,-10),(-7,-25),(11,-26),(-1,-18))):
             g.tree(x*cos(a)-y*sin(a),x*sin(a)+y*cos(a),9,i)
     elif name.startswith('fluff/pool'):
-        g.place(pool_basin,outline=pool_shape(1))
+        g.place(pool_basin,outline=pool_shape(1),asset_name='pool-garden-freeform')
         for i,(x,y) in enumerate(layout['trees']):g.tree(x,y,9,i)
     elif name.startswith('fluff/suburb'):
         n=int(stem[-1])
@@ -1068,16 +1066,20 @@ def build_mesh(name, layouts, shared=None):
             n=int(stem[-2:])
             if n==1:
                 g.box((0,0,.15),(33,70,.3),CONCRETE)
-                g.place(pool_basin,y=7,outline=round_rectangle(18,38,1.5),deck=False)
-                g.place(pool_basin,y=-25,outline=round_rectangle(18,12,1.5),deck=False)
+                g.place(pool_basin,y=7,outline=round_rectangle(18,38,1.5),deck=False,asset_name='pool-sport-01-main')
+                g.place(pool_basin,y=-25,outline=round_rectangle(18,12,1.5),deck=False,asset_name='pool-sport-01-wading')
             elif n==3:
                 g.cylinder(0,0,0,33,.3,CONCRETE,32)
-                g.place(pool_basin,outline=pool_shape(3),deck=False)
-                g.place(pool_basin,y=-28,outline=[(4*cos(i*pi/20),4*sin(i*pi/20)) for i in range(40)],deck=False)
-            else:g.place(pool_basin,outline=round_rectangle(48,28,4) if n==5 else pool_shape(n))
+                g.place(pool_basin,outline=pool_shape(3),deck=False,asset_name='pool-sport-03-main')
+                g.place(pool_basin,y=-28,outline=[(4*cos(i*pi/20),4*sin(i*pi/20)) for i in range(40)],deck=False,
+                        asset_name='pool-sport-03-wading')
+            else:g.place(pool_basin,outline=round_rectangle(48,28,4) if n==5 else pool_shape(n),
+                         asset_name=f'pool-sport-{n:02d}')
         elif 'Lake' in stem:
             n=int(stem[-2:])
-            g.place(pool_basin,outline=pool_shape(1 if n in (1,3,5) else n),natural=True,angle=(n-1)*30,scale=.85)
+            shape=1 if n in (1,3,5) else n
+            g.place(pool_basin,outline=pool_shape(shape),natural=True,angle=(n-1)*30,scale=.85,
+                    asset_name=f'lake-freeform-{shape:02d}')
         elif 'Landscape' in stem:
             n=int(stem[-2:]);sides=6 if n==1 else 32
             g.cylinder(0,0,0,32,.8,(.18,.29,.11),sides)

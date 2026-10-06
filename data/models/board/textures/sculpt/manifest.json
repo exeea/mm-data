@@ -252,6 +252,16 @@
       "source_sha256": "0c81898c2d596ed91baed0d84cbc53bf38a234ed4d99287d0c8262a0dccbb077",
       "height_source": "estimated multiscale luminance",
       "relief_metres": 0.035
+    },
+    "sandstone-cap": {
+      "tile": 8.0,
+      "role": "mantle",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/sandstone-cap.png",
+      "source_sha256": "e6f23deaf31f1eba2dcb83058d1edc65f6a8cdb5d248e0138b5a4288a579c6af",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.035
     }
   }
 }

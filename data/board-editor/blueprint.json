@@ -224,7 +224,10 @@
           "label": "Road Fluff",
           "optional": true
         }
-      ]
+      ],
+      "preview": {
+        "terrain": "road:1:9"
+      }
     },
     {
       "id": "building",
@@ -386,7 +389,10 @@
           "step": 1
         }
       ],
-      "category": "Structures"
+      "category": "Structures",
+      "preview": {
+        "terrain": "bridge:1:9;bridge_cf:40;bridge_elev:2"
+      }
     },
     {
       "id": "fuelTank",
@@ -451,7 +457,11 @@
           "optional": true,
           "edges": true
         }
-      ]
+      ],
+      "preview": {
+        "terrain": "cliff_top:1:63",
+        "level": 2
+      }
     },
     {
       "id": "weather",
@@ -484,7 +494,10 @@
           "label": "Black Ice",
           "optional": true
         }
-      ]
+      ],
+      "preview": {
+        "terrain": "snow:1"
+      }
     },
     {
       "id": "hazards",
@@ -532,7 +545,10 @@
           "label": "Ultra Sublevel",
           "optional": true
         }
-      ]
+      ],
+      "preview": {
+        "terrain": "magma:1"
+      }
     },
     {
       "id": "scenario",
@@ -560,7 +576,10 @@
           "label": "Deployment Zone",
           "optional": true
         }
-      ]
+      ],
+      "preview": {
+        "terrain": "fortified:1"
+      }
     },
     {
       "id": "salvage",
@@ -578,7 +597,10 @@
           "label": "Legs",
           "optional": true
         }
-      ]
+      ],
+      "preview": {
+        "terrain": "arms:1"
+      }
     },
     {
       "id": "elevators",
@@ -597,7 +619,10 @@
           "optional": true
         }
       ],
-      "category": "Structures"
+      "category": "Structures",
+      "preview": {
+        "terrain": "solaris_elevator:2:63"
+      }
     },
     {
       "id": "space",
