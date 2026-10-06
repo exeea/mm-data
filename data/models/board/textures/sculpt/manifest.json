@@ -261,7 +261,27 @@
       "source": "tools/terrain-contact-sources/sandstone-cap.png",
       "source_sha256": "e6f23deaf31f1eba2dcb83058d1edc65f6a8cdb5d248e0138b5a4288a579c6af",
       "height_source": "estimated multiscale luminance",
-      "relief_metres": 0.035
+      "relief_metres": 0.1
+    },
+    "mars-cap": {
+      "tile": 8.0,
+      "role": "mantle",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/mars-cap.png",
+      "source_sha256": "b1e5b18ff1b65a6f4dfec4281e6cc188ece37555ce8d807d6c4c8dc1cbcfd8ea",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.1
+    },
+    "basalt-cap": {
+      "tile": 8.0,
+      "role": "mantle",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/basalt-cap.png",
+      "source_sha256": "2e02a2cd201bf5c78e4a2033068cbb79d48473f7b221685c314c0d2597dcaf91",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.12
     }
   }
 }
