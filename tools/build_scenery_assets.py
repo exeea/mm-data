@@ -10,6 +10,7 @@ from functools import lru_cache
 from math import cos, sin, pi, radians, ceil
 from pathlib import Path
 import json
+import hashlib
 import os
 import random
 import sys
@@ -37,8 +38,10 @@ WATER = (.13, .49, .65)
 
 
 class Mesh:
-    def __init__(self):
+    def __init__(self, shared=None):
         self.vertices, self.parts = [], defaultdict(list)
+        self.components = []
+        self.shared = shared
         self.materials = {'scenery': {'id': 'scenery', 'diffuse': [1, 1, 1]}}
         self.transform = Matrix.Identity(4)
         self.role = 'scenery'
@@ -113,8 +116,30 @@ class Mesh:
         old=self.transform.copy(); old_role=self.role
         if role is not None:self.role=role
         self.transform @= Matrix.Translation((x,y,z)) @ Matrix.Rotation(radians(angle),4,'Z') @ Matrix.Scale(scale,4)
-        function(self, **kwargs)
+        if self.shared is not None and function in (table_frame, bench, shelter, garden_bed, pool, pool_basin):
+            # A plain mesh pool: identical helper parameters produce one asset, reused by every composition.
+            signature=json.dumps(kwargs,sort_keys=True,separators=(',',':'))
+            key=function.__name__.replace('_','-')
+            if kwargs:key+='-'+hashlib.sha256(signature.encode()).hexdigest()[:8]
+            if self.role!='scenery':key+='-'+self.role
+            asset='scenery/components/'+key
+            if asset not in self.shared:
+                component=Mesh();component.role=self.role
+                function(component,**kwargs)
+                self.shared[asset]=component
+            self.component(asset,'SCENERY',self.transform)
+        else:
+            function(self, **kwargs)
         self.transform=old; self.role=old_role
+
+    def component(self, asset, kind, transform):
+        scale=transform.to_scale()
+        assert max(scale)-min(scale)<.00001, 'Composition components use uniform scale'
+        angles=transform.to_euler()
+        assert abs(angles.x)+abs(angles.y)<.00001, 'Board components rotate about their ground normal'
+        self.components.append({'asset':asset,'kind':kind,
+            'position':[round(v,6) for v in transform.to_translation()],
+            'rotation':round(angles.z*180/pi,6),'scale':round(scale.x,6)})
 
     def texture(self, role, filename):
         self.materials[role]={'id':role,'diffuse':[1,1,1],
@@ -131,7 +156,12 @@ class Mesh:
             self.vertices[at+3:at+6]=normals[key].normalized()
 
     def tree(self, x, y, size=12, variant=0):
-        # Reuse the shipped tree kit, including its source UVs/materials.
+        # Trees are ordinary composition components, using the catalog's normalized 30-unit height.
+        if self.shared is not None:
+            transform=self.transform @ Matrix.Translation((x,y,0)) @ Matrix.Rotation(variant*1.71,4,'Z') @ Matrix.Scale(size/30,4)
+            self.component('tree-broad','TREE',transform)
+            return
+        # Editable Blender previews reuse the shared tree kit too; no tree geometry enters scenery GLBs.
         data=library('tree-broad',2)
         values=data['meshes'][0]['vertices']
         positions=[values[i:i+3] for i in range(0,len(values),12)]
@@ -470,13 +500,20 @@ def garden(g, variant=0, pillars=False):
             g.ellipsoid((r*cos(a),r*sin(a),1.4),(1.5,1.5,1),(.57,.12,.27) if i%2 else (.85,.63,.18),6,3)
 
 
-def table(g):
+def bench(g):
+    g.box((0,0,1),(4.5,1.4,.4),WOOD)
+    for x in (-1.5,1.5):g.beam((x,0,0),(x,0,1),.4,STEEL,4)
+
+
+def table_frame(g):
     g.box((0,0,2.2),(4.5,4.5,.6),WHITE)
     for x in (-1.5,1.5):
         for y in (-1.5,1.5):g.beam((x,y,0),(x,y,2),.35,STEEL,4)
-    for y in (-4,4):
-        g.box((0,y,1),(4.5,1.4,.4),WOOD)
-        for x in (-1.5,1.5):g.beam((x,y,0),(x,y,1),.4,STEEL,4)
+
+
+def table(g):
+    g.place(table_frame)
+    for y in (-4,4):g.place(bench,y=y)
 
 
 def chicken(g, color=(.80,.76,.64), rooster=False):
@@ -825,8 +862,8 @@ def geyser(g, magma=False):
     g.materials={role:g.materials[role] for role in g.parts}
 
 
-def build_mesh(name, layouts):
-    g=Mesh(); stem=Path(name).stem; layout=layouts.get(name,{})
+def build_mesh(name, layouts, shared=None):
+    g=Mesh(shared); stem=Path(name).stem; layout=layouts.get(name,{})
     if name.startswith('fluff/skylight'):
         g.place(skylight,x=-1,y=1,angle=-(int(stem[-1])-1)*30)
     elif 'GlassRoof' in name:
@@ -872,7 +909,7 @@ def build_mesh(name, layouts):
         for i,(x,y) in enumerate(((-9,-6),(10,-10),(-7,-25),(11,-26),(-1,-18))):
             g.tree(x*cos(a)-y*sin(a),x*sin(a)+y*cos(a),9,i)
     elif name.startswith('fluff/pool'):
-        pool_basin(g,pool_shape(1))
+        g.place(pool_basin,outline=pool_shape(1))
         for i,(x,y) in enumerate(layout['trees']):g.tree(x,y,9,i)
     elif name.startswith('fluff/suburb'):
         n=int(stem[-1])
@@ -960,9 +997,9 @@ def build_mesh(name, layouts):
                 g.place(pool_basin,y=-25,outline=round_rectangle(18,12,1.5),deck=False)
             elif n==3:
                 g.cylinder(0,0,0,33,.3,CONCRETE,32)
-                pool_basin(g,pool_shape(3),deck=False)
+                g.place(pool_basin,outline=pool_shape(3),deck=False)
                 g.place(pool_basin,y=-28,outline=[(4*cos(i*pi/20),4*sin(i*pi/20)) for i in range(40)],deck=False)
-            else:pool_basin(g,round_rectangle(48,28,4) if n==5 else pool_shape(n))
+            else:g.place(pool_basin,outline=round_rectangle(48,28,4) if n==5 else pool_shape(n))
         elif 'Lake' in stem:
             n=int(stem[-2:])
             g.place(pool_basin,outline=pool_shape(1 if n in (1,3,5) else n),natural=True,angle=(n-1)*30,scale=.85)
@@ -1000,7 +1037,7 @@ def build_mesh(name, layouts):
     elif stem.startswith('geyser'):
         geyser(g,magma='magma' in stem)
     else:return None
-    return g if g.vertices else None
+    return g if g.vertices or g.components else None
 
 
 def blender_mesh(scene, name, mesh, location):
@@ -1017,7 +1054,7 @@ def blender_mesh(scene, name, mesh, location):
     offset=0
     for role,indices in mesh.parts.items():
         source=mesh.materials[role]
-        material_name='Scenery '+role
+        material_name=('Scenery foliage / ' if 'alphaTest' in source else 'Scenery ')+role
         if source.get('textures'):material_name+=' / '+Path(source['textures'][0]['filename']).stem
         mat=bpy.data.materials.get(material_name)
         if mat is None:
@@ -1034,6 +1071,23 @@ def blender_mesh(scene, name, mesh, location):
                     mix=mat.node_tree.nodes.new('ShaderNodeMixRGB');mix.blend_type='MULTIPLY';mix.inputs[0].default_value=1
                     mat.node_tree.links.new(vertex.outputs['Color'],mix.inputs[1]);mat.node_tree.links.new(texture.outputs['Color'],mix.inputs[2])
                     mat.node_tree.links.new(mix.outputs[0],bsdf.inputs['Base Color'])
+                    if 'alphaTest' in source:
+                        threshold=mat.node_tree.nodes.new('ShaderNodeMath');threshold.operation='GREATER_THAN'
+                        threshold.inputs[1].default_value=source['alphaTest']
+                        mat.node_tree.links.new(texture.outputs['Alpha'],threshold.inputs[0])
+                        mat.node_tree.links.new(threshold.outputs[0],bsdf.inputs['Alpha'])
+                    for mapping in source['textures'][1:]:
+                        detail=mat.node_tree.nodes.new('ShaderNodeTexImage')
+                        detail.image=bpy.data.images.load(str(BOARD/mapping['filename']),check_existing=True)
+                        detail.image.colorspace_settings.name='Non-Color'
+                        if mapping['type']=='NORMAL':
+                            normal=mat.node_tree.nodes.new('ShaderNodeNormalMap')
+                            mat.node_tree.links.new(detail.outputs['Color'],normal.inputs['Color'])
+                            mat.node_tree.links.new(normal.outputs['Normal'],bsdf.inputs['Normal'])
+                        elif mapping['type']=='AMBIENT':
+                            channels=mat.node_tree.nodes.new('ShaderNodeSeparateColor')
+                            mat.node_tree.links.new(detail.outputs['Color'],channels.inputs[0])
+                            mat.node_tree.links.new(channels.outputs['Green'],bsdf.inputs['Roughness'])
         slot=len(data.materials);data.materials.append(mat)
         for polygon in data.polygons[offset:offset+len(indices)//3]:polygon.material_index=slot
         offset+=len(indices)//3
@@ -1041,36 +1095,64 @@ def blender_mesh(scene, name, mesh, location):
     return obj
 
 
+def export_mesh(asset, mesh):
+    target=BOARD/(asset+'.glb');target.parent.mkdir(parents=True,exist_ok=True)
+    if not mesh.vertices:
+        assert target.resolve().is_relative_to(BOARD.resolve())
+        target.unlink(missing_ok=True)
+        return
+    data=mesh.data(Path(asset).name)
+    for mat in data['materials']:
+        for texture in mat.get('textures',[]):
+            if 'data' not in texture:
+                texture['filename']=os.path.relpath(BOARD/texture['filename'],target.parent).replace('\\','/')
+    if len(mesh.vertices)//12>65000:raise ValueError('Scenery exceeds rigid mesh budget: '+asset)
+    write_glb(target,levels={0:data})
+
+
 def build(only=None):
     rows,_=declarations();layouts=json.loads((REVIEW/'layouts.json').read_text())
     scene=bpy.data.scenes.new('Board scenery / tileset catalog')
     bpy.context.window.scene=scene
     scene.unit_settings.system='METRIC'
-    stats={}
+    inventory_path=REVIEW/'model-inventory.json'
+    stats=json.loads(inventory_path.read_text()) if only is not None and inventory_path.exists() else {}
+    layout_path=BOARD/'scenery/layouts.json'
+    compositions=json.loads(layout_path.read_text()) if only is not None and layout_path.exists() else {}
+    shared={}
+    built=0
     for name in sorted({r['image'] for r in rows if r['image']}):
         if only is not None and not any(key in name for key in only):continue
-        mesh=build_mesh(name,layouts)
+        mesh=build_mesh(name,layouts,shared)
         if mesh is None:continue
         asset='scenery/'+str(Path(name).with_suffix('')).replace('\\','/')
-        target=BOARD/(asset+'.glb');target.parent.mkdir(parents=True,exist_ok=True)
-        data=mesh.data(Path(name).stem)
-        for mat in data['materials']:
-            for texture in mat.get('textures',[]):
-                if 'data' not in texture:
-                    texture['filename']=os.path.relpath(BOARD/texture['filename'],target.parent).replace('\\','/')
-        if len(mesh.vertices)//12>65000:raise ValueError('Scenery exceeds rigid mesh budget: '+name)
-        write_glb(target,levels={0:data})
-        index=len(stats)
-        blender_mesh(scene,name,mesh,((index%12)*100,-(index//12)*100,0))
+        if mesh.components:
+            if mesh.vertices:
+                mesh.component(asset,'SCENERY',Matrix.Identity(4))
+            compositions[asset]=mesh.components
+        else:
+            compositions.pop(asset,None)
+        export_mesh(asset,mesh)
+        index=built
+        built+=1
+        preview=build_mesh(name,layouts) if mesh.components else mesh
+        blender_mesh(scene,name,preview,((index%12)*100,-(index//12)*100,0))
         stats[name]={'asset':asset,'vertices':len(mesh.vertices)//12,'triangles':sum(len(v)//3 for v in mesh.parts.values()),
-                     'height':round(max(mesh.vertices[2::12])-min(mesh.vertices[2::12]),3)}
+                     'height':round(max(preview.vertices[2::12])-min(preview.vertices[2::12]),3),
+                     'components':len(mesh.components),
+                     'trees':sum(c['kind']=='TREE' for c in mesh.components)}
+    for asset,mesh in shared.items():export_mesh(asset,mesh)
     REVIEW.mkdir(parents=True,exist_ok=True)
     (REVIEW/'model-inventory.json').write_text(json.dumps(stats,indent=2)+'\n')
+    layout_path.write_text(json.dumps(compositions,indent=2)+'\n')
     scene.world=bpy.data.worlds.new('Scenery studio world');scene.world.use_nodes=True
     scene.world.node_tree.nodes['Background'].inputs[0].default_value=(.22,.25,.30,1)
     scene.world.node_tree.nodes['Background'].inputs[1].default_value=.6
     scene.render.engine='CYCLES';scene.cycles.samples=24
     scene.view_settings.view_transform='AgX'
-    bpy.data.libraries.write(str(ROOT/'tools/board-scenery.blend'),{scene},fake_user=True)
-    return {'scene':scene.name,'models':len(stats),'triangles':sum(v['triangles'] for v in stats.values()),
+    source='board-scenery-compositions.blend'
+    bpy.data.libraries.write(str(ROOT/'tools'/source),{scene},fake_user=True)
+    return {'scene':scene.name,'models':built,'layouts':len(compositions),'shared_components':len(shared),
+            'trees':sum(c['kind']=='TREE' for v in compositions.values() for c in v),
+            'triangles':sum(v['triangles'] for v in stats.values()),
             'largest':max(stats.items(),key=lambda v:v[1]['vertices']) if stats else None}

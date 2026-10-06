@@ -1,0 +1,8006 @@
+{
+  "scenery/fluff/cars_2b": [
+    {
+      "asset": "scenery/components/shelter",
+      "kind": "SCENERY",
+      "position": [
+        -7.0,
+        -22.0,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/fluff/cars_2b",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "scenery/fluff/cars_7": [
+    {
+      "asset": "scenery/components/shelter",
+      "kind": "SCENERY",
+      "position": [
+        -7.0,
+        -22.0,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/fluff/cars_7",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "scenery/fluff/garden1": [
+    {
+      "asset": "scenery/components/garden-bed",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -9.0,
+        -6.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        10.0,
+        -10.0,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -7.0,
+        -25.0,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        11.0,
+        -26.0,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -1.0,
+        -18.0,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.3
+    }
+  ],
+  "scenery/fluff/garden2": [
+    {
+      "asset": "scenery/components/garden-bed",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": -60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -9.696153,
+        4.794229,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -3.660254,
+        -13.660254,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -25.150635,
+        -6.437822,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.016661,
+        -22.526279,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -16.088457,
+        -8.133975,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.3
+    }
+  ],
+  "scenery/fluff/garden3": [
+    {
+      "asset": "scenery/components/garden-bed",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": -120.000003,
+      "scale": 1.0
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -0.696152,
+        10.794229,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -13.660254,
+        -3.660254,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -18.150635,
+        18.562178,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -28.016661,
+        3.473721,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -15.088457,
+        9.866025,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.3
+    }
+  ],
+  "scenery/fluff/garden4": [
+    {
+      "asset": "scenery/components/garden-bed",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 179.999991,
+      "scale": 1.0
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        9.0,
+        6.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -10.0,
+        10.0,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        7.0,
+        25.0,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -11.0,
+        26.0,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        1.0,
+        18.0,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.3
+    }
+  ],
+  "scenery/fluff/garden5": [
+    {
+      "asset": "scenery/components/garden-bed",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 119.99999,
+      "scale": 1.0
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        9.696153,
+        -4.794229,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        3.660254,
+        13.660254,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        25.150635,
+        6.437822,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        17.016661,
+        22.526279,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.088457,
+        8.133975,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.3
+    }
+  ],
+  "scenery/fluff/garden6": [
+    {
+      "asset": "scenery/components/garden-bed",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        0.696152,
+        -10.794229,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        13.660254,
+        3.660254,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        18.150635,
+        -18.562178,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        28.016661,
+        -3.473721,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        15.088457,
+        -9.866025,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.3
+    }
+  ],
+  "scenery/fluff/pool1": [
+    {
+      "asset": "scenery/components/pool-basin-2ccd5c12",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -16.190001,
+        -4.93,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.3
+    }
+  ],
+  "scenery/fluff/square1": [
+    {
+      "asset": "scenery/components/pool-2bb54cb1",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.9
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        21.650635,
+        12.5,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.266667
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        0.0,
+        25.0,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.266667
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -21.650635,
+        12.5,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.266667
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -21.650635,
+        -12.5,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.266667
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -0.0,
+        -25.0,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.266667
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        21.650635,
+        -12.5,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.266667
+    },
+    {
+      "asset": "scenery/fluff/square1",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "scenery/fluff/suburb1": [
+    {
+      "asset": "scenery/components/pool-987e05b8",
+      "kind": "SCENERY",
+      "position": [
+        -10.0,
+        4.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/fluff/suburb1",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "scenery/fluff/suburb2": [
+    {
+      "asset": "scenery/components/shelter",
+      "kind": "SCENERY",
+      "position": [
+        -11.0,
+        18.0,
+        0.0
+      ],
+      "rotation": -30.000008,
+      "scale": 1.0
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -15.98,
+        -9.11,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -9.0,
+        -18.18,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        3.0,
+        -20.18,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        9.06,
+        7.03,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        13.1,
+        -18.1,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        18.0,
+        11.88,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        22.09,
+        -12.09,
+        0.0
+      ],
+      "rotation": -132.145295,
+      "scale": 0.3
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        30.9,
+        -5.93,
+        0.0
+      ],
+      "rotation": -34.16951,
+      "scale": 0.3
+    },
+    {
+      "asset": "scenery/fluff/suburb2",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "scenery/fluff/suburb3": [
+    {
+      "asset": "scenery/components/pool",
+      "kind": "SCENERY",
+      "position": [
+        -8.0,
+        0.0,
+        0.9
+      ],
+      "rotation": 30.000008,
+      "scale": 0.5
+    },
+    {
+      "asset": "scenery/fluff/suburb3",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-01": [
+    {
+      "asset": "scenery/components/pool-basin-edd50154",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        7.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/pool-basin-e927252f",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        -25.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-01",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-02": [
+    {
+      "asset": "scenery/components/pool-basin-25f5aa48",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-03": [
+    {
+      "asset": "scenery/components/pool-basin-730d5d6b",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/pool-basin-6c975b46",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        -28.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -0.93,
+        19.17,
+        1.6
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -1.5,
+        18.68,
+        1.6
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.35,
+        2.23,
+        1.6
+      ],
+      "rotation": -164.048426,
+      "scale": 0.333333
+    },
+    {
+      "asset": "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-03",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-04": [
+    {
+      "asset": "scenery/components/pool-basin-b791ed43",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -12.4,
+        -18.719999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        10.21,
+        14.44,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        30.299999,
+        -5.66,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-05": [
+    {
+      "asset": "scenery/components/pool-basin-85bbbf38",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -12.41,
+        20.450001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -11.42,
+        -20.73,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        10.21,
+        20.290001,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        11.57,
+        -19.74,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-01": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -23.530001,
+        1.54,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        8.91,
+        18.34,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        13.3,
+        -14.21,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-02": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -11.53,
+        24.540001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -7.09,
+        -18.66,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-03": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        8.62,
+        14.15,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        12.0,
+        -13.83,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-04": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -10.0,
+        12.17,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -3.8,
+        -11.88,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        17.620001,
+        -6.85,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-05": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -18.799999,
+        -4.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -2.7,
+        18.790001,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        11.06,
+        -24.91,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-01": [
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -23.0,
+        18.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -23.0,
+        15.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -23.0,
+        20.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -17.459999,
+        19.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -17.459999,
+        16.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -17.459999,
+        21.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -18.0,
+        23.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -18.0,
+        20.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -18.0,
+        25.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -18.0,
+        13.12,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -18.0,
+        10.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -18.0,
+        15.719999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -13.0,
+        18.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -13.0,
+        15.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -13.0,
+        20.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        -23.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        -26.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        -21.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        12.54,
+        -23.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        12.54,
+        -25.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        12.54,
+        -20.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        -18.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        -21.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        -16.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        -28.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        -31.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        -26.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        17.0,
+        -23.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        17.0,
+        -26.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        17.0,
+        -21.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        18.0,
+        -8.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        18.0,
+        -11.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        18.0,
+        -6.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        23.540001,
+        -8.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        23.540001,
+        -10.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        23.540001,
+        -5.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        23.0,
+        -3.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        23.0,
+        -6.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        23.0,
+        -1.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        23.0,
+        -13.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        23.0,
+        -16.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        23.0,
+        -11.280001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        28.0,
+        -8.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        28.0,
+        -11.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        28.0,
+        -6.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -16.700001,
+        -6.21,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        2.06,
+        24.09,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-02": [
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -10.0,
+        -23.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -10.0,
+        -26.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -10.0,
+        -21.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -4.46,
+        -23.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -4.46,
+        -25.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -4.46,
+        -20.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -5.0,
+        -18.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -5.0,
+        -21.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -5.0,
+        -16.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -5.0,
+        -28.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -5.0,
+        -31.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -5.0,
+        -26.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        -23.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        -26.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        -21.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        2.0,
+        26.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        2.0,
+        23.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        2.0,
+        28.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        7.54,
+        27.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        7.54,
+        24.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        7.54,
+        29.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        31.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        28.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        33.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        21.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        18.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        7.0,
+        23.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        9.0,
+        -18.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        9.0,
+        -21.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        9.0,
+        -16.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        26.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        23.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        12.0,
+        28.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        14.54,
+        -18.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        14.54,
+        -20.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        14.54,
+        -15.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        14.0,
+        -13.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        14.0,
+        -16.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        14.0,
+        -11.280001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        14.0,
+        -23.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        14.0,
+        -26.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        14.0,
+        -21.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        19.0,
+        -18.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        19.0,
+        -21.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        19.0,
+        -16.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -12.0,
+        17.17,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        1.3,
+        -1.21,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        25.870001,
+        6.36,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-03": [
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -22.0,
+        18.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -22.0,
+        15.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -22.0,
+        20.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -16.459999,
+        19.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -16.459999,
+        16.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -16.459999,
+        21.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -17.0,
+        23.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -17.0,
+        20.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -17.0,
+        25.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -17.0,
+        13.12,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -17.0,
+        10.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -17.0,
+        15.719999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -12.0,
+        18.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -12.0,
+        15.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -12.0,
+        20.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        3.0,
+        27.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        3.0,
+        24.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        3.0,
+        29.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        8.54,
+        28.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        8.54,
+        25.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        8.54,
+        30.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        8.0,
+        32.119999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        8.0,
+        29.519999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        8.0,
+        34.719997,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        8.0,
+        22.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        8.0,
+        19.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        8.0,
+        24.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        8.0,
+        -9.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        8.0,
+        -12.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        8.0,
+        -7.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        13.54,
+        -9.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        13.54,
+        -11.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        13.54,
+        -6.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        13.0,
+        27.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        13.0,
+        24.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        13.0,
+        29.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        13.0,
+        -4.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        13.0,
+        -7.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        13.0,
+        -2.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        13.0,
+        -14.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        13.0,
+        -17.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        13.0,
+        -12.280001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        18.0,
+        -9.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        18.0,
+        -12.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        18.0,
+        -7.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -22.940001,
+        1.09,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -7.0,
+        -20.83,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-04": [
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -30.0,
+        -5.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -30.0,
+        -8.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -30.0,
+        -3.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -24.459999,
+        -5.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -24.459999,
+        -7.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -24.459999,
+        -2.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -25.0,
+        -0.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -25.0,
+        -3.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -25.0,
+        1.72,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -25.0,
+        -10.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -25.0,
+        -13.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -25.0,
+        -8.280001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -20.0,
+        -5.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -20.0,
+        -8.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -20.0,
+        -3.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -18.0,
+        -25.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -18.0,
+        -28.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -18.0,
+        -23.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -12.46,
+        -25.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -12.46,
+        -27.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -12.46,
+        -22.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -13.0,
+        -20.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -13.0,
+        -23.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -13.0,
+        -18.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -13.0,
+        -30.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -13.0,
+        -33.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -13.0,
+        -28.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -8.0,
+        -25.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -8.0,
+        -28.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -8.0,
+        -23.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        10.0,
+        -3.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        10.0,
+        -6.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        10.0,
+        -1.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        14.0,
+        19.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        14.0,
+        16.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        14.0,
+        21.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        15.54,
+        -3.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        15.54,
+        -5.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        15.54,
+        -0.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        1.12,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -1.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        3.72,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -8.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -11.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -6.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        19.540001,
+        20.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        19.540001,
+        17.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        19.540001,
+        22.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        19.0,
+        24.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        19.0,
+        21.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        19.0,
+        26.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        19.0,
+        14.12,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        19.0,
+        11.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        19.0,
+        16.719999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        20.0,
+        -3.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        20.0,
+        -6.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        20.0,
+        -1.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        24.0,
+        19.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        24.0,
+        16.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        24.0,
+        21.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -3.13,
+        -8.64,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -6.0,
+        15.17,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-05": [
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -29.0,
+        -10.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -29.0,
+        -13.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -29.0,
+        -8.280001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -23.459999,
+        -10.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -23.459999,
+        -12.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -23.459999,
+        -7.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -24.0,
+        -5.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -24.0,
+        -8.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -24.0,
+        -3.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -24.0,
+        -15.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -24.0,
+        -18.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -24.0,
+        -13.280001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        -19.0,
+        -10.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -19.0,
+        -13.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        -19.0,
+        -8.280001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        5.0,
+        0.12,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        5.0,
+        -2.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        5.0,
+        2.72,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        10.54,
+        1.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        10.54,
+        -1.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        10.54,
+        3.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        10.0,
+        5.12,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        10.0,
+        2.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        10.0,
+        7.72,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        10.0,
+        -4.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        10.0,
+        -7.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        10.0,
+        -2.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        0.12,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -2.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        2.72,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        17.0,
+        -11.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        17.0,
+        -14.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        17.0,
+        -9.280001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        19.0,
+        12.12,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        19.0,
+        9.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        19.0,
+        14.719999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        22.540001,
+        -11.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        22.540001,
+        -13.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        22.540001,
+        -8.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        22.0,
+        -6.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        22.0,
+        -9.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        22.0,
+        -4.28,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        22.0,
+        -16.879999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        22.0,
+        -19.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        22.0,
+        -14.279999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        24.540001,
+        13.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        24.540001,
+        10.4,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        24.540001,
+        15.6,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        24.0,
+        17.120001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        24.0,
+        14.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        24.0,
+        19.720001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        24.0,
+        7.12,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        24.0,
+        4.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        24.0,
+        9.719999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        27.0,
+        -11.88,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        27.0,
+        -14.48,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        27.0,
+        -9.280001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/table-frame",
+      "kind": "SCENERY",
+      "position": [
+        29.0,
+        12.12,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        29.0,
+        9.52,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "scenery/components/bench",
+      "kind": "SCENERY",
+      "position": [
+        29.0,
+        14.719999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.65
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -8.7,
+        21.790001,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -7.13,
+        -2.64,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -0.94,
+        -23.91,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-01": [
+    {
+      "asset": "scenery/components/pool-basin-b594e561",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.85
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -10.0,
+        -20.83,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-02": [
+    {
+      "asset": "scenery/components/pool-basin-c213f821",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 30.000008,
+      "scale": 0.85
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-03": [
+    {
+      "asset": "scenery/components/pool-basin-b594e561",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.85
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        6.26,
+        22.799999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-04": [
+    {
+      "asset": "scenery/components/pool-basin-02c42a73",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 89.999996,
+      "scale": 0.85
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.940001,
+        24.09,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -2.7,
+        14.93,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-05": [
+    {
+      "asset": "scenery/components/pool-basin-b594e561",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 119.99999,
+      "scale": 0.85
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -30.530001,
+        -1.46,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.333333
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -18.09,
+        8.34,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.333333
+    }
+  ],
+  "scenery/saxarba/roads/road_trees00": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.370001,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.690001,
+        -25.290001,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.709999,
+        1.78,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees01": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees02": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees03": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -2.27,
+        3.77,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees04": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees05": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -12.3,
+        -4.2,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees06": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        2.66,
+        2.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.76,
+        1.83,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees07": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -11.26,
+        -5.13,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees08": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees09": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        0.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        0.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees10": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -11.34,
+        8.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees11": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees12": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -0.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.620001,
+        -25.309999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees13": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees14": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -12.34,
+        8.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.639999,
+        1.81,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees15": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.370001,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.67,
+        -25.34,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.709999,
+        1.78,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees16": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees17": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.309999,
+        -25.290001,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        10.62,
+        -5.24,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees18": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -8.34,
+        15.76,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        6.66,
+        -11.24,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees19": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.309999,
+        -25.290001,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        8.64,
+        -11.19,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.639999,
+        1.81,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees20": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -0.34,
+        15.76,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.620001,
+        -25.24,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees21": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.620001,
+        -25.24,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees22": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.309999,
+        -25.290001,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -9.34,
+        15.76,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees23": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees24": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.370001,
+        -25.299999,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -0.34,
+        1.76,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees25": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees26": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -8.34,
+        15.76,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.639999,
+        1.81,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees27": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees28": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -0.34,
+        14.76,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.620001,
+        -25.24,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees29": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.309999,
+        -25.290001,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees30": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.370001,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.67,
+        -25.34,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.709999,
+        1.78,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees31": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.370001,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.67,
+        -25.34,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.709999,
+        1.78,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees32": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees33": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -1.36,
+        2.81,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees34": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -0.38,
+        -12.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.639999,
+        1.81,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees35": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -0.38,
+        -12.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.639999,
+        1.81,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees36": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -8.37,
+        -11.3,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        6.66,
+        15.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees37": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -8.37,
+        -11.3,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees38": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -9.37,
+        -11.3,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.639999,
+        1.81,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees39": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.370001,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.67,
+        -25.34,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.700001,
+        1.83,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees40": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.360001,
+        28.709999,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        11.66,
+        10.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees41": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees42": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.639999,
+        1.81,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees43": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.639999,
+        1.81,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees44": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.360001,
+        28.709999,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        7.66,
+        15.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees45": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.620001,
+        -25.24,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees46": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.639999,
+        1.81,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees47": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.370001,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.67,
+        -25.34,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.700001,
+        1.83,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees48": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -2.34,
+        1.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees49": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.309999,
+        -25.290001,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        10.62,
+        -5.24,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees50": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        7.66,
+        -11.24,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.639999,
+        1.81,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees51": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.370001,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.690001,
+        -25.290001,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.700001,
+        1.83,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees52": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        7.66,
+        15.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.620001,
+        -25.24,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees53": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.309999,
+        -25.290001,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.620001,
+        -25.24,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees54": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.360001,
+        28.709999,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.309999,
+        -25.290001,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.629999,
+        -25.299999,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.66,
+        1.76,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees55": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.370001,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.67,
+        -25.34,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.700001,
+        1.83,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees56": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.360001,
+        28.709999,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        11.66,
+        8.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees57": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.33,
+        -25.34,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.690001,
+        -25.290001,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.709999,
+        1.78,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees58": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.360001,
+        28.709999,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        -25.24,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        -25.24,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.639999,
+        1.81,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees59": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.360001,
+        28.709999,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.370001,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.690001,
+        -25.290001,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.700001,
+        1.83,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees60": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.370001,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.67,
+        -25.34,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.709999,
+        1.78,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees61": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.33,
+        -25.34,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.67,
+        -25.34,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.709999,
+        1.78,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees62": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.33,
+        -25.34,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.67,
+        -25.34,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.700001,
+        1.83,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ],
+  "scenery/saxarba/roads/road_trees63": [
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -33.34,
+        1.76,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.34,
+        28.76,
+        0.0
+      ],
+      "rotation": 97.975799,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        -17.370001,
+        -25.299999,
+        0.0
+      ],
+      "rotation": -164.048426,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.66,
+        28.76,
+        0.0
+      ],
+      "rotation": -66.072641,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        16.67,
+        -25.34,
+        0.0
+      ],
+      "rotation": 31.903144,
+      "scale": 0.4
+    },
+    {
+      "asset": "tree-broad",
+      "kind": "TREE",
+      "position": [
+        31.709999,
+        1.78,
+        0.0
+      ],
+      "rotation": 129.878929,
+      "scale": 0.4
+    }
+  ]
+}

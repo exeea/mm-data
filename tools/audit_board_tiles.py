@@ -11,6 +11,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TILES = ROOT / 'data/models/board/tileset'
 OUT = ROOT / 'tools/board-models/scenery'
+LAYOUT_FILE = ROOT / 'data/models/board/scenery/layouts.json'
+LAYOUTS = json.loads(LAYOUT_FILE.read_text()) if LAYOUT_FILE.exists() else {}
 
 DECORATIVE = {'fluff', 'ground_fluff', 'road_fluff', 'water_fluff', 'fortified',
               'geyser', 'solaris_elevator', 'industrial_elevator', 'rubble'}
@@ -31,7 +33,7 @@ def classify(row):
         return 'existing-model', 'existing structure GLB selected by original artwork', False, structure
     if native:
         return 'native', 'existing terrain geometry/material or vegetation', False, ''
-    if (ROOT/'data/models/board'/(asset+'.glb')).is_file():
+    if asset in LAYOUTS or (ROOT/'data/models/board'/(asset+'.glb')).is_file():
         return 'new-model', 'authored volume replacing the selected image layer', True, asset
     if 'road' in types and 'road_fluff' in types and levels.get('road') in ('1', '2', '3', '4'):
         return 'native-road', 'shared road geometry/material replaces painted road-fluff surface', True, ''

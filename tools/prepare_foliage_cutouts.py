@@ -57,12 +57,24 @@ def leaf_maps(name, pixels):
     cavity = np.clip(np.exp(-np.maximum(blur(light, 4) - light, 0) * 1.8), .65, 1)
     green = np.clip((color[:, :, 1] - color[:, :, 0] * .6 - color[:, :, 2] * .4)
                     / np.maximum(color[:, :, 1], .05) * 3, 0, 1)
-    snow = '-snow-' in name
+    snow = name == 'snow' or '-snow-' in name
     roughness = np.full_like(light, .85) if snow else np.clip(.62 - .15 * green + .1 * (1 - light), .4, .85)
     transmission = np.zeros_like(light) if snow else green * .65
     surface = np.stack((cavity, roughness, transmission), axis=-1)
     return {name + '-normal': normal_map(height, .012 if snow else .018),
             name + '-surface': np.rint(surface * 255).astype(np.uint8)}
+
+
+def shrub_maps():
+    """The retained biome atlases supply matching shallow bark, leaf and cactus-pad surface detail."""
+    result = {}
+    for source in sorted((OUT / 'shrubs').glob('*.png')):
+        if source.stem.endswith(('-normal', '-surface')):
+            continue
+        with Image.open(source) as image:
+            pixels = np.array(image.convert('RGBA'))
+        result.update({'shrubs/' + name: values for name, values in leaf_maps(source.stem, pixels).items()})
+    return result
 
 
 if __name__ == '__main__':
@@ -73,6 +85,7 @@ if __name__ == '__main__':
     for name, pixels in list(maps.items()):
         maps.update(leaf_maps(name, pixels))
     maps.update(cactus_maps())
+    maps.update(shrub_maps())
     for name, pixels in maps.items():
         destination = OUT / (name + '.png')
         if args.check:

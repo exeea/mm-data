@@ -975,25 +975,25 @@
   },
   "foliage-temperate": {
     "mesh": "foliage-temperate.glb",
-    "triangles": 460,
-    "vertices": 1338,
+    "triangles": 416,
+    "vertices": 508,
     "generator": "tools/build_foliage_assets.py",
     "texture": "textures/foliage/shrubs/temperate.png",
     "lods": [
       {
         "node": "foliage-temperate-lod0",
-        "triangles": 460,
-        "vertices": 1338
+        "triangles": 416,
+        "vertices": 508
       },
       {
         "node": "foliage-temperate-lod1",
-        "triangles": 236,
-        "vertices": 690
+        "triangles": 232,
+        "vertices": 324
       },
       {
         "node": "foliage-temperate-lod2",
-        "triangles": 92,
-        "vertices": 276
+        "triangles": 96,
+        "vertices": 142
       },
       {
         "node": "foliage-temperate-lod3",
@@ -1004,25 +1004,25 @@
   },
   "foliage-highland": {
     "mesh": "foliage-highland.glb",
-    "triangles": 460,
-    "vertices": 1338,
+    "triangles": 416,
+    "vertices": 508,
     "generator": "tools/build_foliage_assets.py",
     "texture": "textures/foliage/shrubs/highland.png",
     "lods": [
       {
         "node": "foliage-highland-lod0",
-        "triangles": 460,
-        "vertices": 1338
+        "triangles": 416,
+        "vertices": 508
       },
       {
         "node": "foliage-highland-lod1",
-        "triangles": 236,
-        "vertices": 690
+        "triangles": 232,
+        "vertices": 324
       },
       {
         "node": "foliage-highland-lod2",
-        "triangles": 92,
-        "vertices": 276
+        "triangles": 96,
+        "vertices": 142
       },
       {
         "node": "foliage-highland-lod3",
@@ -1033,25 +1033,25 @@
   },
   "foliage-rocky": {
     "mesh": "foliage-rocky.glb",
-    "triangles": 460,
-    "vertices": 1338,
+    "triangles": 416,
+    "vertices": 508,
     "generator": "tools/build_foliage_assets.py",
     "texture": "textures/foliage/shrubs/rocky.png",
     "lods": [
       {
         "node": "foliage-rocky-lod0",
-        "triangles": 460,
-        "vertices": 1338
+        "triangles": 416,
+        "vertices": 508
       },
       {
         "node": "foliage-rocky-lod1",
-        "triangles": 236,
-        "vertices": 690
+        "triangles": 232,
+        "vertices": 324
       },
       {
         "node": "foliage-rocky-lod2",
-        "triangles": 92,
-        "vertices": 276
+        "triangles": 96,
+        "vertices": 142
       },
       {
         "node": "foliage-rocky-lod3",
@@ -1062,25 +1062,25 @@
   },
   "foliage-wetland": {
     "mesh": "foliage-wetland.glb",
-    "triangles": 460,
-    "vertices": 1338,
+    "triangles": 416,
+    "vertices": 514,
     "generator": "tools/build_foliage_assets.py",
     "texture": "textures/foliage/shrubs/wetland.png",
     "lods": [
       {
         "node": "foliage-wetland-lod0",
-        "triangles": 460,
-        "vertices": 1338
+        "triangles": 416,
+        "vertices": 514
       },
       {
         "node": "foliage-wetland-lod1",
-        "triangles": 236,
-        "vertices": 690
+        "triangles": 232,
+        "vertices": 330
       },
       {
         "node": "foliage-wetland-lod2",
-        "triangles": 92,
-        "vertices": 276
+        "triangles": 96,
+        "vertices": 142
       },
       {
         "node": "foliage-wetland-lod3",
@@ -1120,25 +1120,25 @@
   },
   "foliage-jungle": {
     "mesh": "foliage-jungle.glb",
-    "triangles": 472,
-    "vertices": 1378,
+    "triangles": 448,
+    "vertices": 280,
     "generator": "tools/build_foliage_assets.py",
     "texture": "textures/foliage/shrubs/jungle.png",
     "lods": [
       {
         "node": "foliage-jungle-lod0",
-        "triangles": 472,
-        "vertices": 1378
+        "triangles": 448,
+        "vertices": 280
       },
       {
         "node": "foliage-jungle-lod1",
-        "triangles": 228,
-        "vertices": 662
+        "triangles": 216,
+        "vertices": 144
       },
       {
         "node": "foliage-jungle-lod2",
         "triangles": 96,
-        "vertices": 284
+        "vertices": 72
       },
       {
         "node": "foliage-jungle-lod3",
@@ -1149,25 +1149,25 @@
   },
   "foliage-barren": {
     "mesh": "foliage-barren.glb",
-    "triangles": 456,
-    "vertices": 1114,
+    "triangles": 480,
+    "vertices": 1066,
     "generator": "tools/build_foliage_assets.py",
     "texture": "textures/foliage/shrubs/barren.png",
     "lods": [
       {
         "node": "foliage-barren-lod0",
-        "triangles": 456,
-        "vertices": 1114
+        "triangles": 480,
+        "vertices": 1066
       },
       {
         "node": "foliage-barren-lod1",
-        "triangles": 232,
-        "vertices": 668
+        "triangles": 240,
+        "vertices": 596
       },
       {
         "node": "foliage-barren-lod2",
         "triangles": 96,
-        "vertices": 272
+        "vertices": 232
       },
       {
         "node": "foliage-barren-lod3",
@@ -1178,25 +1178,25 @@
   },
   "foliage-snow": {
     "mesh": "foliage-snow.glb",
-    "triangles": 460,
-    "vertices": 1338,
+    "triangles": 416,
+    "vertices": 508,
     "generator": "tools/build_foliage_assets.py",
     "texture": "textures/foliage/shrubs/snow.png",
     "lods": [
       {
         "node": "foliage-snow-lod0",
-        "triangles": 460,
-        "vertices": 1338
+        "triangles": 416,
+        "vertices": 508
       },
       {
         "node": "foliage-snow-lod1",
-        "triangles": 236,
-        "vertices": 690
+        "triangles": 232,
+        "vertices": 324
       },
       {
         "node": "foliage-snow-lod2",
-        "triangles": 92,
-        "vertices": 276
+        "triangles": 96,
+        "vertices": 142
       },
       {
         "node": "foliage-snow-lod3",

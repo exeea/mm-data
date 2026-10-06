@@ -2,12 +2,14 @@
 
 Run through Blender MCP with runpy.run_path(...), or Blender --background --python.
 The eight imagegen atlases are unmodified inputs. No trees are imported or scaled down.
-Each family shares one atlas across its LODs, using opaque geometry and explicit leaf backs.
+Low branch cards reuse the shared tree foliage materials, LOD baker and impostors.
+The original biome atlases remain the source for stems and fused cactus pads.
 """
 from collections import defaultdict
 import json
 from math import cos, sin, pi
 from pathlib import Path
+from random import Random
 import sys
 
 import bmesh
@@ -16,6 +18,8 @@ from mathutils import Quaternion, Vector
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from glb_geometry import write_glb
+from prepare_tree_lods import (append_cutout, branch_crowns, counts as model_counts, cutout_material,
+                               pack, round_cactus, unlit_mesh)
 
 ROOT = Path(__file__).resolve().parents[1]
 BOARD = ROOT / 'data/models/board'
@@ -256,20 +260,21 @@ def desert():
 def barren(lod):
     g = Plant()
     endpoints = []
-    count = (8, 8, 5)[lod]
+    count = 8
     for i in range(count):
         angle = i * 2.399963
         root = Vector((cos(angle)*2, sin(angle)*2, .4))
         knee = Vector((cos(angle)*7, sin(angle)*7, 6 + i % 3))
         tip = Vector((cos(angle)*14, sin(angle)*14, 10 + i % 4 * 2))
-        g.branch(root, knee, .55)
-        g.branch(knee, tip, .31)
+        # Keep every major branch at distance; triangular cones spend fewer faces on each branch's roundness.
+        g.branch(root, knee, .70 if lod == 2 else .55, coarse=lod == 2)
+        g.branch(knee, tip, .40 if lod == 2 else .31, coarse=lod == 2)
         endpoints.append((knee, tip, angle))
     for i in range((26, 8, 1)[lod]):
         knee, tip, angle = endpoints[i % count]
         start = knee.lerp(tip, .25 + i % 3 * .2)
         end = start + Vector((cos(angle + 1.1)*4, sin(angle + 1.1)*4, 2.5))
-        g.branch(start, end, .14)
+        g.branch(start, end, .18 if lod == 2 else .14, coarse=lod == 2)
     for i in range((15, 5, 1)[lod]):
         knee, tip, angle = endpoints[i % count]
         start = knee.lerp(tip, .65)
@@ -323,8 +328,51 @@ def export_model(obj, family):
              'vertices': vertices, 'parts': [{'id': role, 'type': 'TRIANGLES', 'indices': indices}
                                           for role, indices in parts.items()]}],
             'materials': [{'id': role, 'diffuse': [1, 1, 1], 'textures': [
-                {'id': role, 'type': 'DIFFUSE', 'filename': path, 'wrapS': 33071, 'wrapT': 33071}]} for role in parts],
+                {'id': role, 'type': kind, 'filename': path.replace('.png', suffix + '.png'),
+                 'wrapS': 33071, 'wrapT': 33071}
+                for kind, suffix in (('DIFFUSE', ''), ('NORMAL', '-normal'), ('AMBIENT', '-surface'))]}
+                          for role in parts],
             'nodes': [{'id': obj.name, 'parts': [{'meshpartid': role, 'materialid': role} for role in parts]}]}
+
+
+def fern_crowns(source):
+    """Bent fern sprays: broad bases, tapered tips and open leaflets instead of solid leaf diamonds."""
+    levels = {}
+    material = cutout_material('canopy-cutout', 'fern-cutout')
+    for lod, (sprays, segments) in enumerate(((28, 4), (18, 3), (12, 2))):
+        result = []
+        rng = Random(1374)
+        for i in range(sprays):
+            angle = i * 2.399963
+            outward = Vector((cos(angle), sin(angle), 0))
+            side = Vector((-sin(angle), cos(angle), 0))
+            root = outward * rng.uniform(.2, 3)
+            reach, rise = rng.uniform(11, 16), rng.uniform(10, 16)
+            width = rng.uniform(6, 8) * (1, 1.3, 1.65)[lod]
+            for j in range(segments):
+                points = []
+                normals = []
+                for t, sign in ((j / segments, -1), (j / segments, 1),
+                                ((j + 1) / segments, 1), ((j + 1) / segments, -1)):
+                    center = root + outward * reach * t
+                    center.z = rise * (1.5 * t - .5 * t*t)
+                    points.append(center + side * sign * width / 2)
+                    normals.append((Vector((0, 0, 1)) + outward * .35).normalized())
+                append_cutout(result, 'canopy-cutout', points,
+                              ((0, 1-j/segments), (1, 1-j/segments),
+                               (1, 1-(j+1)/segments), (0, 1-(j+1)/segments)),
+                              ((0, 1, 2), (0, 2, 3)), normals)
+        model = pack(source, f'foliage-jungle-lod{lod}', result)
+        model['materials'] = [material]
+        levels[lod] = model
+    # All levels share the near model's shape and scale, not a camera-dependent fit.
+    height = max(levels[0]['meshes'][0]['vertices'][2::12])
+    for model in levels.values():
+        data = model['meshes'][0]['vertices']
+        for i in range(0, len(data), 12):
+            for axis in range(3):
+                data[i + axis] *= 18 / height
+    return levels
 
 
 def build(source_path=None):
@@ -371,6 +419,22 @@ def build(source_path=None):
             obj['lod'] = lod
             obj['family'] = family
         name = f'foliage-{family}'
+        if family == 'jungle':
+            levels = fern_crowns(levels[0])
+        elif family == 'barren':
+            levels = branch_crowns(levels[0], name, levels)
+        elif family not in ('desert', 'barren'):
+            levels = branch_crowns(levels[0], name)
+        elif family == 'desert':
+            for model in levels.values():
+                round_cactus(model)
+        # Keep the authored forms as inspectable source envelopes; show the exported cards beside them.
+        for lod, model in levels.items():
+            obj = bpy.data.objects.new(f'{name}-runtime{lod}', unlit_mesh(model, f'{name}-runtime{lod}', {}))
+            scene.collection.objects.link(obj)
+            obj.location = ((index % 4)*52, -(index // 4)*170 - lod*48, 26)
+            obj['lod'] = lod
+        counts = [{'node': f'{name}-lod{lod}', **model_counts(model)} for lod, model in levels.items()]
         write_glb(BOARD / (name + '.glb'), levels=levels)
         manifest[name] = {'mesh': name + '.glb', 'triangles': counts[0]['triangles'],
                           'vertices': counts[0]['vertices'], 'generator': 'tools/build_foliage_assets.py',
@@ -379,7 +443,7 @@ def build(source_path=None):
     manifest_path.write_text(json.dumps(manifest, indent=2) + '\n')
     bpy.context.window.scene = scene
     bpy.context.view_layer.update()
-    bpy.ops.wm.save_as_mainfile(filepath=str(source_path or ROOT / 'tools/board-foliage.blend'), copy=True)
+    bpy.data.libraries.write(str(source_path or ROOT / 'tools/board-foliage.blend'), {scene}, fake_user=True)
     return scene, summary
 
 

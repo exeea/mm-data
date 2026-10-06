@@ -334,7 +334,7 @@ def branch_crowns(source, name, retained_levels=None):
     CC0 authoring file stays untouched. Explicit backs work in every existing
     depth/shadow pass. Standard glTF MASK materials keep every level opaque.
     """
-    if not name.startswith(('tree', 'pine', 'birch', 'willow', 'orchard-')) or name.startswith('tree-dead'):
+    if not name.startswith(('tree', 'pine', 'birch', 'willow', 'orchard-', 'foliage-')) or name.startswith('tree-dead'):
         return None
     vertices, faces, corners = geometry(source)
     leaves = [face for face, (role, _) in zip(faces, corners) if not solid(role)]
@@ -352,7 +352,9 @@ def branch_crowns(source, name, retained_levels=None):
     bark = pack(source, name, [corner for corner in corners if solid(corner[0])])
     stem_vertices, stem_faces, _ = geometry(bark)
     pine = name.startswith('pine')
-    texture = ('conifer' if pine else 'broadleaf') + ('-snow' if name.endswith('-snow') else '') + '-cutout'
+    shrub = name.startswith('foliage-')
+    texture = ('conifer' if pine or name in ('foliage-highland', 'foliage-snow') else
+               'shrub' if shrub else 'broadleaf') + ('-snow' if name.endswith('-snow') else '') + '-cutout'
     role = 'canopy-snow-cutout' if name.endswith('-snow') else 'canopy-cutout'
     material = cutout_material(role, texture)
     seed = sum((i + 1) * ord(c) for i, c in enumerate(name.removesuffix('-snow')))
@@ -362,7 +364,7 @@ def branch_crowns(source, name, retained_levels=None):
         if retained_levels is None:
             model = simplified(bark, f'{name}-lod{level}', budget - cards * 4, False)
         else:
-            # Orchard LODs already author their own branch and fruit counts. Keep those exactly,
+            # These plant LODs already author their own branch and fruit counts. Keep those exactly,
             # assigning only the remaining budget to leaves instead of decimating individual apples.
             retained = retained_levels[level]
             _, _, parts_to_keep = geometry(retained)
@@ -396,7 +398,7 @@ def branch_crowns(source, name, retained_levels=None):
                 # Broadleaf sprays form lobes; willow cards droop from those same authored lobes.
                 if name.startswith('willow'):
                     up = Vector((radial.x * .25, radial.y * .25, -1)).normalized()
-                width = max(2.5, extent.length * (.8 if level == 0 else 1.05 if level == 1 else 1.5))
+                width = max(2.5, extent.length * (.8 if level == 0 else 1.05 if level == 1 else 1.9 if shrub else 1.5))
                 length = width * (1.25 if name.startswith(('willow', 'birch')) else .95)
             # Fewer distant branches cover the same envelope; length as well as width must bridge their gaps.
             if pine and level == 2:
@@ -406,7 +408,11 @@ def branch_crowns(source, name, retained_levels=None):
             # Never expand foliage beyond the captured source bounds or its route/structure clearance.
             points = [Vector(tuple(max(low[k], min(high[k], p[k])) for k in range(3))) for p in points]
             shade = rng.uniform(.88, 1.0)
-            pigment = (1, 1, 1) if name.endswith('-snow') else CROWN_TINTS.get(name, (1, 1, 1))
+            pigment = (1, 1, 1) if name.endswith('-snow') else CROWN_TINTS.get(name, {
+                'foliage-temperate': (.86, .98, .84), 'foliage-wetland': (.83, 1, .89),
+                'foliage-rocky': (.92, .91, .78), 'foliage-highland': (.80, .94, .86),
+                'foliage-barren': (.92, .70, .43)
+            }.get(name, (1, 1, 1)))
             tint = tuple(shade * channel for channel in pigment)
             append_cutout(result, role, points, ((0, 1), (1, 1), (1, 0), (0, 0)),
                           ((0, 1, 2), (0, 2, 3)), [normal] * 4, tint)
@@ -417,7 +423,7 @@ def branch_crowns(source, name, retained_levels=None):
         # A clipped branch tip must not shorten the normalized catalog height, which placement uses at every LOD.
         data = levels[level]['meshes'][0]['vertices']
         bottom = min(data[2::12])
-        scale = high.z / (max(data[2::12]) - bottom)
+        scale = max(point.z for point in vertices) / (max(data[2::12]) - bottom)
         for vertex in range(0, len(data), 12):
             data[vertex + 2] = (data[vertex + 2] - bottom) * scale
         assert counts(levels[level])['triangles'] <= budget
