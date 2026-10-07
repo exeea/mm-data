@@ -11,22 +11,54 @@
         {
           "terrain": "sand",
           "label": "Sand",
-          "optional": true
+          "optional": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Present"
+            }
+          ]
         },
         {
           "terrain": "tundra",
           "label": "Tundra",
-          "optional": true
+          "optional": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Present"
+            }
+          ]
         },
         {
           "terrain": "planted_fields",
           "label": "Planted Fields",
-          "optional": true
+          "optional": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Present"
+            }
+          ]
         },
         {
           "terrain": "swamp",
           "label": "Swamp",
-          "optional": true
+          "optional": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Swamp"
+            },
+            {
+              "value": 2,
+              "label": "Forming quicksand"
+            },
+            {
+              "value": 3,
+              "label": "Quicksand"
+            }
+          ]
         },
         {
           "terrain": "mud",
@@ -201,6 +233,10 @@
             {
               "value": 5,
               "label": "Wall debris"
+            },
+            {
+              "value": 6,
+              "label": "Ultra rubble"
             }
           ]
         }
@@ -230,6 +266,11 @@
           "id": "rubble-wall",
           "label": "Rubble wall",
           "terrain": "rubble:5"
+        },
+        {
+          "id": "rubble-ultra",
+          "label": "Ultra rubble",
+          "terrain": "rubble:6"
         }
       ],
       "receiver": "ground"
@@ -287,7 +328,8 @@
           "optional": false,
           "min": 0,
           "max": 20,
-          "step": 1
+          "step": 1,
+          "height": true
         }
       ],
       "palette": true,
@@ -405,19 +447,23 @@
           "choices": [
             {
               "value": 1,
-              "label": "Paved"
+              "label": "Paved",
+              "material": "asphalt"
             },
             {
               "value": 2,
-              "label": "Alley"
+              "label": "Alley",
+              "material": "asphalt"
             },
             {
               "value": 3,
-              "label": "Dirt"
+              "label": "Dirt",
+              "material": "dirt"
             },
             {
               "value": 4,
-              "label": "Gravel"
+              "label": "Gravel",
+              "material": "gravel"
             }
           ]
         },
@@ -500,7 +546,8 @@
           "min": 0,
           "max": 20,
           "step": 1,
-          "brush": true
+          "brush": true,
+          "height": true
         },
         {
           "terrain": "bldg_basement_type",
@@ -605,7 +652,25 @@
           "terrain": "bridge",
           "label": "Bridge",
           "optional": false,
-          "edges": true
+          "edges": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Light"
+            },
+            {
+              "value": 2,
+              "label": "Medium"
+            },
+            {
+              "value": 3,
+              "label": "Heavy"
+            },
+            {
+              "value": 4,
+              "label": "Hardened"
+            }
+          ]
         },
         {
           "terrain": "bridge_cf",
@@ -623,7 +688,8 @@
           "min": 0,
           "max": 20,
           "step": 1,
-          "brush": true
+          "brush": true,
+          "height": true
         }
       ],
       "category": "Structures",
@@ -649,7 +715,25 @@
           "terrain": "fuel_tank",
           "label": "Fuel Tank",
           "optional": false,
-          "edges": true
+          "edges": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Light"
+            },
+            {
+              "value": 2,
+              "label": "Medium"
+            },
+            {
+              "value": 3,
+              "label": "Heavy"
+            },
+            {
+              "value": 4,
+              "label": "Hardened"
+            }
+          ]
         },
         {
           "terrain": "fuel_tank_cf",
@@ -667,7 +751,8 @@
           "min": 0,
           "max": 20,
           "step": 1,
-          "brush": true
+          "brush": true,
+          "height": true
         },
         {
           "terrain": "fuel_tank_magn",
@@ -697,7 +782,8 @@
           "terrain": "heavy_industrial",
           "label": "Height",
           "optional": false,
-          "brush": true
+          "brush": true,
+          "height": true
         }
       ],
       "category": "Structures",
@@ -738,7 +824,13 @@
         {
           "terrain": "ice",
           "label": "Ice",
-          "optional": true
+          "optional": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Present"
+            }
+          ]
         },
         {
           "terrain": "snow",
@@ -758,7 +850,13 @@
         {
           "terrain": "black_ice",
           "label": "Black Ice",
-          "optional": true
+          "optional": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Present"
+            }
+          ]
         }
       ],
       "preview": {
@@ -799,12 +897,52 @@
         {
           "terrain": "fire",
           "label": "Fire",
-          "optional": true
+          "optional": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Fire"
+            },
+            {
+              "value": 2,
+              "label": "Inferno"
+            },
+            {
+              "value": 3,
+              "label": "Inferno bomb"
+            },
+            {
+              "value": 4,
+              "label": "Inferno IV"
+            }
+          ]
         },
         {
           "terrain": "smoke",
           "label": "Smoke",
-          "optional": true
+          "optional": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Light"
+            },
+            {
+              "value": 2,
+              "label": "Heavy"
+            },
+            {
+              "value": 3,
+              "label": "Light laser-inhibiting"
+            },
+            {
+              "value": 4,
+              "label": "Heavy laser-inhibiting"
+            },
+            {
+              "value": 5,
+              "label": "Chaff"
+            }
+          ]
         },
         {
           "terrain": "magma",
@@ -824,7 +962,21 @@
         {
           "terrain": "geyser",
           "label": "Geyser",
-          "optional": true
+          "optional": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Dormant"
+            },
+            {
+              "value": 2,
+              "label": "Active"
+            },
+            {
+              "value": 3,
+              "label": "Magma vent"
+            }
+          ]
         },
         {
           "terrain": "hazardous_liquid",
@@ -910,12 +1062,24 @@
         {
           "terrain": "impassable",
           "label": "Impassable",
-          "optional": true
+          "optional": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Present"
+            }
+          ]
         },
         {
           "terrain": "fortified",
           "label": "Fortified",
-          "optional": true
+          "optional": true,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Present"
+            }
+          ]
         },
         {
           "terrain": "metal_deposit",
@@ -1038,7 +1202,13 @@
         {
           "terrain": "space",
           "label": "Space",
-          "optional": false
+          "optional": false,
+          "choices": [
+            {
+              "value": 1,
+              "label": "Present"
+            }
+          ]
         },
         {
           "terrain": "screen",
@@ -28208,7 +28378,26 @@
       "id": "scenery/components/parking-barrier",
       "label": "Parking Barrier",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Construction and details",
+      "snap": {
+        "set": "concrete-parking-barrier",
+        "radius": 0.06,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            0.2857142857142857,
+            0.1736111111111111,
+            0.058333333333333334,
+            90
+          ],
+          [
+            0.2857142857142857,
+            -0.1736111111111111,
+            0.058333333333333334,
+            270
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/components/pool-garden-freeform",
@@ -28463,73 +28652,301 @@
       "id": "scenery/fluff/maglevstation1",
       "label": "Maglevstation1",
       "kind": "prop",
-      "group": "Transport"
+      "group": "Transport",
+      "snap": {
+        "set": "maglev-track",
+        "radius": 0.1,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            -0.0,
+            0.5,
+            0.136111111,
+            90
+          ],
+          [
+            0.0,
+            -0.5,
+            0.136111111,
+            270
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/fluff/maglevstation2",
       "label": "Maglevstation2",
       "kind": "prop",
-      "group": "Transport"
+      "group": "Transport",
+      "snap": {
+        "set": "maglev-track",
+        "radius": 0.1,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            0.371153744,
+            0.25,
+            0.136111111,
+            30
+          ],
+          [
+            -0.371153744,
+            -0.25,
+            0.136111111,
+            210
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/fluff/maglevstation3",
       "label": "Maglevstation3",
       "kind": "prop",
-      "group": "Transport"
+      "group": "Transport",
+      "snap": {
+        "set": "maglev-track",
+        "radius": 0.1,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            -0.371153744,
+            0.25,
+            0.136111111,
+            150
+          ],
+          [
+            0.371153744,
+            -0.25,
+            0.136111111,
+            330
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/fluff/maglevtrack1",
       "label": "Maglevtrack1",
       "kind": "prop",
-      "group": "Transport"
+      "group": "Transport",
+      "snap": {
+        "set": "maglev-track",
+        "radius": 0.1,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            -0.0,
+            0.5,
+            0.136111111,
+            90
+          ],
+          [
+            0.0,
+            -0.5,
+            0.136111111,
+            270
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/fluff/maglevtrack2",
       "label": "Maglevtrack2",
       "kind": "prop",
-      "group": "Transport"
+      "group": "Transport",
+      "snap": {
+        "set": "maglev-track",
+        "radius": 0.1,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            0.371153744,
+            0.25,
+            0.136111111,
+            30
+          ],
+          [
+            -0.371153744,
+            -0.25,
+            0.136111111,
+            210
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/fluff/maglevtrack3",
       "label": "Maglevtrack3",
       "kind": "prop",
-      "group": "Transport"
+      "group": "Transport",
+      "snap": {
+        "set": "maglev-track",
+        "radius": 0.1,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            -0.371153744,
+            0.25,
+            0.136111111,
+            150
+          ],
+          [
+            0.371153744,
+            -0.25,
+            0.136111111,
+            330
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/fluff/maglevtrain1",
       "label": "Maglevtrain1",
       "kind": "prop",
-      "group": "Vehicles"
+      "group": "Vehicles",
+      "snap": {
+        "set": "maglev-track",
+        "radius": 0.1,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            -0.0,
+            0.5,
+            0.136111111,
+            90
+          ],
+          [
+            0.0,
+            -0.5,
+            0.136111111,
+            270
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/fluff/maglevtrain2",
       "label": "Maglevtrain2",
       "kind": "prop",
-      "group": "Vehicles"
+      "group": "Vehicles",
+      "snap": {
+        "set": "maglev-track",
+        "radius": 0.1,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            -0.0,
+            0.5,
+            0.136111111,
+            90
+          ],
+          [
+            0.0,
+            -0.5,
+            0.136111111,
+            270
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/fluff/maglevtrain3",
       "label": "Maglevtrain3",
       "kind": "prop",
-      "group": "Vehicles"
+      "group": "Vehicles",
+      "snap": {
+        "set": "maglev-track",
+        "radius": 0.1,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            -0.0,
+            0.5,
+            0.136111111,
+            90
+          ],
+          [
+            0.0,
+            -0.5,
+            0.136111111,
+            270
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/fluff/maglevtrain4",
       "label": "Maglevtrain4",
       "kind": "prop",
-      "group": "Vehicles"
+      "group": "Vehicles",
+      "snap": {
+        "set": "maglev-track",
+        "radius": 0.1,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            -0.0,
+            0.5,
+            0.136111111,
+            90
+          ],
+          [
+            0.0,
+            -0.5,
+            0.136111111,
+            270
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/fluff/maglevtrain5",
       "label": "Maglevtrain5",
       "kind": "prop",
-      "group": "Vehicles"
+      "group": "Vehicles",
+      "snap": {
+        "set": "maglev-track",
+        "radius": 0.1,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            0.371153744,
+            0.25,
+            0.136111111,
+            30
+          ],
+          [
+            -0.371153744,
+            -0.25,
+            0.136111111,
+            210
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/fluff/maglevtrain6",
       "label": "Maglevtrain6",
       "kind": "prop",
-      "group": "Vehicles"
+      "group": "Vehicles",
+      "snap": {
+        "set": "maglev-track",
+        "radius": 0.1,
+        "angleTolerance": 2,
+        "connectors": [
+          [
+            -0.371153744,
+            0.25,
+            0.136111111,
+            150
+          ],
+          [
+            0.371153744,
+            -0.25,
+            0.136111111,
+            330
+          ]
+        ]
+      }
     },
     {
       "id": "scenery/fluff/pigs1",
