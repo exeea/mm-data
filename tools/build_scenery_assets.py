@@ -868,9 +868,10 @@ def fortified(g):
 
 
 def maglev_track(g):
-    g.box((0,0,1.2),(17,72,2.4),CONCRETE)
-    for x in (-6,6):g.box((x,0,3),(1.4,72,2),STEEL)
-    g.box((0,0,2.45),(8,72,.3),DARK)
+    # A single narrow guide beam, with no bridge-like deck or paired running rails.
+    g.box((0,0,1.2),(4,72,2.4),CONCRETE)
+    g.box((0,0,3),(1.4,72,2),STEEL)
+    g.box((0,0,2.45),(2.8,72,.3),DARK)
 
 
 def maglev_platform(g):
@@ -1231,12 +1232,11 @@ def build(only=None):
             compositions[asset]=mesh.components
         else:
             compositions.pop(asset,None)
-        # Maglev's original complete GLBs remain compatibility/parity references;
-        # rendering uses the shared composition when it exists.
-        if mesh.vertices or not name.startswith('fluff/maglev'):export_mesh(asset,mesh)
+        preview=build_mesh(name,layouts) if mesh.components else mesh
+        # Keep complete maglev compatibility models in sync with the shared pieces.
+        export_mesh(asset,preview if name.startswith('fluff/maglev') else mesh)
         index=built
         built+=1
-        preview=build_mesh(name,layouts) if mesh.components else mesh
         blender_mesh(scene,name,preview,((index%12)*100,-(index//12)*100,0))
         stats[name]={'asset':asset,'vertices':len(mesh.vertices)//12,'triangles':sum(len(v)//3 for v in mesh.parts.values()),
                      'height':round(max(preview.vertices[2::12])-min(preview.vertices[2::12]),3),

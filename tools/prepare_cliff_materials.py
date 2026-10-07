@@ -53,6 +53,16 @@ def blur(field, radius):
     return np.fft.ifft2(np.fft.fft2(field) * kernel).real
 
 
+def authored_height(path, size):
+    """Read optional linear grayscale elevation data, preserving its registration and periodic boundaries."""
+    if not path.exists():
+        return None
+    with Image.open(path) as image:
+        maximum = 65535 if image.mode.startswith('I') else 255
+        height = np.asarray(image.convert('F').resize((size, size), Image.Resampling.BICUBIC)) / maximum
+    return np.clip(periodic(height), 0, 1)
+
+
 def normal_map(height, depth):
     """Differentiate the actual height field at its UV/world scale, not color edges."""
     du = (np.roll(height, -1, axis=1) - np.roll(height, 1, axis=1)) * height.shape[1] / 2
@@ -73,12 +83,8 @@ def prepare(family):
     rgb = np.clip(periodic(rgb), .015, .985)
     light = rgb @ np.array([.2126, .7152, .0722])
     authored = SOURCES / f'{family}-height.png'
-    if authored.exists():
-        with Image.open(authored) as image:
-            maximum = 65535 if image.mode.startswith('I') else 255
-            height = np.array(image.convert('F').resize((SIZE, SIZE), Image.Resampling.BICUBIC)) / maximum
-        height = np.clip(periodic(height), 0, 1)
-    else:
+    height = authored_height(authored, SIZE)
+    if height is None:
         # Broad fracture planes and finer grain share one field; no unrelated procedural bump noise.
         # Fine pigment/grain must not become deep embossing. Let broad erosion planes carry the relief,
         # with only a small contribution from the fine source detail to the height derivative.

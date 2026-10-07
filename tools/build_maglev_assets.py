@@ -1,7 +1,7 @@
 """Export shared maglev pieces and preserve old scenery IDs as compositions.
 
 Run with Blender's --background --factory-startup --python option. This focused
-build preserves the existing complete GLBs as compatibility/reference assets;
+build refreshes the complete GLBs as compatibility/reference assets;
 the renderer already prefers layouts.json whenever an ID has a composition.
 """
 import json
@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from build_scenery_assets import BOARD, Mesh, build_mesh, export_mesh, maglev_vehicle
+from build_scenery_assets import BOARD, Mesh, build_mesh, export_mesh, maglev_track, maglev_vehicle
 
 
 def build():
@@ -20,13 +20,19 @@ def build():
             name = f'fluff/maglev{family}{number}.gif'
             mesh = build_mesh(name, {}, shared)
             assert not mesh.vertices, 'Maglev layouts must contain only shared pieces'
-            layouts['scenery/' + Path(name).with_suffix('').as_posix()] = mesh.components
+            asset = 'scenery/' + Path(name).with_suffix('').as_posix()
+            layouts[asset] = mesh.components
+            export_mesh(asset, build_mesh(name, {}))
     # A complete vehicle is also usable without a track or parked road traffic.
     vehicle = Mesh(shared)
     maglev_vehicle(vehicle)
     layouts['scenery/components/maglev-train'] = vehicle.components
     for asset, mesh in shared.items():
         export_mesh(asset, mesh)
+    # Small catalogue preview; the client derives the live route from neighbouring markers.
+    preview = Mesh()
+    maglev_track(preview)
+    export_mesh('scenery/components/maglev-route', preview)
     path = BOARD / 'scenery/layouts.json'
     catalog = json.loads(path.read_text(encoding='utf-8'))
     catalog.update(layouts)
