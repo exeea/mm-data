@@ -326,8 +326,8 @@
           "terrain": "foliage_elev",
           "label": "Canopy height",
           "optional": false,
-          "min": 0,
-          "max": 20,
+          "min": 1,
+          "max": 3,
           "step": 1,
           "height": true
         }
@@ -534,7 +534,7 @@
           "terrain": "bldg_cf",
           "label": "Construction factor",
           "optional": false,
-          "min": 0,
+          "min": 1,
           "max": 200,
           "step": 1,
           "brush": true
@@ -543,7 +543,7 @@
           "terrain": "bldg_elev",
           "label": "Height",
           "optional": false,
-          "min": 0,
+          "min": 1,
           "max": 20,
           "step": 1,
           "brush": true,
@@ -676,7 +676,7 @@
           "terrain": "bridge_cf",
           "label": "Construction factor",
           "optional": false,
-          "min": 0,
+          "min": 1,
           "max": 200,
           "step": 1,
           "brush": true
@@ -739,7 +739,7 @@
           "terrain": "fuel_tank_cf",
           "label": "Construction factor",
           "optional": false,
-          "min": 0,
+          "min": 1,
           "max": 200,
           "step": 1,
           "brush": true
@@ -28650,9 +28650,9 @@
     },
     {
       "id": "scenery/fluff/maglevstation1",
-      "label": "Maglevstation1",
+      "label": "Station N/S",
       "kind": "prop",
-      "group": "Transport",
+      "group": "Maglev and wagons",
       "snap": {
         "set": "maglev-track",
         "radius": 0.1,
@@ -28675,9 +28675,9 @@
     },
     {
       "id": "scenery/fluff/maglevstation2",
-      "label": "Maglevstation2",
+      "label": "Station NE/SW",
       "kind": "prop",
-      "group": "Transport",
+      "group": "Maglev and wagons",
       "snap": {
         "set": "maglev-track",
         "radius": 0.1,
@@ -28700,9 +28700,9 @@
     },
     {
       "id": "scenery/fluff/maglevstation3",
-      "label": "Maglevstation3",
+      "label": "Station NW/SE",
       "kind": "prop",
-      "group": "Transport",
+      "group": "Maglev and wagons",
       "snap": {
         "set": "maglev-track",
         "radius": 0.1,
@@ -28725,9 +28725,9 @@
     },
     {
       "id": "scenery/fluff/maglevtrack1",
-      "label": "Maglevtrack1",
+      "label": "Track N/S",
       "kind": "prop",
-      "group": "Transport",
+      "group": "Maglev and wagons",
       "snap": {
         "set": "maglev-track",
         "radius": 0.1,
@@ -28750,9 +28750,9 @@
     },
     {
       "id": "scenery/fluff/maglevtrack2",
-      "label": "Maglevtrack2",
+      "label": "Track NE/SW",
       "kind": "prop",
-      "group": "Transport",
+      "group": "Maglev and wagons",
       "snap": {
         "set": "maglev-track",
         "radius": 0.1,
@@ -28775,9 +28775,9 @@
     },
     {
       "id": "scenery/fluff/maglevtrack3",
-      "label": "Maglevtrack3",
+      "label": "Track NW/SE",
       "kind": "prop",
-      "group": "Transport",
+      "group": "Maglev and wagons",
       "snap": {
         "set": "maglev-track",
         "radius": 0.1,
@@ -28800,9 +28800,9 @@
     },
     {
       "id": "scenery/fluff/maglevtrain1",
-      "label": "Maglevtrain1",
+      "label": "Train + track N/S",
       "kind": "prop",
-      "group": "Vehicles",
+      "group": "Maglev and wagons",
       "snap": {
         "set": "maglev-track",
         "radius": 0.1,
@@ -28825,9 +28825,9 @@
     },
     {
       "id": "scenery/fluff/maglevtrain2",
-      "label": "Maglevtrain2",
+      "label": "Train + station N/S",
       "kind": "prop",
-      "group": "Vehicles",
+      "group": "Maglev and wagons",
       "snap": {
         "set": "maglev-track",
         "radius": 0.1,
@@ -28850,9 +28850,9 @@
     },
     {
       "id": "scenery/fluff/maglevtrain3",
-      "label": "Maglevtrain3",
+      "label": "Train + track N/S",
       "kind": "prop",
-      "group": "Vehicles",
+      "group": "Maglev and wagons",
       "snap": {
         "set": "maglev-track",
         "radius": 0.1,
@@ -28871,13 +28871,14 @@
             270
           ]
         ]
-      }
+      },
+      "palette": false
     },
     {
       "id": "scenery/fluff/maglevtrain4",
-      "label": "Maglevtrain4",
+      "label": "Train + track N/S",
       "kind": "prop",
-      "group": "Vehicles",
+      "group": "Maglev and wagons",
       "snap": {
         "set": "maglev-track",
         "radius": 0.1,
@@ -28896,13 +28897,14 @@
             270
           ]
         ]
-      }
+      },
+      "palette": false
     },
     {
       "id": "scenery/fluff/maglevtrain5",
-      "label": "Maglevtrain5",
+      "label": "Train + station NE/SW",
       "kind": "prop",
-      "group": "Vehicles",
+      "group": "Maglev and wagons",
       "snap": {
         "set": "maglev-track",
         "radius": 0.1,
@@ -28925,9 +28927,9 @@
     },
     {
       "id": "scenery/fluff/maglevtrain6",
-      "label": "Maglevtrain6",
+      "label": "Train + track NW/SE",
       "kind": "prop",
-      "group": "Vehicles",
+      "group": "Maglev and wagons",
       "snap": {
         "set": "maglev-track",
         "radius": 0.1,
@@ -31949,6 +31951,54 @@
       "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-13.png",
       "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-13.png",
       "group": "Faction markings"
+    },
+    {
+      "id": "scenery/components/maglev-wagon",
+      "label": "Passenger wagon",
+      "kind": "prop",
+      "group": "Maglev and wagons"
+    },
+    {
+      "id": "scenery/components/maglev-cab",
+      "label": "Driver cab",
+      "kind": "prop",
+      "group": "Maglev and wagons"
+    },
+    {
+      "id": "scenery/components/maglev-coupler",
+      "label": "Wagon coupler",
+      "kind": "prop",
+      "group": "Maglev and wagons"
+    },
+    {
+      "id": "scenery/components/maglev-platform",
+      "label": "Station platform",
+      "kind": "prop",
+      "group": "Maglev and wagons"
+    },
+    {
+      "id": "scenery/components/maglev-train",
+      "label": "Two-wagon train",
+      "kind": "prop",
+      "group": "Maglev and wagons"
+    },
+    {
+      "id": "scenery/components/car-deep-teal",
+      "label": "Deep teal car",
+      "kind": "prop",
+      "group": "Vehicles"
+    },
+    {
+      "id": "scenery/components/car-sage",
+      "label": "Sage car",
+      "kind": "prop",
+      "group": "Vehicles"
+    },
+    {
+      "id": "scenery/components/car-ochre",
+      "label": "Ochre car",
+      "kind": "prop",
+      "group": "Vehicles"
     }
   ]
 }

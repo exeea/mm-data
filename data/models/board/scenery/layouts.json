@@ -8931,5 +8931,746 @@
       "rotation": 0.0,
       "scale": 1.0
     }
+  ],
+  "scenery/fluff/maglevtrack1": [
+    {
+      "asset": "scenery/components/maglev-track",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "scenery/fluff/maglevtrack2": [
+    {
+      "asset": "scenery/components/maglev-track",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": -60.000002,
+      "scale": 1.0
+    }
+  ],
+  "scenery/fluff/maglevtrack3": [
+    {
+      "asset": "scenery/components/maglev-track",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 1.0
+    }
+  ],
+  "scenery/fluff/maglevstation1": [
+    {
+      "asset": "scenery/components/maglev-track",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-platform",
+      "kind": "SCENERY",
+      "position": [
+        -15.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/car-deep-teal",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -18.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-sage",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -3.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-ochre",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        12.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    }
+  ],
+  "scenery/fluff/maglevstation2": [
+    {
+      "asset": "scenery/components/maglev-track",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": -60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-platform",
+      "kind": "SCENERY",
+      "position": [
+        -7.5,
+        12.990381,
+        0.0
+      ],
+      "rotation": -60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/car-deep-teal",
+      "kind": "SCENERY",
+      "position": [
+        -8.088459,
+        -21.990379,
+        0.0
+      ],
+      "rotation": -60.000002,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-sage",
+      "kind": "SCENERY",
+      "position": [
+        4.901923,
+        -14.490381,
+        0.0
+      ],
+      "rotation": -60.000002,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-ochre",
+      "kind": "SCENERY",
+      "position": [
+        17.892305,
+        -6.990382,
+        0.0
+      ],
+      "rotation": -60.000002,
+      "scale": 0.75
+    }
+  ],
+  "scenery/fluff/maglevstation3": [
+    {
+      "asset": "scenery/components/maglev-track",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-platform",
+      "kind": "SCENERY",
+      "position": [
+        -7.5,
+        -12.990381,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/car-deep-teal",
+      "kind": "SCENERY",
+      "position": [
+        23.088457,
+        3.990382,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-sage",
+      "kind": "SCENERY",
+      "position": [
+        10.098076,
+        11.490381,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-ochre",
+      "kind": "SCENERY",
+      "position": [
+        -2.892306,
+        18.990381,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.75
+    }
+  ],
+  "scenery/fluff/maglevtrain1": [
+    {
+      "asset": "scenery/components/maglev-track",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-wagon",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        -17.0,
+        3.5
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-cab",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        17.0,
+        3.5
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-coupler",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/car-deep-teal",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -18.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-sage",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -3.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-ochre",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        12.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    }
+  ],
+  "scenery/fluff/maglevtrain2": [
+    {
+      "asset": "scenery/components/maglev-track",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-platform",
+      "kind": "SCENERY",
+      "position": [
+        -15.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-wagon",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        -17.0,
+        3.5
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-cab",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        17.0,
+        3.5
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-coupler",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/car-deep-teal",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -18.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-sage",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -3.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-ochre",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        12.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    }
+  ],
+  "scenery/fluff/maglevtrain3": [
+    {
+      "asset": "scenery/components/maglev-track",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-wagon",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        -17.0,
+        3.5
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-cab",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        17.0,
+        3.5
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-coupler",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/car-deep-teal",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -18.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-sage",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -3.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-ochre",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        12.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    }
+  ],
+  "scenery/fluff/maglevtrain4": [
+    {
+      "asset": "scenery/components/maglev-track",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-wagon",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        -17.0,
+        3.5
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-cab",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        17.0,
+        3.5
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-coupler",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/car-deep-teal",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -18.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-sage",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        -3.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-ochre",
+      "kind": "SCENERY",
+      "position": [
+        15.0,
+        12.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 0.75
+    }
+  ],
+  "scenery/fluff/maglevtrain5": [
+    {
+      "asset": "scenery/components/maglev-track",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": -60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-platform",
+      "kind": "SCENERY",
+      "position": [
+        -7.5,
+        12.990381,
+        0.0
+      ],
+      "rotation": -60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-wagon",
+      "kind": "SCENERY",
+      "position": [
+        -14.722433,
+        -8.499999,
+        3.5
+      ],
+      "rotation": -60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-cab",
+      "kind": "SCENERY",
+      "position": [
+        14.722433,
+        8.499999,
+        3.5
+      ],
+      "rotation": -60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-coupler",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "rotation": -60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/car-deep-teal",
+      "kind": "SCENERY",
+      "position": [
+        -8.088459,
+        -21.990379,
+        0.0
+      ],
+      "rotation": -60.000002,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-sage",
+      "kind": "SCENERY",
+      "position": [
+        4.901923,
+        -14.490381,
+        0.0
+      ],
+      "rotation": -60.000002,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-ochre",
+      "kind": "SCENERY",
+      "position": [
+        17.892305,
+        -6.990382,
+        0.0
+      ],
+      "rotation": -60.000002,
+      "scale": 0.75
+    }
+  ],
+  "scenery/fluff/maglevtrain6": [
+    {
+      "asset": "scenery/components/maglev-track",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-wagon",
+      "kind": "SCENERY",
+      "position": [
+        14.722433,
+        -8.499999,
+        3.5
+      ],
+      "rotation": 60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-cab",
+      "kind": "SCENERY",
+      "position": [
+        -14.722433,
+        8.499999,
+        3.5
+      ],
+      "rotation": 60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-coupler",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "rotation": 60.000002,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/car-deep-teal",
+      "kind": "SCENERY",
+      "position": [
+        23.088457,
+        3.990382,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-sage",
+      "kind": "SCENERY",
+      "position": [
+        10.098076,
+        11.490381,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.75
+    },
+    {
+      "asset": "scenery/components/car-ochre",
+      "kind": "SCENERY",
+      "position": [
+        -2.892306,
+        18.990381,
+        0.0
+      ],
+      "rotation": 60.000002,
+      "scale": 0.75
+    }
+  ],
+  "scenery/components/maglev-train": [
+    {
+      "asset": "scenery/components/maglev-wagon",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        -17.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-cab",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        17.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    },
+    {
+      "asset": "scenery/components/maglev-coupler",
+      "kind": "SCENERY",
+      "position": [
+        0.0,
+        0.0,
+        0.5
+      ],
+      "rotation": 0.0,
+      "scale": 1.0
+    }
   ]
 }
