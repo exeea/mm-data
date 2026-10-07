@@ -4,6 +4,28 @@ This directory is the libGDX board's independent art source. Runtime never reads
 terrain or water from the 2D board's images directory. The Java build stages this
 directory with the game's data. Blender is an authoring dependency only.
 
+## Maglev compositions
+
+The twelve `scenery/fluff/maglev*` IDs resolve through `scenery/layouts.json`.
+Track, platform, passenger wagon, driver cab, coupler and road cars are separate
+shared meshes under `scenery/components/`. Every old placement, orientation and
+color is preserved; the complete original GLBs remain as compatibility references.
+The `scenery/components/maglev-train` layout contains only its two wagons and
+coupler, without track, station or parked road traffic.
+
+The editor groups these assets under **Maglev and wagons**. Standalone wagons
+and platforms have a local base at zero; complete legacy layouts retain their
+original rail clearance. Track snap connectors remain on the original layout
+IDs in `data/board-editor/blueprint.json`; a wagon by itself is not a track
+segment. `palette: false` hides the two identical legacy train choices while
+keeping their IDs available to existing boards and the snapping resolver.
+
+Rebuild this family with `blender --background --factory-startup --python
+tools/build_maglev_assets.py`, from the data repository root. It uses the same
+component generators as the full `build_scenery_assets.py` build. The Java
+`BoardSceneryMaglevTest` checks old/composed triangle positions, normals and
+colors, native layout resolution and independent component bounds.
+
 ## Rock and scatter meshes
 
 - `rocks/block-N.glb` and `rocks/boulder-N.glb` (N = 0..7) are sixteen independently

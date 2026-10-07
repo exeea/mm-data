@@ -126,7 +126,8 @@ class Mesh:
         if role is not None:self.role=role
         self.transform @= Matrix.Translation((x,y,z)) @ Matrix.Rotation(radians(angle),4,'Z') @ Matrix.Scale(scale,4)
         if self.shared is not None and function in (car, parking_barrier, grandstand, concrete_pipe,
-                                                  table_frame, bench, shelter, garden_bed, pool, pool_basin):
+                                                  table_frame, bench, shelter, garden_bed, pool, pool_basin,
+                                                  maglev_track, maglev_platform, maglev_wagon, maglev_coupler):
             # Shared identities are authored, never derived from mutable geometry or paint values.
             key=asset_name or function.__name__.replace('_','-')
             if function is car:key='car-'+kwargs.get('paint','red')
@@ -866,22 +867,43 @@ def fortified(g):
     g.smooth('fortified-bags')
 
 
-def maglev(g, station=False, train=False, variant=0):
+def maglev_track(g):
     g.box((0,0,1.2),(17,72,2.4),CONCRETE)
     for x in (-6,6):g.box((x,0,3),(1.4,72,2),STEEL)
     g.box((0,0,2.45),(8,72,.3),DARK)
+
+
+def maglev_platform(g):
+    g.box((0,0,1.5),(10,42,3),CONCRETE)
+    for y in (-15,15):g.beam((0,y,3),(0,y,11),.7,STEEL,4)
+    g.box((0,0,11),(12,42,1),WHITE)
+
+
+def maglev_wagon(g, cab=False):
+    # Local Z=0 is the vehicle's underside. The composition supplies track clearance.
+    g.box((0,0,3.5),(10,30,7),WHITE)
+    g.box((0,0,7.3),(8,27,.5),STEEL)
+    for x in (-5.1,5.1):
+        for y in range(-10,12,4):g.box((x,y,4.5),(.2,2.8,2.5),GLASS)
+    if cab:g.box((0,15.1,4.5),(7,.2,3),GLASS)
+
+
+def maglev_coupler(g):
+    g.box((0,0,2),(7,3,4),DARK)
+
+
+def maglev_vehicle(g):
+    g.place(maglev_wagon,y=-17)
+    g.place(maglev_wagon,y=17,cab=True,asset_name='maglev-cab')
+    g.place(maglev_coupler,z=.5)
+
+
+def maglev(g, station=False, train=False, variant=0):
+    g.place(maglev_track)
     if station:
-        g.box((-15,0,1.5),(10,42,3),CONCRETE)
-        for y in (-15,15):g.beam((-15,y,3),(-15,y,11),.7,STEEL,4)
-        g.box((-15,0,11),(12,42,1),WHITE)
+        g.place(maglev_platform,x=-15)
     if train:
-        for y in (-17,17):
-            g.box((0,y,7),(10,30,7),WHITE)
-            g.box((0,y,10.8),(8,27,.5),STEEL)
-            for x in (-5.1,5.1):
-                for v in range(-10,12,4):g.box((x,y+v,8),(.2,2.8,2.5),GLASS)
-        g.box((0,32.1,8),(7,.2,3),GLASS)
-        g.box((0,0,6),(7,3,4),DARK)
+        g.place(maglev_vehicle,z=3.5)
     if station or train:
         for i,paint in enumerate(('deep-teal','sage','ochre')):
             g.place(car,x=15,y=-18+i*15,scale=.75,paint=paint)
@@ -1209,7 +1231,9 @@ def build(only=None):
             compositions[asset]=mesh.components
         else:
             compositions.pop(asset,None)
-        export_mesh(asset,mesh)
+        # Maglev's original complete GLBs remain compatibility/parity references;
+        # rendering uses the shared composition when it exists.
+        if mesh.vertices or not name.startswith('fluff/maglev'):export_mesh(asset,mesh)
         index=built
         built+=1
         preview=build_mesh(name,layouts) if mesh.components else mesh
@@ -1218,6 +1242,9 @@ def build(only=None):
                      'height':round(max(preview.vertices[2::12])-min(preview.vertices[2::12]),3),
                      'components':len(mesh.components),
                      'trees':sum(c['kind']=='TREE' for c in mesh.components)}
+    if 'scenery/components/maglev-wagon' in shared:
+        vehicle=Mesh(shared);maglev_vehicle(vehicle)
+        compositions['scenery/components/maglev-train']=vehicle.components
     for asset,mesh in shared.items():export_mesh(asset,mesh)
     REVIEW.mkdir(parents=True,exist_ok=True)
     (REVIEW/'model-inventory.json').write_text(json.dumps(stats,indent=2)+'\n')
