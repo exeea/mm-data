@@ -286,6 +286,36 @@
       "height_source": "tools/terrain-contact-sources/basalt-cap-height.png",
       "relief_metres": 0.12,
       "height_sha256": "5ebf6b877c507e184c8fdd21cf32b396f1d417d8e24e324be5d7a9afa1676e25"
+    },
+    "tundra-crust": {
+      "tile": 28.0,
+      "role": "ground",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/tundra-crust.png",
+      "source_sha256": "c4f18d639b38285a3c8c0d0210ca5ea6269c59b8f88c99895585320ca6fd65b6",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.04
+    },
+    "tundra-earth": {
+      "tile": 24.0,
+      "role": "ground",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/tundra-earth.png",
+      "source_sha256": "9a02f79ea26640eba4cfe74feecbd17cf0d109d1ac30d12d7bf7d11a762b5e21",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.1
+    },
+    "tundra-fungus": {
+      "tile": 24.0,
+      "role": "ground",
+      "size": 512,
+      "generator": "tools/prepare_terrain_contact.py",
+      "source": "tools/terrain-contact-sources/tundra-fungus.png",
+      "source_sha256": "ce0ae833f6657e5974a9ff08ac16e65367a36092655fa7ea394dffe2439c8b85",
+      "height_source": "estimated multiscale luminance",
+      "relief_metres": 0.08
     }
   }
 }
