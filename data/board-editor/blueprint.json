@@ -28649,6 +28649,12 @@
       "group": "Construction and details"
     },
     {
+      "id": "scenery/components/maglev-route",
+      "label": "Maglev route (paint connections)",
+      "kind": "prop",
+      "group": "Maglev and wagons"
+    },
+    {
       "id": "scenery/fluff/maglevstation1",
       "label": "Station N/S",
       "kind": "prop",

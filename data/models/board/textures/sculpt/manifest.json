@@ -105,8 +105,9 @@
       "generator": "tools/prepare_terrain_contact.py",
       "source": "tools/terrain-contact-sources/sandstone.png",
       "source_sha256": "02439e02944c0e5a0aa7bef5154322a1bdf35c88347da4de46279003a2a109fe",
-      "height_source": "estimated multiscale luminance",
-      "relief_metres": 0.16
+      "height_source": "tools/terrain-contact-sources/sandstone-height.png",
+      "relief_metres": 0.16,
+      "height_sha256": "c03c1df646c797a0c66513641d4f728c31f77b6c1fdf9c736679db3f587ba948"
     },
     "granite": {
       "tile": 10.0,
@@ -240,8 +241,9 @@
       "generator": "tools/prepare_terrain_contact.py",
       "source": "tools/terrain-contact-sources/volcano-basalt.png",
       "source_sha256": "de352754563eec1e6aadaab589ae9f9705a3ddd2b06c7a253d988ccc7b451b3a",
-      "height_source": "estimated multiscale luminance",
-      "relief_metres": 0.14
+      "height_source": "tools/terrain-contact-sources/volcano-basalt-height.png",
+      "relief_metres": 0.14,
+      "height_sha256": "7fa0a6f839b0850424a57ea30f72a04fc9313e8598501e1ae216361bcd232572"
     },
     "tropical-ground": {
       "tile": 4.0,
@@ -260,8 +262,9 @@
       "generator": "tools/prepare_terrain_contact.py",
       "source": "tools/terrain-contact-sources/sandstone-cap.png",
       "source_sha256": "e6f23deaf31f1eba2dcb83058d1edc65f6a8cdb5d248e0138b5a4288a579c6af",
-      "height_source": "estimated multiscale luminance",
-      "relief_metres": 0.1
+      "height_source": "tools/terrain-contact-sources/sandstone-cap-height.png",
+      "relief_metres": 0.1,
+      "height_sha256": "2638b39d499d3ebadaa93dfe49688807ae27fdcd5cb795f0ee92566998c098d0"
     },
     "mars-cap": {
       "tile": 8.0,
@@ -280,8 +283,9 @@
       "generator": "tools/prepare_terrain_contact.py",
       "source": "tools/terrain-contact-sources/basalt-cap.png",
       "source_sha256": "2e02a2cd201bf5c78e4a2033068cbb79d48473f7b221685c314c0d2597dcaf91",
-      "height_source": "estimated multiscale luminance",
-      "relief_metres": 0.12
+      "height_source": "tools/terrain-contact-sources/basalt-cap-height.png",
+      "relief_metres": 0.12,
+      "height_sha256": "5ebf6b877c507e184c8fdd21cf32b396f1d417d8e24e324be5d7a9afa1676e25"
     }
   }
 }
