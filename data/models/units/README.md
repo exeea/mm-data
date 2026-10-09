@@ -113,10 +113,24 @@ The numbers live in `tools/unit_model_geometry.py` (`LOD_TRIANGLE_BUDGETS`), `to
 - Author in Python with +x right, +y forward and +z up. The GLB is standard glTF with Y up; the exporter converts on
   the way out and MegaMek converts back. Colours are authored as seen on screen and stored as linear colour.
 - Materials are named by role: `paint` takes the unit's camouflage, `detail` keeps its own colour, and `bark` takes
-  the shared bark texture. Other names are refused; more roles can be added on request to the renderer author. PBR
-  is not implemented.
-- Materials must be opaque and single-sided. Skins, animation clips, morph targets and external buffers are refused;
+  the shared bark texture. Other names are refused. The main 3D board reads glTF roughness/metallic factors,
+  optional packed metallic-roughness maps (linear G/B), normal maps and occlusion maps (linear R), all on UV0.
+  Its direct reflection uses GGX; ambient reflection approximates the sky and ground, without an environment map.
+- Opaque and alpha-tested materials are supported; double-sided faces duplicate reversed geometry on import.
+  Skins, animation clips, morph targets, external geometry buffers and blended materials are refused;
   the game animates the named joints itself.
+
+`tools/model_surfaces.py` holds the reviewed selection and its material values. Atlas and Warhammer paint has
+roughness 0.68 and metalness zero: a metal object covered in paint still reflects like paint. The `detail` role mixes bare metal,
+rubber, glazing and other small parts, so it remains roughness one / metalness zero until that art has a mask or
+separate surfaces. The generic GLB writer still defaults to roughness one / metalness zero for other callers.
+
+The first deployed calibration updates **Atlas and Warhammer bodies**, alongside six board buildings.
+`python tools/calibrate_model_materials.py` previews that selection; `--apply` updates only its material factors
+and manifest checksums, preserving all geometry, LOD groups and embedded images. A complete rebuild uses that
+same selection, including all LODs of the reviewed bodies. Other bodies, equipment, troops and vehicles keep
+their earlier defaults; the camouflage role alone does not identify a physical material (it can include
+clothing). These are artistic starting values, not measured scans.
 
 ## Rebuilding
 

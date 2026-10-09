@@ -22,6 +22,22 @@ def display(value):
     return value * 12.92 if value <= .0031308 else 1.055 * value ** (1 / 2.4) - .055
 
 
+def colour(text):
+    """A '#rrggbb' colour as display-space channels."""
+    return tuple(int(text[i:i + 2], 16) / 255 for i in (1, 3, 5))
+
+
+def colour_text(value):
+    return '#%02x%02x%02x' % tuple(round(max(0, min(1, c)) * 255) for c in value[:3])
+
+
+def recolour(value, default, replacement):
+    """A colour-slot vertex's display colour once its slot's default colour is replaced: each channel keeps its ratio
+    to the default in linear light, so shaded parts of a slot stay shaded. The runtime applies the same rule."""
+    return tuple(display(linear(c) * linear(r) / linear(d)) if linear(d) > 1e-6 else r
+                 for c, d, r in zip(value, default, replacement))
+
+
 def y_up(value):
     return [value[0], value[2], -value[1]]
 
@@ -30,8 +46,12 @@ def z_up(value):
     return [value[0], -value[2], value[1]]
 
 
-def write_glb(path, model=None, *, levels=None, embedded_images=None):
-    """Export existing rigid authoring arrays, preserving node/part/material IDs."""
+def write_glb(path, model=None, *, levels=None, embedded_images=None, extras=None):
+    """Export existing rigid authoring arrays, preserving node/part/material IDs.
+
+    A mesh may carry `slots`, one colour slot per vertex (0 none, n the model's n-th colour slot), written as the
+    `_COLOUR_SLOT` attribute; `extras` become the file's extras (for example its `mmColourSlots` definitions).
+    """
     document = {'asset': {'version': '2.0', 'generator': 'MegaMek rigid mesh exporter'},
                 'scene': 0, 'scenes': [{'nodes': []}], 'nodes': [], 'meshes': [],
                 'materials': [], 'accessors': [], 'bufferViews': [], 'buffers': []}
@@ -65,17 +85,23 @@ def write_glb(path, model=None, *, levels=None, embedded_images=None):
             material_sources[material['id']] = material
             material_ids[material['id']] = len(document['materials'])
             color = material.get('diffuse', [1, 1, 1])
+            roughness, metallic = material.get('roughness', 1), material.get('metallic', 0)
+            if not (math.isfinite(roughness) and 0 <= roughness <= 1
+                    and math.isfinite(metallic) and 0 <= metallic <= 1):
+                raise ValueError('Metallic and roughness factors must be finite values in [0, 1]')
             document['materials'].append({'name': material['id'], 'pbrMetallicRoughness': {
                 'baseColorFactor': [*(linear(c) for c in color[:3]), material.get('opacity', 1)],
-                'metallicFactor': 0, 'roughnessFactor': 1}})
+                'metallicFactor': metallic, 'roughnessFactor': roughness}})
             if 'alphaTest' in material:
                 document['materials'][-1].update(alphaMode='MASK', alphaCutoff=material['alphaTest'])
+            if material.get('extras'):
+                document['materials'][-1]['extras'] = material['extras']
             textures = material.get('textures', [])
             if len({t['type'] for t in textures}) != len(textures):
                 raise ValueError('Duplicate material texture role')
             for texture in textures:
-                if texture['type'] not in ('DIFFUSE', 'NORMAL', 'AMBIENT'):
-                    raise ValueError('Expected diffuse, normal or occlusion texture')
+                if texture['type'] not in ('DIFFUSE', 'NORMAL', 'AMBIENT', 'METALLIC_ROUGHNESS'):
+                    raise ValueError('Expected diffuse, normal, occlusion or metallic-roughness texture')
                 index = len(document.setdefault('images', []))
                 filename = texture['filename']
                 encoded_image = texture.get('data', (embedded_images or {}).get(filename))
@@ -99,6 +125,8 @@ def write_glb(path, model=None, *, levels=None, embedded_images=None):
                     document['materials'][-1]['pbrMetallicRoughness']['baseColorTexture'] = {'index': index}
                 elif texture['type'] == 'NORMAL':
                     document['materials'][-1]['normalTexture'] = {'index': index}
+                elif texture['type'] == 'METALLIC_ROUGHNESS':
+                    document['materials'][-1]['pbrMetallicRoughness']['metallicRoughnessTexture'] = {'index': index}
                 else:
                     document['materials'][-1]['occlusionTexture'] = {'index': index}
 
@@ -123,6 +151,10 @@ def write_glb(path, model=None, *, levels=None, embedded_images=None):
                     values.extend(value)
                 attributes[SEMANTICS[name]] = accessor(values, size)
                 offset += size
+            if any(mesh.get('slots', ())):
+                if len(mesh['slots']) != count or not all(0 <= slot <= 4 for slot in mesh['slots']):
+                    raise ValueError('Expected one colour slot from 0 to 4 per vertex')
+                attributes['_COLOUR_SLOT'] = accessor([float(slot) for slot in mesh['slots']], 1)
             for part in mesh['parts']:
                 if part['type'] != 'TRIANGLES' or len(part['indices']) % 3:
                     raise ValueError('Expected triangle parts')
@@ -166,6 +198,8 @@ def write_glb(path, model=None, *, levels=None, embedded_images=None):
             document['scenes'][0]['nodes'].append(index)
     if binary:
         document['buffers'] = [{'byteLength': len(binary)}]
+    if extras:
+        document['extras'] = extras
     # Empty formation references have a rig but no geometry or binary chunk.
     document = {key: value for key, value in document.items() if value != []}
     encoded = json.dumps(document, separators=(',', ':'), allow_nan=False).encode('utf-8')
@@ -225,7 +259,7 @@ def read_glb(path, level=0):
     for index in roots:
         visit(index)
 
-    vertices, parts, layouts, mesh_parts = [], [], {}, {}
+    vertices, slots, parts, layouts, mesh_parts = [], [], [], {}, {}
 
     for mesh_index in sorted(used):
         mesh = document['meshes'][mesh_index]
@@ -240,6 +274,8 @@ def read_glb(path, level=0):
                 uvs = values(attrs['TEXCOORD_0']) if 'TEXCOORD_0' in attrs else [[0, 0]] * len(position)
                 for p, n, c, uv in zip(position, normals, colors, uvs):
                     vertices.extend([*z_up(p), *z_up(n), *(display(v) for v in c[:3]), c[3], *uv])
+                slot_values = values(attrs['_COLOUR_SLOT']) if '_COLOUR_SLOT' in attrs else [[0]] * len(position)
+                slots.extend(round(v[0]) for v in slot_values)
             part_id = primitive.get('extras', {}).get('mmPart', f'{mesh_index}-{part_index}')
             indices = [i[0] + layouts[layout] for i in values(primitive['indices'])]
             parts.append({'id': part_id, 'type': 'TRIANGLES', 'indices': indices})
@@ -261,10 +297,14 @@ def read_glb(path, level=0):
     def material(source):
         pbr = source['pbrMetallicRoughness']
         result = {'id': source['name'], 'diffuse': [display(v) for v in pbr['baseColorFactor'][:3]]}
+        result.update(roughness=pbr.get('roughnessFactor', 1), metallic=pbr.get('metallicFactor', 1))
         if source.get('alphaMode') == 'MASK':
             result['alphaTest'] = source.get('alphaCutoff', .5)
+        if source.get('extras'):
+            result['extras'] = source['extras']
         for kind, info in (('DIFFUSE', pbr.get('baseColorTexture')), ('NORMAL', source.get('normalTexture')),
-                           ('AMBIENT', source.get('occlusionTexture'))):
+                           ('AMBIENT', source.get('occlusionTexture')),
+                           ('METALLIC_ROUGHNESS', pbr.get('metallicRoughnessTexture'))):
             if info is None:
                 continue
             if kind == 'NORMAL' and info.get('scale', 1) != 1:
@@ -281,7 +321,10 @@ def read_glb(path, level=0):
             result.setdefault('textures', []).append(entry)
         return result
 
-    return {'id': Path(path).stem,
-            'meshes': [{'attributes': list(STRIDES), 'vertices': vertices, 'parts': parts}] if vertices else [],
+    mesh = {'attributes': list(STRIDES), 'vertices': vertices, 'parts': parts}
+    if any(slots):
+        mesh['slots'] = slots
+    return {'id': Path(path).stem, 'extras': document.get('extras', {}),
+            'meshes': [mesh] if vertices else [],
             'nodes': [node(i) for i in roots],
             'materials': [material(m) for m in document.get('materials', [])]}

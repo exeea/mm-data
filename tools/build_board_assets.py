@@ -1,9 +1,8 @@
-"""Run in Blender (including via MCP) to rebuild MegaMek's low-poly board assets.
+"""Run in Blender (including via MCP) to rebuild MegaMek's bridges and crops.
 
 New datablocks live in their own scene; existing scenes are never edited. Runtime
-models use Z up and one hex = 84 x 72 units. Plants retain their natural
-proportions at height 30. Bridges use physical tile units, independent of
-terrain level height; crops retain their legacy height-one convention.
+models use Z up and one hex = 84 x 72 units. Bridges use physical tile units,
+independent of terrain level height; crops retain their legacy height-one convention.
 """
 import sys
 from pathlib import Path
@@ -12,9 +11,6 @@ from glb_geometry import write_glb
 
 import bpy
 import json
-import runpy
-from pathlib import Path
-from mathutils import Vector
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'data/models/board'
@@ -23,12 +19,8 @@ SCENE = bpy.data.scenes.new('MegaMek board assets')
 COLLECTION = SCENE.collection
 STATS = {}
 # Names to rebuild; None rebuilds everything. A caller may pass a set, for example
-# runpy.run_path('tools/build_board_assets.py', init_globals={'ONLY': {'cactus'}}).
+# runpy.run_path('tools/build_board_assets.py', init_globals={'ONLY': {'field'}}).
 ONLY = globals().get('ONLY')
-
-
-# Display-space colour of cactus bodies.
-CACTUS = (.47, .56, .39)
 
 
 def wanted(name):
@@ -58,45 +50,16 @@ def mesh_object(name, vertices, faces, materials, indices):
     return obj
 
 
-def tree_texture(name, mat):
-    """Use the source's material boundaries, especially its authored snow caps."""
-    role = mat.name.split('.')[0]
-    if name.startswith('cactus'):
-        # The body takes the ribbed cactus map (tools/build_cactus_texture.py); the flowers take the leaf map.
-        return 'cactus' if role == 'Green' else 'leaves-broad'
-    if role == 'Snow':
-        return 'snow'
-    if role in ('Wood', 'White', 'Black', 'Coconuts'):
-        return 'bark-birch' if name.startswith('birch') else 'bark-palm' if name.startswith('palm') else 'bark'
-    if role in ('Green', 'DarkGreen'):
-        return ('needles-pine' if name.startswith('pine') else
-                'leaves-willow' if name.startswith('willow') else
-                'fronds-palm' if name.startswith('palm') else 'leaves-broad')
-    raise ValueError(f'Unknown tree material: {name}: {mat.name}')
-
-
-def export(name, objects, normalize=False, foliage=False):
-    """Blender triangulates; runtime assets are GLB and foliage sources feed offline LOD generation."""
+def export(name, objects):
+    """Blender triangulates; runtime assets are GLB."""
     vertices, shared, parts = [], {}, {}
-    bounds = [obj.matrix_world @ Vector(corner) for obj in objects for corner in obj.bound_box]
-    low = Vector(tuple(min(v[i] for v in bounds) for i in range(3)))
-    high = Vector(tuple(max(v[i] for v in bounds) for i in range(3)))
-    # The board places, grounds and clears roads for a plant at its origin, so that is where its trunk stands;
-    # a leaning trunk would otherwise hang over a rim. Textures keep their bounding-box projection.
-    foot = Vector((0, 0, 0))
-    if normalize:
-        span = high.z - low.z
-        ground = [p for obj in objects for p in (obj.matrix_world @ v.co for v in obj.data.vertices)
-                  if p.z < low.z + .02 * span]
-        foot = Vector((sum(p.x for p in ground) / len(ground) - (low.x + high.x) / 2,
-                       sum(p.y for p in ground) / len(ground) - (low.y + high.y) / 2, 0)) * (30 / span)
     for obj in objects:
         mesh = obj.data
         mesh.calc_loop_triangles()
         normal_matrix = obj.matrix_world.to_3x3().inverted().transposed()
         for tri in mesh.loop_triangles:
             mat = mesh.materials[tri.material_index] if mesh.materials else None
-            role = tree_texture(name, mat) if foliage else 'surface'
+            role = 'surface'
             indices = parts.setdefault(role, [])
             color = mat.diffuse_color[:3] if mat else (.35, .45, .25)
             if mat and mat.use_nodes:
@@ -106,36 +69,13 @@ def export(name, objects, normalize=False, foliage=False):
             # Blender stores linear-light colors. libGDX's default shader writes
             # directly to the display framebuffer, so export display-space colors.
             color = tuple(12.92*c if c <= .0031308 else 1.055*c**(1/2.4)-.055 for c in color)
-            if role == 'cactus':
-                # The source's saturated green reads as a dark hedge; desert cacti are a pale sage.
-                color = CACTUS
-            if normalize:
-                color = tuple(min(1,max(.12,c*1.15)) for c in color)
             normal = (normal_matrix @ tri.normal).normalized()
             for index, loop in zip(tri.vertices, tri.loops):
                 pos = obj.matrix_world @ mesh.vertices[index].co
-                if normalize:
-                    span = high.z-low.z
-                    horizontal = 30/span
-                    pos = Vector(((pos.x-(low.x+high.x)/2)*horizontal,
-                                  (pos.y-(low.y+high.y)/2)*horizontal, (pos.z-low.z)*horizontal))
-                    # Uniform normalization preserves the original proportions and normals.
-                    n = normal
-                else:
-                    n = normal
+                n = normal
                 uv = (pos.x/24, pos.y/24) if abs(n.z) > .5 else (
                     (pos.x if abs(n.y) > abs(n.x) else pos.y)/24, pos.z)
-                if foliage:
-                    # Project in the tree's natural proportions. Dominant-axis mapping
-                    # avoids stretched leaves; bark and willow retain vertical grain.
-                    point = pos
-                    if abs(normal.z) >= max(abs(normal.x), abs(normal.y)):
-                        uv = (point.x, point.y)
-                    else:
-                        uv = (point.x if abs(normal.y) > abs(normal.x) else point.y, point.z)
-                    repeat = 4 if role.startswith('bark') else 8 if name.startswith('birch') else 12
-                    uv = (uv[0] / repeat, uv[1] / repeat)
-                vertex = tuple(round(v, 6) for v in (*(pos - foot), *n, *color, 1, *uv))
+                vertex = tuple(round(v, 6) for v in (*pos, *n, *color, 1, *uv))
                 if vertex not in shared:
                     shared[vertex] = len(vertices)//12
                     vertices.extend(vertex)
@@ -143,24 +83,14 @@ def export(name, objects, normalize=False, foliage=False):
     materials = []
     for role in parts:
         entry = {'id':role,'diffuse':[1,1,1]}
-        if foliage:
-            entry['textures'] = [{'id':role,'filename':f'textures/foliage/{role}.png','type':'DIFFUSE'}]
         materials.append(entry)
     model = {'version': [0, 1], 'id': name,
              'meshes': [{'attributes': ['POSITION','NORMAL','COLOR','TEXCOORD0'], 'vertices': vertices,
                          'parts': [{'id':role,'type':'TRIANGLES','indices':indices} for role,indices in parts.items()]}],
              'materials':materials,
              'nodes':[{'id':name,'parts':[{'meshpartid':role,'materialid':role} for role in parts]}]}
-    # Foliage sources stay in authoring tools; only the packaged GLB is deployed.
-    path = ROOT / 'tools/board-models/foliage' / (name+'.glb') if foliage else OUT / (name+'.glb')
+    path = OUT / (name+'.glb')
     path.parent.mkdir(parents=True, exist_ok=True)
-    for entry in model['materials']:
-        for texture in entry.get('textures', []):
-            if foliage:
-                texture['filename'] = '../../../data/models/board/' + texture['filename']
-            else:
-                wrap = 33071
-                texture.update(wrapS=wrap, wrapT=wrap)
     write_glb(path, levels={0: model})
     STATS[name] = {'triangles': sum(len(indices) for indices in parts.values())//3, 'vertices': len(vertices)//12}
 
@@ -185,64 +115,12 @@ if wanted('field'):
                 faces += [(start,start+1,start+2),(start+2,start+1,start)]
     export('field',[mesh_object('Crop rows',vertices,faces,[crop],[0]*len(faces))])
 
-# Import the user's CC0 Quaternius source into the isolated asset scene. Keep the
-# authored colors, simplify only when a source exceeds the foliage budget.
-nature = ROOT / 'TO_SORT/many_trees/Ultimate Nature Pack - Jun 2019'
-old_scene = bpy.context.window.scene if bpy.context.window else None
-if bpy.context.window:
-    bpy.context.window.scene = SCENE
-sources = [('tree','CommonTree_1'),('pine','PineTree_1'),
-           ('tree-snow','CommonTree_Snow_1'),('pine-snow','PineTree_Snow_1'),
-           ('palm','PalmTree_1'),('palm-bent','PalmTree_2'),
-           # Desert woods: saguaro-like cacti, one in flower.
-           ('cactus','Cactus_2'),('cactus-flowers','CactusFlowers_2')]
-for name, source in [('tree-broad','CommonTree_4'),('tree-slender','CommonTree_2'),
-                     ('birch','BirchTree_2'),('willow','Willow_2'),('pine-tall','PineTree_3'),
-                     ('pine-broad','PineTree_2'),('tree-dead','CommonTree_Dead_2'),
-                     # Distinct authored trunks and crown envelopes, not rescaled copies.
-                     ('tree-forked','CommonTree_3'),('tree-layered','CommonTree_5'),
-                     ('birch-tall','BirchTree_1'),('birch-spreading','BirchTree_3'),
-                     ('birch-young','BirchTree_4'),('willow-broad','Willow_1'),
-                     ('pine-slender','PineTree_4'),('pine-layered','PineTree_5')]:
-    family, number = source.rsplit('_', 1)
-    sources += [(name,source),(name+'-snow',family+'_Snow_'+number)]
-for name, source in sources:
-    if not wanted(name):
-        continue
-    path = nature / 'Blends' / (source+'.blend')
-    if not path.exists():
-        raise FileNotFoundError(path)
-    with bpy.data.libraries.load(str(path), link=False) as (available, loaded):
-        loaded.objects = available.objects
-    objects = [obj for obj in loaded.objects if obj and obj.type == 'MESH']
-    for obj in objects:
-        COLLECTION.objects.link(obj)
-    bpy.context.view_layer.update()
-    triangles = sum(len(p.vertices)-2 for obj in objects for p in obj.data.polygons)
-    budget = 480
-    for obj in objects:
-        bpy.context.view_layer.objects.active = obj
-        obj.select_set(True)
-        if triangles > budget:
-            mod = obj.modifiers.new('Game asset budget', 'DECIMATE')
-            mod.ratio = budget/triangles
-            bpy.ops.object.modifier_apply(modifier=mod.name)
-        obj.select_set(False)
-    bpy.context.view_layer.update()
-    export(name,objects,normalize=True,foliage=True)
-    STATS[name]['source'] = str(path.relative_to(nature)).replace('\\', '/')
-if old_scene:
-    bpy.context.window.scene = old_scene
-
 # Terrain, riverbed and rim textures are authored assets. Model rebuilds preserve them.
 
-manifest = STATS
-if ONLY is not None and (OUT/'manifest.json').exists():
-    # A partial rebuild keeps every other asset's entry, including its detail levels.
-    manifest = json.loads((OUT/'manifest.json').read_text())
-    manifest.update(STATS)
+# This generator owns bridges and crops; preserve every other asset's catalog entry.
+manifest = json.loads((OUT/'manifest.json').read_text()) if (OUT/'manifest.json').exists() else {}
+manifest.update(STATS)
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2))
-runpy.run_path(str(ROOT / 'tools/prepare_tree_lods.py'), init_globals={'ONLY': ONLY}, run_name='__main__')
 # Save only the authored library, never replace the user's open file. A partial rebuild has only part of it.
 if ONLY is None:
     bpy.data.libraries.write(str(ROOT/'tools/board-assets.blend'), set(SCENE.objects), fake_user=True)

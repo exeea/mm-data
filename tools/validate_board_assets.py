@@ -25,22 +25,6 @@ for asset, entry in features.items():
             assert lod['node'] == f'{asset}-lod{level}', asset
             assert 0 < lod['triangles'] <= entry['triangles'] // (1 if level == 0 else 2 if level == 1 else 5), lod
             catalog[lod['node']] = lod
-        original = read_glb(ROOT / 'tools/board-models/foliage' / (asset + '.glb'))['meshes'][0]
-        # Plant GLBs must be correctly proportioned in ordinary viewers, before game placement.
-        assert abs(min(original['vertices'][2::12])) < 1e-5, asset
-        assert abs(max(original['vertices'][2::12]) - 30) < 1e-4, asset
-        source_faces = {(part['id'], tuple(tuple(original['vertices'][i * 12:i * 12 + 12])
-                                          for i in part['indices'][offset:offset + 3]))
-                        for part in original['parts'] for offset in range(0, len(part['indices']), 3)}
-        for level, lod in enumerate(entry['lods']):
-            mesh = read_glb(BOARD / (asset + '.glb'), level)['meshes'][0]
-            for axis in range(3):
-                low, high = min(original['vertices'][axis::12]), max(original['vertices'][axis::12])
-                assert all(low - 1e-5 <= value <= high + 1e-5 for value in mesh['vertices'][axis::12]), lod
-            if level == 0:
-                assert all((part['id'], tuple(tuple(mesh['vertices'][i * 12:i * 12 + 12])
-                                             for i in part['indices'][offset:offset + 3])) in source_faces
-                           for part in mesh['parts'] for offset in range(0, len(part['indices']), 3)), lod
 maximum = 0
 assert not list(BOARD.rglob('*.g3dj')), 'All deployed board meshes must use GLB'
 assert not any(name.startswith('rock-') for name in features), 'Retired rocks in manifest'

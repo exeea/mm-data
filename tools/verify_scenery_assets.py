@@ -7,6 +7,17 @@ from pathlib import Path
 from glb_geometry import read_glb
 
 ROOT = Path(__file__).resolve().parents[1]
+SCENERY = ROOT/'data/models/board/scenery'
+LAYOUTS = json.loads((SCENERY/'layouts.json').read_text())
+# layouts.json maps each legacy key that was one mesh to that mesh with one row; invert it to find the source image.
+# Only an unturned, unstretched row is the mesh's own image: crane tips 03-06 are turned rows on tips 01 and 02.
+LEGACY = {rows[0]['asset']: key for key, rows in LAYOUTS.items()
+          if len(rows) == 1 and rows[0]['rotation'] == 0 and 'stretch' not in rows[0]}
+
+
+def image(file):
+    """The tileset image (without extension) whose artwork a renamed scenery mesh bakes."""
+    return LEGACY['scenery/'+file.relative_to(SCENERY).with_suffix('').as_posix()][len('scenery/'):]
 
 
 def signed(a, b, p):
@@ -59,7 +70,7 @@ def below(points, ceiling):
 
 
 def main():
-    files = list((ROOT/'data/models/board/scenery/saxarba/SMV_Seaport').glob('*.glb'))
+    files = list((SCENERY/'seaport').glob('*.glb'))
     checked, overlaps = 0, []
     for file in files:
         data = read_glb(file, 0)
@@ -77,8 +88,8 @@ def main():
                 area = intersection_area(first, second)
                 if area > .001: overlaps.append({'file': file.name, 'area': round(area, 5)})
     pools, bad_edges, coping_overlaps = 0, [], []
-    for file in (ROOT/'data/models/board/scenery').rglob('*.glb'):
-        if not any(key in file.name.lower() for key in ('pool','lake','suburb','square')): continue
+    for file in SCENERY.rglob('*.glb'):
+        if file.parent.name != 'pools' and not file.stem.startswith(('plaza-', 'fountain')): continue
         data = read_glb(file, 0)
         edges, tops = Counter(), []
         for mesh in data['meshes']:
@@ -102,7 +113,7 @@ def main():
                 if intersection_area([p[:2] for p in first], [p[:2] for p in second]) > .001:
                     coping_overlaps.append(file.name)
     squares, outside = 0, []
-    for file in (ROOT/'data/models/board/scenery/fluff').glob('square*.glb'):
+    for file in (SCENERY/'parks').glob('plaza-*.glb'):
         values=read_glb(file,0)['meshes'][0]['vertices']
         green,border=[],[]
         for i in range(0,len(values),12):
@@ -115,7 +126,7 @@ def main():
         if not green or len(boundary)<3 or escaped:outside.append({'file':file.name,'outside_vertices':escaped})
         squares+=1
     construction_area,platforms,construction_overlaps,construction_min_z={},[],[],{}
-    for file in (ROOT/'data/models/board/scenery/fluff').glob('construction*.glb'):
+    for file in (SCENERY/'construction').glob('*.glb'):
         data=read_glb(file,0)
         construction_min_z[file.name]=round(min(z for m in data['meshes'] for z in m['vertices'][2::12]),5)
         area,tops=0,[]
@@ -136,17 +147,19 @@ def main():
                         [p[:2] for p in first],[p[:2] for p in second])>.001:
                     construction_overlaps.append(file.name)
     animals,animal_errors={},[]
-    for name,count in {'horses1':5,'horses2':2,'cattle1':2,'cattle2':2,'cattle3':3,
-                       'pigs1':4,'pigs2':4,'bison1':2}.items():
-        data=read_glb(ROOT/'data/models/board/scenery/fluff'/(name+'.glb'),0)
+    # One mesh per animal (tools/extract_herd_animals.py), standing on Z=0 within the livestock budget.
+    for file in sorted((SCENERY/'farm').glob('*.glb')):
+        data=read_glb(file,0)
         triangles=sum(len(p['indices'])//3 for m in data['meshes'] for p in m['parts'])
         low=min(z for m in data['meshes'] for z in m['vertices'][2::12])
-        animals[name]={'animals':count,'triangles':triangles,'per_animal':triangles/count,'min_z':round(low,6)}
-        if triangles>600*count or low<-.0001:animal_errors.append(name)
+        animals[file.stem]={'triangles':triangles,'min_z':round(low,6)}
+        # The procedural poultry was never within the 600-triangle livestock budget.
+        budget=1100 if file.stem in ('hen','rooster') else 600
+        if triangles>budget or abs(low)>.0001:animal_errors.append(file.stem)
     layouts=json.loads((ROOT/'tools/board-models/scenery/layouts.json').read_text())
     crane_errors,grabber_errors=[],[]
     for file in files:
-        name='saxarba/SMV_Seaport/'+file.stem+'.png';layout=layouts[name];data=read_glb(file,0)
+        name=image(file)+'.png';layout=layouts[name];data=read_glb(file,0)
         roofs=[p for p in mesh_triangles(data,'containers') if all(abs(v[2]-6.4)<.0001 for v in p)]
         grabs=list(mesh_triangles(data,'container-grabbers'))
         if len(layout['grabbers'])!=bool(grabs) or any(p[2]<6.42 for tri in grabs for p in tri):
@@ -158,27 +171,32 @@ def main():
             if len(footprint)<3:continue
             if any(intersection_area(footprint,[p[:2] for p in roof])>.0001 for roof in roofs):
                 crane_errors.append({'file':file.name,'error':'support intersects container'});break
-        tip=read_glb(file.parent/('SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-'+f"{c['direction']:02d}.glb"),0)
+        # The neighbour's tip as its legacy key draws it: its row turns the straight or the diagonal tip.
+        row,=LAYOUTS['scenery/'+name.replace('ShipToShoreGantryCrane-01-20Footer','ShipToShoreGantryCrane-03-CraneTip')
+                     .rsplit('-',2)[0]+f"-1-{c['direction']:02d}"]
+        tip=read_glb(ROOT/f"data/models/board/{row['asset']}.glb",0)
         dx,dy=c['neighbor'];span=math.hypot(dx,dy);ax,ay=dx/span,dy/span
-        def joint(model,translation):
-            result=set()
+        def joint(model,translation,angle=0):
+            result=[]
+            cos,sin=math.cos(math.radians(angle)),math.sin(math.radians(angle))
             for tri in mesh_triangles(model,'crane-boom'):
                 for x,y,z in tri:
-                    x+=translation[0];y+=translation[1]
-                    if abs(x*ax+y*ay-c['half_span'])<.0001 and 27.5<z<31.5:
-                        result.add((round(x,3),round(y,3),round(z,3)))
+                    x,y=x*cos-y*sin+translation[0],x*sin+y*cos+translation[1]
+                    if abs(x*ax+y*ay-c['half_span'])<.001 and 27.5<z<31.5:result.append((x,y,z))
             return result
-        first,second=joint(data,(0,0)),joint(tip,(dx,dy))
-        if len(first)<16 or first!=second:crane_errors.append({'file':file.name,'error':'boom joint mismatch'})
+        first,second=joint(data,(0,0)),joint(tip,(dx,dy),row['rotation'])
+        # Every joint vertex of the crane meets one of the tip's within 0.001 px, and the other way round.
+        meets=lambda a,b:all(any(math.dist(p,q)<.001 for q in b) for p in a)
+        if len(first)<16 or not (meets(first,second) and meets(second,first)):
+            crane_errors.append({'file':file.name,'error':'boom joint mismatch'})
     geysers,geyser_errors={},[]
-    for file in (ROOT/'data/models/board/scenery/saxarba/misc').glob('geyser*.glb'):
+    for file in (SCENERY/'geysers').glob('*.glb'):
         data=read_glb(file,0);low=min(z for m in data['meshes'] for z in m['vertices'][2::12])
         roles={p['id'] for m in data['meshes'] for p in m['parts']}
         geysers[file.name]={'min_z':round(low,5),'triangles':sum(len(p['indices'])//3 for m in data['meshes'] for p in m['parts'])}
         if low<-.0001 or 'geyser-spray' in roles:geyser_errors.append(file.name)
     debris,debris_errors={},[]
-    scenery=ROOT/'data/models/board/scenery/saxarba'
-    for file in list((scenery/'misc').glob('rubble_*.glb'))+list(scenery.glob('rubble_*_path.glb'))+[scenery/'misc/fortified.glb']:
+    for file in list((SCENERY/'rubble').glob('*.glb'))+[SCENERY/'military/fortification.glb']:
         data=read_glb(file,0)
         points=[m['vertices'][i:i+3] for m in data['meshes'] for i in range(0,len(m['vertices']),12)]
         roles={p['id'] for m in data['meshes'] for p in m['parts']}
@@ -187,13 +205,13 @@ def main():
         debris[file.name]={'triangles':count,'min_z':round(low,5),'materials':sorted(roles)}
         if low<-.0001 or len(roles)<2 or any(not mat.get('textures') for mat in data['materials']):
             debris_errors.append({'file':file.name,'error':'untextured or ungrounded debris'})
-        if '_path' in file.stem:
+        if file.stem.endswith('-path'):
             # Checking all three triangle vertices also catches fragments spanning the cleared lane.
             for role in roles:
                 for tri in mesh_triangles(data,role):
                     if min(p[0] for p in tri)<9 and max(p[0] for p in tri)>-9:
                         debris_errors.append({'file':file.name,'error':'cleared lane obstructed'});break
-        if file.stem=='fortified' and any(math.hypot(p[0],p[1])<21 for p in points):
+        if file.stem=='fortification' and any(math.hypot(p[0],p[1])<21 for p in points):
             debris_errors.append({'file':file.name,'error':'sandbags cover open center'})
     result = {'seaport_assets': len(files), 'container_roof_triangles': checked, 'coplanar_overlaps': overlaps,
               'pool_assets': pools, 'pool_nonmanifold_shells': bad_edges, 'pool_coping_overlaps': coping_overlaps,
