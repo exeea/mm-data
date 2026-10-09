@@ -47,11 +47,23 @@ PROFILES = {'soil': (4.0, .095, 'mantle', 'soil-contact'),
 SIZE = 512
 
 
+def balance_axes(field):
+    """Remove row/column bias that joins into long bands when an otherwise seamless tile repeats.
+
+    Preserve the overall mean and all detail that varies across both axes. This is
+    for non-directional hardpan, not bedding, ripples or other intentional grain.
+    """
+    return (field - field.mean(axis=0, keepdims=True) - field.mean(axis=1, keepdims=True)
+            + 2 * field.mean(axis=(0, 1), keepdims=True))
+
+
 def bake(name, out):
     tile, relief, _, runtime_name = PROFILES[name]
     with Image.open(SOURCES / (name + '.png')) as image:
         rgb = np.asarray(image.convert('RGB').resize((SIZE, SIZE), Image.Resampling.LANCZOS)) / 255.0
     rgb = np.clip(periodic(rgb), .015, .985)
+    if name == 'desert-hardpan':
+        rgb = balance_axes(rgb)
     canvas = Canvas(SIZE, tile, 0)
     light = rgb @ np.array([.2126, .7152, .0722])
     height = authored_height(SOURCES / (name + '-height.png'), SIZE)
@@ -65,6 +77,11 @@ def bake(name, out):
         # Keep chipped rims and coherent plate faces. A sub-pixel filter removes generated grain without
         # turning mineral stains into geometry or blurring the cracks into broad luminance swells.
         height = blur(height, .6) * relief
+    if name == 'desert-hardpan':
+        # Percentile clipping can put a small axis bias back into estimated height.
+        # Balance before deriving normals/AO, then retain the authored relief range.
+        height = balance_axes(height)
+        height = (height - height.min()) * relief / max(np.ptp(height), 1e-9)
     # Retain broad fungal/tundra colonies; their shader breaks repetition with translated samples.
     albedo = flatten_tone(canvas, rgb, keep=.8 if name.startswith('fungus-') or name.startswith('tundra-') else .2)
     ao = occlusion(canvas, height, (.02, .08), (40, 18))

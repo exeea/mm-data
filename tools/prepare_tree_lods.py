@@ -1,35 +1,25 @@
-"""Run with Blender --background --python tools/prepare_tree_lods.py -- [trees|impostors] [names...].
+"""Run with Blender --background --python tools/prepare_tree_lods.py -- impostors [names...].
 
-Leafy trees keep their authored trunks and crown envelopes, with alpha-tested
-branch clusters replacing closed leaf shells. Three bounded mesh levels and the
-impostor are generated offline; the renderer does not change tree placement.
-Palms use curved frond strips; cacti keep their stem silhouettes with smooth
-normals, mapped ribs and cutout flowers. Bare trees retain their visible near
-triangles; their lower levels use collapse decimation or component hulls.
-
-The impostor stage adds LOD3 to every plant with detail levels (trees, shrubs
-and orchard trees): three textured cards carrying unlit renders of LOD0.
+Shared branch-card helpers support the shrub, orchard and volcanic foliage
+generators. The command adds LOD3 to existing plant GLBs: three textured cards
+carrying unlit renders of LOD0, while preserving their three mesh levels.
 """
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from glb_geometry import read_glb, write_glb
 
-import collections
 import copy
 import json
 import math
 import random
-from pathlib import Path
 
-import bmesh
 import bpy
 import numpy
 from mathutils import Euler, Matrix, Vector
 from mathutils.bvhtree import BVHTree
 
 BOARD = Path(__file__).resolve().parents[1] / 'data/models/board'
-BUDGETS = (240, 96)
 IMPOSTORS = 'textures/foliage/impostors'
 # Pixels per card face; the game draws the cards only below TreeLod's smallest threshold.
 PANEL = 128
@@ -68,56 +58,6 @@ def geometry(model):
             faces.append(face)
             corners.append((part['id'], attributes))
     return vertices, faces, corners
-
-
-def enclosed_faces(vertices, faces):
-    adjacent = [set() for _ in vertices]
-    for face in faces:
-        for vertex in face:
-            adjacent[vertex].update(face)
-    components, visited = [], set()
-    for start in range(len(vertices)):
-        if start in visited:
-            continue
-        group, pending = set(), [start]
-        while pending:
-            vertex = pending.pop()
-            if vertex not in group:
-                group.add(vertex)
-                pending.extend(adjacent[vertex] - group)
-        visited.update(group)
-        components.append([i for i, face in enumerate(faces) if face[0] in group])
-    whole = BVHTree.FromPolygons(vertices, faces, all_triangles=True)
-    hidden = set()
-    for component in components:
-        surface = [faces[i] for i in component]
-        edges = collections.Counter((face[k], face[(k + 1) % 3]) for face in surface for k in range(3))
-        # Open palm fronds must never be mistaken for enclosing volumes.
-        if any(count != 1 or edges[b, a] != 1 for (a, b), count in edges.items()):
-            continue
-        shell = BVHTree.FromPolygons(vertices, surface, all_triangles=True)
-        intersecting = {a for a, _ in whole.overlap(shell)} | set(component)
-        triangles = [[vertices[i] for i in face] for face in surface]
-
-        def inside(point):
-            if shell.find_nearest(point)[3] < 0.0001:
-                return False
-            # Solid angle works for concave canopies too; no assumed ray direction.
-            angle = 0
-            for triangle in triangles:
-                a, b, c = [vertex - point for vertex in triangle]
-                denominator = (a.length * b.length * c.length + a.dot(b) * c.length
-                               + b.dot(c) * a.length + c.dot(a) * b.length)
-                angle += 2 * math.atan2(a.dot(b.cross(c)), denominator)
-            return abs(angle) > 2 * math.pi
-
-        for index, face in enumerate(faces):
-            if index in intersecting or index in hidden:
-                continue
-            points = [vertices[i] for i in face]
-            if inside(sum(points, Vector()) / 3) and all(inside(point) for point in points):
-                hidden.add(index)
-    return hidden
 
 
 def pack(source, name, corners):
@@ -186,82 +126,10 @@ def parts(count, faces):
     return list(groups.values())
 
 
-def hull(vertices, faces):
-    """The triangulated convex hull of the corners of faces: its positions and triangles."""
-    bm = bmesh.new()
-    made = bmesh.ops.convex_hull(bm, input=[bm.verts.new(vertices[v]) for v in sorted({v for f in faces for v in f})])
-    inside = {element for element in made['geom_interior'] + made['geom_unused'] if isinstance(element, bmesh.types.BMVert)}
-    bmesh.ops.delete(bm, geom=list(inside), context='VERTS')
-    bmesh.ops.triangulate(bm, faces=bm.faces[:])
-    index = {vertex: i for i, vertex in enumerate(bm.verts)}
-    result = [vertex.co.copy() for vertex in bm.verts], [[index[vertex] for vertex in face.verts] for face in bm.faces]
-    bm.free()
-    return result
-
-
-def area(vertices, faces):
-    return sum((vertices[f[1]] - vertices[f[0]]).cross(vertices[f[2]] - vertices[f[0]]).length for f in faces) / 2
-
-
-# The board camera's views of a plant: from 35 degrees above on four sides, and from straight above.
-OUTLINE = [Vector((math.cos(turn) * math.cos(math.radians(35)), math.sin(turn) * math.cos(math.radians(35)),
-                   math.sin(math.radians(35)))) for turn in (0, math.pi / 2, math.pi, 3 * math.pi / 2)] + [Vector((0, 0, 1))]
-
-
-def outline(triangles):
-    """How much of a plant the board camera sees: the area its triangles turn toward the camera's views."""
-    return sum(max(0, (b - a).cross(c - a).dot(view)) for a, b, c in triangles for view in OUTLINE) / 2
-
-
-def keeps_outline(source, budget):
-    """Whether collapse decimation to budget keeps two thirds of the plant's outline. The jagged skirts of pines and
-    the fronds of palms lose half theirs, and the snow on them with it; broad crowns, trunks and cacti keep most."""
+def simplified(source, name, budget):
     vertices, faces, corners = geometry(source)
     keys = [(role, tuple(attributes[0][6:10])) for role, attributes in corners]
-    kept = outline([points for points, key, normal in decimated(vertices, faces, keys, budget)])
-    return kept >= outline([[vertices[v] for v in face] for face in faces]) * 2 / 3
-
-
-def surface_keys(vertices, faces, keys, triangles):
-    """Gives each new triangle the material of the original surface it replaces: the nearest original face turned the
-    same way, at its centre and toward its corners, so a skirt's top keeps its snow and its underside its needles."""
-    tree = BVHTree.FromPolygons(vertices, faces, all_triangles=True)
-    normals = [(vertices[f[1]] - vertices[f[0]]).cross(vertices[f[2]] - vertices[f[0]]).normalized() for f in faces]
-    reach = max(max(point[i] for point in vertices) - min(point[i] for point in vertices) for i in range(3)) * .15
-    result = []
-    for points, key, normal in triangles:
-        centre = sum(points, Vector()) / 3
-        votes = collections.Counter()
-        for sample in [centre] + [(centre + point) / 2 for point in points]:
-            near = sorted(tree.find_nearest_range(sample, reach), key=lambda hit: hit[3])
-            hit = next((hit for hit in near if normals[hit[2]].dot(normal) > 0), None) or tree.find_nearest(sample)
-            votes[keys[hit[2]]] += 1
-        result.append((points, votes.most_common(1)[0][0], normal))
-    return result
-
-
-def simplified(source, name, budget, hulled):
-    vertices, faces, corners = geometry(source)
-    keys = [(role, tuple(attributes[0][6:10])) for role, attributes in corners]
-    if not hulled:
-        triangles = decimated(vertices, faces, keys, budget)
-    else:
-        # Each compact part (a pine skirt, a palm frond) keeps its outline as its decimated convex hull, which holds
-        # the tips decimation files away. Parts whose hull would bloat (trunks, branches) decimate together.
-        triangles, rest = [], []
-        for part in parts(len(vertices), faces):
-            part_faces = [faces[i] for i in part]
-            positions, shell = hull(vertices, part_faces)
-            if area(positions, shell) < 1.3 * area(vertices, part_faces):
-                share = max(4, budget * len(part) // len(faces))
-                # Any key will do: the surface decides each hull triangle's material below.
-                triangles += decimated(positions, shell, [keys[part[0]]] * len(shell), share)
-            else:
-                rest += part
-        triangles = surface_keys(vertices, faces, keys, triangles)
-        if rest:
-            triangles += decimated(vertices, [faces[i] for i in rest], [keys[i] for i in rest],
-                                   budget * len(rest) // len(faces))
+    triangles = decimated(vertices, faces, keys, budget)
     result = []
     low = Vector(tuple(min(point[i] for point in vertices) for i in range(3)))
     high = Vector(tuple(max(point[i] for point in vertices) for i in range(3)))
@@ -362,7 +230,7 @@ def branch_crowns(source, name, retained_levels=None):
     for level, (budget, cards) in enumerate(((480, 88), (240, 42), (96, 15))):
         rng = random.Random(seed)
         if retained_levels is None:
-            model = simplified(bark, f'{name}-lod{level}', budget - cards * 4, False)
+            model = simplified(bark, f'{name}-lod{level}', budget - cards * 4)
         else:
             # These plant LODs already author their own branch and fruit counts. Keep those exactly,
             # assigning only the remaining budget to leaves instead of decimating individual apples.
@@ -428,200 +296,6 @@ def branch_crowns(source, name, retained_levels=None):
             data[vertex + 2] = (data[vertex + 2] - bottom) * scale
         assert counts(levels[level])['triangles'] <= budget
     return levels
-
-
-def palm_crowns(source, name):
-    """Curved, folded fronds attach to the original palm's terminal stem, including the leaning palm."""
-    vertices, faces, corners = geometry(source)
-    leaves = [face for face, (role, _) in zip(faces, corners) if not solid(role)]
-    bark = pack(source, name, [corner for corner in corners if solid(corner[0])])
-    stem_vertices, stem_faces, _ = geometry(bark)
-    root = stem_section(stem_vertices, stem_faces, max(p.z for p in stem_vertices) - .15)
-    low = Vector(tuple(min(p[k] for p in vertices) for k in range(3)))
-    high = Vector(tuple(max(p[k] for p in vertices) for k in range(3)))
-    fronds = []
-    for group in parts(len(vertices), leaves):
-        points = [vertices[i] for j in group for i in leaves[j]]
-        tip = max(points, key=lambda p: (p - root).length_squared).copy()
-        along = Vector((tip.x - root.x, tip.y - root.y, 0)).normalized()
-        right = Vector((-along.y, along.x, 0))
-        width = max(1.5, max(abs((p - root).dot(right)) for p in points) * 2.2)
-        control = (root + tip) / 2
-        control.z = 2 * max(p.z for p in points) - (root.z + tip.z) / 2
-        fronds.append((math.atan2(along.y, along.x), tip, right, width, control))
-    fronds.sort(key=lambda f: f[0])
-    material = cutout_material('canopy-cutout', 'palm-frond-cutout')
-    levels = {}
-    for level, budget in enumerate((480, 240, 96)):
-        selected = fronds if level < 2 else [fronds[i * len(fronds) // 7] for i in range(7)]
-        segments, columns = (3, 3) if level == 0 else (3, 2) if level == 1 else (2, 2)
-        leaf_budget = len(selected) * segments * (columns - 1) * 4
-        model = simplified(bark, f'{name}-lod{level}', budget - leaf_budget, False)
-        _, _, result = geometry(model)
-        for _, tip, right, width, control in selected:
-            points, uvs, triangles = [], [], []
-            width *= 1.65 if level == 2 else 1
-            for row in range(segments + 1):
-                t = row / segments
-                centre = (1 - t) ** 2 * root + 2 * t * (1 - t) * control + t * t * tip
-                for column in range(columns):
-                    u = column / (columns - 1)
-                    p = centre + right * ((u - .5) * width)
-                    if columns == 3 and column == 1:
-                        p.z += .10 * width * math.sin(math.pi * t)
-                    points.append(Vector(tuple(max(low[k], min(high[k], p[k])) for k in range(3))))
-                    uvs.append((u, 1 - t))
-            for row in range(segments):
-                for column in range(columns - 1):
-                    a = row * columns + column
-                    triangles.extend(((a, a + 1, a + columns + 1), (a, a + columns + 1, a + columns)))
-            append_cutout(result, material['id'], points, uvs, triangles)
-        model['materials'] = [m for m in source['materials'] if solid(m['id'])] + [material]
-        model['nodes'] = [{'id': f'{name}-lod{level}', 'parts': [
-            {'meshpartid': m['id'], 'materialid': m['id']} for m in model['materials']]}]
-        levels[level] = pack(model, f'{name}-lod{level}', result)
-        data = levels[level]['meshes'][0]['vertices']
-        scale = high.z / max(data[2::12])
-        for offset in range(2, len(data), 12):
-            data[offset] *= scale
-        assert counts(levels[level])['triangles'] <= budget
-    return levels
-
-
-def cactus_levels(source, name):
-    """Keep stem topology, wrap ribs around each arm, and replace angular flower shells with shallow cutout cups."""
-    vertices, faces, corners = geometry(source)
-    body = pack(source, name, [corner for corner in corners if corner[0] == 'cactus'])
-    flower_faces = [face for face, (role, _) in zip(faces, corners) if role != 'cactus']
-    flowers = []
-    for group in parts(len(vertices), flower_faces):
-        points = [vertices[i] for j in group for i in flower_faces[j]]
-        low = Vector(tuple(min(p[k] for p in points) for k in range(3)))
-        high = Vector(tuple(max(p[k] for p in points) for k in range(3)))
-        # Each original flower has overlapping inner and outer petal shells.
-        overlap = next((i for i, (a, b) in enumerate(flowers)
-                        if all(a[k] <= high[k] and low[k] <= b[k] for k in range(3))), None)
-        if overlap is None:
-            flowers.append((low, high))
-        else:
-            a, b = flowers[overlap]
-            flowers[overlap] = (Vector(tuple(min(a[k], low[k]) for k in range(3))),
-                                Vector(tuple(max(b[k], high[k]) for k in range(3))))
-    materials = [{'id': 'cactus', 'diffuse': [1, 1, 1], 'textures': [
-        {'id': 'cactus', 'type': 'DIFFUSE', 'filename': 'textures/foliage/cactus-skin.png'},
-        {'id': 'cactus-normal', 'type': 'NORMAL', 'filename': 'textures/foliage/cactus-skin-normal.png'}]}]
-    if flowers:
-        materials.append(cutout_material('flower-cutout', 'cactus-flower-cutout'))
-    levels = {}
-    for level, budget in enumerate((480, 240, 96)):
-        petals = (8, 6, 4)[level]
-        body_budget = budget - len(flowers) * petals * 2
-        if level == 0:
-            vs, fs, cs = geometry(body)
-            hidden = enclosed_faces(vs, fs)
-            model = pack(body, f'{name}-lod{level}', [c for i, c in enumerate(cs) if i not in hidden])
-        else:
-            model = simplified(body, f'{name}-lod{level}', body_budget, False)
-        round_cactus(model)
-        vs, fs, cs = geometry(model)
-        result = []
-        for group in parts(len(vs), fs):
-            arm_faces = [fs[i] for i in group]
-            arm_points = [vs[i] for face in arm_faces for i in face]
-            arm_low = min(p.z for p in arm_points)
-            arm_high = max(p.z for p in arm_points)
-            # Sections follow the existing elbow and upright stem, keeping bark/ribs attached to the arm.
-            section_vertices = arm_points
-            section_faces = [list(range(i, i + 3)) for i in range(0, len(arm_points), 3)]
-            for index in group:
-                attributes, us = [], []
-                for vertex in cs[index][1]:
-                    p = Vector(vertex[:3])
-                    centre = stem_section(section_vertices, section_faces, max(arm_low, min(arm_high, p.z)))
-                    u = math.atan2(p.y - centre.y, p.x - centre.x) / (2 * math.pi)
-                    us.append(u)
-                    attributes.append([*vertex[:6], 1, 1, 1, 1, u * 2, p.z / 4])
-                # Do not interpolate across the cylindrical UV seam through the middle of a face.
-                if max(us) - min(us) > .5:
-                    for vertex, u in zip(attributes, us):
-                        if u < 0:
-                            vertex[10] += 2
-                result.append(('cactus', [tuple(v) for v in attributes]))
-        for low, high in flowers:
-            centre = (low + high) / 2
-            centre.z = low.z
-            points, uvs = [centre], [(.5, .5)]
-            for i in range(petals):
-                angle = 2 * math.pi * i / petals
-                p = Vector((centre.x + (high.x - low.x) * .5 * math.cos(angle),
-                            centre.y + (high.y - low.y) * .5 * math.sin(angle),
-                            low.z + (high.z - low.z) * .4))
-                points.append(p)
-                uvs.append((.5 + .5 * math.cos(angle), .5 + .5 * math.sin(angle)))
-            append_cutout(result, 'flower-cutout', points, uvs,
-                          [(0, i + 1, (i + 1) % petals + 1) for i in range(petals)])
-        model['materials'] = materials
-        model['nodes'] = [{'id': f'{name}-lod{level}', 'parts': [
-            {'meshpartid': m['id'], 'materialid': m['id']} for m in materials]}]
-        levels[level] = pack(model, f'{name}-lod{level}', result)
-        if flowers:
-            data = levels[level]['meshes'][0]['vertices']
-            scale = max(p.z for p in vertices) / max(data[2::12])
-            for offset in range(2, len(data), 12):
-                data[offset] *= scale
-        assert counts(levels[level])['triangles'] <= budget
-    return levels
-
-
-def prepare(only=None):
-    """Rebuild the detail levels of every tree, or only of the named ones."""
-    manifest = json.loads((BOARD / 'manifest.json').read_text())
-    old_scene = bpy.context.window.scene
-    scene = bpy.data.scenes.new('MegaMek tree detail levels')
-    bpy.context.window.scene = scene
-    try:
-        for name, entry in manifest.items():
-            if 'source' not in entry or only is not None and name not in only:
-                continue
-            source_path = BOARD.parents[2] / 'tools/board-models/foliage' / (name + '.glb')
-            source = read_glb(source_path)
-            for material in source['materials']:
-                for texture in material.get('textures', []):
-                    texture['filename'] = (source_path.parent / texture['filename']).resolve().relative_to(BOARD).as_posix()
-            crowns = (cactus_levels(source, name) if name.startswith('cactus') else
-                      palm_crowns(source, name) if name.startswith('palm') else branch_crowns(source, name))
-            if crowns is not None:
-                entry['mesh'] = name + '.glb'
-                entry['lods'] = [{'node': f'{name}-lod{level}', **counts(model)} for level, model in crowns.items()]
-                write_glb(BOARD / (name + '.glb'), levels=crowns)
-                print(name, 'plant surfaces', [lod['triangles'] for lod in entry['lods']], flush=True)
-                continue
-            vertices, faces, corners = geometry(source)
-            hidden = enclosed_faces(vertices, faces)
-            near_name = name + '-lod0'
-            near = pack(source, near_name, [corner for index, corner in enumerate(corners) if index not in hidden])
-            entry['mesh'] = name + '.glb'
-            entry['lods'] = [{'node': near_name, **counts(near)}]
-            levels = {0: near}
-            budgets = [min(budget, entry['triangles'] // (2 if level == 1 else 5))
-                       for level, budget in enumerate(BUDGETS, 1)]
-            # Decided once from the farthest level, so every level of a plant keeps one shape.
-            hulled = not keeps_outline(source, budgets[-1])
-            for level, budget in enumerate(budgets, 1):
-                asset = f'{name}-lod{level}'
-                # Simplify the closed original, so enclosed surfaces cannot leave
-                # holes when the distant canopy changes shape.
-                model = simplified(source, asset, budget, hulled)
-                levels[level] = model
-                entry['lods'].append({'node': asset, **counts(model)})
-            write_glb(BOARD / (name + '.glb'), levels=levels)
-            # The complete authoring source remains available for geometry and visual review.
-            print(name, entry['triangles'], '->',
-                  [lod['triangles'] for lod in entry['lods']], flush=True)
-        (BOARD / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
-    finally:
-        bpy.context.window.scene = old_scene
-        bpy.data.scenes.remove(scene)
 
 
 def round_cactus(model):
@@ -996,9 +670,8 @@ def impostors(only=None):
 
 if __name__ == '__main__':
     arguments = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
-    stage = arguments[0] if arguments else 'all'
+    stage = arguments[0] if arguments else 'impostors'
     only = set(arguments[1:]) or globals().get('ONLY')
-    if stage in ('all', 'trees'):
-        prepare(only)
-    if stage in ('all', 'impostors'):
-        impostors(only)
+    if stage != 'impostors':
+        raise SystemExit('Only the impostors stage is supported; legacy tree generation has been removed.')
+    impostors(only)

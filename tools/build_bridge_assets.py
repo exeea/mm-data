@@ -43,7 +43,9 @@ def triangles(loops):
 
 def build(root):
     from build_bridge_terminal import build as build_terminal
+    from build_bridge_pier import build as build_pier
     build_terminal(root)
+    build_pier(root)
     out = root / 'data/models/board'
     shapes = json.loads((root / 'tools/board-models/bridge-shapes.json').read_text())
     assert sorted(shape['exits'] for shape in shapes) == list(range(64))

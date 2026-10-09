@@ -580,15 +580,13 @@ def rock(c):
 
 
 def snow(c):
-    """Wind-packed snow: soft swells, low sastrugi ridges across the wind, faint grain."""
-    height = c.spectral(4, 1, 4) * .08
-    ridge = 1 - np.abs(c.spectral(3, 2, 14, stretch=(1, 3.5), angle=.5))
-    height += smoothstep(.35, 1, ridge) * .02 * smoothstep(-.6, .6, c.spectral(3, 1, 4))
-    height += c.spectral(1, 40, 300) * .0015
-    hollow = smoothstep(.02, -.1, height - c.blur(height, .5))
-    rgb = mix(fill(c, '#f1f3f6'), fill(c, '#e1e7ef'), hollow * .8)
-    rgb = shade(rgb, 1 + .015 * c.spectral(2, 2, 20))
-    return rgb, height, 1.6
+    """Settled granular snow: shallow irregular crust and fine grains, without repeated sastrugi waves."""
+    height = c.spectral(3.2, 2, 10) * .009 + c.spectral(1.8, 10, 65) * .002
+    height += c.spectral(.8, 65, 240) * .0006
+    hollow = smoothstep(.003, -.012, height - c.blur(height, .18))
+    rgb = mix(fill(c, '#f1f3f6'), fill(c, '#e4e9ef'), hollow * .45)
+    rgb = shade(rgb, 1 + .008 * c.spectral(2, 3, 24))
+    return rgb, height, 1.1
 
 
 def aggregate(c, paste, clouds):

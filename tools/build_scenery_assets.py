@@ -1,6 +1,7 @@
 """Build the tile scenery catalog in an isolated Blender scene through MCP.
 
-The existing tileset image identity is also the mesh identity. All dimensions
+A tileset image's key (scenery/<image path>) decodes through layouts.json to
+meshes named by topic (roofs/, parks/, pools/, ...; see SHARED and NAMES). All dimensions
 are tile pixels, Z-up, with the supporting ground at Z=0. Original images and
 existing Blender scenes are preserved. Run build() via execute_blender_code.
 """
@@ -21,7 +22,7 @@ from mathutils.geometry import tessellate_polygon
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from audit_board_tiles import declarations
-from glb_geometry import linear, read_glb, write_glb
+from glb_geometry import colour, colour_text, linear, read_glb, recolour, write_glb
 
 ROOT = Path(__file__).resolve().parents[1]
 BOARD = ROOT/'data/models/board'
@@ -42,18 +43,32 @@ CAR_PAINT = {
     'teal': (.14, .56, .54), 'pink': (.48, .24, .36), 'purple': (.56, .14, .51),
     'green': (.08, .67, .10), 'red': (.65, .08, .04), 'maroon': (.33, .07, .06),
     'mustard': (.5, .42, .1), 'turquoise': (.15, .45, .5), 'magenta': (.56, .13, .35),
-    'deep-teal': (.15, .38, .38), 'sage': (.30, .38, .28), 'ochre': (.45, .38, .18),
+    'ochre': (.45, .38, .18),
 }
+# Colour slots (glb_geometry.write_glb): the parked car's paint is slot 1; any paint is its colour, red its default.
+CAR_SLOTS=[{'name':'Paint','colour':colour_text(CAR_PAINT['red']),
+            'presets':[[paint.capitalize(),colour_text(value)] for paint,value in CAR_PAINT.items()]}]
+# A pool basin's wall, coping, deck and water are slots 1-4; a pond is a pool with the natural colours.
+POOL_COLOURS={'Pool':((.62,.76,.76),WHITE,(.64,.60,.51),(.88,.95,.98)),
+              'Pond':((.39,.46,.24),(.39,.46,.24),(.39,.46,.24),(.58,.78,.67))}
+POOL_SLOTS=[{'name':name,'colour':colour_text(POOL_COLOURS['Pool'][i]),
+             'presets':[[style,colour_text(values[i])] for style,values in POOL_COLOURS.items()]}
+            for i,name in enumerate(('Wall','Coping','Deck','Water'))]
+POND=[colour_text(value) for value in POOL_COLOURS['Pond']]
 
 
 class Mesh:
     def __init__(self, shared=None):
         self.vertices, self.parts = [], defaultdict(list)
+        # Each vertex's colour slot (0 none) while `slot` is set, and the slots' definitions.
+        self.slots, self.slot, self.colour_slots = [], 0, None
         self.components = []
         self.shared = shared
         self.materials = {'scenery': {'id': 'scenery', 'diffuse': [1, 1, 1]}}
         self.transform = Matrix.Identity(4)
         self.role = 'scenery'
+        # Where a recentred canonical's origin lay when it was authored; rows add it back.
+        self.origin = Vector((0, 0, 0))
 
     def face(self, points, color, role=None, uv=None):
         role = role or self.role
@@ -64,6 +79,7 @@ class Mesh:
         start = len(self.vertices)//12
         for i, v in enumerate(p):
             self.vertices.extend([*v, *n, *color, 1, *(uv[i] if uv else (v.x/12, v.y/12))])
+        self.slots.extend([self.slot]*len(p))
         for i in range(1, len(p)-1): self.parts[role].extend((start, start+i, start+i+1))
 
     def box(self, center, size, color, angle=0):
@@ -121,37 +137,70 @@ class Mesh:
             self.face([p(inner,b,0),p(inner,a,0),p(inner,a,height),p(inner,b,height)],color)
             self.face([p(outer,a,height),p(outer,b,height),p(inner,b,height),p(inner,a,height)],color)
 
-    def place(self, function, x=0, y=0, z=0, angle=0, scale=1, role=None, asset_name=None, **kwargs):
+    def place(self, function, x=0, y=0, z=0, angle=0, scale=1, role=None, asset_name=None, colours=None, **kwargs):
+        """`colours` replace the placed mesh's slot colours (a row's "colours"; a preview recolours its vertices)."""
         old=self.transform.copy(); old_role=self.role
         if role is not None:self.role=role
         self.transform @= Matrix.Translation((x,y,z)) @ Matrix.Rotation(radians(angle),4,'Z') @ Matrix.Scale(scale,4)
-        if self.shared is not None and function in (car, parking_barrier, grandstand, concrete_pipe,
-                                                  table_frame, bench, shelter, garden_bed, pool, pool_basin,
-                                                  maglev_track, maglev_platform, maglev_wagon, maglev_coupler):
+        if function is car and kwargs.get('paint','red')!='red':
+            # Every paint is the one car mesh with its paint slot's colour.
+            colours=[colour_text(CAR_PAINT[kwargs.pop('paint')])]
+        if self.shared is not None and function in SHARED:
             # Shared identities are authored, never derived from mutable geometry or paint values.
-            key=asset_name or function.__name__.replace('_','-')
-            if function is car:key='car-'+kwargs.get('paint','red')
+            key=asset_name or SHARED[function]
+            if function is car:key='vehicles/car'
             elif kwargs and asset_name is None:
-                raise ValueError('Parameterized shared '+key+' requires an explicit asset_name')
+                raise ValueError('Parameterized shared '+function.__name__+' requires an explicit asset_name')
             if self.role!='scenery':key+='-'+self.role
-            asset='scenery/components/'+key
+            asset='scenery/'+key
             if asset not in self.shared:
                 component=Mesh();component.role=self.role
                 function(component,**kwargs)
+                if function in CANONICAL:recentre(component)
                 self.shared[asset]=component
-            self.component(asset,'SCENERY',self.transform)
+            self.component(asset,self.transform @ Matrix.Translation(self.shared[asset].origin),colours=colours)
         else:
+            start=len(self.slots)
             function(self, **kwargs)
+            self.recolour(start,colours)
         self.transform=old; self.role=old_role
 
-    def component(self, asset, kind, transform):
+    def recolour(self, start, colours):
+        """Replace the slot colours of the vertices from `start` on, as a row's colours replace them at runtime."""
+        for index in range(start,len(self.slots)) if colours else ():
+            slot=self.slots[index]
+            if slot and slot<=len(colours) and colours[slot-1]:
+                at=index*12
+                self.vertices[at+6:at+9]=recolour(self.vertices[at+6:at+9],colour(self.colour_slots[slot-1]['colour']),
+                                                  colour(colours[slot-1]))
+
+    def instance(self, asset, function, angle, stretch=(1,1,1), base_angle=0, **kwargs):
+        """A rotated or stretched duplicate of a legacy mesh is a row on that mesh; previews bake it.
+
+        `function` draws the mesh unrotated; `asset` is it baked at `base_angle`, so the row turns by the difference.
+        `stretch` scales the mesh's own axes before that turn, on top of the row's uniform scale.
+        """
+        turn=Matrix.Rotation(radians(angle-base_angle),4,'Z')
+        if self.shared is not None:
+            self.component(asset,self.transform @ turn,stretch)
+            return
+        old=self.transform.copy()
+        self.transform@=turn @ Matrix.Diagonal((*stretch,1)) @ Matrix.Rotation(radians(base_angle),4,'Z')
+        self.place(function,**kwargs)
+        self.transform=old
+
+    def component(self, asset, transform, stretch=(1,1,1), colours=None):
+        # Rows carry no kind: the shared 'tree-broad' slot is the only tree, everything else is scenery.
         scale=transform.to_scale()
-        assert max(scale)-min(scale)<.00001, 'Composition components use uniform scale'
+        assert max(scale)-min(scale)<.00001, 'Composition components use uniform scale; per-axis factors are stretch'
+        assert min(stretch)>0, 'Stretch factors are positive'
         angles=transform.to_euler()
         assert abs(angles.x)+abs(angles.y)<.00001, 'Board components rotate about their ground normal'
-        self.components.append({'asset':asset,'kind':kind,
-            'position':[round(v,6) for v in transform.to_translation()],
-            'rotation':round(angles.z*180/pi,6),'scale':round(scale.x,6)})
+        row={'asset':asset,'position':[round(v,6) for v in transform.to_translation()],
+             'rotation':round(angles.z*180/pi,6),'scale':round(scale.x,6)}
+        if any(abs(v-1)>1e-9 for v in stretch):row['stretch']=[round(v,6) for v in stretch]
+        if colours:row['colours']=list(colours)
+        self.components.append(row)
 
     def texture(self, role, filename):
         self.materials[role]={'id':role,'diffuse':[1,1,1],
@@ -167,11 +216,27 @@ class Mesh:
             at=index*12;key=tuple(round(v,5) for v in self.vertices[at:at+3])
             self.vertices[at+3:at+6]=normals[key].normalized()
 
+    def library_row(self, asset, transform, colours=None):
+        """A row on a prebuilt mesh under data/models/board; an editable preview bakes its geometry."""
+        if self.shared is not None:
+            self.component(asset,self.transform @ transform,colours=colours)
+            return
+        data=library(asset);mesh=data['meshes'][0]
+        values=mesh['vertices'];start=len(self.vertices)//12
+        transform=self.transform @ transform;normals=transform.to_3x3().inverted().transposed()
+        for i in range(0,len(values),12):
+            v=values[i:i+12]
+            self.vertices.extend([*(transform @ Vector(v[:3])),*(normals @ Vector(v[3:6])).normalized(),*v[6:]])
+        self.slots.extend(mesh.get('slots',[0]*(len(values)//12)))
+        self.colour_slots=data['extras'].get('mmColourSlots',self.colour_slots)
+        self.recolour(start,colours)
+        self.parts[self.role].extend(start+i for p in mesh['parts'] for i in p['indices'])
+
     def tree(self, x, y, size=12, variant=0):
         # Trees are ordinary composition components, using the catalog's normalized 30-unit height.
         if self.shared is not None:
             transform=self.transform @ Matrix.Translation((x,y,0)) @ Matrix.Rotation(variant*1.71,4,'Z') @ Matrix.Scale(size/30,4)
-            self.component('tree-broad','TREE',transform)
+            self.component('tree-broad',transform)
             return
         # Editable Blender previews reuse the shared tree kit too; no tree geometry enters scenery GLBs.
         data=library('tree-broad',2)
@@ -185,6 +250,7 @@ class Mesh:
         for i in range(0,len(values),12):
             v=values[i:i+12]
             self.vertices.extend([*(transform @ Vector(v[:3])),*(normals @ Vector(v[3:6])).normalized(),*v[6:]])
+        self.slots.extend([0]*(len(values)//12))
         roles={p['meshpartid']:p['materialid'] for n in walk(data['nodes']) for p in n.get('parts',[])}
         for mat in data['materials']: self.materials[mat['id']]=mat
         for part in data['meshes'][0]['parts']:
@@ -192,8 +258,9 @@ class Mesh:
 
     def data(self, name):
         parts=[{'id':r,'type':'TRIANGLES','indices':indices} for r,indices in self.parts.items()]
+        assert len(self.slots)*12==len(self.vertices),'One colour slot per vertex'
         return {'id':name,'meshes':[{'attributes':['POSITION','NORMAL','COLOR','TEXCOORD0'],
-                                    'vertices':self.vertices,'parts':parts}],
+                                    'vertices':self.vertices,'parts':parts,'slots':self.slots}],
                 'materials':deepcopy([self.materials[role] for role in self.parts if self.parts[role]]),
                 'nodes':[{'id':name,'parts':[{'meshpartid':r,'materialid':r} for r in self.parts]}]}
 
@@ -206,6 +273,23 @@ def walk(nodes):
 
 @lru_cache(None)
 def library(name, level=0): return read_glb(BOARD/(name+'.glb'),level)
+
+
+def asset_id(name):
+    return 'scenery/'+Path(name).with_suffix('').as_posix()
+
+
+def recentre(mesh, xy=True):
+    """Ground a mesh at Z=0 and, for a canonical component, centre its XY bounds on the origin.
+
+    Runtime grounds a whole legacy SCENERY mesh but places layout rows as authored, so a
+    canonical carries the grounding itself and its rows keep only the XY offset (mesh.origin).
+    """
+    v=mesh.vertices
+    shift=[(min(v[k::12])+max(v[k::12]))/2 if xy else 0 for k in (0,1)]+[min(v[2::12])]
+    for i in range(0,len(v),12):
+        for k in range(3):v[i+k]-=shift[k]
+    mesh.origin=Vector((shift[0],shift[1],0))
 
 
 def skylight(g, width=34, length=60, rows=5):
@@ -231,10 +315,16 @@ def skylight(g, width=34, length=60, rows=5):
 
 
 def car(g, paint='red'):
-    color=CAR_PAINT[paint]
+    # The paint is its slot's colour to the 8-bit step, so a row's paint replaces it exactly.
+    color=colour(colour_text(CAR_PAINT[paint]))
+    g.colour_slots=CAR_SLOTS
+    g.slot=1
     g.box((0,0,1.5),(4.3,9.0,2),color)
+    g.slot=0
     g.box((0,-.2,2.8),(3.8,4.3,1.6),GLASS)
+    g.slot=1
     g.box((0,-.2,3.65),(3.9,2.6,.4),color)
+    g.slot=0
     for y in (-2.8,2.8):
         for x in (-2.05,2.05):g.beam((x-.35,y,.9),(x+.35,y,.9),1.8,DARK,8)
     for x in (-1.5,1.5):
@@ -376,6 +466,14 @@ def bulldozer(g):
     g.box((0,13,1),(16,.8,1),STEEL)
 
 
+def site_debris(g, n):
+    """Construction site n's scattered concrete chunks, seeded per site."""
+    rng=random.Random(143+n)
+    for i in range(35):
+        x,y=rng.uniform(6,23),rng.uniform(-24,-14)
+        g.ellipsoid((x,y,.65),(1.2,.8,.6),CONCRETE,5,3)
+
+
 def excavation(g):
     soil=(.51,.43,.18)
     g.box((-5,0,.3),(33,48,.6),(.28,.25,.13))
@@ -465,8 +563,14 @@ def pool_shape(variant):
     return points
 
 
-def pool_basin(g, outline, deck=True, natural=False):
-    """One continuous closed coping/deck shell, with bevels, inner walls and recessed water."""
+def pool_basin(g, outline, deck=True, plinth=0):
+    """One continuous closed coping/deck shell, with bevels, inner walls and recessed water.
+
+    plinth extends the outer wall that far below the basin's foot, for a basin raised on a plinth. The wall, coping,
+    deck and water are colour slots 1-4 (POOL_SLOTS): a pond is this basin with the 'Pond' colours.
+    """
+    g.colour_slots=POOL_SLOTS
+    wall,coping,surround,surface=(colour(colour_text(value)) for value in POOL_COLOURS['Pool'])
     if sum(a[0]*b[1]-b[0]*a[1] for a,b in zip(outline,outline[1:]+outline[:1])) < 0:
         outline=list(reversed(outline))
     normals=[]
@@ -479,7 +583,7 @@ def pool_basin(g, outline, deck=True, natural=False):
     # Offset samples share indices across every ring, so there are no separate rim pieces or open joins.
     profile=[(0,0),(0,1.25),(.25,1.55),(1.75,1.55),(2,1.25),(2,.38)]
     if deck:profile += [(5,.38),(5,0)]
-    else:profile += [(2,0)]
+    else:profile += [(2,0)]+([(2,-plinth)] if plinth else [])
     rings=[[(x+n.x*offset,y+n.y*offset,z) for (x,y),n in zip(outline,normals)] for offset,z in profile]
     def cross(a,b,c):return (b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0])
     for ring in rings:
@@ -498,7 +602,8 @@ def pool_basin(g, outline, deck=True, natural=False):
     for band,first in enumerate(rings):
         second=rings[(band+1)%len(rings)]
         role='pool-wall' if band==0 else 'pool-coping' if band<4 else 'pool-deck'
-        color=(.39,.46,.24) if natural else (.62,.76,.76) if band==0 else WHITE if band<4 else (.64,.60,.51)
+        color=wall if band==0 else coping if band<4 else surround
+        g.slot=1 if band==0 else 2 if band<4 else 3
         for i in range(len(outline)):
             j=(i+1)%len(outline)
             shade=1-.025*((i//4)%2) if band in (2,5) else 1
@@ -508,7 +613,9 @@ def pool_basin(g, outline, deck=True, natural=False):
         points=[water[i] for i in indices]
         if (points[1]-points[0]).cross(points[2]-points[0]).z<0:points.reverse()
         uv=[((g.transform @ p).x/84+.5,(g.transform @ p).y/84+.5) for p in points]
-        g.face(points,(.58,.78,.67) if natural else (.88,.95,.98),'pool-water',uv)
+        g.slot=4
+        g.face(points,surface,'pool-water',uv)
+    g.slot=0
 
 
 def inside_outline(x,y,outline):
@@ -539,37 +646,57 @@ def bevel(g):
         g.beam(inner[i],inner[j],.7,WHITE,4)
 
 
-def vents(g):
-    g.box((-12,0,3),(15,22,6),STEEL)
-    for y in range(-9,11,3):g.box((-12,y,6.3),(14,.8,.6),WHITE)
-    g.ring(16,0,0,7.5,5.8,13,CONCRETE,8)
-    g.ring(16,0,12.5,8,5.5,1.5,WHITE,8)
-    g.cylinder(16,0,.1,5.7,.3,DARK,8)
+def roof_grille(g):
+    g.box((0,0,3),(15,22,6),STEEL)
+    for y in range(-9,11,3):g.box((0,y,6.3),(14,.8,.6),WHITE)
 
 
-def pool(g, circular=False, small=False):
+def chimney_stack(g):
+    g.ring(0,0,0,7.5,5.8,13,CONCRETE,8)
+    g.ring(0,0,12.5,8,5.5,1.5,WHITE,8)
+    g.cylinder(0,0,.1,5.7,.3,DARK,8)
+
+
+def roof_vent(g):
+    """The legacy stack sprites show a slatted grille beside a chimney stack: two separate objects."""
+    g.place(roof_grille,x=-12)
+    g.place(chimney_stack,x=16)
+
+
+def pool(g, circular=False, small=False, plinth=0):
     outline=[(18*cos(i*pi/32),18*sin(i*pi/32)) for i in range(64)] if circular else round_rectangle(25,45,2)
-    pool_basin(g,outline,deck=not small)
+    pool_basin(g,outline,deck=not small,plinth=plinth)
     if small:g.cylinder(0,0,.75,2,7,CONCRETE)
 
 
-def garden(g, variant=0, pillars=False):
-    if not pillars:
-        g.cylinder(0,0,.05,25,.8,(.22,.34,.12),6)
-        g.ring(0,0,0,26,24,1.4,CONCRETE,6)
-    if variant==0 and not pillars:g.place(pool,z=.9,circular=True,small=True,asset_name='fountain-round')
-    if variant==3 and not pillars:
+def hex_plaza(g):
+    """The square family's planted hexagonal plaza."""
+    g.cylinder(0,0,.05,25,.8,(.22,.34,.12),6)
+    g.ring(0,0,0,26,24,1.4,CONCRETE,6)
+
+
+def fountain(g):
+    """Square1's round fountain. Its outer wall reaches the ground: the plaza hides that plinth, bare ground shows it."""
+    g.place(pool,z=.9,circular=True,small=True,plinth=.9)
+
+
+def garden(g, variant=0):
+    if variant==0:
+        g.place(hex_plaza)
+        g.place(fountain)
+    else:hex_plaza(g)
+    if variant==3:
         g.ring(0,0,.8,14,12,1.5,CONCRETE,6)
         g.cylinder(0,0,1,12,.2,WATER,6)
     for i in range(6):
         a=i*pi/3+pi/6
         x,y=25*cos(a),25*sin(a)
-        if pillars or variant in (1,2,4):
+        if variant in (1,2,4):
             g.cylinder(x,y,0,2.4,7,CONCRETE,6)
             g.cylinder(x,y,7,2.9,.9,WHITE,6)
         elif variant==0:g.tree(x,y,8,i)
-    if variant==2 and not pillars:g.ring(0,0,1,20,18,2.5,(.16,.27,.09),6)
-    if variant in (4,5) and not pillars:
+    if variant==2:g.ring(0,0,1,20,18,2.5,(.16,.27,.09),6)
+    if variant in (4,5):
         for i in range(24):
             a=i*2.39996;r=5+(i%4)*4
             g.ellipsoid((r*cos(a),r*sin(a),1.4),(1.5,1.5,1),(.57,.12,.27) if i%2 else (.85,.63,.18),6,3)
@@ -586,34 +713,61 @@ def table_frame(g):
         for y in (-1.5,1.5):g.beam((x,y,0),(x,y,2),.35,STEEL,4)
 
 
-def table(g):
+def picnic_table(g):
     g.place(table_frame)
     for y in (-4,4):g.place(bench,y=y)
 
 
-def chicken(g, color=(.80,.76,.64), rooster=False):
-    # Upright two-legged bird: a single head/neck, folded wings and a feathered tail.
-    # It deliberately does not share the quadruped head, ears, horns or limb arrangement.
-    feet=(.70,.47,.15)
-    for x in (-.55,.55):
-        g.beam((x,0,.25),(x,.10,1.7),.20,feet,6)
-        for spread in (-.45,0,.45):g.beam((x,0,.18),(x+spread,.85,.12),.13,feet,5)
-    g.ellipsoid((0,0,2.2),(1.05,1.65,1.25),color,12,7)
-    wing=tuple(c*.78 for c in color)
-    for x in (-.90,.90):g.ellipsoid((x,-.30,2.4),(.33,1.17,.77),wing,10,5)
-    neck=(.66,.26,.10) if rooster else color
-    g.ellipsoid((0,1.18,3.0),(.67,.67,1.1),neck,10,6)
-    g.ellipsoid((0,1.52,3.90),(.57,.69,.63),color if not rooster else (.57,.17,.08),12,6)
-    g.face([(-.28,2.03,3.85),(.28,2.03,3.85),(0,2.68,3.68)],feet)
-    g.face([(.28,2.03,3.85),(-.28,2.03,3.85),(0,2.15,3.51)],feet)
-    for side in (-1,1):
-        g.ellipsoid((side*.47,1.75,4.03),(.075,.105,.105),(.035,.028,.02),8,4)
-    for i in range(3):g.ellipsoid((0,1.18+i*.29,4.51),(.16,.23,.28 if rooster else .19),(.68,.035,.025),8,4)
-    g.ellipsoid((0,2.0,3.41),(.23,.24,.38),(.68,.035,.025),8,4)
-    tail=(.05,.16,.15) if rooster else wing
-    for i in range(5):
-        x=(i-2)*.27
-        g.beam((x,-1.10,2.3),(x*1.8,-2.45,3.55 if rooster else 3.05),.45,tail,6)
+def pillar(g):
+    g.cylinder(0,0,0,3.8,7,CONCRETE,6)
+    g.cylinder(0,0,7,4.4,.9,WHITE,6)
+
+
+def pool_deck(g, shape, islands=()):
+    """A sport pool's paved surround, with the source's planted islands; the basins are separate objects."""
+    if shape==1:g.box((0,0,.15),(33,70,.3),CONCRETE)
+    else:g.cylinder(0,0,0,33,.3,CONCRETE,32)
+    clusters=[]
+    for x,y in islands:
+        # Overlapping islands have coplanar tops that z-fight: trees within one island's reach share one.
+        near=next((c for c in clusters if any(Vector((x-a,y-b)).length<7.6 for a,b in c)),None)
+        if near is None:clusters.append([(x,y)])
+        else:near.append((x,y))
+    for members in clusters:
+        centre=sum((Vector(m) for m in members),Vector((0,0)))/len(members)
+        radius=3.2+max((Vector(m)-centre).length for m in members)
+        # The planted pool islands need dry support above the basin waterline.
+        g.ring(centre.x,centre.y,.1,radius+.6,radius,1.5,WHITE,24)
+        g.cylinder(centre.x,centre.y,1.2,radius,.4,(.23,.29,.12),24)
+
+
+def landscape(g, n):
+    sides=6 if n==1 else 32
+    g.cylinder(0,0,0,32,.8,(.18,.29,.11),sides)
+    g.ring(0,0,.6,32,30,1.5,CONCRETE,sides)
+    g.ring(0,0,.8,24,22,1.4,CONCRETE,sides)
+    g.ring(0,0,.8,9,7,1.5,CONCRETE,24)
+    g.cylinder(0,0,1,7,.2,WATER,24)
+    for i in range(4 if n<4 else 8):
+        a=i*360/(4 if n<4 else 8)
+        g.box((19*cos(radians(a)),19*sin(radians(a)),.9),(23,3.8,.2),CONCRETE,a)
+    for i in range(80):
+        a=i*2.39996;r=12+(i%4)*4
+        if abs(sin(a*2))<.3:continue
+        g.ellipsoid((r*cos(a),r*sin(a),1.2),(.75,.75,.65),(.7,.16,.15) if i%2 else (.8,.7,.12),5,3)
+
+
+# Legacy decode canonicals: one mesh per real object, recentred and grounded. Layout rows place
+# them with the same angles and offsets that baked their rotated legacy variants.
+CANONICAL=(bevel, ledge, roof_grille, chimney_stack, skylight, garden_bed, pillar, picnic_table, hex_plaza, fountain,
+           crane, bulldozer, site_debris)
+# Livestock placements of the legacy herd images; the animals are prebuilt meshes (tools/extract_herd_animals.py).
+HERDS_BY_STEM={Path(name).name:rows for name,rows in json.loads((ROOT/'tools/farm-herds.json').read_text()).items()}
+# Coats that differ only in colour are one mesh (tools/farm-coats.json): a coat is that mesh and its slot colours, none
+# for the mesh's own coat.
+COATS={coat:(family,None if index==0 else colours)
+       for family,entry in json.loads((ROOT/'tools/farm-coats.json').read_text()).items()
+       for index,(coat,_,colours) in enumerate(entry['coats'])}
 
 
 def orbital_gun(g):
@@ -629,52 +783,8 @@ def orbital_gun(g):
     for x in (-18,-13,-8):
         for y in (-13,13):
             g.box((x,y,3.8),(4,4,4),STEEL)
-            for offset in (-1,0,1):g.box((x+offset,y,5.85),(.35,3,.1),DARK)
+            for offset in (-1,0,1):g.box((x+offset,y,5.95),(.35,3,.3),DARK)
     for y in (-10,10):g.box((1,y,8),(5,.4,1.3),(.6,.10,.06))
-
-
-@lru_cache(None)
-def animal_poses():
-    return json.loads((REVIEW/'animal-source/poses.json').read_text())['animals']
-
-
-def animal(g, species='cattle', color=(.74,.72,.65), mane=(.12,.075,.045),
-           pose='standing', pattern=None):
-    """One faceted, static mesh pipeline for the matching CC0 livestock set."""
-    source=animal_poses()[species][pose]
-    palette={'Main':color, 'Hair':mane,
-             'Main_Dark':tuple(c*.82 for c in color),
-             'Main_Light':tuple(min(1,c*1.12) for c in color),
-             'Muzzle':tuple(c*.55 for c in color), 'Hooves':(.20,.19,.17),
-             'Horns':(.72,.68,.54), 'Eye_Black':(.025,.022,.018), 'Eye_White':(.65,.65,.59)}
-    for a,b,c,material in source['faces']:
-        points=[source['vertices'][i] for i in (a,b,c)]
-        shade=palette[material]
-        if material in ('Main','Main_Light'):
-            x,y,z=[sum(p[k] for p in points)/3 for k in range(3)]
-            patches=((-2.8,5.2,1.35,1.2),(.35,4.1,.8,1.0),(2.2,5.7,.9,.8))
-            if species=='pigs':patches=((-2,2.5,1.1,.9),(.6,2.5,.9,.9))
-            if pattern is not None and any(((y-py)/ry)**2+((z-pz)/rz)**2<1
-                    for py,pz,ry,rz in patches):
-                shade=pattern
-            if species=='bison' and y>.2 and z>2:
-                shade=tuple(v*.70 for v in color)
-            if species=='pigs' and y>4.05:shade=tuple(v*.75 for v in color)
-        g.face(points,shade)
-    if species=='bison':
-        muzzle={i for face in source['faces'] if face[3]=='Muzzle' for i in face[:3]}
-        x,y,z=[sum(source['vertices'][i][k] for i in muzzle)/len(muzzle) for k in range(3)]
-        # A short shaggy beard below the broad jaw, attached to the posed muzzle.
-        crown=[(x+.55*cos(i*pi/4),y-.75+.6*sin(i*pi/4),z-.12) for i in range(8)]
-        tip=(x,y-.6,max(.15,z-1.3));fur=tuple(c*.55 for c in color)
-        g.face(crown,fur)
-        for i in range(8):g.face([crown[i],tip,crown[(i+1)%8]],fur)
-    if species=='pigs':
-        surface=BVHTree.FromPolygons([Vector(p) for p in source['vertices']],
-                                    [f[:3] for f in source['faces']],all_triangles=True)
-        for side in (-1,1):
-            eye,normal,_,_=surface.ray_cast(Vector((side*10,3.1,2.8)),Vector((-side,0,0)))
-            if eye is not None:g.ellipsoid(eye+normal*.035,(.09,.12,.10),palette['Eye_Black'],4,2)
 
 
 def debris_face(g, points, role, color=(.93,.93,.93)):
@@ -880,34 +990,61 @@ def maglev_platform(g):
     g.box((0,0,11),(12,42,1),WHITE)
 
 
+# Vehicles ride RIDE px above the route marker's ground, 0.5 px into the 4 px rail: rows on a route stay at Z=0.
+RIDE=3.5
+
+
 def maglev_wagon(g, cab=False):
-    # Local Z=0 is the vehicle's underside. The composition supplies track clearance.
-    g.box((0,0,3.5),(10,30,7),WHITE)
-    g.box((0,0,7.3),(8,27,.5),STEEL)
+    g.box((0,0,RIDE+3.5),(10,30,7),WHITE)
+    g.box((0,0,RIDE+7.3),(8,27,.5),STEEL)
     for x in (-5.1,5.1):
-        for y in range(-10,12,4):g.box((x,y,4.5),(.2,2.8,2.5),GLASS)
-    if cab:g.box((0,15.1,4.5),(7,.2,3),GLASS)
+        for y in range(-10,12,4):g.box((x,y,RIDE+4.5),(.2,2.8,2.5),GLASS)
+    if cab:g.box((0,15.1,RIDE+4.5),(7,.2,3),GLASS)
 
 
 def maglev_coupler(g):
-    g.box((0,0,2),(7,3,4),DARK)
+    g.box((0,0,RIDE+2.5),(7,3,4),DARK)
 
 
-def maglev_vehicle(g):
+def maglev_vehicle(g, cab=True):
+    """Two wagons and their coupler; the cab's nose points to +Y."""
     g.place(maglev_wagon,y=-17)
-    g.place(maglev_wagon,y=17,cab=True,asset_name='maglev-cab')
-    g.place(maglev_coupler,z=.5)
+    if cab:g.place(maglev_wagon,y=17,cab=True,asset_name='maglev/cab')
+    else:g.place(maglev_wagon,y=17)
+    g.place(maglev_coupler)
 
 
-def maglev(g, station=False, train=False, variant=0):
-    g.place(maglev_track)
-    if station:
-        g.place(maglev_platform,x=-15)
-    if train:
-        g.place(maglev_vehicle,z=3.5)
-    if station or train:
-        for i,paint in enumerate(('deep-teal','sage','ochre')):
-            g.place(car,x=15,y=-18+i*15,scale=.75,paint=paint)
+# The legacy maglev sprites (fluff/maglev*.gif, 84x72 px), measured: the route's heading (0 runs N/S, -60 NE/SW and
+# 60 NW/SE, +Y then pointing N, NE or NW), the platform's side (-1 left of +Y, 1 right), the train piece and the parked
+# cars as (x, y, paint) in that frame, east of the route and turned 60 degrees clockwise from it. A three-hex train is
+# a cab hex, a middle hex and a tail hex: maglevtrain1-3 from N to S with the nose N ('cab'), maglevtrain4-6 from SW
+# to NE with the nose SW ('cab-reversed').
+MAGLEV={
+    'maglevtrack1':(0,0,None,()), 'maglevtrack2':(-60,0,None,()), 'maglevtrack3':(60,0,None,()),
+    'maglevstation1':(0,-1,None,((17,14,'teal'),(17,2,'silver'),(17,-7,'ochre'),(17,-19,'white'))),
+    'maglevstation2':(-60,-1,None,((19.8,13.4,'teal'),(19.6,-16.1,'red'))),
+    'maglevstation3':(60,1,None,()),
+    'maglevtrain1':(0,0,'cab',((19,-9.5,'silver'),(19,-19,'gray'))),
+    'maglevtrain2':(0,-1,'wagons',((19.6,26.1,'steel'),(19.5,14,'silver'),(20.7,-5.6,'yellow'),(20.6,-15.9,'pink'))),
+    'maglevtrain3':(0,0,'wagons',((20,-6.2,'yellow'),)),
+    'maglevtrain4':(-60,0,'cab-reversed',()),
+    'maglevtrain5':(-60,-1,'wagons',((20.3,13.3,'maroon'),(19,-5.2,'silver'),(19.7,-16.1,'red'))),
+    'maglevtrain6':(-60,0,'wagons',((18.8,3.4,'magenta'),)),
+}
+# A route marker's sides (N=1, NE=2, SE=4, S=8, SW=16, NW=32) by heading.
+MAGLEV_SIDES={0:9,-60:18,60:36}
+
+
+def maglev(g, stem):
+    angle,platform,train,cars=MAGLEV[stem]
+    # The route marker: the client draws its rail from the stored sides; the legacy render shows this straight mesh.
+    g.place(maglev_track,angle=angle)
+    if g.shared is not None:g.components[-1]['connections']=MAGLEV_SIDES[angle]
+    if platform:g.place(maglev_platform,x=15*platform*cos(radians(angle)),y=15*platform*sin(radians(angle)),angle=angle)
+    if train:g.place(maglev_vehicle,angle=angle+(180 if train=='cab-reversed' else 0),cab=train!='wagons')
+    for x,y,paint in cars:
+        g.place(car,x=x*cos(radians(angle))-y*sin(radians(angle)),y=x*sin(radians(angle))+y*cos(radians(angle)),
+                angle=angle-60,scale=.75,paint=paint)
 
 
 def geyser(g, magma=False):
@@ -939,14 +1076,14 @@ def geyser(g, magma=False):
         g.face(points,(1,1,1) if magma else (.52,.76,.78),'geyser-lava' if magma else 'geyser-water',
                [(x/35+.5,y/35+.5) for x,y,z in points])
     if magma:
-        # Narrow branching fissures follow the same sculpted surface, raised only
-        # enough to avoid coplanar faces. Runtime applies the shared animated lava material.
+        # Narrow branching fissures follow the same sculpted surface, raised enough to clear the
+        # 0.1 px coplanar margin. Runtime applies the shared animated lava material.
         for start in (4,29,57):
             for band in range(1,len(rings)-1):
                 i=(start+band%2)%count;j=(i+1)%count
                 k=(start+(band+1)%2)%count;l=(k+1)%count
                 points=[rings[band][i],rings[band][j],rings[band+1][l],rings[band+1][k]]
-                g.face([(x,y,z+.035) for x,y,z in points],(1,1,1),'geyser-lava')
+                g.face([(x,y,z+.25) for x,y,z in points],(1,1,1),'geyser-lava')
     for i in range(12):
         a=i*2.39996+rng.uniform(-.25,.25);r=rng.uniform(11.5,18)
         size=(rng.uniform(1.1,3.2),rng.uniform(1,2.7),rng.uniform(.7,2.7))
@@ -958,6 +1095,55 @@ def geyser(g, magma=False):
     # Avoid unused textures/materials in the water and magma variants.
     g.parts={role:indices for role,indices in g.parts.items() if indices}
     g.materials={role:g.materials[role] for role in g.parts}
+
+
+# Shared meshes and their ids under scenery/. None: the call names it (asset_name); every car is vehicles/car.
+SHARED={bevel:'roofs/bevel', ledge:'roofs/ledge', roof_grille:'roofs/grille', chimney_stack:'roofs/chimney-stack',
+        skylight:'roofs/skylight', garden_bed:'parks/garden-bed', pillar:'parks/pillar', picnic_table:'parks/picnic-table',
+        hex_plaza:'parks/plaza', fountain:'parks/fountain', grandstand:'parks/grandstand',
+        concrete_pipe:'construction/concrete-pipe', crane:'construction/crawler-crane', bulldozer:'construction/bulldozer',
+        site_debris:None,
+        car:None, parking_barrier:'vehicles/parking-barrier', shelter:'vehicles/parking-shelter',
+        pool_basin:None, pool_deck:None, maglev_track:'maglev/route', maglev_platform:'maglev/platform',
+        maglev_wagon:'maglev/wagon', maglev_coupler:'maglev/coupler'}
+# Palette objects that no legacy image shows.
+PALETTE={'scenery/parks/bench':bench, 'scenery/pools/rectangular':pool}
+# Legacy images whose artwork is one baked mesh, and that mesh's id under scenery/. No mesh is written
+# at a legacy key: layouts.json decodes the key (scenery/<image path>) to its mesh with one row.
+SEAPORT_AXES={1:'n-s',2:'ne-sw',3:'nw-se',4:'e-w'}
+NAMES={
+    'fluff/beacon1':'roofs/landing-beacon-hex','fluff/beacon2':'roofs/landing-beacon-round',
+    'fluff/construction2':'construction/site-excavation',
+    'fluff/square2':'parks/plaza-pillars','fluff/square3':'parks/plaza-hedge','fluff/square4':'parks/plaza-pond',
+    'fluff/square5':'parks/plaza-flowers-pillars','fluff/square6':'parks/plaza-flowers',
+    'saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-2-01':'roofs/glass-roof-wide',
+    'saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-3-01':'roofs/glass-dome',
+    'saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-01':'parks/formal-garden-hex',
+    'saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-02':'parks/formal-garden-round',
+    'saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-04':'parks/formal-garden-star',
+    **{f'saxarba/misc/rubble_{kind}':f'rubble/{kind}' for kind in ('light','medium','heavy','hardened','wall')},
+    **{f'saxarba/rubble_{kind}_path':f'rubble/{kind}-path' for kind in ('light','medium','heavy','hardened','wall')},
+    'saxarba/misc/geyser_water_off':'geysers/water-dormant','saxarba/misc/geyser_water_on':'geysers/water-erupting',
+    'saxarba/misc/geyser_magma':'geysers/magma','saxarba/misc/fortified':'military/fortification',
+    'UlyssesSprites/orbitalguns/OrbitalGunE':'military/orbital-gun',
+    # Seaport sets 1-4 are the container rows' axis; the numbers are the source's variants.
+    **{f'saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-{s}-{n:02d}':f'seaport/containers-{axis}-{n:02d}'
+       for s,axis in SEAPORT_AXES.items() for n in range(1,8)},
+    **{f'saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-{s}-{n:02d}':
+       f'seaport/gantry-crane-{axis}-{n:02d}' for s,axis in SEAPORT_AXES.items() for n in range(1,13)},
+    # The straight (N) and diagonal (NE) tips; the other four directions are rows on them (CRANE_TIPS).
+    **{f'saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-{n:02d}':f'seaport/crane-tip-{n:02d}'
+       for n in range(1,3)},
+}
+
+
+# Crane tip direction -> the baked tip it turns: S is N turned 180 degrees; SE, SW and NW turn the NE tip.
+CRANE_TIPS={3:2,4:1,5:2,6:2}
+
+
+def mesh_id(name):
+    """The id of the baked mesh that legacy image `name` decodes to."""
+    return 'scenery/'+NAMES[Path(name).with_suffix('').as_posix()]
 
 
 def build_mesh(name, layouts, shared=None):
@@ -974,104 +1160,73 @@ def build_mesh(name, layouts, shared=None):
                     u,v=k*pi/12,(k+1)*pi/12
                     g.beam((29*cos(u)*cos(radians(a)),29*cos(u)*sin(radians(a)),1.6+9*sin(u)),
                            (29*cos(v)*cos(radians(a)),29*cos(v)*sin(radians(a)),1.6+9*sin(v)),.6,STEEL,4)
-        else:g.place(skylight,angle=(0,90,-60,60)[(n-1)%4],width=27 if group==1 else 34,length=58,rows=4)
+            # The dome's lower cap reaches below its ring; ground it where legacy SCENERY grounding put it.
+            recentre(g,xy=False)
+        else:
+            # Variants 02-04 are rotations of variant 01 and decode as rows on its mesh. The narrow roof (group 1,
+            # 29 px over its curbs) is the wide one (36 px) stretched across its width.
+            angle=(0,90,-60,60)[(n-1)%4]
+            if group==2 and n==1:skylight(g,width=34,length=58,rows=4)
+            else:g.instance('scenery/roofs/glass-roof-wide',skylight,angle,stretch=(29/36 if group==1 else 1,1,1),
+                            width=34,length=58,rows=4)
     elif name.startswith('fluff/ledge'):g.place(ledge,angle=-(int(stem[-1])-1)*60)
-    elif name.startswith('fluff/stack'):g.place(vents,angle=-(int(stem[-1])-1)*60)
+    elif name.startswith('fluff/stack'):g.place(roof_vent,angle=-(int(stem[-1])-1)*60)
     elif name.startswith('fluff/bevel'):g.place(bevel,angle=-(int(stem[-1])-1)*60)
     elif name.startswith('fluff/construction'):
         # The board already supplies the supporting terrain; export equipment/debris only.
         n=int(stem[-1])
-        if n==1:g.place(crane,x=-5,y=-9,angle=-55)
-        elif n==2:excavation(g)
-        else:g.place(bulldozer,angle=-55)
-        rng=random.Random(143+n)
-        for i in range(35):
-            x,y=rng.uniform(6,23),rng.uniform(-24,-14)
-            g.ellipsoid((x,y,.65),(1.2,.8,.6),CONCRETE,5,3)
+        if n==2:
+            excavation(g);site_debris(g,2)
+        else:
+            if n==1:g.place(crane,x=-5,y=-9,angle=-55)
+            else:g.place(bulldozer,angle=-55)
+            g.place(site_debris,n=n,asset_name=f'construction/debris-{n}')
     elif name.startswith('fluff/cars'):
         # Only roadside objects belong in the GLB. The board's shared road engine supplies the road.
         for x,y,angle,paint in layout['cars']:g.place(car,x=x,y=y,angle=angle,paint=paint,scale=.8)
         if stem in ('cars_7','cars_2b'):g.place(shelter,x=-7,y=-22,angle=-30)
         if stem in ('cars_8','cars_3b'):g.place(parking_barrier)
+        # tools/build_board_decals.py adds the standard car-park decal rows and the cars' seats afterwards.
     elif name.startswith('fluff/square'):garden(g,int(stem[-1])-1)
     elif name.startswith('fluff/pillars'):
-        for x,y in layout['pillars']:
-            g.cylinder(x,y,0,3.8,7,CONCRETE,6)
-            g.cylinder(x,y,7,4.4,.9,WHITE,6)
+        for x,y in layout['pillars']:g.place(pillar,x=x,y=y)
     elif name.startswith('fluff/garden'):
         g.place(garden_bed,angle=-(int(stem[-1])-1)*60)
         a=radians(-(int(stem[-1])-1)*60)
         for i,(x,y) in enumerate(((-9,-6),(10,-10),(-7,-25),(11,-26),(-1,-18))):
             g.tree(x*cos(a)-y*sin(a),x*sin(a)+y*cos(a),9,i)
     elif name.startswith('fluff/pool'):
-        g.place(pool_basin,outline=pool_shape(1),asset_name='pool-garden-freeform')
+        g.place(pool_basin,outline=pool_shape(1),asset_name='pools/freeform')
         for i,(x,y) in enumerate(layout['trees']):g.tree(x,y,9,i)
     elif name.startswith('fluff/suburb'):
         n=int(stem[-1])
         if n==1:
-            g.place(pool_basin,x=-10,y=4,scale=.75,deck=False,asset_name='pool-round-no-deck',
+            g.place(pool_basin,x=-10,y=4,scale=.75,deck=False,asset_name='pools/round-no-deck',
                     outline=[(18*cos(i*pi/16),18*sin(i*pi/16)) for i in range(32)])
             g.place(grandstand,x=22.7,y=6,angle=30)
             for i in range(3):g.place(car,x=-4+i*7,y=-22+i*2,scale=.75,angle=30,
                                    paint=('mustard','turquoise','red')[i])
         elif n==2:
-            g.place(shelter,x=-11,y=18,angle=-30,floor=False,asset_name='shelter-no-floor')
-            g.place(table,x=12,y=-3,angle=-30,scale=1.3)
+            g.place(shelter,x=-11,y=18,angle=-30,floor=False,asset_name='vehicles/parking-shelter-no-floor')
+            g.place(picnic_table,x=12,y=-3,angle=-30,scale=1.3)
             for i,(x,y) in enumerate(layout['trees']):g.tree(x,y,9,i)
             for i in range(3):g.place(car,x=-12+i*5,y=6-i*6,scale=.65,angle=30,paint='magenta')
         else:
             g.place(pool_basin,x=-8,y=0,angle=30,scale=.5,outline=round_rectangle(25,45,2),deck=False,
-                    asset_name='pool-rectangular-no-deck')
+                    asset_name='pools/rectangular-no-deck')
             for i in range(3):g.place(concrete_pipe,x=10+i*4,y=-7+i*2)
             g.place(car,x=5,y=22,angle=30,scale=.65,paint='red')
     elif name.startswith('fluff/beacon'):
         g.cylinder(0,0,0,22,3,DARK,6 if stem[-1]=='1' else 24)
         g.ring(0,0,3,9,6,1.5,STEEL)
         g.ellipsoid((0,0,4),(6,6,3),(.85,.07,.025),16,5)
-    elif name.startswith('fluff/maglev'):
-        n=int(stem[-1]); angle=0 if n in (1,2,3) and 'train' in stem else (0,-60,60)[(n-1)%3]
-        if 'track' in stem or 'station' in stem:angle=(0,-60,60)[(n-1)%3]
-        g.place(maglev,angle=angle,station='station' in stem or 'train' in stem and n in (2,5),train='train' in stem,variant=n)
-    elif name.startswith('fluff/chickens'):
-        variants={1:[(-16,-3,20,(.87,.86,.79),False),(16,10,-45,(.66,.45,.22),False)],
-                  2:[(-7,18,35,(.11,.12,.11),True),(-19,-1,85,(.83,.80,.69),False),
-                     (16,0,-55,(.59,.28,.14),False),(2,-21,155,(.12,.13,.10),False)],
-                  3:[(-16,12,50,(.70,.63,.40),True),(17,6,-45,(.76,.72,.49),False),
-                     (0,-17,145,(.61,.29,.12),True)]}
-        for x,y,angle,color,rooster in variants[int(stem[-1])]:
-            g.place(chicken,x=x,y=y,angle=angle,color=color,rooster=rooster,scale=1.3)
-    elif name.startswith('fluff/horses'):
-        if stem=='horses1':
-            # Four adults and their foal, with the source's coat colors and facing directions.
-            placements=[(-17,15,-85,1,(.64,.55,.33),(.18,.14,.08)),
-                        (16,19,85,1,(.76,.76,.72),(.29,.28,.26)),
-                        (-18,-11,-85,1,(.48,.22,.12),(.16,.075,.04)),
-                        (1,-16,-65,.62,(.59,.32,.16),(.28,.14,.07)),
-                        (23,-10,90,1,(.64,.43,.23),(.10,.075,.045))]
-            for i,(x,y,angle,scale,color,mane) in enumerate(placements):
-                g.place(animal,species='horse',x=x,y=y,angle=angle,scale=scale,color=color,mane=mane,
-                        pose='relaxed' if i in (1,4) else 'standing')
-        else:
-            g.place(animal,species='horse',x=-14,y=8,angle=-65,color=(.42,.26,.12),pose='running-a')
-            g.place(animal,species='horse',x=15,y=-9,angle=75,color=(.20,.21,.20),mane=(.08,.085,.08),pose='running-b')
-    elif name.startswith('fluff/') and any(s in stem for s in ('pigs','cattle','bison')):
-        species=''.join(c for c in stem if c.isalpha()); n=int(stem[-1])
-        if species=='cattle':
-            placements=([(-18,4,-80,'standing'),(18,6,40,'standing')] if n<3 else
-                        [(-13,16,-75,'grazing'),(15,0,85,'resting'),(-6,-19,-70,'resting')])
-            for i,(x,y,angle,pose) in enumerate(placements):
-                g.place(animal,species=species,x=x,y=y,angle=angle,pose=pose,
-                        color=(.77,.75,.67),pattern=(.50,.32,.14) if n==1 else (.12,.105,.085))
-        elif species=='bison':
-            g.place(animal,species=species,x=-17,y=-5,angle=70,scale=.75,color=(.53,.37,.20))
-            g.place(animal,species=species,x=16,y=8,angle=155,color=(.37,.23,.12))
-        else:
-            placements=[(-16,5,60),(4,21,-100),(20,-6,70),(-8,-20,-65)]
-            if n==2:placements=[(-18,17,175),(17,11,110),(-20,-10,-65),(14,-20,-120)]
-            for i,(x,y,angle) in enumerate(placements):
-                g.place(animal,species=species,x=x,y=y,angle=angle,pose='relaxed' if i==1 else 'standing',
-                        color=(.70,.56,.46) if i%2==0 else (.56,.42,.32),
-                        pattern=(.23,.18,.14) if i in (0,3) else None)
+    elif stem in MAGLEV:
+        maglev(g,stem)
+    elif stem in HERDS_BY_STEM:
+        for asset,x,y,angle,scale in HERDS_BY_STEM[stem]:
+            asset,colours=COATS.get(asset,(asset,None))
+            g.library_row('scenery/'+asset,Matrix.Translation((x,y,0)) @ Matrix.Rotation(radians(angle),4,'Z') @ Matrix.Scale(scale,4),
+                          colours)
     elif '/SMV_Seaport/' in name:
         for x,y,angle,color in layout.get('containers',[]):
             g.place(container,x=x,y=y,angle=angle,color=color,role='containers')
@@ -1081,55 +1236,51 @@ def build_mesh(name, layouts, shared=None):
         if 'crane' in layout:
             c=layout['crane']
             if not c['tip']:g.place(gantry_support,angle=c['angle'],role='crane-support')
-            g.place(gantry_boom,angle=c['angle'],half_span=c['half_span'],tip=c['tip'],role='crane-boom')
+            if c['tip'] and c['direction'] in CRANE_TIPS:
+                base=Path(name).with_stem(stem[:-2]+f"{CRANE_TIPS[c['direction']]:02d}").as_posix()
+                g.instance(mesh_id(base),gantry_boom,c['angle'],base_angle=layouts[base]['crane']['angle'],
+                           half_span=c['half_span'],tip=True,role='crane-boom')
+            else:g.place(gantry_boom,angle=c['angle'],half_span=c['half_span'],tip=c['tip'],role='crane-boom')
     elif 'road_trees' in stem:
         for i,(x,y) in enumerate(layout.get('trees',[])):g.tree(x,y,12,i)
     elif '/SMV_Fluff/' in name:
         if 'SwimmingPool' in stem:
             n=int(stem[-2:])
             if n==1:
-                g.box((0,0,.15),(33,70,.3),CONCRETE)
-                g.place(pool_basin,y=7,outline=round_rectangle(18,38,1.5),deck=False,asset_name='pool-sport-01-main')
-                g.place(pool_basin,y=-25,outline=round_rectangle(18,12,1.5),deck=False,asset_name='pool-sport-01-wading')
+                g.place(pool_deck,shape=1,asset_name='pools/sport-1-deck')
+                g.place(pool_basin,y=7,outline=round_rectangle(18,38,1.5),deck=False,asset_name='pools/sport-1-main')
+                g.place(pool_basin,y=-25,outline=round_rectangle(18,12,1.5),deck=False,asset_name='pools/sport-1-wading')
             elif n==3:
-                g.cylinder(0,0,0,33,.3,CONCRETE,32)
-                g.place(pool_basin,outline=pool_shape(3),deck=False,asset_name='pool-sport-03-main')
+                islands=[(x,y) for x,y in layout.get('trees',[]) if inside_outline(x,y,pool_shape(3))]
+                g.place(pool_deck,shape=3,islands=islands,asset_name='pools/sport-3-deck')
+                g.place(pool_basin,outline=pool_shape(3),deck=False,asset_name='pools/sport-3-main')
                 g.place(pool_basin,y=-28,outline=[(4*cos(i*pi/20),4*sin(i*pi/20)) for i in range(40)],deck=False,
-                        asset_name='pool-sport-03-wading')
+                        asset_name='pools/sport-3-wading')
             else:g.place(pool_basin,outline=round_rectangle(48,28,4) if n==5 else pool_shape(n),
-                         asset_name=f'pool-sport-{n:02d}')
+                         asset_name=f'pools/sport-{n}')
         elif 'Lake' in stem:
             n=int(stem[-2:])
             shape=1 if n in (1,3,5) else n
-            g.place(pool_basin,outline=pool_shape(shape),natural=True,angle=(n-1)*30,scale=.85,
-                    asset_name=f'lake-freeform-{shape:02d}')
+            # A pond is the pool of the same outline in the pond colours.
+            g.place(pool_basin,outline=pool_shape(shape),angle=(n-1)*30,scale=.85,colours=POND,
+                    asset_name='pools/freeform' if shape==1 else f'pools/sport-{shape}')
         elif 'Landscape' in stem:
-            n=int(stem[-2:]);sides=6 if n==1 else 32
-            g.cylinder(0,0,0,32,.8,(.18,.29,.11),sides)
-            g.ring(0,0,.6,32,30,1.5,CONCRETE,sides)
-            g.ring(0,0,.8,24,22,1.4,CONCRETE,sides)
-            g.ring(0,0,.8,9,7,1.5,CONCRETE,24)
-            g.cylinder(0,0,1,7,.2,WATER,24)
-            for i in range(4 if n<4 else 8):
-                a=i*360/(4 if n<4 else 8)
-                g.box((19*cos(radians(a)),19*sin(radians(a)),.9),(23,3.8,.2),CONCRETE,a)
-            for i in range(80):
-                a=i*2.39996;r=12+(i%4)*4
-                if abs(sin(a*2))<.3:continue
-                g.ellipsoid((r*cos(a),r*sin(a),1.2),(.75,.75,.65),(.7,.16,.15) if i%2 else (.8,.7,.12),5,3)
+            n=int(stem[-2:])
+            # Landscape 03 is the same mesh as 02.
+            if n==3:g.instance(mesh_id(Path(name).with_stem(stem[:-2]+'02')),landscape,0,n=2)
+            else:landscape(g,n)
         elif 'Garden' in stem:
             if 'Table' in stem:
-                for x,y in layout['tables']:g.place(table,x=x,y=y,scale=.65)
+                for x,y in layout['tables']:g.place(picnic_table,x=x,y=y,scale=.65)
         else:return None
         if 'Landscape' not in stem:
-            for i,(x,y) in enumerate(layout.get('trees',[])):
-                if 'SwimmingPool' in stem and int(stem[-2:])==3 and inside_outline(x,y,pool_shape(3)):
-                    # The source's planted pool islands need dry support above the basin waterline.
-                    g.ring(x,y,.1,3.8,3.2,1.5,WHITE,24)
-                    g.cylinder(x,y,1.2,3.2,.4,(.23,.29,.12),24)
-                    g.place(lambda mesh:mesh.tree(0,0,10,i),x=x,y=y,z=1.6)
-                else:g.tree(x,y,10,i)
-    elif '/orbitalguns/' in name:g.place(orbital_gun,angle={'E':0,'N':90,'S':-90,'W':180}[stem[-1]])
+            # Tree rows stand at Z=0, also on the pool islands: a decoration offset cannot carry a model height.
+            for i,(x,y) in enumerate(layout.get('trees',[])):g.tree(x,y,10,i)
+    elif '/orbitalguns/' in name:
+        angle={'E':0,'N':90,'S':-90,'W':180}[stem[-1]]
+        # N, S and W are rotations of E and decode as rows on its mesh.
+        if angle:g.instance(mesh_id(Path(name).with_stem(stem[:-1]+'E')),orbital_gun,angle)
+        else:orbital_gun(g)
     elif 'rubble' in stem and 'cleared' not in stem:
         variant=next(i for i,kind in enumerate(('light','medium','heavy','hardened','wall')) if kind in stem)
         rubble(g,variant,path='path' in stem)
@@ -1197,23 +1348,20 @@ def blender_mesh(scene, name, mesh, location):
 
 def export_mesh(asset, mesh):
     target=BOARD/(asset+'.glb');target.parent.mkdir(parents=True,exist_ok=True)
-    if not mesh.vertices:
-        assert target.resolve().is_relative_to(BOARD.resolve())
-        target.unlink(missing_ok=True)
-        return
+    assert mesh.vertices,'Empty mesh: '+asset
     data=mesh.data(Path(asset).name)
     for mat in data['materials']:
         for texture in mat.get('textures',[]):
             if 'data' not in texture:
                 texture['filename']=os.path.relpath(BOARD/texture['filename'],target.parent).replace('\\','/')
     if len(mesh.vertices)//12>65000:raise ValueError('Scenery exceeds rigid mesh budget: '+asset)
-    write_glb(target,levels={0:data})
+    write_glb(target,levels={0:data},extras={'mmColourSlots':mesh.colour_slots} if any(mesh.slots) else None)
 
 
 def build(only=None):
     rows,_=declarations();layouts=json.loads((REVIEW/'layouts.json').read_text())
     scene=bpy.data.scenes.new('Board scenery / tileset catalog')
-    bpy.context.window.scene=scene
+    if bpy.context.window:bpy.context.window.scene=scene
     scene.unit_settings.system='METRIC'
     inventory_path=REVIEW/'model-inventory.json'
     stats=json.loads(inventory_path.read_text()) if only is not None and inventory_path.exists() else {}
@@ -1225,27 +1373,30 @@ def build(only=None):
         if only is not None and not any(key in name for key in only):continue
         mesh=build_mesh(name,layouts,shared)
         if mesh is None:continue
-        asset='scenery/'+str(Path(name).with_suffix('')).replace('\\','/')
+        asset=asset_id(name)
         if mesh.components:
-            if mesh.vertices:
-                mesh.component(asset,'SCENERY',Matrix.Identity(4))
+            # A layout row never names its own key: baked geometry beside rows is a component of its own.
+            assert not mesh.vertices,'Composition with baked geometry: '+name
             compositions[asset]=mesh.components
+            preview=build_mesh(name,layouts)
         else:
-            compositions.pop(asset,None)
-        preview=build_mesh(name,layouts) if mesh.components else mesh
-        # Keep complete maglev compatibility models in sync with the shared pieces.
-        export_mesh(asset,preview if name.startswith('fluff/maglev') else mesh)
+            # Rows stand on their receiver. Only seaport crane tips are raised: they hang from the gantry boom.
+            preview=mesh
+            export_mesh(mesh_id(name),mesh)
+            compositions[asset]=[{'asset':mesh_id(name),'position':[0.0,0.0,0.0],'rotation':0.0,'scale':1.0}]
         index=built
         built+=1
         blender_mesh(scene,name,preview,((index%12)*100,-(index//12)*100,0))
         stats[name]={'asset':asset,'vertices':len(mesh.vertices)//12,'triangles':sum(len(v)//3 for v in mesh.parts.values()),
                      'height':round(max(preview.vertices[2::12])-min(preview.vertices[2::12]),3),
                      'components':len(mesh.components),
-                     'trees':sum(c['kind']=='TREE' for c in mesh.components)}
-    if 'scenery/components/maglev-wagon' in shared:
+                     'trees':sum(c['asset']=='tree-broad' for c in mesh.components)}
+    if 'scenery/maglev/wagon' in shared:
         vehicle=Mesh(shared);maglev_vehicle(vehicle)
-        compositions['scenery/components/maglev-train']=vehicle.components
+        compositions['scenery/maglev/train']=vehicle.components
     for asset,mesh in shared.items():export_mesh(asset,mesh)
+    for asset,function in PALETTE.items():
+        mesh=Mesh();function(mesh);export_mesh(asset,mesh)
     REVIEW.mkdir(parents=True,exist_ok=True)
     (REVIEW/'model-inventory.json').write_text(json.dumps(stats,indent=2)+'\n')
     layout_path.write_text(json.dumps(compositions,indent=2)+'\n')
@@ -1257,6 +1408,11 @@ def build(only=None):
     source='board-scenery-compositions.blend'
     bpy.data.libraries.write(str(ROOT/'tools'/source),{scene},fake_user=True)
     return {'scene':scene.name,'models':built,'layouts':len(compositions),'shared_components':len(shared),
-            'trees':sum(c['kind']=='TREE' for v in compositions.values() for c in v),
+            'trees':sum(c['asset']=='tree-broad' for v in compositions.values() for c in v),
             'triangles':sum(v['triangles'] for v in stats.values()),
             'largest':max(stats.items(),key=lambda v:v[1]['vertices']) if stats else None}
+
+
+if __name__=='__main__':
+    # blender --background --factory-startup --python tools/build_scenery_assets.py -- [image name parts]
+    print(build(sys.argv[sys.argv.index('--')+1:] or None if '--' in sys.argv else None))

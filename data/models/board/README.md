@@ -4,27 +4,581 @@ This directory is the libGDX board's independent art source. Runtime never reads
 terrain or water from the 2D board's images directory. The Java build stages this
 directory with the game's data. Blender is an authoring dependency only.
 
-## Maglev compositions
+## Scenery folders
 
-The twelve `scenery/fluff/maglev*` IDs resolve through `scenery/layouts.json`.
-Track, platform, passenger wagon, driver cab, coupler and road cars are separate
-shared meshes under `scenery/components/`. Every old placement, orientation and
-color is preserved; the complete original GLBs remain as compatibility references.
-The `scenery/components/maglev-train` layout contains only its two wagons and
-coupler, without track, station or parked road traffic.
+Scenery meshes live in topic folders under `scenery/`, with kebab-case names:
 
-The editor groups these assets under **Maglev and wagons**. Standalone wagons
-and platforms have a local base at zero; complete legacy layouts retain their
-original rail clearance. Track snap connectors remain on the original layout
-IDs in `data/board-editor/blueprint.json`; a wagon by itself is not a track
-segment. `palette: false` hides the two identical legacy train choices while
-keeping their IDs available to existing boards and the snapping resolver.
+| Folder | Contents |
+|---|---|
+| `roofs/` | rooftop objects: bevel, ledge, roof grille, chimney stack, skylight, glass roof and dome, landing beacons |
+| `parks/` | bench, picnic table, garden bed, pillar, hex plaza, fountain, plaza variants, formal gardens, grandstand |
+| `pools/` | sport pools (deck, main and wading basins), rectangular, round and freeform pools; a pond is a pool in pond colours |
+| `vehicles/` | the car (its paint is a colour slot), parking barrier, parking shelters |
+| `construction/` | crawler crane, bulldozer, concrete debris, excavation site, concrete pipe |
+| `farm/` | one mesh per animal and pose: cow, pig, horse, bison, hen and rooster; coats are colour slots |
+| `seaport/` | container rows and gantry cranes by row axis (`n-s`, `ne-sw`, `nw-se`, `e-w`), crane tips |
+| `maglev/` | route marker (the only rail mesh), platform, wagon, cab, coupler; `train.png` is the train stamp's thumbnail |
+| `military/` | orbital gun, fortification |
+| `rubble/` | rubble by structure type, and the cleared paths through it |
+| `geysers/` | dormant and erupting water geysers, magma geyser |
 
-Rebuild this family with `blender --background --factory-startup --python
-tools/build_maglev_assets.py`, from the data repository root. It uses the same
-component generators as the full `build_scenery_assets.py` build. The Java
-`BoardSceneryMaglevTest` checks old/composed triangle positions, normals and
-colors, native layout resolution and independent component bounds.
+No mesh sits at a legacy key. A legacy key is `scenery/<tileset image path
+without extension>`; it resolves only through `scenery/layouts.json`, so that
+file is the complete legacy-to-mesh mapping. A key that used to be one GLB is a
+one-row entry at the origin on its renamed mesh. Every mesh stands on Z=0 and
+every row has Z=0. Two kinds of mesh stand above Z=0 by design: a seaport crane
+tip hangs from the gantry boom, so its mesh keeps the boom height and its grabber
+is 10.28 px up, and the maglev wagon and cab (3.5 px) and coupler (4 px) ride the
+route's rail. Blueprint IDs are the new mesh paths; stamps still name legacy keys.
+Decal rows (`decal/...`) name painted decals, not meshes (see Decals): each
+car-park key `fluff/cars_*` places standard car-park decals, and its car rows
+carry `"seat"`. Only import uses them; the legacy render paves the lane itself
+and draws the cars where their rows stand, and import makes the lane a real
+`road:1` with the lane's exits on a car park on plain ground without a road. The
+rows stand beside that road; import folds them back to back where no road is drawn.
+A row may carry `"stretch": [x, y, z]`, positive factors on the mesh's own axes
+before its turn (the narrow glass roof is `roofs/glass-roof-wide` stretched to
+29/36 of its width), and `"colours": ["#rrggbb", null, ...]`, replacements for the
+mesh's colour slots in slot order (null keeps a slot's own colour).
+
+### Colour slots
+
+A mesh may mark up to four colour slots: each vertex carries its slot in the
+attribute `_COLOUR_SLOT` (0 none), and the file's extras `mmColourSlots` list each
+slot's name, its default colour and preset colours (the colours of the family's
+former meshes). A row's or a placed object's colour replaces a slot's default: each
+channel keeps its ratio to the default in linear light, so shaded parts of a slot
+stay shaded (`tools/glb_geometry.py` `recolour`; the runtime's `RigidGlb.recolour`
+applies the same rule). A slot's base vertices hold its default exactly, to the
+8-bit step, so a replacement reproduces itself exactly there. The colour families
+are one mesh each:
+
+| Mesh (`scenery/...`) | Slots | Former meshes (now colours) |
+|---|---|---|
+| `vehicles/car` | Paint | 19 `car-<paint>` (red is the default) |
+| `farm/hen` | Plumage | 6 hens (white is the default) |
+| `farm/rooster` | Plumage, Wings | 3 roosters (red) |
+| `farm/horse` | Coat, Mane and tail, Muzzle | chestnut, dun, sorrel |
+| `farm/horse-relaxed` | Coat, Mane and tail, Muzzle | bay, grey (resting) |
+| `farm/cow` | Patches | brown, black patches |
+| `farm/pig` | Skin, Spots | pink spotted (default), pink, brown spotted |
+| `farm/bison` | Coat | dark, light |
+| `pools/*` | Wall, Coping, Deck, Water | `parks/pond-1`, `-2`, `-4` are `pools/freeform`, `sport-2`, `sport-4` in the 'Pond' colours |
+
+Every vertex whose colour differs between a family's coats belongs to the slot
+that reproduces it for every coat; `tools/extract_herd_animals.py` assigns them
+from `tools/farm-coats.json` (slot names and each coat's colours) and reports the
+largest error per family (at most 3.9/255, the resting horse's head), and
+`verify_legacy_decode.py` compares the recoloured rows with the base's meshes
+vertex by vertex (see below). The car's paint and the pool slots are marked by
+`tools/build_scenery_assets.py` (`CAR_SLOTS`, `POOL_SLOTS`), which writes each car
+and pond row's colours.
+
+`tools/build_scenery_assets.py` names its output with `SHARED` (shared
+components) and `NAMES` (meshes that legacy images bake); it never writes a GLB
+at a legacy key. The animal meshes are not generated: their pose source was never
+in the repository. `tools/extract_herd_animals.py` split them out of the herd
+meshes of commit `0d5b47e5d0` by undoing each animal's placement from
+`tools/farm-herds.json`, and checks that animals with one name share geometry and
+colour (26 coats and poses from 11 herds). Coats that differ only in colour share
+one mesh with colour slots (`tools/farm-coats.json`, see Colour slots), so 12
+animal meshes remain. The generator writes the herd keys' rows from the same tables,
+each with its coat's colours.
+
+### Old to new
+
+| New mesh (`scenery/...`) | Old file or ID (`scenery/...`) | Legacy key decodes to it |
+|---|---|---|
+| `construction/concrete-pipe` | `components/concrete-pipe` | - |
+| `construction/bulldozer`, `construction/debris-3` | `fluff/construction3` | yes, two rows |
+| `construction/crawler-crane`, `construction/debris-1` | `fluff/construction1` | yes, two rows |
+| `construction/site-excavation` | `fluff/construction2` | yes, one row |
+| `farm/<animal>` (12 meshes; coats are colours) | `fluff/bison1`, `cattle1`-`3`, `chickens1`-`3`, `horses1`-`2`, `pigs1`-`2` | yes, one row per animal (`tools/farm-herds.json`) |
+| `geysers/magma` | `saxarba/misc/geyser_magma` | yes, one row |
+| `geysers/water-dormant` | `saxarba/misc/geyser_water_off` | yes, one row |
+| `geysers/water-erupting` | `saxarba/misc/geyser_water_on` | yes, one row |
+| `maglev/cab` | `components/maglev-cab` | - |
+| `maglev/coupler` | `components/maglev-coupler` | - |
+| `maglev/platform` | `components/maglev-platform` | - |
+| `maglev/route` | `components/maglev-route` | - |
+| `maglev/train` | `components/maglev-train` | layout ID of the train stamp, not a mesh |
+| `maglev/wagon` | `components/maglev-wagon` | - |
+| `military/fortification` | `saxarba/misc/fortified` | yes, one row |
+| `military/orbital-gun` | `UlyssesSprites/orbitalguns/OrbitalGunE` | yes, one row |
+| `parks/bench` | `components/bench` | - |
+| `parks/formal-garden-hex` | `saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-01` | yes, one row |
+| `parks/formal-garden-round` | `saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-02` | yes, one row |
+| `parks/formal-garden-star` | `saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-04` | yes, one row |
+| `parks/garden-bed` | `components/garden-bed` | - |
+| `parks/grandstand` | `components/grandstand` | - |
+| `parks/picnic-table` | `components/picnic-table` | - |
+| `parks/pillar` | `components/pillar` | - |
+| `parks/plaza-flowers` | `fluff/square6` | yes, one row |
+| `parks/plaza-flowers-pillars` | `fluff/square5` | yes, one row |
+| `parks/plaza`, `parks/fountain` | `components/hex-plaza` | - |
+| `parks/plaza-hedge` | `fluff/square3` | yes, one row |
+| `parks/plaza-pillars` | `fluff/square2` | yes, one row |
+| `parks/plaza-pond` | `fluff/square4` | yes, one row |
+| `pools/freeform` in pond colours | `components/lake-freeform-01` | - |
+| `pools/sport-2` in pond colours | `components/lake-freeform-02` | - |
+| `pools/sport-4` in pond colours | `components/lake-freeform-04` | - |
+| `pools/freeform` | `components/pool-garden-freeform` | - |
+| `pools/rectangular` | `components/pool` | - |
+| `pools/rectangular-no-deck` | `components/pool-rectangular-no-deck` | - |
+| `pools/round-no-deck` | `components/pool-round-no-deck` | - |
+| `pools/sport-1-deck` | `components/pool-sport-01-deck` | - |
+| `pools/sport-1-main` | `components/pool-sport-01-main` | - |
+| `pools/sport-1-wading` | `components/pool-sport-01-wading` | - |
+| `pools/sport-2` | `components/pool-sport-02` | - |
+| `pools/sport-3-deck` | `components/pool-sport-03-deck` | - |
+| `pools/sport-3-main` | `components/pool-sport-03-main` | - |
+| `pools/sport-3-wading` | `components/pool-sport-03-wading` | - |
+| `pools/sport-4` | `components/pool-sport-04` | - |
+| `pools/sport-5` | `components/pool-sport-05` | - |
+| `roofs/bevel` | `components/bevel` | - |
+| `roofs/glass-dome` | `saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-3-01` | yes, one row |
+| `roofs/glass-roof-wide`, stretched to 29/36 of its width | `roofs/glass-roof-narrow`, `saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-1-01` | yes, one row with stretch |
+| `roofs/glass-roof-wide` | `saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-2-01` | yes, one row |
+| `roofs/landing-beacon-hex` | `fluff/beacon1` | yes, one row |
+| `roofs/landing-beacon-round` | `fluff/beacon2` | yes, one row |
+| `roofs/ledge` | `components/ledge` | - |
+| `roofs/skylight` | `components/skylight` | - |
+| `roofs/grille`, `roofs/chimney-stack` | `components/roof-vent` | - |
+| `rubble/hardened` | `saxarba/misc/rubble_hardened` | yes, one row |
+| `rubble/hardened-path` | `saxarba/rubble_hardened_path` | yes, one row |
+| `rubble/heavy` | `saxarba/misc/rubble_heavy` | yes, one row |
+| `rubble/heavy-path` | `saxarba/rubble_heavy_path` | yes, one row |
+| `rubble/light` | `saxarba/misc/rubble_light` | yes, one row |
+| `rubble/light-path` | `saxarba/rubble_light_path` | yes, one row |
+| `rubble/medium` | `saxarba/misc/rubble_medium` | yes, one row |
+| `rubble/medium-path` | `saxarba/rubble_medium_path` | yes, one row |
+| `rubble/wall` | `saxarba/misc/rubble_wall` | yes, one row |
+| `rubble/wall-path` | `saxarba/rubble_wall_path` | yes, one row |
+| `seaport/containers-e-w-01` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-01` | yes, one row |
+| `seaport/containers-e-w-02` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-02` | yes, one row |
+| `seaport/containers-e-w-03` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-03` | yes, one row |
+| `seaport/containers-e-w-04` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-04` | yes, one row |
+| `seaport/containers-e-w-05` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-05` | yes, one row |
+| `seaport/containers-e-w-06` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-06` | yes, one row |
+| `seaport/containers-e-w-07` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-07` | yes, one row |
+| `seaport/containers-n-s-01` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-01` | yes, one row |
+| `seaport/containers-n-s-02` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-02` | yes, one row |
+| `seaport/containers-n-s-03` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-03` | yes, one row |
+| `seaport/containers-n-s-04` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-04` | yes, one row |
+| `seaport/containers-n-s-05` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-05` | yes, one row |
+| `seaport/containers-n-s-06` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-06` | yes, one row |
+| `seaport/containers-n-s-07` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-07` | yes, one row |
+| `seaport/containers-ne-sw-01` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-01` | yes, one row |
+| `seaport/containers-ne-sw-02` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-02` | yes, one row |
+| `seaport/containers-ne-sw-03` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-03` | yes, one row |
+| `seaport/containers-ne-sw-04` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-04` | yes, one row |
+| `seaport/containers-ne-sw-05` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-05` | yes, one row |
+| `seaport/containers-ne-sw-06` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-06` | yes, one row |
+| `seaport/containers-ne-sw-07` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-07` | yes, one row |
+| `seaport/containers-nw-se-01` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-01` | yes, one row |
+| `seaport/containers-nw-se-02` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-02` | yes, one row |
+| `seaport/containers-nw-se-03` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-03` | yes, one row |
+| `seaport/containers-nw-se-04` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-04` | yes, one row |
+| `seaport/containers-nw-se-05` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-05` | yes, one row |
+| `seaport/containers-nw-se-06` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-06` | yes, one row |
+| `seaport/containers-nw-se-07` | `saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-07` | yes, one row |
+| `seaport/crane-tip-01` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-01` | yes, one row |
+| `seaport/crane-tip-02` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-02` | yes, one row |
+| `seaport/crane-tip-02`, turned -59.49, 180 and 120.51 degrees | `seaport/crane-tip-03`, `-05`, `-06`, `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-03`, `-05`, `-06` | yes, one row each |
+| `seaport/crane-tip-01`, turned 180 degrees | `seaport/crane-tip-04`, `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-04` | yes, one row |
+| `seaport/gantry-crane-e-w-01` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-01` | yes, one row |
+| `seaport/gantry-crane-e-w-02` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-02` | yes, one row |
+| `seaport/gantry-crane-e-w-03` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-03` | yes, one row |
+| `seaport/gantry-crane-e-w-04` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-04` | yes, one row |
+| `seaport/gantry-crane-e-w-05` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-05` | yes, one row |
+| `seaport/gantry-crane-e-w-06` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-06` | yes, one row |
+| `seaport/gantry-crane-e-w-07` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-07` | yes, one row |
+| `seaport/gantry-crane-e-w-08` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-08` | yes, one row |
+| `seaport/gantry-crane-e-w-09` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-09` | yes, one row |
+| `seaport/gantry-crane-e-w-10` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-10` | yes, one row |
+| `seaport/gantry-crane-e-w-11` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-11` | yes, one row |
+| `seaport/gantry-crane-e-w-12` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-12` | yes, one row |
+| `seaport/gantry-crane-n-s-01` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-01` | yes, one row |
+| `seaport/gantry-crane-n-s-02` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-02` | yes, one row |
+| `seaport/gantry-crane-n-s-03` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-03` | yes, one row |
+| `seaport/gantry-crane-n-s-04` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-04` | yes, one row |
+| `seaport/gantry-crane-n-s-05` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-05` | yes, one row |
+| `seaport/gantry-crane-n-s-06` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-06` | yes, one row |
+| `seaport/gantry-crane-n-s-07` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-07` | yes, one row |
+| `seaport/gantry-crane-n-s-08` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-08` | yes, one row |
+| `seaport/gantry-crane-n-s-09` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-09` | yes, one row |
+| `seaport/gantry-crane-n-s-10` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-10` | yes, one row |
+| `seaport/gantry-crane-n-s-11` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-11` | yes, one row |
+| `seaport/gantry-crane-n-s-12` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-12` | yes, one row |
+| `seaport/gantry-crane-ne-sw-01` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-01` | yes, one row |
+| `seaport/gantry-crane-ne-sw-02` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-02` | yes, one row |
+| `seaport/gantry-crane-ne-sw-03` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-03` | yes, one row |
+| `seaport/gantry-crane-ne-sw-04` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-04` | yes, one row |
+| `seaport/gantry-crane-ne-sw-05` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-05` | yes, one row |
+| `seaport/gantry-crane-ne-sw-06` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-06` | yes, one row |
+| `seaport/gantry-crane-ne-sw-07` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-07` | yes, one row |
+| `seaport/gantry-crane-ne-sw-08` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-08` | yes, one row |
+| `seaport/gantry-crane-ne-sw-09` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-09` | yes, one row |
+| `seaport/gantry-crane-ne-sw-10` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-10` | yes, one row |
+| `seaport/gantry-crane-ne-sw-11` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-11` | yes, one row |
+| `seaport/gantry-crane-ne-sw-12` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-12` | yes, one row |
+| `seaport/gantry-crane-nw-se-01` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-01` | yes, one row |
+| `seaport/gantry-crane-nw-se-02` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-02` | yes, one row |
+| `seaport/gantry-crane-nw-se-03` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-03` | yes, one row |
+| `seaport/gantry-crane-nw-se-04` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-04` | yes, one row |
+| `seaport/gantry-crane-nw-se-05` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-05` | yes, one row |
+| `seaport/gantry-crane-nw-se-06` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-06` | yes, one row |
+| `seaport/gantry-crane-nw-se-07` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-07` | yes, one row |
+| `seaport/gantry-crane-nw-se-08` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-08` | yes, one row |
+| `seaport/gantry-crane-nw-se-09` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-09` | yes, one row |
+| `seaport/gantry-crane-nw-se-10` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-10` | yes, one row |
+| `seaport/gantry-crane-nw-se-11` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-11` | yes, one row |
+| `seaport/gantry-crane-nw-se-12` | `saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-12` | yes, one row |
+| `vehicles/car` (paint as a colour) | `components/car-<paint>` (19 paints) | - |
+| `vehicles/parking-barrier` | `components/parking-barrier` | - |
+| `vehicles/parking-shelter` | `components/shelter` | - |
+| `vehicles/parking-shelter-no-floor` | `components/shelter-no-floor` | - |
+
+## Maglev
+
+The twelve `scenery/fluff/maglev*` keys decode through `scenery/layouts.json`
+to a route marker row and the artwork's pieces: platform, passenger wagons,
+driver cab, coupler and parked road cars (`scenery/vehicles/`). The marker row
+(`scenery/maglev/route`) carries the route's sides as `connections`
+(N=1, NE=2, SE=4, S=8, SW=16, NW=32): 9 for N/S, 18 for NE/SW and 36 for NW/SE.
+The client draws the rail from the stored sides; the legacy render shows the
+same straight route mesh. Facts measured on the 84x72 sprites (`MAGLEV` in
+`tools/build_scenery_assets.py`):
+
+| Keys | Route | Platform | Train piece | Parked cars |
+|---|---|---|---|---|
+| `track1`-`3` | N/S, NE/SW, NW/SE | - | - | 0 |
+| `station1`-`3` | N/S, NE/SW, NW/SE | W, NW, NE | - | 4, 2, 0 |
+| `train1`-`3` | N/S | -, W, - | cab hex (nose N), middle, tail | 2, 4, 1 |
+| `train4`-`6` | NE/SW | -, NW, - | cab hex (nose SW), middle, tail | 0, 3, 1 |
+
+A three-hex train is a cab hex, a middle hex and a tail hex: maglevtrain1-3 from
+north to south, maglevtrain4-6 from south-west to north-east (every shipped
+maglevtrain4 has a maglevtrain5 to its north-east, every maglevtrain6 one to its
+south-west). The wagon and cab meshes include their 3.5 px ride above the
+route's ground and the coupler its 4 px, so every row has Z=0; a vehicle sits
+0.5 px into the route's 4 px rail. `scenery/maglev/train` is the train stamp's
+layout (a wagon, a cab and their coupler); `train.png` is its thumbnail. No baked
+composite and no second rail mesh remain.
+
+`tools/build_scenery_assets.py` (with the `fluff/maglev` argument) writes the five
+maglev meshes and the thirteen maglev layouts; afterwards `blender --background
+--factory-startup --python tools/build_maglev_assets.py`, from the data repository
+root, renders the thumbnail from the stamp's rows. The Java
+`BoardSceneryMaglevTest` checks the decoded rows against the sprite facts above,
+the palette and the import of two shipped boards.
+
+## Legacy scenery decode
+
+`scenery/layouts.json` is the decode table for legacy scenery keys: one row per
+real object, placed on one canonical mesh. Rotated or baked duplicates are not
+shipped. Bevel, ledge, roof grille, chimney stack, skylight, garden bed, pillar,
+picnic table, hex plaza, fountain, crawler crane, bulldozer and concrete debris
+are canonical components, recentred on their XY bounds and grounded at Z=0. A
+legacy stack sprite is a grille and a chimney stack, square1 a plaza, a fountain
+and trees, and construction sites 1 and 3 a vehicle and its debris. The fountain's
+outer wall reaches the ground: the plaza hides that 0.9 px plinth, bare ground
+shows it. Their rows use the same
+angles and offsets that baked the old variants. GlassRoof-1-01..04 and
+GlassRoof-2-02..04 are rows on the wide glass roof (the 1-0n rows stretch it to the
+narrow roof's width), crane tips 03-06 rows on tips 01 and 02, OrbitalGun
+N/S/W rows on the orbital gun and Landscape 1-03 rows on the round formal garden. The sport pool decks are separate components, so no
+row names its own key. Rows carry no `kind`: `tree-broad` is the only tree.
+Maglev decodes to a route marker and its pieces (see Maglev). Herds decode to one row per animal;
+each seaport key stays one baked mesh.
+
+The generator owns both the meshes and the rows. Rebuild every generated family
+from the data repository root with
+`blender --background --factory-startup --python tools/build_scenery_assets.py --
+fluff/skylight GlassRoof fluff/ledge fluff/stack fluff/bevel fluff/construction
+fluff/cars fluff/square fluff/pillars fluff/garden fluff/pool fluff/suburb
+fluff/beacon fluff/maglev SMV_Seaport road_trees SMV_Fluff/ orbitalguns rubble
+fortified geyser fluff/bison fluff/cattle fluff/chickens fluff/horses fluff/pigs`,
+then `tools/build_maglev_assets.py` for the train stamp's thumbnail and
+`python tools/build_board_decals.py` for the decals and the car-park decal rows and seats
+(the scenery build writes the car-park keys without them). The arguments select
+image names, as `build(only)` does. The herd rows need the animal meshes of
+`tools/extract_herd_animals.py`. Each build also writes the palette-only bench
+and rectangular pool, and overwrites `tools/board-scenery-compositions.blend` and
+`tools/board-models/scenery/model-inventory.json` with the selected families.
+
+`python tools/verify_legacy_decode.py` checks the rows against the baked GLBs of
+commit `0d5b47e5d0`, the last commit that has them at their legacy keys. A
+replaced key must match its old GLB after grounding, because that runtime
+grounded a whole legacy SCENERY mesh but placed rows as authored. A key that
+already had rows must match its old composition, trees included; the maglev keys
+are re-authored from their sprites (see Maglev) and skip that comparison. Every tileset
+key that resolved to 3D at the base must still resolve through layouts.json, on
+existing meshes. Every mesh reached by a decodable tileset token (`fluff` below
+2000, `road_fluff:3`, `road:2`) must be grounded and have a
+blueprint entry, and the rows of decoded keys must have Z=0. No layout may
+z-fight: within one mesh, and between the rows of a layout, no two upward faces
+that face the same way and are shaded differently may lie within 0.1 px of each
+other where their outlines overlap. No two meshes that rows, palette props or
+the scatter kit reach may be copies (the same vertex radii about Z, heights,
+colours and materials): a rotated or mirrored copy is a row on the other mesh.
+That check does not catch stretched or regenerated near-copies, which need a
+scan with fitted transforms. Decals (see Decals) must have their image by path
+convention and every image an entry; palette decals and legacy ids must name
+existing decals; every ground-symbol tile must decode, each set with its centre
+and six directions once; each one-hex variant must match its emblem at its decode
+transform (blurred mean difference at most 8/255, coverage overlap at least
+0.75); and every car of a car-park key must have its own slot on one of the
+key's decal rows. A row's `colours` must be one to four `#rrggbb` values or null,
+no more than its mesh's colour slots, and a key whose rows recolour a shared mesh
+must reproduce the base's colours vertex by vertex within 5/255 (see Colour
+slots). Deliberate geometry changes since the base
+are listed as Fixed. Residuals are symmetric Hausdorff distances between vertex
+sets, in model px:
+
+| Family | Keys | Rows | Canonical meshes | Reference | Mesh residual (px) | Tree residual |
+|---|---:|---:|---|---|---:|---:|
+| 01-Building-07-GlassRoof-# | 9 | 9 | glass-dome, glass-roof-wide | baked GLB | 2.7e-01 | 0.0e+00 |
+| 02-Sport-03-SwimmingPool-# | 5 | 19 | sport-1-deck, sport-1-main, sport-1-wading, sport-2, sport-3-deck, sport-3-main, sport-3-wading, sport-4, sport-5 | old rows | 7.5e-01 | 1.6e+00 |
+| 07-Garden-01-Tree-# | 5 | 13 | - | old rows | 0.0e+00 | 0.0e+00 |
+| 07-Garden-02-Table-# | 5 | 97 | picnic-table | old rows | 2.2e-06 | 0.0e+00 |
+| 07-Garden-03-Landscape-# | 4 | 4 | formal-garden-hex, formal-garden-round, formal-garden-star | baked GLB | 0.0e+00 | 0.0e+00 |
+| 07-Garden-04-Lake-# | 5 | 11 | freeform, sport-2, sport-4 | old rows | 0.0e+00 | 0.0e+00 |
+| OrbitalGun# | 4 | 4 | orbital-gun | baked GLB | 2.0e-01 | 0.0e+00 |
+| SeaportSystem-01-Container-01-20Footer-# | 28 | 28 | 28 meshes (containers-e-w-01 ...) | baked GLB | 0.0e+00 | 0.0e+00 |
+| SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-# | 48 | 48 | 48 meshes (gantry-crane-e-w-01 ...) | baked GLB | 0.0e+00 | 0.0e+00 |
+| SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-# | 6 | 6 | crane-tip-01, crane-tip-02 | baked GLB | 1.0e+01 | 0.0e+00 |
+| beacon# | 2 | 2 | landing-beacon-hex, landing-beacon-round | baked GLB | 0.0e+00 | 0.0e+00 |
+| bevel# | 6 | 6 | bevel | baked GLB | 3.6e-06 | 0.0e+00 |
+| bison# | 1 | 2 | bison | baked GLB | 1.7e-06 | 0.0e+00 |
+| cars_# | 8 | 79 | car, parking-barrier, parking-shelter | old rows | 0.0e+00 | 0.0e+00 |
+| cars_2b | 1 | 8 | car, parking-shelter | old rows | 0.0e+00 | 0.0e+00 |
+| cars_3b | 1 | 9 | car, parking-barrier | old rows | 0.0e+00 | 0.0e+00 |
+| cattle# | 3 | 7 | cow, cow-grazing, cow-resting | baked GLB | 2.0e-06 | 0.0e+00 |
+| chickens# | 3 | 9 | hen, rooster | baked GLB | 2.3e-06 | 0.0e+00 |
+| construction# | 3 | 5 | bulldozer, crawler-crane, debris-1, debris-3, site-excavation | baked GLB | 5.0e-02 | 0.0e+00 |
+| fortified | 1 | 1 | fortification | baked GLB | 0.0e+00 | 0.0e+00 |
+| garden# | 6 | 36 | garden-bed | old rows | 8.3e-07 | 0.0e+00 |
+| geyser_magma | 1 | 1 | magma | baked GLB | 2.2e-01 | 0.0e+00 |
+| geyser_water_off | 1 | 1 | water-dormant | baked GLB | 0.0e+00 | 0.0e+00 |
+| geyser_water_on | 1 | 1 | water-erupting | baked GLB | 0.0e+00 | 0.0e+00 |
+| horses# | 2 | 7 | horse, horse-black-running, horse-brown-running, horse-relaxed | baked GLB | 2.4e-06 | 0.0e+00 |
+| ledge# | 6 | 6 | ledge | baked GLB | 3.4e-06 | 0.0e+00 |
+| pigs# | 2 | 8 | pig, pig-brown-resting | baked GLB | 2.2e-06 | 0.0e+00 |
+| pillars# | 6 | 36 | pillar | baked GLB | 2.0e-06 | 0.0e+00 |
+| pool# | 1 | 2 | freeform | old rows | 0.0e+00 | 0.0e+00 |
+| road_trees# | 64 | 336 | - | old rows | 0.0e+00 | 0.0e+00 |
+| rubble_hardened | 1 | 1 | hardened | baked GLB | 0.0e+00 | 0.0e+00 |
+| rubble_hardened_path | 1 | 1 | hardened-path | baked GLB | 0.0e+00 | 0.0e+00 |
+| rubble_heavy | 1 | 1 | heavy | baked GLB | 0.0e+00 | 0.0e+00 |
+| rubble_heavy_path | 1 | 1 | heavy-path | baked GLB | 0.0e+00 | 0.0e+00 |
+| rubble_light | 1 | 1 | light | baked GLB | 0.0e+00 | 0.0e+00 |
+| rubble_light_path | 1 | 1 | light-path | baked GLB | 0.0e+00 | 0.0e+00 |
+| rubble_medium | 1 | 1 | medium | baked GLB | 0.0e+00 | 0.0e+00 |
+| rubble_medium_path | 1 | 1 | medium-path | baked GLB | 0.0e+00 | 0.0e+00 |
+| rubble_wall | 1 | 1 | wall | baked GLB | 0.0e+00 | 0.0e+00 |
+| rubble_wall_path | 1 | 1 | wall-path | baked GLB | 0.0e+00 | 0.0e+00 |
+| skylight# | 6 | 6 | skylight | baked GLB | 3.2e-06 | 0.0e+00 |
+| square# | 6 | 13 | fountain, plaza, plaza-flowers, plaza-flowers-pillars, plaza-hedge, plaza-pillars, plaza-pond | baked GLB, old rows | 9.0e-01 | 0.0e+00 |
+| stack# | 6 | 12 | chimney-stack, grille | baked GLB | 2.1e-06 | 0.0e+00 |
+| suburb# | 3 | 23 | car, concrete-pipe, grandstand, parking-shelter-no-floor, picnic-table, rectangular-no-deck, round-no-deck | old rows | 7.8e-07 | 0.0e+00 |
+
+- 281 tileset keys resolved to 3D at the base; all resolve through layouts.json, and every row names an existing mesh.
+- `bevel1` (now `scenery/roofs/bevel`) stood 1 px off Z=0; the mesh is re-grounded.
+- `bevel2` (now `scenery/roofs/bevel`) stood 1 px off Z=0; the mesh is re-grounded.
+- `bevel3` (now `scenery/roofs/bevel`) stood 1 px off Z=0; the mesh is re-grounded.
+- `bevel4` (now `scenery/roofs/bevel`) stood 1 px off Z=0; the mesh is re-grounded.
+- `bevel5` (now `scenery/roofs/bevel`) stood 1 px off Z=0; the mesh is re-grounded.
+- `bevel6` (now `scenery/roofs/bevel`) stood 1 px off Z=0; the mesh is re-grounded.
+- `FluffSystem-01-Building-07-GlassRoof-3-01` (now `scenery/roofs/glass-dome`) stood -7.4 px off Z=0; the mesh is re-grounded.
+- `SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-01` (now `scenery/seaport/crane-tip-01`) stood 10.3 px off Z=0; it keeps that height (see Fixed).
+- `SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-02` (now `scenery/seaport/crane-tip-02`) stood 10.3 px off Z=0; it keeps that height (see Fixed).
+- `SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-03` (now `scenery/seaport/crane-tip-02`) stood 10.3 px off Z=0; it keeps that height (see Fixed).
+- `SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-04` (now `scenery/seaport/crane-tip-01`) stood 10.3 px off Z=0; it keeps that height (see Fixed).
+- `SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-05` (now `scenery/seaport/crane-tip-02`) stood 10.3 px off Z=0; it keeps that height (see Fixed).
+- `SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-06` (now `scenery/seaport/crane-tip-02`) stood 10.3 px off Z=0; it keeps that height (see Fixed).
+- 141 meshes reached by decodable tileset tokens: all grounded within 0.01 px and present in the blueprint.
+- Every row has Z=0.
+- Decals: 22 in `decals/decals.json`, each with its image by path convention; 170 legacy decal ids decode to them.
+- Emblems: 13 full emblems; all 169 ground-symbol tiles decode (13 sets of 7 pieces, 78 one-hex variants). The variants match their emblem at the decode transform: blurred mean |difference| at most 5.5/255 (the -04 variants at most 4.4), coverage overlap at least 0.77.
+- Car parks: 10 legacy car-park keys place 20 standard decal rows and seat all 72 cars in distinct slots (the legacy render draws neither the decal nor the seats).
+- 4 keys stretch a row (01-Building-07-GlassRoof-#).
+- Colours: 25 keys recolour a shared mesh; 25 keep the base's vertex order and match its colours, by family within 07-Garden-04-Lake-# 0.6, bison# 2.6, cars_# 0.5, cars_2b 0.5, cars_3b 0.4, cattle# 0.4, chickens# 2.9, horses# 3.9, pigs# 1.1, suburb# 0.5 (of 255).
+- Copy check: 256 meshes reached by rows, palette props and the scatter kit; accepted `water-dormant`: GpuGeysers takes the eruption from the asset name (water-erupting).
+- Coplanar check (upward faces within 0.1 px, outlines overlapping by more than 0.01 px, different shading): 56 multi-row layouts and every row mesh, no z-fighting.
+- Accepted: 12 sliver pairs in 5 terrain-owned rubble meshes (rebar and beam flanges crossing slabs at shallow angles).
+- Accepted: `FluffSystem-02-Sport-03-SwimmingPool-1-03` trees lowered by 1.6 px to Z=0.
+- Fixed: `OrbitalGunE` differs by 0.2 px: vent slats raised clear of the plinth top they z-fought with.
+- Fixed: `OrbitalGunN` differs by 0.2 px: vent slats raised clear of the plinth top they z-fought with.
+- Fixed: `OrbitalGunS` differs by 0.2 px: vent slats raised clear of the plinth top they z-fought with.
+- Fixed: `OrbitalGunW` differs by 0.2 px: vent slats raised clear of the plinth top they z-fought with.
+- Fixed: `construction1` differs by 0.05 px: the debris is its own object, grounded: it floated 0.05 px.
+- Fixed: `construction3` differs by 0.05 px: the debris is its own object, grounded: it floated 0.05 px.
+- Fixed: `square1` differs by 0.9 px: the fountain is its own object; its outer wall reaches the ground, hidden by the plaza.
+- Fixed: `FluffSystem-01-Building-07-GlassRoof-1-01` differs by 0.273 px: the narrow glass roof is the wide one stretched to 29 px; its side curbs and ridge bar are 20% thinner.
+- Fixed: `FluffSystem-01-Building-07-GlassRoof-1-02` differs by 0.273 px: the narrow glass roof is the wide one stretched to 29 px; its side curbs and ridge bar are 20% thinner.
+- Fixed: `FluffSystem-01-Building-07-GlassRoof-1-03` differs by 0.273 px: the narrow glass roof is the wide one stretched to 29 px; its side curbs and ridge bar are 20% thinner.
+- Fixed: `FluffSystem-01-Building-07-GlassRoof-1-04` differs by 0.273 px: the narrow glass roof is the wide one stretched to 29 px; its side curbs and ridge bar are 20% thinner.
+- Fixed: `FluffSystem-02-Sport-03-SwimmingPool-1-03` differs by 0.751 px: two overlapping pool islands, whose coplanar tops z-fought, are merged into one.
+- Fixed: `SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-01` differs by 10.3 px: tips keep their boom height; grounding them broke the boom at the hex edge.
+- Fixed: `SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-02` differs by 10.3 px: tips keep their boom height; grounding them broke the boom at the hex edge.
+- Fixed: `SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-03` differs by 10.3 px: tips keep their boom height; grounding them broke the boom at the hex edge.
+- Fixed: `SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-04` differs by 10.3 px: tips keep their boom height; grounding them broke the boom at the hex edge.
+- Fixed: `SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-05` differs by 10.3 px: tips keep their boom height; grounding them broke the boom at the hex edge.
+- Fixed: `SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-06` differs by 10.3 px: tips keep their boom height; grounding them broke the boom at the hex edge.
+- Fixed: `geyser_magma` differs by 0.215 px: lava fissures lifted from 0.035 to 0.25 px above the rock they z-fought with.
+- Accepted: 1 `car*` meshes stand 0.0494 px up, as authored.
+- Accepted: 2 `crane-tip-*` meshes stand 10.3 px up, as authored.
+- Accepted: 1 `wagon*` meshes stand 3.5 px up, as authored.
+- Accepted: 1 `cab*` meshes stand 3.5 px up, as authored.
+- Accepted: 1 `coupler*` meshes stand 4 px up, as authored.
+
+Tolerance is 0.001 px for meshes and trees and 0.01 px for grounding. The pool
+trees are the only accepted tree difference: tree meshes are shared species
+assets, so a pool-island tree cannot keep its 1.6 px model height. The rubble
+meshes are terrain-owned and never placed by import or the editor; their thin
+rebar and beam flanges cross slabs at shallow angles, and those slivers are
+accepted by the coplanar check.
+
+## Decals
+
+A decal id `decal/<group>/<name>` is the image `decals/<group>/<name>.png`; no
+catalog is needed to find it. Images are straight RGBA with north (+y) at the
+top; transparent texels carry the colour of the nearest ink so filtering and
+mipmaps do not darken edges. `tools/build_board_decals.py` writes every image and
+`decals/decals.json`, and also the car-park rows of `scenery/layouts.json`:
+
+| Folder | Decals | Source |
+|---|---|---|
+| `emblems/` | `red-cross`, `capellan-confederation`, `draconis-combine`, `federated-suns`, `free-worlds-league`, `lyran-commonwealth`, `terran-hegemony`, `magistracy-of-canopus`, `outworlds-alliance`, `rim-worlds-republic`, `taurian-concordat`, `star-league`, `comstar` | the seven pieces of the Saxarba 7-hex set stitched at their hex offsets: 144 x 144 px, 1 image px per model px, identical to the unused `-Medium` images |
+| `car-park/` | `straight-4`, `-8`, `-12`; `parallel-3`, `-6`; `diagonal-3`, `-6`, `-9` | painted: 8 image px per model px |
+| `damage/` | `rubble-light-path` | copy of `images/hexes/saxarba/rubble_light_path.png` |
+
+The 2D tileset's ground-symbol pieces and their copies under `tileset/` stay for
+the legacy render and the Tactical View; only the palette moved here.
+
+`decals/decals.json`:
+
+```json
+{
+  "format": "megamek-board-decals", "version": 1,
+  "decals": {
+    "decal/emblems/red-cross": {"size": [144, 144]},
+    "decal/car-park/straight-4": {"size": [22.5, 9.25],
+      "slots": [{"position": [-8.25, -0.075], "heading": 0}, ...]}
+  },
+  "legacy": {
+    "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-04":
+      {"decal": "decal/emblems/red-cross", "scale": 0.5, "rotation": 0},
+    "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-10":
+      {"decal": "decal/emblems/red-cross", "set": true},
+    "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-12":
+      {"decal": "decal/emblems/red-cross", "set": true, "direction": 2},
+    "decal/saxarba/rubble_light_path": {"decal": "decal/damage/rubble-light-path"}
+  }
+}
+```
+
+- `size`: the decal's footprint at scale 1, model px (a hex is 84 x 72), centred on
+  the object's position. Image px differ per group; only `size` sets the footprint.
+- `slots` (car parks only): parking places in the decal's frame, model px from its
+  centre, +y toward the back of the bays (the bay centres); `heading` is the car's rotation in
+  degrees (CCW, 0 = the car's front to +y, as object rotations). The slots fit
+  the car mesh at its car-park scale 0.8 (3.84 x 7.36 px) with at least 0.33 px to
+  every bay line.
+- `legacy`: old decal ids, which are also the legacy tileset images
+  (`decal/` + the tileset image path without extension; `.board2` files saved
+  before this change use them). `scale` (default 1) and `rotation` (default 0,
+  CCW degrees) are the new decal's transform at the old object's position.
+  `"set": true` marks a piece of a ground symbol's 7-hex set: import places ONE
+  decal at scale 1 and rotation 0 on the set's centre hex, which is the piece's
+  own hex for the centre piece (no `direction`) and its neighbour in direction
+  `(direction + 3) % 6` otherwise (`direction` is the piece's hex direction from
+  the centre: 0 N, 1 NE, 2 SE, 3 S, 4 SW, 5 NW). A set with missing pieces
+  still gets its full emblem at the inferred centre. The one-hex variants
+  -01/-04 are upright, -02/-05 turned -30 deg and -03/-06 +30 deg; their scales
+  were fitted to the legacy tiles (small 0.204-0.326, large 0.346-0.503 per emblem).
+
+Car parks: each standard decal is only its row of bays (straight: 5.5 x 9 px
+bays; parallel: 9.8 x 5 px; diagonal: 60 deg to the row, 5.5 px wide and 10.8 px
+long along the car), open on its bottom (road) edge: the dividers reach that edge,
+and the back line and the two end dividers lie on the other three edges, so no
+asphalt shows beyond them and two rows laid back to back touch line to line.
+Unmarked asphalt with white bay lines, no aisle, no road markings, fully opaque.
+Two sides are the same decal twice, the second turned 180 deg, one on each side
+of the road. In `scenery/layouts.json` each legacy key `fluff/cars_*` (1-8, 2b,
+3b) has one decal row per side of its lane that has cars, beside the lane's road:
+its road-side edge 7.3 px from the lane's centre line (`ROAD_EDGE`: the road's
+7.5 px half width less half its 0.45 px asphalt fade, so the decal hides the
+road's gray verge and leaves its carriageway clear), the smallest standard of the
+cars' layout (across the lane: straight; along it: parallel) with room for that
+side's cars. No legacy car park is diagonal. Where no road is drawn (no lane, as
+2b/3b; a roof, deck, industrial top, fuel tank, ice or liquid; a road level the
+renderer does not draw), the editor's import folds the same rows back to back on
+the line through the hex centre, turned and mirrored, their closed sides touching.
+Each car row carries `"seat": [n, slot]`: import places that car on
+`slots[slot]` of the key's n-th decal row (the decal row's transform, mirror
+included, applied to the slot; the car keeps its asset, colour and scale). Cars
+keep the order they had along the lane; beside the road they move up to 22.0 px
+(mean 3.7-12.5 px per key) from their legacy spots, back to back up to 23.0 px
+(mean 8.7-13.4 px). The legacy render ignores seats and decal rows.
+
+## Editor palette, import and stamps
+
+The rows serve two readers. The legacy render of a `.board` expands a scenery
+key into its rows every time it draws. The 3D editor's import (opening a
+`.board`, or saving a game board as `.board2`) turns the same rows into
+separate placed objects once, with the rows of one key in one group. Stamps in
+`data/board-editor/blueprint.json` name a key in their `layout` field and place
+its rows the same way; `{exits}` in a stamp's layout becomes the painted hex's
+road exits. So editing a row changes legacy rendering, future imports and
+stamps, but never objects already saved in a `.board2`.
+
+Palette rules, checked by `BoardSceneryDecodeDataTest`:
+
+- A visible entry is one real object a user places, or a stamp: 199 props.
+- A mesh that only imported objects use is `palette: false` and keeps its
+  label (sport-pool parts, plaza ornaments, the second debris pile, the rooster
+  and the other animal poses: one visible animal per species). Coats and paints
+  are colours, not entries. An entry may place another `model` in `colours`: the
+  three ponds are pools in the pond colours. The five `-snow` trees that keep their
+  own GLB are `palette: false` too: a tree takes its winter form on a snow surface,
+  and its Snow toggle keeps it bare.
+- No visible ID is a layouts key. Maglev and wagons shows the route, platform,
+  wagon, cab and the Maglev train stamp (a wagon, a cab and their coupler); the coupler is `palette: false`.
+- Rotated or baked duplicates are not shipped; terrain-owned scenery (rubble,
+  geysers, fortifications) has no prop entry, though its GLBs stay.
+- Every decode row's mesh has a blueprint entry, so imported objects have a
+  readable name.
+- Decals: 22 visible entries, all from `decals/`: the 13 full emblems
+  ("Emblems"), the 8 standard car parks ("Car park, straight 12", ... in
+  "Ground details") and the light rubble path ("Damage and debris"). The
+  emblem pieces and one-hex variants have no entry; they only decode
+  (`decals/decals.json` `legacy`).
+
+The 78 seaport pieces are
+visible in the Seaport group (container yards, gantry cranes and the straight and
+diagonal boom tips, which the other four tip directions turn), one baked mesh each, with live 3D previews; import
+places each seaport key as one object and gives a hex whose art covered woods
+the `woods/no-trees` vegetation design. Imported and placed trees store their
+bare species; the renderer draws the `-snow` form on a snow surface unless the
+object is marked `"bare": true`.
+
+For 19 species the `-snow` form is a material variant of the bare GLB, not a file:
+the six `orchard-*`, `pine`, `pine-broad`, `pine-slender`, `pine-layered`,
+`tree-broad`, `birch`, `willow-broad`, `tree-layered`, `birch-spreading`,
+`birch-young`, `tree-slender`, `tree` and `birch-tall`. Their materials' extras
+`mmVariants.snow` give the snow canopy material and textures, a linear factor on
+the crown's vertex colours (the snow cards drop the species' pigment) and the
+winter impostor's texture and card colours; `manifest.json` points their `-snow`
+entry at the bare file (`"variant": "snow"`). The runtime builds the winter form
+from it (`RigidGlb.source`). `pine-tall`, `tree-dead`, `willow`, `tree-forked` and
+`foliage-snow` keep their own winter GLB: the duplicate scan found their snow
+geometry or bark different. `python tools/merge_snow_trees.py merge` folds a
+rebuilt `<species>-snow.glb` into its bare GLB (and removes it); `split` writes it
+out again for the Blender tree tools, which read and write the winter GLBs. Ten
+pairs share the bare geometry exactly; the nine regenerated ones (from
+`tree-broad` on) take the bare geometry, 0.15-0.61 px from their own.
 
 ## Rock and scatter meshes
 
@@ -36,12 +590,14 @@ colors, native layout resolution and independent component bounds.
   rough and dry natural rough on exposed ridges, in the same layout (`outcrop-N-lod0` to `-lod2`; 92, 44
   and 22 triangles). Unlike the other rocks they are generated: rebuild them with
   `blender -b --factory-startup --python tools/build_outcrop_assets.py`.
-- `scatter/` contains 26 independently editable GLBs: `stone-block-N.glb` and
+- `scatter/` contains 25 independently editable GLBs: `stone-block-N.glb` and
   `stone-boulder-N.glb` (N = 0..7, eight triangles each, open base), `bush-N.glb`
-  (N = 0..7, shrub masses), `grass.glb` (six triangles) and `plant.glb` (sixteen).
+  (N = 0..7, shrub masses, 660 triangles dry and 792 green) and `grass.glb` (six
+  triangles). The small scatter plant is the first bush of its biome (`bush-0`
+  dry, `bush-4` green).
   Each file contains only its `<shape>-lod0` root mesh (for example, `grass-lod0`)
   and that mesh's vertices.
-  The complete scatter kit has 498 triangles. Grass and plants have explicit
+  The complete scatter kit has 5,942 triangles. Grass and bushes have explicit
   back faces; green and dry grass share geometry.
 
 For terrain rocks, LOD0 is the most detailed version. LOD1 and LOD2 are optional;
@@ -84,8 +640,8 @@ no rock or scatter geometry is generated in-game.
   follow the authored curved trunk. Palms use curved, folded cutout fronds;
   cacti retain their stem silhouettes with smooth normals, mapped ribs and
   cutout flowers. Dead trees keep their existing near meshes and decimated or
-  component-hull distant meshes. The original CC0
-  sources remain in `tools/board-models/foliage/`; the runtime uses these GLBs.
+  component-hull distant meshes. These runtime GLBs are the maintained tree
+  meshes; the legacy low-poly source exports and their importer have been retired.
   A `-lod3` group holds the plant's impostor: two crossed vertical cards and a
   horizontal cap through the crown, 12 triangles with their backs, textured by
   `textures/foliage/impostors/<name>.png` (three 128 by 128 unlit renders of
@@ -102,8 +658,8 @@ no rock or scatter geometry is generated in-game.
   `TreeLod`, so no camera or game state is baked into these assets.
 - Every plant's origin is the foot of its trunk, where the board places, grounds and
   clears roads for it; a leaning crown (bent palm, willow) overhangs to one side.
-  `tools/build_board_assets.py` centres plants there, and textures keep their
-  bark projection. Cactus skin wraps around each stem, following bent arms.
+  The maintained GLBs keep that origin and their bark projection. Cactus skin
+  wraps around each stem, following bent arms.
 - `textures/foliage/*-cutout.png`: six shared 512 by 512 RGBA textures
   for broadleaf/conifer and their snow variants, palm fronds and cactus flowers. Near, medium and far crowns
   share these clamped images; impostors are baked from the same alpha-tested
@@ -237,16 +793,30 @@ only elevation, never slab thickness or rail height.
 The deck uses shared road asphalt and the road's normal/surface maps, lighting
 and world-space texture phase. Sides and underside use shared repeating concrete.
 
+Two concrete kits complete the deck; each is a set of root meshes named `<part>-lod0`/`-lod1`, outside
+`manifest.json`. `bridge-terminal.glb` is the bank end block. `bridges/bridge-pier.glb` is the hammerhead
+pier that stands under a deck joint, on the edge two bridge hexes share, never at a hex centre (56 triangles
+at LOD0, 40 at LOD1). Its origin is the edge midpoint; X runs along the edge (across the deck), Y along the
+deck. Three parts keep the pier undistorted at any height: `bridge-pier-cap` (17 by 9, Z=0 at the deck
+underside, top 0.75 up inside the slab, tapered soffit at Z=-6), `bridge-pier-shaft` (11 by 8 with chamfered
+corners, unit height Z=0..1, no end faces; stretched between footing and cap) and `bridge-pier-footing`
+(16 by 13, Z=0 at the floor, a 1-unit lip, buried 6). The runtime (`BoardBridgeFooting`) places one pier under
+each joint of a bridge whose Pillars toggle is on: each of the two hexes builds the half on its own side of the
+edge, cut at the kit's mirror plane and closed by its section there, so the pier must stay mirror-symmetric in X
+and Y and each part convex.
+
 Rebuild only bridges:
 1. In the MegaMek code checkout run `gradlew :megamek:exportBridgeShapes`.
 2. In mm-data run `blender --background --python tools/build_bridge_assets.py`.
+   It also rebuilds both kits; `python tools/build_bridge_pier.py` (or `build_bridge_terminal.py`) rebuilds
+   one kit alone, and `--check` validates the shipped file.
 
 The exported `tools/board-models/bridge-shapes.json` comes from `BoardRoad` curves
 and unioned footprints; the Blender tool triangulates/extrudes it into GLBs.
 The main board-asset builder delegates its bridge rebuild to this same tool.
 No separate bridge path algorithm or runtime mesh generator is used. Textures and meshes are shared;
 translucency changes instance materials, not the assets. Snow trees have their
-own snow geometry/materials.
+own snow materials, as variants of the bare tree where it shares their shape.
 Rough terrain places the shared GLB rock templates in its terrain mesh.
 Ground image normal maps remain a separate surface detail. `normals/` mirrors ground image paths
 under `tileset/`, appending `.png` to the complete source name (including its
@@ -307,19 +877,14 @@ exports runtime files, and saves editable object libraries at
 Use Blender's Append command to load their objects. The source scripts create
 their own scenes and do not replace the user's open scene.
 
-The nature pack must be present at
-`TO_SORT/many_trees/Ultimate Nature Pack - Jun 2019/Blends` to rebuild foliage. These sources match the user's Quaternius ZIP;
-runtime does not need that folder. Export converts Blender's linear colors to
-display-space vertex colors, preserving the green/snow material distinction.
-
-`build_board_assets.py` runs `prepare_tree_lods.py` after exporting the trees.
-To rebuild detail levels from GLB authoring sources under `tools/board-models/foliage`, run
-`blender --background --factory-startup --python tools/prepare_tree_lods.py`.
-Near pruning requires an enclosing component to be closed with consistent winding;
-surface intersections and boundary contacts are retained. Open palm fronds are
-never treated as enclosing solids. Smaller meshes are decimated from the complete
-original, rather than a pruned mesh whose canopy could expose missing faces.
-The script owns a temporary Blender scene and preserves the active scene.
+`build_board_assets.py` rebuilds bridges and crops while preserving the other
+manifest entries. It no longer imports or regenerates the legacy low-poly trees.
+Edit the maintained tree GLBs directly. To refresh their impostors, run
+`python tools/merge_snow_trees.py split`, then
+`blender --background --factory-startup --python tools/prepare_tree_lods.py -- impostors`,
+then `python tools/merge_snow_trees.py merge`. The bake preserves the three mesh
+levels, owns a temporary Blender scene and preserves the active scene. Its shared
+branch-card helpers remain available to the shrub, orchard and volcanic generators.
 
 Validation checks all 3,319 base models and 66 tree detail meshes, their budgets and texture dependencies, structure
 roof winding, unchanged opaque roof pixels, facade assignments, small runtime
@@ -359,8 +924,7 @@ missing optional levels toward LOD0 once while loading. Foliage PNGs remain
 external under `textures/foliage`, shared by all variants and levels.
 All levels have natural proportions and a base at zero, including when inspected
 in an ordinary GLB viewer. Export and LOD preparation never flatten the height.
-The complete source meshes for Blender regeneration and visual regression
-checks are in `tools/board-models/foliage`; they are not deployed game meshes.
+LOD coverage checks compare the shipped near mesh with its coarser levels.
 
 ## Building GLBs and textures
 

@@ -1,7 +1,8 @@
 """Build small, open wild bushes through Blender MCP or Blender --background --python.
 
 The eight existing bush slots hold four dry and four meadow silhouettes. The
-small scatter plant uses the same authoring with its own two biome exports.
+small scatter plant is the first bush of its biome (bush-0 dry, bush-4 meadow):
+it used to be exported twice, byte-identical, as plant-dry and plant.
 Coordinates are metres, Z-up, with roots at zero; runtime scales them uniformly
 and places them above tall grass but below half of a gameplay foliage level.
 """
@@ -142,10 +143,10 @@ def build():
         shader.inputs['Roughness'].default_value = .9
         materials[role] = material
     summary = {}
-    for i in range(10):
-        dry = i < 4 or i == 9
-        variant = i % 4 if i < 8 else 0
-        name = f'bush-{i}' if i < 8 else 'plant' if i == 8 else 'plant-dry'
+    for i in range(8):
+        dry = i < 4
+        variant = i % 4
+        name = f'bush-{i}'
         obj = blender_mesh(scene, name + '-lod0', bush(dry, variant), materials)
         obj['biome'] = 'sand/rock' if dry else 'green fields'
         obj['cosmetic'] = True

@@ -90,7 +90,8 @@
         "vertices": 24
       }
     ],
-    "mesh": "tree-snow.glb"
+    "mesh": "tree.glb",
+    "variant": "snow"
   },
   "pine-snow": {
     "triangles": 480,
@@ -118,7 +119,8 @@
         "vertices": 24
       }
     ],
-    "mesh": "pine-snow.glb"
+    "mesh": "pine.glb",
+    "variant": "snow"
   },
   "palm": {
     "triangles": 480,
@@ -230,7 +232,8 @@
         "vertices": 24
       }
     ],
-    "mesh": "tree-broad-snow.glb"
+    "mesh": "tree-broad.glb",
+    "variant": "snow"
   },
   "tree-slender": {
     "triangles": 478,
@@ -286,7 +289,8 @@
         "vertices": 24
       }
     ],
-    "mesh": "tree-slender-snow.glb"
+    "mesh": "tree-slender.glb",
+    "variant": "snow"
   },
   "birch": {
     "triangles": 480,
@@ -342,7 +346,8 @@
         "vertices": 24
       }
     ],
-    "mesh": "birch-snow.glb"
+    "mesh": "birch.glb",
+    "variant": "snow"
   },
   "willow": {
     "triangles": 478,
@@ -566,7 +571,8 @@
         "vertices": 24
       }
     ],
-    "mesh": "pine-broad-snow.glb"
+    "mesh": "pine-broad.glb",
+    "variant": "snow"
   },
   "tree-dead": {
     "triangles": 478,
@@ -1239,7 +1245,7 @@
     ]
   },
   "orchard-round-snow": {
-    "mesh": "orchard-round-snow.glb",
+    "mesh": "orchard-round.glb",
     "triangles": 480,
     "vertices": 788,
     "generator": "tools/build_orchard_assets.py",
@@ -1265,7 +1271,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "orchard-spreading": {
     "mesh": "orchard-spreading.glb",
@@ -1297,7 +1304,7 @@
     ]
   },
   "orchard-spreading-snow": {
-    "mesh": "orchard-spreading-snow.glb",
+    "mesh": "orchard-spreading.glb",
     "triangles": 480,
     "vertices": 788,
     "generator": "tools/build_orchard_assets.py",
@@ -1323,7 +1330,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "orchard-upright": {
     "mesh": "orchard-upright.glb",
@@ -1355,7 +1363,7 @@
     ]
   },
   "orchard-upright-snow": {
-    "mesh": "orchard-upright-snow.glb",
+    "mesh": "orchard-upright.glb",
     "triangles": 480,
     "vertices": 784,
     "generator": "tools/build_orchard_assets.py",
@@ -1381,7 +1389,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "orchard-vase": {
     "mesh": "orchard-vase.glb",
@@ -1413,7 +1422,7 @@
     ]
   },
   "orchard-vase-snow": {
-    "mesh": "orchard-vase-snow.glb",
+    "mesh": "orchard-vase.glb",
     "triangles": 480,
     "vertices": 794,
     "generator": "tools/build_orchard_assets.py",
@@ -1439,7 +1448,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "orchard-leaning": {
     "mesh": "orchard-leaning.glb",
@@ -1471,7 +1481,7 @@
     ]
   },
   "orchard-leaning-snow": {
-    "mesh": "orchard-leaning-snow.glb",
+    "mesh": "orchard-leaning.glb",
     "triangles": 480,
     "vertices": 784,
     "generator": "tools/build_orchard_assets.py",
@@ -1497,7 +1507,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "orchard-young": {
     "mesh": "orchard-young.glb",
@@ -1529,7 +1540,7 @@
     ]
   },
   "orchard-young-snow": {
-    "mesh": "orchard-young-snow.glb",
+    "mesh": "orchard-young.glb",
     "triangles": 480,
     "vertices": 784,
     "generator": "tools/build_orchard_assets.py",
@@ -1555,7 +1566,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "tree-forked": {
     "triangles": 480,
@@ -1645,7 +1657,7 @@
     "triangles": 480,
     "vertices": 1440,
     "source": "Blends/CommonTree_Snow_5.blend",
-    "mesh": "tree-layered-snow.glb",
+    "mesh": "tree-layered.glb",
     "lods": [
       {
         "node": "tree-layered-snow-lod0",
@@ -1667,7 +1679,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "birch-tall": {
     "triangles": 480,
@@ -1701,7 +1714,7 @@
     "triangles": 480,
     "vertices": 1440,
     "source": "Blends/BirchTree_Snow_1.blend",
-    "mesh": "birch-tall-snow.glb",
+    "mesh": "birch-tall.glb",
     "lods": [
       {
         "node": "birch-tall-snow-lod0",
@@ -1723,7 +1736,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "birch-spreading": {
     "triangles": 480,
@@ -1757,7 +1771,7 @@
     "triangles": 480,
     "vertices": 1440,
     "source": "Blends/BirchTree_Snow_3.blend",
-    "mesh": "birch-spreading-snow.glb",
+    "mesh": "birch-spreading.glb",
     "lods": [
       {
         "node": "birch-spreading-snow-lod0",
@@ -1779,7 +1793,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "birch-young": {
     "triangles": 480,
@@ -1813,7 +1828,7 @@
     "triangles": 480,
     "vertices": 1440,
     "source": "Blends/BirchTree_Snow_4.blend",
-    "mesh": "birch-young-snow.glb",
+    "mesh": "birch-young.glb",
     "lods": [
       {
         "node": "birch-young-snow-lod0",
@@ -1835,7 +1850,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "willow-broad": {
     "triangles": 480,
@@ -1869,7 +1885,7 @@
     "triangles": 480,
     "vertices": 1440,
     "source": "Blends/Willow_Snow_1.blend",
-    "mesh": "willow-broad-snow.glb",
+    "mesh": "willow-broad.glb",
     "lods": [
       {
         "node": "willow-broad-snow-lod0",
@@ -1891,7 +1907,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "pine-slender": {
     "triangles": 480,
@@ -1925,7 +1942,7 @@
     "triangles": 480,
     "vertices": 1440,
     "source": "Blends/PineTree_Snow_4.blend",
-    "mesh": "pine-slender-snow.glb",
+    "mesh": "pine-slender.glb",
     "lods": [
       {
         "node": "pine-slender-snow-lod0",
@@ -1947,7 +1964,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "pine-layered": {
     "triangles": 480,
@@ -1981,7 +1999,7 @@
     "triangles": 480,
     "vertices": 1440,
     "source": "Blends/PineTree_Snow_5.blend",
-    "mesh": "pine-layered-snow.glb",
+    "mesh": "pine-layered.glb",
     "lods": [
       {
         "node": "pine-layered-snow-lod0",
@@ -2003,7 +2021,8 @@
         "triangles": 12,
         "vertices": 24
       }
-    ]
+    ],
+    "variant": "snow"
   },
   "tree-volcano-crown": {
     "mesh": "tree-volcano-crown.glb",

@@ -3,6 +3,7 @@ from collections import defaultdict
 from math import cos, sin, pi, sqrt
 import hashlib
 from glb_geometry import write_glb
+from model_surfaces import unit_surface
 
 
 # Git may check these out with either line ending, so their fingerprint must not depend on it.
@@ -185,7 +186,7 @@ class Geometry:
             return entry
         roles = ['paint', 'detail'] + (['bark'] if any(role == 'bark' for _, role in parts) else [])
         model = {'version': [0, 1], 'id': name, 'meshes': [],
-                 'materials': [{'id': role, 'diffuse': [1, 1, 1]} for role in roles],
+                 'materials': [{'id': role, 'diffuse': [1, 1, 1], **unit_surface(role, name)} for role in roles],
                  'nodes': [node('root')]}
         if vertices:
             model['meshes'] = [{'attributes': ['POSITION', 'NORMAL', 'COLOR'] + (['TEXCOORD0'] if paint_uv else []), 'vertices': vertices,

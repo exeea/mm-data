@@ -696,14 +696,7 @@
       "preview": {
         "terrain": "bridge:1:9;bridge_cf:40;bridge_elev:2"
       },
-      "palette": true,
-      "presets": [
-        {
-          "id": "default",
-          "label": "Bridge",
-          "terrain": "bridge:1;bridge_cf:40;bridge_elev:1"
-        }
-      ]
+      "palette": true
     },
     {
       "id": "fuelTank",
@@ -1279,6 +1272,18 @@
   ],
   "variants": [
     {
+      "id": "bridge/built",
+      "label": "Built bridge",
+      "owner": "bridge",
+      "group": "Bridges"
+    },
+    {
+      "id": "bridge/natural",
+      "label": "Natural bridge",
+      "owner": "bridge",
+      "group": "Bridges"
+    },
+    {
       "id": "pavement/runway-piece-a",
       "label": "Runway Piece A",
       "owner": "pavement",
@@ -1311,13 +1316,6 @@
       "label": "Horizontal",
       "owner": "road",
       "selectors": "road_fluff:2",
-      "group": "Designs"
-    },
-    {
-      "id": "road/trees",
-      "label": "Trees",
-      "owner": "road",
-      "selectors": "road_fluff:3",
       "group": "Designs"
     },
     {
@@ -1379,6 +1377,13 @@
       "label": "Orchard",
       "owner": "vegetation",
       "selectors": "fluff:12",
+      "group": "Designs"
+    },
+    {
+      "id": "woods/no-trees",
+      "label": "No trees",
+      "owner": "vegetation",
+      "selectors": "",
       "group": "Designs"
     },
     {
@@ -27775,38 +27780,14 @@
   ],
   "assets": [
     {
-      "id": "birch-snow",
-      "label": "Birch Snow",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
-      "id": "birch-spreading-snow",
-      "label": "Birch Spreading Snow",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
       "id": "birch-spreading",
       "label": "Birch Spreading",
       "kind": "prop",
       "group": "Trees and plants"
     },
     {
-      "id": "birch-tall-snow",
-      "label": "Birch Tall Snow",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
       "id": "birch-tall",
       "label": "Birch Tall",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
-      "id": "birch-young-snow",
-      "label": "Birch Young Snow",
       "kind": "prop",
       "group": "Trees and plants"
     },
@@ -27868,7 +27849,8 @@
       "id": "foliage-snow",
       "label": "Foliage Snow",
       "kind": "prop",
-      "group": "Trees and plants"
+      "group": "Trees and plants",
+      "palette": false
     },
     {
       "id": "foliage-temperate",
@@ -28051,20 +28033,8 @@
       "group": "Alien plants"
     },
     {
-      "id": "orchard-leaning-snow",
-      "label": "Orchard Leaning Snow",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
       "id": "orchard-leaning",
       "label": "Orchard Leaning",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
-      "id": "orchard-round-snow",
-      "label": "Orchard Round Snow",
       "kind": "prop",
       "group": "Trees and plants"
     },
@@ -28075,20 +28045,8 @@
       "group": "Trees and plants"
     },
     {
-      "id": "orchard-spreading-snow",
-      "label": "Orchard Spreading Snow",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
       "id": "orchard-spreading",
       "label": "Orchard Spreading",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
-      "id": "orchard-upright-snow",
-      "label": "Orchard Upright Snow",
       "kind": "prop",
       "group": "Trees and plants"
     },
@@ -28099,20 +28057,8 @@
       "group": "Trees and plants"
     },
     {
-      "id": "orchard-vase-snow",
-      "label": "Orchard Vase Snow",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
       "id": "orchard-vase",
       "label": "Orchard Vase",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
-      "id": "orchard-young-snow",
-      "label": "Orchard Young Snow",
       "kind": "prop",
       "group": "Trees and plants"
     },
@@ -28135,20 +28081,8 @@
       "group": "Trees and plants"
     },
     {
-      "id": "pine-broad-snow",
-      "label": "Pine Broad Snow",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
       "id": "pine-broad",
       "label": "Pine Broad",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
-      "id": "pine-layered-snow",
-      "label": "Pine Layered Snow",
       "kind": "prop",
       "group": "Trees and plants"
     },
@@ -28159,20 +28093,8 @@
       "group": "Trees and plants"
     },
     {
-      "id": "pine-slender-snow",
-      "label": "Pine Slender Snow",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
       "id": "pine-slender",
       "label": "Pine Slender",
-      "kind": "prop",
-      "group": "Trees and plants"
-    },
-    {
-      "id": "pine-snow",
-      "label": "Pine Snow",
       "kind": "prop",
       "group": "Trees and plants"
     },
@@ -28180,7 +28102,8 @@
       "id": "pine-tall-snow",
       "label": "Pine Tall Snow",
       "kind": "prop",
-      "group": "Trees and plants"
+      "group": "Trees and plants",
+      "palette": false
     },
     {
       "id": "pine-tall",
@@ -28219,164 +28142,77 @@
       "group": "Rocks and debris"
     },
     {
-      "id": "scenery/components/bench",
+      "id": "scenery/parks/bench",
       "label": "Bench",
       "kind": "prop",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/components/car-azure",
-      "label": "Car Azure",
+      "id": "scenery/vehicles/car",
+      "label": "Car",
       "kind": "prop",
       "group": "Vehicles"
     },
     {
-      "id": "scenery/components/car-blue",
-      "label": "Car Blue",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-gray",
-      "label": "Car Gray",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-green",
-      "label": "Car Green",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-magenta",
-      "label": "Car Magenta",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-maroon",
-      "label": "Car Maroon",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-mustard",
-      "label": "Car Mustard",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-olive",
-      "label": "Car Olive",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-orange",
-      "label": "Car Orange",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-pink",
-      "label": "Car Pink",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-purple",
-      "label": "Car Purple",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-red",
-      "label": "Car Red",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-silver",
-      "label": "Car Silver",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-steel",
-      "label": "Car Steel",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-teal",
-      "label": "Car Teal",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-turquoise",
-      "label": "Car Turquoise",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-white",
-      "label": "Car White",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-yellow",
-      "label": "Car Yellow",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/concrete-pipe",
-      "label": "Concrete Pipe",
+      "id": "scenery/construction/concrete-pipe",
+      "label": "Concrete pipe",
       "kind": "prop",
       "group": "Construction and details"
     },
     {
-      "id": "scenery/components/fountain-round",
-      "label": "Fountain Round",
+      "id": "scenery/parks/garden-bed",
+      "label": "Garden bed",
       "kind": "prop",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/components/garden-bed",
-      "label": "Garden Bed",
-      "kind": "prop",
-      "group": "Parks and furniture"
-    },
-    {
-      "id": "scenery/components/grandstand",
+      "id": "scenery/parks/grandstand",
       "label": "Grandstand",
       "kind": "prop",
       "group": "Sport and pools"
     },
     {
-      "id": "scenery/components/lake-freeform-01",
-      "label": "Lake Freeform 01",
+      "id": "scenery/parks/pond-1",
+      "label": "Kidney pond",
+      "model": "scenery/pools/freeform",
+      "colours": [
+        "#63753d",
+        "#63753d",
+        "#63753d",
+        "#94c7ab"
+      ],
       "kind": "prop",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/components/lake-freeform-02",
-      "label": "Lake Freeform 02",
+      "id": "scenery/parks/pond-2",
+      "label": "Freeform pond",
+      "model": "scenery/pools/sport-2",
+      "colours": [
+        "#63753d",
+        "#63753d",
+        "#63753d",
+        "#94c7ab"
+      ],
       "kind": "prop",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/components/lake-freeform-04",
-      "label": "Lake Freeform 04",
+      "id": "scenery/parks/pond-4",
+      "label": "Twin-lobed pond",
+      "model": "scenery/pools/sport-4",
+      "colours": [
+        "#63753d",
+        "#63753d",
+        "#63753d",
+        "#94c7ab"
+      ],
       "kind": "prop",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/components/parking-barrier",
-      "label": "Parking Barrier",
+      "id": "scenery/vehicles/parking-barrier",
+      "label": "Parking barrier",
       "kind": "prop",
       "group": "Construction and details",
       "snap": {
@@ -28400,3611 +28236,1128 @@
       }
     },
     {
-      "id": "scenery/components/pool-garden-freeform",
-      "label": "Pool Garden Freeform",
+      "id": "scenery/pools/freeform",
+      "label": "Freeform pool",
       "kind": "prop",
       "group": "Sport and pools"
     },
     {
-      "id": "scenery/components/pool-rectangular-no-deck",
-      "label": "Pool Rectangular No Deck",
+      "id": "scenery/pools/rectangular-no-deck",
+      "label": "Rectangular pool, no deck",
       "kind": "prop",
       "group": "Sport and pools"
     },
     {
-      "id": "scenery/components/pool-round-no-deck",
-      "label": "Pool Round No Deck",
+      "id": "scenery/pools/round-no-deck",
+      "label": "Round pool, no deck",
       "kind": "prop",
       "group": "Sport and pools"
     },
     {
-      "id": "scenery/components/pool-sport-01-main",
-      "label": "Pool Sport 01 Main",
+      "id": "scenery/pools/sport-1-main",
+      "label": "Sport pool 1",
+      "kind": "prop",
+      "group": "Sport and pools",
+      "palette": false
+    },
+    {
+      "id": "scenery/pools/sport-1-wading",
+      "label": "Sport pool 1 wading",
+      "kind": "prop",
+      "group": "Sport and pools",
+      "palette": false
+    },
+    {
+      "id": "scenery/pools/sport-2",
+      "label": "Sport pool 2",
+      "kind": "prop",
+      "group": "Sport and pools",
+      "palette": false
+    },
+    {
+      "id": "scenery/pools/sport-3-main",
+      "label": "Sport pool 3",
+      "kind": "prop",
+      "group": "Sport and pools",
+      "palette": false
+    },
+    {
+      "id": "scenery/pools/sport-3-wading",
+      "label": "Sport pool 3 wading",
+      "kind": "prop",
+      "group": "Sport and pools",
+      "palette": false
+    },
+    {
+      "id": "scenery/pools/sport-4",
+      "label": "Sport pool 4",
+      "kind": "prop",
+      "group": "Sport and pools",
+      "palette": false
+    },
+    {
+      "id": "scenery/pools/sport-5",
+      "label": "Sport pool 5",
+      "kind": "prop",
+      "group": "Sport and pools",
+      "palette": false
+    },
+    {
+      "id": "scenery/pools/rectangular",
+      "label": "Rectangular pool",
       "kind": "prop",
       "group": "Sport and pools"
     },
     {
-      "id": "scenery/components/pool-sport-01-wading",
-      "label": "Pool Sport 01 Wading",
-      "kind": "prop",
-      "group": "Sport and pools"
-    },
-    {
-      "id": "scenery/components/pool-sport-02",
-      "label": "Pool Sport 02",
-      "kind": "prop",
-      "group": "Sport and pools"
-    },
-    {
-      "id": "scenery/components/pool-sport-03-main",
-      "label": "Pool Sport 03 Main",
-      "kind": "prop",
-      "group": "Sport and pools"
-    },
-    {
-      "id": "scenery/components/pool-sport-03-wading",
-      "label": "Pool Sport 03 Wading",
-      "kind": "prop",
-      "group": "Sport and pools"
-    },
-    {
-      "id": "scenery/components/pool-sport-04",
-      "label": "Pool Sport 04",
-      "kind": "prop",
-      "group": "Sport and pools"
-    },
-    {
-      "id": "scenery/components/pool-sport-05",
-      "label": "Pool Sport 05",
-      "kind": "prop",
-      "group": "Sport and pools"
-    },
-    {
-      "id": "scenery/components/pool",
-      "label": "Pool",
-      "kind": "prop",
-      "group": "Sport and pools"
-    },
-    {
-      "id": "scenery/components/shelter-no-floor",
-      "label": "Shelter No Floor",
+      "id": "scenery/vehicles/parking-shelter-no-floor",
+      "label": "Parking shelter, no floor",
       "kind": "prop",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/components/shelter",
-      "label": "Shelter",
+      "id": "scenery/vehicles/parking-shelter",
+      "label": "Parking shelter",
       "kind": "prop",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/components/table-frame",
-      "label": "Table Frame",
+      "id": "scenery/parks/picnic-table",
+      "label": "Picnic table",
       "kind": "prop",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/fluff/beacon1",
-      "label": "Beacon1",
+      "id": "scenery/roofs/landing-beacon-hex",
+      "label": "Hex landing beacon",
       "kind": "prop",
       "group": "Military"
     },
     {
-      "id": "scenery/fluff/beacon2",
-      "label": "Beacon2",
+      "id": "scenery/roofs/landing-beacon-round",
+      "label": "Round landing beacon",
       "kind": "prop",
       "group": "Military"
     },
     {
-      "id": "scenery/fluff/bevel1",
-      "label": "Bevel1",
+      "id": "scenery/roofs/bevel",
+      "label": "Roof bevel",
       "kind": "prop",
       "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/bevel2",
-      "label": "Bevel2",
+      "id": "scenery/farm/pig",
+      "label": "Pig",
       "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/bevel3",
-      "label": "Bevel3",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/bevel4",
-      "label": "Bevel4",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/bevel5",
-      "label": "Bevel5",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/bevel6",
-      "label": "Bevel6",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/bison1",
-      "label": "Bison1",
-      "kind": "prop",
-      "thumbnail": "images/hexes/fluff/bison1.png",
       "group": "Animals"
     },
     {
-      "id": "scenery/fluff/cattle1",
-      "label": "Cattle1",
+      "id": "scenery/farm/pig-brown-resting",
+      "label": "Pig, brown, resting",
       "kind": "prop",
-      "thumbnail": "images/hexes/fluff/cattle1.png",
+      "group": "Animals",
+      "palette": false
+    },
+    {
+      "id": "scenery/farm/cow",
+      "label": "Cow",
+      "kind": "prop",
       "group": "Animals"
     },
     {
-      "id": "scenery/fluff/cattle2",
-      "label": "Cattle2",
+      "id": "scenery/farm/cow-grazing",
+      "label": "Cow, grazing",
       "kind": "prop",
-      "thumbnail": "images/hexes/fluff/cattle2.png",
+      "group": "Animals",
+      "palette": false
+    },
+    {
+      "id": "scenery/farm/cow-resting",
+      "label": "Cow, resting",
+      "kind": "prop",
+      "group": "Animals",
+      "palette": false
+    },
+    {
+      "id": "scenery/farm/horse",
+      "label": "Horse",
+      "kind": "prop",
       "group": "Animals"
     },
     {
-      "id": "scenery/fluff/cattle3",
-      "label": "Cattle3",
+      "id": "scenery/farm/horse-relaxed",
+      "label": "Horse, resting",
       "kind": "prop",
-      "thumbnail": "images/hexes/fluff/cattle3.png",
+      "group": "Animals",
+      "palette": false
+    },
+    {
+      "id": "scenery/farm/horse-brown-running",
+      "label": "Horse, brown, running",
+      "kind": "prop",
+      "group": "Animals",
+      "palette": false
+    },
+    {
+      "id": "scenery/farm/horse-black-running",
+      "label": "Horse, black, running",
+      "kind": "prop",
+      "group": "Animals",
+      "palette": false
+    },
+    {
+      "id": "scenery/farm/hen",
+      "label": "Chicken",
+      "kind": "prop",
       "group": "Animals"
     },
     {
-      "id": "scenery/fluff/chickens1",
-      "label": "Chickens1",
+      "id": "scenery/farm/rooster",
+      "label": "Rooster",
       "kind": "prop",
-      "thumbnail": "images/hexes/fluff/chickens1.png",
+      "group": "Animals",
+      "palette": false
+    },
+    {
+      "id": "scenery/farm/bison",
+      "label": "Bison",
+      "kind": "prop",
       "group": "Animals"
     },
     {
-      "id": "scenery/fluff/chickens2",
-      "label": "Chickens2",
-      "kind": "prop",
-      "thumbnail": "images/hexes/fluff/chickens2.png",
-      "group": "Animals"
-    },
-    {
-      "id": "scenery/fluff/chickens3",
-      "label": "Chickens3",
-      "kind": "prop",
-      "thumbnail": "images/hexes/fluff/chickens3.png",
-      "group": "Animals"
-    },
-    {
-      "id": "scenery/fluff/construction1",
-      "label": "Construction1",
+      "id": "scenery/construction/crawler-crane",
+      "label": "Crawler crane",
       "kind": "prop",
       "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/construction2",
-      "label": "Construction2",
+      "id": "scenery/construction/debris-1",
+      "label": "Concrete debris",
       "kind": "prop",
       "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/construction3",
-      "label": "Construction3",
+      "id": "scenery/construction/site-excavation",
+      "label": "Excavation site",
       "kind": "prop",
       "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/horses1",
-      "label": "Horses1",
-      "kind": "prop",
-      "thumbnail": "images/hexes/fluff/horses1.png",
-      "group": "Animals"
-    },
-    {
-      "id": "scenery/fluff/horses2",
-      "label": "Horses2",
-      "kind": "prop",
-      "thumbnail": "images/hexes/fluff/horses2.png",
-      "group": "Animals"
-    },
-    {
-      "id": "scenery/fluff/ledge1",
-      "label": "Ledge1",
+      "id": "scenery/construction/bulldozer",
+      "label": "Bulldozer",
       "kind": "prop",
       "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/ledge2",
-      "label": "Ledge2",
+      "id": "scenery/construction/debris-3",
+      "label": "Concrete debris 2",
+      "kind": "prop",
+      "group": "Construction and details",
+      "palette": false
+    },
+    {
+      "id": "scenery/roofs/ledge",
+      "label": "Roof ledge",
       "kind": "prop",
       "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/ledge3",
-      "label": "Ledge3",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/ledge4",
-      "label": "Ledge4",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/ledge5",
-      "label": "Ledge5",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/ledge6",
-      "label": "Ledge6",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/components/maglev-route",
-      "label": "Maglev route (paint connections)",
+      "id": "scenery/maglev/route",
+      "label": "Maglev route",
       "kind": "prop",
       "group": "Maglev and wagons"
     },
     {
-      "id": "scenery/fluff/maglevstation1",
-      "label": "Station N/S",
+      "id": "scenery/parks/pillar",
+      "label": "Pillar",
       "kind": "prop",
-      "group": "Maglev and wagons",
-      "snap": {
-        "set": "maglev-track",
-        "radius": 0.1,
-        "angleTolerance": 2,
-        "connectors": [
-          [
-            -0.0,
-            0.5,
-            0.136111111,
-            90
-          ],
-          [
-            0.0,
-            -0.5,
-            0.136111111,
-            270
-          ]
-        ]
-      }
+      "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/maglevstation2",
-      "label": "Station NE/SW",
+      "id": "scenery/roofs/skylight",
+      "label": "Skylight",
       "kind": "prop",
-      "group": "Maglev and wagons",
-      "snap": {
-        "set": "maglev-track",
-        "radius": 0.1,
-        "angleTolerance": 2,
-        "connectors": [
-          [
-            0.371153744,
-            0.25,
-            0.136111111,
-            30
-          ],
-          [
-            -0.371153744,
-            -0.25,
-            0.136111111,
-            210
-          ]
-        ]
-      }
+      "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/maglevstation3",
-      "label": "Station NW/SE",
+      "id": "scenery/parks/plaza",
+      "label": "Hex plaza",
       "kind": "prop",
-      "group": "Maglev and wagons",
-      "snap": {
-        "set": "maglev-track",
-        "radius": 0.1,
-        "angleTolerance": 2,
-        "connectors": [
-          [
-            -0.371153744,
-            0.25,
-            0.136111111,
-            150
-          ],
-          [
-            0.371153744,
-            -0.25,
-            0.136111111,
-            330
-          ]
-        ]
-      }
+      "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/maglevtrack1",
-      "label": "Track N/S",
+      "id": "scenery/parks/fountain",
+      "label": "Fountain",
       "kind": "prop",
-      "group": "Maglev and wagons",
-      "snap": {
-        "set": "maglev-track",
-        "radius": 0.1,
-        "angleTolerance": 2,
-        "connectors": [
-          [
-            -0.0,
-            0.5,
-            0.136111111,
-            90
-          ],
-          [
-            0.0,
-            -0.5,
-            0.136111111,
-            270
-          ]
-        ]
-      }
+      "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/maglevtrack2",
-      "label": "Track NE/SW",
+      "id": "scenery/parks/plaza-pillars",
+      "label": "Plaza with pillars",
       "kind": "prop",
-      "group": "Maglev and wagons",
-      "snap": {
-        "set": "maglev-track",
-        "radius": 0.1,
-        "angleTolerance": 2,
-        "connectors": [
-          [
-            0.371153744,
-            0.25,
-            0.136111111,
-            30
-          ],
-          [
-            -0.371153744,
-            -0.25,
-            0.136111111,
-            210
-          ]
-        ]
-      }
-    },
-    {
-      "id": "scenery/fluff/maglevtrack3",
-      "label": "Track NW/SE",
-      "kind": "prop",
-      "group": "Maglev and wagons",
-      "snap": {
-        "set": "maglev-track",
-        "radius": 0.1,
-        "angleTolerance": 2,
-        "connectors": [
-          [
-            -0.371153744,
-            0.25,
-            0.136111111,
-            150
-          ],
-          [
-            0.371153744,
-            -0.25,
-            0.136111111,
-            330
-          ]
-        ]
-      }
-    },
-    {
-      "id": "scenery/fluff/maglevtrain1",
-      "label": "Train + track N/S",
-      "kind": "prop",
-      "group": "Maglev and wagons",
-      "snap": {
-        "set": "maglev-track",
-        "radius": 0.1,
-        "angleTolerance": 2,
-        "connectors": [
-          [
-            -0.0,
-            0.5,
-            0.136111111,
-            90
-          ],
-          [
-            0.0,
-            -0.5,
-            0.136111111,
-            270
-          ]
-        ]
-      }
-    },
-    {
-      "id": "scenery/fluff/maglevtrain2",
-      "label": "Train + station N/S",
-      "kind": "prop",
-      "group": "Maglev and wagons",
-      "snap": {
-        "set": "maglev-track",
-        "radius": 0.1,
-        "angleTolerance": 2,
-        "connectors": [
-          [
-            -0.0,
-            0.5,
-            0.136111111,
-            90
-          ],
-          [
-            0.0,
-            -0.5,
-            0.136111111,
-            270
-          ]
-        ]
-      }
-    },
-    {
-      "id": "scenery/fluff/maglevtrain3",
-      "label": "Train + track N/S",
-      "kind": "prop",
-      "group": "Maglev and wagons",
-      "snap": {
-        "set": "maglev-track",
-        "radius": 0.1,
-        "angleTolerance": 2,
-        "connectors": [
-          [
-            -0.0,
-            0.5,
-            0.136111111,
-            90
-          ],
-          [
-            0.0,
-            -0.5,
-            0.136111111,
-            270
-          ]
-        ]
-      },
+      "group": "Construction and details",
       "palette": false
     },
     {
-      "id": "scenery/fluff/maglevtrain4",
-      "label": "Train + track N/S",
+      "id": "scenery/parks/plaza-hedge",
+      "label": "Plaza with hedge",
       "kind": "prop",
-      "group": "Maglev and wagons",
-      "snap": {
-        "set": "maglev-track",
-        "radius": 0.1,
-        "angleTolerance": 2,
-        "connectors": [
-          [
-            -0.0,
-            0.5,
-            0.136111111,
-            90
-          ],
-          [
-            0.0,
-            -0.5,
-            0.136111111,
-            270
-          ]
-        ]
-      },
+      "group": "Construction and details",
       "palette": false
     },
     {
-      "id": "scenery/fluff/maglevtrain5",
-      "label": "Train + station NE/SW",
+      "id": "scenery/parks/plaza-pond",
+      "label": "Plaza with pond",
       "kind": "prop",
-      "group": "Maglev and wagons",
-      "snap": {
-        "set": "maglev-track",
-        "radius": 0.1,
-        "angleTolerance": 2,
-        "connectors": [
-          [
-            0.371153744,
-            0.25,
-            0.136111111,
-            30
-          ],
-          [
-            -0.371153744,
-            -0.25,
-            0.136111111,
-            210
-          ]
-        ]
-      }
+      "group": "Construction and details",
+      "palette": false
     },
     {
-      "id": "scenery/fluff/maglevtrain6",
-      "label": "Train + track NW/SE",
+      "id": "scenery/parks/plaza-flowers-pillars",
+      "label": "Flower plaza with pillars",
       "kind": "prop",
-      "group": "Maglev and wagons",
-      "snap": {
-        "set": "maglev-track",
-        "radius": 0.1,
-        "angleTolerance": 2,
-        "connectors": [
-          [
-            -0.371153744,
-            0.25,
-            0.136111111,
-            150
-          ],
-          [
-            0.371153744,
-            -0.25,
-            0.136111111,
-            330
-          ]
-        ]
-      }
+      "group": "Construction and details",
+      "palette": false
     },
     {
-      "id": "scenery/fluff/pigs1",
-      "label": "Pigs1",
+      "id": "scenery/parks/plaza-flowers",
+      "label": "Flower plaza",
       "kind": "prop",
-      "thumbnail": "images/hexes/fluff/pigs1.png",
-      "group": "Animals"
+      "group": "Construction and details",
+      "palette": false
     },
     {
-      "id": "scenery/fluff/pigs2",
-      "label": "Pigs2",
-      "kind": "prop",
-      "thumbnail": "images/hexes/fluff/pigs2.png",
-      "group": "Animals"
-    },
-    {
-      "id": "scenery/fluff/pillars1",
-      "label": "Pillars1",
+      "id": "scenery/roofs/grille",
+      "label": "Roof grille",
       "kind": "prop",
       "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/pillars2",
-      "label": "Pillars2",
+      "id": "scenery/roofs/chimney-stack",
+      "label": "Chimney stack",
       "kind": "prop",
       "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/pillars3",
-      "label": "Pillars3",
+      "id": "scenery/roofs/glass-roof-wide",
+      "label": "Glass roof",
       "kind": "prop",
       "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/pillars4",
-      "label": "Pillars4",
+      "id": "scenery/roofs/glass-dome",
+      "label": "Glass dome",
       "kind": "prop",
       "group": "Construction and details"
     },
     {
-      "id": "scenery/fluff/pillars5",
-      "label": "Pillars5",
+      "id": "scenery/pools/sport-1-deck",
+      "label": "Sport pool 1 deck",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Sport and pools",
+      "palette": false
     },
     {
-      "id": "scenery/fluff/pillars6",
-      "label": "Pillars6",
+      "id": "scenery/pools/sport-3-deck",
+      "label": "Sport pool 3 deck",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Sport and pools",
+      "palette": false
     },
     {
-      "id": "scenery/fluff/skylight1",
-      "label": "Skylight1",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/skylight2",
-      "label": "Skylight2",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/skylight3",
-      "label": "Skylight3",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/skylight4",
-      "label": "Skylight4",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/skylight5",
-      "label": "Skylight5",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/skylight6",
-      "label": "Skylight6",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/square1",
-      "label": "Square1",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/square2",
-      "label": "Square2",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/square3",
-      "label": "Square3",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/square4",
-      "label": "Square4",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/square5",
-      "label": "Square5",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/square6",
-      "label": "Square6",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/stack1",
-      "label": "Stack1",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/stack2",
-      "label": "Stack2",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/stack3",
-      "label": "Stack3",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/stack4",
-      "label": "Stack4",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/stack5",
-      "label": "Stack5",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/fluff/stack6",
-      "label": "Stack6",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/saxarba/misc/fortified",
-      "label": "Fortified",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/misc/fortified.png",
-      "group": "Military"
-    },
-    {
-      "id": "scenery/saxarba/misc/geyser_magma",
-      "label": "Geyser Magma",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/misc/geyser_magma.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/misc/geyser_water_off",
-      "label": "Geyser Water Off",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/misc/geyser_water_off.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/misc/geyser_water_on",
-      "label": "Geyser Water On",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/misc/geyser_water_on.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/misc/rubble_hardened",
-      "label": "Rubble Hardened",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/misc/rubble_hardened.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/misc/rubble_heavy",
-      "label": "Rubble Heavy",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/misc/rubble_heavy.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/misc/rubble_light",
-      "label": "Rubble Light",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/misc/rubble_light.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/misc/rubble_medium",
-      "label": "Rubble Medium",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/misc/rubble_medium.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/misc/rubble_wall",
-      "label": "Rubble Wall",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/misc/rubble_wall.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/rubble_hardened_path",
-      "label": "Rubble Hardened Path",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/rubble_hardened_path.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/rubble_heavy_path",
-      "label": "Rubble Heavy Path",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/rubble_heavy_path.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/rubble_light_path",
-      "label": "Rubble Light Path",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/rubble_light_path.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/rubble_medium_path",
-      "label": "Rubble Medium Path",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/rubble_medium_path.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/rubble_wall_path",
-      "label": "Rubble Wall Path",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/rubble_wall_path.png",
-      "group": "Rocks and debris"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-1-01",
-      "label": "Fluffsystem 01 Building 07 Glassroof 1 01",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-1-02",
-      "label": "Fluffsystem 01 Building 07 Glassroof 1 02",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-1-03",
-      "label": "Fluffsystem 01 Building 07 Glassroof 1 03",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-1-04",
-      "label": "Fluffsystem 01 Building 07 Glassroof 1 04",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-2-01",
-      "label": "Fluffsystem 01 Building 07 Glassroof 2 01",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-2-02",
-      "label": "Fluffsystem 01 Building 07 Glassroof 2 02",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-2-03",
-      "label": "Fluffsystem 01 Building 07 Glassroof 2 03",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-2-04",
-      "label": "Fluffsystem 01 Building 07 Glassroof 2 04",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-01-Building-07-GlassRoof-3-01",
-      "label": "Fluffsystem 01 Building 07 Glassroof 3 01",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-01",
-      "label": "Fluffsystem 02 Sport 03 Swimmingpool 1 01",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-01.png",
-      "group": "Sport and pools"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-03",
-      "label": "Fluffsystem 02 Sport 03 Swimmingpool 1 03",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-03.png",
-      "group": "Sport and pools"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-01",
-      "label": "Fluffsystem 07 Garden 03 Landscape 1 01",
+      "id": "scenery/parks/formal-garden-hex",
+      "label": "Hexagonal formal garden",
       "kind": "prop",
       "thumbnail": "images/hexes/saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-01.png",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-02",
-      "label": "Fluffsystem 07 Garden 03 Landscape 1 02",
+      "id": "scenery/parks/formal-garden-round",
+      "label": "Round formal garden",
       "kind": "prop",
       "thumbnail": "images/hexes/saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-02.png",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-03",
-      "label": "Fluffsystem 07 Garden 03 Landscape 1 03",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-03.png",
-      "group": "Parks and furniture"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-04",
-      "label": "Fluffsystem 07 Garden 03 Landscape 1 04",
+      "id": "scenery/parks/formal-garden-star",
+      "label": "Star formal garden",
       "kind": "prop",
       "thumbnail": "images/hexes/saxarba/SMV_Fluff/FluffSystem-07-Garden-03-Landscape-1-04.png",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-01",
-      "label": "Seaportsystem 01 Container 01 20Footer 1 01",
+      "id": "scenery/seaport/containers-n-s-01",
+      "label": "Container yard N-S 1",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-01.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-02",
-      "label": "Seaportsystem 01 Container 01 20Footer 1 02",
+      "id": "scenery/seaport/containers-n-s-02",
+      "label": "Container yard N-S 2",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-02.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-03",
-      "label": "Seaportsystem 01 Container 01 20Footer 1 03",
+      "id": "scenery/seaport/containers-n-s-03",
+      "label": "Container yard N-S 3",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-03.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-04",
-      "label": "Seaportsystem 01 Container 01 20Footer 1 04",
+      "id": "scenery/seaport/containers-n-s-04",
+      "label": "Container yard N-S 4",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-04.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-05",
-      "label": "Seaportsystem 01 Container 01 20Footer 1 05",
+      "id": "scenery/seaport/containers-n-s-05",
+      "label": "Container yard N-S 5",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-05.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-06",
-      "label": "Seaportsystem 01 Container 01 20Footer 1 06",
+      "id": "scenery/seaport/containers-n-s-06",
+      "label": "Container yard N-S 6",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-06.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-07",
-      "label": "Seaportsystem 01 Container 01 20Footer 1 07",
+      "id": "scenery/seaport/containers-n-s-07",
+      "label": "Container yard N-S 7",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-1-07.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-01",
-      "label": "Seaportsystem 01 Container 01 20Footer 2 01",
+      "id": "scenery/seaport/containers-ne-sw-01",
+      "label": "Container yard NE-SW 1",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-01.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-02",
-      "label": "Seaportsystem 01 Container 01 20Footer 2 02",
+      "id": "scenery/seaport/containers-ne-sw-02",
+      "label": "Container yard NE-SW 2",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-02.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-03",
-      "label": "Seaportsystem 01 Container 01 20Footer 2 03",
+      "id": "scenery/seaport/containers-ne-sw-03",
+      "label": "Container yard NE-SW 3",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-03.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-04",
-      "label": "Seaportsystem 01 Container 01 20Footer 2 04",
+      "id": "scenery/seaport/containers-ne-sw-04",
+      "label": "Container yard NE-SW 4",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-04.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-05",
-      "label": "Seaportsystem 01 Container 01 20Footer 2 05",
+      "id": "scenery/seaport/containers-ne-sw-05",
+      "label": "Container yard NE-SW 5",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-05.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-06",
-      "label": "Seaportsystem 01 Container 01 20Footer 2 06",
+      "id": "scenery/seaport/containers-ne-sw-06",
+      "label": "Container yard NE-SW 6",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-06.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-07",
-      "label": "Seaportsystem 01 Container 01 20Footer 2 07",
+      "id": "scenery/seaport/containers-ne-sw-07",
+      "label": "Container yard NE-SW 7",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-2-07.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-01",
-      "label": "Seaportsystem 01 Container 01 20Footer 3 01",
+      "id": "scenery/seaport/containers-nw-se-01",
+      "label": "Container yard NW-SE 1",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-01.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-02",
-      "label": "Seaportsystem 01 Container 01 20Footer 3 02",
+      "id": "scenery/seaport/containers-nw-se-02",
+      "label": "Container yard NW-SE 2",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-02.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-03",
-      "label": "Seaportsystem 01 Container 01 20Footer 3 03",
+      "id": "scenery/seaport/containers-nw-se-03",
+      "label": "Container yard NW-SE 3",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-03.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-04",
-      "label": "Seaportsystem 01 Container 01 20Footer 3 04",
+      "id": "scenery/seaport/containers-nw-se-04",
+      "label": "Container yard NW-SE 4",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-04.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-05",
-      "label": "Seaportsystem 01 Container 01 20Footer 3 05",
+      "id": "scenery/seaport/containers-nw-se-05",
+      "label": "Container yard NW-SE 5",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-05.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-06",
-      "label": "Seaportsystem 01 Container 01 20Footer 3 06",
+      "id": "scenery/seaport/containers-nw-se-06",
+      "label": "Container yard NW-SE 6",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-06.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-07",
-      "label": "Seaportsystem 01 Container 01 20Footer 3 07",
+      "id": "scenery/seaport/containers-nw-se-07",
+      "label": "Container yard NW-SE 7",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-3-07.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-01",
-      "label": "Seaportsystem 01 Container 01 20Footer 4 01",
+      "id": "scenery/seaport/containers-e-w-01",
+      "label": "Container yard E-W 1",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-01.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-02",
-      "label": "Seaportsystem 01 Container 01 20Footer 4 02",
+      "id": "scenery/seaport/containers-e-w-02",
+      "label": "Container yard E-W 2",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-02.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-03",
-      "label": "Seaportsystem 01 Container 01 20Footer 4 03",
+      "id": "scenery/seaport/containers-e-w-03",
+      "label": "Container yard E-W 3",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-03.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-04",
-      "label": "Seaportsystem 01 Container 01 20Footer 4 04",
+      "id": "scenery/seaport/containers-e-w-04",
+      "label": "Container yard E-W 4",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-04.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-05",
-      "label": "Seaportsystem 01 Container 01 20Footer 4 05",
+      "id": "scenery/seaport/containers-e-w-05",
+      "label": "Container yard E-W 5",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-05.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-06",
-      "label": "Seaportsystem 01 Container 01 20Footer 4 06",
+      "id": "scenery/seaport/containers-e-w-06",
+      "label": "Container yard E-W 6",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-06.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-07",
-      "label": "Seaportsystem 01 Container 01 20Footer 4 07",
+      "id": "scenery/seaport/containers-e-w-07",
+      "label": "Container yard E-W 7",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-01-Container-01-20Footer-4-07.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-01",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 1 01",
+      "id": "scenery/seaport/gantry-crane-n-s-01",
+      "label": "Gantry crane, boom NE, yard N-S 1",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-01.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-02",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 1 02",
+      "id": "scenery/seaport/gantry-crane-n-s-02",
+      "label": "Gantry crane, boom NE, yard N-S 2",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-02.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-03",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 1 03",
+      "id": "scenery/seaport/gantry-crane-n-s-03",
+      "label": "Gantry crane, boom NE, yard N-S 3",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-03.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-04",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 1 04",
+      "id": "scenery/seaport/gantry-crane-n-s-04",
+      "label": "Gantry crane, boom SE, yard N-S 4",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-04.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-05",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 1 05",
+      "id": "scenery/seaport/gantry-crane-n-s-05",
+      "label": "Gantry crane, boom SE, yard N-S 5",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-05.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-06",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 1 06",
+      "id": "scenery/seaport/gantry-crane-n-s-06",
+      "label": "Gantry crane, boom SE, yard N-S 6",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-06.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-07",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 1 07",
+      "id": "scenery/seaport/gantry-crane-n-s-07",
+      "label": "Gantry crane, boom SW, yard N-S 7",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-07.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-08",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 1 08",
+      "id": "scenery/seaport/gantry-crane-n-s-08",
+      "label": "Gantry crane, boom SW, yard N-S 8",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-08.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-09",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 1 09",
+      "id": "scenery/seaport/gantry-crane-n-s-09",
+      "label": "Gantry crane, boom SW, yard N-S 9",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-09.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-10",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 1 10",
+      "id": "scenery/seaport/gantry-crane-n-s-10",
+      "label": "Gantry crane, boom NW, yard N-S 10",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-10.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-11",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 1 11",
+      "id": "scenery/seaport/gantry-crane-n-s-11",
+      "label": "Gantry crane, boom NW, yard N-S 11",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-11.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-12",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 1 12",
+      "id": "scenery/seaport/gantry-crane-n-s-12",
+      "label": "Gantry crane, boom NW, yard N-S 12",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-1-12.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-01",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 2 01",
+      "id": "scenery/seaport/gantry-crane-ne-sw-01",
+      "label": "Gantry crane, boom SE, yard NE-SW 1",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-01.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-02",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 2 02",
+      "id": "scenery/seaport/gantry-crane-ne-sw-02",
+      "label": "Gantry crane, boom SE, yard NE-SW 2",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-02.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-03",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 2 03",
+      "id": "scenery/seaport/gantry-crane-ne-sw-03",
+      "label": "Gantry crane, boom SE, yard NE-SW 3",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-03.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-04",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 2 04",
+      "id": "scenery/seaport/gantry-crane-ne-sw-04",
+      "label": "Gantry crane, boom S, yard NE-SW 4",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-04.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-05",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 2 05",
+      "id": "scenery/seaport/gantry-crane-ne-sw-05",
+      "label": "Gantry crane, boom S, yard NE-SW 5",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-05.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-06",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 2 06",
+      "id": "scenery/seaport/gantry-crane-ne-sw-06",
+      "label": "Gantry crane, boom S, yard NE-SW 6",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-06.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-07",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 2 07",
+      "id": "scenery/seaport/gantry-crane-ne-sw-07",
+      "label": "Gantry crane, boom NW, yard NE-SW 7",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-07.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-08",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 2 08",
+      "id": "scenery/seaport/gantry-crane-ne-sw-08",
+      "label": "Gantry crane, boom NW, yard NE-SW 8",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-08.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-09",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 2 09",
+      "id": "scenery/seaport/gantry-crane-ne-sw-09",
+      "label": "Gantry crane, boom NW, yard NE-SW 9",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-09.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-10",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 2 10",
+      "id": "scenery/seaport/gantry-crane-ne-sw-10",
+      "label": "Gantry crane, boom N, yard NE-SW 10",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-10.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-11",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 2 11",
+      "id": "scenery/seaport/gantry-crane-ne-sw-11",
+      "label": "Gantry crane, boom N, yard NE-SW 11",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-11.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-12",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 2 12",
+      "id": "scenery/seaport/gantry-crane-ne-sw-12",
+      "label": "Gantry crane, boom N, yard NE-SW 12",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-2-12.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-01",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 3 01",
+      "id": "scenery/seaport/gantry-crane-nw-se-01",
+      "label": "Gantry crane, boom N, yard NW-SE 1",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-01.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-02",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 3 02",
+      "id": "scenery/seaport/gantry-crane-nw-se-02",
+      "label": "Gantry crane, boom N, yard NW-SE 2",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-02.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-03",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 3 03",
+      "id": "scenery/seaport/gantry-crane-nw-se-03",
+      "label": "Gantry crane, boom N, yard NW-SE 3",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-03.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-04",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 3 04",
+      "id": "scenery/seaport/gantry-crane-nw-se-04",
+      "label": "Gantry crane, boom NE, yard NW-SE 4",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-04.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-05",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 3 05",
+      "id": "scenery/seaport/gantry-crane-nw-se-05",
+      "label": "Gantry crane, boom NE, yard NW-SE 5",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-05.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-06",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 3 06",
+      "id": "scenery/seaport/gantry-crane-nw-se-06",
+      "label": "Gantry crane, boom NE, yard NW-SE 6",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-06.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-07",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 3 07",
+      "id": "scenery/seaport/gantry-crane-nw-se-07",
+      "label": "Gantry crane, boom S, yard NW-SE 7",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-07.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-08",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 3 08",
+      "id": "scenery/seaport/gantry-crane-nw-se-08",
+      "label": "Gantry crane, boom S, yard NW-SE 8",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-08.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-09",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 3 09",
+      "id": "scenery/seaport/gantry-crane-nw-se-09",
+      "label": "Gantry crane, boom S, yard NW-SE 9",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-09.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-10",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 3 10",
+      "id": "scenery/seaport/gantry-crane-nw-se-10",
+      "label": "Gantry crane, boom SW, yard NW-SE 10",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-10.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-11",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 3 11",
+      "id": "scenery/seaport/gantry-crane-nw-se-11",
+      "label": "Gantry crane, boom SW, yard NW-SE 11",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-11.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-12",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 3 12",
+      "id": "scenery/seaport/gantry-crane-nw-se-12",
+      "label": "Gantry crane, boom SW, yard NW-SE 12",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-3-12.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-01",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 4 01",
+      "id": "scenery/seaport/gantry-crane-e-w-01",
+      "label": "Gantry crane, boom NE, yard E-W 1",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-01.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-02",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 4 02",
+      "id": "scenery/seaport/gantry-crane-e-w-02",
+      "label": "Gantry crane, boom NE, yard E-W 2",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-02.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-03",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 4 03",
+      "id": "scenery/seaport/gantry-crane-e-w-03",
+      "label": "Gantry crane, boom NE, yard E-W 3",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-03.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-04",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 4 04",
+      "id": "scenery/seaport/gantry-crane-e-w-04",
+      "label": "Gantry crane, boom SE, yard E-W 4",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-04.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-05",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 4 05",
+      "id": "scenery/seaport/gantry-crane-e-w-05",
+      "label": "Gantry crane, boom SE, yard E-W 5",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-05.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-06",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 4 06",
+      "id": "scenery/seaport/gantry-crane-e-w-06",
+      "label": "Gantry crane, boom SE, yard E-W 6",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-06.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-07",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 4 07",
+      "id": "scenery/seaport/gantry-crane-e-w-07",
+      "label": "Gantry crane, boom SW, yard E-W 7",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-07.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-08",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 4 08",
+      "id": "scenery/seaport/gantry-crane-e-w-08",
+      "label": "Gantry crane, boom SW, yard E-W 8",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-08.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-09",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 4 09",
+      "id": "scenery/seaport/gantry-crane-e-w-09",
+      "label": "Gantry crane, boom SW, yard E-W 9",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-09.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-10",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 4 10",
+      "id": "scenery/seaport/gantry-crane-e-w-10",
+      "label": "Gantry crane, boom NW, yard E-W 10",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-10.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-11",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 4 11",
+      "id": "scenery/seaport/gantry-crane-e-w-11",
+      "label": "Gantry crane, boom NW, yard E-W 11",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-11.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-12",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 01 20Footer 4 12",
+      "id": "scenery/seaport/gantry-crane-e-w-12",
+      "label": "Gantry crane, boom NW, yard E-W 12",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-01-20Footer-4-12.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-01",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 03 Cranetip 1 01",
+      "id": "scenery/seaport/crane-tip-01",
+      "label": "Crane boom tip, straight",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-01.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-02",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 03 Cranetip 1 02",
+      "id": "scenery/seaport/crane-tip-02",
+      "label": "Crane boom tip, diagonal",
       "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-02.png",
       "group": "Seaport"
     },
     {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-03",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 03 Cranetip 1 03",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-03.png",
-      "group": "Seaport"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-04",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 03 Cranetip 1 04",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-04.png",
-      "group": "Seaport"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-05",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 03 Cranetip 1 05",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-05.png",
-      "group": "Seaport"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-06",
-      "label": "Seaportsystem 02 Shiptoshoregantrycrane 03 Cranetip 1 06",
-      "kind": "prop",
-      "thumbnail": "images/hexes/saxarba/SMV_Seaport/SeaportSystem-02-ShipToShoreGantryCrane-03-CraneTip-1-06.png",
-      "group": "Seaport"
-    },
-    {
-      "id": "scenery/UlyssesSprites/orbitalguns/OrbitalGunE",
-      "label": "Orbitalgune",
+      "id": "scenery/military/orbital-gun",
+      "label": "Orbital gun",
       "kind": "prop",
       "thumbnail": "images/hexes/UlyssesSprites/orbitalguns/OrbitalGunE.png",
       "group": "Military"
     },
     {
-      "id": "scenery/UlyssesSprites/orbitalguns/OrbitalGunN",
-      "label": "Orbitalgunn",
-      "kind": "prop",
-      "thumbnail": "images/hexes/UlyssesSprites/orbitalguns/OrbitalGunN.png",
-      "group": "Military"
-    },
-    {
-      "id": "scenery/UlyssesSprites/orbitalguns/OrbitalGunS",
-      "label": "Orbitalguns",
-      "kind": "prop",
-      "thumbnail": "images/hexes/UlyssesSprites/orbitalguns/OrbitalGunS.png",
-      "group": "Military"
-    },
-    {
-      "id": "scenery/UlyssesSprites/orbitalguns/OrbitalGunW",
-      "label": "Orbitalgunw",
-      "kind": "prop",
-      "thumbnail": "images/hexes/UlyssesSprites/orbitalguns/OrbitalGunW.png",
-      "group": "Military"
-    },
-    {
-      "id": "tree-broad-snow",
-      "label": "Tree Broad Snow",
-      "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
       "id": "tree-broad",
       "label": "Tree Broad",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants"
     },
     {
       "id": "tree-dead-snow",
       "label": "Tree Dead Snow",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants",
+      "palette": false
     },
     {
       "id": "tree-dead",
       "label": "Tree Dead",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants"
     },
     {
       "id": "tree-forked-snow",
       "label": "Tree Forked Snow",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants",
+      "palette": false
     },
     {
       "id": "tree-forked",
       "label": "Tree Forked",
       "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "tree-layered-snow",
-      "label": "Tree Layered Snow",
-      "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants"
     },
     {
       "id": "tree-layered",
       "label": "Tree Layered",
       "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "tree-slender-snow",
-      "label": "Tree Slender Snow",
-      "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants"
     },
     {
       "id": "tree-slender",
       "label": "Tree Slender",
       "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "tree-snow",
-      "label": "Tree Snow",
-      "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants"
     },
     {
       "id": "tree-volcano-crown",
       "label": "Tree Volcano Crown",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants"
     },
     {
       "id": "tree-volcano-forked",
       "label": "Tree Volcano Forked",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants"
     },
     {
       "id": "tree-volcano-spire",
       "label": "Tree Volcano Spire",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants"
     },
     {
       "id": "tree",
       "label": "Tree",
       "kind": "prop",
-      "group": "Construction and details"
-    },
-    {
-      "id": "willow-broad-snow",
-      "label": "Willow Broad Snow",
-      "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants"
     },
     {
       "id": "willow-broad",
       "label": "Willow Broad",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants"
     },
     {
       "id": "willow-snow",
       "label": "Willow Snow",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants",
+      "palette": false
     },
     {
       "id": "willow",
       "label": "Willow",
       "kind": "prop",
-      "group": "Construction and details"
+      "group": "Trees and plants"
     },
     {
-      "id": "decal/saxarba/rubble_light_path",
+      "id": "decal/damage/rubble-light-path",
       "label": "Rubble Light Path",
       "kind": "decal",
-      "thumbnail": "images/hexes/saxarba/rubble_light_path.png",
-      "image": "images/hexes/saxarba/rubble_light_path.png",
       "group": "Damage and debris"
     },
     {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-02",
-      "label": "Fluffsystem 02 Sport 03 Swimmingpool 1 02",
+      "id": "stamp/tree-cluster-1",
+      "label": "Tree cluster 1",
       "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-02.png",
-      "group": "Sport and pools"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-04",
-      "label": "Fluffsystem 02 Sport 03 Swimmingpool 1 04",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-04.png",
-      "group": "Sport and pools"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-05",
-      "label": "Fluffsystem 02 Sport 03 Swimmingpool 1 05",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-02-Sport-03-SwimmingPool-1-05.png",
-      "group": "Sport and pools"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-01",
-      "label": "Fluffsystem 07 Garden 01 Tree 1 01",
-      "kind": "prop",
+      "layout": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-01",
       "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-01.png",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-02",
-      "label": "Fluffsystem 07 Garden 01 Tree 1 02",
+      "id": "stamp/tree-cluster-2",
+      "label": "Tree cluster 2",
       "kind": "prop",
+      "layout": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-02",
       "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-02.png",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-03",
-      "label": "Fluffsystem 07 Garden 01 Tree 1 03",
+      "id": "stamp/tree-cluster-3",
+      "label": "Tree cluster 3",
       "kind": "prop",
+      "layout": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-03",
       "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-03.png",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-04",
-      "label": "Fluffsystem 07 Garden 01 Tree 1 04",
+      "id": "stamp/tree-cluster-4",
+      "label": "Tree cluster 4",
       "kind": "prop",
+      "layout": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-04",
       "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-04.png",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-05",
-      "label": "Fluffsystem 07 Garden 01 Tree 1 05",
+      "id": "stamp/tree-cluster-5",
+      "label": "Tree cluster 5",
       "kind": "prop",
+      "layout": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-05",
       "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-05.png",
       "group": "Parks and furniture"
     },
     {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-01",
-      "label": "Picnic tables 01",
+      "id": "stamp/roadside-trees",
+      "label": "Roadside trees",
       "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-01.png",
-      "group": "Parks and furniture"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-02",
-      "label": "Picnic tables 02",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-02.png",
-      "group": "Parks and furniture"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-03",
-      "label": "Picnic tables 03",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-03.png",
-      "group": "Parks and furniture"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-04",
-      "label": "Picnic tables 04",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-04.png",
-      "group": "Parks and furniture"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-05",
-      "label": "Picnic tables 05",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-02-Table-1-05.png",
-      "group": "Parks and furniture"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-01",
-      "label": "Fluffsystem 07 Garden 04 Lake 1 01",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-01.png",
-      "group": "Parks and furniture"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-02",
-      "label": "Fluffsystem 07 Garden 04 Lake 1 02",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-02.png",
-      "group": "Parks and furniture"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-03",
-      "label": "Fluffsystem 07 Garden 04 Lake 1 03",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-03.png",
-      "group": "Parks and furniture"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-04",
-      "label": "Fluffsystem 07 Garden 04 Lake 1 04",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-04.png",
-      "group": "Parks and furniture"
-    },
-    {
-      "id": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-05",
-      "label": "Fluffsystem 07 Garden 04 Lake 1 05",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-04-Lake-1-05.png",
-      "group": "Parks and furniture"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees00",
-      "label": "Road Trees00",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees00.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees01",
-      "label": "Road Trees01",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees01.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees02",
-      "label": "Road Trees02",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees02.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees03",
-      "label": "Road Trees03",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees03.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees04",
-      "label": "Road Trees04",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees04.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees05",
-      "label": "Road Trees05",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees05.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees06",
-      "label": "Road Trees06",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees06.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees07",
-      "label": "Road Trees07",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees07.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees08",
-      "label": "Road Trees08",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees08.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees09",
-      "label": "Road Trees09",
-      "kind": "prop",
+      "layout": "scenery/saxarba/roads/road_trees{exits}",
       "thumbnail": "models/board/tileset/saxarba/roads/road_trees09.png",
       "group": "Transport"
     },
     {
-      "id": "scenery/saxarba/roads/road_trees10",
-      "label": "Road Trees10",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees10.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees11",
-      "label": "Road Trees11",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees11.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees12",
-      "label": "Road Trees12",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees12.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees13",
-      "label": "Road Trees13",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees13.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees14",
-      "label": "Road Trees14",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees14.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees15",
-      "label": "Road Trees15",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees15.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees16",
-      "label": "Road Trees16",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees16.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees17",
-      "label": "Road Trees17",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees17.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees18",
-      "label": "Road Trees18",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees18.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees19",
-      "label": "Road Trees19",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees19.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees20",
-      "label": "Road Trees20",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees20.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees21",
-      "label": "Road Trees21",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees21.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees22",
-      "label": "Road Trees22",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees22.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees23",
-      "label": "Road Trees23",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees23.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees24",
-      "label": "Road Trees24",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees24.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees25",
-      "label": "Road Trees25",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees25.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees26",
-      "label": "Road Trees26",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees26.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees27",
-      "label": "Road Trees27",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees27.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees28",
-      "label": "Road Trees28",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees28.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees29",
-      "label": "Road Trees29",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees29.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees30",
-      "label": "Road Trees30",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees30.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees31",
-      "label": "Road Trees31",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees31.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees32",
-      "label": "Road Trees32",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees32.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees33",
-      "label": "Road Trees33",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees33.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees34",
-      "label": "Road Trees34",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees34.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees35",
-      "label": "Road Trees35",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees35.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees36",
-      "label": "Road Trees36",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees36.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees37",
-      "label": "Road Trees37",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees37.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees38",
-      "label": "Road Trees38",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees38.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees39",
-      "label": "Road Trees39",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees39.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees40",
-      "label": "Road Trees40",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees40.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees41",
-      "label": "Road Trees41",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees41.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees42",
-      "label": "Road Trees42",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees42.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees43",
-      "label": "Road Trees43",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees43.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees44",
-      "label": "Road Trees44",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees44.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees45",
-      "label": "Road Trees45",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees45.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees46",
-      "label": "Road Trees46",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees46.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees47",
-      "label": "Road Trees47",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees47.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees48",
-      "label": "Road Trees48",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees48.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees49",
-      "label": "Road Trees49",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees49.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees50",
-      "label": "Road Trees50",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees50.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees51",
-      "label": "Road Trees51",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees51.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees52",
-      "label": "Road Trees52",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees52.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees53",
-      "label": "Road Trees53",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees53.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees54",
-      "label": "Road Trees54",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees54.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees55",
-      "label": "Road Trees55",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees55.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees56",
-      "label": "Road Trees56",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees56.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees57",
-      "label": "Road Trees57",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees57.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees58",
-      "label": "Road Trees58",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees58.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees59",
-      "label": "Road Trees59",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees59.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees60",
-      "label": "Road Trees60",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees60.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees61",
-      "label": "Road Trees61",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees61.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees62",
-      "label": "Road Trees62",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees62.png",
-      "group": "Transport"
-    },
-    {
-      "id": "scenery/saxarba/roads/road_trees63",
-      "label": "Road Trees63",
-      "kind": "prop",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees63.png",
-      "group": "Transport"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-01",
-      "label": "Red Cross 1 01",
+      "id": "decal/emblems/red-cross",
+      "label": "Red Cross",
       "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-01.png",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/emblems/capellan-confederation",
+      "label": "Capellan Confederation",
+      "kind": "decal",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/emblems/draconis-combine",
+      "label": "Draconis Combine",
+      "kind": "decal",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/emblems/federated-suns",
+      "label": "Federated Suns",
+      "kind": "decal",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/emblems/free-worlds-league",
+      "label": "Free Worlds League",
+      "kind": "decal",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/emblems/lyran-commonwealth",
+      "label": "Lyran Commonwealth",
+      "kind": "decal",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/emblems/terran-hegemony",
+      "label": "Terran Hegemony",
+      "kind": "decal",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/emblems/magistracy-of-canopus",
+      "label": "Magistracy of Canopus",
+      "kind": "decal",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/emblems/outworlds-alliance",
+      "label": "Outworlds Alliance",
+      "kind": "decal",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/emblems/rim-worlds-republic",
+      "label": "Rim Worlds Republic",
+      "kind": "decal",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/emblems/taurian-concordat",
+      "label": "Taurian Concordat",
+      "kind": "decal",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/emblems/star-league",
+      "label": "Star League",
+      "kind": "decal",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/emblems/comstar",
+      "label": "ComStar",
+      "kind": "decal",
+      "group": "Emblems"
+    },
+    {
+      "id": "decal/car-park/straight-4",
+      "label": "Car park, straight 4",
+      "kind": "decal",
       "group": "Ground details"
     },
     {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-02",
-      "label": "Red Cross 1 02",
+      "id": "decal/car-park/straight-8",
+      "label": "Car park, straight 8",
       "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-02.png",
       "group": "Ground details"
     },
     {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-03",
-      "label": "Red Cross 1 03",
+      "id": "decal/car-park/straight-12",
+      "label": "Car park, straight 12",
       "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-03.png",
       "group": "Ground details"
     },
     {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-04",
-      "label": "Red Cross 1 04",
+      "id": "decal/car-park/parallel-3",
+      "label": "Car park, parallel 3",
       "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-04.png",
       "group": "Ground details"
     },
     {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-05",
-      "label": "Red Cross 1 05",
+      "id": "decal/car-park/parallel-6",
+      "label": "Car park, parallel 6",
       "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-05.png",
       "group": "Ground details"
     },
     {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-06",
-      "label": "Red Cross 1 06",
+      "id": "decal/car-park/diagonal-3",
+      "label": "Car park, diagonal 3",
       "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-06.png",
       "group": "Ground details"
     },
     {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-07",
-      "label": "Red Cross 1 07",
+      "id": "decal/car-park/diagonal-6",
+      "label": "Car park, diagonal 6",
       "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-07.png",
       "group": "Ground details"
     },
     {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-08",
-      "label": "Red Cross 1 08",
+      "id": "decal/car-park/diagonal-9",
+      "label": "Car park, diagonal 9",
       "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-08.png",
       "group": "Ground details"
     },
     {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-09",
-      "label": "Red Cross 1 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-09.png",
-      "group": "Ground details"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-10",
-      "label": "Red Cross 1 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-10.png",
-      "group": "Ground details"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-11",
-      "label": "Red Cross 1 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-11.png",
-      "group": "Ground details"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-12",
-      "label": "Red Cross 1 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-12.png",
-      "group": "Ground details"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-13",
-      "label": "Red Cross 1 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-05-Symbol-01-RedCross-1-13.png",
-      "group": "Ground details"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-01",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 01",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-01.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-02",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 02",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-02.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-03",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 03",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-03.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-04",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 04",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-04.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-05",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 05",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-05.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-06",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 06",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-06.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-07",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 07",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-07.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-08",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 08",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-08.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-09",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-09.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-10",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-10.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-11",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-11.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-12",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-12.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-13",
-      "label": "Pre Ageof War IS 1 Capellan Condederation 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-1-CapellanCondederation-13.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-01",
-      "label": "Pre Ageof War IS 2 Draconis Combine 01",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-01.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-02",
-      "label": "Pre Ageof War IS 2 Draconis Combine 02",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-02.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-03",
-      "label": "Pre Ageof War IS 2 Draconis Combine 03",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-03.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-04",
-      "label": "Pre Ageof War IS 2 Draconis Combine 04",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-04.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-05",
-      "label": "Pre Ageof War IS 2 Draconis Combine 05",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-05.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-06",
-      "label": "Pre Ageof War IS 2 Draconis Combine 06",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-06.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-07",
-      "label": "Pre Ageof War IS 2 Draconis Combine 07",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-07.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-08",
-      "label": "Pre Ageof War IS 2 Draconis Combine 08",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-08.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-09",
-      "label": "Pre Ageof War IS 2 Draconis Combine 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-09.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-10",
-      "label": "Pre Ageof War IS 2 Draconis Combine 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-10.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-11",
-      "label": "Pre Ageof War IS 2 Draconis Combine 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-11.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-12",
-      "label": "Pre Ageof War IS 2 Draconis Combine 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-12.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-13",
-      "label": "Pre Ageof War IS 2 Draconis Combine 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-2-DraconisCombine-13.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-01",
-      "label": "Pre Ageof War IS 3 Federated Suns 01",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-01.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-02",
-      "label": "Pre Ageof War IS 3 Federated Suns 02",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-02.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-03",
-      "label": "Pre Ageof War IS 3 Federated Suns 03",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-03.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-04",
-      "label": "Pre Ageof War IS 3 Federated Suns 04",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-04.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-05",
-      "label": "Pre Ageof War IS 3 Federated Suns 05",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-05.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-06",
-      "label": "Pre Ageof War IS 3 Federated Suns 06",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-06.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-07",
-      "label": "Pre Ageof War IS 3 Federated Suns 07",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-07.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-08",
-      "label": "Pre Ageof War IS 3 Federated Suns 08",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-08.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-09",
-      "label": "Pre Ageof War IS 3 Federated Suns 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-09.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-10",
-      "label": "Pre Ageof War IS 3 Federated Suns 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-10.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-11",
-      "label": "Pre Ageof War IS 3 Federated Suns 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-11.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-12",
-      "label": "Pre Ageof War IS 3 Federated Suns 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-12.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-13",
-      "label": "Pre Ageof War IS 3 Federated Suns 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-3-FederatedSuns-13.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-01",
-      "label": "Pre Ageof War IS 4 Free Worlds League 01",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-01.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-02",
-      "label": "Pre Ageof War IS 4 Free Worlds League 02",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-02.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-03",
-      "label": "Pre Ageof War IS 4 Free Worlds League 03",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-03.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-04",
-      "label": "Pre Ageof War IS 4 Free Worlds League 04",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-04.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-05",
-      "label": "Pre Ageof War IS 4 Free Worlds League 05",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-05.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-06",
-      "label": "Pre Ageof War IS 4 Free Worlds League 06",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-06.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-07",
-      "label": "Pre Ageof War IS 4 Free Worlds League 07",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-07.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-08",
-      "label": "Pre Ageof War IS 4 Free Worlds League 08",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-08.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-09",
-      "label": "Pre Ageof War IS 4 Free Worlds League 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-09.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-10",
-      "label": "Pre Ageof War IS 4 Free Worlds League 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-10.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-11",
-      "label": "Pre Ageof War IS 4 Free Worlds League 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-11.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-12",
-      "label": "Pre Ageof War IS 4 Free Worlds League 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-12.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-13",
-      "label": "Pre Ageof War IS 4 Free Worlds League 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-4-FreeWorldsLeague-13.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-01",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 01",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-01.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-02",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 02",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-02.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-03",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 03",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-03.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-04",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 04",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-04.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-05",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 05",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-05.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-06",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 06",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-06.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-07",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 07",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-07.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-08",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 08",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-08.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-09",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-09.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-10",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-10.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-11",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-11.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-12",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-12.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-13",
-      "label": "Pre Ageof War IS 5 Lyran Commonwealth 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-5-LyranCommonwealth-13.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-01",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 01",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-01.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-02",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 02",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-02.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-03",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 03",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-03.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-04",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 04",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-04.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-05",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 05",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-05.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-06",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 06",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-06.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-07",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 07",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-07.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-08",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 08",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-08.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-09",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-09.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-10",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-10.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-11",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-11.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-12",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-12.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-13",
-      "label": "Pre Ageof War IS 6 Terran Hegemony 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-01-PreAgeofWarIS-6-TerranHegemony-13.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-01",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 01",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-01.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-02",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 02",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-02.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-03",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 03",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-03.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-04",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 04",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-04.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-05",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 05",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-05.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-06",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 06",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-06.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-07",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 07",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-07.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-08",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 08",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-08.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-09",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-09.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-10",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-10.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-11",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-11.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-12",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-12.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-13",
-      "label": "Pre Ageof War Periphery 1 Magistracyof Canopus 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-1-MagistracyofCanopus-13.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-01",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 01",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-01.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-02",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 02",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-02.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-03",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 03",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-03.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-04",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 04",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-04.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-05",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 05",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-05.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-06",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 06",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-06.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-07",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 07",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-07.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-08",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 08",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-08.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-09",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-09.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-10",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-10.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-11",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-11.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-12",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-12.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-13",
-      "label": "Pre Ageof War Periphery 2 Outworlds Alliance 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-2-OutworldsAlliance-13.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-01",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 01",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-01.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-02",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 02",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-02.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-03",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 03",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-03.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-04",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 04",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-04.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-05",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 05",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-05.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-06",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 06",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-06.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-07",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 07",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-07.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-08",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 08",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-08.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-09",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-09.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-10",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-10.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-11",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-11.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-12",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-12.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-13",
-      "label": "Pre Ageof War Periphery 3 Rim Worlds Republic 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-3-RimWorldsRepublic-13.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-01",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 01",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-01.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-02",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 02",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-02.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-03",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 03",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-03.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-04",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 04",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-04.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-05",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 05",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-05.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-06",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 06",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-06.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-07",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 07",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-07.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-08",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 08",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-08.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-09",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-09.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-10",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-10.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-11",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-11.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-12",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-12.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-13",
-      "label": "Pre Ageof War Periphery 4 Taurian Concordat 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-02-PreAgeofWarPeriphery-4-TaurianConcordat-13.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-01",
-      "label": "Star League IS 1 Star League 01",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-01.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-02",
-      "label": "Star League IS 1 Star League 02",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-02.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-03",
-      "label": "Star League IS 1 Star League 03",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-03.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-04",
-      "label": "Star League IS 1 Star League 04",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-04.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-05",
-      "label": "Star League IS 1 Star League 05",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-05.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-06",
-      "label": "Star League IS 1 Star League 06",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-06.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-07",
-      "label": "Star League IS 1 Star League 07",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-07.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-08",
-      "label": "Star League IS 1 Star League 08",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-08.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-09",
-      "label": "Star League IS 1 Star League 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-09.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-10",
-      "label": "Star League IS 1 Star League 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-10.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-11",
-      "label": "Star League IS 1 Star League 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-11.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-12",
-      "label": "Star League IS 1 Star League 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-12.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-13",
-      "label": "Star League IS 1 Star League 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-1-StarLeague-13.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-01",
-      "label": "Star League IS 2 Com Star 01",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-01.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-01.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-02",
-      "label": "Star League IS 2 Com Star 02",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-02.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-02.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-03",
-      "label": "Star League IS 2 Com Star 03",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-03.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-03.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-04",
-      "label": "Star League IS 2 Com Star 04",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-04.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-04.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-05",
-      "label": "Star League IS 2 Com Star 05",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-05.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-05.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-06",
-      "label": "Star League IS 2 Com Star 06",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-06.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-06.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-07",
-      "label": "Star League IS 2 Com Star 07",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-07.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-07.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-08",
-      "label": "Star League IS 2 Com Star 08",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-08.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-08.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-09",
-      "label": "Star League IS 2 Com Star 09",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-09.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-09.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-10",
-      "label": "Star League IS 2 Com Star 10",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-10.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-10.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-11",
-      "label": "Star League IS 2 Com Star 11",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-11.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-11.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-12",
-      "label": "Star League IS 2 Com Star 12",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-12.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-12.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "decal/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-13",
-      "label": "Star League IS 2 Com Star 13",
-      "kind": "decal",
-      "thumbnail": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-13.png",
-      "image": "models/board/tileset/saxarba/SMV_GroundSymbols/FluffSystem-06-Faction-07-StarLeagueIS-2-ComStar-13.png",
-      "group": "Faction markings"
-    },
-    {
-      "id": "scenery/components/maglev-wagon",
+      "id": "scenery/maglev/wagon",
       "label": "Passenger wagon",
       "kind": "prop",
       "group": "Maglev and wagons"
     },
     {
-      "id": "scenery/components/maglev-cab",
+      "id": "scenery/maglev/cab",
       "label": "Driver cab",
       "kind": "prop",
       "group": "Maglev and wagons"
     },
     {
-      "id": "scenery/components/maglev-coupler",
+      "id": "scenery/maglev/coupler",
       "label": "Wagon coupler",
       "kind": "prop",
-      "group": "Maglev and wagons"
+      "group": "Maglev and wagons",
+      "palette": false
     },
     {
-      "id": "scenery/components/maglev-platform",
+      "id": "scenery/maglev/platform",
       "label": "Station platform",
       "kind": "prop",
       "group": "Maglev and wagons"
     },
     {
-      "id": "scenery/components/maglev-train",
-      "label": "Two-wagon train",
+      "id": "stamp/maglev-train",
+      "label": "Maglev train",
       "kind": "prop",
+      "layout": "scenery/maglev/train",
+      "thumbnail": "models/board/scenery/maglev/train.png",
       "group": "Maglev and wagons"
-    },
-    {
-      "id": "scenery/components/car-deep-teal",
-      "label": "Deep teal car",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-sage",
-      "label": "Sage car",
-      "kind": "prop",
-      "group": "Vehicles"
-    },
-    {
-      "id": "scenery/components/car-ochre",
-      "label": "Ochre car",
-      "kind": "prop",
-      "group": "Vehicles"
     }
   ]
 }
