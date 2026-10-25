@@ -20,8 +20,8 @@ Scenery meshes live in topic folders under `scenery/`, with kebab-case names:
 | `seaport/` | the legacy container rows, gantry cranes and crane tips, decoded no more: objects of `.board2` files written before batch 12 |
 | `seaport/yard/` | the container yard looks' ten compositions (`yard/<name>` in `layouts.json`) and the ten seaport props |
 | `maglev/` | route marker (the only rail mesh), station platform, city and colony vehicles, the city gangway coupler; `train.png` and `colony-train.png` are the stamps' thumbnails |
-| `military/` | orbital gun, fortification |
-| `rubble/` | rubble by structure type, and the cleared paths through it |
+| `military/` | orbital gun, fortification, the trench of a dug-in platoon |
+| `rubble/` | a collapsed building by structure type, and (`-path`) its hex cleared: the debris collected into heaps, the salvage stacked |
 | `geysers/` | dormant and erupting water geysers, magma geyser |
 
 No mesh sits at a legacy key. A legacy key is `scenery/<tileset image path
@@ -573,8 +573,8 @@ no rock or scatter geometry is generated in-game.
   larger structural bays at that width.
 - `textures/terrain/classic/`: Classic mode's 128 by 128 column wall maps (concrete, dirt, rock,
   sand, snow, lunar, fungus, mars and volcano; each repeats once per 96 world units), the
-  `water_bed` map for liquid banks and beds, and the two 84 by 72 incline rim masks
-  (`incline_dark`, `high_incline_dark`). The Material Maker projects under
+  `water-bed` map for liquid banks and beds, and the two 84 by 72 incline rim masks
+  (`incline-dark`, `high-incline-dark`). The Material Maker projects under
   `tools/materials/structures/facades/` and `tools/materials/terrain/classic/`
   generate both folders.
 - `textures/terrain/surfaces/`: the sculpted terrain's 512 by 512 materials (ground,

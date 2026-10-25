@@ -1,0 +1,44 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "laser",
+  "mesh": "laser-medium-exposed.glb",
+  "bounds": {
+    "min": [
+      -2.859999895095825,
+      0.0,
+      -0.13600000739097595
+    ],
+    "max": [
+      2.859999895095825,
+      14.180000305175781,
+      8.555000305175781
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim",
+    "elevation": "aim"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "beam-0",
+      "node": "aim",
+      "position": [
+        0,
+        11.879999999999999,
+        0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "beam",
+      "effect": "laser"
+    }
+  ]
+}

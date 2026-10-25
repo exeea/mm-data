@@ -1,0 +1,45 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "ballistic",
+  "mesh": "autocannon-2-exposed.glb",
+  "bounds": {
+    "min": [
+      -3.700000047683716,
+      -0.5199999809265137,
+      0.0
+    ],
+    "max": [
+      3.700000047683716,
+      32.0,
+      9.687999725341797
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim",
+    "elevation": "aim",
+    "recoil": "recoil"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "muzzle-0",
+      "node": "recoil",
+      "position": [
+        0,
+        27.8,
+        0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    }
+  ]
+}

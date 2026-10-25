@@ -72,9 +72,9 @@ adds maps to a material with a shader, so each of these is a `ShaderMaterial` of
 
 | Project | Export node | Map | Shader parameter |
 | --- | --- | --- | --- |
-| `terrain/lava/lava` | `ExportMask` | `lava_coverage.png`: exposed-melt coverage | `texture_coverage` |
-| `terrain/lava/crust` | `ExportMask` | `crust_glow.png`: crack glow | `texture_glow` |
-| `terrain/ice/sheet` | `ExportCracks` | `sheet_cracks.png`: cracks and bubbles | `texture_cracks` |
+| `terrain/lava/lava-flow` | `ExportMask` | `lava-flow_coverage.png`: exposed-melt coverage | `texture_coverage` |
+| `terrain/lava/lava-crust` | `ExportMask` | `lava-crust_glow.png`: crack glow | `texture_glow` |
+| `terrain/ice/ice-sheet` | `ExportCracks` | `ice-sheet_cracks.png`: cracks and bubbles | `texture_cracks` |
 
 A stock **Export** node writes the extra map beside the others. Each of these projects'
 Material node carries its own export target, *Godot > Godot 4 ShaderMaterial*: the stock
@@ -111,8 +111,8 @@ scorch build their own roughness.
 
 - **Loose** materials repeat across the board: terrain surfaces, roads, lava, ice and
   industrial plating.
-- **Constrained** materials fit a footprint: facades, classic tiles, scars, scenery and
-  plant cutouts. Their texture size never changes what they cover.
+- **Constrained** materials fit a footprint: facades, turret plating, classic tiles, scars,
+  scenery and plant cutouts. Their texture size never changes what they cover.
 
 A loose entry has up to two values:
 
@@ -182,7 +182,8 @@ python tools/materials/export.py terrain/surfaces/grassland-ground/grassland-gro
 The script exports every project, or the one given. Material Maker's command line writes each map
 at its node's Size, the same pixels as the editor. The script writes a map only when its pixels
 change, in the PNG mode of the file it replaces, and the `.tres` only when a value changes, so
-exporting an unchanged project changes no file; it prints which files changed. It removes Material
-node maps the material no longer has. For a loose material it prints the ground one repeat covers.
+exporting an unchanged project changes no file; it prints which files changed. It removes the
+project's maps it no longer writes, an Export node's included. For a loose material it prints the
+ground one repeat covers.
 
 megamek's `docs/gpu-board-materials.md` describes how the game reads these files.

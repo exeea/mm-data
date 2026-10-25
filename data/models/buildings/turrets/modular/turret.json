@@ -1,0 +1,6 @@
+{
+  "schema": 2,
+  "kind": "building-turret",
+  "family": "building-turret",
+  "equipment": "units/modular/equipment.json"
+}

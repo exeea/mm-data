@@ -1,0 +1,464 @@
+{
+  "schema": 2,
+  "kind": "body",
+  "family": "building-turret",
+  "mesh": "head-twin.glb",
+  "bounds": {
+    "min": [
+      -13.514206886291504,
+      -13.514206886291504,
+      -0.44999998807907104
+    ],
+    "max": [
+      13.514206886291504,
+      13.514206886291504,
+      16.209999084472656
+    ]
+  },
+  "rig": "building-turret-v1",
+  "joints": {
+    "root": "root",
+    "turret": "yaw"
+  },
+  "locations": {},
+  "hardpoints": [
+    {
+      "id": "left",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        -4.800000190734863,
+        7.949999809265137,
+        7.449999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        6.8,
+        30,
+        5.4
+      ],
+      "minScale": 0.35,
+      "maxScale": 1,
+      "roles": [
+        "weapon",
+        "misc"
+      ]
+    },
+    {
+      "id": "right",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        4.800000190734863,
+        7.949999809265137,
+        7.449999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        6.8,
+        30,
+        5.4
+      ],
+      "minScale": 0.35,
+      "maxScale": 1,
+      "roles": [
+        "weapon",
+        "misc"
+      ]
+    },
+    {
+      "id": "aux-left",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        -3.0,
+        8.649999618530273,
+        3.6000001430511475
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1.6,
+        30,
+        1.5
+      ],
+      "minScale": 0.35,
+      "maxScale": 1,
+      "roles": [
+        "weapon",
+        "misc"
+      ]
+    },
+    {
+      "id": "aux-right",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        3.0,
+        8.649999618530273,
+        3.6000001430511475
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1.6,
+        30,
+        1.5
+      ],
+      "minScale": 0.35,
+      "maxScale": 1,
+      "roles": [
+        "weapon",
+        "misc"
+      ]
+    },
+    {
+      "id": "external-searchlight",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        0.0,
+        -6.949999809265137,
+        12.300000190734863
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        2.2,
+        30,
+        2.0
+      ],
+      "minScale": 0.35,
+      "maxScale": 1,
+      "roles": [
+        "weapon",
+        "misc"
+      ]
+    },
+    {
+      "id": "pod-center",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        0.0,
+        -4.0,
+        8.199999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        8.2,
+        15,
+        11
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "pod-left",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        -4.5,
+        -4.0,
+        8.199999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        8.2,
+        15,
+        11
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "pod-right",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        4.5,
+        -4.0,
+        8.199999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        8.2,
+        15,
+        11
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "pod-wide-left",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        -8.600000381469727,
+        -4.0,
+        8.199999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        8.2,
+        15,
+        11
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "pod-wide-right",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        8.600000381469727,
+        -4.0,
+        8.199999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        8.2,
+        15,
+        11
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "pod-outer-left",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        -12.899999618530273,
+        -4.0,
+        8.199999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        8.2,
+        15,
+        11
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "pod-inner-left",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        -4.300000190734863,
+        -4.0,
+        8.199999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        8.2,
+        15,
+        11
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "pod-inner-right",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        4.300000190734863,
+        -4.0,
+        8.199999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        8.2,
+        15,
+        11
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "pod-outer-right",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        12.899999618530273,
+        -4.0,
+        8.199999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        8.2,
+        15,
+        11
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "arm-left",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        -11.449999809265137,
+        -0.699999988079071,
+        6.199999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        14,
+        30,
+        12
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "arm-right",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        11.449999809265137,
+        -0.699999988079071,
+        6.199999809265137
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        14,
+        30,
+        12
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
+  "emitters": []
+}

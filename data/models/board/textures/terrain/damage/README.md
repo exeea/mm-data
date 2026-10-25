@@ -9,8 +9,8 @@ The game loads them from `data/models/board/textures/terrain/damage/` when prepa
 | `laser-gouge`, `laser-blast` | Smooth laser grooves and round fused impacts |
 | `ppc-gouge`, `ppc-blast` | Fractured fused grooves and round impacts, selected by `F_PPC` |
 | `ballistic-gouge`, `ballistic-blast` | Autocannon and other ballistic furrows and round impacts |
-| `blast` | Missiles and artillery; damage controls size |
-| `burn` | Flamer scorch patches, without excavated relief |
+| `explosive-blast` | Missiles and artillery; damage controls size |
+| `fire-burn` | Flamer scorch patches, without excavated relief |
 | `plasma-splash` | Melted splashes, selected by `F_PLASMA` or `F_PLASMA_MFUK` |
 
 ## Editing

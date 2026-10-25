@@ -1106,51 +1106,6 @@
           }
         },
         {
-          "name": "RegisteredHeightRange",
-          "type": "math",
-          "parameters": {
-            "op": 2,
-            "default_in1": 0,
-            "default_in2": 0.05924803763628006,
-            "clamp": false
-          },
-          "seed_int": 0,
-          "node_position": {
-            "x": 1620,
-            "y": 0
-          }
-        },
-        {
-          "name": "HeightAboveMinimum",
-          "type": "math",
-          "parameters": {
-            "op": 0,
-            "default_in1": 0,
-            "default_in2": 0,
-            "clamp": false
-          },
-          "seed_int": 0,
-          "node_position": {
-            "x": 0,
-            "y": 180
-          }
-        },
-        {
-          "name": "NormalizedHeight",
-          "type": "math",
-          "parameters": {
-            "op": 3,
-            "default_in1": 0,
-            "default_in2": 0.05924803863628006,
-            "clamp": true
-          },
-          "seed_int": 0,
-          "node_position": {
-            "x": 270,
-            "y": 180
-          }
-        },
-        {
           "name": "SlopeScale",
           "type": "math",
           "parameters": {
@@ -1701,24 +1656,6 @@
           "to_port": 1
         },
         {
-          "from": "Fields",
-          "from_port": 0,
-          "to": "RegisteredHeightRange",
-          "to_port": 0
-        },
-        {
-          "from": "RegisteredHeightRange",
-          "from_port": 0,
-          "to": "HeightAboveMinimum",
-          "to_port": 0
-        },
-        {
-          "from": "HeightAboveMinimum",
-          "from_port": 0,
-          "to": "NormalizedHeight",
-          "to_port": 0
-        },
-        {
           "from": "PhysicalHeight",
           "from_port": 0,
           "to": "HeightUMinus",
@@ -1971,7 +1908,7 @@
           "to_port": 3
         },
         {
-          "from": "NormalizedHeight",
+          "from": "Fields",
           "from_port": 0,
           "to": "HighGrain",
           "to_port": 1
@@ -2013,7 +1950,7 @@
           "to_port": 0
         },
         {
-          "from": "NormalizedHeight",
+          "from": "Fields",
           "from_port": 0,
           "to": "gen_outputs",
           "to_port": 1

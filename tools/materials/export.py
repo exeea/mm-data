@@ -25,7 +25,7 @@ MATERIAL_MAKER = shutil.which('material_maker') or 'C:/material_maker/material_m
 BAKED = ROOT.parents[1] / 'data/models/board/textures'
 TARGET = 'Godot/Godot 4 Standard'
 SHADER_TARGET = 'Godot/Godot 4 ShaderMaterial'
-# Every map the target can write; one this export did not write belongs to an older version of the material.
+# Every map the target can write.
 MAPS = ('albedo', 'orm', 'emission', 'normal', 'heightmap', 'sss')
 
 
@@ -152,12 +152,15 @@ def export(project):
                                          f'{expected[file.name]}; export with Material Maker 1.8-mm.2 or later')
         destination.mkdir(parents=True, exist_ok=True)
         states = []
-        for map_name in MAPS:
-            if not (output / f'{project.stem}_{map_name}.png').exists():
-                stale = destination / f'{project.stem}_{map_name}.png'
-                if stale.exists():
-                    stale.unlink()
-                    states.append(f'{map_name}:removed')
+        # A shipped map of this project that the export no longer writes (a disconnected input, a removed Export node)
+        # belongs to an older version of it. Projects in the same folder whose names extend this one keep theirs.
+        names = {file.name for file in written}
+        longer = [other.stem for other in project.parent.parent.glob('*/*.ptex')
+                  if other.stem != project.stem and other.stem.startswith(project.stem)]
+        for stale in sorted(destination.glob(f'{project.stem}_*.png')):
+            if stale.name not in names and not any(stale.name.startswith(other + '_') for other in longer):
+                stale.unlink()
+                states.append(f'{stale.stem.replace(project.stem + "_", "", 1)}:removed')
         for file in written:
             if file.suffix == '.png':
                 states.append(f'{file.stem.replace(project.stem + "_", "")}:{write_map(file, destination / file.name)}')

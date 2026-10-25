@@ -663,7 +663,7 @@
     "mesh": "foliage-temperate.glb",
     "triangles": 416,
     "vertices": 508,
-    "texture": "textures/vegetation/shrubs/temperate_albedo.png",
+    "texture": "textures/vegetation/shrubs/shrub-temperate_albedo.png",
     "lods": [
       {
         "node": "foliage-temperate-lod0",
@@ -691,7 +691,7 @@
     "mesh": "foliage-highland.glb",
     "triangles": 416,
     "vertices": 508,
-    "texture": "textures/vegetation/shrubs/highland_albedo.png",
+    "texture": "textures/vegetation/shrubs/shrub-highland_albedo.png",
     "lods": [
       {
         "node": "foliage-highland-lod0",
@@ -719,7 +719,7 @@
     "mesh": "foliage-rocky.glb",
     "triangles": 416,
     "vertices": 508,
-    "texture": "textures/vegetation/shrubs/rocky_albedo.png",
+    "texture": "textures/vegetation/shrubs/shrub-rocky_albedo.png",
     "lods": [
       {
         "node": "foliage-rocky-lod0",
@@ -747,7 +747,7 @@
     "mesh": "foliage-wetland.glb",
     "triangles": 416,
     "vertices": 514,
-    "texture": "textures/vegetation/shrubs/wetland_albedo.png",
+    "texture": "textures/vegetation/shrubs/shrub-wetland_albedo.png",
     "lods": [
       {
         "node": "foliage-wetland-lod0",
@@ -775,7 +775,7 @@
     "mesh": "foliage-desert.glb",
     "triangles": 478,
     "vertices": 1434,
-    "texture": "textures/vegetation/shrubs/desert_albedo.png",
+    "texture": "textures/vegetation/shrubs/shrub-desert_albedo.png",
     "lods": [
       {
         "node": "foliage-desert-lod0",
@@ -830,7 +830,7 @@
     "mesh": "foliage-barren.glb",
     "triangles": 480,
     "vertices": 1066,
-    "texture": "textures/vegetation/shrubs/barren_albedo.png",
+    "texture": "textures/vegetation/shrubs/shrub-barren_albedo.png",
     "lods": [
       {
         "node": "foliage-barren-lod0",
@@ -858,7 +858,7 @@
     "mesh": "foliage-snow.glb",
     "triangles": 416,
     "vertices": 508,
-    "texture": "textures/vegetation/shrubs/snow_albedo.png",
+    "texture": "textures/vegetation/shrubs/shrub-snow_albedo.png",
     "lods": [
       {
         "node": "foliage-snow-lod0",

@@ -1,0 +1,43 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "ppc",
+  "mesh": "ppc.glb",
+  "bounds": {
+    "min": [
+      -1.725000023841858,
+      0.0,
+      -1.6100000143051147
+    ],
+    "max": [
+      1.725000023841858,
+      11.779999732971191,
+      1.6100000143051147
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "beam-0",
+      "node": "aim",
+      "position": [
+        0,
+        11.78,
+        0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "beam",
+      "effect": "ppc"
+    }
+  ]
+}
