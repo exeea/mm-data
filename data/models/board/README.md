@@ -84,8 +84,8 @@ colour (the vertex colour) tints only the paint, never the bare metal, rust and 
 white vertices hold the slot's default as a ratio of 1. A material whose extras set `mmLabel`
 draws a label: each quad is one character place (its U's integer part), mapped to the first,
 blank cell of an 8 by 8 atlas of `RigidGlb.LABEL_CHARACTERS`, and the game writes the label's
-characters there, centred (`RigidGlb.label`): the crate's two-digit number, worn stencils in
-`military/cargo-crate_stencil.png`.
+characters there, centred (`RigidGlb.label`): the crate's two-digit number, in worn stencils from its
+embedded stencil atlas.
 
 ### Old to new
 
@@ -777,7 +777,9 @@ materials retain full-height UVs. Roof samplers clamp; facade samplers repeat.
 `ModelTextures` caches images with their sampler state, releases native pixels
 after upload, retains encoded bytes for context restoration and gives texture
 disposal to the owning asset library. Unit and plant models use the same path.
-Only the roof belongs inside each building package; the facade stays shared.
+Only the roof belongs inside each building package; the facade stays shared. Every model follows the same rule: a
+texture only that model uses is embedded in its GLB (the cargo crate's maps, the `rough/` timber's albedo and normal
+maps), and a texture several models or the board materials share stays external, under `textures/`.
 Each building keeps `<building>.png` beside `<building>.glb`: a byte-for-byte
 copy of its original tileset image, retaining alpha and shadows. This is for
 inspection and is not a runtime texture dependency. The processed roof PNG
