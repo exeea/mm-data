@@ -20,7 +20,7 @@ Scenery meshes live in topic folders under `scenery/`, with kebab-case names:
 | `seaport/` | the legacy container rows, gantry cranes and crane tips, decoded no more: objects of `.board2` files written before batch 12 |
 | `seaport/yard/` | the container yard looks' ten compositions (`yard/<name>` in `layouts.json`) and the ten seaport props |
 | `maglev/` | route marker (the only rail mesh), station platform, city and colony vehicles, the city gangway coupler; `train.png` and `colony-train.png` are the stamps' thumbnails |
-| `military/` | orbital gun, fortification, the trench of a dug-in platoon |
+| `military/` | orbital gun, fortification, the trench of a dug-in platoon, an olive container of cargo set down on the ground |
 | `rubble/` | a collapsed building by structure type, and (`-path`) its hex cleared: the debris collected into heaps, the salvage stacked |
 | `geysers/` | dormant and erupting water geysers, magma geyser |
 
@@ -68,11 +68,24 @@ are one mesh each:
 | `farm/bison` | Coat | dark, light |
 | `pools/*` | Wall, Coping, Deck, Water | `parks/pond-1`, `-2`, `-4` are `pools/freeform`, `sport-2`, `sport-4` in the 'Pond' colours |
 | `seaport/yard/container`, `container-stack-2`, `container-stack-3`, `yard-truck` | Paint; Bottom, Top; Bottom, Middle, Top; Container | one mesh each, the 11 legacy container paints as presets |
+| `military/cargo-crate` | Paint | olive (default), woodland, desert, grey, navy, winter, oxide red |
 
 Every vertex whose colour differs between a family's coats belongs to the slot
 that reproduces it for every coat; each car and pond row names its colours.
 Coats that differ only in colour share one mesh with colour slots, so there are
 12 animal meshes.
+
+The containers are corrugated steel, the shared `textures/structures/common/corrugated`
+(as are the light walls): their slot colour tints its near-white paint.
+
+The cargo crate's maps are baked, its olive paint worn to the metal, rusted and dirty. A
+material whose extras set `mmPaintMask` keeps a paint mask in its albedo's alpha: the slot
+colour (the vertex colour) tints only the paint, never the bare metal, rust and grime. Its
+white vertices hold the slot's default as a ratio of 1. A material whose extras set `mmLabel`
+draws a label: each quad is one character place (its U's integer part), mapped to the first,
+blank cell of an 8 by 8 atlas of `RigidGlb.LABEL_CHARACTERS`, and the game writes the label's
+characters there, centred (`RigidGlb.label`): the crate's two-digit number, worn stencils in
+`military/cargo-crate_stencil.png`.
 
 ### Old to new
 

@@ -652,12 +652,12 @@
     "vertices": 48
   },
   "rough/felled-trunk": {
-    "triangles": 91,
-    "vertices": 159
+    "triangles": 442,
+    "vertices": 491
   },
   "rough/charred-stump": {
-    "triangles": 112,
-    "vertices": 264
+    "triangles": 441,
+    "vertices": 653
   },
   "foliage-temperate": {
     "mesh": "foliage-temperate.glb",
@@ -882,9 +882,17 @@
       }
     ]
   },
+  "rough/sawn-stump": {
+    "triangles": 383,
+    "vertices": 499
+  },
+  "rough/sawn-log": {
+    "triangles": 420,
+    "vertices": 326
+  },
   "rough/fallen-stump": {
-    "triangles": 112,
-    "vertices": 264
+    "triangles": 464,
+    "vertices": 521
   },
   "orchard-round": {
     "mesh": "orchard-round.glb",
@@ -1786,6 +1794,34 @@
       },
       {
         "node": "foliage-volcano-lod3",
+        "triangles": 12,
+        "vertices": 24
+      }
+    ]
+  },
+  "foliage-tussock": {
+    "mesh": "foliage-tussock.glb",
+    "triangles": 408,
+    "vertices": 360,
+    "texture": "textures/vegetation/tundra-tussock_albedo.png",
+    "lods": [
+      {
+        "node": "foliage-tussock-lod0",
+        "triangles": 408,
+        "vertices": 360
+      },
+      {
+        "node": "foliage-tussock-lod1",
+        "triangles": 128,
+        "vertices": 146
+      },
+      {
+        "node": "foliage-tussock-lod2",
+        "triangles": 48,
+        "vertices": 68
+      },
+      {
+        "node": "foliage-tussock-lod3",
         "triangles": 12,
         "vertices": 24
       }
