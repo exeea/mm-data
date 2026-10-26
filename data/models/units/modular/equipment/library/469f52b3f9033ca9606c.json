@@ -1,0 +1,123 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "ballistic",
+  "mesh": "469f52b3f9033ca9606c.glb",
+  "bounds": {
+    "min": [
+      -3.554607040743771,
+      -2.0,
+      -3.5546070407437713
+    ],
+    "max": [
+      3.5546070407437713,
+      9.5,
+      3.5546070407437713
+    ]
+  },
+  "rig": "module-v1",
+  "joints": {
+    "root": "root",
+    "aim": "mount"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "emitter-0",
+      "node": "mount",
+      "position": [
+        2.048,
+        9.5,
+        0.0
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "emitter-1",
+      "node": "mount",
+      "position": [
+        1.0240000000000005,
+        9.5,
+        1.7736200269505304
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "emitter-2",
+      "node": "mount",
+      "position": [
+        -1.0239999999999996,
+        9.5,
+        1.7736200269505307
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "emitter-3",
+      "node": "mount",
+      "position": [
+        -2.048,
+        9.5,
+        2.5080766446537797e-16
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "emitter-4",
+      "node": "mount",
+      "position": [
+        -1.024000000000001,
+        9.5,
+        -1.77362002695053
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "emitter-5",
+      "node": "mount",
+      "position": [
+        1.0240000000000005,
+        9.5,
+        -1.7736200269505304
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    }
+  ]
+}

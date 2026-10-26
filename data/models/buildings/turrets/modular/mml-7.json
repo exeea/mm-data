@@ -1,0 +1,139 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "missile",
+  "mesh": "mml-7.glb",
+  "bounds": {
+    "min": [
+      -3.190000057220459,
+      0.0,
+      -1.6349999904632568
+    ],
+    "max": [
+      3.190000057220459,
+      8.850000381469727,
+      1.84089994430542
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "launcher-0",
+      "node": "aim",
+      "position": [
+        -1.83,
+        8.82,
+        0.61
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-1",
+      "node": "aim",
+      "position": [
+        -0.61,
+        8.82,
+        0.61
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-2",
+      "node": "aim",
+      "position": [
+        0.61,
+        8.82,
+        0.61
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-3",
+      "node": "aim",
+      "position": [
+        1.83,
+        8.82,
+        0.61
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-4",
+      "node": "aim",
+      "position": [
+        -1.22,
+        8.82,
+        -0.61
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-5",
+      "node": "aim",
+      "position": [
+        0.0,
+        8.82,
+        -0.61
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-6",
+      "node": "aim",
+      "position": [
+        1.22,
+        8.82,
+        -0.61
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    }
+  ]
+}

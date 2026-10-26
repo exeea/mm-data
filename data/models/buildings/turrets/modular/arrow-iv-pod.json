@@ -1,0 +1,92 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "missile",
+  "mesh": "arrow-iv-pod.glb",
+  "bounds": {
+    "min": [
+      -3.2750000953674316,
+      0.0,
+      0.0
+    ],
+    "max": [
+      3.4149999618530273,
+      9.449999809265137,
+      9.932499885559082
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim",
+    "elevation": "aim"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "launcher-0",
+      "node": "aim",
+      "position": [
+        -0.9,
+        4.72,
+        0.9
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-1",
+      "node": "aim",
+      "position": [
+        0.9,
+        4.72,
+        0.9
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-2",
+      "node": "aim",
+      "position": [
+        -0.9,
+        4.72,
+        -0.9
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-3",
+      "node": "aim",
+      "position": [
+        0.9,
+        4.72,
+        -0.9
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+Generated photographic sheets, keyed off their chroma-green background into the seven-plant sources; the anchors in data/models/board/textures/vegetation/maize-row.json follow each plant.
+
+Side (front = the side plants mirrored, in reverse order):
+
+A real photograph, photo-scanned game-asset cutout sheet, not art and not an illustration: SEVEN separate maize (corn) plants in late summer, seen from the SIDE at eye level, standing in one row, evenly spaced, each plant centred in its own seventh of the image width, none touching another. Each is one realistic maize plant: a single sturdy stalk, long broad arching green leaves with slightly dry yellowing tips, a tassel at the top and one or two husked ears on the stalk; slightly different from one another. All seven bases sit on the same baseline at the very bottom edge; the tassels nearly reach the top edge. Flat soft overcast daylight, no harsh shadows, no soil, no ground, no text.
+
+Background: one perfectly uniform flat pure chroma green (#00FF00), edge to edge, no gradient, no shadow, so the plants can be keyed out.
+
+Top:
+
+A real photograph, photo-scanned game-asset cutout sheet, not art and not an illustration: the SAME seven maize plants (each a star of long broad arching green leaves with dry yellowing tips radiating from the stalk, the pale tassel in the centre) as the reference image, now each seen from DIRECTLY ABOVE (orthographic top-down, camera pointing straight down), in one row, evenly spaced, each centred in its own seventh of the image width, none touching another, all centred on the same horizontal line through the middle of the image. Same colours and light as the reference. Flat soft overcast daylight, no harsh shadows, no soil, no ground, no text.
+
+Background: one perfectly uniform flat pure chroma green (#00FF00), edge to edge, no gradient, no shadow, so the plants can be keyed out.

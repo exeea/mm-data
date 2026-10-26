@@ -1,0 +1,94 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "ballistic",
+  "mesh": "hag-30-exposed.glb",
+  "bounds": {
+    "min": [
+      -4.050000190734863,
+      -1.3308043479919434,
+      0.0
+    ],
+    "max": [
+      4.050000190734863,
+      33.0,
+      10.309293746948242
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim",
+    "elevation": "aim",
+    "recoil": "recoil",
+    "spin": "spin"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "muzzle-0",
+      "node": "spin",
+      "position": [
+        -0.55,
+        28.2,
+        0.55
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "muzzle-1",
+      "node": "spin",
+      "position": [
+        -0.55,
+        28.2,
+        -0.55
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "muzzle-2",
+      "node": "spin",
+      "position": [
+        0.55,
+        28.2,
+        0.55
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "muzzle-3",
+      "node": "spin",
+      "position": [
+        0.55,
+        28.2,
+        -0.55
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    }
+  ]
+}

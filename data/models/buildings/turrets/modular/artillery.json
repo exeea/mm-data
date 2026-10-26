@@ -1,0 +1,44 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "ballistic",
+  "mesh": "artillery.glb",
+  "bounds": {
+    "min": [
+      -2.549999952316284,
+      0.0,
+      -2.25
+    ],
+    "max": [
+      2.549999952316284,
+      27.0,
+      2.25
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim",
+    "recoil": "recoil"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "muzzle-0",
+      "node": "recoil",
+      "position": [
+        0,
+        27.0,
+        0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    }
+  ]
+}

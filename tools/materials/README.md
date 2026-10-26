@@ -114,6 +114,14 @@ scorch build their own roughness.
 - **Constrained** materials fit a footprint: facades, turret plating, classic tiles, scars,
   scenery and plant cutouts. Their texture size never changes what they cover.
 
+`structures/common/` holds the materials several models share: `steel` (turrets, the Solaris
+elevator's lift, container fittings, the cargo crate's metal), `iron` (cast parts: the lift's hubs
+and clevises, the cargo crate's corner castings), `corrugated` (painted corrugated steel for the
+light walls and the seaport containers), `chrome` (hydraulic rods and axles), `hazard-stripes`,
+`safety-yellow` (heavy machinery's paint, lightly chipped: models add wear where it gathers) and `tread-plate`. The cargo crate's maps are baked
+from steel, iron and the hazard stripes. The corrugated paint is near white: each model tints it
+with its vertex colours or colour slots (the light walls keep it light grey).
+
 A loose entry has up to two values:
 
 | Value | What it is | What changing it does |

@@ -196,7 +196,7 @@
             "y": 0
           },
           "parameters": {
-            "size": 9
+            "size": 10
           },
           "seed": 0,
           "seed_locked": true,
@@ -927,10 +927,10 @@
       "label": "SurfaceResponse",
       "type": "graph",
       "parameters": {
-        "ReliefPercent": 0.6,
+        "ReliefPercent": 0.15,
         "NormalStrength": 1,
-        "NearCavityStrength": 200.0,
-        "WideCavityStrength": 90.0,
+        "NearCavityStrength": 800.0,
+        "WideCavityStrength": 360.0,
         "BaseRoughness": 0.9,
         "RoughnessVariation": 0.08
       },
@@ -996,10 +996,10 @@
           "name": "gen_parameters",
           "type": "remote",
           "parameters": {
-            "ReliefPercent": 0.6,
+            "ReliefPercent": 0.15,
             "NormalStrength": 1,
-            "NearCavityStrength": 200.0,
-            "WideCavityStrength": 90.0,
+            "NearCavityStrength": 800.0,
+            "WideCavityStrength": 360.0,
             "BaseRoughness": 0.9,
             "RoughnessVariation": 0.08
           },
@@ -1016,7 +1016,7 @@
               "min": 0,
               "max": 20,
               "step": 0.01,
-              "default": 0.6
+              "default": 0.15
             },
             {
               "name": "NormalStrength",
@@ -1032,18 +1032,18 @@
               "label": "NearCavityStrength",
               "type": "named_parameter",
               "min": 0,
-              "max": 600.0,
+              "max": 2400.0,
               "step": 1,
-              "default": 200.0
+              "default": 800.0
             },
             {
               "name": "WideCavityStrength",
               "label": "WideCavityStrength",
               "type": "named_parameter",
               "min": 0,
-              "max": 500.0,
+              "max": 2000.0,
               "step": 1,
-              "default": 90.0
+              "default": 360.0
             },
             {
               "name": "BaseRoughness",
@@ -2881,7 +2881,7 @@
         "y": -650
       },
       "parameters": {
-        "ReliefPercent": 0.6
+        "ReliefPercent": 0.15
       },
       "widgets": [
         {
@@ -2909,13 +2909,13 @@
           "a": 1
         },
         "ao": 1,
-        "depth_scale": 0.024,
+        "depth_scale": 0.006,
         "emission_energy": 1.0,
         "flags_transparent": false,
         "metallic": 0,
         "normal": 1,
         "roughness": 1.0,
-        "size": 9,
+        "size": 10,
         "sss": 0.0
       },
       "node_position": {

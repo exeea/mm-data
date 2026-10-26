@@ -1,0 +1,744 @@
+{
+	"connections": [
+		{
+			"from": "graph_4",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "graph_4",
+			"from_port": 1,
+			"to": "Material",
+			"to_port": 2
+		},
+		{
+			"from": "graph_4",
+			"from_port": 2,
+			"to": "Material",
+			"to_port": 4
+		}
+	],
+	"label": "Graph",
+	"longdesc": "",
+	"name": "turret-paint",
+	"node_position": {
+		"x": 0.0,
+		"y": 0.0
+	},
+	"nodes": [
+		{
+			"export_last_target": "Godot/Godot 4 ORM",
+			"export_paths": {
+				"Godot/Godot 4 ORM": "/home/yosoyfreeman/Imágenes/Liblast/SteelHotspot/SteelHotspot"
+			},
+			"name": "Material",
+			"node_position": {
+				"x": 3340.0,
+				"y": -220.0
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1.0,
+					"b": 1.0,
+					"g": 1.0,
+					"r": 1.0,
+					"type": "Color"
+				},
+				"ao": 1.0,
+				"depth_scale": 0.0,
+				"emission_energy": 1.0,
+				"flags_transparent": false,
+				"metallic": 0.65,
+				"normal": 1.0,
+				"roughness": 1.0,
+				"size": 9.0,
+				"sss": 1.0
+			},
+			"seed_int": 0,
+			"type": "material"
+		},
+		{
+			"connections": [
+				{
+					"from": "fbm2",
+					"from_port": 0,
+					"to": "colorize",
+					"to_port": 0
+				},
+				{
+					"from": "colorize",
+					"from_port": 0,
+					"to": "quantize",
+					"to_port": 0
+				},
+				{
+					"from": "gaussian_blur",
+					"from_port": 0,
+					"to": "invert",
+					"to_port": 0
+				},
+				{
+					"from": "quantize",
+					"from_port": 0,
+					"to": "smooth_curvature2",
+					"to_port": 0
+				},
+				{
+					"from": "smooth_curvature2",
+					"from_port": 0,
+					"to": "tones_step",
+					"to_port": 0
+				},
+				{
+					"from": "tones_step",
+					"from_port": 0,
+					"to": "gaussian_blur",
+					"to_port": 0
+				},
+				{
+					"from": "uniform_4",
+					"from_port": 0,
+					"to": "blend2",
+					"to_port": 1
+				},
+				{
+					"from": "quantize",
+					"from_port": 0,
+					"to": "blend2",
+					"to_port": 2
+				},
+				{
+					"from": "invert",
+					"from_port": 0,
+					"to": "blend2",
+					"to_port": 3
+				},
+				{
+					"from": "fbm2_2",
+					"from_port": 0,
+					"to": "quantize_2",
+					"to_port": 0
+				},
+				{
+					"from": "fbm2_15",
+					"from_port": 0,
+					"to": "colorize_9",
+					"to_port": 0
+				},
+				{
+					"from": "multi_warp",
+					"from_port": 0,
+					"to": "invert_4",
+					"to_port": 0
+				},
+				{
+					"from": "fbm2_5",
+					"from_port": 0,
+					"to": "tonality_2",
+					"to_port": 0
+				},
+				{
+					"from": "tonality_2",
+					"from_port": 0,
+					"to": "multi_warp",
+					"to_port": 0
+				},
+				{
+					"from": "tonality_2",
+					"from_port": 0,
+					"to": "multi_warp",
+					"to_port": 1
+				},
+				{
+					"from": "invert_4",
+					"from_port": 0,
+					"to": "normal_map2_2",
+					"to_port": 0
+				},
+				{
+					"from": "normal_map2_2",
+					"from_port": 0,
+					"to": "gen_outputs",
+					"to_port": 2
+				},
+				{
+					"from": "fbm2_3",
+					"from_port": 0,
+					"to": "blend2",
+					"to_port": 7
+				},
+				{
+					"from": "quantize_2",
+					"from_port": 0,
+					"to": "blend2",
+					"to_port": 5
+				},
+				{
+					"from": "uniform_2",
+					"from_port": 0,
+					"to": "blend2",
+					"to_port": 0
+				},
+				{
+					"from": "colorize_9",
+					"from_port": 0,
+					"to": "blend2",
+					"to_port": 9
+				},
+				{
+					"from": "blend2",
+					"from_port": 0,
+					"to": "colorize_2",
+					"to_port": 0
+				},
+				{
+					"from": "blend2",
+					"from_port": 0,
+					"to": "gen_outputs",
+					"to_port": 0
+				},
+				{
+					"from": "colorize_2",
+					"from_port": 0,
+					"to": "gen_outputs",
+					"to_port": 1
+				}
+			],
+			"label": "Steel                ",
+			"longdesc": "",
+			"name": "graph_4",
+			"node_position": {
+				"x": 2600.0,
+				"y": -200.0
+			},
+			"nodes": [
+				{
+					"name": "colorize_9",
+					"node_position": {
+						"x": -1460.0,
+						"y": -420.0
+					},
+					"parameters": {
+						"gradient": {
+							"interpolation": 1,
+							"points": [
+								{
+									"a": 1.0,
+									"b": 0.0,
+									"g": 0.0,
+									"pos": 0.0,
+									"r": 0.0
+								},
+								{
+									"a": 1.0,
+									"b": 1.0,
+									"g": 1.0,
+									"pos": 1.0,
+									"r": 1.0
+								}
+							],
+							"type": "Gradient"
+						}
+					},
+					"seed_int": 0,
+					"type": "colorize"
+				},
+				{
+					"name": "fbm2_15",
+					"node_position": {
+						"x": -1820.0,
+						"y": -420.0
+					},
+					"parameters": {
+						"folds": 0.0,
+						"iterations": 10.0,
+						"noise": 1.0,
+						"offset": 0.0,
+						"persistence": 0.66,
+						"scale_x": 8.0,
+						"scale_y": 8.0
+					},
+					"seed_int": 0,
+					"type": "fbm2"
+				},
+				{
+					"color": {
+						"a": 1.0,
+						"b": 0.0,
+						"g": 0.0,
+						"r": 0.0,
+						"type": "Color"
+					},
+					"name": "comment_2",
+					"node_position": {
+						"x": -3060.0,
+						"y": -1200.0
+					},
+					"parameters": {},
+					"seed_int": 0,
+					"size": {
+						"x": 2520.0,
+						"y": 1020.0
+					},
+					"text": "",
+					"title": "Color",
+					"type": "comment"
+				},
+				{
+					"name": "fbm2_3",
+					"node_position": {
+						"x": -1820.0,
+						"y": -860.0
+					},
+					"parameters": {
+						"folds": 0.0,
+						"iterations": 10.0,
+						"noise": 9.0,
+						"offset": 0.0,
+						"persistence": 0.5,
+						"scale_x": 1024.0,
+						"scale_y": 1024.0
+					},
+					"seed_int": 2523454720,
+					"type": "fbm2"
+				},
+				{
+					"generic_size": 1,
+					"name": "quantize_2",
+					"node_position": {
+						"x": -1440.0,
+						"y": -640.0
+					},
+					"parameters": {
+						"steps": 16.0
+					},
+					"seed_int": 0,
+					"type": "quantize"
+				},
+				{
+					"generic_size": 5,
+					"name": "blend2",
+					"node_position": {
+						"x": -940.0,
+						"y": -1040.0
+					},
+					"parameters": {
+						"amount1": 0.25,
+						"amount2": 0.15,
+						"amount3": 0.2,
+						"amount4": 0.075,
+						"amount5": 0.1,
+						"blend_type1": 14.0,
+						"blend_type2": 2.0,
+						"blend_type3": 2.0,
+						"blend_type4": 4.0,
+						"blend_type5": 2.0
+					},
+					"seed_int": 0,
+					"type": "blend2"
+				},
+				{
+					"name": "fbm2_2",
+					"node_position": {
+						"x": -1820.0,
+						"y": -640.0
+					},
+					"parameters": {
+						"folds": 0.0,
+						"iterations": 5.0,
+						"noise": 1.0,
+						"offset": 0.0,
+						"persistence": 0.49,
+						"scale_x": 6.0,
+						"scale_y": 6.0
+					},
+					"seed_int": 739595904,
+					"type": "fbm2"
+				},
+				{
+					"name": "tones_step",
+					"node_position": {
+						"x": -2120.0,
+						"y": -1040.0
+					},
+					"parameters": {
+						"invert": false,
+						"value": 0.8,
+						"width": 0.05
+					},
+					"seed_int": 0,
+					"type": "tones_step"
+				},
+				{
+					"name": "smooth_curvature2",
+					"node_position": {
+						"x": -2360.0,
+						"y": -1040.0
+					},
+					"parameters": {
+						"param0": 11.0,
+						"param1": 32.0,
+						"param2": 0.37,
+						"param3": 0.04,
+						"param4": 1.0
+					},
+					"seed_int": 0,
+					"type": "smooth_curvature2"
+				},
+				{
+					"name": "invert",
+					"node_position": {
+						"x": -1620.0,
+						"y": -1040.0
+					},
+					"parameters": {},
+					"seed_int": 0,
+					"type": "invert"
+				},
+				{
+					"name": "gaussian_blur",
+					"node_position": {
+						"x": -1900.0,
+						"y": -1040.0
+					},
+					"parameters": {
+						"param0": 11.0,
+						"param1": 2.0,
+						"param2": 0.0,
+						"param3": false
+					},
+					"seed_int": 0,
+					"type": "gaussian_blur"
+				},
+				{
+					"name": "colorize",
+					"node_position": {
+						"x": -2760.0,
+						"y": -880.0
+					},
+					"parameters": {
+						"gradient": {
+							"interpolation": 1,
+							"points": [
+								{
+									"a": 1.0,
+									"b": 0.0,
+									"g": 0.0,
+									"pos": 0.0,
+									"r": 0.0
+								},
+								{
+									"a": 1.0,
+									"b": 1.0,
+									"g": 1.0,
+									"pos": 0.880525,
+									"r": 1.0
+								}
+							],
+							"type": "Gradient"
+						}
+					},
+					"seed_int": 0,
+					"type": "colorize"
+				},
+				{
+					"name": "uniform_4",
+					"node_position": {
+						"x": -1640.0,
+						"y": -1100.0
+					},
+					"parameters": {
+						"color": {
+							"a": 1.0,
+							"b": 0.375,
+							"g": 0.354101002216339,
+							"r": 0.326234996318817,
+							"type": "Color"
+						}
+					},
+					"seed_int": 0,
+					"type": "uniform"
+				},
+				{
+					"generic_size": 1,
+					"name": "quantize",
+					"node_position": {
+						"x": -2560.0,
+						"y": -880.0
+					},
+					"parameters": {
+						"steps": 8.0
+					},
+					"seed_int": 0,
+					"type": "quantize"
+				},
+				{
+					"name": "fbm2",
+					"node_position": {
+						"x": -3040.0,
+						"y": -880.0
+					},
+					"parameters": {
+						"folds": 0.0,
+						"iterations": 8.0,
+						"noise": 1.0,
+						"offset": 0.0,
+						"persistence": 0.5,
+						"scale_x": 16.0,
+						"scale_y": 16.0
+					},
+					"seed_int": 456896512,
+					"type": "fbm2"
+				},
+				{
+					"name": "colorize_2",
+					"node_position": {
+						"x": -500.0,
+						"y": -340.0
+					},
+					"parameters": {
+						"gradient": {
+							"interpolation": 2,
+							"points": [
+								{
+									"a": 1.0,
+									"b": 0.449218988418579,
+									"g": 0.449218988418579,
+									"pos": 0.139804,
+									"r": 0.449218988418579
+								},
+								{
+									"a": 1.0,
+									"b": 0.332031011581421,
+									"g": 0.332031011581421,
+									"pos": 0.479135,
+									"r": 0.332031011581421
+								}
+							],
+							"type": "Gradient"
+						}
+					},
+					"seed_int": 0,
+					"type": "colorize"
+				},
+				{
+					"name": "gen_inputs",
+					"node_position": {
+						"x": -3820.0,
+						"y": -376.362335205078
+					},
+					"parameters": {},
+					"ports": [],
+					"seed_int": 0,
+					"type": "ios"
+				},
+				{
+					"name": "gen_outputs",
+					"node_position": {
+						"x": 140.0,
+						"y": -480.0
+					},
+					"parameters": {},
+					"ports": [
+						{
+							"longdesc": "",
+							"name": "Albedo",
+							"shortdesc": "Albedo",
+							"type": "rgb"
+						},
+						{
+							"longdesc": "",
+							"name": "Roughness",
+							"shortdesc": "Roughness",
+							"type": "f"
+						},
+						{
+							"name": "unnamed",
+							"type": "rgb"
+						}
+					],
+					"seed_int": 0,
+					"type": "ios"
+				},
+				{
+					"name": "gen_parameters",
+					"node_position": {
+						"x": -2373.8203125,
+						"y": -1340.0
+					},
+					"parameters": {},
+					"seed_int": 0,
+					"type": "remote",
+					"widgets": []
+				},
+				{
+					"color": {
+						"a": 1.0,
+						"b": 0.0,
+						"g": 0.0,
+						"r": 0.0,
+						"type": "Color"
+					},
+					"name": "comment_3",
+					"node_position": {
+						"x": -1640.0,
+						"y": 640.0
+					},
+					"parameters": {},
+					"seed_int": 0,
+					"size": {
+						"x": 1100.0,
+						"y": 340.0
+					},
+					"text": "",
+					"title": "Bumps",
+					"type": "comment"
+				},
+				{
+					"generic_size": 1,
+					"name": "tonality_2",
+					"node_position": {
+						"x": -1360.0,
+						"y": 720.0
+					},
+					"parameters": {
+						"curve": {
+							"points": [
+								{
+									"ls": 0.0,
+									"rs": 4.0,
+									"x": 0.0,
+									"y": 0.0
+								},
+								{
+									"ls": 1.0,
+									"rs": 1.0,
+									"x": 0.29289299249649,
+									"y": 0.70710700750351
+								},
+								{
+									"ls": 0.0,
+									"rs": 0.0,
+									"x": 1.0,
+									"y": 1.0
+								}
+							],
+							"type": "Curve"
+						}
+					},
+					"seed_int": 0,
+					"type": "tonality"
+				},
+				{
+					"name": "invert_4",
+					"node_position": {
+						"x": -920.0,
+						"y": 700.0
+					},
+					"parameters": {},
+					"seed_int": 0,
+					"type": "invert"
+				},
+				{
+					"name": "multi_warp",
+					"node_position": {
+						"x": -1180.0,
+						"y": 700.0
+					},
+					"parameters": {
+						"param0": 11.0,
+						"param1": 0.05,
+						"param2": 32.0,
+						"param3": 2.0
+					},
+					"seed_int": 0,
+					"type": "multi_warp"
+				},
+				{
+					"name": "fbm2_5",
+					"node_position": {
+						"x": -1620.0,
+						"y": 720.0
+					},
+					"parameters": {
+						"folds": 0.0,
+						"iterations": 10.0,
+						"noise": 9.0,
+						"offset": 0.0,
+						"persistence": 0.35,
+						"scale_x": 512.0,
+						"scale_y": 512.0
+					},
+					"seed_int": 0,
+					"type": "fbm2"
+				},
+				{
+					"name": "normal_map2_2",
+					"node_position": {
+						"x": -740.0,
+						"y": 700.0
+					},
+					"parameters": {
+						"buffer": 1.0,
+						"param2": 0.0,
+						"size": 11.0,
+						"strength": 0.0025
+					},
+					"seed_int": 0,
+					"type": "normal_map2"
+				},
+				{
+					"color": {
+						"a": 1.0,
+						"b": 0.0,
+						"g": 0.0,
+						"r": 1.0,
+						"type": "Color"
+					},
+					"name": "comment_4",
+					"node_position": {
+						"x": -820.0,
+						"y": -1260.0
+					},
+					"parameters": {},
+					"seed_int": 0,
+					"size": {
+						"x": 260.0,
+						"y": 20.0
+					},
+					"text": "",
+					"title": "Steel pattern covers 4 meters",
+					"type": "comment"
+				},
+				{
+					"name": "uniform_2",
+					"node_position": {
+						"x": -1640.0,
+						"y": -1180.0
+					},
+					"parameters": {
+						"color": {
+							"a": 1.0,
+							"b": 0.494118005037308,
+							"g": 0.474510014057159,
+							"r": 0.443136990070343,
+							"type": "Color"
+						}
+					},
+					"seed_int": 0,
+					"type": "uniform"
+				}
+			],
+			"parameters": {},
+			"seed_int": 0,
+			"shortdesc": "",
+			"type": "graph"
+		}
+	],
+	"parameters": {},
+	"project_thumbnail": "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",
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}

@@ -80,6 +80,7 @@ exact "default_infantry" "defaults/default_infantry_platoon.png" "units/modular/
 exact "default_ba" "defaults/default_ba.png" "units/modular/battle-armor.json"
 exact "default_proto" "defaults/default_proto.png" "units/modular/families/proto.json"
 exact "default_gun_emplacement" "defaults/default_gun_emplacement.png" "units/modular/families/emplacement.json"
+exact "default_turret" "defaults/default_gun_emplacement.png" "buildings/turrets/modular/turret.json"
 exact "default_wige" "vehicles/Hiryo.png" "units/modular/families/wige.json"
 exact "default_aero" "defaults/asf.png" "units/modular/families/fighter.json"
 exact "default_small_trailer" "defaults/default_small_trailer.png" "units/modular/families/wheeled.json"

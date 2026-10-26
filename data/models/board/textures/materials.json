@@ -164,12 +164,12 @@
       "metres": 28.0
     },
     "terrain/surfaces/tundra-ground": {
-      "pixels": 512,
-      "metres": 12.0
+      "pixels": 1024,
+      "metres": 48.0
     },
     "terrain/surfaces/tundra-ground-variant": {
-      "pixels": 512,
-      "metres": 12.0
+      "pixels": 1024,
+      "metres": 48.0
     },
     "terrain/surfaces/tundra-mat": {
       "pixels": 512,
@@ -196,7 +196,17 @@
     "scenery/rubble-slab",
     "scenery/rubble-steel",
     "scenery/rubble-timber",
+    "scenery/timber-bark",
+    "scenery/timber-char",
+    "scenery/timber-endgrain",
     "scenery/tunnel-concrete",
+    "structures/common/chrome",
+    "structures/common/corrugated",
+    "structures/common/hazard-stripes",
+    "structures/common/iron",
+    "structures/common/safety-yellow",
+    "structures/common/steel",
+    "structures/common/tread-plate",
     "structures/facades/facade-fortress",
     "structures/facades/facade-hangar",
     "structures/facades/facade-hard",
@@ -206,11 +216,9 @@
     "structures/facades/facade-medium",
     "structures/facades/facade-tank",
     "structures/industrial/fan",
-    "structures/turret/turret-armor",
     "structures/turret/turret-dark",
     "structures/turret/turret-edge",
-    "structures/turret/turret-pale",
-    "structures/turret/turret-steel",
+    "structures/turret/turret-paint",
     "terrain/classic/concrete",
     "terrain/classic/dirt",
     "terrain/classic/fungus",
@@ -241,13 +249,15 @@
     "vegetation/cactus-skin",
     "vegetation/conifer-cutout",
     "vegetation/conifer-snow-cutout",
-    "vegetation/crop-row-front",
-    "vegetation/crop-row-side",
-    "vegetation/crop-row-top",
     "vegetation/fern-cutout",
     "vegetation/fungus/fungus-atlas",
+    "vegetation/maize-row-front",
+    "vegetation/maize-row-side",
+    "vegetation/maize-row-top",
     "vegetation/mars/mars-coral-atlas",
     "vegetation/marsh-sedge",
+    "vegetation/tundra-tussock",
+    "vegetation/tundra-tussock-dry",
     "vegetation/orchard/orchard-leaning",
     "vegetation/orchard/orchard-round",
     "vegetation/orchard/orchard-spreading",
@@ -267,6 +277,9 @@
     "vegetation/shrubs/shrub-wetland",
     "vegetation/snow",
     "vegetation/volcano/cinder-bark",
-    "vegetation/volcano/cinder-cutout"
+    "vegetation/volcano/cinder-cutout",
+    "vegetation/wheat-row-front",
+    "vegetation/wheat-row-side",
+    "vegetation/wheat-row-top"
   ]
 }

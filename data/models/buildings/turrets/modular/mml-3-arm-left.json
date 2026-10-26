@@ -1,0 +1,76 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "missile",
+  "mesh": "mml-3-arm-left.glb",
+  "bounds": {
+    "min": [
+      -7.460000038146973,
+      -4.400000095367432,
+      -1.7000000476837158
+    ],
+    "max": [
+      0.8999999761581421,
+      4.450000286102295,
+      1.9952855110168457
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim",
+    "elevation": "aim"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "launcher-0",
+      "node": "aim",
+      "position": [
+        -1.22,
+        4.42,
+        0.0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-1",
+      "node": "aim",
+      "position": [
+        0.0,
+        4.42,
+        0.0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-2",
+      "node": "aim",
+      "position": [
+        1.22,
+        4.42,
+        0.0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    }
+  ]
+}

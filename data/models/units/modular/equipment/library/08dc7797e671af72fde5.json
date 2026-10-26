@@ -1,0 +1,123 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "ballistic",
+  "mesh": "08dc7797e671af72fde5.glb",
+  "bounds": {
+    "min": [
+      -2.999199690627557,
+      -2.0,
+      -2.9991996906275573
+    ],
+    "max": [
+      2.9991996906275573,
+      0.6,
+      2.9991996906275573
+    ]
+  },
+  "rig": "module-v1",
+  "joints": {
+    "root": "root",
+    "aim": "mount"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "emitter-0",
+      "node": "mount",
+      "position": [
+        1.7280000000000002,
+        0.6,
+        0.0
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "emitter-1",
+      "node": "mount",
+      "position": [
+        0.8640000000000002,
+        0.6,
+        1.49649189773951
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "emitter-2",
+      "node": "mount",
+      "position": [
+        -0.8639999999999997,
+        0.6,
+        1.49649189773951
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "emitter-3",
+      "node": "mount",
+      "position": [
+        -1.7280000000000002,
+        0.6,
+        2.1161896689266263e-16
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "emitter-4",
+      "node": "mount",
+      "position": [
+        -0.8640000000000008,
+        0.6,
+        -1.4964918977395099
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    },
+    {
+      "id": "emitter-5",
+      "node": "mount",
+      "position": [
+        0.8640000000000002,
+        0.6,
+        -1.49649189773951
+      ],
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    }
+  ]
+}

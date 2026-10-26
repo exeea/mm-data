@@ -1,0 +1,59 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "missile",
+  "mesh": "mortar-2.glb",
+  "bounds": {
+    "min": [
+      -2.3499999046325684,
+      0.0,
+      -1.215000033378601
+    ],
+    "max": [
+      2.3499999046325684,
+      5.650000095367432,
+      1.412500023841858
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "launcher-0",
+      "node": "aim",
+      "position": [
+        -0.8,
+        5.619999999999999,
+        0.0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-1",
+      "node": "aim",
+      "position": [
+        0.8,
+        5.619999999999999,
+        0.0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    }
+  ]
+}

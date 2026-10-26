@@ -1,0 +1,43 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "flamer",
+  "mesh": "flamer.glb",
+  "bounds": {
+    "min": [
+      -0.5600000023841858,
+      0.0,
+      -0.5600000023841858
+    ],
+    "max": [
+      0.5600000023841858,
+      4.099999904632568,
+      0.5600000023841858
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "muzzle-0",
+      "node": "aim",
+      "position": [
+        0,
+        4.1,
+        0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "muzzle",
+      "effect": "flame"
+    }
+  ]
+}

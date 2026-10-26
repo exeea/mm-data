@@ -1,0 +1,11 @@
+Generated photographs, graded from amber to straw-gold: a continuous wheat row keyed off its chroma-green background, and an overhead wheat carpet, each cut into seven contiguous cells, so a strip of seven plants reads as one stand (front = the side cells mirrored, in reverse order). The anchors in data/models/board/textures/vegetation/wheat-row.json follow each cell.
+
+Side:
+
+A real photograph, photo-scanned game-asset cutout, not art, not an illustration, not a 3D render: a long, continuous, dense row of ripe golden winter wheat seen from the SIDE at eye level from about 5 metres away, running straight across the whole image from the left edge to the right edge without any gap. The wheat forms one horizontal band through the middle of the image, about 40 % of the image height: a dense wall of many thin straw-gold stalks, slender bearded ears of realistic size crowded in the top third of the band, a slightly uneven top line where single ears stand a little higher, a few dry leaves low down. Every stalk base sits on the same straight horizontal baseline at the bottom of the band. Same colours as the reference image. Flat soft overcast daylight, no harsh shadows, no soil, no ground, no sky, no text.
+
+Background above and below the band: one perfectly uniform flat pure chroma green (#00FF00), edge to edge, no gradient, no shadow, so the wheat can be keyed out.
+
+Top (the middle band, one row spacing across):
+
+A real photograph, not art, not an illustration, not a 3D render: a dense field of ripe golden winter wheat seen from DIRECTLY ABOVE (camera pointing straight down, orthographic look) from about 4 metres up, the frame about 4 metres across. Filled edge to edge with crowded bearded wheat ears pointing up at the camera, seen end-on, with their fine awns; slight variation from pale straw to deeper gold, a little shade between the ears, no soil visible, no gaps. Same colours as the reference image. Flat soft overcast daylight, no harsh shadows, no text.

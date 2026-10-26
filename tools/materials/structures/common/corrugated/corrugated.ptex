@@ -1,0 +1,902 @@
+{
+  "name": "corrugated",
+  "label": "Corrugated steel",
+  "type": "graph",
+  "parameters": {},
+  "nodes": [
+    {
+      "name": "About",
+      "type": "comment",
+      "parameters": {},
+      "node_position": {
+        "x": -1700,
+        "y": -950
+      },
+      "size": {
+        "x": 1000,
+        "y": 230
+      },
+      "title": "About this material",
+      "text": "Shared corrugated steel: near-white paint over corrugated steel, a remix of corrugated_steel. Models tint the paint with their own colour (vertex colours, colour slots), so keep it near white: the cargo crate is olive, the seaport containers take their paints, the light walls grey. One repeat holds 10 corrugations along U; models map it 3 m across, so a corrugation is 0.3 m, and lay frames on the flat top of a ridge. The paint chips off the ridge edges and where the chip noise rises; the steel shows there, metallic. Depth is the profile, 4.5 cm deep: Depth scale is that depth as a percentage of the repeat over 25 (tools/materials/README.md). Node names become shader identifiers: none may be called albedo, depth or the like. Export: File > Export material > Godot > Godot 4 Standard into data/models/board/textures/structures/common, then Reload assets in the Tuning panel."
+    },
+    {
+      "name": "bricks3",
+      "type": "bricks3",
+      "parameters": {
+        "pattern": 0,
+        "repeat": 1,
+        "rows": 1,
+        "columns": 10,
+        "row_offset": 0,
+        "mortar": 0.01,
+        "bevel": 0.02,
+        "round": 0,
+        "corner": 0
+      },
+      "node_position": {
+        "x": -1400,
+        "y": -600
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "transform2",
+      "type": "transform2",
+      "parameters": {
+        "mode": 0,
+        "rotate": 0,
+        "scale_x": 1,
+        "scale_y": 1.56,
+        "translate_x": 0,
+        "translate_y": 0
+      },
+      "node_position": {
+        "x": -1150,
+        "y": -600
+      },
+      "seed_int": 0,
+      "generic_size": 1
+    },
+    {
+      "name": "normal_map2",
+      "type": "normal_map2",
+      "parameters": {
+        "buffer": 1,
+        "param2": 0,
+        "size": 10,
+        "strength": 0.25
+      },
+      "node_position": {
+        "x": -850,
+        "y": -700
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "profile_depth",
+      "type": "invert",
+      "parameters": {},
+      "node_position": {
+        "x": -850,
+        "y": -550
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "fbm3_2",
+      "type": "fbm3",
+      "parameters": {
+        "folds": 0,
+        "iterations": 5,
+        "noise": 7,
+        "offset": 0,
+        "persistence": 1,
+        "scale_x": 5,
+        "scale_y": 15
+      },
+      "node_position": {
+        "x": -1400,
+        "y": -300
+      },
+      "seed_int": 1267942656
+    },
+    {
+      "name": "colorize_2",
+      "type": "colorize",
+      "parameters": {
+        "gradient": {
+          "type": "Gradient",
+          "interpolation": 1,
+          "points": [
+            {
+              "pos": 0,
+              "r": 0.749,
+              "g": 0.753,
+              "b": 0.758,
+              "a": 1
+            },
+            {
+              "pos": 0.495,
+              "r": 0.674,
+              "g": 0.6875,
+              "b": 0.6875,
+              "a": 1
+            },
+            {
+              "pos": 1,
+              "r": 0.816,
+              "g": 0.832,
+              "b": 0.832,
+              "a": 1
+            }
+          ]
+        }
+      },
+      "node_position": {
+        "x": -1150,
+        "y": -300
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "fbm3",
+      "type": "fbm3",
+      "parameters": {
+        "folds": 0,
+        "iterations": 7,
+        "noise": 0,
+        "offset": 0,
+        "persistence": 1,
+        "scale_x": 21,
+        "scale_y": 24
+      },
+      "node_position": {
+        "x": -1400,
+        "y": -100
+      },
+      "seed_int": 2074886912
+    },
+    {
+      "name": "colorize_3",
+      "type": "colorize",
+      "parameters": {
+        "gradient": {
+          "type": "Gradient",
+          "interpolation": 1,
+          "points": [
+            {
+              "pos": 0,
+              "r": 0.93,
+              "g": 0.93,
+              "b": 0.93,
+              "a": 1
+            },
+            {
+              "pos": 1,
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          ]
+        }
+      },
+      "node_position": {
+        "x": -1150,
+        "y": -100
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "shape",
+      "type": "shape",
+      "parameters": {
+        "edge": 1,
+        "radius": 1,
+        "shape": 0,
+        "sides": 2
+      },
+      "node_position": {
+        "x": -1650,
+        "y": 100
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "tiler",
+      "type": "tiler",
+      "parameters": {
+        "fixed_offset": 1,
+        "inputs": 0,
+        "offset": 1,
+        "overlap": 5,
+        "rotate": 180,
+        "scale": 0.02,
+        "scale_x": 0.02,
+        "scale_y": 0.02,
+        "tx": 90,
+        "ty": 90,
+        "value": 0.64,
+        "variations": true
+      },
+      "node_position": {
+        "x": -1400,
+        "y": 100
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "colorize",
+      "type": "colorize",
+      "parameters": {
+        "gradient": {
+          "type": "Gradient",
+          "interpolation": 1,
+          "points": [
+            {
+              "pos": 0,
+              "r": 0.344,
+              "g": 0.344,
+              "b": 0.344,
+              "a": 1
+            },
+            {
+              "pos": 1,
+              "r": 0.172,
+              "g": 0.172,
+              "b": 0.172,
+              "a": 1
+            }
+          ]
+        }
+      },
+      "node_position": {
+        "x": -1150,
+        "y": 100
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "steel_roughness",
+      "type": "blend2",
+      "parameters": {
+        "amount1": 0.28,
+        "blend_type1": 0
+      },
+      "node_position": {
+        "x": -900,
+        "y": 100
+      },
+      "seed_int": 0,
+      "generic_size": 1
+    },
+    {
+      "name": "paint_mottle",
+      "type": "fbm3",
+      "parameters": {
+        "folds": 0,
+        "iterations": 6,
+        "noise": 1,
+        "offset": 0,
+        "persistence": 0.5,
+        "scale_x": 6,
+        "scale_y": 6
+      },
+      "node_position": {
+        "x": -1400,
+        "y": 350
+      },
+      "seed_int": 31337
+    },
+    {
+      "name": "paint",
+      "type": "colorize",
+      "parameters": {
+        "gradient": {
+          "type": "Gradient",
+          "interpolation": 1,
+          "points": [
+            {
+              "pos": 0,
+              "r": 0.9,
+              "g": 0.9,
+              "b": 0.89,
+              "a": 1
+            },
+            {
+              "pos": 0.5,
+              "r": 0.95,
+              "g": 0.95,
+              "b": 0.94,
+              "a": 1
+            },
+            {
+              "pos": 1,
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          ]
+        }
+      },
+      "node_position": {
+        "x": -1150,
+        "y": 350
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "streak_noise",
+      "type": "fbm3",
+      "parameters": {
+        "folds": 0,
+        "iterations": 5,
+        "noise": 1,
+        "offset": 0,
+        "persistence": 0.6,
+        "scale_x": 40,
+        "scale_y": 2
+      },
+      "node_position": {
+        "x": -1400,
+        "y": 550
+      },
+      "seed_int": 90210
+    },
+    {
+      "name": "streaks",
+      "type": "tones_step",
+      "parameters": {
+        "value": 0.62,
+        "width": 0.35,
+        "invert": false
+      },
+      "node_position": {
+        "x": -1150,
+        "y": 550
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "rust",
+      "type": "uniform",
+      "parameters": {
+        "color": {
+          "type": "Color",
+          "r": 0.42,
+          "g": 0.25,
+          "b": 0.14,
+          "a": 1
+        }
+      },
+      "node_position": {
+        "x": -1150,
+        "y": 700
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "flank_low",
+      "type": "math",
+      "parameters": {
+        "op": 1,
+        "default_in1": 1,
+        "default_in2": 0.0,
+        "clamp": true
+      },
+      "node_position": {
+        "x": -1150,
+        "y": 800
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "flank",
+      "type": "math",
+      "parameters": {
+        "op": 2,
+        "default_in1": 0.0,
+        "default_in2": 0.0,
+        "clamp": true
+      },
+      "node_position": {
+        "x": -950,
+        "y": 800
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "flank_scaled",
+      "type": "math",
+      "parameters": {
+        "op": 2,
+        "default_in1": 0.0,
+        "default_in2": 1.0,
+        "clamp": true
+      },
+      "node_position": {
+        "x": -800,
+        "y": 800
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "chip_noise",
+      "type": "fbm3",
+      "parameters": {
+        "folds": 0,
+        "iterations": 7,
+        "noise": 1,
+        "offset": 0,
+        "persistence": 0.55,
+        "scale_x": 22,
+        "scale_y": 22
+      },
+      "node_position": {
+        "x": -1150,
+        "y": 950
+      },
+      "seed_int": 4242
+    },
+    {
+      "name": "wear",
+      "type": "math",
+      "parameters": {
+        "op": 0,
+        "default_in1": 0.0,
+        "default_in2": 0.0,
+        "clamp": true
+      },
+      "node_position": {
+        "x": -650,
+        "y": 900
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "chips",
+      "type": "tones_step",
+      "parameters": {
+        "value": 0.9,
+        "width": 0.03,
+        "invert": false
+      },
+      "node_position": {
+        "x": -450,
+        "y": 900
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "weathered",
+      "type": "blend2",
+      "parameters": {
+        "amount1": 0.22,
+        "blend_type1": 0
+      },
+      "node_position": {
+        "x": -800,
+        "y": 450
+      },
+      "seed_int": 0,
+      "generic_size": 1
+    },
+    {
+      "name": "chipped_paint",
+      "type": "blend2",
+      "parameters": {
+        "amount1": 1.0,
+        "blend_type1": 0
+      },
+      "node_position": {
+        "x": -350,
+        "y": 300
+      },
+      "seed_int": 0,
+      "generic_size": 1
+    },
+    {
+      "name": "black",
+      "type": "uniform",
+      "parameters": {
+        "color": {
+          "type": "Color",
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 1
+        }
+      },
+      "node_position": {
+        "x": -650,
+        "y": 0
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "chip_metal",
+      "type": "blend2",
+      "parameters": {
+        "amount1": 1.0,
+        "blend_type1": 0
+      },
+      "node_position": {
+        "x": -350,
+        "y": 0
+      },
+      "seed_int": 0,
+      "generic_size": 1
+    },
+    {
+      "name": "paint_roughness",
+      "type": "uniform",
+      "parameters": {
+        "color": {
+          "type": "Color",
+          "r": 0.6,
+          "g": 0.6,
+          "b": 0.6,
+          "a": 1
+        }
+      },
+      "node_position": {
+        "x": -900,
+        "y": 250
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "chipped_roughness",
+      "type": "blend2",
+      "parameters": {
+        "amount1": 1.0,
+        "blend_type1": 0
+      },
+      "node_position": {
+        "x": -650,
+        "y": 200
+      },
+      "seed_int": 0,
+      "generic_size": 1
+    },
+    {
+      "name": "rust_roughness",
+      "type": "uniform",
+      "parameters": {
+        "color": {
+          "type": "Color",
+          "r": 0.86,
+          "g": 0.86,
+          "b": 0.86,
+          "a": 1
+        }
+      },
+      "node_position": {
+        "x": -650,
+        "y": 330
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "finish_roughness",
+      "type": "blend2",
+      "parameters": {
+        "amount1": 0.4,
+        "blend_type1": 0
+      },
+      "node_position": {
+        "x": -350,
+        "y": 200
+      },
+      "seed_int": 0,
+      "generic_size": 1
+    },
+    {
+      "name": "valley",
+      "type": "math",
+      "parameters": {
+        "op": 2,
+        "default_in1": 0.0,
+        "default_in2": 0.28,
+        "clamp": true
+      },
+      "node_position": {
+        "x": -850,
+        "y": -400
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "valley_occlusion",
+      "type": "math",
+      "parameters": {
+        "op": 0,
+        "default_in1": 0.0,
+        "default_in2": 0.72,
+        "clamp": true
+      },
+      "node_position": {
+        "x": -650,
+        "y": -400
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "Material",
+      "type": "material",
+      "node_position": {
+        "x": 0,
+        "y": 0
+      },
+      "seed_int": 0,
+      "export_paths": {},
+      "parameters": {
+        "albedo_color": {
+          "type": "Color",
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        },
+        "ao": 1,
+        "depth_scale": 0.06,
+        "emission_energy": 1,
+        "flags_transparent": false,
+        "metallic": 1,
+        "normal": 1,
+        "roughness": 1,
+        "size": 10,
+        "sss": 0
+      }
+    }
+  ],
+  "connections": [
+    {
+      "from": "bricks3",
+      "from_port": 0,
+      "to": "transform2",
+      "to_port": 0
+    },
+    {
+      "from": "transform2",
+      "from_port": 0,
+      "to": "normal_map2",
+      "to_port": 0
+    },
+    {
+      "from": "transform2",
+      "from_port": 0,
+      "to": "profile_depth",
+      "to_port": 0
+    },
+    {
+      "from": "fbm3_2",
+      "from_port": 0,
+      "to": "colorize_2",
+      "to_port": 0
+    },
+    {
+      "from": "fbm3",
+      "from_port": 0,
+      "to": "colorize_3",
+      "to_port": 0
+    },
+    {
+      "from": "shape",
+      "from_port": 0,
+      "to": "tiler",
+      "to_port": 0
+    },
+    {
+      "from": "tiler",
+      "from_port": 1,
+      "to": "colorize",
+      "to_port": 0
+    },
+    {
+      "from": "colorize",
+      "from_port": 0,
+      "to": "steel_roughness",
+      "to_port": 0
+    },
+    {
+      "from": "fbm3",
+      "from_port": 0,
+      "to": "steel_roughness",
+      "to_port": 1
+    },
+    {
+      "from": "paint_mottle",
+      "from_port": 0,
+      "to": "paint",
+      "to_port": 0
+    },
+    {
+      "from": "streak_noise",
+      "from_port": 0,
+      "to": "streaks",
+      "to_port": 0
+    },
+    {
+      "from": "transform2",
+      "from_port": 0,
+      "to": "flank_low",
+      "to_port": 1
+    },
+    {
+      "from": "transform2",
+      "from_port": 0,
+      "to": "flank",
+      "to_port": 0
+    },
+    {
+      "from": "flank_low",
+      "from_port": 0,
+      "to": "flank",
+      "to_port": 1
+    },
+    {
+      "from": "flank",
+      "from_port": 0,
+      "to": "flank_scaled",
+      "to_port": 0
+    },
+    {
+      "from": "chip_noise",
+      "from_port": 0,
+      "to": "wear",
+      "to_port": 0
+    },
+    {
+      "from": "flank_scaled",
+      "from_port": 0,
+      "to": "wear",
+      "to_port": 1
+    },
+    {
+      "from": "wear",
+      "from_port": 0,
+      "to": "chips",
+      "to_port": 0
+    },
+    {
+      "from": "paint",
+      "from_port": 0,
+      "to": "weathered",
+      "to_port": 0
+    },
+    {
+      "from": "rust",
+      "from_port": 0,
+      "to": "weathered",
+      "to_port": 1
+    },
+    {
+      "from": "streaks",
+      "from_port": 0,
+      "to": "weathered",
+      "to_port": 2
+    },
+    {
+      "from": "weathered",
+      "from_port": 0,
+      "to": "chipped_paint",
+      "to_port": 0
+    },
+    {
+      "from": "colorize_2",
+      "from_port": 0,
+      "to": "chipped_paint",
+      "to_port": 1
+    },
+    {
+      "from": "chips",
+      "from_port": 0,
+      "to": "chipped_paint",
+      "to_port": 2
+    },
+    {
+      "from": "black",
+      "from_port": 0,
+      "to": "chip_metal",
+      "to_port": 0
+    },
+    {
+      "from": "colorize_3",
+      "from_port": 0,
+      "to": "chip_metal",
+      "to_port": 1
+    },
+    {
+      "from": "chips",
+      "from_port": 0,
+      "to": "chip_metal",
+      "to_port": 2
+    },
+    {
+      "from": "paint_roughness",
+      "from_port": 0,
+      "to": "chipped_roughness",
+      "to_port": 0
+    },
+    {
+      "from": "steel_roughness",
+      "from_port": 0,
+      "to": "chipped_roughness",
+      "to_port": 1
+    },
+    {
+      "from": "chips",
+      "from_port": 0,
+      "to": "chipped_roughness",
+      "to_port": 2
+    },
+    {
+      "from": "chipped_roughness",
+      "from_port": 0,
+      "to": "finish_roughness",
+      "to_port": 0
+    },
+    {
+      "from": "rust_roughness",
+      "from_port": 0,
+      "to": "finish_roughness",
+      "to_port": 1
+    },
+    {
+      "from": "streaks",
+      "from_port": 0,
+      "to": "finish_roughness",
+      "to_port": 2
+    },
+    {
+      "from": "transform2",
+      "from_port": 0,
+      "to": "valley",
+      "to_port": 0
+    },
+    {
+      "from": "valley",
+      "from_port": 0,
+      "to": "valley_occlusion",
+      "to_port": 0
+    },
+    {
+      "from": "chipped_paint",
+      "from_port": 0,
+      "to": "Material",
+      "to_port": 0
+    },
+    {
+      "from": "chip_metal",
+      "from_port": 0,
+      "to": "Material",
+      "to_port": 1
+    },
+    {
+      "from": "finish_roughness",
+      "from_port": 0,
+      "to": "Material",
+      "to_port": 2
+    },
+    {
+      "from": "normal_map2",
+      "from_port": 0,
+      "to": "Material",
+      "to_port": 4
+    },
+    {
+      "from": "valley_occlusion",
+      "from_port": 0,
+      "to": "Material",
+      "to_port": 5
+    },
+    {
+      "from": "profile_depth",
+      "from_port": 0,
+      "to": "Material",
+      "to_port": 6
+    }
+  ]
+}

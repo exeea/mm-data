@@ -2491,33 +2491,6 @@
         }
       ]
     },
-    "equipment/library/2eaa09c875b09837d12d": {
-      "triangles": 62,
-      "bareUnit": false,
-      "vertices": 112,
-      "bounds": [
-        [
-          -1.1687702498097727,
-          1.1687702498097727
-        ],
-        [
-          0.0,
-          3.63
-        ],
-        [
-          -1.1687702498097727,
-          1.168770249809773
-        ]
-      ],
-      "sha256": "f05e9929c38ea1a3ef561f9a3150891d9d208f3aa3b12b3ddeb47807c61e51dc",
-      "lods": [
-        {
-          "node": "2eaa09c875b09837d12d-lod0",
-          "triangles": 62,
-          "vertices": 112
-        }
-      ]
-    },
     "equipment/library/c0ddda17b5851860f175": {
       "triangles": 30,
       "bareUnit": false,
@@ -19174,6 +19147,492 @@
           "node": "f23335457324ecc7a7e3-lod0",
           "triangles": 74,
           "vertices": 136
+        }
+      ]
+    },
+    "equipment/library/f6afb1e0a00b1698cd9e": {
+      "triangles": 14,
+      "bareUnit": false,
+      "vertices": 28,
+      "bounds": [
+        [
+          -1.0606601717798214,
+          1.0606601717798214
+        ],
+        [
+          -2.0,
+          0.51
+        ],
+        [
+          -1.0606601717798214,
+          1.0606601717798214
+        ]
+      ],
+      "sha256": "9c86853e75fa7ca3bf59624c73db88e6941845f8cb4a77d630b6e7e93fdd301c",
+      "lods": [
+        {
+          "node": "f6afb1e0a00b1698cd9e-lod0",
+          "triangles": 14,
+          "vertices": 28
+        }
+      ]
+    },
+    "equipment/library/2cdf7aa8adfb3350b7fb": {
+      "triangles": 14,
+      "bareUnit": false,
+      "vertices": 28,
+      "bounds": [
+        [
+          -1.0606601717798214,
+          1.0606601717798214
+        ],
+        [
+          -2.0,
+          3.23
+        ],
+        [
+          -1.0606601717798214,
+          1.0606601717798214
+        ]
+      ],
+      "sha256": "5dec2e9d3659ed99f0b612d9c3aa56440c1f24e1cd62aee3fce1dba1c16b8f42",
+      "lods": [
+        {
+          "node": "2cdf7aa8adfb3350b7fb-lod0",
+          "triangles": 14,
+          "vertices": 28
+        }
+      ]
+    },
+    "equipment/library/1022cc77948ce7890ea8": {
+      "triangles": 14,
+      "bareUnit": false,
+      "vertices": 28,
+      "bounds": [
+        [
+          -1.0606601717798214,
+          1.0606601717798214
+        ],
+        [
+          -2.0,
+          5.63
+        ],
+        [
+          -1.0606601717798212,
+          1.0606601717798212
+        ]
+      ],
+      "sha256": "df92a4fb0c155a1304a9386044378cd2ea312482061582c340dbbdaa7880f33a",
+      "lods": [
+        {
+          "node": "1022cc77948ce7890ea8-lod0",
+          "triangles": 14,
+          "vertices": 28
+        }
+      ]
+    },
+    "equipment/library/7e3088c5ffe426aae73e": {
+      "triangles": 14,
+      "bareUnit": false,
+      "vertices": 28,
+      "bounds": [
+        [
+          -1.0606601717798214,
+          1.0606601717798214
+        ],
+        [
+          -2.0,
+          8.03
+        ],
+        [
+          -1.0606601717798214,
+          1.0606601717798214
+        ]
+      ],
+      "sha256": "78ac2e09ed88cfb9767b24dc55fdd39adfcb1594646d55fe978a386ec3ae7f05",
+      "lods": [
+        {
+          "node": "7e3088c5ffe426aae73e-lod0",
+          "triangles": 14,
+          "vertices": 28
+        }
+      ]
+    },
+    "equipment/library/08dc7797e671af72fde5": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 144,
+      "bounds": [
+        [
+          -2.999199690627557,
+          2.9991996906275573
+        ],
+        [
+          -2.0,
+          0.6
+        ],
+        [
+          -2.9991996906275573,
+          2.9991996906275573
+        ]
+      ],
+      "sha256": "38b1ca69bd24887703a88494a0fb2d4ef16b40c0f5846dc5ef40234431df6e85",
+      "lods": [
+        {
+          "node": "08dc7797e671af72fde5-lod0",
+          "triangles": 68,
+          "vertices": 144
+        }
+      ]
+    },
+    "equipment/library/8cdd4b873236561c2d26": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 144,
+      "bounds": [
+        [
+          -2.999199690627557,
+          2.9991996906275573
+        ],
+        [
+          -2.0,
+          4.0
+        ],
+        [
+          -2.9991996906275573,
+          2.9991996906275573
+        ]
+      ],
+      "sha256": "1a69d871ad97151d19729df1aec4a750c5904509a9a4cd27dd8ce6c81b9d5fd8",
+      "lods": [
+        {
+          "node": "8cdd4b873236561c2d26-lod0",
+          "triangles": 68,
+          "vertices": 144
+        }
+      ]
+    },
+    "equipment/library/feede29a93048bd95882": {
+      "triangles": 88,
+      "bareUnit": false,
+      "vertices": 180,
+      "bounds": [
+        [
+          -2.999199690627557,
+          2.9991996906275573
+        ],
+        [
+          -2.0,
+          7.0
+        ],
+        [
+          -2.9991996906275573,
+          2.9991996906275573
+        ]
+      ],
+      "sha256": "ac352b01838e79b732e46e3b8caaa92a1f3ca90ae662d6a92a7042a3e4abfe6e",
+      "lods": [
+        {
+          "node": "feede29a93048bd95882-lod0",
+          "triangles": 88,
+          "vertices": 180
+        }
+      ]
+    },
+    "equipment/library/0f3b35525369a67d827f": {
+      "triangles": 88,
+      "bareUnit": false,
+      "vertices": 180,
+      "bounds": [
+        [
+          -2.999199690627557,
+          2.9991996906275573
+        ],
+        [
+          -2.0,
+          10.0
+        ],
+        [
+          -2.9991996906275573,
+          2.9991996906275573
+        ]
+      ],
+      "sha256": "fea178cff5efab37a4328c34e51f92c5b9e50b58203326c85b98e9c944a24fd7",
+      "lods": [
+        {
+          "node": "0f3b35525369a67d827f-lod0",
+          "triangles": 88,
+          "vertices": 180
+        }
+      ]
+    },
+    "equipment/library/bb15ba98a41667522cd5": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 112,
+      "bounds": [
+        [
+          -2.8687997040785334,
+          2.8687997040785334
+        ],
+        [
+          0.0,
+          9.03
+        ],
+        [
+          -2.8687997040785334,
+          2.868799704078534
+        ]
+      ],
+      "sha256": "dabcee88511aefad5167c811b8233ee862e99b2229e66e523171bed31fcbdc04",
+      "lods": [
+        {
+          "node": "bb15ba98a41667522cd5-lod0",
+          "triangles": 62,
+          "vertices": 112
+        }
+      ]
+    },
+    "equipment/library/baa30c92bb52a023f7df": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 144,
+      "bounds": [
+        [
+          -3.554607040743771,
+          3.5546070407437713
+        ],
+        [
+          -2.0,
+          0.57
+        ],
+        [
+          -3.5546070407437713,
+          3.5546070407437713
+        ]
+      ],
+      "sha256": "f2f09c334cff7bba706746c642c36b44f5b79fe1feec195bf450f426ac10b668",
+      "lods": [
+        {
+          "node": "baa30c92bb52a023f7df-lod0",
+          "triangles": 68,
+          "vertices": 144
+        }
+      ]
+    },
+    "equipment/library/3857ab0a853bf9e848a1": {
+      "triangles": 68,
+      "bareUnit": false,
+      "vertices": 144,
+      "bounds": [
+        [
+          -3.554607040743771,
+          3.5546070407437713
+        ],
+        [
+          -2.0,
+          3.8000000000000003
+        ],
+        [
+          -3.5546070407437713,
+          3.5546070407437713
+        ]
+      ],
+      "sha256": "474904917360d195f804a0d9ea511072c847834b6c9aa4fe06e8b47c94714368",
+      "lods": [
+        {
+          "node": "3857ab0a853bf9e848a1-lod0",
+          "triangles": 68,
+          "vertices": 144
+        }
+      ]
+    },
+    "equipment/library/ebe5a06de767e727ab0f": {
+      "triangles": 88,
+      "bareUnit": false,
+      "vertices": 180,
+      "bounds": [
+        [
+          -3.554607040743771,
+          3.5546070407437713
+        ],
+        [
+          -2.0,
+          6.6499999999999995
+        ],
+        [
+          -3.5546070407437713,
+          3.5546070407437713
+        ]
+      ],
+      "sha256": "c8596023ab8d72a69c0a589a9d0a18aaeea329e07045c251e3d86d3747ff2288",
+      "lods": [
+        {
+          "node": "ebe5a06de767e727ab0f-lod0",
+          "triangles": 88,
+          "vertices": 180
+        }
+      ]
+    },
+    "equipment/library/469f52b3f9033ca9606c": {
+      "triangles": 88,
+      "bareUnit": false,
+      "vertices": 180,
+      "bounds": [
+        [
+          -3.554607040743771,
+          3.5546070407437713
+        ],
+        [
+          -2.0,
+          9.5
+        ],
+        [
+          -3.5546070407437713,
+          3.5546070407437713
+        ]
+      ],
+      "sha256": "3b597cb922215a9218789d1f5e2ddd9e8b5d5892c4d1399624cef24158da1270",
+      "lods": [
+        {
+          "node": "469f52b3f9033ca9606c-lod0",
+          "triangles": 88,
+          "vertices": 180
+        }
+      ]
+    },
+    "equipment/library/471129956b5cf9254aad": {
+      "triangles": 62,
+      "bareUnit": false,
+      "vertices": 112,
+      "bounds": [
+        [
+          -3.4000589085375204,
+          3.400058908537521
+        ],
+        [
+          0.0,
+          8.58
+        ],
+        [
+          -3.4000589085375204,
+          3.400058908537521
+        ]
+      ],
+      "sha256": "0e2aac742aecfe6ab9e2272d32d0f6ee12183bfc5563e20b7428cadb6206f1a1",
+      "lods": [
+        {
+          "node": "471129956b5cf9254aad-lod0",
+          "triangles": 62,
+          "vertices": 112
+        }
+      ]
+    },
+    "equipment/library/201432782f796c4463b0": {
+      "triangles": 14,
+      "bareUnit": false,
+      "vertices": 28,
+      "bounds": [
+        [
+          -0.49497474683058335,
+          0.4949747468305833
+        ],
+        [
+          -2.0,
+          0.21
+        ],
+        [
+          -0.4949747468305833,
+          0.49497474683058335
+        ]
+      ],
+      "sha256": "a5d917606c9206de7bd9dc60cd24b422f302992c1a4bbac3a975789ef86158cb",
+      "lods": [
+        {
+          "node": "201432782f796c4463b0-lod0",
+          "triangles": 14,
+          "vertices": 28
+        }
+      ]
+    },
+    "equipment/library/14f8d8e81801267599ea": {
+      "triangles": 14,
+      "bareUnit": false,
+      "vertices": 28,
+      "bounds": [
+        [
+          -0.49497474683058335,
+          0.4949747468305833
+        ],
+        [
+          -2.0,
+          1.2300000000000002
+        ],
+        [
+          -0.4949747468305833,
+          0.49497474683058335
+        ]
+      ],
+      "sha256": "6cbbee23293fc8333fdea4b974fc64a8e98023b3ff46451edafb2eb5e41dd13c",
+      "lods": [
+        {
+          "node": "14f8d8e81801267599ea-lod0",
+          "triangles": 14,
+          "vertices": 28
+        }
+      ]
+    },
+    "equipment/library/dd8a2b331be09e878789": {
+      "triangles": 14,
+      "bareUnit": false,
+      "vertices": 28,
+      "bounds": [
+        [
+          -0.49497474683058335,
+          0.4949747468305833
+        ],
+        [
+          -2.0,
+          2.1299999999999994
+        ],
+        [
+          -0.4949747468305833,
+          0.49497474683058335
+        ]
+      ],
+      "sha256": "27b47fc42f7d04bfbba7046d83f47fb2e5308b5f35d5eaef8f3e1fbd73bc18e6",
+      "lods": [
+        {
+          "node": "dd8a2b331be09e878789-lod0",
+          "triangles": 14,
+          "vertices": 28
+        }
+      ]
+    },
+    "equipment/library/981559d0dfde04ba78b3": {
+      "triangles": 14,
+      "bareUnit": false,
+      "vertices": 28,
+      "bounds": [
+        [
+          -0.49497474683058335,
+          0.4949747468305833
+        ],
+        [
+          -2.0,
+          3.03
+        ],
+        [
+          -0.4949747468305833,
+          0.49497474683058335
+        ]
+      ],
+      "sha256": "b9ba2310e3df501dd37f977138ad76c6a9bc979cfa8b517b152cd727685a97b0",
+      "lods": [
+        {
+          "node": "981559d0dfde04ba78b3-lod0",
+          "triangles": 14,
+          "vertices": 28
         }
       ]
     }

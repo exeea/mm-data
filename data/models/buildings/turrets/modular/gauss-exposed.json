@@ -1,0 +1,45 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "ballistic",
+  "mesh": "gauss-exposed.glb",
+  "bounds": {
+    "min": [
+      -4.050000190734863,
+      -1.3412108421325684,
+      0.0
+    ],
+    "max": [
+      4.050000190734863,
+      35.0,
+      10.549511909484863
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim",
+    "elevation": "aim",
+    "recoil": "recoil"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "muzzle-0",
+      "node": "recoil",
+      "position": [
+        0,
+        30.1,
+        0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "muzzle",
+      "effect": "bullet"
+    }
+  ]
+}

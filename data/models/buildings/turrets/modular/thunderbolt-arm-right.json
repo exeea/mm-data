@@ -1,0 +1,44 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "missile",
+  "mesh": "thunderbolt-arm-right.glb",
+  "bounds": {
+    "min": [
+      -0.8999999761581421,
+      -5.099999904632568,
+      -1.7000000476837158
+    ],
+    "max": [
+      6.300000190734863,
+      5.150000095367432,
+      1.9952855110168457
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim",
+    "elevation": "aim"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "launcher-0",
+      "node": "aim",
+      "position": [
+        0.0,
+        5.119999999999999,
+        0.0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    }
+  ]
+}

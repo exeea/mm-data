@@ -1,0 +1,83 @@
+{
+  "schema": 2,
+  "kind": "body",
+  "family": "building-turret",
+  "mesh": "head-casemate-twin.glb",
+  "bounds": {
+    "min": [
+      -11.5,
+      -2.0999999046325684,
+      -8.100000381469727
+    ],
+    "max": [
+      11.5,
+      5.565000534057617,
+      8.5
+    ]
+  },
+  "rig": "building-casemate-v1",
+  "joints": {
+    "root": "root",
+    "turret": "yaw"
+  },
+  "locations": {},
+  "hardpoints": [
+    {
+      "id": "left",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        -3.9000000953674316,
+        4.199999809265137,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        5.6,
+        30,
+        4.6
+      ],
+      "minScale": 0.35,
+      "maxScale": 1,
+      "roles": [
+        "weapon",
+        "misc"
+      ]
+    },
+    {
+      "id": "right",
+      "location": "*",
+      "side": "front",
+      "node": "yaw",
+      "position": [
+        3.9000000953674316,
+        4.199999809265137,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        5.6,
+        30,
+        4.6
+      ],
+      "minScale": 0.35,
+      "maxScale": 1,
+      "roles": [
+        "weapon",
+        "misc"
+      ]
+    }
+  ],
+  "emitters": []
+}

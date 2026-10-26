@@ -1,0 +1,172 @@
+{
+  "schema": 2,
+  "kind": "equipment",
+  "family": "missile",
+  "mesh": "atm-9-arm-right.glb",
+  "bounds": {
+    "min": [
+      -0.8999999761581421,
+      -4.300000190734863,
+      -2.2899999618530273
+    ],
+    "max": [
+      7.550000190734863,
+      4.34999942779541,
+      2.509000062942505
+    ]
+  },
+  "rig": "equipment-v1",
+  "joints": {
+    "root": "module",
+    "aim": "aim",
+    "elevation": "aim"
+  },
+  "locations": {},
+  "hardpoints": [],
+  "emitters": [
+    {
+      "id": "launcher-0",
+      "node": "aim",
+      "position": [
+        -1.25,
+        4.319999999999999,
+        1.25
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-1",
+      "node": "aim",
+      "position": [
+        0.0,
+        4.319999999999999,
+        1.25
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-2",
+      "node": "aim",
+      "position": [
+        1.25,
+        4.319999999999999,
+        1.25
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-3",
+      "node": "aim",
+      "position": [
+        -1.25,
+        4.319999999999999,
+        0.0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-4",
+      "node": "aim",
+      "position": [
+        0.0,
+        4.319999999999999,
+        0.0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-5",
+      "node": "aim",
+      "position": [
+        1.25,
+        4.319999999999999,
+        0.0
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-6",
+      "node": "aim",
+      "position": [
+        -1.25,
+        4.319999999999999,
+        -1.25
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-7",
+      "node": "aim",
+      "position": [
+        0.0,
+        4.319999999999999,
+        -1.25
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    },
+    {
+      "id": "launcher-8",
+      "node": "aim",
+      "position": [
+        1.25,
+        4.319999999999999,
+        -1.25
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "role": "launcher",
+      "effect": "missile"
+    }
+  ]
+}

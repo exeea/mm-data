@@ -17,7 +17,7 @@
         "y": 214
       },
       "title": "About this material",
-      "text": "Turret material: abraded bare steel with paint flecks, on bevels, from a photographic study, built from sources/ (pigment and the 16-bit height fields). The turret models' UVs set the area one repeat covers. They tile seamlessly: keep them so. Relief is the heightmap's height range as a percentage of the repeat; the normals round it to a whole code of the heightmap (Relief x 25.5), so keep it a multiple of 10 / 255 (0.0392), and set the Material node's Depth scale to Relief / 25 (tools/materials/README.md). The ...PNG8 groups and the nodes after them only store exact file values; leave them. Export with tools/materials/export.py (or File > Export material > Godot > Godot 4 Standard into data/models/board/textures/structures/turret), then Reload assets in the game's Tuning panel.",
+      "text": "Turret material: abraded bare steel with paint flecks, on the bevelled corners, from a photographic study, built from sources/ (pigment and the 16-bit height fields). The turret models' UVs set the area one repeat covers. They tile seamlessly: keep them so. Relief is the heightmap's height range as a percentage of the repeat; the normals round it to a whole code of the heightmap (Relief x 25.5), so keep it a multiple of 10 / 255 (0.0392), and set the Material node's Depth scale to Relief / 25 (tools/materials/README.md). The ...PNG8 groups and the nodes after them only store exact file values; leave them. Export with tools/materials/export.py (or File > Export material > Godot > Godot 4 Standard into data/models/board/textures/structures/turret), then Reload assets in the game's Tuning panel.",
       "color": {
         "type": "Color",
         "r": 0.14,
@@ -926,8 +926,8 @@
       "label": "SurfaceResponse",
       "type": "graph",
       "parameters": {
-        "ReliefPercent": 0.1568627450980392,
-        "BaseRoughness": 0.5,
+        "ReliefPercent": 0.0784313725490196,
+        "BaseRoughness": 0.42,
         "HeightRoughness": 0.12,
         "CavityStrength": 1.7
       },
@@ -2581,10 +2581,10 @@
           "a": 1
         },
         "ao": 1,
-        "depth_scale": 0.006274509803921568,
+        "depth_scale": 0.003137254901960784,
         "emission_energy": 1.0,
         "flags_transparent": false,
-        "metallic": 0.8,
+        "metallic": 0.85,
         "normal": 1,
         "roughness": 1.0,
         "size": 9,
