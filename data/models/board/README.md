@@ -755,7 +755,9 @@ also used built-in image_gen. Only the 128 by 128 runtime maps are shipped.
 
 ## Plant GLB packaging
 
-Each of the 22 plant variants has one GLB, for example `pine.glb`, containing
+The plant GLBs (trees, palms, cacti, orchard trees and foliage) are in `vegetation/`; their ids stay bare (`pine`, as
+boards and code name them), and `BoardModelBounds.file` finds a bare id there when the board root has no such file.
+Each of the 22 plant variants has one GLB, for example `vegetation/pine.glb`, containing
 identity groups `pine-lod0`, `pine-lod1`, `pine-lod2` and the impostor `pine-lod3`. Their authored geometry,
 UVs and material roles are preserved. The runtime chooses one level and resolves
 missing optional levels toward LOD0 once while loading. Foliage PNGs are
