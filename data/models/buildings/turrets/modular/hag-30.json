@@ -6,31 +6,87 @@
   "bounds": {
     "min": [
       -2.634999990463257,
-      0.0,
+      -6.130804538726807,
       -2.325000047683716
     ],
     "max": [
       2.634999990463257,
-      21.5,
-      2.325000047683716
+      28.200000762939453,
+      3.4092931747436523
     ]
   },
   "rig": "equipment-v1",
   "joints": {
     "root": "module",
     "aim": "aim",
+    "elevation": "aim",
     "recoil": "recoil",
     "spin": "spin"
   },
   "locations": {},
-  "hardpoints": [],
+  "hardpoints": [
+    {
+      "id": "trunnion",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        2.540000057220459,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "face",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        0,
+        6.7,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
   "emitters": [
     {
       "id": "muzzle-0",
       "node": "spin",
       "position": [
         -0.55,
-        21.5,
+        28.2,
         0.55
       ],
       "direction": [
@@ -46,7 +102,7 @@
       "node": "spin",
       "position": [
         -0.55,
-        21.5,
+        28.2,
         -0.55
       ],
       "direction": [
@@ -62,7 +118,7 @@
       "node": "spin",
       "position": [
         0.55,
-        21.5,
+        28.2,
         0.55
       ],
       "direction": [
@@ -78,7 +134,7 @@
       "node": "spin",
       "position": [
         0.55,
-        21.5,
+        28.2,
         -0.55
       ],
       "direction": [

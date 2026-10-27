@@ -5,31 +5,87 @@
   "mesh": "autocannon-compact.glb",
   "bounds": {
     "min": [
-      -2.00600004196167,
-      0.0,
-      -1.7699999809265137
+      -2.1999998092651367,
+      -4.519999980926514,
+      -1.9299999475479126
     ],
     "max": [
-      2.00600004196167,
-      10.5,
-      1.7699999809265137
+      2.1999998092651367,
+      16.0,
+      2.9739999771118164
     ]
   },
   "rig": "equipment-v1",
   "joints": {
     "root": "module",
     "aim": "aim",
+    "elevation": "aim",
     "recoil": "recoil"
   },
   "locations": {},
-  "hardpoints": [],
+  "hardpoints": [
+    {
+      "id": "trunnion",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        2.1999999046325684,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "face",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        0,
+        5.5,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
   "emitters": [
     {
       "id": "muzzle-0",
       "node": "recoil",
       "position": [
         0,
-        10.5,
+        16.0,
         0
       ],
       "direction": [

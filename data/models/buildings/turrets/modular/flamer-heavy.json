@@ -5,30 +5,86 @@
   "mesh": "flamer-heavy.glb",
   "bounds": {
     "min": [
-      -0.6720000505447388,
-      0.0,
-      -0.6720000505447388
+      -1.1815999746322632,
+      -2.200000047683716,
+      -0.949999988079071
     ],
     "max": [
-      0.6720000505447388,
-      4.920000076293945,
-      0.6720000505447388
+      1.1815999746322632,
+      6.920000076293945,
+      1.2120000123977661
     ]
   },
   "rig": "equipment-v1",
   "joints": {
     "root": "module",
-    "aim": "aim"
+    "aim": "aim",
+    "elevation": "aim"
   },
   "locations": {},
-  "hardpoints": [],
+  "hardpoints": [
+    {
+      "id": "trunnion",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        1.1815999507904054,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "face",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        0,
+        2.0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
   "emitters": [
     {
       "id": "muzzle-0",
       "node": "aim",
       "position": [
         0,
-        4.919999999999999,
+        6.919999999999999,
         0
       ],
       "direction": [

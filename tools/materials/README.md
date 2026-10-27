@@ -118,7 +118,8 @@ scorch build their own roughness.
 elevator's lift, container fittings, the cargo crate's metal), `iron` (cast parts: the lift's hubs
 and clevises, the cargo crate's corner castings), `corrugated` (painted corrugated steel for the
 light walls and the seaport containers), `chrome` (hydraulic rods and axles), `hazard-stripes`,
-`safety-yellow` (heavy machinery's paint, lightly chipped: models add wear where it gathers) and `tread-plate`. The cargo crate's maps are baked
+`safety-yellow` (heavy machinery's paint, lightly chipped: models add wear where it gathers) and `diamond-plate`
+(steel diamond plate: the layered walls' decks, the Solaris elevator's platform and pit). The cargo crate's maps are baked
 from steel, iron and the hazard stripes. The corrugated paint is near white: each model tints it
 with its vertex colours or colour slots (the light walls keep it light grey).
 

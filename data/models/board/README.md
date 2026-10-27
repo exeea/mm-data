@@ -4,6 +4,26 @@ This directory is the libGDX board's independent art source. Runtime never reads
 terrain or water from the 2D board's images directory. The Java build stages this
 directory with the game's data. Blender is an authoring dependency only.
 
+## Model ids
+
+A model's id is its path here without `.glb` (`vegetation/pine`, `scenery/military/cargo-crate`): the game, its code,
+the editor and the catalogues name models by it. Models live in folders, none at this root. `uids.json` gives each
+model a stable, opaque id, never reused, for saved boards alone: a `.board2` stores a model's path and its id and loads
+it by its id (`BoardModelIds`), so a board saved before a model moved still finds it. Move or rename a model with
+`tools/move_model.py <path> <new path>`: it rewrites the model's texture paths, keeps its id (its line now names the new
+path) and renames its manifest entries; `tools/move_model.py --stamp` gives new models their ids.
+`BoardModelIdsTest` fails while an id names no model or a model has no id: update a moved model's line, never give it a
+new id. A tree's winter form `<path>-snow` without a file of its own is its bare species' file in its `snow` variant. A
+model's levels are its root groups named `...-lod0` to `...-lod3`: only the ending counts, so `teapot.glb` may hold
+`a-lod0` and `a-lod1`. Authored scenery may hold two more root groups, which the game reads as data: `cut`, triangles
+of the ground it digs out of its hex (in Enhanced the hex's top gives way over them and they become the ground there),
+and `stands`, empties where troops resting in its hex stand (`stand-N`, N the formation slot), facing their +Y, where a
+platoon's transports park (`vehicle-N`) and where a tank waits to go hull down (`hide-N`). A model whose pieces show
+one by one names them `part-N`, both its level nodes and the `cut` children: the game shows the parts a hex needs.
+The model draws its own floor and walls and stands on its hex's ground as it was before the cut. The manifests,
+`tools/board-models/manifest.json` and `tools/board-models/building-manifest.json` (the Saxarba buildings), are tool
+data: budgets, levels and sources keyed by these paths. They are not shipped and the game does not read them.
+
 ## Scenery folders
 
 Scenery meshes live in topic folders under `scenery/`, with kebab-case names:
@@ -11,21 +31,21 @@ Scenery meshes live in topic folders under `scenery/`, with kebab-case names:
 | Folder | Contents |
 |---|---|
 | `roofs/` | rooftop objects: bevel, ledge, roof grille, chimney stack, skylight, glass roof and dome, landing beacons |
-| `parks/` | bench, picnic table, garden bed, pillar, hex plaza, fountain, plaza variants, formal gardens, grandstand |
+| `parks/` | bench, picnic table, garden bed, pillar, hex plaza, fountain, plaza variants, formal gardens, grandstand; `tree-cluster-1`-`5.png`, the tree-cluster stamps' thumbnails, rendered from their rows |
 | `pools/` | sport pools (deck, main and wading basins), rectangular, round and freeform pools; a pond is a pool in pond colours |
 | `vehicles/` | the car (its paint is a colour slot), parking barrier, parking shelters |
-| `road/` | stop sign, three-aspect pole signal and curved mast-arm signal gantry; facing +Y with pole bases at Z=0; generated road-junction controls |
+| `road/` | stop sign, three-aspect pole signal and curved mast-arm signal gantry; facing +Y with pole bases at Z=0; generated road-junction controls; `roadside-trees.png`, the roadside-trees stamp's thumbnail, rendered from its rows over its half-transparent road |
 | `construction/` | crawler crane, bulldozer, concrete debris, excavation site, concrete pipe |
 | `farm/` | one mesh per animal and pose: cow, pig, horse, bison, hen and rooster; coats are colour slots |
-| `seaport/` | the legacy container rows, gantry cranes and crane tips, decoded no more: objects of `.board2` files written before batch 12 |
 | `seaport/yard/` | the container yard looks' ten compositions (`yard/<name>` in `layouts.json`) and the ten seaport props |
 | `maglev/` | route marker (the only rail mesh), station platform, city and colony vehicles, the city gangway coupler; `train.png` and `colony-train.png` are the stamps' thumbnails |
-| `military/` | orbital gun, fortification, the trench of a dug-in platoon, an olive container of cargo set down on the ground |
+| `military/` | orbital gun, fortification (dug, and sandbags where paved), the trench of a dug-in platoon, an olive container of cargo set down on the ground |
 | `rubble/` | a collapsed building by structure type, and (`-path`) its hex cleared: the debris collected into heaps, the salvage stacked |
 | `geysers/` | dormant and erupting water geysers, magma geyser |
 
-No mesh sits at a legacy key. A legacy key is `scenery/<tileset image path
-without extension>`; it resolves only through `scenery/layouts.json`, so that
+No mesh sits at a legacy key. A legacy key is `scenery/<2D tileset image path
+without extension>`, which the Classic tileset names for the token it stands for
+(`classic/`); it resolves only through `scenery/layouts.json`, so that
 file is the complete legacy-to-mesh mapping. Its `yard/<name>` keys are no legacy
 keys: they are the container yard looks' compositions, which a hex's woods draw.
 A key that was one GLB at the base is a one-row entry at the origin on its
@@ -284,7 +304,7 @@ decal id of `decals/decals.json`: runway, landing pads, letters, courts, rails),
 its art (the blueprint variant whose `selectors` equal the token: `ground/blend/*` transitions at strength
 exits/6, `road/rounded`, `road/horizontal`, `woods/orchard`, `rough/obstacles`, `rough/felled-trees`, the 55
 `building/legacy-art-N` building art designs, or the asset variant of the building model chosen beside the art),
-or nothing (the transparent wildcard `saxarba/misc/blank.png`, `bldg_fluff:0`, quay art the fitted quay wall
+or nothing (the transparent wildcard `classic/tileset/blank.png`, `bldg_fluff:0`, quay art the fitted quay wall
 replaces). Elevator plates and the cleared-rubble gravel stay rows of their rule terrain (below).
 
 `scenery/layouts.json` and the meshes and decals it names are edited directly. The heli pads
@@ -313,12 +333,12 @@ mipmaps do not darken edges. The groups:
 | `landing-pads/` | `vtol-`, `medic-`, `aero-`, `aero-lit-` each `concrete` and `asphalt` (72 x 72); `dropship-`, `dropship-ring-` each `concrete` and `asphalt` (144 x 144); `heli-pad` (60 x 60) | one-hex pads cut 1:1 from the -01 sprites; DropShip pads stitched from their 7 pieces as the emblems; the heli pad redrawn flat |
 | `lettering/` | `letter-a` ... `letter-z`, `digit-0` ... `digit-9` (40 x 40) | the upright black sprite's shape, 4x bicubic, blurred and re-sharpened, white: the object's paint colour (`size` entry `"colour": "#ffffff"`) multiplies it |
 | `sport/` | `tennis-court-green`, `-blue` (33 x 63); `basketball-court-green`, `-blue` (39 x 71) | redrawn at 8 image px per model px, 0.75 px lines |
-| `elevator/` | `level-minus-10` ... `level-minus-1`, `level-0` ... `level-10` (84 x 72) | copies of `images/hexes/saxarba/misc/elevator_<n>.png`; rows of the elevator's rule terrain, not palette decals |
+| `elevator/` | `level-minus-10` ... `level-minus-1`, `level-0` ... `level-10` (665 x 576) | an up-and-down arrow and the level, painted by `tools/decals/elevator_levels.py` at 8 image px per model px in Exo 2 Bold (`data/fonts`, OFL), worn white paint at 95 %, over the elevator platform's diamond plate; rows of the elevator's rule terrain, not palette decals |
 | `rail/` | `level-crossing` (16 x 27) | retained for standalone authored artwork; native crossings use the continuous road and embedded rails |
 
-The 2D tileset's ground-symbol pieces and their copies under `tileset/` stay for
-the 2D board, which draws a converted board's kept tokens, and for the conversion,
-which matches the `tileset/` copy; the palette uses the decals here.
+The 2D tileset's ground-symbol pieces stay for the 2D board, which draws a
+converted board's kept tokens; the conversion matches the Classic tileset's
+`decal/` keys; the palette uses the decals here.
 
 `decals/decals.json`:
 
@@ -351,7 +371,8 @@ which matches the `tileset/` copy; the palette uses the decals here.
   native scale, including the suburb and maglev compositions; suburb2's closely
   parked trio is spaced farther apart to clear the larger bodies.
 - `legacy`: old decal ids, which are also the legacy tileset images
-  (`decal/` + the tileset image path without extension; `.board2` files saved
+  (`decal/` + the 2D tileset image path without extension, the Classic tileset's
+  key for the token; `.board2` files saved
   before this change use them). `scale` (default 1) and `rotation` (default 0,
   CCW degrees) are the new decal's transform at the old object's position.
   `"set": true` marks a piece of a ground symbol's 7-hex set: import places ONE
@@ -454,8 +475,7 @@ Palette rules, checked by `BoardSceneryDecodeDataTest`:
   outline"; group "Legacy building art"), each with the `selectors` of the
   legacy token it stands for.
 
-The 78 legacy seaport pieces are off the palette; objects of `.board2` files written
-before batch 12 keep them and their labels. Industry > Seaport holds the container
+Industry > Seaport holds the container
 yard looks and the ten `seaport/yard/` props; import gives a hex with container yard
 or quay crane art the container yard look of its woods at its rotation. Imported and placed trees store their
 bare species; the renderer draws the `-snow` form on a snow surface unless the
@@ -467,7 +487,7 @@ the six `orchard-*`, `pine`, `pine-broad`, `pine-slender`, `pine-layered`,
 `birch-young`, `tree-slender`, `tree` and `birch-tall`. Their materials' extras
 `mmVariants.snow` give the snow canopy material and textures, a linear factor on
 the crown's vertex colours (the snow cards drop the species' pigment) and the
-winter impostor's texture and card colours; `manifest.json` points their `-snow`
+winter impostor's texture and card colours; the manifest points their `-snow`
 entry at the bare file (`"variant": "snow"`). The runtime builds the winter form
 from it (`RigidGlb.source`). `pine-tall`, `tree-dead`, `willow`, `tree-forked` and
 `foliage-snow` keep their own winter GLB: their snow geometry or bark differs.
@@ -510,18 +530,35 @@ no rock or scatter geometry is generated in-game.
 
 ## Contents and editing
 
-- `tileset/saxarba.tileset`: the forced 3D tileset, with all recursive includes
-  and referenced images, including references outside the Saxarba subdirectory.
-  The 7,295 files are independent copies. Edit these without affecting 2D.
+- `classic/`: the Classic graphics' art and its tileset, used whatever the player's 2D
+  tileset (edit it without affecting 2D). `tileset/classic.tileset` holds the rules in
+  one file (the 2D tilesets' format, read in order); the art lies by kind in
+  `terrain/` (ground, themes, water and liquid animations, pavement, transitions),
+  `vegetation/`, `effects/` (fire, smoke, limbs) and `scenery/` (terrain-owned sprites
+  at their layout keys), with the wildcards' transparent `tileset/blank.png`. Each
+  image is the level-0 art; `tileset/levels.json` names each ground image's recipe,
+  which turns it for the hex's level as the old per-level copies were: a hue turn and
+  saturation and value curves, `1 - (1 - x)^k`, from the recipe's table (levels -3 to
+  10, fitted to those copies). A level past the table starts from its nearest end and
+  adds the recipe's formula, `up` and `down` rates per level eased as Enhanced eases
+  heights (`ease`); an empty table leaves the formula alone. Marks, cracks and grass
+  tufts can take their own recipe, and fungus ground keeps its own level-0 art.
+  Entries for art the 3D board never draws name a key
+  instead of an image (`buildings/`, `scenery/`, `decal/`, `quay/`, and `route` for
+  roads, `bridge` for bridges, `design` for container yards, `water` for water and
+  rapids, which show the water animation (tinted or toned; frozen, its still first
+  frame under Enhanced's ice), `space` for transparent space and `magma` for molten
+  magma, whose animated surface covers its column); roads, rails, bridges and drops
+  have no art here, since the 3D board draws its own in both graphics.
 - `buildings/`: 3,295 structure models with roofs derived from the exact selected
   tile image. Simplified outlines retain diagonal walls, curves, disconnected
   parts and courtyards; no runtime pixel extrusion or generic substitutions.
-- `building-manifest.json`: each structure's source, facade family, wall tint,
+- `tools/board-models/building-manifest.json`: each structure's source, facade family, wall tint,
   outline, vertex and triangle counts. The largest has 499 triangles. Fuel tanks
   and industrial structures use their selected Saxarba artwork too; there are no
   generic cylinder/factory substitutes.
 - `field.glb` and foliage GLB files. Counts and the imported Blender source
-  names are in `manifest.json`. Bridge spans are generated at runtime;
+  names are in `tools/board-models/manifest.json`. Bridge spans are generated at runtime;
   reusable terminal and pier kits remain GLBs.
 - Each tree GLB contains `-lod0`, `-lod1`, and `-lod2` groups, with budgets
   of 480, 240 and 96 triangles including explicit back faces. Sixteen leafy
@@ -599,12 +636,13 @@ no rock or scatter geometry is generated in-game.
   `tools/materials/terrain/surfaces/` generate them; their relief is an artistic
   estimate, not a measured scan. See `tools/terrain-realism/README.md` for the
   stone sources and visual references.
-- Liquid artwork comes from this directory's own `tileset/saxarba/anim_water_N.gif`,
-  `theme_mars/water_anim_mars_N.gif`, `theme_volcano/water_anim_volcano_N.gif`,
-  `base/base_magma_anim_N.gif`, and `water/rapids_anim.gif` / `water/torrent_anim.gif`.
-  The latter paths are relative to `tileset/saxarba/`. All are independent copies
-  of the original 32-frame, 3.2-second animations. The runtime selects these
-  images, so they stay even where the static tileset omits them.
+- Liquid artwork comes from `classic/terrain/water/anim_water_N.gif`,
+  `classic/terrain/ground/base_magma_anim.gif`, and `classic/terrain/water/rapids_anim.gif` /
+  `torrent_anim.gif`, copies of the original 32-frame, 3.2-second animations. Mars
+  and volcano water play the water animation in their theme's tone (`BoardLiquid.Tone`),
+  hazardous liquid tinted green. The
+  runtime selects these images (`BoardLiquid.textures`), so they stay even where
+  the tileset omits them.
   `GpuWaterShader.USE_PROCEDURAL_WATER` selects shader-generated water patterns
   and palettes matched to this artwork, using the renderer's shared noise field.
   Set it to `false` and rebuild for the authored water GIFs. Both paths share
@@ -617,14 +655,9 @@ no rock or scatter geometry is generated in-game.
   `Structured_Water` art is a shoreline reference, not a baked replacement.
   Two nonadjacent water openings form a continuous channel. Elevation drops
   use vertically scrolling, animated water on the waterfall face.
-- Exposed top edges reuse the single south-facing `08` patches under
-  `tileset/High_Incline/`, oriented per edge. Edit these to change cliff-top
-  detail without affecting 2D. The renderer avoids mixing their baked lighting
-  with the brighter north-facing variants and leaves road approaches open.
-  `normals/High_Incline/` supplies their matching normal maps. Runtime rotates
-  these directions with the edge, combines color and normals with the ground
-  before lighting, and caches the resulting paired atlas material. The source
-  images remain separate. Riverbanks keep the undecorated ground artwork.
+- A Classic column's exposed top edges take the lightness masks
+  `textures/terrain/classic/incline-dark` (drops up to two levels) and
+  `high-incline-dark`, oriented per edge, leaving road approaches open.
 
 Each building GLB embeds its processed RGB roof texture: the source roof's opaque
 pixels at their UV locations, with RGB extended only outside the roof mask to
@@ -656,7 +689,7 @@ The deck uses shared road asphalt and the road's normal/surface maps, lighting
 and world-space texture phase. Sides and underside use shared repeating concrete.
 
 Two concrete kits complete the deck; each is a set of root meshes named `<part>-lod0`/`-lod1`, outside
-`manifest.json`. `bridge-terminal.glb` is the bank end block. `bridges/bridge-pier.glb` is the hammerhead
+the manifest. `bridges/bridge-terminal.glb` is the bank end block. `bridges/bridge-pier.glb` is the hammerhead
 pier that stands under a deck joint, on the edge two bridge hexes share, never at a hex centre (56 triangles
 at LOD0, 40 at LOD1). Its origin is the edge midpoint; X runs along the edge (across the deck), Y along the
 deck. Three parts keep the pier undistorted at any height: `bridge-pier-cap` (17 by 9, Z=0 at the deck
@@ -676,29 +709,7 @@ Textures and meshes are shared;
 translucency changes instance materials, not the assets. Snow trees have their
 own snow materials, as variants of the bare tree where it shares their shape.
 Rough terrain places the shared GLB rock templates in its terrain mesh.
-Ground image normal maps remain a separate surface detail. `normals/` mirrors ground image paths
-under `tileset/`, appending `.png` to the complete source name (including its
-original extension and any crop). Runtime selects each map through the chosen
-albedo image and composites both in the same order, then packs aligned atlases.
-No height estimation or normal-map generation runs in the game. Missing maps
-for custom art fall back to flat shading.
-
-The maps hold constant normals over alternating 4-pixel triangles, baked from the
-albedo's smoothed, alpha-weighted brightness. Painted brightness
-is only an approximation to height; baked highlights can also produce relief.
-Rubble/rough use the strongest relief, rocky themes are next, and grass, dirt,
-sand, snow, mud/swamp, tundra, fields and ice use gentler detail. Pavement and
-paved roads have neutral maps, including their opaque coverage over grass.
-South-edge cliff-top patches use restrained relief at strength 3. Their alpha
-masks control both color and normal coverage; reoriented normal mapping retains
-the base relief under the rim. These derived maps retain the same limitation as
-other painted sources: authored height/normal maps would give more accurate
-relief. Missing custom rim normals preserve the base normal map.
-F9 opens Tuning, where the Normal maps checkbox switches this shading live.
-It starts enabled, and Defaults re-enables it; switching needs no atlas,
-geometry or shadow rebuild.
-Animated water keeps its separate rendering. These maps affect ground lighting
-and bank slopes, not silhouettes, picking, movement or cast-shadow geometry.
+Enhanced draws its own ground materials; the Classic art has no normal maps.
 
 ## Materials
 
@@ -708,7 +719,8 @@ metallic), `NAME_normal.png` (OpenGL convention), `NAME_heightmap.png`, `NAME_em
 Models name these maps directly. `textures/materials.json` sorts the materials: loose ones repeat across the board
 at a fixed texel density, so a wider export covers more ground before repeating; constrained ones fit their
 footprint. `tools/materials/README.md` describes the export, and megamek's `docs/gpu-board-materials.md` how the
-game reads the files.
+game reads the files. `scenery/fortified-sandbag` is made from two photographic studies instead
+(`tools/board-models/military/sandbag_atlas.py`, its studies in `sources/` beside it), into the same files.
 
 ## Editing and checks
 
@@ -755,8 +767,6 @@ also used built-in image_gen. Only the 128 by 128 runtime maps are shipped.
 
 ## Plant GLB packaging
 
-The plant GLBs (trees, palms, cacti, orchard trees and foliage) are in `vegetation/`; their ids stay bare (`pine`, as
-boards and code name them), and `BoardModelBounds.file` finds a bare id there when the board root has no such file.
 Each of the 22 plant variants has one GLB, for example `vegetation/pine.glb`, containing
 identity groups `pine-lod0`, `pine-lod1`, `pine-lod2` and the impostor `pine-lod3`. Their authored geometry,
 UVs and material roles are preserved. The runtime chooses one level and resolves

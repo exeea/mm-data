@@ -34,7 +34,7 @@
           {
             "id": "icon-1",
             "kind": "prop",
-            "asset": "pine-tall",
+            "asset": "vegetation/pine-tall",
             "position": [
               -0.2,
               0.15
@@ -52,7 +52,7 @@
           {
             "id": "icon-2",
             "kind": "prop",
-            "asset": "tree-broad",
+            "asset": "vegetation/tree-broad",
             "position": [
               0.15,
               0.1
@@ -70,7 +70,7 @@
           {
             "id": "icon-3",
             "kind": "prop",
-            "asset": "palm",
+            "asset": "vegetation/palm",
             "position": [
               0.05,
               -0.25
@@ -302,7 +302,7 @@
           {
             "id": "icon-4",
             "kind": "prop",
-            "asset": "tree-broad",
+            "asset": "vegetation/tree-broad",
             "position": [
               -0.2,
               0.25
@@ -319,7 +319,7 @@
           {
             "id": "icon-5",
             "kind": "prop",
-            "asset": "tree",
+            "asset": "vegetation/tree",
             "position": [
               0.25,
               0.25
@@ -26652,90 +26652,90 @@
   ],
   "assets": [
     {
-      "id": "birch-spreading",
+      "id": "vegetation/birch-spreading",
       "label": "Birch Spreading",
       "kind": "prop",
       "section": "vegetation/birch"
     },
     {
-      "id": "birch-tall",
+      "id": "vegetation/birch-tall",
       "label": "Birch Tall",
       "kind": "prop",
       "section": "vegetation/birch"
     },
     {
-      "id": "birch-young",
+      "id": "vegetation/birch-young",
       "label": "Birch Young",
       "kind": "prop",
       "section": "vegetation/birch"
     },
     {
-      "id": "birch",
+      "id": "vegetation/birch",
       "label": "Birch",
       "kind": "prop",
       "section": "vegetation/birch"
     },
     {
-      "id": "cactus-flowers",
+      "id": "vegetation/cactus-flowers",
       "label": "Cactus Flowers",
       "kind": "prop",
       "section": "vegetation/cactus"
     },
     {
-      "id": "cactus",
+      "id": "vegetation/cactus",
       "label": "Cactus",
       "kind": "prop",
       "section": "vegetation/cactus"
     },
     {
-      "id": "foliage-barren",
+      "id": "vegetation/foliage-barren",
       "label": "Foliage Barren",
       "kind": "prop",
       "section": "vegetation/bushes"
     },
     {
-      "id": "foliage-desert",
+      "id": "vegetation/foliage-desert",
       "label": "Foliage Desert",
       "kind": "prop",
       "section": "vegetation/bushes"
     },
     {
-      "id": "foliage-highland",
+      "id": "vegetation/foliage-highland",
       "label": "Foliage Highland",
       "kind": "prop",
       "section": "vegetation/bushes"
     },
     {
-      "id": "foliage-jungle",
+      "id": "vegetation/foliage-jungle",
       "label": "Foliage Jungle",
       "kind": "prop",
       "section": "vegetation/bushes"
     },
     {
-      "id": "foliage-rocky",
+      "id": "vegetation/foliage-rocky",
       "label": "Foliage Rocky",
       "kind": "prop",
       "section": "vegetation/bushes"
     },
     {
-      "id": "foliage-snow",
+      "id": "vegetation/foliage-snow",
       "label": "Foliage Snow",
       "kind": "prop"
     },
     {
-      "id": "foliage-temperate",
+      "id": "vegetation/foliage-temperate",
       "label": "Foliage Temperate",
       "kind": "prop",
       "section": "vegetation/bushes"
     },
     {
-      "id": "foliage-volcano",
+      "id": "vegetation/foliage-volcano",
       "label": "Foliage Volcano",
       "kind": "prop",
       "section": "vegetation/bushes"
     },
     {
-      "id": "foliage-wetland",
+      "id": "vegetation/foliage-wetland",
       "label": "Foliage Wetland",
       "kind": "prop",
       "section": "vegetation/bushes"
@@ -26903,84 +26903,84 @@
       "section": "vegetation/mars-coral"
     },
     {
-      "id": "orchard-leaning",
+      "id": "vegetation/orchard-leaning",
       "label": "Orchard Leaning",
       "kind": "prop",
       "section": "vegetation/fruit"
     },
     {
-      "id": "orchard-round",
+      "id": "vegetation/orchard-round",
       "label": "Orchard Round",
       "kind": "prop",
       "section": "vegetation/fruit"
     },
     {
-      "id": "orchard-spreading",
+      "id": "vegetation/orchard-spreading",
       "label": "Orchard Spreading",
       "kind": "prop",
       "section": "vegetation/fruit"
     },
     {
-      "id": "orchard-upright",
+      "id": "vegetation/orchard-upright",
       "label": "Orchard Upright",
       "kind": "prop",
       "section": "vegetation/fruit"
     },
     {
-      "id": "orchard-vase",
+      "id": "vegetation/orchard-vase",
       "label": "Orchard Vase",
       "kind": "prop",
       "section": "vegetation/fruit"
     },
     {
-      "id": "orchard-young",
+      "id": "vegetation/orchard-young",
       "label": "Orchard Young",
       "kind": "prop",
       "section": "vegetation/fruit"
     },
     {
-      "id": "palm-bent",
+      "id": "vegetation/palm-bent",
       "label": "Palm Bent",
       "kind": "prop",
       "section": "vegetation/palm"
     },
     {
-      "id": "palm",
+      "id": "vegetation/palm",
       "label": "Palm",
       "kind": "prop",
       "section": "vegetation/palm"
     },
     {
-      "id": "pine-broad",
+      "id": "vegetation/pine-broad",
       "label": "Pine Broad",
       "kind": "prop",
       "section": "vegetation/pine"
     },
     {
-      "id": "pine-layered",
+      "id": "vegetation/pine-layered",
       "label": "Pine Layered",
       "kind": "prop",
       "section": "vegetation/pine"
     },
     {
-      "id": "pine-slender",
+      "id": "vegetation/pine-slender",
       "label": "Pine Slender",
       "kind": "prop",
       "section": "vegetation/pine"
     },
     {
-      "id": "pine-tall-snow",
+      "id": "vegetation/pine-tall-snow",
       "label": "Pine Tall Snow",
       "kind": "prop"
     },
     {
-      "id": "pine-tall",
+      "id": "vegetation/pine-tall",
       "label": "Pine Tall",
       "kind": "prop",
       "section": "vegetation/pine"
     },
     {
-      "id": "pine",
+      "id": "vegetation/pine",
       "label": "Pine",
       "kind": "prop",
       "section": "vegetation/pine"
@@ -27462,396 +27462,6 @@
       "family": "Formal garden"
     },
     {
-      "id": "scenery/seaport/containers-n-s-01",
-      "label": "Container yard N-S 1",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-n-s-02",
-      "label": "Container yard N-S 2",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-n-s-03",
-      "label": "Container yard N-S 3",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-n-s-04",
-      "label": "Container yard N-S 4",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-n-s-05",
-      "label": "Container yard N-S 5",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-n-s-06",
-      "label": "Container yard N-S 6",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-n-s-07",
-      "label": "Container yard N-S 7",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-ne-sw-01",
-      "label": "Container yard NE-SW 1",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-ne-sw-02",
-      "label": "Container yard NE-SW 2",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-ne-sw-03",
-      "label": "Container yard NE-SW 3",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-ne-sw-04",
-      "label": "Container yard NE-SW 4",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-ne-sw-05",
-      "label": "Container yard NE-SW 5",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-ne-sw-06",
-      "label": "Container yard NE-SW 6",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-ne-sw-07",
-      "label": "Container yard NE-SW 7",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-nw-se-01",
-      "label": "Container yard NW-SE 1",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-nw-se-02",
-      "label": "Container yard NW-SE 2",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-nw-se-03",
-      "label": "Container yard NW-SE 3",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-nw-se-04",
-      "label": "Container yard NW-SE 4",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-nw-se-05",
-      "label": "Container yard NW-SE 5",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-nw-se-06",
-      "label": "Container yard NW-SE 6",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-nw-se-07",
-      "label": "Container yard NW-SE 7",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-e-w-01",
-      "label": "Container yard E-W 1",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-e-w-02",
-      "label": "Container yard E-W 2",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-e-w-03",
-      "label": "Container yard E-W 3",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-e-w-04",
-      "label": "Container yard E-W 4",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-e-w-05",
-      "label": "Container yard E-W 5",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-e-w-06",
-      "label": "Container yard E-W 6",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/containers-e-w-07",
-      "label": "Container yard E-W 7",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-n-s-01",
-      "label": "Gantry crane, boom NE, yard N-S 1",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-n-s-02",
-      "label": "Gantry crane, boom NE, yard N-S 2",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-n-s-03",
-      "label": "Gantry crane, boom NE, yard N-S 3",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-n-s-04",
-      "label": "Gantry crane, boom SE, yard N-S 4",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-n-s-05",
-      "label": "Gantry crane, boom SE, yard N-S 5",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-n-s-06",
-      "label": "Gantry crane, boom SE, yard N-S 6",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-n-s-07",
-      "label": "Gantry crane, boom SW, yard N-S 7",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-n-s-08",
-      "label": "Gantry crane, boom SW, yard N-S 8",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-n-s-09",
-      "label": "Gantry crane, boom SW, yard N-S 9",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-n-s-10",
-      "label": "Gantry crane, boom NW, yard N-S 10",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-n-s-11",
-      "label": "Gantry crane, boom NW, yard N-S 11",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-n-s-12",
-      "label": "Gantry crane, boom NW, yard N-S 12",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-ne-sw-01",
-      "label": "Gantry crane, boom SE, yard NE-SW 1",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-ne-sw-02",
-      "label": "Gantry crane, boom SE, yard NE-SW 2",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-ne-sw-03",
-      "label": "Gantry crane, boom SE, yard NE-SW 3",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-ne-sw-04",
-      "label": "Gantry crane, boom S, yard NE-SW 4",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-ne-sw-05",
-      "label": "Gantry crane, boom S, yard NE-SW 5",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-ne-sw-06",
-      "label": "Gantry crane, boom S, yard NE-SW 6",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-ne-sw-07",
-      "label": "Gantry crane, boom NW, yard NE-SW 7",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-ne-sw-08",
-      "label": "Gantry crane, boom NW, yard NE-SW 8",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-ne-sw-09",
-      "label": "Gantry crane, boom NW, yard NE-SW 9",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-ne-sw-10",
-      "label": "Gantry crane, boom N, yard NE-SW 10",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-ne-sw-11",
-      "label": "Gantry crane, boom N, yard NE-SW 11",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-ne-sw-12",
-      "label": "Gantry crane, boom N, yard NE-SW 12",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-nw-se-01",
-      "label": "Gantry crane, boom N, yard NW-SE 1",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-nw-se-02",
-      "label": "Gantry crane, boom N, yard NW-SE 2",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-nw-se-03",
-      "label": "Gantry crane, boom N, yard NW-SE 3",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-nw-se-04",
-      "label": "Gantry crane, boom NE, yard NW-SE 4",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-nw-se-05",
-      "label": "Gantry crane, boom NE, yard NW-SE 5",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-nw-se-06",
-      "label": "Gantry crane, boom NE, yard NW-SE 6",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-nw-se-07",
-      "label": "Gantry crane, boom S, yard NW-SE 7",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-nw-se-08",
-      "label": "Gantry crane, boom S, yard NW-SE 8",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-nw-se-09",
-      "label": "Gantry crane, boom S, yard NW-SE 9",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-nw-se-10",
-      "label": "Gantry crane, boom SW, yard NW-SE 10",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-nw-se-11",
-      "label": "Gantry crane, boom SW, yard NW-SE 11",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-nw-se-12",
-      "label": "Gantry crane, boom SW, yard NW-SE 12",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-e-w-01",
-      "label": "Gantry crane, boom NE, yard E-W 1",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-e-w-02",
-      "label": "Gantry crane, boom NE, yard E-W 2",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-e-w-03",
-      "label": "Gantry crane, boom NE, yard E-W 3",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-e-w-04",
-      "label": "Gantry crane, boom SE, yard E-W 4",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-e-w-05",
-      "label": "Gantry crane, boom SE, yard E-W 5",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-e-w-06",
-      "label": "Gantry crane, boom SE, yard E-W 6",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-e-w-07",
-      "label": "Gantry crane, boom SW, yard E-W 7",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-e-w-08",
-      "label": "Gantry crane, boom SW, yard E-W 8",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-e-w-09",
-      "label": "Gantry crane, boom SW, yard E-W 9",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-e-w-10",
-      "label": "Gantry crane, boom NW, yard E-W 10",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-e-w-11",
-      "label": "Gantry crane, boom NW, yard E-W 11",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/gantry-crane-e-w-12",
-      "label": "Gantry crane, boom NW, yard E-W 12",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/crane-tip-01",
-      "label": "Crane boom tip, straight",
-      "kind": "prop"
-    },
-    {
-      "id": "scenery/seaport/crane-tip-02",
-      "label": "Crane boom tip, diagonal",
-      "kind": "prop"
-    },
-    {
       "id": "scenery/seaport/yard/container",
       "label": "Container",
       "kind": "prop",
@@ -27956,82 +27566,82 @@
       "section": "industry/military"
     },
     {
-      "id": "tree-broad",
+      "id": "vegetation/tree-broad",
       "label": "Tree Broad",
       "kind": "prop",
       "section": "vegetation/broadleaf"
     },
     {
-      "id": "tree-dead-snow",
+      "id": "vegetation/tree-dead-snow",
       "label": "Tree Dead Snow",
       "kind": "prop"
     },
     {
-      "id": "tree-dead",
+      "id": "vegetation/tree-dead",
       "label": "Tree Dead",
       "kind": "prop",
       "section": "vegetation/deadwood"
     },
     {
-      "id": "tree-forked-snow",
+      "id": "vegetation/tree-forked-snow",
       "label": "Tree Forked Snow",
       "kind": "prop"
     },
     {
-      "id": "tree-forked",
+      "id": "vegetation/tree-forked",
       "label": "Tree Forked",
       "kind": "prop",
       "section": "vegetation/broadleaf"
     },
     {
-      "id": "tree-layered",
+      "id": "vegetation/tree-layered",
       "label": "Tree Layered",
       "kind": "prop",
       "section": "vegetation/broadleaf"
     },
     {
-      "id": "tree-slender",
+      "id": "vegetation/tree-slender",
       "label": "Tree Slender",
       "kind": "prop",
       "section": "vegetation/broadleaf"
     },
     {
-      "id": "tree-volcano-crown",
+      "id": "vegetation/tree-volcano-crown",
       "label": "Tree Volcano Crown",
       "kind": "prop",
       "section": "vegetation/volcano"
     },
     {
-      "id": "tree-volcano-forked",
+      "id": "vegetation/tree-volcano-forked",
       "label": "Tree Volcano Forked",
       "kind": "prop",
       "section": "vegetation/volcano"
     },
     {
-      "id": "tree-volcano-spire",
+      "id": "vegetation/tree-volcano-spire",
       "label": "Tree Volcano Spire",
       "kind": "prop",
       "section": "vegetation/volcano"
     },
     {
-      "id": "tree",
+      "id": "vegetation/tree",
       "label": "Tree",
       "kind": "prop",
       "section": "vegetation/broadleaf"
     },
     {
-      "id": "willow-broad",
+      "id": "vegetation/willow-broad",
       "label": "Willow Broad",
       "kind": "prop",
       "section": "vegetation/willow"
     },
     {
-      "id": "willow-snow",
+      "id": "vegetation/willow-snow",
       "label": "Willow Snow",
       "kind": "prop"
     },
     {
-      "id": "willow",
+      "id": "vegetation/willow",
       "label": "Willow",
       "kind": "prop",
       "section": "vegetation/willow"
@@ -28047,7 +27657,7 @@
       "label": "Tree cluster 1",
       "kind": "prop",
       "layout": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-01",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-01.png",
+      "thumbnail": "models/board/scenery/parks/tree-cluster-1.png",
       "section": "vegetation/blueprints",
       "family": "Tree cluster"
     },
@@ -28056,7 +27666,7 @@
       "label": "Tree cluster 2",
       "kind": "prop",
       "layout": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-02",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-02.png",
+      "thumbnail": "models/board/scenery/parks/tree-cluster-2.png",
       "section": "vegetation/blueprints",
       "family": "Tree cluster"
     },
@@ -28065,7 +27675,7 @@
       "label": "Tree cluster 3",
       "kind": "prop",
       "layout": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-03",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-03.png",
+      "thumbnail": "models/board/scenery/parks/tree-cluster-3.png",
       "section": "vegetation/blueprints",
       "family": "Tree cluster"
     },
@@ -28074,7 +27684,7 @@
       "label": "Tree cluster 4",
       "kind": "prop",
       "layout": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-04",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-04.png",
+      "thumbnail": "models/board/scenery/parks/tree-cluster-4.png",
       "section": "vegetation/blueprints",
       "family": "Tree cluster"
     },
@@ -28083,7 +27693,7 @@
       "label": "Tree cluster 5",
       "kind": "prop",
       "layout": "scenery/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-05",
-      "thumbnail": "models/board/tileset/saxarba/SMV_Fluff/FluffSystem-07-Garden-01-Tree-1-05.png",
+      "thumbnail": "models/board/scenery/parks/tree-cluster-5.png",
       "section": "vegetation/blueprints",
       "family": "Tree cluster"
     },
@@ -28092,7 +27702,7 @@
       "label": "Roadside trees",
       "kind": "prop",
       "layout": "scenery/saxarba/roads/road_trees{exits}",
-      "thumbnail": "models/board/tileset/saxarba/roads/road_trees09.png",
+      "thumbnail": "models/board/scenery/road/roadside-trees.png",
       "section": "transportation/blueprints"
     },
     {

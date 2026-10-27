@@ -5,31 +5,87 @@
   "mesh": "gauss-light.glb",
   "bounds": {
     "min": [
-      -2.2100000381469727,
-      0.0,
+      -2.3399999141693115,
+      -5.8203935623168945,
       -1.9500000476837158
     ],
     "max": [
-      2.2100000381469727,
-      25.0,
-      1.9500000476837158
+      2.3399999141693115,
+      31.5,
+      3.171757459640503
     ]
   },
   "rig": "equipment-v1",
   "joints": {
     "root": "module",
     "aim": "aim",
+    "elevation": "aim",
     "recoil": "recoil"
   },
   "locations": {},
-  "hardpoints": [],
+  "hardpoints": [
+    {
+      "id": "trunnion",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        2.3400000095367433,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "face",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        0,
+        6.5,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
   "emitters": [
     {
       "id": "muzzle-0",
       "node": "recoil",
       "position": [
         0,
-        25.0,
+        31.5,
         0
       ],
       "direction": [

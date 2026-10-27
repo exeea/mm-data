@@ -5,31 +5,87 @@
   "mesh": "artillery.glb",
   "bounds": {
     "min": [
-      -2.549999952316284,
-      0.0,
-      -2.25
+      -2.5999999046325684,
+      -5.420000076293945,
+      -2.3299999237060547
     ],
     "max": [
-      2.549999952316284,
-      27.0,
-      2.25
+      2.5999999046325684,
+      33.70000076293945,
+      3.6619999408721924
     ]
   },
   "rig": "equipment-v1",
   "joints": {
     "root": "module",
     "aim": "aim",
+    "elevation": "aim",
     "recoil": "recoil"
   },
   "locations": {},
-  "hardpoints": [],
+  "hardpoints": [
+    {
+      "id": "trunnion",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        2.6,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "face",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        0,
+        6.699999999999999,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
   "emitters": [
     {
       "id": "muzzle-0",
       "node": "recoil",
       "position": [
         0,
-        27.0,
+        33.7,
         0
       ],
       "direction": [

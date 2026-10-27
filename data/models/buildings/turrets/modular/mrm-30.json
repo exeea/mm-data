@@ -6,29 +6,58 @@
   "bounds": {
     "min": [
       -2.9100000858306885,
-      0.0,
+      -4.0,
       -2.2149999141693115
     ],
     "max": [
       2.9100000858306885,
-      8.050000190734863,
+      4.050000190734863,
       2.432499885559082
     ]
   },
   "rig": "equipment-v1",
   "joints": {
     "root": "module",
-    "aim": "aim"
+    "aim": "aim",
+    "elevation": "aim"
   },
   "locations": {},
-  "hardpoints": [],
+  "hardpoints": [
+    {
+      "id": "trunnion",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        2.535,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
   "emitters": [
     {
       "id": "launcher-0",
       "node": "aim",
       "position": [
         -1.7999999999999998,
-        8.02,
+        4.02,
         1.44
       ],
       "direction": [
@@ -44,7 +73,7 @@
       "node": "aim",
       "position": [
         -1.08,
-        8.02,
+        4.02,
         1.44
       ],
       "direction": [
@@ -60,7 +89,7 @@
       "node": "aim",
       "position": [
         -0.36,
-        8.02,
+        4.02,
         1.44
       ],
       "direction": [
@@ -76,7 +105,7 @@
       "node": "aim",
       "position": [
         0.36,
-        8.02,
+        4.02,
         1.44
       ],
       "direction": [
@@ -92,7 +121,7 @@
       "node": "aim",
       "position": [
         1.08,
-        8.02,
+        4.02,
         1.44
       ],
       "direction": [
@@ -108,7 +137,7 @@
       "node": "aim",
       "position": [
         1.7999999999999998,
-        8.02,
+        4.02,
         1.44
       ],
       "direction": [
@@ -124,7 +153,7 @@
       "node": "aim",
       "position": [
         -1.7999999999999998,
-        8.02,
+        4.02,
         0.72
       ],
       "direction": [
@@ -140,7 +169,7 @@
       "node": "aim",
       "position": [
         -1.08,
-        8.02,
+        4.02,
         0.72
       ],
       "direction": [
@@ -156,7 +185,7 @@
       "node": "aim",
       "position": [
         -0.36,
-        8.02,
+        4.02,
         0.72
       ],
       "direction": [
@@ -172,7 +201,7 @@
       "node": "aim",
       "position": [
         0.36,
-        8.02,
+        4.02,
         0.72
       ],
       "direction": [
@@ -188,7 +217,7 @@
       "node": "aim",
       "position": [
         1.08,
-        8.02,
+        4.02,
         0.72
       ],
       "direction": [
@@ -204,7 +233,7 @@
       "node": "aim",
       "position": [
         1.7999999999999998,
-        8.02,
+        4.02,
         0.72
       ],
       "direction": [
@@ -220,7 +249,7 @@
       "node": "aim",
       "position": [
         -1.7999999999999998,
-        8.02,
+        4.02,
         0.0
       ],
       "direction": [
@@ -236,7 +265,7 @@
       "node": "aim",
       "position": [
         -1.08,
-        8.02,
+        4.02,
         0.0
       ],
       "direction": [
@@ -252,7 +281,7 @@
       "node": "aim",
       "position": [
         -0.36,
-        8.02,
+        4.02,
         0.0
       ],
       "direction": [
@@ -268,7 +297,7 @@
       "node": "aim",
       "position": [
         0.36,
-        8.02,
+        4.02,
         0.0
       ],
       "direction": [
@@ -284,7 +313,7 @@
       "node": "aim",
       "position": [
         1.08,
-        8.02,
+        4.02,
         0.0
       ],
       "direction": [
@@ -300,7 +329,7 @@
       "node": "aim",
       "position": [
         1.7999999999999998,
-        8.02,
+        4.02,
         0.0
       ],
       "direction": [
@@ -316,7 +345,7 @@
       "node": "aim",
       "position": [
         -1.7999999999999998,
-        8.02,
+        4.02,
         -0.72
       ],
       "direction": [
@@ -332,7 +361,7 @@
       "node": "aim",
       "position": [
         -1.08,
-        8.02,
+        4.02,
         -0.72
       ],
       "direction": [
@@ -348,7 +377,7 @@
       "node": "aim",
       "position": [
         -0.36,
-        8.02,
+        4.02,
         -0.72
       ],
       "direction": [
@@ -364,7 +393,7 @@
       "node": "aim",
       "position": [
         0.36,
-        8.02,
+        4.02,
         -0.72
       ],
       "direction": [
@@ -380,7 +409,7 @@
       "node": "aim",
       "position": [
         1.08,
-        8.02,
+        4.02,
         -0.72
       ],
       "direction": [
@@ -396,7 +425,7 @@
       "node": "aim",
       "position": [
         1.7999999999999998,
-        8.02,
+        4.02,
         -0.72
       ],
       "direction": [
@@ -412,7 +441,7 @@
       "node": "aim",
       "position": [
         -1.7999999999999998,
-        8.02,
+        4.02,
         -1.44
       ],
       "direction": [
@@ -428,7 +457,7 @@
       "node": "aim",
       "position": [
         -1.08,
-        8.02,
+        4.02,
         -1.44
       ],
       "direction": [
@@ -444,7 +473,7 @@
       "node": "aim",
       "position": [
         -0.36,
-        8.02,
+        4.02,
         -1.44
       ],
       "direction": [
@@ -460,7 +489,7 @@
       "node": "aim",
       "position": [
         0.36,
-        8.02,
+        4.02,
         -1.44
       ],
       "direction": [
@@ -476,7 +505,7 @@
       "node": "aim",
       "position": [
         1.08,
-        8.02,
+        4.02,
         -1.44
       ],
       "direction": [
@@ -492,7 +521,7 @@
       "node": "aim",
       "position": [
         1.7999999999999998,
-        8.02,
+        4.02,
         -1.44
       ],
       "direction": [

@@ -5,32 +5,88 @@
   "mesh": "hag-20.glb",
   "bounds": {
     "min": [
-      -2.380000114440918,
-      0.0,
+      -2.43999981880188,
+      -5.923864364624023,
       -2.0999999046325684
     ],
     "max": [
-      2.380000114440918,
-      21.0,
-      2.0999999046325684
+      2.43999981880188,
+      27.399999618530273,
+      3.250934600830078
     ]
   },
   "rig": "equipment-v1",
   "joints": {
     "root": "module",
     "aim": "aim",
+    "elevation": "aim",
     "recoil": "recoil",
     "spin": "spin"
   },
   "locations": {},
-  "hardpoints": [],
+  "hardpoints": [
+    {
+      "id": "trunnion",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        2.4399999141693116,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "face",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        0,
+        6.4,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
   "emitters": [
     {
       "id": "muzzle-0",
       "node": "spin",
       "position": [
         -0.475,
-        21.0,
+        27.4,
         0.475
       ],
       "direction": [
@@ -46,7 +102,7 @@
       "node": "spin",
       "position": [
         -0.475,
-        21.0,
+        27.4,
         -0.475
       ],
       "direction": [
@@ -62,7 +118,7 @@
       "node": "spin",
       "position": [
         0.475,
-        21.0,
+        27.4,
         0.475
       ],
       "direction": [
@@ -78,7 +134,7 @@
       "node": "spin",
       "position": [
         0.475,
-        21.0,
+        27.4,
         -0.475
       ],
       "direction": [

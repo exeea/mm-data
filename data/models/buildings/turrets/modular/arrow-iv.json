@@ -6,29 +6,58 @@
   "bounds": {
     "min": [
       -2.549999952316284,
-      0.0,
+      -4.699999809265137,
       -2.2149999141693115
     ],
     "max": [
       2.549999952316284,
-      9.449999809265137,
+      4.75,
       2.432499885559082
     ]
   },
   "rig": "equipment-v1",
   "joints": {
     "root": "module",
-    "aim": "aim"
+    "aim": "aim",
+    "elevation": "aim"
   },
   "locations": {},
-  "hardpoints": [],
+  "hardpoints": [
+    {
+      "id": "trunnion",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        2.175,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
   "emitters": [
     {
       "id": "launcher-0",
       "node": "aim",
       "position": [
         -0.9,
-        9.42,
+        4.72,
         0.9
       ],
       "direction": [
@@ -44,7 +73,7 @@
       "node": "aim",
       "position": [
         0.9,
-        9.42,
+        4.72,
         0.9
       ],
       "direction": [
@@ -60,7 +89,7 @@
       "node": "aim",
       "position": [
         -0.9,
-        9.42,
+        4.72,
         -0.9
       ],
       "direction": [
@@ -76,7 +105,7 @@
       "node": "aim",
       "position": [
         0.9,
-        9.42,
+        4.72,
         -0.9
       ],
       "direction": [

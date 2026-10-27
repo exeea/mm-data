@@ -38,9 +38,12 @@ floors and a roof at N×18. Roof rails, parapets and lights extend above that he
 Files store a height-2 assembly: base at 0, floor at 18 and roof at 36 along glTF's Y-up axis.
 The runtime grounds each module on its lowest point, its arm included, preserving its texture scale.
 
-Textures are embedded PNGs using glTF metallic/roughness, normal and emissive materials.
+Textures are embedded PNGs using glTF metallic/roughness, normal and emissive materials, except two shared board
+materials (`data/models/board/textures/structures/common`): the light walls' `corrugated` steel and every deck's
+`diamond-plate`. A deck holds 8 plate repeats along a 72-unit section, so sections join without a seam; the
+hardened and Castle Brian decks darken the plate with vertex colours.
 Civilian fence and barbed-wire surfaces use alpha masking at a 0.5 cutoff; other surfaces
-are opaque. No external textures or required glTF extensions are needed.
+are opaque. No required glTF extensions are needed.
 
 ## Dimensions and repetition
 

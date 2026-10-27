@@ -5,30 +5,86 @@
   "mesh": "laser-large.glb",
   "bounds": {
     "min": [
-      -2.497465133666992,
-      0.0,
+      -2.5974650382995605,
+      -3.1050000190734863,
       -2.1937501430511475
     ],
     "max": [
-      2.497465133666992,
-      19.143001556396484,
+      2.5974650382995605,
+      16.038002014160156,
       2.3692500591278076
     ]
   },
   "rig": "equipment-v1",
   "joints": {
     "root": "module",
-    "aim": "aim"
+    "aim": "aim",
+    "elevation": "aim"
   },
   "locations": {},
-  "hardpoints": [],
+  "hardpoints": [
+    {
+      "id": "trunnion",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        2.5974651336669923,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "face",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        0,
+        -3.105,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
   "emitters": [
     {
       "id": "beam-0",
       "node": "aim",
       "position": [
         0,
-        19.143,
+        16.038,
         0
       ],
       "direction": [

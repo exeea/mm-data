@@ -186,6 +186,7 @@
   },
   "constrained": [
     "scenery/demolition-materials",
+    "scenery/fortified-sandbag",
     "scenery/geyser-travertine",
     "scenery/pool-water",
     "scenery/rubble-brick",
@@ -202,11 +203,11 @@
     "scenery/tunnel-concrete",
     "structures/common/chrome",
     "structures/common/corrugated",
+    "structures/common/diamond-plate",
     "structures/common/hazard-stripes",
     "structures/common/iron",
     "structures/common/safety-yellow",
     "structures/common/steel",
-    "structures/common/tread-plate",
     "structures/facades/facade-fortress",
     "structures/facades/facade-hangar",
     "structures/facades/facade-hard",
@@ -251,9 +252,6 @@
     "vegetation/conifer-snow-cutout",
     "vegetation/fern-cutout",
     "vegetation/fungus/fungus-atlas",
-    "vegetation/maize-row-front",
-    "vegetation/maize-row-side",
-    "vegetation/maize-row-top",
     "vegetation/mars/mars-coral-atlas",
     "vegetation/marsh-sedge",
     "vegetation/tundra-tussock",
@@ -277,9 +275,6 @@
     "vegetation/shrubs/shrub-wetland",
     "vegetation/snow",
     "vegetation/volcano/cinder-bark",
-    "vegetation/volcano/cinder-cutout",
-    "vegetation/wheat-row-front",
-    "vegetation/wheat-row-side",
-    "vegetation/wheat-row-top"
+    "vegetation/volcano/cinder-cutout"
   ]
 }

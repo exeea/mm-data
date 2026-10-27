@@ -5,30 +5,86 @@
   "mesh": "ppc-light.glb",
   "bounds": {
     "min": [
-      -1.4249999523162842,
-      0.0,
-      -1.3300000429153442
+      -2.0399999618530273,
+      -4.511529445648193,
+      -1.6408262252807617
     ],
     "max": [
-      1.4249999523162842,
-      8.460000038146973,
-      1.3300000429153442
+      2.0399999618530273,
+      11.859999656677246,
+      3.268224000930786
     ]
   },
   "rig": "equipment-v1",
   "joints": {
     "root": "module",
-    "aim": "aim"
+    "aim": "aim",
+    "elevation": "aim"
   },
   "locations": {},
-  "hardpoints": [],
+  "hardpoints": [
+    {
+      "id": "trunnion",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        2.040000057220459,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    },
+    {
+      "id": "face",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        0,
+        3.3999999999999995,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
   "emitters": [
     {
       "id": "beam-0",
       "node": "aim",
       "position": [
         0,
-        8.46,
+        11.86,
         0
       ],
       "direction": [

@@ -1,0 +1,143 @@
+{
+  "ease": 6,
+  "recipes": {
+    "verdant": {
+      "up":   {"hue": -4.4, "saturation": 0.9274, "value": 1.148},
+      "down": {"hue": 9.08, "saturation": 1.0646, "value": 0.8859},
+      "from": -3,
+      "hue":        [22.2, 14.9, 7.4, 0, -4.1, -8.6, -10.8, -13, -15, -17.1, -18.1, -19, -20.2, -21.1],
+      "saturation": [1.163, 1.11, 1.055, 1, 0.945, 0.875, 0.836, 0.809, 0.783, 0.754, 0.735, 0.716, 0.699, 0.686],
+      "value":      [0.74, 0.823, 0.911, 1, 1.175, 1.356, 1.444, 1.515, 1.593, 1.663, 1.735, 1.803, 1.878, 1.963]
+    },
+    "arid": {
+      "up":   {"hue": 0.53, "saturation": 0.9161, "value": 1.1639},
+      "down": {"hue": -5.22, "saturation": 1.0142, "value": 0.7953},
+      "from": -3,
+      "hue":        [-12.8, -8.6, -4.1, 0, 0.1, 0.6, 1, 1.4, 1.8, 1.9, 2.1, 2.4, 2.6, 2.9],
+      "saturation": [1.038, 1.023, 1.005, 1, 0.957, 0.901, 0.841, 0.788, 0.749, 0.716, 0.691, 0.669, 0.653, 0.641],
+      "value":      [0.579, 0.683, 0.809, 1, 1.17, 1.305, 1.425, 1.537, 1.659, 1.761, 1.862, 1.957, 2.044, 2.123]
+    },
+    "snow": {
+      "up":   {"hue": -0.63, "saturation": 0.8633, "value": 1.1659},
+      "down": {"hue": 0.68, "saturation": 1.5603, "value": 0.9017},
+      "from": -3,
+      "hue":        [2, 0.6, 0.6, 0, -0.6, -0.8, -1.2, -1.3, -1.9, -2.1, -2.4, -2.7, -3.4, -3.8],
+      "saturation": [2.691, 2.415, 1.396, 1, 0.995, 0.934, 0.855, 0.775, 0.699, 0.62, 0.558, 0.492, 0.432, 0.376],
+      "value":      [0.758, 0.884, 0.897, 1, 1.141, 1.266, 1.38, 1.492, 1.606, 1.723, 1.85, 1.988, 2.138, 2.302]
+    },
+    "snow-deep": {
+      "up":   {"hue": -0.6, "saturation": 0.8675, "value": 1.1677},
+      "down": {"hue": 0.47, "saturation": 1.8607, "value": 0.9793},
+      "from": -3,
+      "hue":        [1.3, 0.6, 0.3, 0, -0.5, -0.9, -1, -1.3, -1.7, -2.1, -2.2, -2.6, -3.2, -3.6],
+      "saturation": [5.431, 2.394, 1.392, 1, 1, 0.943, 0.866, 0.786, 0.709, 0.631, 0.569, 0.503, 0.442, 0.385],
+      "value":      [1.046, 0.888, 0.898, 1, 1.14, 1.263, 1.379, 1.493, 1.609, 1.729, 1.861, 2.004, 2.161, 2.334]
+    },
+    "sand": {
+      "up":   {"hue": 1.51, "saturation": 0.8895, "value": 1.1582},
+      "down": {"hue": -1.32, "saturation": 1.4593, "value": 1.0067},
+      "from": -3,
+      "hue":        [-3.4, -2, -0.9, 0, 1, 2.2, 3.1, 3.9, 4.7, 5.4, 6, 6.8, 7.5, 8.4],
+      "saturation": [2.571, 1.727, 1.481, 1, 0.982, 0.935, 0.877, 0.816, 0.752, 0.689, 0.628, 0.569, 0.513, 0.459],
+      "value":      [1.04, 0.958, 1.047, 1, 1.17, 1.291, 1.395, 1.495, 1.59, 1.69, 1.793, 1.912, 2.042, 2.164]
+    },
+    "sand-grey": {
+      "up":   {"hue": 1.67, "saturation": 0.9675, "value": 1.108},
+      "down": {"hue": -1.59, "saturation": 1.2597, "value": 0.901},
+      "from": -3,
+      "hue":        [-4, -2.1, -1.9, 0, 1.6, 2.5, 4, 4.6, 5.2, 5.4, 7.3, 7.6, 8, 8.7],
+      "saturation": [1.766, 1.399, 1.293, 1, 1.037, 1.034, 1.016, 0.988, 0.953, 0.915, 0.873, 0.838, 0.798, 0.757],
+      "value":      [0.784, 0.834, 0.909, 1, 1.089, 1.158, 1.222, 1.288, 1.355, 1.427, 1.505, 1.591, 1.683, 1.779]
+    },
+    "tundra": {
+      "up":   {"hue": -7.33, "saturation": 0.9514, "value": 1.0103},
+      "down": {"hue": 9.02, "saturation": 1.0616, "value": 0.8812},
+      "from": -3,
+      "hue":        [21.9, 14.9, 7.6, 0, -5.8, -12.2, -18.4, -24.9, -31.1, -30.9, -30.7, -30.9, -30.9, -30.8],
+      "saturation": [1.155, 1.103, 1.056, 1, 0.967, 0.926, 0.877, 0.826, 0.78, 0.795, 0.809, 0.82, 0.828, 0.834],
+      "value":      [0.73, 0.816, 0.908, 1, 1.137, 1.28, 1.431, 1.589, 1.757, 1.389, 1.11, 0.882, 0.705, 0.556]
+    },
+    "volcano": {
+      "up":   {"hue": -4.85, "saturation": 0.9382, "value": 1.195},
+      "down": {"hue": 0, "saturation": 0.9736, "value": 0.8506},
+      "from": -3,
+      "hue":        [0, -0.1, 0.2, 0, 0.6, -0, -20, -20, -20, -20, -20, -20, -20, -20],
+      "saturation": [0.961, 0.943, 0.942, 1, 0.979, 0.963, 0.931, 0.9, 0.869, 0.819, 0.779, 0.723, 0.677, 0.671],
+      "value":      [0.679, 0.764, 0.863, 1, 1.119, 1.253, 1.393, 1.545, 1.712, 1.878, 2.065, 2.247, 2.453, 2.729]
+    },
+    "pavement": {
+      "up":   {"hue": -3.31, "saturation": 0.8861, "value": 1.0576},
+      "down": {"hue": -4.7, "saturation": 1.0139, "value": 0.8118},
+      "from": -3,
+      "hue":        [-12, -7.3, -3.3, 0, 2.5, 4, 5.1, 6.1, 8.8, -1.4, -10.5, -21.4, -31.9, -39.6],
+      "saturation": [1.032, 1.027, 1.01, 1, 0.977, 0.898, 0.789, 0.687, 0.575, 0.572, 0.576, 0.584, 0.61, 0.612],
+      "value":      [0.603, 0.709, 0.838, 1, 1.201, 1.437, 1.706, 2.016, 2.379, 1.799, 1.379, 1.067, 0.797, 0.565]
+    },
+    "crust": {
+      "up":   {"hue": -5.16, "saturation": 0.9259, "value": 1.182},
+      "down": {"hue": 1.19, "saturation": 0.9885, "value": 0.8584},
+      "from": -3,
+      "hue":        [2.7, 2.1, 1.2, 0, -0.9, -1, -21, -21, -21.2, -21.3, -21.2, -21.1, -21.2, -21.3],
+      "saturation": [0.995, 0.968, 0.957, 1, 0.975, 0.954, 0.889, 0.857, 0.825, 0.776, 0.737, 0.684, 0.641, 0.634],
+      "value":      [0.694, 0.776, 0.87, 1, 1.114, 1.24, 1.362, 1.504, 1.657, 1.808, 1.978, 2.14, 2.321, 2.558]
+    },
+    "fungus": {
+      "up":   {"hue": 21.49, "saturation": 0.8129, "value": 0.8833},
+      "down": {"hue": 6.1, "saturation": 0.7212, "value": 0.8466},
+      "from": -3,
+      "hue":        [21.4, 3.7, 0, 0, -15, -14.5, -14.2, -13, -4.9, 48.4, 128.5, 146.8, 150.2, 157.4],
+      "saturation": [0.351, 0.714, 1, 1, 1.699, 1.594, 1.38, 0.998, 0.362, 0.135, 0.151, 0.304, 0.398, 1.068],
+      "value":      [0.611, 0.796, 1, 1, 1.93, 1.686, 1.361, 0.971, 0.594, 0.511, 0.493, 0.478, 0.471, 0.464]
+    }
+  },
+  "images": {
+    "terrain/fungus/base_low.png": "fungus",
+    "terrain/grass/base_grass.png": "verdant",
+    "terrain/grass/snow_light_grass.png": {"recipe": "snow", "split": [0.2, 0.3], "saturated": "verdant"},
+    "terrain/grass/snow_light_grassb.png": {"recipe": "snow", "split": [0.2, 0.3], "saturated": "verdant"},
+    "terrain/ground/base_crust.png": {"recipe": "crust", "split": [0.4, 0.8], "saturated": null},
+    "terrain/ground/base_default.png": "arid",
+    "terrain/ground/base_pavement.png": "pavement",
+    "terrain/ground/base_pavement_urban.png": {"recipe": "pavement", "split": [0.1, 0.4], "saturated": null},
+    "terrain/ground/base_sand.png": "sand",
+    "terrain/ground/base_sand_gray.png": "sand-grey",
+    "terrain/ground/base_snow_deep.png": "snow-deep",
+    "terrain/ground/base_snow_light.png": "snow",
+    "terrain/ground/base_snow_lightb.png": "snow",
+    "terrain/ground/base_tundra.png": "tundra",
+    "terrain/lunar/base_lunar.png": "verdant",
+    "terrain/lunar/base_lunarb.png": "verdant",
+    "terrain/lunar/base_lunarc.png": "verdant",
+    "terrain/lunar/base_lunard.png": "verdant",
+    "terrain/lunar/base_lunare.png": "verdant",
+    "terrain/lunar/base_lunarf.png": "verdant",
+    "terrain/mars/base_mars.png": "arid",
+    "terrain/transitions/Mars_Transition_B_10.png": "arid",
+    "terrain/transitions/Mars_Transition_B_11.png": "arid",
+    "terrain/transitions/Mars_Transition_B_12.png": "arid",
+    "terrain/transitions/Mars_Transition_B_13.png": "arid",
+    "terrain/transitions/Mars_Transition_B_9.png": "arid",
+    "terrain/transitions/Moon_Transition_49.png": "verdant",
+    "terrain/transitions/Moon_Transition_50.png": "verdant",
+    "terrain/transitions/Moon_Transition_51.png": "verdant",
+    "terrain/transitions/Moon_Transition_52.png": "verdant",
+    "terrain/transitions/Moon_Transition_53.png": "verdant",
+    "terrain/transitions/toDesert_100.png": "arid",
+    "terrain/transitions/toDesert_20.png": "arid",
+    "terrain/transitions/toDesert_40.png": "arid",
+    "terrain/transitions/toDesert_60.png": "arid",
+    "terrain/transitions/toDesert_80.png": "arid",
+    "terrain/transitions/toGrass_100.png": "verdant",
+    "terrain/transitions/toGrass_20.png": "verdant",
+    "terrain/transitions/toGrass_40.png": "verdant",
+    "terrain/transitions/toGrass_60.png": "verdant",
+    "terrain/transitions/toGrass_80.png": "verdant",
+    "terrain/transitions/toTropical_100.png": "verdant",
+    "terrain/transitions/toTropical_20.png": "verdant",
+    "terrain/transitions/toTropical_40.png": "verdant",
+    "terrain/transitions/toTropical_60.png": "verdant",
+    "terrain/transitions/toTropical_80.png": "verdant",
+    "terrain/tropical/base_tropical.png": "verdant",
+    "terrain/volcano/base_volcano.png": "volcano"
+  }
+}

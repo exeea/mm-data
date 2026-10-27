@@ -1,0 +1,53 @@
+{
+  "schema": 2,
+  "kind": "body",
+  "family": "building-turret",
+  "mesh": "mount-arm.glb",
+  "bounds": {
+    "min": [
+      -0.8999999761581421,
+      -1.7999999523162842,
+      -1.9952855110168457
+    ],
+    "max": [
+      2.200000047683716,
+      1.7999999523162842,
+      1.9952855110168457
+    ]
+  },
+  "rig": "building-mount-v1",
+  "joints": {
+    "root": "root"
+  },
+  "locations": {},
+  "hardpoints": [
+    {
+      "id": "pin",
+      "location": "*",
+      "side": "front",
+      "node": "root",
+      "position": [
+        2.2,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
+  "emitters": []
+}

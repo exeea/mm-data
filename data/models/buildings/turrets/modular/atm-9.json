@@ -6,29 +6,58 @@
   "bounds": {
     "min": [
       -2.625,
-      0.0,
+      -4.300000190734863,
       -2.2899999618530273
     ],
     "max": [
       2.625,
-      8.649999618530273,
+      4.34999942779541,
       2.509000062942505
     ]
   },
   "rig": "equipment-v1",
   "joints": {
     "root": "module",
-    "aim": "aim"
+    "aim": "aim",
+    "elevation": "aim"
   },
   "locations": {},
-  "hardpoints": [],
+  "hardpoints": [
+    {
+      "id": "trunnion",
+      "location": "*",
+      "side": "front",
+      "node": "module",
+      "position": [
+        2.25,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "minScale": 1,
+      "maxScale": 1,
+      "roles": [
+        "weapon"
+      ]
+    }
+  ],
   "emitters": [
     {
       "id": "launcher-0",
       "node": "aim",
       "position": [
         -1.25,
-        8.62,
+        4.319999999999999,
         1.25
       ],
       "direction": [
@@ -44,7 +73,7 @@
       "node": "aim",
       "position": [
         0.0,
-        8.62,
+        4.319999999999999,
         1.25
       ],
       "direction": [
@@ -60,7 +89,7 @@
       "node": "aim",
       "position": [
         1.25,
-        8.62,
+        4.319999999999999,
         1.25
       ],
       "direction": [
@@ -76,7 +105,7 @@
       "node": "aim",
       "position": [
         -1.25,
-        8.62,
+        4.319999999999999,
         0.0
       ],
       "direction": [
@@ -92,7 +121,7 @@
       "node": "aim",
       "position": [
         0.0,
-        8.62,
+        4.319999999999999,
         0.0
       ],
       "direction": [
@@ -108,7 +137,7 @@
       "node": "aim",
       "position": [
         1.25,
-        8.62,
+        4.319999999999999,
         0.0
       ],
       "direction": [
@@ -124,7 +153,7 @@
       "node": "aim",
       "position": [
         -1.25,
-        8.62,
+        4.319999999999999,
         -1.25
       ],
       "direction": [
@@ -140,7 +169,7 @@
       "node": "aim",
       "position": [
         0.0,
-        8.62,
+        4.319999999999999,
         -1.25
       ],
       "direction": [
@@ -156,7 +185,7 @@
       "node": "aim",
       "position": [
         1.25,
-        8.62,
+        4.319999999999999,
         -1.25
       ],
       "direction": [
