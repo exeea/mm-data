@@ -926,8 +926,8 @@
       "label": "SurfaceResponse",
       "type": "graph",
       "parameters": {
-        "ReliefPercent": 0.3137254901960784,
-        "BaseRoughness": 0.78,
+        "ReliefPercent": 1.2,
+        "BaseRoughness": 0.9,
         "HeightRoughness": 0.12,
         "CavityStrength": 1.7
       },
@@ -2581,7 +2581,7 @@
           "a": 1
         },
         "ao": 1,
-        "depth_scale": 0.012549019607843137,
+        "depth_scale": 0.048,
         "emission_energy": 1.0,
         "flags_transparent": false,
         "metallic": 0,

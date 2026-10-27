@@ -2778,7 +2778,7 @@
         "metallic": 0,
         "normal": 1,
         "roughness": 1.0,
-        "size": 10,
+        "size": 9,
         "sss": 1.0
       },
       "node_position": {

@@ -38,11 +38,19 @@ floors and a roof at N×18. Roof rails, parapets and lights extend above that he
 Files store a height-2 assembly: base at 0, floor at 18 and roof at 36 along glTF's Y-up axis.
 The runtime grounds each module on its lowest point, its arm included, preserving its texture scale.
 
-Textures are embedded PNGs using glTF metallic/roughness, normal and emissive materials, except two shared board
-materials (`data/models/board/textures/structures/common`): the light walls' `corrugated` steel and every deck's
-`diamond-plate`. A deck holds 8 plate repeats along a 72-unit section, so sections join without a seam; the
-hardened and Castle Brian decks darken the plate with vertex colours.
-Civilian fence and barbed-wire surfaces use alpha masking at a 0.5 cutoff; other surfaces
+The GLBs embed no textures. Each textured material's base colour is the albedo of a shared board material
+(`data/models/board/textures/structures/common`), whose `.tres` gives its finish, normal, occlusion and depth;
+LOD0 and LOD1 share it. The steel is near white and takes each family's colour from vertex colours (`COLOR_0`):
+`satin-steel` (trim, frames, armor, sheet panels), `matte-steel` (recesses and vents), `painted-steel` (the light
+walls' frames, the civilian scaffold) and `grille`. `cast-concrete` and `concrete-panels` keep their own colour.
+The light walls' `corrugated` steel is tinted the same way. The red lamps and the medium walls' bronze channel
+edge have no texture: their colour is vertex colours (a kit's `baseColorFactor` would tint the whole kit), their
+finish glTF factors, and the lamps glow with their red emissive factor.
+
+Decks are `worn-diamond-plate` (the medium walls' roofs are concrete), its vertex colours their family's tone:
+civilian untinted, light near white, heavy mid grey, hardened and Castle Brian darker, tinted to their paint. A deck holds 8 plate repeats along a
+72-unit section, so sections join without a seam.
+Civilian `chain-link` and `barbed-wire` use alpha masking at a 0.5 cutoff; other surfaces
 are opaque. No required glTF extensions are needed.
 
 ## Dimensions and repetition
@@ -66,7 +74,7 @@ Triangle counts per height-2 file (base + one floor + roof, arms included), **LO
 | Family | Pier | Straight | Terminal |
 |---|---:|---:|---:|
 | Civilian | 3,920 / 1,736 | 2,796 / 852 | 3,940 / 1,756 |
-| Light | 3,644 / 1,072 | 2,288 / 588 | 3,692 / 1,072 |
+| Light | 3,608 / 1,072 | 2,180 / 588 | 3,656 / 1,072 |
 | Medium | 2,768 / 1,104 | 1,476 / 624 | 2,744 / 1,104 |
 | Heavy | 2,656 / 1,212 | 1,624 / 588 | 2,704 / 1,212 |
 | Hardened | 4,284 / 2,520 | 2,556 / 1,200 | 4,332 / 2,520 |
