@@ -234,7 +234,7 @@ def strip_editor_properties(value):
         extras = value.get('extras')
         if isinstance(extras, dict):
             for key in list(extras):
-                if key.startswith('_mm_') or key in ('mm_materials', 'mm_asset_test'):
+                if key.startswith('_mm_') or key in ('mm_materials', 'mm_asset_test', 'mm_palette'):
                     del extras[key]
             if not extras:
                 del value['extras']

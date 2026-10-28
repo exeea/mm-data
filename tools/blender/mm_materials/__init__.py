@@ -2,7 +2,7 @@
 bl_info = {
     'name': 'MegaMek Materials & GLB',
     'author': 'MegaMek contributors',
-    'version': (1, 2, 0),
+    'version': (1, 3, 0),
     'blender': (5, 2, 0),
     'location': '3D View > Sidebar > MegaMek',
     'description': 'Assign Material Maker .tres materials and save GLBs with shared external textures',
@@ -26,6 +26,7 @@ from bpy_extras.io_utils import ImportHelper, ExportHelper
 
 from . import glb
 from . import testing
+from . import palette
 from .tres import read_material
 from .preview import build_preview, show_materials
 
@@ -56,11 +57,14 @@ def textures_root(context):
 
 def clear_library(owner, context):
     # A directory change must not leave choices from a different checkout visible.
+    palette.clear_icons()
     for scene in bpy.data.scenes:
         state = scene.mm_materials
         if state == owner or (isinstance(owner, MMPreferences) and not state.root):
             state.materials.clear()
             state.material = ''
+            if hasattr(scene, 'mm_palette'):
+                scene.mm_palette.folder = 'ALL'
 
 
 def remember_name(source, target):
@@ -439,6 +443,7 @@ class MM_OT_catalog(bpy.types.Operator):
             entries.clear()
             for path in sorted((root / 'data/models/board/textures').rglob('*.tres')):
                 entries.add().name = path.relative_to(root / 'data/models/board/textures').as_posix()
+            palette.refresh(context)
             self.report({'INFO'}, f'{len(entries)} materials available')
             return {'FINISHED'}
         except Exception as error:
@@ -629,6 +634,7 @@ class MM_PT_panel(bpy.types.Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'MegaMek'
+    bl_order = 1
 
     def draw(self, context):
         layout = self.layout
@@ -682,9 +688,11 @@ def register():
         bpy.utils.register_class(cls)
     bpy.types.Scene.mm_materials = PointerProperty(type=MMState)
     testing.register()
+    palette.register()
 
 
 def unregister():
+    palette.unregister()
     testing.unregister()
     del bpy.types.Scene.mm_materials
     for cls in reversed(_classes):

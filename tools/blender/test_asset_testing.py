@@ -112,11 +112,14 @@ with tempfile.TemporaryDirectory(prefix='.mm-contract-test-', dir=ROOT / 'data/m
         assert 'Return to Authoring' in str(error)
     bpy.ops.mm_materials.test_return()
     assert bpy.context.scene == scene and not settings.preview_scene
+    check_ui()
+    assert bpy.context.scene.mm_asset_test.source_scene == scene
     # The engine, not a duplicate Python regexp, reports a malformed kit node.
     mesh = next(o for o in scene.objects if o.type == 'MESH' and '-lod0-' in addon.export_name(o))
     mesh.name = addon.export_name(mesh) + '-bad-tag'
     check_ui()
     assert settings.status.startswith('FAIL:') and 'Expected -baseN' in settings.status, settings.status
+    assert bpy.context.scene == scene and not settings.preview_scene, 'A failed retest retained a stale successful preview'
     close_scene(scene)
     print('PASS: engine assembly, uneven connection heights, rotation, LOD, isolated preview and invalid tags')
 

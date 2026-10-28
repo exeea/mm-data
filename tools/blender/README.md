@@ -18,6 +18,27 @@ Click **Save as Default Folder** to remember the path for new scenes and future 
 sessions. The default is also editable in the add-on preferences. A scene's chosen
 folder is stored in its `.blend` and takes precedence over the default.
 
+## Visual material palette
+
+Open **N → MegaMek → Material Palette**, then click **Refresh Library**. All materials
+appear in a scrollable thumbnail grid. Widen the sidebar for more columns, choose
+Small/Medium/Large thumbnails, search by name/path, or filter to a texture folder.
+Hover a material's name button to see its complete library path.
+
+Click the **name below a thumbnail** to assign it to selected mesh objects' active
+material slots, or to selected faces in Edit Mode. Disable **Assign on click** to
+browse first, then use **Assign Material**. With no mesh selected, a click only chooses
+the material. These controls use the same assignment operation as the existing panel.
+
+**Render Material Thumbnails** builds shaded sphere previews of the `.tres` materials,
+including their tint, normal detail, roughness and emission. Until a sphere is ready,
+its tile shows the albedo. Rendering runs in a separate background Blender process;
+the working scene, objects, materials and selection are untouched. Stop it at any time
+and retain the previews already finished. Previews are cached in
+`mm-data/.tmp/blender-material-previews` and shared by scenes. After changing a material
+or its maps, Refresh Library and render again; only missing or changed previews render.
+The same preview limitations described below apply to these thumbnails.
+
 ## Create a new mesh
 
 1. Model normally in Blender. No GLB import is required. UV unwrap your mesh (one UV set).
@@ -68,7 +89,8 @@ Reload. Change their finish in Material Maker.
 Previews include albedo/tint, roughness/metallic map channels and factors, OpenGL normal
 maps and strength, emission, approximate SSS, vertex colour, and alpha cutouts. AO is
 loaded for inspection; Principled has no AO input. Height/parallax and custom Godot
-shaders (including lava and ice effects) are not reproduced. Compare final appearance
+shaders (including lava and ice effects) are not reproduced. Combined GLB and `.tres`
+emission is an approximate preview; the original GLB emission remains in the export. Compare final appearance
 in the game. Blender lighting and colour management also differ.
 
 Unmanaged materials use Blender's normal glTF exporter. Existing external PNG/JPEG
@@ -179,8 +201,14 @@ Run `test_new_mesh.py` with the same Blender arguments for the fresh-scene workf
 preferences-based library discovery, assigning to a new cube, selection-only export
 from Edit Mode, automatic LOD0, external textures, white colour defaults, and re-import.
 
+`test_palette.py` checks visual-library discovery, search and folder filters, optional
+click assignment in Object/Edit Mode, independent thumbnail rendering, cache invalidation,
+switching library roots, missing-map reporting and preview cleanup.
+
 Run `gradlew :megamek:prepareBlenderPreview` in the engine checkout, then run
 `test_asset_testing.py` with Blender for the wall/scenery and engine bridge integration
 checks. It covers all 18 walls, their lamp emission and hierarchy, `cut`/`stands`,
 connection heights and rotation, LOD selection, invalid tags, synthetic two-tag link/end
 corners, mixed embedded/shared materials and model emission on a shared albedo.
+For a rendered wall assembly check, run `render_preview.py -- --kit` with the same
+Blender arguments. It writes `.tmp/blender-kit-preview.png`.
