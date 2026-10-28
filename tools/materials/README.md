@@ -120,12 +120,16 @@ and clevises, the cargo crate's corner castings), `corrugated` (painted corrugat
 light walls and the seaport containers), `chrome` (hydraulic rods and axles), `hazard-stripes`,
 `safety-yellow` (heavy machinery's paint, lightly chipped: models add wear where it gathers), `diamond-plate`
 (steel diamond plate: the Solaris elevator's platform and pit), `worn-diamond-plate` (the wall decks) and
-`aluminium-plate` (no model uses it at present). The layered walls
+`aluminium-plate` (no model uses it at present). The fuel tanks take `weathered-paint` (glossy off-white enamel
+with dried stains, rain-streaked dirt, rust specks and blotches, chips and rust drips) and `rusted-steel` (weathered
+steel with rust patches); both read their maps from `sources/`, which `photo_sources.py` makes from a photographic
+study (its header gives the recipe). The hard tank's vents take `vent-slots` (pressed louvre slots, two across and
+eight down per repeat). The layered walls
 also take `satin-steel`, `matte-steel`, `painted-steel`, `grille`, `cast-concrete`, `concrete-panels`,
 `chain-link` and `barbed-wire`; their projects without a Material Maker graph of their own read
 their maps from `sources/`. The cargo crate's maps are baked from steel, iron and the hazard stripes. The corrugated
-paint, the three wall steels, the grille and the worn plate are near white or flat: each model tints them with its
-vertex colours or colour slots.
+paint, the three wall steels, the grille, the worn plate, the weathered paint and the vent slots are near white or
+flat: each model tints them with its vertex colours or colour slots.
 
 A loose entry has up to two values:
 

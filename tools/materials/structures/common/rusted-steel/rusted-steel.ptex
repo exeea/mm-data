@@ -1,0 +1,708 @@
+{
+	"connections": [
+		{
+			"from": "AlbedoSource",
+			"from_port": 0,
+			"to": "AlbedoPNG8",
+			"to_port": 0
+		},
+		{
+			"from": "AlbedoPNG8",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "OrmSource",
+			"from_port": 0,
+			"to": "OrmPNG8",
+			"to_port": 0
+		},
+		{
+			"from": "OrmPNG8",
+			"from_port": 0,
+			"to": "Orm",
+			"to_port": 0
+		},
+		{
+			"from": "Orm",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 5
+		},
+		{
+			"from": "Orm",
+			"from_port": 1,
+			"to": "Material",
+			"to_port": 2
+		},
+		{
+			"from": "Orm",
+			"from_port": 2,
+			"to": "Material",
+			"to_port": 1
+		},
+		{
+			"from": "NormalSource",
+			"from_port": 0,
+			"to": "NormalPNG8",
+			"to_port": 0
+		},
+		{
+			"from": "NormalPNG8",
+			"from_port": 0,
+			"to": "NormalForMaterial",
+			"to_port": 0
+		},
+		{
+			"from": "NormalForMaterial",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 4
+		}
+	],
+	"label": "rusted-steel",
+	"name": "rusted-steel",
+	"nodes": [
+		{
+			"color": {
+				"a": 1,
+				"b": 0.3,
+				"g": 0.25,
+				"r": 0.2,
+				"type": "Color"
+			},
+			"name": "About",
+			"node_position": {
+				"x": 0,
+				"y": -320
+			},
+			"parameters": {},
+			"size": {
+				"x": 900,
+				"y": 200
+			},
+			"text": "Rusted steel: dark weathered steel plate with patches of orange-brown rust and pitting, from a photographic study (sources/). Steel is metallic and fairly smooth, rust rough.",
+			"title": "Grille",
+			"type": "comment"
+		},
+		{
+			"name": "Material",
+			"node_position": {
+				"x": 1600,
+				"y": 0
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1,
+					"b": 1,
+					"g": 1,
+					"r": 1,
+					"type": "Color"
+				},
+				"ao": 1,
+				"depth_scale": 0.5,
+				"emission_energy": 1,
+				"flags_transparent": false,
+				"metallic": 1,
+				"normal": 1,
+				"roughness": 1,
+				"size": 9,
+				"sss": 0
+			},
+			"seed": 0,
+			"seed_locked": true,
+			"type": "material"
+		},
+		{
+			"name": "AlbedoSource",
+			"node_position": {
+				"x": 0,
+				"y": 0
+			},
+			"parameters": {
+				"clamp": false,
+				"fix_ar": false,
+				"image": "%PROJECT_PATH%/sources/albedo.png"
+			},
+			"seed": 0,
+			"seed_locked": true,
+			"type": "image"
+		},
+		{
+			"connections": [
+				{
+					"from": "gen_inputs",
+					"from_port": 0,
+					"to": "RGBValidRange",
+					"to_port": 0
+				},
+				{
+					"from": "RGBValidRange",
+					"from_port": 0,
+					"to": "RGBCodes",
+					"to_port": 0
+				},
+				{
+					"from": "RGBCodes",
+					"from_port": 0,
+					"to": "RGBNearestCode",
+					"to_port": 0
+				},
+				{
+					"from": "RGBNearestCode",
+					"from_port": 0,
+					"to": "RGBBinCenter",
+					"to_port": 0
+				},
+				{
+					"from": "RGBBinCenter",
+					"from_port": 0,
+					"to": "RGBPNGValue",
+					"to_port": 0
+				},
+				{
+					"from": "RGBPNGValue",
+					"from_port": 0,
+					"to": "gen_outputs",
+					"to_port": 0
+				}
+			],
+			"label": "Albedo PNG8 storage",
+			"name": "AlbedoPNG8",
+			"node_position": {
+				"x": 500,
+				"y": 0
+			},
+			"nodes": [
+				{
+					"name": "gen_inputs",
+					"node_position": {
+						"x": 0,
+						"y": 0
+					},
+					"parameters": {},
+					"ports": [
+						{
+							"group_size": 0,
+							"name": "Unencoded numeric value",
+							"type": "rgb"
+						}
+					],
+					"seed": 0,
+					"seed_locked": true,
+					"type": "ios"
+				},
+				{
+					"name": "gen_outputs",
+					"node_position": {
+						"x": 1800,
+						"y": 0
+					},
+					"parameters": {},
+					"ports": [
+						{
+							"group_size": 0,
+							"name": "PNG bin center",
+							"type": "rgb"
+						}
+					],
+					"seed": 0,
+					"seed_locked": true,
+					"type": "ios"
+				},
+				{
+					"name": "RGBValidRange",
+					"node_position": {
+						"x": 250,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": true,
+						"d_in2_x": 0,
+						"d_in2_y": 0,
+						"d_in2_z": 0,
+						"op": 0
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBCodes",
+					"node_position": {
+						"x": 500,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": false,
+						"d_in2_x": 255,
+						"d_in2_y": 255,
+						"d_in2_z": 255,
+						"op": 2
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBNearestCode",
+					"node_position": {
+						"x": 750,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": false,
+						"d_in2_x": 0,
+						"d_in2_y": 0,
+						"d_in2_z": 0,
+						"op": 8
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBBinCenter",
+					"node_position": {
+						"x": 1000,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": false,
+						"d_in2_x": 0.5,
+						"d_in2_y": 0.5,
+						"d_in2_z": 0.5,
+						"op": 0
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBPNGValue",
+					"node_position": {
+						"x": 1250,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": true,
+						"d_in2_x": 255,
+						"d_in2_y": 255,
+						"d_in2_z": 255,
+						"op": 3
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				}
+			],
+			"parameters": {},
+			"seed": 0,
+			"seed_locked": true,
+			"type": "graph"
+		},
+		{
+			"name": "OrmSource",
+			"node_position": {
+				"x": 0,
+				"y": 250
+			},
+			"parameters": {
+				"clamp": false,
+				"fix_ar": false,
+				"image": "%PROJECT_PATH%/sources/orm.png"
+			},
+			"seed": 0,
+			"seed_locked": true,
+			"type": "image"
+		},
+		{
+			"connections": [
+				{
+					"from": "gen_inputs",
+					"from_port": 0,
+					"to": "RGBValidRange",
+					"to_port": 0
+				},
+				{
+					"from": "RGBValidRange",
+					"from_port": 0,
+					"to": "RGBCodes",
+					"to_port": 0
+				},
+				{
+					"from": "RGBCodes",
+					"from_port": 0,
+					"to": "RGBNearestCode",
+					"to_port": 0
+				},
+				{
+					"from": "RGBNearestCode",
+					"from_port": 0,
+					"to": "RGBBinCenter",
+					"to_port": 0
+				},
+				{
+					"from": "RGBBinCenter",
+					"from_port": 0,
+					"to": "RGBPNGValue",
+					"to_port": 0
+				},
+				{
+					"from": "RGBPNGValue",
+					"from_port": 0,
+					"to": "gen_outputs",
+					"to_port": 0
+				}
+			],
+			"label": "ORM PNG8 storage",
+			"name": "OrmPNG8",
+			"node_position": {
+				"x": 500,
+				"y": 250
+			},
+			"nodes": [
+				{
+					"name": "gen_inputs",
+					"node_position": {
+						"x": 0,
+						"y": 0
+					},
+					"parameters": {},
+					"ports": [
+						{
+							"group_size": 0,
+							"name": "Unencoded numeric value",
+							"type": "rgb"
+						}
+					],
+					"seed": 0,
+					"seed_locked": true,
+					"type": "ios"
+				},
+				{
+					"name": "gen_outputs",
+					"node_position": {
+						"x": 1800,
+						"y": 0
+					},
+					"parameters": {},
+					"ports": [
+						{
+							"group_size": 0,
+							"name": "PNG bin center",
+							"type": "rgb"
+						}
+					],
+					"seed": 0,
+					"seed_locked": true,
+					"type": "ios"
+				},
+				{
+					"name": "RGBValidRange",
+					"node_position": {
+						"x": 250,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": true,
+						"d_in2_x": 0,
+						"d_in2_y": 0,
+						"d_in2_z": 0,
+						"op": 0
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBCodes",
+					"node_position": {
+						"x": 500,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": false,
+						"d_in2_x": 255,
+						"d_in2_y": 255,
+						"d_in2_z": 255,
+						"op": 2
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBNearestCode",
+					"node_position": {
+						"x": 750,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": false,
+						"d_in2_x": 0,
+						"d_in2_y": 0,
+						"d_in2_z": 0,
+						"op": 8
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBBinCenter",
+					"node_position": {
+						"x": 1000,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": false,
+						"d_in2_x": 0.5,
+						"d_in2_y": 0.5,
+						"d_in2_z": 0.5,
+						"op": 0
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBPNGValue",
+					"node_position": {
+						"x": 1250,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": true,
+						"d_in2_x": 255,
+						"d_in2_y": 255,
+						"d_in2_z": 255,
+						"op": 3
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				}
+			],
+			"parameters": {},
+			"seed": 0,
+			"seed_locked": true,
+			"type": "graph"
+		},
+		{
+			"name": "Orm",
+			"node_position": {
+				"x": 1000,
+				"y": 250
+			},
+			"parameters": {},
+			"seed": 0,
+			"seed_locked": true,
+			"type": "decompose"
+		},
+		{
+			"name": "NormalSource",
+			"node_position": {
+				"x": 0,
+				"y": 600
+			},
+			"parameters": {
+				"clamp": false,
+				"fix_ar": false,
+				"image": "%PROJECT_PATH%/sources/normal.png"
+			},
+			"seed": 0,
+			"seed_locked": true,
+			"type": "image"
+		},
+		{
+			"connections": [
+				{
+					"from": "gen_inputs",
+					"from_port": 0,
+					"to": "RGBValidRange",
+					"to_port": 0
+				},
+				{
+					"from": "RGBValidRange",
+					"from_port": 0,
+					"to": "RGBCodes",
+					"to_port": 0
+				},
+				{
+					"from": "RGBCodes",
+					"from_port": 0,
+					"to": "RGBNearestCode",
+					"to_port": 0
+				},
+				{
+					"from": "RGBNearestCode",
+					"from_port": 0,
+					"to": "RGBBinCenter",
+					"to_port": 0
+				},
+				{
+					"from": "RGBBinCenter",
+					"from_port": 0,
+					"to": "RGBPNGValue",
+					"to_port": 0
+				},
+				{
+					"from": "RGBPNGValue",
+					"from_port": 0,
+					"to": "gen_outputs",
+					"to_port": 0
+				}
+			],
+			"label": "Normal PNG8 storage",
+			"name": "NormalPNG8",
+			"node_position": {
+				"x": 500,
+				"y": 600
+			},
+			"nodes": [
+				{
+					"name": "gen_inputs",
+					"node_position": {
+						"x": 0,
+						"y": 0
+					},
+					"parameters": {},
+					"ports": [
+						{
+							"group_size": 0,
+							"name": "Unencoded numeric value",
+							"type": "rgb"
+						}
+					],
+					"seed": 0,
+					"seed_locked": true,
+					"type": "ios"
+				},
+				{
+					"name": "gen_outputs",
+					"node_position": {
+						"x": 1800,
+						"y": 0
+					},
+					"parameters": {},
+					"ports": [
+						{
+							"group_size": 0,
+							"name": "PNG bin center",
+							"type": "rgb"
+						}
+					],
+					"seed": 0,
+					"seed_locked": true,
+					"type": "ios"
+				},
+				{
+					"name": "RGBValidRange",
+					"node_position": {
+						"x": 250,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": true,
+						"d_in2_x": 0,
+						"d_in2_y": 0,
+						"d_in2_z": 0,
+						"op": 0
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBCodes",
+					"node_position": {
+						"x": 500,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": false,
+						"d_in2_x": 255,
+						"d_in2_y": 255,
+						"d_in2_z": 255,
+						"op": 2
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBNearestCode",
+					"node_position": {
+						"x": 750,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": false,
+						"d_in2_x": 0,
+						"d_in2_y": 0,
+						"d_in2_z": 0,
+						"op": 8
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBBinCenter",
+					"node_position": {
+						"x": 1000,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": false,
+						"d_in2_x": 0.5,
+						"d_in2_y": 0.5,
+						"d_in2_z": 0.5,
+						"op": 0
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBPNGValue",
+					"node_position": {
+						"x": 1250,
+						"y": 0
+					},
+					"parameters": {
+						"clamp": true,
+						"d_in2_x": 255,
+						"d_in2_y": 255,
+						"d_in2_z": 255,
+						"op": 3
+					},
+					"seed": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				}
+			],
+			"parameters": {},
+			"seed": 0,
+			"seed_locked": true,
+			"type": "graph"
+		},
+		{
+			"name": "NormalForMaterial",
+			"node_position": {
+				"x": 1000,
+				"y": 600
+			},
+			"parameters": {
+				"op": 0
+			},
+			"seed": 0,
+			"seed_locked": true,
+			"type": "normal_map_convert"
+		}
+	],
+	"parameters": {},
+	"type": "graph"
+}

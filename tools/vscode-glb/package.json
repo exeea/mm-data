@@ -1,0 +1,105 @@
+{
+  "name": "megamek-glb-viewer",
+  "displayName": "MegaMek GLB Viewer",
+  "description": "Inspect MegaMek GLBs, shared Material Maker materials, LODs and engine-assembled connected kits.",
+  "version": "0.1.4",
+  "publisher": "megamek-local",
+  "license": "GPL-3.0-or-later",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "main": "./src/extension.cjs",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Viewing is available; engine builds and tests require a trusted workspace.",
+      "restrictedConfigurations": [
+        "megamekGlb.enginePath",
+        "megamekGlb.javaPath",
+        "megamekGlb.mmDataPath"
+      ]
+    },
+    "virtualWorkspaces": false
+  },
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "megamek.glb",
+        "displayName": "MegaMek GLB Viewer",
+        "selector": [
+          {
+            "filenamePattern": "*.glb"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "megamekGlb.open",
+        "title": "MegaMek: Open GLB Viewer"
+      },
+      {
+        "command": "megamekGlb.configure",
+        "title": "MegaMek: Configure GLB Viewer"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "megamekGlb.open",
+          "when": "resourceExtname == .glb",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "MegaMek GLB Viewer",
+      "properties": {
+        "megamekGlb.mmDataPath": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "mm-data checkout containing data/models. Empty detects it from the model and workspace folders."
+        },
+        "megamekGlb.enginePath": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "MegaMek checkout containing gradlew. Empty detects sibling megamek_temp or megamek. Used only for engine validation and connected-kit assembly."
+        },
+        "megamekGlb.javaPath": {
+          "type": "string",
+          "default": "java",
+          "scope": "machine",
+          "description": "Java executable used to build the engine bridge. Tests use the JDK recorded by that build."
+        },
+        "megamekGlb.autoReload": {
+          "type": "boolean",
+          "default": true,
+          "description": "Refresh when the open GLB or its material dependencies change on disk."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "vscode:prepublish": "npm run build",
+    "test": "node --test test/*.test.cjs",
+    "test:browser": "node test/browser.mjs",
+    "test:extension": "node test/extension.mjs",
+    "audit": "node scripts/audit.cjs",
+    "package": "vsce package --no-dependencies --allow-missing-repository -o megamek-glb-viewer.vsix"
+  },
+  "devDependencies": {
+    "three": "0.186.1",
+    "esbuild": "0.28.2",
+    "@vscode/vsce": "4.1.0",
+    "@playwright/test": "1.64.1",
+    "@vscode/test-electron": "3.1.0"
+  }
+}

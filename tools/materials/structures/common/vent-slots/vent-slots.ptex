@@ -1,0 +1,104 @@
+{
+  "connections": [
+    {"from": "pill", "from_port": 0, "to": "grid", "to_port": 0},
+    {"from": "grid", "from_port": 0, "to": "show", "to_port": 0},
+    {"from": "opening", "from_port": 0, "to": "opening_grid", "to_port": 0},
+    {"from": "opening_grid", "from_port": 0, "to": "opening_show", "to_port": 0},
+    {"from": "opening_show", "from_port": 0, "to": "gap", "to_port": 0},
+    {"from": "show", "from_port": 0, "to": "gap", "to_port": 1},
+    {"from": "gap", "from_port": 0, "to": "dark", "to_port": 0},
+    {"from": "dark", "from_port": 0, "to": "albedo", "to_port": 1},
+    {"from": "dark", "from_port": 0, "to": "occlusion", "to_port": 1},
+    {"from": "show", "from_port": 0, "to": "normal", "to_port": 0},
+    {"from": "albedo", "from_port": 0, "to": "Material", "to_port": 0},
+    {"from": "normal", "from_port": 0, "to": "Material", "to_port": 4},
+    {"from": "occlusion", "from_port": 0, "to": "Material", "to_port": 5}
+  ],
+  "label": "vent-slots",
+  "longdesc": "Shared vent slots (structures/common): pressed louvre slots, two across and eight down per repeat, each with a dark opening along its lower edge. A model maps one repeat onto one vent, offset by half a slot cell (the slots are centred on the cell edges). Near-white: models tint it with their vertex colours.",
+  "name": "vent-slots",
+  "node_position": {"x": 0, "y": 0},
+  "nodes": [
+    {
+      "name": "Material",
+      "node_position": {"x": 600, "y": 0},
+      "parameters": {
+        "albedo_color": {"a": 1, "b": 1, "g": 1, "r": 1, "type": "Color"},
+        "ao": 1, "depth_scale": 0.5, "emission_energy": 1, "flags_transparent": false, "metallic": 0, "normal": 1,
+        "roughness": 0.55, "size": 9, "sss": 0
+      },
+      "seed": 0, "seed_locked": true, "type": "material"
+    },
+    {
+      "name": "pill",
+      "node_position": {"x": -600, "y": 0},
+      "parameters": {"bottom_left": 0.045, "bottom_right": 0.045, "center_x": 0.0, "center_y": 0.0, "height": 0.045,
+                     "top_left": 0.045, "top_right": 0.045, "width": 0.2125},
+      "seed_int": 0, "type": "sdroundedbox"
+    },
+    {
+      "name": "grid",
+      "node_position": {"x": -400, "y": 0},
+      "parameters": {"r": 0.0, "rx": 2.0, "ry": 8.0, "variations": false},
+      "seed_int": 0, "type": "sdrepeat"
+    },
+    {
+      "name": "show",
+      "node_position": {"x": -200, "y": 0},
+      "parameters": {"base": 0.0, "bevel": 0.012},
+      "seed_int": 0, "type": "sdshow"
+    },
+    {
+      "name": "opening",
+      "node_position": {"x": -600, "y": 200},
+      "parameters": {"bottom_left": 0.045, "bottom_right": 0.045, "center_x": 0.0, "center_y": 0.012, "height": 0.045,
+                     "top_left": 0.045, "top_right": 0.045, "width": 0.2125},
+      "seed_int": 0, "type": "sdroundedbox"
+    },
+    {
+      "name": "opening_grid",
+      "node_position": {"x": -400, "y": 200},
+      "parameters": {"r": 0.0, "rx": 2.0, "ry": 8.0, "variations": false},
+      "seed_int": 0, "type": "sdrepeat"
+    },
+    {
+      "name": "opening_show",
+      "node_position": {"x": -200, "y": 200},
+      "parameters": {"base": 0.0, "bevel": 0.006},
+      "seed_int": 0, "type": "sdshow"
+    },
+    {
+      "name": "gap",
+      "node_position": {"x": 0, "y": 200},
+      "parameters": {"clamp": true, "default_in1": 0.0, "default_in2": 0.0, "op": 1},
+      "seed_int": 0, "type": "math"
+    },
+    {
+      "name": "dark",
+      "node_position": {"x": 200, "y": 200},
+      "parameters": {"clamp": false, "default_in1": 0.0, "default_in2": 0.6, "op": 2},
+      "seed_int": 0, "type": "math"
+    },
+    {
+      "name": "albedo",
+      "node_position": {"x": 400, "y": 150},
+      "parameters": {"clamp": true, "default_in1": 0.9, "default_in2": 0.0, "op": 1},
+      "seed_int": 0, "type": "math"
+    },
+    {
+      "name": "occlusion",
+      "node_position": {"x": 400, "y": 300},
+      "parameters": {"clamp": true, "default_in1": 1.0, "default_in2": 0.0, "op": 1},
+      "seed_int": 0, "type": "math"
+    },
+    {
+      "name": "normal",
+      "node_position": {"x": 200, "y": 0},
+      "parameters": {"buffer": 1, "param2": 0, "size": 9, "strength": 1.0},
+      "seed_int": 0, "type": "normal_map2"
+    }
+  ],
+  "parameters": {},
+  "shortdesc": "Vent slots",
+  "type": "graph"
+}

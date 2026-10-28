@@ -2,7 +2,9 @@
 
 Store kits as `<family>/<name>.glb`, for example `fortress_light/fortress_light_a_52.glb`.
 Do not nest this catalog under the source tileset's `saxarba` directory. The selected tileset artwork remains
-the key for legacy fallback under `models/board/buildings`.
+the key for legacy fallback under `models/board/buildings`. A kit named for the design without the tileset's exit
+suffix, for example `fuel_tanks/fuel_tank_light.glb`, stands for every `fuel_tank_light_NN` key: its connection
+pieces follow the hex's exits. An exact `<name>_NN.glb` takes precedence.
 
 Each file contains one building: an identity `<name>-lod0` group and, normally, optional `<name>-lod1`.
 Author no more than two levels for this work; simple kits (especially under 200 triangles) can use just `lod0`.
@@ -22,7 +24,9 @@ interior floors and struts. Keep notches and courtyards in those surfaces.
 
 ## Connected kits
 
-A structure that changes shape with the hexsides it connects across tags its mesh nodes after the module:
+Buildings and fuel tanks connect across the hexsides their exits name. A neighbour of the same structure (building or
+fuel tank) that connects back and stands lower ends the connection at its top. A kit that changes shape with its
+connections tags its mesh nodes after the module:
 `<name>-lod0-<module>[-<tag>[-<tag>]]`, each tag `link-<dir>` or `end-<dir>`, `dir` one of `n`, `ne`, `se`, `s`,
 `sw`, `nw` (clockwise from north), for example `pier-lod0-floor0-link-n`.
 
@@ -33,14 +37,22 @@ A structure that changes shape with the hexsides it connects across tags its mes
 - A symmetric kit tags `n` only (one-tag pieces) or `n` and `ne` (corner pieces, in all four link/end states);
   the runtime turns them by exact 60-degree steps for the other directions. Any other kit tags all six directions
   for every piece.
-- Every module variant and LOD has the same tagged pieces. Base and floor modules, tagged pieces included, are
-  exactly 18 units high; a module stands on its lowest point over all its pieces.
+- Every variant of a module type (base, floor, roof) and every LOD has the same tagged pieces. A type may have none:
+  a fuel tank's ground pipes stand in its base only. Base and floor modules, tagged pieces included, are exactly
+  18 units high; a module stands on its lowest point over all its pieces.
 - The board's hex is regular: 72 across its flats, 83.125 across its corners (the regular 83.138 to a 32nd), every
-  edge midpoint 36 from the centre within 0.005 (Blender: X east, Y north, Z up, one unit per board unit). A one-tag
-  `link` piece ends on its edge line, within one unit.
+  edge midpoint 36 from the centre within 0.005 (Blender: X east, Y north, Z up, one unit per board unit). Every kit
+  is drawn as authored on it. A one-tag `link` piece ends on its edge line, within one unit.
 - Names are checked when the kit loads: Blender's `.001` suffixes and unknown tags are errors.
 
-Walls (`walls/README.md`) are connected kits.
+Walls (`walls/README.md`) and fuel tanks (`fuel_tanks/`) are connected kits. The fuel tanks are generated:
+`python tools/buildings/fuel_tanks.py [weight ...]`, after the designer's kits (sizes, paint, roof rings). Each kit is
+authored stacked as built (floor at 18, roof at 36) with no coincident surfaces between its pieces. At full detail
+the base carries a nozzle in all six directions; a `link-n` pipe runs from the north one to the edge, and an `end-n`
+blind flange closes it where no pipe leaves. Painted pieces take the board's `weathered-paint`, the hard tank's
+vents `vent-slots`, both tinted by vertex colour, and steel `rusted-steel`, by image URI; vertex colours also carry
+contact shading and grime. Three levels of detail follow the props' rule (above 80 pixels on screen, down to 24,
+below).
 
 The four heavy-industrial terrain uses `BoardIndustrial` procedural generator. It assembles
 different equipment families with independently chosen heights, distinct domed/conical/flat caps, and pipes
