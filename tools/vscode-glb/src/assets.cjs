@@ -29,20 +29,28 @@ async function findRoots(file, configured = '', folders = [], io = fs) {
   return { root, models, textures: path.join(models, 'board/textures') };
 }
 
-async function loadAsset(file, roots, urlFor = p => p, variant = '', io = fs) {
-  const bytes = await io.readFile(file);
+async function resolveLocal(base, uri, boundaries, dependencies, io = fs) {
+  if (typeof uri !== 'string' || /[?#\x00]/.test(uri) || /^[a-z][a-z\d+.-]*:/i.test(uri) || /^[\\/]/.test(uri)) throw Error(`Only local relative asset paths are allowed: ${uri}`);
+  const target = path.resolve(base, decodeURIComponent(uri));
+  if (!boundaries.some(root => inside(root, target))) throw Error(`Asset path leaves its allowed folder: ${uri}`);
+  dependencies.add(target);
+  const real = await io.realpath(target);
+  if (!boundaries.some(root => inside(root, real))) throw Error(`Asset link leaves its allowed folder: ${uri}`);
+  return target;
+}
+async function materialSpec(file, roots, urlFor, dependencies, io = fs) {
+  const resolve = (base, uri, boundaries) => resolveLocal(base, uri, boundaries, dependencies, io);
+  dependencies.add(file);
+  const spec = await readTres(file, roots.textures, resolve, io);
+  return { ...spec, maps: Object.fromEntries(await Promise.all(Object.entries(spec.maps).filter(([, p]) => p).map(async ([role, p]) => [role, { file: p, url: await urlFor(p, (await io.stat(p)).mtimeMs) }]))) };
+}
+
+async function loadAsset(file, roots, urlFor = p => p, variant = '', io = fs, bytes) {
+  bytes ||= await io.readFile(file);
   const { json, binary } = readGlb(bytes);
   const original = structuredClone(json), diagnostics = [], dependencies = new Set([file]);
   const allowed = [roots.models, path.dirname(file)];
-  const resolve = async (base, uri, boundaries = allowed) => {
-    if (typeof uri !== 'string' || /[?#\x00]/.test(uri) || /^[a-z][a-z\d+.-]*:/i.test(uri) || /^[\\/]/.test(uri)) throw Error(`Only local relative asset paths are allowed: ${uri}`);
-    const target = path.resolve(base, decodeURIComponent(uri));
-    if (!boundaries.some(root => inside(root, target))) throw Error(`Asset path leaves its allowed folder: ${uri}`);
-    dependencies.add(target);
-    const real = await io.realpath(target);
-    if (!boundaries.some(root => inside(root, real))) throw Error(`Asset link leaves its allowed folder: ${uri}`);
-    return target;
-  };
+  const resolve = (base, uri, boundaries = allowed) => resolveLocal(base, uri, boundaries, dependencies, io);
   const localUrl = async p => urlFor(p, (await io.stat(p)).mtimeMs);
   const imagePaths = new Map();
   for (const [index, image] of (json.images || []).entries()) {
@@ -78,8 +86,8 @@ async function loadAsset(file, roots, urlFor = p => p, variant = '', io = fs) {
     if (albedo && inside(roots.textures, albedo) && albedo.endsWith('_albedo.png')) {
       const resource = albedo.replace(/_albedo\.png$/, '.tres'); dependencies.add(resource);
       try {
-        const spec = await readTres(resource, roots.textures, resolve, io);
-        surface.managed = { ...spec, maps: Object.fromEntries(await Promise.all(Object.entries(spec.maps).filter(([, p]) => p).map(async ([role, p]) => [role, { file: p, url: await localUrl(p) }]))) };
+        const spec = await materialSpec(resource, roots, urlFor, dependencies, io);
+        surface.managed = spec;
         if (spec.shader) diagnostics.push(`${material.name}: Godot ShaderMaterial is shown as a PBR approximation; custom lava/ice shader behavior requires the game.`);
         if (spec.maps.height || spec.scatter) diagnostics.push(`${material.name}: height uses bump preview; subsurface scattering and game parallax require the game.`);
       } catch (error) { diagnostics.push(`${material.name}: ${error.message}`); }
@@ -102,4 +110,4 @@ async function loadAsset(file, roots, urlFor = p => p, variant = '', io = fs) {
   const statistics = summarize(original, binary, bytes.length);
   return { file, name: path.basename(file), roots, document: json, metadata: original, statistics, surfaces, variants: [...variants], diagnostics, dependencies: [...dependencies], descriptors };
 }
-module.exports = { readGlb, inside, exists, findRoots, loadAsset };
+module.exports = { readGlb, inside, exists, findRoots, loadAsset, resolveLocal, materialSpec };

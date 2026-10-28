@@ -37,7 +37,7 @@ Scenery meshes live in topic folders under `scenery/`, with kebab-case names:
 | `road/` | stop sign, three-aspect pole signal and curved mast-arm signal gantry; facing +Y with pole bases at Z=0; generated road-junction controls; `roadside-trees.png`, the roadside-trees stamp's thumbnail, rendered from its rows over its half-transparent road |
 | `construction/` | crawler crane, bulldozer, concrete debris, excavation site, concrete pipe |
 | `farm/` | one mesh per animal and pose: cow, pig, horse, bison, hen and rooster; coats are colour slots |
-| `seaport/yard/` | the container yard looks' ten compositions (`yard/<name>` in `layouts.json`) and the ten seaport props; every container in a yard, and the one the quay crane, straddle carrier or reach stacker carries, is the `container` prop's box (its last level) in one of its paint presets, a yard's with the faces touching a neighbour left out and its sides darkening toward its foot |
+| `seaport/yard/` | the container yard looks' ten compositions (`yard/<name>` in `layouts.json`) and the ten seaport props; all 17 container-bearing models have three LODs, with detailed individual props and budgeted yard shells using baked frames and door hardware; hidden neighbour faces are omitted |
 | `maglev/` | route marker (the only rail mesh), station platform, city and colony vehicles, the city gangway coupler; `train.png` and `colony-train.png` are the stamps' thumbnails |
 | `military/` | orbital gun, fortification (dug, and sandbags where paved), the trench of a dug-in platoon, an olive container of cargo set down on the ground |
 | `rubble/` | a collapsed building by structure type, and (`-path`) its hex cleared: the debris collected into heaps, the salvage stacked |
@@ -95,8 +95,22 @@ that reproduces it for every coat; each car and pond row names its colours.
 Coats that differ only in colour share one mesh with colour slots, so there are
 12 animal meshes.
 
-The containers are corrugated steel, the shared `textures/structures/common/corrugated`
-(as are the light walls), one repeat to 6.5 m (18 units), so its 0.65 m corrugations read at play zoom: their slot colour tints its near-white paint.
+The containers use `textures/structures/common/corrugated-painted`: opaque dielectric satin paint, tinted by
+vertex/slot colours, with subtle broad weathering. Their fittings use separate steel; there is no tiled chip mask.
+The unpainted light walls use `corrugated`, the bare-metal finish. Both materials have the same profile, one repeat
+to 6.5 m (18 units), so their 0.65 m corrugations read at play zoom.
+
+Individual container props have formed frames, castings, hinges and locking bars at LOD0, and recessed panels with
+four rim strips per face at LOD1. Yard compositions use simpler shells at every level: top/bottom rail profiles at
+LOD0, top rails at LOD1 and flat faces at LOD2. Frames, door seams and hardware use the shared `container-details`
+albedo, normal and ORM atlas. Its alpha masks paint tint on metal fittings, not visibility. The near/middle stacked
+bodies have small physical joints; the far atlas preserves those boundaries. The single container uses 250/50/10
+triangles; heavy rows use 1868/1264/660, ultra rows 2940/1980/1020, and ultra gantry containers 2316/1560/804.
+Each yard container mesh is capped at 3000/2000/1100 triangles, excluding separately placed cranes/vehicles.
+All levels retain colour slots, placement and existing machinery. The props' existing screen-size LOD selection
+chooses the three levels.
+Authoring sources and the reproducible build are in `tools/board-models/seaport/`; rerun that build after changing
+the source container or exporting its underlying Material Maker materials.
 
 The cargo crate's maps are baked, its olive paint worn to the metal, rusted and dirty. A
 material whose extras set `mmPaintMask` keeps a paint mask in its albedo's alpha: the slot

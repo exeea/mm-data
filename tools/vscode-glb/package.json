@@ -1,8 +1,8 @@
 {
   "name": "megamek-glb-viewer",
   "displayName": "MegaMek GLB Viewer",
-  "description": "Inspect MegaMek GLBs, shared Material Maker materials, LODs and engine-assembled connected kits.",
-  "version": "0.1.4",
+  "description": "Inspect and edit MegaMek GLB surface materials with a shared Material Maker palette, LODs and connected-kit previews.",
+  "version": "0.6.0",
   "publisher": "megamek-local",
   "license": "GPL-3.0-or-later",
   "engines": {

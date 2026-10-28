@@ -43,7 +43,8 @@ The GLBs embed no textures. Each textured material's base colour is the albedo o
 LOD0 and LOD1 share it. The steel is near white and takes each family's colour from vertex colours (`COLOR_0`):
 `satin-steel` (trim, frames, armor, sheet panels), `matte-steel` (recesses and vents), `painted-steel` (the light
 walls' frames, the civilian scaffold) and `grille`. `cast-concrete` and `concrete-panels` keep their own colour.
-The light walls' `corrugated` steel is tinted the same way. The red lamps and the medium walls' bronze channel
+The light walls' `corrugated` is bare steel, tinted the same way; painted containers use the separate
+`corrugated-painted` finish. The red lamps and the medium walls' bronze channel
 edge have no texture: their colour is vertex colours (a kit's `baseColorFactor` would tint the whole kit), their
 finish glTF factors, and the lamps glow with their red emissive factor.
 

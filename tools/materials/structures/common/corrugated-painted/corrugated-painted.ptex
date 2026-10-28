@@ -1,0 +1,424 @@
+{
+  "name": "corrugated-painted",
+  "label": "Corrugated steel",
+  "type": "graph",
+  "parameters": {},
+  "nodes": [
+    {
+      "name": "About",
+      "type": "comment",
+      "parameters": {},
+      "node_position": {
+        "x": -1700,
+        "y": -950
+      },
+      "size": {
+        "x": 1000,
+        "y": 230
+      },
+      "title": "About this material",
+      "text": "Painted corrugated container steel: opaque dielectric paint (metallic 0), satin roughness 0.42, broad subtle weathering. No repeating chips or albedo-alpha paint mask: random bright spots do not represent wear. Container frames and fittings use their separate steel material. Shares the ten-rib profile, 6.5 m repeat, normal, height and AO of corrugated, the bare-steel material for light walls. Real edge wear needs geometry-aware placement on corners, seams and handling points, not a tiled noise mask. Export Godot/Godot 4 Standard into data/models/board/textures/structures/common, then Reload assets."
+    },
+    {
+      "name": "bricks3",
+      "type": "bricks3",
+      "parameters": {
+        "pattern": 0,
+        "repeat": 1,
+        "rows": 1,
+        "columns": 10,
+        "row_offset": 0,
+        "mortar": 0.01,
+        "bevel": 0.02,
+        "round": 0,
+        "corner": 0
+      },
+      "node_position": {
+        "x": -1400,
+        "y": -600
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "transform2",
+      "type": "transform2",
+      "parameters": {
+        "mode": 0,
+        "rotate": 0,
+        "scale_x": 1,
+        "scale_y": 1.56,
+        "translate_x": 0,
+        "translate_y": 0
+      },
+      "node_position": {
+        "x": -1150,
+        "y": -600
+      },
+      "seed_int": 0,
+      "generic_size": 1
+    },
+    {
+      "name": "normal_map2",
+      "type": "normal_map2",
+      "parameters": {
+        "buffer": 1,
+        "param2": 0,
+        "size": 9,
+        "strength": 0.25
+      },
+      "node_position": {
+        "x": -850,
+        "y": -700
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "profile_depth",
+      "type": "invert",
+      "parameters": {},
+      "node_position": {
+        "x": -850,
+        "y": -550
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "paint_mottle",
+      "type": "fbm3",
+      "parameters": {
+        "folds": 0,
+        "iterations": 6,
+        "noise": 1,
+        "offset": 0,
+        "persistence": 0.5,
+        "scale_x": 6,
+        "scale_y": 6
+      },
+      "node_position": {
+        "x": -1400,
+        "y": 350
+      },
+      "seed_int": 31337
+    },
+    {
+      "name": "paint",
+      "type": "colorize",
+      "parameters": {
+        "gradient": {
+          "type": "Gradient",
+          "interpolation": 1,
+          "points": [
+            {
+              "pos": 0,
+              "r": 0.9,
+              "g": 0.9,
+              "b": 0.89,
+              "a": 1
+            },
+            {
+              "pos": 0.5,
+              "r": 0.95,
+              "g": 0.95,
+              "b": 0.94,
+              "a": 1
+            },
+            {
+              "pos": 1,
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          ]
+        }
+      },
+      "node_position": {
+        "x": -1150,
+        "y": 350
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "streak_noise",
+      "type": "fbm3",
+      "parameters": {
+        "folds": 0,
+        "iterations": 3,
+        "noise": 1,
+        "offset": 0,
+        "persistence": 0.4,
+        "scale_x": 12,
+        "scale_y": 2
+      },
+      "node_position": {
+        "x": -1400,
+        "y": 550
+      },
+      "seed_int": 90210
+    },
+    {
+      "name": "streaks",
+      "type": "tones_step",
+      "parameters": {
+        "value": 0.62,
+        "width": 0.35,
+        "invert": false
+      },
+      "node_position": {
+        "x": -1150,
+        "y": 550
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "rust",
+      "type": "uniform",
+      "parameters": {
+        "color": {
+          "type": "Color",
+          "r": 0.42,
+          "g": 0.25,
+          "b": 0.14,
+          "a": 1
+        }
+      },
+      "node_position": {
+        "x": -1150,
+        "y": 700
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "weathered",
+      "type": "blend2",
+      "parameters": {
+        "amount1": 0.22,
+        "blend_type1": 0
+      },
+      "node_position": {
+        "x": -800,
+        "y": 450
+      },
+      "seed_int": 0,
+      "generic_size": 1
+    },
+    {
+      "name": "paint_roughness",
+      "type": "uniform",
+      "parameters": {
+        "color": {
+          "type": "Color",
+          "r": 0.42,
+          "g": 0.42,
+          "b": 0.42,
+          "a": 1.0
+        }
+      },
+      "node_position": {
+        "x": -900,
+        "y": 250
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "rust_roughness",
+      "type": "uniform",
+      "parameters": {
+        "color": {
+          "type": "Color",
+          "r": 0.86,
+          "g": 0.86,
+          "b": 0.86,
+          "a": 1
+        }
+      },
+      "node_position": {
+        "x": -650,
+        "y": 330
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "finish_roughness",
+      "type": "blend2",
+      "parameters": {
+        "amount1": 0.15,
+        "blend_type1": 0
+      },
+      "node_position": {
+        "x": -350,
+        "y": 200
+      },
+      "seed_int": 0,
+      "generic_size": 1
+    },
+    {
+      "name": "valley",
+      "type": "math",
+      "parameters": {
+        "op": 2,
+        "default_in1": 0.0,
+        "default_in2": 0.28,
+        "clamp": true
+      },
+      "node_position": {
+        "x": -850,
+        "y": -400
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "valley_occlusion",
+      "type": "math",
+      "parameters": {
+        "op": 0,
+        "default_in1": 0.0,
+        "default_in2": 0.72,
+        "clamp": true
+      },
+      "node_position": {
+        "x": -650,
+        "y": -400
+      },
+      "seed_int": 0
+    },
+    {
+      "name": "Material",
+      "type": "material",
+      "node_position": {
+        "x": 0,
+        "y": 0
+      },
+      "seed_int": 0,
+      "export_paths": {},
+      "parameters": {
+        "albedo_color": {
+          "type": "Color",
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        },
+        "ao": 1,
+        "depth_scale": 0.06,
+        "emission_energy": 1,
+        "flags_transparent": false,
+        "metallic": 0,
+        "normal": 1,
+        "roughness": 1,
+        "size": 9,
+        "sss": 0
+      }
+    }
+  ],
+  "connections": [
+    {
+      "from": "bricks3",
+      "from_port": 0,
+      "to": "transform2",
+      "to_port": 0
+    },
+    {
+      "from": "transform2",
+      "from_port": 0,
+      "to": "normal_map2",
+      "to_port": 0
+    },
+    {
+      "from": "transform2",
+      "from_port": 0,
+      "to": "profile_depth",
+      "to_port": 0
+    },
+    {
+      "from": "paint_mottle",
+      "from_port": 0,
+      "to": "paint",
+      "to_port": 0
+    },
+    {
+      "from": "streak_noise",
+      "from_port": 0,
+      "to": "streaks",
+      "to_port": 0
+    },
+    {
+      "from": "paint",
+      "from_port": 0,
+      "to": "weathered",
+      "to_port": 0
+    },
+    {
+      "from": "rust",
+      "from_port": 0,
+      "to": "weathered",
+      "to_port": 1
+    },
+    {
+      "from": "streaks",
+      "from_port": 0,
+      "to": "weathered",
+      "to_port": 2
+    },
+    {
+      "from": "rust_roughness",
+      "from_port": 0,
+      "to": "finish_roughness",
+      "to_port": 1
+    },
+    {
+      "from": "streaks",
+      "from_port": 0,
+      "to": "finish_roughness",
+      "to_port": 2
+    },
+    {
+      "from": "transform2",
+      "from_port": 0,
+      "to": "valley",
+      "to_port": 0
+    },
+    {
+      "from": "valley",
+      "from_port": 0,
+      "to": "valley_occlusion",
+      "to_port": 0
+    },
+    {
+      "from": "finish_roughness",
+      "from_port": 0,
+      "to": "Material",
+      "to_port": 2
+    },
+    {
+      "from": "normal_map2",
+      "from_port": 0,
+      "to": "Material",
+      "to_port": 4
+    },
+    {
+      "from": "valley_occlusion",
+      "from_port": 0,
+      "to": "Material",
+      "to_port": 5
+    },
+    {
+      "from": "profile_depth",
+      "from_port": 0,
+      "to": "Material",
+      "to_port": 6
+    },
+    {
+      "from": "weathered",
+      "from_port": 0,
+      "to": "Material",
+      "to_port": 0
+    },
+    {
+      "from": "paint_roughness",
+      "from_port": 0,
+      "to": "finish_roughness",
+      "to_port": 0
+    }
+  ]
+}

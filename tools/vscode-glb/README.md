@@ -1,7 +1,7 @@
 # MegaMek GLB Viewer for VS Code
 
-A read-only 3D editor for the GLBs in `mm-data`. The viewport stays separate from
-the scrollable View, Materials, Parts, Test and Info tabs. No asset is rewritten.
+A 3D viewer and surface-material editor for the GLBs in `mm-data`. The viewport
+stays separate from the View, Materials, Palette, Parts, Test and Info tabs.
 
 ## Install
 
@@ -51,10 +51,11 @@ code --install-extension tools/vscode-glb/megamek-glb-viewer.vsix
   `stand-N`, `vehicle-N`, `hide-N` direction markers.
 - **Measure two points** reports distance and axis differences in model units.
   **Save PNG** exports the viewport to a location you choose.
-- Click geometry to inspect it in **Parts**. Search nodes, hide them, solo a part,
+- Click geometry to edit that surface in **Materials**. In **Parts**, click geometry
+  to inspect its hierarchy. Search nodes, hide them, solo a part,
   double-click its name to frame it, or reset visibility. Selection details show
   geometry counts and original node metadata, including joints and hardpoints.
-- **Materials** lists only this GLB's materials, with search, map previews,
+- **Materials** edits surface assignments and lists this GLB's materials, with search, map previews,
   factors, channel choices and links to their source `.tres` and images.
 - **Info** lists dependencies, diagnostics, file extras and adjacent JSON
   descriptors that reference this mesh. Nothing in those files is executed.
@@ -76,7 +77,111 @@ extensions, including `KHR_materials_emissive_strength`.
 Save changes in Blender or Material Maker and the viewer refreshes its GLB and
 material dependencies while keeping the camera. **Reload** is available for an
 explicit refresh. A file change invalidates any previous engine-test snapshot.
-Preview controls do not save materials, geometry, colour choices or labels.
+View controls do not save geometry, colour-slot previews or label previews.
+
+## Material palette and saving
+
+1. Open **Palette**. It reads `data/models/board/textures/materials.json` from the
+   detected mm-data checkout (or `mmDataPath` in Settings), including both loose
+   and constrained materials. Search by name/path and filter by folder or type.
+   Eight albedo thumbnails per page keep the palette bounded; maps load only for
+   the displayed page. Unavailable materials show their error instead of silently
+   disappearing. **Refresh** re-reads the catalogue and maps.
+2. Click a surface in the viewport while **Palette** or **Materials** is open,
+   or choose it from **Surface**. A surface is one authored glTF primitive, not
+   an arbitrary face selection. The list distinguishes each node, LOD and surface.
+3. Select a palette card and click **Assign to surface**. **This surface only**
+   isolates shared material/mesh instances. Choose **All using this material** to
+   replace every use, including other LODs. **Keep model emission** retains
+   authored lamp emission; shared emission still comes from the chosen `.tres`.
+   Textured assignment requires existing UV coordinates; unwrap missing UVs in Blender.
+4. In **Materials**, use **Assign a different material** to reuse an existing GLB
+   material (including embedded textures). Tint is directly visible; expand
+   **Emission & surface properties** to change opacity, emission, alpha
+   cutoff and double-sided rendering. Ordinary GLB materials also expose roughness
+   and metallic; shared ones use their `.tres`. These edits do not modify library files.
+5. Use **Save GLB** / **Ctrl+S**, or **Save as…**. Normal VS Code dirty tabs,
+   Undo/Redo, close prompts, File: Revert File and hot-exit backups are supported.
+   Save As rebases external image/buffer and `mmVariants` paths for its new folder.
+
+Material assignment and factor edits rewrite only GLB JSON. Placement and vertex
+paint edits append UV/colour attributes while retaining the original binary data,
+embedded images and other chunks. Positions, normals, triangle indices, node
+metadata, animations and untouched materials remain intact. A selected surface may
+get a separate mesh/material record to avoid changing another instance. Files are
+replaced through an adjacent temporary file.
+If the disk file changed since it was loaded/saved, Save refuses to overwrite it;
+use Save As to retain the edits or File: Revert File to load the disk version.
+Reload preserves unsaved material edits while refreshing their dependencies.
+
+Edits affect the base material; select **Default** under Season / variant first.
+Existing seasonal overrides are preserved. Save before running engine tests, which
+read the disk file. Git views have a revision-specific palette and remain read-only;
+**Open working copy** opens the editable file. Linked comparisons synchronize viewing
+controls, not material edits. Mesh construction and UV unwrapping stay in Blender; View-tab colour
+slots and labels remain previews. Alpha blending is available for glTF previews but
+is not supported by MegaMek's rigid loader.
+
+## Placement, tint and authored paint
+
+Click a surface to open **Materials**, or choose one from its **Surface** list.
+Offset, scale, rotation and tint are at the top, without an accordion or Apply button.
+The Palette's **Edit offset, scale, rotation & tint** button opens these controls.
+After installing an update, run **Developer: Reload Window** in VS Code to load the new UI.
+
+- **Offset, scale & rotation** has U/V offset, scale/repeat, rotation in degrees, a U/V pivot,
+  ratio locking, quarter turns and flips. Repeat 2 halves the pattern size; one
+  offset unit is one texture tile. Scale is applied around the pivot, then rotated,
+  then offset. **Fit one tile** fits the referenced UVs into 0–1. **UV checker**
+  shows eight checks per tile and orange tile borders; **Show material** returns to PBR.
+  Changes preview live on all maps without reloading the model or moving the camera.
+  Tint and the advanced surface properties also preview live. They update the unsaved
+  document immediately; **Ctrl+S** saves the latest value even while a control is focused.
+  Adjustments within a control share an undo step and replace that gesture's UV data.
+  Invalid or incomplete numbers retain the last valid preview. The controls retain
+  their absolute values after saving/reopening; edits do not compound the transform.
+  **Restore original UVs** returns to the coordinates before this editor's first
+  placement edit, even after reopening. Undo/Redo also works normally.
+- **Material tint** includes the picker, a hex entry,
+  and **Reset white**. Tint multiplies the texture, shared `.tres` tint and any
+  authored vertex colour; it cannot remove an existing red vertex tint by itself.
+- **Vertex paint (authored tint)** handles models such as the fuel tanks, whose
+  red/yellow bands, grey rings, contact shading and grime are vertex colours.
+  Click an authored swatch to select that paint across its shaded variations, then
+  change **New colour** to preview immediately. There is no Apply step; **Ctrl+S**
+  saves the latest preview, even while the colour control is focused. Colour, mode
+  and tolerance adjustments within the paint controls share an Undo step.
+  Swatches and matching use the original authored colours, so a red band stays
+  selected after turning blue, saving and reopening. **Recolour, keep shading**
+  also uses the original shading, including after a solid, black or white edit.
+  Selecting another swatch starts a separate adjustment and preserves the earlier
+  paint group. The match compares RGB proportions;
+  tolerance controls how similar a colour must be. Unmatched colours and vertex
+  alpha are retained. Disable matching to affect the whole selected surface.
+  With **All using this material**, parts without matching paint remain unchanged.
+  **Solid colour** replaces the selected paint without retaining shade variation;
+  **White / remove tint** neutralizes it. **Restore original paint** restores the
+  attribute before the first paint edit. A surface with no colour attribute can
+  receive paint, and restoration removes that newly added attribute.
+- **Texture wrapping & filtering** offers repeat, mirrored repeat and clamp for
+  U/V, plus nearest/linear filtering and mipmap choices. Every selection previews
+  live, without Apply; **Ctrl+S** saves the latest settings. Adjustments inside the
+  sampling controls share an Undo step. These apply to the material's
+  maps; shared `.tres` maps follow the albedo sampler. Other materials sharing the
+  original texture/sampler are isolated.
+
+The **Apply to** selector scopes all these edits to one surface or every use of
+its material. Seasonal overrides remain intact and may replace colours in a
+non-default variant. Library files are never changed by these controls.
+
+Placement is baked into `TEXCOORD_0`, because the engine and Blender add-on do not
+support `KHR_texture_transform`. Normal maps follow those same UVs. Stale authored
+tangents are removed on the edited primitive so the viewer derives its tangent basis
+from the new UVs; restoring UVs restores the original tangent accessor. Original
+attribute references and placement values are retained in primitive extras for Reset.
+UV unwrapping, decompression, extra UV sets, per-map texture transforms and label-atlas
+placement require the corresponding Blender/label tools. These cases report an error
+instead of saving an adjustment that the engine would ignore.
 
 ## Engine validation and connected kits
 

@@ -6,13 +6,14 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { prepareMaterials, modifyGeometry, applyColors, applyLabel } from './materials.js';
+import { prepareMaterials, materialFactors, materialSampling, modifyGeometry, applyColors, applyLabel } from './materials.js';
 import { displayKeys, viewState } from '../src/view-state.cjs';
+import { materialEditor } from './editor.js';
 
 const api = typeof acquireVsCodeApi === 'function' ? acquireVsCodeApi() : globalThis.__MM_TEST__?.api;
 const $ = id => document.getElementById(id), send = (type, extra = {}) => api.postMessage({ type, ...extra });
 const state = { lod: '0', variant: '', projection: 'ortho', shading: 'pbr', wire: false, grid: true, helpers: false, bounds: false, exposure: '1', environment: '1', bloom: false, background: '#202a35', label: '', tab: 'view', syncViews: true, ...api.getState() };
-let renderer, composer, camera, controls, asset, gltf, assembly, selected, mixer, playing = false, generation = 0, loadSerial = 0, engineBusy = false;
+let renderer, composer, camera, controls, asset, gltf, assembly, selected, mixer, editor, playing = false, generation = 0, loadSerial = 0, engineBusy = false, documentDirty = false;
 let receivingView = false, viewLoading = false, linkedView, syncPending = false, lastShared = '', lastSharedAt = 0, engineAllowed = false;
 const scene = new THREE.Scene(), owned = new Set(), hidden = new Set(), nodes = new Map(), alternate = new Map();
 const perspective = new THREE.PerspectiveCamera(40, 1, .1, 1000), ortho = new THREE.OrthographicCamera(-50, 50, 50, -50, .1, 1000);
@@ -144,6 +145,12 @@ function buildNodes() {
   gltf.scene.traverse(object => {
     const index = gltf.parser.associations.get(object)?.nodes;
     if (index !== undefined) nodes.set(index, object);
+    if (object.isMesh) {
+      let parent = object, node;
+      while (parent && node === undefined) { node = gltf.parser.associations.get(parent)?.nodes; parent = parent.parent; }
+      const primitive = gltf.parser.associations.get(object)?.primitives ?? 0;
+      if (node !== undefined && asset.metadata.meshes?.[asset.metadata.nodes[node]?.mesh]?.primitives[primitive]) object.userData.mmSurface = { node, primitive };
+    }
     object.userData.mmHelper = isHelper(object);
     if (object.userData.mmHelper && object.isMesh) {
       const material = new THREE.MeshBasicMaterial({ color: 0x58d8ca, wireframe: true, transparent: true, opacity: .7, depthTest: false }); owned.add(material); object.material = material;
@@ -183,7 +190,7 @@ function applyDisplay() {
     const key = `${source.uuid}:${state.shading}`;
     if (!alternate.has(key)) {
       const options = { side: source.side, alphaTest: source.alphaTest, map: source.map };
-      const mat = state.shading === 'normal' ? new THREE.MeshNormalMaterial({ side: source.side }) : state.shading === 'clay' ? new THREE.MeshStandardMaterial({ ...options, color: 0xadb9c8, map: null, roughness: .7, metalness: 0 }) : new THREE.ShaderMaterial({ side: source.side, vertexShader: 'varying vec2 mmUv; void main(){ mmUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }', fragmentShader: 'varying vec2 mmUv; void main(){ gl_FragColor=vec4(fract(mmUv),0.3,1.); }' });
+      const mat = state.shading === 'normal' ? new THREE.MeshNormalMaterial({ side: source.side }) : state.shading === 'clay' ? new THREE.MeshStandardMaterial({ ...options, color: 0xadb9c8, map: null, roughness: .7, metalness: 0 }) : new THREE.ShaderMaterial({ side: source.side, vertexShader: 'varying vec2 mmUv; void main(){ mmUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }', fragmentShader: state.shading === 'checker' ? 'varying vec2 mmUv; void main(){ vec2 tile=fract(mmUv), cell=floor(mmUv*8.); vec3 c=mix(vec3(.16),vec3(.8),mod(cell.x+cell.y,2.)); c*=vec3(.7+.3*tile.x,.7+.3*tile.y,1.); if(min(min(tile.x,1.-tile.x),min(tile.y,1.-tile.y))<.015)c=vec3(.9,.2,.06); gl_FragColor=vec4(c,1.); }' : 'varying vec2 mmUv; void main(){ gl_FragColor=vec4(fract(mmUv),0.3,1.); }' });
       alternate.set(key, mat);
     }
     const material = alternate.get(key); material.wireframe = state.wire; return material;
@@ -193,6 +200,7 @@ function applyDisplay() {
 }
 function selectObject(object) {
   selected = object; selectionBox.visible = !!object && visible(object);
+  editor?.pick(!assembly ? object?.userData.mmSurface || null : null);
   if (object) {
     selectionBox.setFromObject(object);
     const index = gltf.parser.associations.get(object)?.nodes;
@@ -201,6 +209,45 @@ function selectObject(object) {
     $('selectionInfo').textContent = JSON.stringify({ vertices, triangles, primitives, node: index === undefined ? originalName(object) : asset.metadata.nodes[index] }, null, 2);
   } else $('selectionInfo').textContent = '';
   renderParts();
+}
+function previewMaterial(message) {
+  if (!gltf || message.generation !== generation) return;
+  asset.metadata = message.metadata; asset.surfaces = message.surfaces;
+  const updates = new Map(message.updates.map(update => [`${update.node}:${update.primitive}`, update]));
+  gltf.scene.traverse(object => {
+    const target = object.userData.mmSurface, update = target && updates.get(`${target.node}:${target.primitive}`);
+    if (!update) return;
+    object.userData.mmMaterial = update.material;
+    if (!object.userData.mmLiveMaterial) {
+      const source = object.mmOriginalMaterial, material = source.clone();
+      material.onBeforeCompile = source.onBeforeCompile; material.customProgramCacheKey = source.customProgramCacheKey;
+      owned.add(material); object.mmOriginalMaterial = material; object.userData.mmLiveMaterial = true;
+    }
+    materialFactors(object.mmOriginalMaterial, asset.surfaces[update.material]);
+    if (update.sampling) materialSampling(object.mmOriginalMaterial, update.sampling, owned);
+    if (update.uv) {
+      const values = new Float32Array(Uint8Array.from(atob(update.uv), char => char.charCodeAt(0)).buffer);
+      const uv = object.geometry.attributes.uv;
+      if (uv && !uv.isInterleavedBufferAttribute && uv.array instanceof Float32Array && !uv.normalized && uv.array.length === values.length) { uv.array.set(values); uv.needsUpdate = true; }
+      else object.geometry.setAttribute('uv', new THREE.Float32BufferAttribute(values, 2));
+      object.geometry.deleteAttribute('tangent');
+    }
+    if (update.color !== undefined) {
+      const width = update.color?.width || 3;
+      const values = update.color ? new Float32Array(Uint8Array.from(atob(update.color.data), char => char.charCodeAt(0)).buffer) : new Float32Array(object.geometry.attributes.position.count * width).fill(1);
+      const color = object.geometry.attributes.color;
+      if (color && color.itemSize === width && color.array.length === values.length) { color.array.set(values); color.needsUpdate = true; }
+      else object.geometry.setAttribute('color', new THREE.Float32BufferAttribute(values, width));
+      object.geometry.userData.originalColors = values.slice();
+      object.mmOriginalMaterial.vertexColors = !!update.color; object.mmOriginalMaterial.needsUpdate = true;
+    }
+    for (const [key, material] of alternate) if (key.startsWith(object.mmOriginalMaterial.uuid + ':')) { material.dispose(); alternate.delete(key); }
+  });
+  applyColors(gltf.scene, asset.metadata.extras?.mmColourSlots || [], state.colors || []);
+  clearAssembly(); applyVisibility(); applyDisplay(); renderMaterials();
+  documentDirty = !!message.dirty; editor.preview(message);
+  $('build').disabled = $('test').disabled = !engineAllowed || engineBusy || documentDirty;
+  $('engineStatus').textContent = 'Material edited; save the GLB before testing in the engine.';
 }
 function renderParts() {
   $('partList').replaceChildren(); const filter = $('partSearch').value.toLowerCase();
@@ -275,8 +322,8 @@ async function load(message) {
   $('metadata').textContent = JSON.stringify({ extras: asset.metadata.extras, descriptors: asset.descriptors, extensions: asset.metadata.extensionsUsed }, null, 2);
   $('dependencies').replaceChildren(...asset.dependencies.map(file => openButton(file)));
   asset.diagnostics.forEach(diagnostic); $('enginePath').textContent = message.engine || 'Engine checkout not found. Use Settings to choose one.';
-  engineAllowed = message.trusted && !message.revision;
-  $('build').disabled = $('test').disabled = !engineAllowed || engineBusy;
+  engineAllowed = message.trusted && !message.revision; documentDirty = !!message.dirty;
+  $('build').disabled = $('test').disabled = !engineAllowed || engineBusy || documentDirty;
   if (!message.trusted) $('engineStatus').textContent = 'Trust the workspace to run engine tests. Viewing remains available.';
   let loaded; const resources = new Set();
   try {
@@ -285,8 +332,10 @@ async function load(message) {
     if (serial !== loadSerial) { disposeLoaded(loaded); return; }
     await prepareMaterials(loaded, nextAsset, resources, text => { if (serial === loadSerial) diagnostic(text); });
     if (serial !== loadSerial) { disposeLoaded(loaded, resources); return; }
+    await modifyGeometry(loaded, nextAsset, resources);
+    if (serial !== loadSerial) { disposeLoaded(loaded, resources); return; }
     gltf = loaded; resources.forEach(r => owned.add(r));
-    modifyGeometry(gltf, asset, owned); scene.add(gltf.scene); buildNodes();
+    scene.add(gltf.scene); buildNodes();
     const lods = [...new Set([...nodes.values()].map(o => originalName(o)?.match(/-lod([0-3])$/)?.[1]).filter(Boolean))].sort();
     $('lod').replaceChildren(...lods.map(level => new Option(`LOD ${level}`, level)), new Option('All authored groups', 'all'));
     if (!lods.includes(state.lod)) state.lod = lods[0] || 'all'; $('lod').value = state.lod;
@@ -300,7 +349,8 @@ async function load(message) {
     else if (state.camera) { camera.position.fromArray(state.camera.position); controls.target.fromArray(state.camera.target); camera.zoom = state.camera.zoom; ortho.userData.span = state.camera.span; resize(); }
     else fit();
     controls.update(); $('overlay').textContent = ''; $('engineStatus').textContent = message.revision ? 'Open the working copy to run engine tests. This view shows the Git revision and its materials.' : !message.trusted ? 'Trust the workspace to run engine tests.' : 'No engine test run for this version.';
-    viewLoading = false; save(false); updateStats();
+    viewLoading = false; save(false); updateStats(); editor.loaded(message);
+    if (documentDirty) $('engineStatus').textContent = 'Save the GLB before running engine tests.';
     if (linkedView) applyLinked(linkedView); else publishView();
     globalThis.__MM_TEST__?.loaded?.();
   } catch (error) { if (gltf === loaded) disposeAsset(); else disposeLoaded(loaded, resources); if (serial === loadSerial) { viewLoading = false; $('overlay').textContent = `Cannot display this GLB\n${escapeError(error)}`; diagnostic(escapeError(error)); setStatus('Load failed — see Info'); globalThis.__MM_TEST__?.failed?.(escapeError(error)); } }
@@ -321,7 +371,7 @@ function showAssembly(message) {
   }
   assembly = group; scene.add(group); gltf.scene.visible = false; selectObject(null); helperGroup.visible = false; applyDisplay(); fit(); updateStats();
 }
-function tab(name) { state.tab = name; document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === name)); document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.id === `tab-${name}`)); save(); }
+function tab(name) { state.tab = name; document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === name)); document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.id === `tab-${name}`)); editor?.tab(name); save(); }
 function bind() {
   $('syncViews').checked = state.syncViews;
   $('syncViews').onchange = () => { state.syncViews = $('syncViews').checked; lastShared = ''; save(); };
@@ -363,7 +413,10 @@ function bind() {
       measurePoints.push(hit.point.clone());
       if (measurePoints.length === 2) { const delta = measurePoints[1].clone().sub(measurePoints[0]); measureLine.geometry.dispose(); measureLine.geometry = new THREE.BufferGeometry().setFromPoints(measurePoints); measureLine.visible = true; $('measurement').textContent = `${delta.length().toFixed(3)} model units · ΔE ${delta.x.toFixed(2)}, ΔN ${(-delta.z).toFixed(2)}, Δheight ${delta.y.toFixed(2)}`; measuring = false; $('measure').textContent = 'Measure two points'; }
       else $('measurement').textContent = 'Choose the second point.';
-    } else if (hit) { let object = hit.object; while (object.parent && gltf.parser.associations.get(object)?.nodes === undefined && object.parent !== gltf.scene) object = object.parent; selectObject(object); tab('parts'); }
+    } else if (hit) {
+      if (state.tab !== 'parts' && !assembly) { selectObject(hit.object); if (state.tab !== 'palette') tab('materials'); }
+      else { let object = hit.object; while (object.parent && gltf.parser.associations.get(object)?.nodes === undefined && object.parent !== gltf.scene) object = object.parent; selectObject(object); tab('parts'); }
+    }
   });
 }
 try {
@@ -371,6 +424,28 @@ try {
   const environment = new RoomEnvironment(); const pmrem = new THREE.PMREMGenerator(renderer); const target = pmrem.fromScene(environment, .04); scene.environment = target.texture; pmrem.dispose(); environment.dispose();
   perspective.position.set(120, 90, 120); ortho.position.copy(perspective.position); switchCamera();
   composer = new EffectComposer(renderer); renderPass = new RenderPass(scene, camera); bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), .3, .4, 1); composer.addPass(renderPass); composer.addPass(bloomPass); composer.addPass(new OutputPass());
+  editor = materialEditor({ send, showTab: tab,
+    previewMode: mode => { state.shading = mode; $('shading').value = mode; applyDisplay(); save(); },
+    paintSwatches: target => {
+      let object; gltf?.scene.traverse(o => { if (o.userData.mmSurface?.node === target.node && o.userData.mmSurface?.primitive === target.primitive) object = o; });
+      if (!object) return [];
+      const colors = object.geometry.userData.authoredPaint, groups = new Map();
+      const used = object.geometry.index ? new Set(object.geometry.index.array) : Array.from({ length: colors.count }, (_, i) => i);
+      for (const i of used) {
+        const rgb = [0, 1, 2].map(c => colors.getComponent(i, c)), peak = Math.max(...rgb, .000001), key = rgb.map(n => Math.round(n / peak * 8)).join(':');
+        const group = groups.get(key) || { count: 0, peak: -1 }; group.count++; if (peak > group.peak) { group.rgb = rgb; group.peak = peak; } groups.set(key, group);
+      }
+      return [...groups.values()].sort((a, b) => b.count - a.count).slice(0, 12).map(group => group.rgb);
+    },
+    inspectMaterial: index => { $('materialSearch').value = ''; renderMaterials(); $('materialList').value = String(index); showMaterial(); },
+    selectSurface: target => {
+      let object; gltf?.scene.traverse(o => { if (o.userData.mmSurface?.node === target.node && o.userData.mmSurface?.primitive === target.primitive) object = o; });
+      if (!object) return;
+      clearAssembly();
+      for (let parent = object; parent; parent = parent.parent) { hidden.delete(parent.uuid); const lod = originalName(parent)?.match(/-lod([0-3])$/); if (lod && state.lod !== 'all') { state.lod = lod[1]; $('lod').value = state.lod; } }
+      applyVisibility(); selectObject(object);
+    }
+  });
   // Composer is initialized after controls; now size both.
   resize(); bind(); new ResizeObserver(resize).observe($('viewport'));
   let previous = performance.now(); renderer.setAnimationLoop(now => { const delta = Math.min((now - previous) / 1000, .1); previous = now; controls.update(); if (playing) { mixer?.update(delta); updateBounds(); } if (selected && selectionBox.visible) selectionBox.setFromObject(selected); updateClipping(); composer.render(); if (syncPending && now - lastSharedAt >= 50) publishView(); });
@@ -378,10 +453,13 @@ try {
     const message = event.data;
     if (message.type === 'asset') load(message);
     else if (message.type === 'linkedView') applyLinked(message.state);
-    else if (message.type === 'loading') { viewLoading = true; loadSerial++; clearAssembly(); $('overlay').textContent = 'Reading model and materials…'; $('engineStatus').textContent = 'Asset changed; previous engine test invalidated.'; }
+    else if (message.type === 'loading') { editor.loading(); viewLoading = true; loadSerial++; clearAssembly(); $('overlay').textContent = 'Reading model and materials…'; $('engineStatus').textContent = 'Asset changed; previous engine test invalidated.'; }
+    else if (message.type === 'palettePage') editor.palette(message);
+    else if (message.type === 'materialPreview') previewMaterial(message);
+    else if (message.type === 'editStatus') { documentDirty = !!message.dirty; editor.status(message); $('build').disabled = $('test').disabled = !engineAllowed || engineBusy || documentDirty; }
     else if (message.type === 'error') { loadSerial++; disposeAsset(); $('overlay').textContent = message.message; setStatus('Load failed'); globalThis.__MM_TEST__?.failed?.(message.message); }
     else if (message.type === 'engineBusy') { engineBusy = true; clearAssembly(); applyVisibility(); $('build').disabled = $('test').disabled = true; $('engineStatus').textContent = message.message; }
-    else if (message.type === 'engineIdle') { engineBusy = false; $('build').disabled = $('test').disabled = !engineAllowed; }
+    else if (message.type === 'engineIdle') { engineBusy = false; $('build').disabled = $('test').disabled = !engineAllowed || documentDirty; }
     else if (message.type === 'engineResult') { if (message.error) { clearAssembly(); applyVisibility(); } $('engineStatus').textContent = (message.error ? 'FAIL: ' : '') + message.message; }
     else if (message.type === 'assembly') { try { showAssembly(message); } catch (error) { clearAssembly(); applyVisibility(); $('engineStatus').textContent = 'FAIL: ' + escapeError(error); } }
   });

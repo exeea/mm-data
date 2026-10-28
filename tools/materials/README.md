@@ -116,8 +116,12 @@ scorch build their own roughness.
 
 `structures/common/` holds the materials several models share: `steel` (turrets, the Solaris
 elevator's lift, container fittings, the cargo crate's metal), `iron` (cast parts: the lift's hubs
-and clevises, the cargo crate's corner castings), `corrugated` (painted corrugated steel for the
-light walls and the seaport containers), `chrome` (hydraulic rods and axles), `hazard-stripes`,
+and clevises, the cargo crate's corner castings), `corrugated` (bare satin corrugated steel for unpainted light walls,
+metallic across the sheet), `corrugated-painted` (opaque dielectric satin paint for seaport containers, with subtle
+weathering and no repeated chip pattern; fittings use separate steel),
+`container-details` (all yard LODs and individual container LOD1/LOD2, baked from the shared geometry and exported materials
+by `tools/board-models/seaport/build_container_lods.py`; its alpha separates paint tint from metal fittings),
+`chrome` (hydraulic rods and axles), `hazard-stripes`,
 `safety-yellow` (heavy machinery's paint, lightly chipped: models add wear where it gathers), `diamond-plate`
 (steel diamond plate: the Solaris elevator's platform and pit), `worn-diamond-plate` (the wall decks) and
 `aluminium-plate` (no model uses it at present). The fuel tanks take `weathered-paint` (glossy off-white enamel
@@ -128,8 +132,14 @@ eight down per repeat). The layered walls
 also take `satin-steel`, `matte-steel`, `painted-steel`, `grille`, `cast-concrete`, `concrete-panels`,
 `chain-link` and `barbed-wire`; their projects without a Material Maker graph of their own read
 their maps from `sources/`. The cargo crate's maps are baked from steel, iron and the hazard stripes. The corrugated
-paint, the three wall steels, the grille, the worn plate, the weathered paint and the vent slots are near white or
+finish, the three wall steels, the grille, the worn plate, the weathered paint and the vent slots are near white or
 flat: each model tints them with its vertex colours or colour slots.
+
+Keep corrugated weathering broad and its finish variation small: fine, high-contrast metallic and roughness streaks
+turn into bright trails under grazing light. Its graph limits weathering's metallic blend to 0.10 and roughness blend
+to 0.15, with three noise octaves across 12 by 2 features per repeat; the ten straight ribs remain in normal and height.
+The painted variant has metallic zero throughout. Do not add randomly tiled bright chips: convincing wear belongs
+on the model's corners, seams and handling points and needs geometry-aware placement.
 
 A loose entry has up to two values:
 

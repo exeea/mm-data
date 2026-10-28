@@ -18110,1932 +18110,1932 @@
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_00",
       "label": "Fuel Tank Hard 00",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_00",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_00.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_01",
       "label": "Fuel Tank Hard 01",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_01",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_01.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_02",
       "label": "Fuel Tank Hard 02",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_02",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_02.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_03",
       "label": "Fuel Tank Hard 03",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_03",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_03.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_04",
       "label": "Fuel Tank Hard 04",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_04",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_04.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_05",
       "label": "Fuel Tank Hard 05",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_05",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_05.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_06",
       "label": "Fuel Tank Hard 06",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_06",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_06.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_07",
       "label": "Fuel Tank Hard 07",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_07",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_07.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_08",
       "label": "Fuel Tank Hard 08",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_08",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_08.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_09",
       "label": "Fuel Tank Hard 09",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_09",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_09.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_10",
       "label": "Fuel Tank Hard 10",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_10",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_10.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_11",
       "label": "Fuel Tank Hard 11",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_11",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_11.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_12",
       "label": "Fuel Tank Hard 12",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_12",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_12.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_13",
       "label": "Fuel Tank Hard 13",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_13",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_13.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_14",
       "label": "Fuel Tank Hard 14",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_14",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_14.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_15",
       "label": "Fuel Tank Hard 15",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_15",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_15.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_16",
       "label": "Fuel Tank Hard 16",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_16",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_16.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_17",
       "label": "Fuel Tank Hard 17",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_17",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_17.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_18",
       "label": "Fuel Tank Hard 18",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_18",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_18.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_19",
       "label": "Fuel Tank Hard 19",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_19",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_19.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_20",
       "label": "Fuel Tank Hard 20",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_20",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_20.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_21",
       "label": "Fuel Tank Hard 21",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_21",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_21.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_22",
       "label": "Fuel Tank Hard 22",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_22",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_22.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_23",
       "label": "Fuel Tank Hard 23",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_23",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_23.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_24",
       "label": "Fuel Tank Hard 24",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_24",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_24.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_25",
       "label": "Fuel Tank Hard 25",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_25",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_25.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_26",
       "label": "Fuel Tank Hard 26",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_26",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_26.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_27",
       "label": "Fuel Tank Hard 27",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_27",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_27.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_28",
       "label": "Fuel Tank Hard 28",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_28",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_28.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_29",
       "label": "Fuel Tank Hard 29",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_29",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_29.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_30",
       "label": "Fuel Tank Hard 30",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_30",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_30.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_31",
       "label": "Fuel Tank Hard 31",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_31",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_31.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_32",
       "label": "Fuel Tank Hard 32",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_32",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_32.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_33",
       "label": "Fuel Tank Hard 33",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_33",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_33.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_34",
       "label": "Fuel Tank Hard 34",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_34",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_34.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_35",
       "label": "Fuel Tank Hard 35",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_35",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_35.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_36",
       "label": "Fuel Tank Hard 36",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_36",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_36.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_37",
       "label": "Fuel Tank Hard 37",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_37",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_37.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_38",
       "label": "Fuel Tank Hard 38",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_38",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_38.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_39",
       "label": "Fuel Tank Hard 39",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_39",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_39.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_40",
       "label": "Fuel Tank Hard 40",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_40",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_40.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_41",
       "label": "Fuel Tank Hard 41",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_41",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_41.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_42",
       "label": "Fuel Tank Hard 42",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_42",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_42.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_43",
       "label": "Fuel Tank Hard 43",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_43",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_43.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_44",
       "label": "Fuel Tank Hard 44",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_44",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_44.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_45",
       "label": "Fuel Tank Hard 45",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_45",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_45.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_46",
       "label": "Fuel Tank Hard 46",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_46",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_46.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_47",
       "label": "Fuel Tank Hard 47",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_47",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_47.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_48",
       "label": "Fuel Tank Hard 48",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_48",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_48.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_49",
       "label": "Fuel Tank Hard 49",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_49",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_49.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_50",
       "label": "Fuel Tank Hard 50",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_50",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_50.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_51",
       "label": "Fuel Tank Hard 51",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_51",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_51.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_52",
       "label": "Fuel Tank Hard 52",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_52",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_52.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_53",
       "label": "Fuel Tank Hard 53",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_53",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_53.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_54",
       "label": "Fuel Tank Hard 54",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_54",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_54.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_55",
       "label": "Fuel Tank Hard 55",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_55",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_55.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_56",
       "label": "Fuel Tank Hard 56",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_56",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_56.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_57",
       "label": "Fuel Tank Hard 57",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_57",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_57.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_58",
       "label": "Fuel Tank Hard 58",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_58",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_58.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_59",
       "label": "Fuel Tank Hard 59",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_59",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_59.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_60",
       "label": "Fuel Tank Hard 60",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_60",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_60.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_61",
       "label": "Fuel Tank Hard 61",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_61",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_61.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_62",
       "label": "Fuel Tank Hard 62",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_62",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_62.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_63",
       "label": "Fuel Tank Hard 63",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_63",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_63.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_64",
       "label": "Fuel Tank Hard 64",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_64",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_64.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_65",
       "label": "Fuel Tank Hard 65",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_65",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_65.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_66",
       "label": "Fuel Tank Hard 66",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_66",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_66.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_67",
       "label": "Fuel Tank Hard 67",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_67",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_67.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_hard_68",
       "label": "Fuel Tank Hard 68",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_hard_68",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_hard_68.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_00",
       "label": "Fuel Tank Heavy 00",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_00",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_00.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_01",
       "label": "Fuel Tank Heavy 01",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_01",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_01.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_02",
       "label": "Fuel Tank Heavy 02",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_02",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_02.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_03",
       "label": "Fuel Tank Heavy 03",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_03",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_03.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_04",
       "label": "Fuel Tank Heavy 04",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_04",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_04.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_05",
       "label": "Fuel Tank Heavy 05",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_05",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_05.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_06",
       "label": "Fuel Tank Heavy 06",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_06",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_06.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_07",
       "label": "Fuel Tank Heavy 07",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_07",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_07.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_08",
       "label": "Fuel Tank Heavy 08",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_08",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_08.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_09",
       "label": "Fuel Tank Heavy 09",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_09",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_09.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_10",
       "label": "Fuel Tank Heavy 10",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_10",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_10.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_11",
       "label": "Fuel Tank Heavy 11",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_11",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_11.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_12",
       "label": "Fuel Tank Heavy 12",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_12",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_12.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_13",
       "label": "Fuel Tank Heavy 13",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_13",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_13.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_14",
       "label": "Fuel Tank Heavy 14",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_14",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_14.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_15",
       "label": "Fuel Tank Heavy 15",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_15",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_15.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_16",
       "label": "Fuel Tank Heavy 16",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_16",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_16.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_17",
       "label": "Fuel Tank Heavy 17",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_17",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_17.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_18",
       "label": "Fuel Tank Heavy 18",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_18",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_18.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_19",
       "label": "Fuel Tank Heavy 19",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_19",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_19.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_20",
       "label": "Fuel Tank Heavy 20",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_20",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_20.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_21",
       "label": "Fuel Tank Heavy 21",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_21",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_21.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_22",
       "label": "Fuel Tank Heavy 22",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_22",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_22.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_23",
       "label": "Fuel Tank Heavy 23",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_23",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_23.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_24",
       "label": "Fuel Tank Heavy 24",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_24",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_24.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_25",
       "label": "Fuel Tank Heavy 25",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_25",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_25.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_26",
       "label": "Fuel Tank Heavy 26",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_26",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_26.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_27",
       "label": "Fuel Tank Heavy 27",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_27",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_27.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_28",
       "label": "Fuel Tank Heavy 28",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_28",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_28.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_29",
       "label": "Fuel Tank Heavy 29",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_29",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_29.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_30",
       "label": "Fuel Tank Heavy 30",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_30",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_30.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_31",
       "label": "Fuel Tank Heavy 31",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_31",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_31.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_32",
       "label": "Fuel Tank Heavy 32",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_32",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_32.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_33",
       "label": "Fuel Tank Heavy 33",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_33",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_33.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_34",
       "label": "Fuel Tank Heavy 34",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_34",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_34.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_35",
       "label": "Fuel Tank Heavy 35",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_35",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_35.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_36",
       "label": "Fuel Tank Heavy 36",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_36",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_36.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_37",
       "label": "Fuel Tank Heavy 37",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_37",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_37.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_38",
       "label": "Fuel Tank Heavy 38",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_38",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_38.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_39",
       "label": "Fuel Tank Heavy 39",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_39",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_39.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_40",
       "label": "Fuel Tank Heavy 40",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_40",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_40.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_41",
       "label": "Fuel Tank Heavy 41",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_41",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_41.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_42",
       "label": "Fuel Tank Heavy 42",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_42",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_42.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_43",
       "label": "Fuel Tank Heavy 43",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_43",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_43.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_44",
       "label": "Fuel Tank Heavy 44",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_44",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_44.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_45",
       "label": "Fuel Tank Heavy 45",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_45",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_45.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_46",
       "label": "Fuel Tank Heavy 46",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_46",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_46.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_47",
       "label": "Fuel Tank Heavy 47",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_47",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_47.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_48",
       "label": "Fuel Tank Heavy 48",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_48",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_48.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_49",
       "label": "Fuel Tank Heavy 49",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_49",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_49.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_50",
       "label": "Fuel Tank Heavy 50",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_50",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_50.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_51",
       "label": "Fuel Tank Heavy 51",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_51",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_51.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_52",
       "label": "Fuel Tank Heavy 52",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_52",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_52.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_53",
       "label": "Fuel Tank Heavy 53",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_53",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_53.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_54",
       "label": "Fuel Tank Heavy 54",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_54",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_54.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_55",
       "label": "Fuel Tank Heavy 55",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_55",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_55.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_56",
       "label": "Fuel Tank Heavy 56",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_56",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_56.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_57",
       "label": "Fuel Tank Heavy 57",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_57",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_57.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_58",
       "label": "Fuel Tank Heavy 58",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_58",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_58.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_59",
       "label": "Fuel Tank Heavy 59",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_59",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_59.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_60",
       "label": "Fuel Tank Heavy 60",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_60",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_60.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_61",
       "label": "Fuel Tank Heavy 61",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_61",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_61.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_62",
       "label": "Fuel Tank Heavy 62",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_62",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_62.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_63",
       "label": "Fuel Tank Heavy 63",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_63",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_63.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_64",
       "label": "Fuel Tank Heavy 64",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_64",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_64.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_65",
       "label": "Fuel Tank Heavy 65",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_65",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_65.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_66",
       "label": "Fuel Tank Heavy 66",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_66",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_66.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_67",
       "label": "Fuel Tank Heavy 67",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_67",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_67.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_68",
       "label": "Fuel Tank Heavy 68",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_heavy_68",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_heavy_68.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_00",
       "label": "Fuel Tank Light 00",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_00",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_00.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_01",
       "label": "Fuel Tank Light 01",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_01",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_01.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_02",
       "label": "Fuel Tank Light 02",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_02",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_02.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_03",
       "label": "Fuel Tank Light 03",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_03",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_03.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_04",
       "label": "Fuel Tank Light 04",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_04",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_04.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_05",
       "label": "Fuel Tank Light 05",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_05",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_05.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_06",
       "label": "Fuel Tank Light 06",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_06",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_06.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_07",
       "label": "Fuel Tank Light 07",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_07",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_07.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_08",
       "label": "Fuel Tank Light 08",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_08",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_08.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_09",
       "label": "Fuel Tank Light 09",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_09",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_09.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_10",
       "label": "Fuel Tank Light 10",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_10",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_10.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_11",
       "label": "Fuel Tank Light 11",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_11",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_11.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_12",
       "label": "Fuel Tank Light 12",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_12",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_12.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_13",
       "label": "Fuel Tank Light 13",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_13",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_13.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_14",
       "label": "Fuel Tank Light 14",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_14",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_14.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_15",
       "label": "Fuel Tank Light 15",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_15",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_15.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_16",
       "label": "Fuel Tank Light 16",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_16",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_16.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_17",
       "label": "Fuel Tank Light 17",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_17",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_17.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_18",
       "label": "Fuel Tank Light 18",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_18",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_18.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_19",
       "label": "Fuel Tank Light 19",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_19",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_19.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_20",
       "label": "Fuel Tank Light 20",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_20",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_20.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_21",
       "label": "Fuel Tank Light 21",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_21",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_21.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_22",
       "label": "Fuel Tank Light 22",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_22",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_22.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_23",
       "label": "Fuel Tank Light 23",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_23",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_23.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_24",
       "label": "Fuel Tank Light 24",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_24",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_24.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_25",
       "label": "Fuel Tank Light 25",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_25",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_25.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_26",
       "label": "Fuel Tank Light 26",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_26",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_26.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_27",
       "label": "Fuel Tank Light 27",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_27",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_27.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_28",
       "label": "Fuel Tank Light 28",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_28",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_28.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_29",
       "label": "Fuel Tank Light 29",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_29",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_29.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_30",
       "label": "Fuel Tank Light 30",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_30",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_30.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_31",
       "label": "Fuel Tank Light 31",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_31",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_31.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_32",
       "label": "Fuel Tank Light 32",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_32",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_32.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_33",
       "label": "Fuel Tank Light 33",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_33",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_33.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_34",
       "label": "Fuel Tank Light 34",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_34",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_34.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_35",
       "label": "Fuel Tank Light 35",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_35",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_35.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_36",
       "label": "Fuel Tank Light 36",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_36",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_36.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_37",
       "label": "Fuel Tank Light 37",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_37",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_37.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_38",
       "label": "Fuel Tank Light 38",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_38",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_38.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_39",
       "label": "Fuel Tank Light 39",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_39",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_39.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_40",
       "label": "Fuel Tank Light 40",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_40",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_40.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_41",
       "label": "Fuel Tank Light 41",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_41",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_41.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_42",
       "label": "Fuel Tank Light 42",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_42",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_42.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_43",
       "label": "Fuel Tank Light 43",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_43",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_43.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_44",
       "label": "Fuel Tank Light 44",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_44",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_44.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_45",
       "label": "Fuel Tank Light 45",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_45",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_45.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_46",
       "label": "Fuel Tank Light 46",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_46",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_46.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_47",
       "label": "Fuel Tank Light 47",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_47",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_47.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_48",
       "label": "Fuel Tank Light 48",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_48",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_48.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_49",
       "label": "Fuel Tank Light 49",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_49",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_49.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_50",
       "label": "Fuel Tank Light 50",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_50",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_50.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_51",
       "label": "Fuel Tank Light 51",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_51",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_51.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_52",
       "label": "Fuel Tank Light 52",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_52",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_52.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_53",
       "label": "Fuel Tank Light 53",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_53",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_53.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_54",
       "label": "Fuel Tank Light 54",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_54",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_54.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_55",
       "label": "Fuel Tank Light 55",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_55",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_55.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_56",
       "label": "Fuel Tank Light 56",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_56",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_56.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_57",
       "label": "Fuel Tank Light 57",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_57",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_57.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_58",
       "label": "Fuel Tank Light 58",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_58",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_58.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_59",
       "label": "Fuel Tank Light 59",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_59",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_59.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_60",
       "label": "Fuel Tank Light 60",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_60",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_60.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_61",
       "label": "Fuel Tank Light 61",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_61",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_61.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_62",
       "label": "Fuel Tank Light 62",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_62",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_62.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_63",
       "label": "Fuel Tank Light 63",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_63",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_63.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_64",
       "label": "Fuel Tank Light 64",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_64",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_64.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_65",
       "label": "Fuel Tank Light 65",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_65",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_65.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_66",
       "label": "Fuel Tank Light 66",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_66",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_66.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_67",
       "label": "Fuel Tank Light 67",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_67",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_67.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_light_68",
       "label": "Fuel Tank Light 68",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_light_68",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_light_68.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_00",
       "label": "Fuel Tank Medium 00",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_00",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_00.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_01",
       "label": "Fuel Tank Medium 01",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_01",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_01.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_02",
       "label": "Fuel Tank Medium 02",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_02",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_02.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_03",
       "label": "Fuel Tank Medium 03",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_03",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_03.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_04",
       "label": "Fuel Tank Medium 04",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_04",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_04.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_05",
       "label": "Fuel Tank Medium 05",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_05",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_05.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_06",
       "label": "Fuel Tank Medium 06",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_06",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_06.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_07",
       "label": "Fuel Tank Medium 07",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_07",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_07.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_08",
       "label": "Fuel Tank Medium 08",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_08",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_08.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_09",
       "label": "Fuel Tank Medium 09",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_09",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_09.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_10",
       "label": "Fuel Tank Medium 10",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_10",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_10.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_11",
       "label": "Fuel Tank Medium 11",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_11",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_11.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_12",
       "label": "Fuel Tank Medium 12",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_12",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_12.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_13",
       "label": "Fuel Tank Medium 13",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_13",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_13.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_14",
       "label": "Fuel Tank Medium 14",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_14",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_14.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_15",
       "label": "Fuel Tank Medium 15",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_15",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_15.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_16",
       "label": "Fuel Tank Medium 16",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_16",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_16.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_17",
       "label": "Fuel Tank Medium 17",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_17",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_17.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_18",
       "label": "Fuel Tank Medium 18",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_18",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_18.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_19",
       "label": "Fuel Tank Medium 19",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_19",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_19.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_20",
       "label": "Fuel Tank Medium 20",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_20",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_20.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_21",
       "label": "Fuel Tank Medium 21",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_21",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_21.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_22",
       "label": "Fuel Tank Medium 22",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_22",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_22.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_23",
       "label": "Fuel Tank Medium 23",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_23",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_23.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_24",
       "label": "Fuel Tank Medium 24",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_24",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_24.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_25",
       "label": "Fuel Tank Medium 25",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_25",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_25.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_26",
       "label": "Fuel Tank Medium 26",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_26",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_26.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_27",
       "label": "Fuel Tank Medium 27",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_27",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_27.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_28",
       "label": "Fuel Tank Medium 28",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_28",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_28.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_29",
       "label": "Fuel Tank Medium 29",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_29",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_29.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_30",
       "label": "Fuel Tank Medium 30",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_30",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_30.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_31",
       "label": "Fuel Tank Medium 31",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_31",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_31.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_32",
       "label": "Fuel Tank Medium 32",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_32",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_32.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_33",
       "label": "Fuel Tank Medium 33",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_33",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_33.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_34",
       "label": "Fuel Tank Medium 34",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_34",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_34.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_35",
       "label": "Fuel Tank Medium 35",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_35",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_35.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_36",
       "label": "Fuel Tank Medium 36",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_36",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_36.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_37",
       "label": "Fuel Tank Medium 37",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_37",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_37.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_38",
       "label": "Fuel Tank Medium 38",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_38",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_38.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_39",
       "label": "Fuel Tank Medium 39",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_39",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_39.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_40",
       "label": "Fuel Tank Medium 40",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_40",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_40.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_41",
       "label": "Fuel Tank Medium 41",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_41",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_41.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_42",
       "label": "Fuel Tank Medium 42",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_42",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_42.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_43",
       "label": "Fuel Tank Medium 43",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_43",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_43.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_44",
       "label": "Fuel Tank Medium 44",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_44",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_44.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_45",
       "label": "Fuel Tank Medium 45",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_45",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_45.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_46",
       "label": "Fuel Tank Medium 46",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_46",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_46.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_47",
       "label": "Fuel Tank Medium 47",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_47",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_47.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_48",
       "label": "Fuel Tank Medium 48",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_48",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_48.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_49",
       "label": "Fuel Tank Medium 49",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_49",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_49.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_50",
       "label": "Fuel Tank Medium 50",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_50",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_50.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_51",
       "label": "Fuel Tank Medium 51",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_51",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_51.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_52",
       "label": "Fuel Tank Medium 52",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_52",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_52.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_53",
       "label": "Fuel Tank Medium 53",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_53",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_53.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_54",
       "label": "Fuel Tank Medium 54",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_54",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_54.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_55",
       "label": "Fuel Tank Medium 55",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_55",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_55.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_56",
       "label": "Fuel Tank Medium 56",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_56",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_56.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_57",
       "label": "Fuel Tank Medium 57",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_57",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_57.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_58",
       "label": "Fuel Tank Medium 58",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_58",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_58.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_59",
       "label": "Fuel Tank Medium 59",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_59",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_59.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_60",
       "label": "Fuel Tank Medium 60",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_60",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_60.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_61",
       "label": "Fuel Tank Medium 61",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_61",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_61.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_62",
       "label": "Fuel Tank Medium 62",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_62",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_62.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_63",
       "label": "Fuel Tank Medium 63",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_63",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_63.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_64",
       "label": "Fuel Tank Medium 64",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_64",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_64.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_65",
       "label": "Fuel Tank Medium 65",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_65",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_65.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_66",
       "label": "Fuel Tank Medium 66",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_66",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_66.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_67",
       "label": "Fuel Tank Medium 67",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_67",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_67.png"
     },
     {
       "id": "buildings/saxarba/fuel_tanks/fuel_tank_medium_68",
       "label": "Fuel Tank Medium 68",
-      "owner": "building",
+      "owner": "fuelTank",
       "asset": "buildings/saxarba/fuel_tanks/fuel_tank_medium_68",
       "thumbnail": "images/hexes/saxarba/fuel_tanks/fuel_tank_medium_68.png"
     },
@@ -26119,33 +26119,33 @@
       "id": "buildings/saxarba/misc/heavy_industrial_a",
       "label": "Heavy Industrial A",
       "owner": "building",
+      "legacyOnly": true,
       "asset": "buildings/saxarba/misc/heavy_industrial_a",
-      "thumbnail": "images/hexes/saxarba/misc/heavy_industrial_a.png",
-      "section": "buildings/looks"
+      "thumbnail": "images/hexes/saxarba/misc/heavy_industrial_a.png"
     },
     {
       "id": "buildings/saxarba/misc/heavy_industrial_b",
       "label": "Heavy Industrial B",
       "owner": "building",
+      "legacyOnly": true,
       "asset": "buildings/saxarba/misc/heavy_industrial_b",
-      "thumbnail": "images/hexes/saxarba/misc/heavy_industrial_b.png",
-      "section": "buildings/looks"
+      "thumbnail": "images/hexes/saxarba/misc/heavy_industrial_b.png"
     },
     {
       "id": "buildings/saxarba/misc/heavy_industrial_c",
       "label": "Heavy Industrial C",
       "owner": "building",
+      "legacyOnly": true,
       "asset": "buildings/saxarba/misc/heavy_industrial_c",
-      "thumbnail": "images/hexes/saxarba/misc/heavy_industrial_c.png",
-      "section": "buildings/looks"
+      "thumbnail": "images/hexes/saxarba/misc/heavy_industrial_c.png"
     },
     {
       "id": "buildings/saxarba/misc/heavy_industrial_d",
       "label": "Heavy Industrial D",
       "owner": "building",
+      "legacyOnly": true,
       "asset": "buildings/saxarba/misc/heavy_industrial_d",
-      "thumbnail": "images/hexes/saxarba/misc/heavy_industrial_d.png",
-      "section": "buildings/looks"
+      "thumbnail": "images/hexes/saxarba/misc/heavy_industrial_d.png"
     },
     {
       "id": "building/legacy-art-1",
@@ -26617,9 +26617,8 @@
     {
       "id": "building/tank-farm",
       "label": "Tank farm",
-      "owner": "building",
-      "pieces": "buildings/saxarba/fuel_tanks/fuel_tank_{weight}_{nn}",
-      "section": "buildings/looks"
+      "owner": "fuelTank",
+      "pieces": "buildings/saxarba/fuel_tanks/fuel_tank_{weight}_{nn}"
     },
     {
       "id": "scorch/singed",

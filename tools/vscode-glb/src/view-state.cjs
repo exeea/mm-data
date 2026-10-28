@@ -1,7 +1,7 @@
 const displayKeys = ['lod', 'projection', 'shading', 'wire', 'grid', 'helpers', 'bounds', 'exposure', 'environment', 'bloom', 'background', 'label'];
 function viewState(value) {
   if (!value || !['0', '1', '2', '3', 'all'].includes(value.lod) || !['perspective', 'ortho'].includes(value.projection)
-    || !['pbr', 'clay', 'normal', 'uv'].includes(value.shading) || !/^#[0-9a-f]{6}$/i.test(value.background)
+    || !['pbr', 'clay', 'normal', 'uv', 'checker'].includes(value.shading) || !/^#[0-9a-f]{6}$/i.test(value.background)
     || typeof value.label !== 'string' || value.label.length > 64 || typeof value.variant !== 'string' || value.variant.length > 100) return null;
   for (const key of ['wire', 'grid', 'helpers', 'bounds', 'bloom']) if (typeof value[key] !== 'boolean') return null;
   for (const key of ['exposure', 'environment']) if (!Number.isFinite(Number(value[key])) || Number(value[key]) < 0 || Number(value[key]) > 3) return null;

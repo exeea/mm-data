@@ -17,7 +17,7 @@
         "y": 230
       },
       "title": "About this material",
-      "text": "Shared corrugated steel: near-white paint over corrugated steel, a remix of corrugated_steel. Models tint the paint with their own colour (vertex colours, colour slots), so keep it near white: the cargo crate is olive, the seaport containers take their paints, the light walls grey. One repeat holds 10 corrugations along U; models map it 6.5 m across (18 units), so a corrugation is 0.65 m, which still reads at play zoom, and lay frames on the flat top of a ridge. The paint chips off the ridge edges and where the chip noise rises; the steel shows there, metallic. Depth is the profile, about 10 cm deep at that size: Depth scale is that depth as a percentage of the repeat over 25 (tools/materials/README.md). Node names become shader identifiers: none may be called albedo, depth or the like. Export: File > Export material > Godot > Godot 4 Standard into data/models/board/textures/structures/common, then Reload assets in the Tuning panel."
+      "text": "Bare corrugated steel for unpainted light walls, a remix of corrugated_steel. Models tint the near-white steel with their vertex colours. Painted seaport containers use the separate corrugated-painted material: opaque dielectric satin paint without a tiled chip mask. One repeat holds 10 corrugations along U; models map it 6.5 m across (18 units), so a corrugation is 0.65 m, which still reads at play zoom, and lay frames on the flat top of a ridge. The sheet keeps a metallic response across its surface (0.93-1 before weathering), with satin roughness 0.32. Broad, low-frequency weathering varies metallic response by at most 10 percent and blends 15 percent toward rust roughness 0.86. Keep these variations subtle: high-contrast, fine streaks in the finish become wood-like bright trails when the light catches the sheet. Wear varies the steel colour at ridge edges and where the chip noise rises. Depth is the profile, about 10 cm deep at that size: Depth scale is that depth as a percentage of the repeat over 25 (tools/materials/README.md). Node names become shader identifiers: none may be called albedo, depth or the like. Export: File > Export material > Godot > Godot 4 Standard into data/models/board/textures/structures/common, then Reload assets in the Tuning panel."
     },
     {
       "name": "bricks3",
@@ -331,11 +331,11 @@
       "type": "fbm3",
       "parameters": {
         "folds": 0,
-        "iterations": 5,
+        "iterations": 3,
         "noise": 1,
         "offset": 0,
-        "persistence": 0.6,
-        "scale_x": 40,
+        "persistence": 0.4,
+        "scale_x": 12,
         "scale_y": 2
       },
       "node_position": {
@@ -515,29 +515,15 @@
       "seed_int": 0
     },
     {
-      "name": "chip_metal",
-      "type": "blend2",
-      "parameters": {
-        "amount1": 1.0,
-        "blend_type1": 0
-      },
-      "node_position": {
-        "x": -350,
-        "y": 0
-      },
-      "seed_int": 0,
-      "generic_size": 1
-    },
-    {
       "name": "paint_roughness",
       "type": "uniform",
       "parameters": {
         "color": {
           "type": "Color",
-          "r": 0.6,
-          "g": 0.6,
-          "b": 0.6,
-          "a": 1
+          "r": 0.32,
+          "g": 0.32,
+          "b": 0.32,
+          "a": 1.0
         }
       },
       "node_position": {
@@ -582,7 +568,7 @@
       "name": "finish_roughness",
       "type": "blend2",
       "parameters": {
-        "amount1": 0.4,
+        "amount1": 0.15,
         "blend_type1": 0
       },
       "node_position": {
@@ -648,6 +634,18 @@
         "roughness": 1,
         "size": 9,
         "sss": 0
+      }
+    },
+    {
+      "type": "blend2",
+      "name": "finish_metallic",
+      "node_position": {
+        "x": -350,
+        "y": 0
+      },
+      "parameters": {
+        "amount1": 0.1,
+        "blend_type1": 0.0
       }
     }
   ],
@@ -797,24 +795,6 @@
       "to_port": 2
     },
     {
-      "from": "black",
-      "from_port": 0,
-      "to": "chip_metal",
-      "to_port": 0
-    },
-    {
-      "from": "colorize_3",
-      "from_port": 0,
-      "to": "chip_metal",
-      "to_port": 1
-    },
-    {
-      "from": "chips",
-      "from_port": 0,
-      "to": "chip_metal",
-      "to_port": 2
-    },
-    {
       "from": "paint_roughness",
       "from_port": 0,
       "to": "chipped_roughness",
@@ -869,12 +849,6 @@
       "to_port": 0
     },
     {
-      "from": "chip_metal",
-      "from_port": 0,
-      "to": "Material",
-      "to_port": 1
-    },
-    {
       "from": "finish_roughness",
       "from_port": 0,
       "to": "Material",
@@ -897,6 +871,30 @@
       "from_port": 0,
       "to": "Material",
       "to_port": 6
+    },
+    {
+      "from": "colorize_3",
+      "from_port": 0,
+      "to": "finish_metallic",
+      "to_port": 0
+    },
+    {
+      "from": "black",
+      "from_port": 0,
+      "to": "finish_metallic",
+      "to_port": 1
+    },
+    {
+      "from": "streaks",
+      "from_port": 0,
+      "to": "finish_metallic",
+      "to_port": 2
+    },
+    {
+      "from": "finish_metallic",
+      "from_port": 0,
+      "to": "Material",
+      "to_port": 1
     }
   ]
 }

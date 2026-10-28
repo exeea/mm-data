@@ -1,5 +1,50 @@
 import * as THREE from 'three';
 
+const sampledMaps = ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap', 'bumpMap'];
+const wrapping = { 10497: THREE.RepeatWrapping, 33071: THREE.ClampToEdgeWrapping, 33648: THREE.MirroredRepeatWrapping };
+const filtering = { 9728: THREE.NearestFilter, 9729: THREE.LinearFilter, 9984: THREE.NearestMipmapNearestFilter, 9985: THREE.LinearMipmapNearestFilter, 9986: THREE.NearestMipmapLinearFilter, 9987: THREE.LinearMipmapLinearFilter };
+
+export function materialSampling(material, sampler, owned) {
+  if (!material.mmSamplingCloned) {
+    // A material clone still shares its textures. Copy them once, keeping the loaded images.
+    const copies = new Map();
+    for (const role of sampledMaps) {
+      const source = material[role]; if (!source) continue;
+      if (!copies.has(source)) { const texture = source.clone(); copies.set(source, texture); owned.add(texture); }
+      material[role] = copies.get(source);
+    }
+    material.mmSamplingCloned = true;
+  }
+  for (const role of sampledMaps) {
+    const texture = material[role]; if (!texture) continue;
+    texture.wrapS = wrapping[sampler.wrapS]; texture.wrapT = wrapping[sampler.wrapT];
+    texture.minFilter = filtering[sampler.minFilter]; texture.magFilter = filtering[sampler.magFilter];
+    texture.needsUpdate = true;
+  }
+}
+
+export function materialFactors(material, surface) {
+  const gltf = surface?.gltf || {}, spec = surface?.managed, pbr = gltf.pbrMetallicRoughness || {};
+  material.color.fromArray(pbr.baseColorFactor || [1, 1, 1]);
+  if (spec) material.color.multiply(new THREE.Color().fromArray(spec.tint).convertSRGBToLinear());
+  material.opacity = pbr.baseColorFactor?.[3] ?? 1;
+  material.roughness = spec?.roughness ?? pbr.roughnessFactor ?? 1;
+  material.metalness = spec?.metallic ?? pbr.metallicFactor ?? 1;
+  material.side = gltf.doubleSided ? THREE.DoubleSide : THREE.FrontSide;
+  const paint = !!gltf.extras?.mmPaintMask;
+  material.transparent = !paint && gltf.alphaMode === 'BLEND'; material.depthWrite = !material.transparent;
+  material.alphaTest = !paint && gltf.alphaMode === 'MASK' ? gltf.alphaCutoff ?? .5 : 0;
+  if (material.emissive) {
+    material.emissive.fromArray(gltf.emissiveFactor || [0, 0, 0]);
+    material.emissiveIntensity = gltf.extensions?.KHR_materials_emissive_strength?.emissiveStrength ?? 1;
+    if (spec?.maps.emission && !gltf.emissiveTexture) {
+      material.emissive.copy(spec.emissionOperator === 0 ? new THREE.Color().setRGB(spec.emissionEnergy, spec.emissionEnergy, spec.emissionEnergy) : new THREE.Color().fromArray(spec.emissionColor).convertSRGBToLinear().multiplyScalar(spec.emissionEnergy));
+      if (gltf.emissiveFactor?.some(v => v !== 0)) material.emissive.multiply(new THREE.Color().fromArray(gltf.emissiveFactor));
+    }
+  }
+  material.needsUpdate = true;
+}
+
 // Preview mapping of docs/gpu-board-materials.md. The original GLB and .tres are never modified.
 export async function prepareMaterials(gltf, asset, owned, report) {
   const textureLoader = new THREE.TextureLoader();
@@ -33,8 +78,6 @@ export async function prepareMaterials(gltf, asset, owned, report) {
     const spec = surface.managed; const glow = new THREE.Color(0, 0, 0);
     if (spec) {
       try {
-        material.color.multiply(new THREE.Color().fromArray(spec.tint).convertSRGBToLinear());
-        material.roughness = spec.roughness; material.metalness = spec.metallic;
         material.roughnessMap = spec.maps.roughness ? await texture(spec.maps.roughness, material.map, false, spec.channels.roughness) : null;
         material.metalnessMap = spec.maps.metallic ? await texture(spec.maps.metallic, material.map, false, spec.channels.metallic) : null;
         if (!surface.gltf.normalTexture && spec.maps.normal) { material.normalMap = await texture(spec.maps.normal, material.map); material.normalScale.set(spec.normalScale, spec.normalScale); }
@@ -43,15 +86,12 @@ export async function prepareMaterials(gltf, asset, owned, report) {
         if (spec.emissionOperator === 0 || !spec.maps.emission) glow.copy(tint);
         if (spec.maps.emission && !surface.gltf.emissiveTexture) {
           material.emissiveMap = await texture(spec.maps.emission, material.map, true);
-          const factor = surface.gltf.emissiveFactor;
-          material.emissive.copy(spec.emissionOperator === 0 ? new THREE.Color().setRGB(spec.emissionEnergy, spec.emissionEnergy, spec.emissionEnergy) : tint);
-          if (factor?.some(v => v !== 0)) material.emissive.multiply(new THREE.Color().fromArray(factor));
         }
         if (spec.maps.height && !material.normalMap) { material.bumpMap = await texture(spec.maps.height, material.map); material.bumpScale = spec.heightScale / 100 * (spec.heightFlip ? -1 : 1); }
       } catch (error) { report(`${surface.name}: map preview failed: ${error.message}`); }
     }
+    materialFactors(material, surface);
     const paint = !!surface.gltf.extras?.mmPaintMask;
-    if (paint) { material.transparent = false; material.alphaTest = 0; }
     if (paint || glow.r || glow.g || glow.b) {
       material.onBeforeCompile = shader => {
         shader.uniforms.mmGlow = { value: glow };
@@ -87,13 +127,22 @@ export async function prepareMaterials(gltf, asset, owned, report) {
   });
 }
 
-export function modifyGeometry(gltf, asset, owned) {
+export async function modifyGeometry(gltf, asset, owned) {
+  const originals = new Map();
+  for (const mesh of asset.metadata.meshes || []) for (const primitive of mesh.primitives) {
+    const source = primitive.extras?.mmVertexPaint?.source;
+    if (Number.isInteger(source)) originals.set(source, null);
+  }
+  await Promise.all([...originals.keys()].map(async source => originals.set(source, await gltf.parser.getDependency('accessor', source))));
   gltf.scene.traverse(object => {
     if (!object.isMesh) return;
     owned.add(object.geometry); object.geometry = object.geometry.clone();
     const geometry = object.geometry, count = geometry.attributes.position.count;
     let colors = geometry.attributes.color;
     if (!colors) { colors = new THREE.Float32BufferAttribute(new Float32Array(count * 3).fill(1), 3); geometry.setAttribute('color', colors); }
+    const association = gltf.parser.associations.get(object), primitive = asset.metadata.meshes?.[association?.meshes]?.primitives[association?.primitives ?? 0];
+    const source = primitive?.extras?.mmVertexPaint?.source;
+    geometry.userData.authoredPaint = source === null ? new THREE.Float32BufferAttribute(new Float32Array(count * 3).fill(1), 3) : originals.get(source) || colors;
     // Convert normalized/interleaved colors to an editable float copy; glTF colors are already linear.
     const values = new Float32Array(count * colors.itemSize);
     for (let i = 0; i < count; i++) for (let c = 0; c < colors.itemSize; c++) values[i * colors.itemSize + c] = colors.getComponent(i, c);
