@@ -31,13 +31,15 @@ def z_up(value):
     return [value[0], -value[2], value[1]]
 
 
-def write_glb(path, model=None, *, levels=None, extras=None, linear_colors=False):
+def write_glb(path, model=None, *, levels=None, groups=None, extras=None, linear_colors=False):
     """Export existing rigid authoring arrays, preserving node/part/material IDs.
 
     With `linear_colors=True`, pigment factors and vertex RGB are already linear; alpha is unchanged.
     A mesh with `colorData=True` stores numeric COLOR_0 channels without any transfer function.
     A mesh may carry `slots`, one colour slot per vertex (0 none, n the model's n-th colour slot), written as the
     `_COLOUR_SLOT` attribute; `extras` become the file's extras (for example its `mmColourSlots` definitions).
+    `groups` adds root groups beside the levels by name, which the game reads as data (a `cut` and its `stands`):
+    their parts may leave out `materialid`, and nodes without parts are empties.
     """
     document = {'asset': {'version': '2.0', 'generator': 'MegaMek rigid mesh exporter'},
                 'scene': 0, 'scenes': [{'nodes': []}], 'nodes': [], 'meshes': [],
@@ -166,7 +168,8 @@ def write_glb(path, model=None, *, levels=None, extras=None, linear_colors=False
                 x, y, z = source['scale']
                 entry['scale'] = [x, z, y]
             if source.get('parts'):
-                primitives = [{**parts[p['meshpartid']], 'material': material_ids[p['materialid']]}
+                primitives = [{**parts[p['meshpartid']], **({'material': material_ids[p['materialid']]}
+                                                             if p.get('materialid') else {})}
                               for p in source['parts']]
                 entry['mesh'] = len(document['meshes'])
                 document['meshes'].append({'name': source['id'], 'primitives': primitives})
@@ -186,6 +189,10 @@ def write_glb(path, model=None, *, levels=None, extras=None, linear_colors=False
             index = len(document['nodes'])
             document['nodes'].append({'name': f'{Path(path).stem}-lod{level}', 'children': children})
             document['scenes'][0]['nodes'].append(index)
+    for name, geometry in (groups or {}).items():
+        children = emit(geometry)
+        document['scenes'][0]['nodes'].append(len(document['nodes']))
+        document['nodes'].append({'name': name, 'children': children})
     if binary:
         document['buffers'] = [{'byteLength': len(binary)}]
     if extras:

@@ -37,11 +37,11 @@ Scenery meshes live in topic folders under `scenery/`, with kebab-case names:
 | `road/` | stop sign, three-aspect pole signal and curved mast-arm signal gantry; facing +Y with pole bases at Z=0; generated road-junction controls; `roadside-trees.png`, the roadside-trees stamp's thumbnail, rendered from its rows over its half-transparent road |
 | `construction/` | crawler crane, bulldozer, concrete debris, excavation site, concrete pipe |
 | `farm/` | one mesh per animal and pose: cow, pig, horse, bison, hen and rooster; coats are colour slots |
-| `seaport/yard/` | the container yard looks' ten compositions (`yard/<name>` in `layouts.json`) and the ten seaport props |
+| `seaport/yard/` | the container yard looks' ten compositions (`yard/<name>` in `layouts.json`) and the ten seaport props; every container in a yard, and the one the quay crane, straddle carrier or reach stacker carries, is the `container` prop's box (its last level) in one of its paint presets, a yard's with the faces touching a neighbour left out and its sides darkening toward its foot |
 | `maglev/` | route marker (the only rail mesh), station platform, city and colony vehicles, the city gangway coupler; `train.png` and `colony-train.png` are the stamps' thumbnails |
 | `military/` | orbital gun, fortification (dug, and sandbags where paved), the trench of a dug-in platoon, an olive container of cargo set down on the ground |
 | `rubble/` | a collapsed building by structure type, and (`-path`) its hex cleared: the debris collected into heaps, the salvage stacked |
-| `geysers/` | dormant and erupting water geysers, magma geyser |
+| `geysers/` | dormant and erupting water geysers and the magma geyser, two looks each (`<state>` and `<state>-b`, one or the other per hex): one top-down photographic study (`textures/scenery/geyser-sinter`, `geyser-spatter` and their `-b`) mapped straight down over a heightfield of the feature, its water or lava just under the rim, where `GpuGeysers.vent` starts the steam and the eruption |
 
 No mesh sits at a legacy key. A legacy key is `scenery/<2D tileset image path
 without extension>`, which the Classic tileset names for the token it stands for
@@ -96,7 +96,7 @@ Coats that differ only in colour share one mesh with colour slots, so there are
 12 animal meshes.
 
 The containers are corrugated steel, the shared `textures/structures/common/corrugated`
-(as are the light walls): their slot colour tints its near-white paint.
+(as are the light walls), one repeat to 6.5 m (18 units), so its 0.65 m corrugations read at play zoom: their slot colour tints its near-white paint.
 
 The cargo crate's maps are baked, its olive paint worn to the metal, rusted and dirty. A
 material whose extras set `mmPaintMask` keeps a paint mask in its albedo's alpha: the slot
@@ -314,8 +314,8 @@ same way and are shaded differently may lie within 0.1 px of each other where th
 terrain-owned rubble meshes, which import and the editor never place, are the exception: their thin rebar and
 beam flanges cross slabs at shallow angles. No two meshes that rows, palette props or the scatter kit reach may
 be copies (the same vertex radii about Z, heights, colours and materials): a rotated or mirrored copy is a row
-on the other mesh. `geysers/water-dormant` and `water-erupting` are the one accepted pair, because `GpuGeysers`
-takes the eruption from the asset name.
+on the other mesh. `geysers/water-dormant` and `water-erupting` (and their `-b` looks) are the accepted pairs, because
+`GpuGeysers` takes the eruption from the asset name.
 
 ## Decals
 

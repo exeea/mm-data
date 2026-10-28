@@ -17,7 +17,7 @@
         "y": 230
       },
       "title": "About this material",
-      "text": "Shared corrugated steel: near-white paint over corrugated steel, a remix of corrugated_steel. Models tint the paint with their own colour (vertex colours, colour slots), so keep it near white: the cargo crate is olive, the seaport containers take their paints, the light walls grey. One repeat holds 10 corrugations along U; models map it 3 m across, so a corrugation is 0.3 m, and lay frames on the flat top of a ridge. The paint chips off the ridge edges and where the chip noise rises; the steel shows there, metallic. Depth is the profile, 4.5 cm deep: Depth scale is that depth as a percentage of the repeat over 25 (tools/materials/README.md). Node names become shader identifiers: none may be called albedo, depth or the like. Export: File > Export material > Godot > Godot 4 Standard into data/models/board/textures/structures/common, then Reload assets in the Tuning panel."
+      "text": "Shared corrugated steel: near-white paint over corrugated steel, a remix of corrugated_steel. Models tint the paint with their own colour (vertex colours, colour slots), so keep it near white: the cargo crate is olive, the seaport containers take their paints, the light walls grey. One repeat holds 10 corrugations along U; models map it 6.5 m across (18 units), so a corrugation is 0.65 m, which still reads at play zoom, and lay frames on the flat top of a ridge. The paint chips off the ridge edges and where the chip noise rises; the steel shows there, metallic. Depth is the profile, about 10 cm deep at that size: Depth scale is that depth as a percentage of the repeat over 25 (tools/materials/README.md). Node names become shader identifiers: none may be called albedo, depth or the like. Export: File > Export material > Godot > Godot 4 Standard into data/models/board/textures/structures/common, then Reload assets in the Tuning panel."
     },
     {
       "name": "bricks3",
@@ -63,7 +63,7 @@
       "parameters": {
         "buffer": 1,
         "param2": 0,
-        "size": 10,
+        "size": 9,
         "strength": 0.25
       },
       "node_position": {
@@ -646,7 +646,7 @@
         "metallic": 1,
         "normal": 1,
         "roughness": 1,
-        "size": 10,
+        "size": 9,
         "sss": 0
       }
     }

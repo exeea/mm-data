@@ -10,6 +10,7 @@ import re
 
 from unit_model_geometry import Geometry
 from unit_weapon_shapes import BOOK, draw, held_for, housing_layout, rule_for
+from modular_turret_profiles import add_profiles
 
 
 def fallback_rule(item, low_detail=False):
@@ -138,6 +139,7 @@ def build_equipment(catalog, output, export_asset):
         item = {'internalName': 'fallback-'+family, 'name': family, 'family': family, 'rackSize': 1,
                 'policy': 'PHYSICAL_WEAPON' if family == 'physical' else 'WEAPON'}
         fallback_models[family] = module(item, fallback_rule(item, True), low_detail=True)
+    add_profiles(catalog, mappings)
     metadata = {'schema': 2, 'equipment': mappings, 'fallbacks': fallback_models, 'diagnostics': diagnostics,
                 'note': 'Mappings describe reusable equipment, not unit variants. Optional misc has no generic fallback.'}
     (output / 'equipment.json').write_text(json.dumps(metadata, indent=2, ensure_ascii=False)+'\n', encoding='utf-8')

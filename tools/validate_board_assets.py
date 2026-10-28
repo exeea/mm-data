@@ -7,15 +7,19 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 BOARD = ROOT / 'data/models/board'
-buildings = json.loads((BOARD / 'building-manifest.json').read_text())
-features = json.loads((BOARD / 'manifest.json').read_text())
+# The board models' budgets, levels and sources: tool data, never shipped.
+MANIFESTS = ROOT / 'tools/board-models'
+buildings = json.loads((MANIFESTS / 'building-manifest.json').read_text())
+features = json.loads((MANIFESTS / 'manifest.json').read_text())
 catalog = dict(features, **buildings)
 
 lods = {}
 for asset, entry in features.items():
     if 'lods' in entry:
         # Three mesh levels and the impostor; a winter variant (`"variant": "snow"`) reads its bare species' file.
-        assert [lod['node'] for lod in entry['lods']] == [f'{asset}-lod{level}' for level in range(4)], asset
+        # Entries are keyed by the model's path; its level groups by its own name.
+        name = asset.rsplit('/', 1)[-1]
+        assert [lod['node'] for lod in entry['lods']] == [f'{name}-lod{level}' for level in range(4)], asset
         for level, lod in enumerate(entry['lods']):
             assert 0 < lod['triangles'] <= (480, 240, 96, 12)[level], lod
             catalog[lod['node']] = lod

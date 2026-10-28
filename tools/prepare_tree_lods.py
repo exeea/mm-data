@@ -17,6 +17,10 @@ from mathutils import Euler, Matrix, Vector
 from mathutils.bvhtree import BVHTree
 
 BOARD = Path(__file__).resolve().parents[1] / 'data/models/board'
+# The plant GLBs; their texture paths are relative to this folder.
+PLANTS = BOARD / 'vegetation'
+# The plants' levels and sources: tool data, never shipped.
+MANIFEST = Path(__file__).resolve().parent / 'board-models/manifest.json'
 IMPOSTORS = 'textures/vegetation/impostors'
 # Pixels per card face; the game draws the cards only below TreeLod's smallest threshold.
 PANEL = 128
@@ -75,7 +79,7 @@ def unlit_material(role, filename, images):
     nodes.clear()
     if filename not in images:
         # The bake owns its image copies; never change an open scene's existing image color space.
-        images[filename] = bpy.data.images.load(str(BOARD / filename), check_existing=False)
+        images[filename] = bpy.data.images.load(str(PLANTS / filename), check_existing=False)
         images[filename].colorspace_settings.name = 'sRGB'
     texture = nodes.new('ShaderNodeTexImage')
     texture.image = images[filename]
@@ -262,7 +266,7 @@ def lighting(model, toward):
     for material in model['materials']:
         if not material['id'].endswith('-cutout'):
             continue
-        image = bpy.data.images.load(str(BOARD / material['textures'][0]['filename']), check_existing=True)
+        image = bpy.data.images.load(str(PLANTS / material['textures'][0]['filename']), check_existing=True)
         pixels = numpy.empty(len(image.pixels), dtype=numpy.float32)
         image.pixels.foreach_get(pixels)
         cutouts[material['id']] = pixels.reshape(image.size[1], image.size[0], 4)[:, :, 3]
@@ -360,13 +364,13 @@ def impostor(scene, model, name, images):
                         'parts': [{'id': 'impostor', 'type': 'TRIANGLES', 'indices': indices}]}],
             'nodes': [{'id': asset, 'parts': [{'meshpartid': 'impostor', 'materialid': 'impostor'}]}],
             'materials': [{'id': 'impostor', 'diffuse': [1, 1, 1], 'alphaTest': .5, 'textures': [
-                {'id': 'impostor', 'type': 'DIFFUSE', 'filename': f'{IMPOSTORS}/{name}.png',
+                {'id': 'impostor', 'type': 'DIFFUSE', 'filename': f'../{IMPOSTORS}/{name}.png',
                  'wrapS': 33071, 'wrapT': 33071}]}]}
 
 
 def impostors(only=None):
     """Add or refresh LOD3 of every plant with detail levels, keeping its other levels as they are."""
-    manifest = json.loads((BOARD / 'manifest.json').read_text())
+    manifest = json.loads(MANIFEST.read_text())
     old_scene = bpy.context.window.scene
     scene = bpy.data.scenes.new('MegaMek plant impostors')
     bpy.context.window.scene = scene
@@ -398,14 +402,16 @@ def impostors(only=None):
         scene.view_settings.use_curve_mapping = False
         if hasattr(scene, 'eevee'):
             scene.eevee.taa_render_samples = 16
-        for name, entry in manifest.items():
-            if 'lods' not in entry or only is not None and name not in only:
+        for key, entry in manifest.items():
+            # Entries are keyed by the model's path; the plant's own name names its levels and impostor.
+            name = key.rsplit('/', 1)[-1]
+            if 'lods' not in entry or only is not None and name not in only and key not in only:
                 continue
-            if entry['mesh'] != name + '.glb':
+            if entry['mesh'] != key + '.glb':
                 # A winter form kept as a material variant has no GLB of its own; its impostor stays in that file.
                 print(name, 'is kept in', entry['mesh'], flush=True)
                 continue
-            path = BOARD / (name + '.glb')
+            path = BOARD / entry['mesh']
             levels = {level: read_glb(path, level, linear_colors=True) for level in range(min(3, len(entry['lods'])))}
             # The impostor material's extras hold the winter impostor of a material variant (mmVariants.snow).
             extras = next((material.get('extras') for material in levels[0]['materials']
@@ -418,7 +424,7 @@ def impostors(only=None):
             entry['lods'] = entry['lods'][:3] + [{'node': f'{name}-lod3', **counts(levels[3])}]
             write_glb(path, levels=levels, linear_colors=True, extras=levels[0].get('extras'))
             print(name, [lod['triangles'] for lod in entry['lods']], flush=True)
-        (BOARD / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+        MANIFEST.write_text(json.dumps(manifest, indent=2) + '\n')
     finally:
         bpy.context.window.scene = old_scene
         bpy.data.scenes.remove(scene)
