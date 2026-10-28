@@ -9,9 +9,10 @@ Run `python tools/blender/package_addon.py` from mm-data. In Blender choose **Ed
 Preferences → Add-ons → menu → Install from Disk**, choose the resulting
 `tools/blender/mm_materials.zip`, and enable **MegaMek Materials & GLB**.
 
-In the 3D View press **N**, open **MegaMek**, and set **mm-data folder** to your checkout
-(the folder containing `data`, not `data/models/board/textures`). Click **Refresh Library**.
-These controls are grouped under **Material Library Configuration**. The add-on scans
+The 3D View sidebar (**N**) has two tabs: **MegaMek** for GLB files and tests, and
+**MM Materials** for browsing and assignment. Under **MM Materials → Library Setup**,
+set **mm-data** to your checkout (the folder containing `data`, not
+`data/models/board/textures`). Click **Load Materials** in the browser. The add-on scans
 `<mm-data folder>/data/models/board/textures/**/*.tres`; it never depends on an opened GLB
 to discover the library. Changing folders clears the old list; Refresh loads the new one.
 Click **Save as Default Folder** to remember the path for new scenes and future Blender
@@ -20,17 +21,21 @@ folder is stored in its `.blend` and takes precedence over the default.
 
 ## Visual material palette
 
-Open **N → MegaMek → Material Palette**, then click **Refresh Library**. All materials
-appear in a scrollable thumbnail grid. Widen the sidebar for more columns, choose
-Small/Medium/Large thumbnails, search by name/path, or filter to a texture folder.
+Open **N → MM Materials**, or click **Browse Materials** in the **MegaMek** tab.
+Browse Materials loads the library automatically if needed. The browser shows **six
+materials per page**, with previous/next arrows, name/path search and a folder filter.
+Small thumbnails show 12 per page; Large shows four. Loading more materials adds pages,
+so the browser stays bounded. Search, folder and thumbnail-size changes return to page 1.
+The refresh icon beside Search refreshes the library and retains the chosen material.
 Hover a material's name button to see its complete library path.
 
 Click the **name below a thumbnail** to assign it to selected mesh objects' active
 material slots, or to selected faces in Edit Mode. Disable **Assign on click** to
-browse first, then use **Assign Material**. With no mesh selected, a click only chooses
-the material. These controls use the same assignment operation as the existing panel.
+browse first, then use **Assign Chosen Material**. With no mesh selected, a click only
+chooses the material. Expand **Material Slots** to choose the active slot. File controls
+remain in the separate **MegaMek** tab and never move below the thumbnail grid.
 
-**Render Material Thumbnails** builds shaded sphere previews of the `.tres` materials,
+**Library Setup → Build / Update Thumbnails** builds shaded sphere previews of the `.tres` materials,
 including their tint, normal detail, roughness and emission. Until a sphere is ready,
 its tile shows the albedo. Rendering runs in a separate background Blender process;
 the working scene, objects, materials and selection are untouched. Stop it at any time
@@ -42,10 +47,9 @@ The same preview limitations described below apply to these thumbnails.
 ## Create a new mesh
 
 1. Model normally in Blender. No GLB import is required. UV unwrap your mesh (one UV set).
-2. Set the library folder and click **Refresh Library**, then select your mesh, choose
-   a `.tres` in the **Material** field, and click **Assign Material**. Selected faces in
-   Edit Mode can receive different materials.
-3. Select every object that belongs in the asset and click **Export Selected GLB**.
+2. Select your mesh and use **MM Materials** to choose and assign a material.
+   Selected faces in Edit Mode can receive different materials.
+3. Select every object that belongs in the asset and click **MegaMek → Export Selected GLB**.
    Save under `mm-data/data/models`. Unselected meshes, cameras, and lights are omitted.
 4. If the export has no LOD groups, the add-on adds an identity `<filename>-lod0` group
    around the selected geometry. Existing LOD groups are checked and preserved. Shared
@@ -65,11 +69,11 @@ manifest entry, or extra LOD geometry is invented for a new mesh.
    previews from the external albedos' adjacent `.tres` files. Existing scenes remain open.
 2. Use **Preview LOD** to view one level. All levels are included when saving, including
    ones hidden in the viewport. Use the Outliner to select the mesh you want to edit.
-3. Click the searchable **Material** field and select a `.tres` from the library.
-   In **Object Mode**, **Assign Material** replaces the active slot on selected meshes.
-   Choose the slot in the panel's material list. In **Edit Mode**, it assigns a new slot
+3. Click **Browse Materials** to switch to the material browser.
+   In **Object Mode**, assignment replaces the active slot on selected meshes.
+   Choose the slot under **Material Slots**. In **Edit Mode**, assignment adds a new slot
    only to selected faces. UV unwrap new geometry; adjust texture size in the UV Editor.
-4. After exporting changes from Material Maker, click **Reload Materials & Maps**.
+4. After exporting changes from Material Maker, use **Library Setup → Reload Assigned Materials**.
 5. Click **Save GLB** to update the source, or **Save As…** for a copy under `data/models`.
    Normal Blender **Ctrl+S** still saves the `.blend`; it does not save your GLB.
 
@@ -123,7 +127,7 @@ edits; it does not save over the source GLB or change the authoring scene. This 
 for newly created meshes too. Enable **Selected objects only** when your working scene
 also contains unrelated objects; include every LOD and mesh belonging to the asset.
 
-The panel calls the actual MegaMek engine. Set **MegaMek engine checkout** to the repository
+The Asset Test panel starts collapsed. Under **Engine Setup**, set **Checkout** to the repository
 containing `gradlew` (automatically finds sibling `megamek_temp` or `megamek`). Click
 **Build / Refresh Engine** once and again after engine changes. This requires the JDK and
 Gradle dependencies used to build the game. It runs in the background and reports errors
@@ -201,7 +205,8 @@ Run `test_new_mesh.py` with the same Blender arguments for the fresh-scene workf
 preferences-based library discovery, assigning to a new cube, selection-only export
 from Edit Mode, automatic LOD0, external textures, white colour defaults, and re-import.
 
-`test_palette.py` checks visual-library discovery, search and folder filters, optional
+`test_palette.py` checks bounded pagination with every material reachable, filter/page
+resets, selection retention on refresh, visual-library discovery, optional
 click assignment in Object/Edit Mode, independent thumbnail rendering, cache invalidation,
 switching library roots, missing-map reporting and preview cleanup.
 

@@ -2,9 +2,9 @@
 bl_info = {
     'name': 'MegaMek Materials & GLB',
     'author': 'MegaMek contributors',
-    'version': (1, 3, 0),
+    'version': (1, 4, 0),
     'blender': (5, 2, 0),
-    'location': '3D View > Sidebar > MegaMek',
+    'location': '3D View > Sidebar > MegaMek / MM Materials',
     'description': 'Assign Material Maker .tres materials and save GLBs with shared external textures',
     'category': 'Import-Export',
 }
@@ -438,12 +438,17 @@ class MM_OT_catalog(bpy.types.Operator):
     def execute(self, context):
         try:
             root = data_root(context)
-            context.scene.mm_materials.root = str(root)
-            entries = context.scene.mm_materials.materials
+            state = context.scene.mm_materials
+            chosen = state.material
+            if state.root != str(root):
+                state.root = str(root)
+            entries = state.materials
             entries.clear()
             for path in sorted((root / 'data/models/board/textures').rglob('*.tres')):
                 entries.add().name = path.relative_to(root / 'data/models/board/textures').as_posix()
             palette.refresh(context)
+            state.material = chosen if chosen in entries else ''
+            context.scene.mm_palette.page = 0
             self.report({'INFO'}, f'{len(entries)} materials available')
             return {'FINISHED'}
         except Exception as error:
@@ -629,12 +634,12 @@ class MM_OT_save(bpy.types.Operator):
 
 
 class MM_PT_panel(bpy.types.Panel):
-    bl_label = 'MegaMek Materials & GLB'
+    bl_label = 'Model / GLB'
     bl_idname = 'MM_PT_materials'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'MegaMek'
-    bl_order = 1
+    bl_order = 0
 
     def draw(self, context):
         layout = self.layout
@@ -643,13 +648,6 @@ class MM_PT_panel(bpy.types.Panel):
             layout.operator('mm_materials.test_return', icon='LOOP_BACK')
             return
         state = context.scene.mm_materials
-        config = layout.box()
-        config.label(text='Material Library Configuration', icon='PREFERENCES')
-        config.prop(state if state.root else context.preferences.addons[__name__].preferences, 'root')
-        config.label(text='Reads: data/models/board/textures')
-        config.operator('mm_materials.catalog', icon='FILE_REFRESH')
-        config.operator('mm_materials.default_folder', icon='FILE_TICK')
-        config.label(text=f'{len(state.materials)} materials loaded')
         layout.operator('mm_materials.open', icon='FILE_FOLDER')
         if state.source:
             layout.label(text=Path(state.source).name, icon='MESH_DATA')
@@ -661,22 +659,8 @@ class MM_PT_panel(bpy.types.Panel):
             layout.label(text='New mesh: select parts, then export.')
         layout.operator('mm_materials.export_selected', icon='EXPORT')
         layout.separator()
-        layout.prop_search(state, 'material', state, 'materials')
-        layout.operator('mm_materials.assign', icon='MATERIAL')
-        layout.label(text='Edit Mode: selected faces')
-        layout.label(text='Object Mode: active material slot')
-        layout.operator('mm_materials.reload', icon='FILE_REFRESH')
-        obj = context.object
-        if obj and obj.type == 'MESH' and obj.active_material:
-            layout.template_list('MATERIAL_UL_matslots', '', obj, 'material_slots', obj,
-                                 'active_material_index', rows=3)
-            material = obj.active_material
-            layout.label(text='Active: ' + export_name(material))
-            if material.get('_mm_tres'):
-                layout.label(text=material['_mm_tres'])
-        layout.separator()
+        layout.operator('mm_materials.browse_materials', icon='MATERIAL')
         layout.label(text='Save .blend separately to keep editor state.')
-        layout.label(text='Preview: PBR; game shaders/parallax differ.')
 
 
 _classes = (MMPreferences, MMEntry, MMState, MM_OT_catalog, MM_OT_default_folder, MM_OT_assign, MM_OT_reload,

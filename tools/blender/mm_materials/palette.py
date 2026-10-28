@@ -7,12 +7,14 @@ import tempfile
 
 import bpy
 import bpy.utils.previews
-from bpy.props import BoolProperty, EnumProperty, PointerProperty, StringProperty
+from bpy.props import BoolProperty, EnumProperty, IntProperty, PointerProperty, StringProperty
 
 from .tres import read_material
 
 _libraries = {}
 _job = None
+# A library of any size occupies at most four thumbnail rows.
+PAGE_LAYOUTS = {'SMALL': (3, 12, 2.6), 'MEDIUM': (2, 6, 3.8), 'LARGE': (2, 4, 5.2)}
 
 
 def thumbnail_path(path, root):
@@ -85,6 +87,19 @@ def filtered_items(context):
             and all(word in (item['name'] + ' ' + item['label']).casefold() for word in words)]
 
 
+def reset_page(settings, context):
+    settings.page = 0
+
+
+def page_items(context):
+    settings = context.scene.mm_palette
+    items = filtered_items(context)
+    count = PAGE_LAYOUTS[settings.size][1]
+    pages = max(1, (len(items) + count - 1) // count)
+    page = min(settings.page, pages - 1)
+    return items[page * count:(page + 1) * count], page, pages, len(items)
+
+
 def redraw():
     for window in bpy.context.window_manager.windows:
         for area in window.screen.areas:
@@ -148,9 +163,11 @@ def clear_icons(*args):
 
 
 class MMPaletteState(bpy.types.PropertyGroup):
-    search: StringProperty(name='Search', options={'TEXTEDIT_UPDATE'})
-    folder: EnumProperty(name='Folder', items=categories)
-    size: EnumProperty(name='Thumbnails', items=[('SMALL', 'Small', ''), ('MEDIUM', 'Medium', ''), ('LARGE', 'Large', '')], default='MEDIUM')
+    search: StringProperty(name='Search', options={'TEXTEDIT_UPDATE'}, update=reset_page)
+    folder: EnumProperty(name='Folder', items=categories, update=reset_page)
+    size: EnumProperty(name='Thumbnails', items=[('SMALL', 'Small · 12 per page', ''), ('MEDIUM', 'Medium · 6 per page', ''),
+                                               ('LARGE', 'Large · 4 per page', '')], default='MEDIUM', update=reset_page)
+    page: IntProperty(min=0, options={'SKIP_SAVE'})
     assign_on_click: BoolProperty(name='Assign on click', default=True,
                                   description='Click a material name to assign to selected objects or faces; without a mesh, only select it')
 
@@ -232,12 +249,47 @@ class MM_OT_palette_cancel(bpy.types.Operator):
         return {'FINISHED'}
 
 
+class MM_OT_palette_page(bpy.types.Operator):
+    bl_idname = 'mm_materials.palette_page'
+    bl_label = 'Change Material Page'
+    direction: IntProperty(default=1, options={'SKIP_SAVE'})
+
+    def execute(self, context):
+        _, page, pages, _ = page_items(context)
+        context.scene.mm_palette.page = max(0, min(pages - 1, page + self.direction))
+        return {'FINISHED'}
+
+
+class MM_OT_browse_materials(bpy.types.Operator):
+    bl_idname = 'mm_materials.browse_materials'
+    bl_label = 'Browse Materials'
+    bl_description = 'Open the separate MM Materials tab and load the library if needed'
+
+    def execute(self, context):
+        try:
+            if not context.scene.mm_materials.materials:
+                if bpy.ops.mm_materials.catalog() != {'FINISHED'}:
+                    return {'CANCELLED'}
+            area = context.area if context.area and context.area.type == 'VIEW_3D' else next(
+                (area for area in context.screen.areas if area.type == 'VIEW_3D'), None)
+            if not area:
+                raise ValueError('Open a 3D View to browse materials')
+            area.spaces.active.show_region_ui = True
+            region = next(region for region in area.regions if region.type == 'UI')
+            region.active_panel_category = 'MM Materials'
+            area.tag_redraw()
+            return {'FINISHED'}
+        except Exception as error:
+            self.report({'ERROR'}, str(error))
+            return {'CANCELLED'}
+
+
 class MM_PT_palette(bpy.types.Panel):
-    bl_label = 'Material Palette'
+    bl_label = 'Material Browser'
     bl_idname = 'MM_PT_palette'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
-    bl_category = 'MegaMek'
+    bl_category = 'MM Materials'
     bl_order = 0
 
     @classmethod
@@ -250,39 +302,34 @@ class MM_PT_palette(bpy.types.Panel):
         settings = context.scene.mm_palette
         if not state.materials:
             layout.label(text='Load the materials from your mm-data folder.')
-            layout.operator('mm_materials.catalog', icon='FILE_REFRESH')
+            layout.operator('mm_materials.catalog', text='Load Materials', icon='FILE_REFRESH')
             return
         try:
             cached = library(context)
-            items = filtered_items(context)
+            items, page, pages, total = page_items(context)
         except Exception as error:
             layout.label(text=str(error), icon='ERROR')
             return
-        layout.prop(settings, 'search', icon='VIEWZOOM', text='')
-        layout.prop(settings, 'folder')
         row = layout.row(align=True)
-        row.prop(settings, 'size', text='')
+        row.prop(settings, 'search', icon='VIEWZOOM', text='')
         row.operator('mm_materials.catalog', text='', icon='FILE_REFRESH')
+        layout.prop(settings, 'folder')
+        layout.prop(settings, 'size', text='')
+        row = layout.row(align=True)
+        previous = row.row(align=True)
+        previous.enabled = page > 0
+        previous.operator('mm_materials.palette_page', text='', icon='TRIA_LEFT').direction = -1
+        row.label(text=f'{page + 1} / {pages} · {total} materials')
+        following = row.row(align=True)
+        following.enabled = page + 1 < pages
+        following.operator('mm_materials.palette_page', text='', icon='TRIA_RIGHT').direction = 1
         layout.prop(settings, 'assign_on_click')
-        if state.material:
-            layout.label(text='Chosen: ' + Path(state.material).stem)
-        layout.operator('mm_materials.assign', icon='MATERIAL')
-        count = sum(item['rendered'] for item in cached['items'])
-        layout.label(text=f'{len(items)} / {len(cached["items"])} materials · {count} spheres ready')
-        if any(item['error'] for item in cached['items']):
-            layout.label(text='Errors: Text Editor → MegaMek Palette Report', icon='ERROR')
-        if _job:
-            layout.operator('mm_materials.palette_cancel', text='Rendering… Stop', icon='CANCEL')
-        elif count < len(cached['items']):
-            layout.operator('mm_materials.palette_render', icon='RENDER_STILL')
-            layout.label(text='Unrendered tiles show their albedo.')
         if not items:
             layout.label(text='No matching materials.')
-            return
-        size = {'SMALL': 3.0, 'MEDIUM': 4.5, 'LARGE': 6.0}[settings.size]
-        ui_scale = context.preferences.system.ui_scale
-        columns = max(1, int(context.region.width / (ui_scale * (size * 20 + 18))))
-        grid = layout.grid_flow(columns=columns, even_columns=True, even_rows=True, align=False)
+        columns, capacity, size = PAGE_LAYOUTS[settings.size]
+        width = context.region.width / context.preferences.system.ui_scale
+        size = max(1.8, min(size, (width - 35) / columns / 20 - 1.1))
+        grid = layout.grid_flow(row_major=True, columns=columns, even_columns=True, even_rows=True, align=False)
         for item in items:
             cell = grid.box().column(align=True)
             if item['icon']:
@@ -293,9 +340,52 @@ class MM_PT_palette(bpy.types.Panel):
             button.material = item['name']
             if item['error']:
                 cell.label(text='Check .tres / maps', icon='ERROR')
+        layout.separator()
+        if state.material:
+            layout.label(text=Path(state.material).stem.replace('-', ' '), icon='MATERIAL')
+        row = layout.row()
+        row.enabled = bool(state.material)
+        row.operator('mm_materials.assign', text='Assign Chosen Material', icon='CHECKMARK')
+        layout.label(text='Selected faces' if context.mode == 'EDIT_MESH' else 'Selected objects · active slot')
+        obj = context.object
+        if obj and obj.type == 'MESH' and obj.material_slots:
+            header, body = layout.panel('mm_material_slots', default_closed=True)
+            header.label(text='Material Slots')
+            if body:
+                body.template_list('MATERIAL_UL_matslots', '', obj, 'material_slots', obj, 'active_material_index', rows=3)
+        if _job:
+            layout.operator('mm_materials.palette_cancel', text='Thumbnails rendering… Stop', icon='CANCEL')
 
 
-_classes = (MMPaletteState, MM_OT_palette_pick, MM_OT_palette_render, MM_OT_palette_cancel, MM_PT_palette)
+class MM_PT_library_setup(bpy.types.Panel):
+    bl_label = 'Library Setup'
+    bl_idname = 'MM_PT_library_setup'
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = 'MM Materials'
+    bl_options = {'DEFAULT_CLOSED'}
+    bl_order = 1
+
+    @classmethod
+    def poll(cls, context):
+        return not context.scene.mm_asset_test.source_scene
+
+    def draw(self, context):
+        layout = self.layout
+        state = context.scene.mm_materials
+        prefs = context.preferences.addons[__package__].preferences
+        layout.prop(state if state.root else prefs, 'root', text='mm-data')
+        layout.operator('mm_materials.default_folder', icon='FILE_TICK')
+        layout.label(text=f'{len(state.materials)} materials in library')
+        layout.separator()
+        layout.operator('mm_materials.reload', text='Reload Assigned Materials', icon='FILE_REFRESH')
+        if not _job:
+            layout.operator('mm_materials.palette_render', text='Build / Update Thumbnails', icon='RENDER_STILL')
+        layout.label(text='Diagnostics: MegaMek Palette Report')
+
+
+_classes = (MMPaletteState, MM_OT_palette_pick, MM_OT_palette_render, MM_OT_palette_cancel,
+            MM_OT_palette_page, MM_OT_browse_materials, MM_PT_palette, MM_PT_library_setup)
 
 
 def register():

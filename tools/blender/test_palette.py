@@ -23,13 +23,32 @@ assert bpy.ops.mm_materials.catalog() == {'FINISHED'}
 cached = palette.library(bpy.context)
 assert len(cached['items']) == len(state.materials) == MATERIAL_COUNT
 assert all(not item['error'] and item['name'] in cached['icons'] for item in cached['items'])
+# Every material remains reachable while each page has a bounded tile count.
+for size, (_, capacity, _) in palette.PAGE_LAYOUTS.items():
+    settings.size = size
+    visited = []
+    _, _, pages, total = palette.page_items(bpy.context)
+    for page in range(pages):
+        settings.page = page
+        items, current, _, count = palette.page_items(bpy.context)
+        assert current == page and count == total and len(items) <= capacity
+        visited.extend(item['name'] for item in items)
+    assert visited == [item['name'] for item in cached['items']]
+    bpy.ops.mm_materials.palette_page(direction=1)
+    assert settings.page == pages - 1
+settings.size = 'MEDIUM'
+assert settings.page == 0
+settings.page = 10
 settings.search = 'painted steel'
+assert settings.page == 0
 assert {item['name'] for item in palette.filtered_items(bpy.context)} == {'structures/common/painted-steel.tres'}
 settings.search = ''
 settings.folder = 'structures/common'
 assert all(item['folder'] == 'structures/common' for item in palette.filtered_items(bpy.context))
 settings.search = 'no such material exists'
 assert not palette.filtered_items(bpy.context)
+assert palette.page_items(bpy.context) == ([], 0, 1, 0)
+assert bpy.ops.mm_materials.palette_page(direction=-1) == {'FINISHED'}
 settings.search = ''
 
 cube = bpy.context.object
@@ -54,6 +73,8 @@ bpy.ops.object.mode_set(mode='OBJECT')
 cube.select_set(False)
 assert bpy.ops.mm_materials.palette_pick(material='structures/common/cast-concrete.tres') == {'FINISHED'}
 assert state.material == 'structures/common/cast-concrete.tres'
+assert bpy.ops.mm_materials.catalog() == {'FINISHED'}
+assert state.material == 'structures/common/cast-concrete.tres', 'Refresh must retain the chosen material'
 print('PALETTE_BROWSE_AND_ASSIGN_OK')
 
 # Exercise the worker through the UI operator on a small real-material sample.

@@ -309,18 +309,15 @@ class MM_PT_test(bpy.types.Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'MegaMek'
-    bl_order = 2
+    bl_order = 1
+    bl_options = {'DEFAULT_CLOSED'}
 
     def draw(self, context):
         layout = self.layout
         settings = authoring_scene(context).mm_asset_test
         prefs = context.preferences.addons[__package__].preferences
-        layout.prop(prefs, 'engine')
-        if not prefs.engine:
-            layout.label(text='Auto: sibling MegaMek checkout')
         controls = layout.column()
         controls.enabled = _job is None
-        controls.operator('mm_materials.test_build', icon='FILE_REFRESH')
         controls.prop(settings, 'kind')
         controls.prop(settings, 'selected')
         controls.prop(settings, 'lod')
@@ -339,6 +336,14 @@ class MM_PT_test(bpy.types.Panel):
             box.label(text=line)
         layout.label(text='Full result: Text Editor → MegaMek Asset Test Report')
         layout.label(text='Blender shading; game lighting may differ.')
+        header, body = layout.panel('mm_engine_setup', default_closed=True)
+        header.label(text='Engine Setup')
+        if body:
+            body.enabled = _job is None
+            body.prop(prefs, 'engine', text='Checkout')
+            if not prefs.engine:
+                body.label(text='Auto: sibling MegaMek checkout')
+            body.operator('mm_materials.test_build', icon='FILE_REFRESH')
 
 
 _classes = (MMTestState, MM_OT_test_build, MM_OT_test_run, MM_OT_test_return, MM_PT_test)
