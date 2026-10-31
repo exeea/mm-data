@@ -26116,38 +26116,6 @@
       "thumbnail": "images/hexes/saxarba/medium/medium_roof68.png"
     },
     {
-      "id": "buildings/saxarba/misc/heavy_industrial_a",
-      "label": "Heavy Industrial A",
-      "owner": "building",
-      "legacyOnly": true,
-      "asset": "buildings/saxarba/misc/heavy_industrial_a",
-      "thumbnail": "images/hexes/saxarba/misc/heavy_industrial_a.png"
-    },
-    {
-      "id": "buildings/saxarba/misc/heavy_industrial_b",
-      "label": "Heavy Industrial B",
-      "owner": "building",
-      "legacyOnly": true,
-      "asset": "buildings/saxarba/misc/heavy_industrial_b",
-      "thumbnail": "images/hexes/saxarba/misc/heavy_industrial_b.png"
-    },
-    {
-      "id": "buildings/saxarba/misc/heavy_industrial_c",
-      "label": "Heavy Industrial C",
-      "owner": "building",
-      "legacyOnly": true,
-      "asset": "buildings/saxarba/misc/heavy_industrial_c",
-      "thumbnail": "images/hexes/saxarba/misc/heavy_industrial_c.png"
-    },
-    {
-      "id": "buildings/saxarba/misc/heavy_industrial_d",
-      "label": "Heavy Industrial D",
-      "owner": "building",
-      "legacyOnly": true,
-      "asset": "buildings/saxarba/misc/heavy_industrial_d",
-      "thumbnail": "images/hexes/saxarba/misc/heavy_industrial_d.png"
-    },
-    {
       "id": "building/legacy-art-1",
       "label": "Legacy building art 1",
       "owner": "building",
