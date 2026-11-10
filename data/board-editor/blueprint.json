@@ -7379,6 +7379,12 @@
       "section": "buildings/heritage-accessories"
     },
     {
+      "id": "buildings/authored/heritage-cathedral",
+      "label": "Cathedral",
+      "kind": "prop",
+      "section": "buildings/heritage"
+    },
+    {
       "id": "buildings/authored/heritage-government-hall",
       "label": "Government Hall",
       "kind": "prop",

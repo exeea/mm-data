@@ -2,7 +2,7 @@
 landmarks the kit cannot stand in for. The parts the kit lacks are modelled here in the same finishes: steep slate roofs
 with dormers under copper ridges, gables, towers in stages (tall lancets, a louvred belfry, pinnacles) under slate
 spires or battlements, great arched windows with stone mullions between stepped buttresses, glass vaults on iron ribs,
-clock faces, stairs and planters. The kit's own roofs (its mansard, parapet and battlement) run round the lower blocks.
+clock faces, stairs and planters; for the cathedral, gabled portals, blind arcades, a rose, flying buttresses. The kit's own roofs (its mansard, parapet and battlement) run round the lower blocks.
 
 Run: blender -b --factory-startup --python heritage_buildings.py -- <name> [sheet folder]
 Writes data/models/buildings/authored/heritage-<name>.glb, front (the entrance) to -y. Where a sheet's views disagree,
@@ -20,6 +20,7 @@ import frontier_buildings as f
 import heritage_kit as hk
 import imperial_kit as ik
 import kit_blocks as kb
+import authored_examples as shared
 import theme_kits as k
 import utopia_buildings as u
 from civic_habitat import LOUVRE, PAINT, PALE_GLASS, SLATS, add, cuboid, round_prism
@@ -32,6 +33,11 @@ PAVERS, DECK_TONE = h.PANELS, (.60, .60, .60)  # Flat roofs: concrete pavers.
 GLASS_ROOF = (1, .86, .81)  # A glazed roof: the pale glass greyed.
 FACE = (.86, .83, .74)  # A clock's face.
 HALL_GLASS = (.80, .88, .92)  # The halls' great windows and lancets: pale glass.
+# Stained glass, dark from outside by day: deep blues, then ruby, a little amber and green. At night most panes glow
+# in their own tone (finish).
+BLUE, RUBY = ((.09, .13, .32), (.07, .10, .26)), ((.30, .07, .06), (.24, .06, .08))
+JEWELS = (*BLUE, *BLUE, *RUBY, (.30, .20, .07), (.08, .21, .14))
+LIT_PANES = .78  # The share of a stained window's panes that glow at night.
 steps = partial(kb.steps, stone=(STONE, DRESSING))
 planter = partial(kb.planter, stone=(STONE, DRESSING))
 screen = partial(kb.screen, louvre=hk.PALE_LOUVRE)
@@ -50,7 +56,7 @@ def fill(length, base, accent=False, kind=None):
         return hk.mansard_rows(0, length)
     if kind in ('battlement', 'parapet'):
         return hk.battlement_corner(None, length, merlons=kind == 'battlement')
-    open_top = kind == 'lancet-low'
+    open_top = kind in ('lancet-low', 'stained-low')
     cuboid('pier', 0, length, -PILASTER_OUT, 0, PLINTH if base else 0.0, LEVEL if open_top else COURSE, STONE, RUSTIC if base else DRESSING,
            omit='b' if open_top else 'bt')
     if base:
@@ -60,12 +66,12 @@ def fill(length, base, accent=False, kind=None):
 
 
 def lit_glass(name, verts, rng, lit=.7, warm=0.0):
-    """A pane of the landmarks' glass: pale, the odd one bright with the sky, most lit at night; a `warm` share show
+    """A pane (named `name` glass) of the landmarks' glass: pale, the odd one bright with the sky, most lit at night; a `warm` share show
     their lit hall and glow faintly all day."""
     if rng.random() < warm:
-        add(name, PAINT, ik.WARM_ROOM, verts, [tuple(range(len(verts)))], light=ik.SHOP_GLOW)
+        add(name+' glass', PAINT, ik.WARM_ROOM, verts, [tuple(range(len(verts)))], light=ik.SHOP_GLOW)
     else:
-        add(name, PALE_GLASS, ik.SKY_PANE if rng.random() < .2 else HALL_GLASS, verts, [tuple(range(len(verts)))],
+        add(name+' glass', PALE_GLASS, ik.SKY_PANE if rng.random() < .2 else HALL_GLASS, verts, [tuple(range(len(verts)))],
             light='night' if rng.random() < lit else 'off')
 
 
@@ -84,10 +90,10 @@ def glazing(name, cx, half, sill, spring, outline, rng, depth, pointed=False, fa
         z0, z1 = sill+(spring-sill)*row/rows+.12, sill+(spring-sill)*(row+1)/rows-.12
         for i in range(lights):
             a, b = x0+2*half*i/lights+.12, x0+2*half*(i+1)/lights-.12
-            lit_glass(name+' glass', [(a, depth-.06, z0), (b, depth-.06, z0), (b, depth-.06, z1), (a, depth-.06, z1)], rng, warm=.35)
+            lit_glass(name, [(a, depth-.06, z0), (b, depth-.06, z0), (b, depth-.06, z1), (a, depth-.06, z1)], rng, warm=.35)
         if row:
             cuboid(name+' bar', x0, x1, depth-.3, depth-.05, z0-.24, z0, PAINT, IRON, omit='bk', detail=True)
-    lit_glass(name+' glass', outline, rng, 1.0, warm=1.0)
+    lit_glass(name, outline, rng, 1.0, warm=1.0)
     stone = {round(lights/3), round(2*lights/3)} if half > 5 else set()  # Two stone posts, up into the head.
     for i in range(1, lights):
         x = x0+2*half*i/lights
@@ -123,9 +129,9 @@ def great(rng, length, storeys, half, sill, spring, pointed=False, brick=False, 
         outline = hk.arch('side lancet', x, side_half, side_sill, side_spring, key, colour, 1.2, pointed=True)
         add('side lancet back', PAINT, k.DARK_BACK, [(x-side_half, 1.2, side_sill), (x+side_half, 1.2, side_sill),
                                                     (x+side_half, 1.2, side_spring+6), (x-side_half, 1.2, side_spring+6)], [(0, 1, 2, 3)])
-        lit_glass('side lancet glass', [(x-side_half+.1, 1.14, side_sill+.1), (x+side_half-.1, 1.14, side_sill+.1), (x+side_half-.1, 1.14, side_spring),
+        lit_glass('side lancet', [(x-side_half+.1, 1.14, side_sill+.1), (x+side_half-.1, 1.14, side_sill+.1), (x+side_half-.1, 1.14, side_spring),
                                         (x-side_half+.1, 1.14, side_spring)], rng, warm=.5)
-        lit_glass('side lancet glass', outline, rng, warm=.5)
+        lit_glass('side lancet', outline, rng, warm=.5)
     for x0, x1, inner in ((0, 3.0, 'l'), (length-3.0, length, 'r')):
         # A buttress in two steps under a gabled cap.
         low, high = eave*.56, eave-4.0
@@ -162,9 +168,14 @@ def slit(rng, base, length):
     hk.window('slit', cx-.9, cx+.9, 5.0, 12.6, rng, 1, depth=.6, transom=0)
 
 
-def lancet(rng, length, part):
+def stained(name, verts, rng):
+    """A pane (named `name` stained glass): a dark jewel tone from outside by day, glowing at night (finish)."""
+    facing(name+' stained glass', PAINT, rng.choice(JEWELS), verts, (0, -1, 0), light='night' if rng.random() < LIT_PANES else 'off')
+
+
+def lancet(rng, length, part, glass=lit_glass):
     """A tower's tall pointed window, two storeys high: `low`, its foot (the opening runs on up through the storey's top,
-    which has no course); `high`, its head."""
+    which has no course); `high`, its head. glass: what lays a pane (name, verts, rng)."""
     half, depth = min(2.8, length/2-PILASTER-1.4), 1.0
     centres = [length/2] if length < 20 else [PILASTER+(length-2*PILASTER)*.27, PILASTER+(length-2*PILASTER)*.73]
     z0, z1 = (6.0, LEVEL) if part == 'low' else (0.0, 8.6)
@@ -182,11 +193,14 @@ def lancet(rng, length, part):
                 verts = [(x, 0, z0), (x, depth, z0), (x, depth, z1), (x, 0, z1)]
                 add('lancet reveal', STONE, hk.REVEAL, verts, [k.facing(verts, (inner, 0, 0))])
         else:
-            lit_glass('lancet glass', hk.arch('lancet', cx, half, 0, z1, STONE, WALL, depth, pointed=True), rng)
+            glass('lancet', hk.arch('lancet', cx, half, 0, z1, STONE, WALL, depth, pointed=True), rng)
         top = z1+(6 if part == 'high' else 0)
         add('lancet back', PAINT, k.DARK_BACK, [(x0, depth, z0), (x1, depth, z0), (x1, depth, top), (x0, depth, top)], [(0, 1, 2, 3)])
         for a, b in ((x0+.1, cx-.3), (cx+.3, x1-.1)):
-            lit_glass('lancet glass', [(a, depth-.06, z0+.1), (b, depth-.06, z0+.1), (b, depth-.06, z1-.1), (a, depth-.06, z1-.1)], rng)
+            rows = 2 if glass is stained else 1  # Stained lights change tone up their height.
+            for row in range(rows):
+                za, zb = z0+.1+(z1-z0-.2)*row/rows, z0+.1+(z1-z0-.2)*(row+1)/rows
+                glass('lancet', [(a, depth-.06, za), (b, depth-.06, za), (b, depth-.06, zb), (a, depth-.06, zb)], rng)
         cuboid('lancet stone post', cx-.3, cx+.3, depth-.6, depth-.1, z0, z1, STONE, DRESSING, omit='bkt')
     back_wall(length, 0, LEVEL)
 
@@ -217,9 +231,10 @@ def piece(kind, base, rng, length):
             'entrance': lambda: hk.entrance(rng), 'entrance-med': lambda: hk.entrance(rng, 'med'),
             'blank': lambda: blank(rng, base, length), 'slit': lambda: slit(rng, base, length), 'belfry': lambda: belfry(rng, length),
             'lancet-low': lambda: lancet(rng, length, 'low'), 'lancet-high': lambda: lancet(rng, length, 'high'),
+            'stained-low': lambda: lancet(rng, length, 'low', stained), 'stained-high': lambda: lancet(rng, length, 'high', stained),
             'mansard': lambda: hk.mansard(rng, length), 'mansard-plain': lambda: hk.mansard(rng, length, dormers=False),
             'battlement': lambda: hk.battlement(rng, length), 'parapet': lambda: hk.battlement(rng, length, merlons=False),
-            'pier': lambda: fill(length, base), 'skip': lambda: None}[kind]
+            'gallery': lambda: gallery(rng, length, BUTTRESS), 'pier': lambda: fill(length, base), 'skip': lambda: None}[kind]
 
 
 def downpipes(p, q, spec, z0, z1):
@@ -344,7 +359,6 @@ def pitched(name, ring, z, pitch=1.0, top=None, key=SLATE, omit=(), ridge=True, 
 def finial(name, x, y, z, height=3.0):
     """A plain iron spike on a roof's point."""
     cuboid(name+' finial', x-.22, x+.22, y-.22, y+.22, z-.3, z+height, PAINT, IRON, omit='b')
-    cuboid(name+' finial foot', x-.6, x+.6, y-.6, y+.6, z-.2, z+.5, PAINT, VERDIGRIS, omit='b', detail=True)
 
 
 def flat_top(name, ring, z, curb=1.2):
@@ -797,15 +811,263 @@ def medical_center():
     volume('rear', rear, 0, 2*LEVEL)
 
 
-BUILDINGS = {'government-hall': government_hall, 'transit-terminal': transit_terminal, 'administrative-offices': administrative_offices,
+# -- Cathedral: a French Gothic great church, without a transept (after Bourges) -------------------------------------
+BUTTRESS = 4.4  # How far along a tower's wall its corner buttress reaches.
+FLECHE = (.37, .40, .42)  # The fleche's lead, paler than the slate it stands on.
+def portal(length, half, spring, height, post=False):
+    """A cathedral's door in a wall `height` tall: timber leaves deep in its wall
+    in three orders on their shafts, a stone tympanum over them, under a steep open gable; post, a stone post between
+    its leaves."""
+    cx, depth = length/2, 3.2
+    crown = spring+hk.rise(half, True)
+    facade('wall', [hk.arch_hole(cx, half, 0, spring, True)], 0, height, length, WALL, du=12, dv=9, key=STONE)
+    outline = hk.arch('portal', cx, half, 0, spring, STONE, WALL, depth, ring=2.0, pointed=True, shade=hk.SHADE)
+    back = depth-.06
+    add('portal back', PAINT, k.DARK_BACK, [(cx-half, depth, 0), (cx+half, depth, 0), (cx+half, depth, crown), (cx-half, depth, crown)], [(0, 1, 2, 3)])
+    for a, b in ((cx-half+.2, cx-.3), (cx+.3, cx+half-.2)):
+        add('portal leaf', PAINT, hk.TIMBER, [(a, back, .1), (b, back, .1), (b, back, spring), (a, back, spring)], [(0, 1, 2, 3)])
+    add('portal tympanum', STONE, hk.REVEAL, outline, [tuple(range(len(outline)))])
+    cuboid('portal lintel', cx-half, cx+half, depth-.6, depth-.05, spring-.45, spring+.45, STONE, DRESSING, omit='bk')
+    for step in (1, 2):  # The inner orders: each an arch's face a step deeper and narrower, on a shaft each side.
+        y, inner = step*1.05, half-step*1.1
+        ring, grown = hk.arch_curve(cx, inner, spring, True), hk.arch_curve(cx, inner, spring, True, 1.25)
+        for (a, b), (c, d) in zip(zip(ring, ring[1:]), zip(grown, grown[1:])):
+            facing('portal order', STONE, DRESSING if step == 1 else WALL, [(a[0], y, a[1]), (b[0], y, b[1]), (d[0], y, d[1]), (c[0], y, c[1])], (0, -1, 0))
+        for side in (-1, 1):
+            x = cx+side*(inner+.6)
+            cuboid('portal shaft', x-.5, x+.5, y-.7, y, 0, spring, STONE, DRESSING, omit='bk')
+    if post:
+        cuboid('portal post', cx-.55, cx+.55, depth-.9, depth-.05, 0, spring, STONE, DRESSING, omit='bk')
+    foot, apex, wide, out, band = spring+1.2, min(crown+7.0, height-.6), half+3.4, 1.1, 1.3
+    for side in (-1, 1):
+        for i in range(2):  # Jamb shafts.
+            x = cx+side*(half+1.0+i*1.6)
+            cuboid('portal shaft', x-.45, x+.45, -1.0, -.1, 0, spring, STONE, DRESSING, omit='bk')
+        cuboid('portal impost', *sorted((cx+side*(half+.3), cx+side*(half+3.3))), -1.2, 0, spring, spring+.8, STONE, DRESSING, omit='k')
+        # The gable's raking coping, from the imposts up to its point over the arch.
+        verts = [(cx+side*wide, -out, foot), (cx+side*(wide-band), -out, foot), (cx, -out, apex-band*1.6), (cx, -out, apex)]
+        facing('portal gable', STONE, DRESSING, verts, (0, -1, 0))
+        verts = [(cx+side*wide, -out, foot), (cx, -out, apex), (cx, 0, apex), (cx+side*wide, 0, foot)]
+        facing('portal gable', STONE, DRESSING, verts, (side, 0, 1))
+    back_wall(length, 0, height, depth+.1)
+
+
+def gallery(rng, length, margin=0.0):
+    """A storey of blind arcade: pointed arches shoulder to shoulder, deep in the wall, `margin` clear of its ends (a
+    tower's corner buttresses stand there)."""
+    count = max(2, round((length-2*PILASTER-2*margin)/6.4))
+    pitch = (length-2*PILASTER-2*margin)/count
+    half, sill, spring, depth = pitch/2-1.0, 2.6, 8.0, 1.1
+    centres = [PILASTER+margin+(i+.5)*pitch for i in range(count)]
+    hk.frame(length, [hk.arch_hole(cx, half, sill, spring, True) for cx in centres], False)
+    for cx in centres:
+        hk.arch('gallery', cx, half, sill, spring, STONE, WALL, depth, pointed=True)
+        top = spring+hk.rise(half, True)
+        add('gallery back', STONE, hk.SHADE, [(cx-half, depth, sill), (cx+half, depth, sill), (cx+half, depth, top), (cx-half, depth, top)], [(0, 1, 2, 3)])
+
+
+def rose(rng, length, height, radius):
+    """A west front's rose: a great round window deep in its wall, jewel glass that glows from within behind stone
+    spokes, a hub and a ring."""
+    cx, cz, depth, n, box = length/2, height/2, 2.6, 24, radius+2.2
+    facade('wall', [(cx-box, cx+box, cz-box, cz+box)], 0, height, length, WALL, du=12, dv=9, key=STONE)
+    at = lambda r, i, y: (cx+r*math.cos(math.tau*i/n), y, cz+r*math.sin(math.tau*i/n))
+
+    def corner(i):  # The square's point a ring point looks at: the middle of a side, else its quadrant's corner.
+        c, sn = math.cos(math.tau*i/n), math.sin(math.tau*i/n)
+        return cx+(0 if abs(c) < 1e-6 else math.copysign(box, c)), 0, cz+(0 if abs(sn) < 1e-6 else math.copysign(box, sn))
+    for i in range(n):
+        facing('rose wall', STONE, WALL, distinct([corner(i), corner(i+1)])+[at(radius, i+1, 0), at(radius, i, 0)], (0, -1, 0))
+        facing('rose ring', STONE, DRESSING, [at(radius, i, -.4), at(radius, i+1, -.4), at(radius+1.8, i+1, -.4), at(radius+1.8, i, -.4)], (0, -1, 0))
+        verts = [at(radius, i, 0), at(radius, i+1, 0), at(radius, i+1, depth), at(radius, i, depth)]
+        mid = at(radius, i+.5, 0)
+        facing('rose reveal', STONE, hk.SHADE, verts, (cx-mid[0], 0, cz-mid[2]))
+    add('rose back', PAINT, k.DARK_BACK, [(cx-radius, depth, cz-radius), (cx+radius, depth, cz-radius), (cx+radius, depth, cz+radius),
+                                         (cx-radius, depth, cz+radius)], [(0, 1, 2, 3)])
+    hub, ring, glass, stone = radius*.22, radius*.6, depth-.06, depth-.6
+    pane = lambda verts: stained('rose', verts, rng)
+    for i in range(n):  # Twelve petals round the hub, twenty-four round those, a spoke between each two.
+        pane([at(ring, i, glass), at(radius, i, glass), at(radius, i+1, glass), at(ring, i+1, glass)])
+        if i % 2 == 0:
+            pane([at(hub, i, glass), at(ring, i, glass), at(ring, i+1, glass), at(ring, i+2, glass), at(hub, i+2, glass), at(hub, i+1, glass)])
+        a, b = at(hub if i % 2 == 0 else ring, i, stone), at(radius, i, stone)
+        reach = math.dist(a, b)
+        wx, wz = -(b[2]-a[2])/reach*.32, (b[0]-a[0])/reach*.32
+        facing('rose spoke', STONE, DRESSING, [(a[0]-wx, stone, a[2]-wz), (a[0]+wx, stone, a[2]+wz), (b[0]+wx, stone, b[2]+wz), (b[0]-wx, stone, b[2]-wz)],
+               (0, -1, 0))
+        for r in (hub, ring):
+            facing('rose tracery', STONE, DRESSING, [at(r-.42, i, stone), at(r+.42, i, stone), at(r+.42, i+1, stone), at(r-.42, i+1, stone)], (0, -1, 0))
+    facing('rose stained glass', PAINT, JEWELS[3], [at(hub-.4, i, glass) for i in range(0, n, 2)], (0, -1, 0), light='night')
+    back_wall(length, 0, height, depth+.1)
+
+
+def buttress(low, top):
+    """A pier buttress standing out of an aisle's wall about x 0: two stages with weathered offsets, rising over the
+    aisle's roof to `top` to carry a flyer, under a pinnacle."""
+    cuboid('buttress', -2.6, 2.6, -6.4, 0, 0, low, STONE, DRESSING, omit='bk')
+    facing('buttress', STONE, DRESSING, [(-2.6, -6.4, low), (2.6, -6.4, low), (2.2, -4.4, low+3.4), (-2.2, -4.4, low+3.4)], (0, -1, 1))
+    cuboid('buttress', -2.2, 2.2, -4.4, 1.0, low, top, STONE, DRESSING, omit='b')
+    pinnacles('buttress', [(0, -1.7)], top, half=1.5, shaft=4.2, tip=7.5, inset=0)
+
+
+def front_buttress(x0, x1, stages):
+    """One of a tower's great buttresses, from x0 to x1 along its wall: stages (z0, z1, how far out), a weathered offset
+    over each."""
+    for (z0, z1, out), after in zip(stages, stages[1:]+[None]):
+        cuboid('front buttress', x0, x1, -out, 0, z0, z1, STONE, DRESSING, omit='bt')
+        back = after[2] if after else 0.0
+        facing('front buttress', STONE, DRESSING, [(x0, -out, z1), (x1, -out, z1), (x1, -back, z1+(out-back)*1.6), (x0, -back, z1+(out-back)*1.6)], (0, -1, 1))
+        for x, side in ((x0, -1), (x1, 1)):
+            facing('front buttress', STONE, DRESSING, [(x, -out, z1), (x, -back, z1+(out-back)*1.6), (x, -back, z1)], (side, 0, 0))
+
+
+def flyer(a, b, z0, z1, wide=2.2, rib=1.9):
+    """A flying buttress from a pier at a up to the wall at b: a quarter arch springing at z0 on the pier to z1 on the
+    wall, a stone rib `rib` deep along it, filled up to a straight raking top where that runs higher."""
+    (ux, uy), length, n = f.unit(a, b), math.dist(a, b), 6
+    at = lambda t, side, z: (a[0]+ux*length*t-uy*side*wide/2, a[1]+uy*length*t+ux*side*wide/2, z)
+    under = lambda t: z1-rib-(z1-rib-z0)*(1-math.sqrt(1-(1-t)**2))
+    over = lambda t: max(z0+9.0+(z1-z0-9.0)*t, under(t)+rib)
+    for i in range(n):
+        t0, t1 = i/n, (i+1)/n
+        for side in (-1, 1):
+            facing('flyer', STONE, DRESSING, [at(t0, side, under(t0)), at(t1, side, under(t1)), at(t1, side, over(t1)), at(t0, side, over(t0))],
+                   (-uy*side, ux*side, 0))
+        facing('flyer', STONE, DRESSING, [at(t0, -1, over(t0)), at(t0, 1, over(t0)), at(t1, 1, over(t1)), at(t1, -1, over(t1))], (-ux, -uy, 3))
+        facing('flyer', STONE, hk.REVEAL, [at(t0, -1, under(t0)), at(t0, 1, under(t0)), at(t1, 1, under(t1)), at(t1, -1, under(t1))], (ux, uy, -3))
+
+
+def fleche(x, y, z, height):
+    """A slender lead spire astride a roof's ridge: a louvred stage, an open lantern of four posts, a plain iron point."""
+    base = f.rect(x-3.2, x+3.2, y-3.2, y+3.2)
+    f.wall_ring('fleche', base, z-7, z+10, PAINT, FLECHE)
+    for (px, py), (qx, qy) in zip(base, base[1:]+base[:1]):
+        nx, ny = f.outward((px, py), (qx, qy))
+        mx, my = (px+qx)/2+nx*.06, (py+qy)/2+ny*.06
+        tx, ty = (qx-px)/6.4*1.9, (qy-py)/6.4*1.9
+        facing('fleche louvre', SLATS, LOUVRE, [(mx-tx, my-ty, z+2.4), (mx+tx, my+ty, z+2.4), (mx+tx, my+ty, z+8.6), (mx-tx, my-ty, z+8.6)], (nx, ny, 0))
+    f.cap('fleche', base, z+10, PAINT, FLECHE)
+    lantern = z+10+7.0
+    for px, py in f.inset(base, .5):
+        cuboid('fleche post', px-.5, px+.5, py-.5, py+.5, z+10, lantern, PAINT, FLECHE, omit='bt')
+    eave = f.inset(base, -.7)
+    for i in range(4):
+        add('fleche', PAINT, FLECHE, [(*eave[i], lantern), (*eave[(i+1) % 4], lantern), (x, y, lantern+height)], [(0, 1, 2)])
+    add('fleche soffit', PAINT, IRON, [(*point, lantern) for point in eave][::-1], [(0, 1, 2, 3)])
+    finial('fleche', x, y, lantern+height, 5.5)
+
+
+def cathedral():
+    """A great church in the French Gothic manner: the west front, three gabled portals under a gallery of blind arches,
+    a rose of jewel glass and an upper arcade under a small gable, between two towers (tall lancets, a double belfry,
+    pinnacles) under slate spires, four great buttresses parting its bays; a long nave, two storeys of lancets in its clerestory under a steep slate roof with a lead spire astride
+    its ridge; lower aisles under lean-to roofs, pier buttresses with pinnacles between their bays carrying flying
+    buttresses to the nave; a five-sided chevet, the choir's lancets over an ambulatory, its flyers round it. No transept:
+    its plan is one long vessel. No figures, crosses or emblems."""
+    rng = random.Random(71)
+    nave, aisle, y0, y1 = 22.0, 44.0, -2.0, 192.0  # Half the nave's width; the aisles' outer walls; the nave's ends.
+    low, high = 2*LEVEL, 5*LEVEL  # The aisles' walls; the nave's.
+    lean = 3*LEVEL  # Where the aisles' roofs meet the nave: its clerestory starts there.
+    count = 8
+    front, face, width = -32.0, -28.0, 30.0  # The towers' front; the nave's, between them; a tower's width.
+    clerestory = lambda s: [('skip', y1-y0)] if s < 3 else ['stained-low' if s == 3 else 'stained-high']*count
+    block(f.rect(-nave, nave, y0, y1), {1: clerestory, 3: clerestory}, 5, hidden={0, 2}, butt={(1, 0), (1, 1), (3, 0), (3, 1)}, seed=71, ground=False)
+    ridge = gabled('nave roof', -nave, nave, face+2.4, y1, high, pitch=1.25, fronts=())  # From the front's screen.
+    lancets = lambda s: ['stained-low' if s == 0 else 'stained-high']*count
+    for side in (-1, 1):
+        ring = f.rect(*sorted((side*nave, side*aisle)), y0, y1)
+        outer = 1 if side > 0 else 3
+        block(ring, {outer: lancets}, 2, hidden={0, 1, 2, 3}-{outer}, butt={(outer, 0), (outer, 1)}, seed=72+side, ground=True)
+        cuboid('aisle cornice', *sorted((side*aisle, side*(aisle+1.4))), y0, y1, low, low+1.4, STONE, DRESSING, omit='b')
+        facing('aisle roof', SLATE, (1, 1, 1), [(side*(aisle+1.7), y0, low+1.5), (side*(aisle+1.7), y1, low+1.5), (side*nave, y1, lean), (side*nave, y0, lean)],
+               (side, 0, 1))
+        cuboid('aisle roof head', *sorted((side*nave, side*(nave+1.2))), y0, y1, lean-.2, lean+.8, PAINT, LEAD, omit='b')
+        volume('aisle %d' % side, ring, 0, low)
+        for i in range(1, count+1):  # A pier between each two bays, and at the chevet's springing.
+            y = y0+(y1-y0)*i/count
+            f.lay(lambda: buttress(low+4, lean+8), (side*aisle, y), (0, side), 0)
+            flyer((side*(aisle-1.0), y), (side*nave, y), lean, high-9)
+    fleche(0, y0+(y1-y0)*.72, ridge, 46.0)
+    # The chevet: the choir's five sides over the ambulatory's.
+    turns = [math.radians(36*i) for i in range(6)]
+    choir = [(nave*math.cos(a), y1+nave*math.sin(a)) for a in turns]
+    walk = [(aisle*math.cos(a), y1+aisle*math.sin(a)) for a in turns]
+    sides = {(0, 0), (4, 1)}
+    block(choir, {i: (lambda s: [('skip', 2*nave*math.sin(math.radians(18)))] if s < 3 else ('stained-low' if s == 3 else 'stained-high')) for i in range(5)},
+          5, hidden={5}, butt=sides, seed=74, ground=False)
+    block(walk, {i: (lambda s: 'stained-low' if s == 0 else 'stained-high') for i in range(5)}, 2, hidden={5}, butt=sides, seed=75, ground=True)
+    eave, top = [(x*(1+1.7/aisle), y1+(y-y1)*(1+1.7/aisle)) for x, y in walk], [(x*(1+.8/nave), y1+(y-y1)*(1+.8/nave)) for x, y in choir]
+    for i in range(5):
+        (ax, ay), (bx, by) = walk[i], walk[i+1]
+        nx, ny = f.outward(walk[i], walk[i+1])
+        facing('ambulatory roof', SLATE, (1, 1, 1), [(*eave[i], low+1.5), (*eave[i+1], low+1.5), (*choir[i+1], lean), (*choir[i], lean)], (nx, ny, 1))
+        facing('ambulatory cornice', STONE, DRESSING, [(ax+nx*1.4, ay+ny*1.4, low), (bx+nx*1.4, by+ny*1.4, low), (bx+nx*1.4, by+ny*1.4, low+1.4),
+                                                       (ax+nx*1.4, ay+ny*1.4, low+1.4)], (nx, ny, 0))
+        facing('choir roof', SLATE, (1, 1, 1), [(*top[i], high-1.0), (*top[i+1], high-1.0), (0, y1, ridge)], (nx, ny, 1))
+    for point in top:
+        kb.bar('choir hip', [(*point, high-.8), (0, y1, ridge+.15)], .32, VERDIGRIS, fine=False)
+    for a in turns[1:5]:
+        out = (math.cos(a), math.sin(a))
+        f.lay(lambda: buttress(low+4, lean+8), (aisle*out[0], y1+aisle*out[1]), (-out[1], out[0]), 0)
+        flyer(((aisle-1.0)*out[0], y1+(aisle-1.0)*out[1]), (nave*out[0], y1+nave*out[1]), lean, high-9)
+    volume('choir', choir, 0, high)
+    volume('ambulatory', walk, 0, low)
+    # The west front: the towers, and between them the portal, the gallery, the rose and the upper arcade.
+    stages = ['blank', 'blank', 'gallery', 'stained-low', 'stained-high', 'gallery', 'belfry', 'belfry']
+    for side in (-1, 1):
+        ring = f.rect(*sorted((side*nave, side*(nave+width))), front, y0)
+        inner = 1 if side < 0 else 3
+        # Its back stands behind the aisle for two storeys and behind the aisle's roof for a third (plain wall there),
+        # its inner side behind the nave's front for five.
+        behind = lambda s, kind, side=side: kind if s >= 3 else 'blank' if s == 2 else ([('skip', aisle-nave), ('pier', nave+width-aisle)][::-side])
+        between = lambda s, kind, side=side: kind if s >= 5 else ([('pier', face-front), ('skip', y0-face)][::-side])
+        faces = {0: lambda s, kind: [('skip', width)] if s < 2 else kind, inner: between, 2: behind}
+        z = tower('west tower', ring, stages, faces, seed=76+side, ground=False)
+        f.lay(lambda: portal(width, 7.0, 9.5, 2*LEVEL), (ring[0][0], front), (1, 0), 0)
+        spire('west spire', ring, z, 62.0)
+        pinnacles('west tower', f.inset(ring, -.6), z+hk.CORNICE, half=2.0, shaft=8.0, tip=11.0, inset=0)  # On the cornice's corners.
+        # The front's four great buttresses, one at each corner of a tower: they part its three bays.
+        steps = [(0, 2*LEVEL, 6.0), (2*LEVEL, high, 4.2), (high, 7*LEVEL, 2.4)]
+        for x, inward in ((side*nave, side), (side*(nave+width), -side)):  # Mostly on the tower's side of its corner.
+            f.lay(lambda: front_buttress(*sorted((-1.2*inward, BUTTRESS*inward)), steps), (x, front), (1, 0), 0)
+        # And two on its outer side, laid front to back as seen from outside: at the front corner and at its back.
+        deep = y0-front
+        origin, along = ((side*(nave+width), front), (0, 1)) if side > 0 else ((side*(nave+width), y0), (0, -1))
+        for a, b in ((-1.2, BUTTRESS), (deep-BUTTRESS, deep)) if side > 0 else ((0, BUTTRESS), (deep-BUTTRESS, deep+1.2)):
+            f.lay(lambda: front_buttress(a, b, steps), origin, along, 0)
+        volume('west tower %d' % side, ring, 0, len(stages)*LEVEL)
+    f.lay(lambda: portal(2*nave, 10.0, 12.0, 2*LEVEL, post=True), (-nave, face), (1, 0), 0)
+    f.lay(lambda: gallery(rng, 2*nave), (-nave, face), (1, 0), 2*LEVEL)
+    f.lay(lambda: rose(rng, 2*nave, 2*LEVEL, 15.2), (-nave, face), (1, 0), 3*LEVEL)
+    f.lay(lambda: gallery(rng, 2*nave), (-nave, face), (1, 0), high)
+    screen_top = high+LEVEL
+    cuboid('screen coping', -nave, nave, face-1.6, face+3.4, screen_top, screen_top+1.0, STONE, DRESSING, omit='b')
+    facing('screen back', STONE, WALL, [(-nave, face+2.4, high), (nave, face+2.4, high), (nave, face+2.4, screen_top), (-nave, face+2.4, screen_top)],
+           (0, 1, 0))
+    peak = screen_top+1.0+9.0
+    for y, way in ((face-.6, -1), (face+2.4, 1)):
+        facing('front gable', STONE, WALL, [(-11, y, screen_top+1.0), (11, y, screen_top+1.0), (0, y, peak)], (0, way, 0))
+    for side in (-1, 1):
+        facing('front gable', STONE, DRESSING, [(side*11.6, face-.9, screen_top+.8), (side*11.6, face+2.7, screen_top+.8), (0, face+2.7, peak+.5), (0, face-.9, peak+.5)],
+               (side, 0, 1))
+    pinnacles('front gable', [(0, face+.9)], peak-1.2, half=1.3, shaft=3.0, tip=6.0, inset=0)
+    paving(-64, 64, -72, face+3.4, .3)  # In under the middle portal's leaves.
+    for x in (-37, 0, 37):
+        h.fixtures.append((x, front-6, 9))
+    volume('nave', f.rect(-nave, nave, face, y1), 0, high)
+
+
+BUILDINGS = {'cathedral': cathedral, 'government-hall': government_hall, 'transit-terminal': transit_terminal, 'administrative-offices': administrative_offices,
              'commercial-center': commercial_center, 'medical-center': medical_center}
-FINE = ('mullion', 'transom', 'lamp cap', 'baluster', 'channel', 'course shadow', 'quoin', 'impost', 'fan', 'finial foot', 'fanlight bar',
+FINE = ('portal shaft', 'portal order', 'rose tracery', 'rose spoke', 'fleche louvre', 'fleche post', 'mullion', 'transom', 'lamp cap', 'baluster', 'channel', 'course shadow', 'quoin', 'impost', 'fan', 'fanlight bar',
         'dormer bar', 'keystone', 'sill', 'downpipe', 'hand', 'duct foot', 'tank leg')
 
 
 def finish(obj):
     """A part's amber night light, and roofing without UVs laid down its slope."""
     ik.warm(obj)
+    if 'stained glass' in obj.name and obj.get('building_night_emission'):
+        shared.emissive(obj, tuple(obj['pigment']), night=True)
     if not obj.data.uv_layers and obj['board_material'] in hk.ROOFING:
         ik.roof_uvs(obj, hk.ROOFING[obj['board_material']])
 
