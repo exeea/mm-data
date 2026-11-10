@@ -315,15 +315,17 @@ building's roof for a unit is its volumes' top, the game's height.
 ## Large doors
 
 A building hex may have a large door on any hexside its building does not continue across, as a hangar has them
-(`building.appearance.doors` in a `.board2`: a height in levels by direction, `{"n": 3, "se": 2}`; the board editor's
-Hangar doors section, shown for the hangar class). A hangar-class building has no interior floors by default, and draws
+(`building.appearance.doors` in a `.board2`: a height in levels by direction, `{"n": 3, "se": 2}`, and
+`building.appearance.doorLinks`: the link group of each linked door, `{"n": 1, "ne": 1}`; the board editor's building
+designer and Hangar doors section, shown for the hangar class). A hangar-class building has no interior floors by default, and draws
 its kit's variant of `class` `hangar` where the kit lists one (every look kit) unless the author chooses another. Only generated kits draw doors (`KitDoors`). Rules and the 2D views ignore them.
 
 - A door stands in the footprint's wall towards its hexside: the longest straight stretch of wall within that sixth of
   the hex, with a remainder of the wall up to 12.5 beside it. Square footprints give long straight walls (a column's east
   wall is two doors a hex); an Angled hex's facets are 24 long.
-- Doors of one height side by side along a straight wall, in one hex or the next, are one wide door: jambs stand only at
-  its ends, each hex's part is a leaf of its own.
+- Linked doors (one group, so one height) side by side along a straight wall, in one hex or the next, are one wide
+  door: jambs stand only at its ends, each hex's part is a leaf of its own. Doors that are not linked, and linked ones
+  that meet at a bend of the wall, each keep their jambs.
 - The hex's kit pieces are cut open over the door, from the ground to its top level's line less the `lintel`, through the
   wall's `depth` and 9 out of the wall line (canopies, planters, sidewalks), and the door is generated in the opening.
   Such a hex has a mesh of its own; when it falls, it falls in whole storeys.
