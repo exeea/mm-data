@@ -11,7 +11,9 @@ corner, a stone pier on the walls. The roof module is the eave: a seamed skirt f
 curb round a deck of paving, and on each corner's facet the piece that runs the eave out and up to a tip, so a roof of
 any outline reads as hipped with upturned corners. Variants name what the sheets' buildings are: offices, tower (glass
 from pier to pier), habitat (loggias between red columns), commercial (shopfronts), medical, industrial and a hangar's
-hall.
+hall; two more take the authored buildings' forms, their roofs' corners drawn out to swept-up points: pavilion (an
+arcade under glass between lacquer columns, lacquer posts at its corners) and residence (paper screens behind dark
+lattices).
 """
 import itertools
 import math
@@ -62,26 +64,34 @@ EAVE = [(-EAVE_OUT, -1.2), (-3.0, -.2), (.5, 1.2), (4.2, 3.2), (7.8, 5.3), (SKIR
 FASCIA = 1.4  # The eave's bronze edge, tall enough to stay a line at the board's zoom.
 TIP_OUT, TIP_UP = 3.2, 3.0  # A corner's eave runs out and turns up to a tip.
 CORNER = 6.0  # The facet that cuts a convex corner (the kit's cornerRadius): wide enough that its trims cross at the curb.
+REACH = 10.0  # How far the kit carries a facet's piece on past both its ends (KitOutline.EXTEND).
+# A pointed corner's eave, each side of the corner's line: (how far from it along the facet, out past the eave, up).
+POINT = [(4.6, 0.0, 0.0), (3.4, .6, .3), (2.2, 1.6, 1.0), (1.1, 3.0, 2.0), (.5, 4.0, 2.75), (0.0, 5.0, 3.4)]
+RIB = (.20, .21, .22)  # A pointed corner's hip: the roof's own dark.
+SHOE = (.36, .29, .17)  # The tip's bronze shoe: facing the sky, drawn darker than the eave's edge to match it.
+PAPER = (.86, .82, .71)  # A screen's paper panes: ivory, about the stone's own value.
+TIMBER = (.30, .22, .16)  # A screen's lower panel.
 
 
-def pane(name, x0, x1, z0, z1, y, lit, shop=False):
-    """A pane: dark teal glass, or bright with the sky, or the warm room behind it, chosen pane by pane; a lit room
-    behind it at night or none. A shop's is always its warm room, glowing faintly all day."""
+def pane(name, x0, x1, z0, z1, y, lit, shop=False, dark=TEAL_GLASS, room=WARM_ROOM):
+    """A pane: dark glass (teal, or another look's `dark`), or bright with the sky, or the warm room behind it (`room`),
+    chosen pane by pane; a lit room behind it at night or none. A shop's is always its warm room, glowing faintly all
+    day."""
     pick = next(panes)*7 % 20
     quad = [(x0, y, z0), (x1, y, z0), (x1, y, z1), (x0, y, z1)]
     if shop:
         add(name, PAINT, WARM_ROOM, quad, [(0, 1, 2, 3)], light=SHOP_GLOW)
     elif pick < 3:
-        add(name, PAINT, WARM_ROOM, quad, [(0, 1, 2, 3)], light='night' if lit else 'off')
+        add(name, PAINT, room, quad, [(0, 1, 2, 3)], light='night' if lit else 'off')
     else:
-        glass(name, x0, x1, z0, z1, y, lit, SKY_PANE if pick < 8 else TEAL_GLASS, PALE_GLASS)
+        glass(name, x0, x1, z0, z1, y, lit, SKY_PANE if pick < 8 else dark, PALE_GLASS)
 
 
-def window(name, x0, x1, z0, z1, rng, lights=3, warm=.5, depth=.8, transom=2.6):
+def window(name, x0, x1, z0, z1, rng, lights=3, warm=.5, depth=.8, transom=2.6, **tones):
     """A window in a dark frame: its reveal, panes (some lit) with a dark line between, bars and a transom."""
     recess(name, x0, x1, z0, z1, depth, DARK, PAINT)
     for i in range(lights):
-        pane(name+' glass', x0+(x1-x0)*i/lights+.1, x0+(x1-x0)*(i+1)/lights-.1, z0+.1, z1-.1, depth-.06, rng.random() < warm)
+        pane(name+' glass', x0+(x1-x0)*i/lights+.1, x0+(x1-x0)*(i+1)/lights-.1, z0+.1, z1-.1, depth-.06, rng.random() < warm, **tones)
     mullions(name, x0, x1, z0, z1, depth-.1, lights, DARK, PAINT)
     if transom:
         cuboid(name+' transom', x0, x1, depth-.25, depth-.05, z1-transom-.15, z1-transom+.15, PAINT, DARK, omit='bk', detail=True)
@@ -163,14 +173,17 @@ def bay(rng, kind, base=False, length=W):
         lantern(length/2-5.6, 7.8)
 
 
-def curtain(rng, base=False, length=W, pier=PIER, banded=True):
+def curtain(rng, base=False, length=W, pier=PIER, banded=True, red=False):
     """Glass from pier to pier, two rows of panes a storey over dark spandrels: the tower's skin; on the ground, a lobby's
     tall panes over the plinth. Not banded (no storey course), the glass runs on from storey to storey behind a dark spandrel, between
-    piers `pier` wide: a tower's face."""
+    piers `pier` wide: a tower's face. Red, between lacquer columns: a hall's glazed wall."""
     x0, x1, depth = pier, length-pier, .7
     low, head = (PLINTH if base else 0.0), (COURSE if banded else LEVEL)
     for a, b, inner in ((0, pier, 'l'), (length-pier, length, 'r')):
-        cuboid('pier', a, b, -PIER_OUT, 0, low, head, STONE, PIER_TONE, omit='bkt'+inner)
+        if red:
+            cuboid('column', a, b, -COLUMN_OUT, 0, low, LEVEL, PAINT, LACQUER, omit='bk')
+        else:
+            cuboid('pier', a, b, -PIER_OUT, 0, low, head, STONE, PIER_TONE, omit='bkt'+inner)
         if base:
             cuboid('pier foot', a, b, -PIER_OUT-.3, 0, 0, low, CAST, GRANITE, omit='bk'+inner)
     if banded:
@@ -215,6 +228,52 @@ def balcony(rng, length=W):
     for i in range(1, 6):
         x = x0+(x1-x0)*i/6
         cuboid('loggia rail post', x-.12, x+.12, -.32, -.12, floor, floor+3.1, PAINT, PALE_LOUVRE, omit='bt', detail=True)
+
+
+def lattice(rng, base=False, length=W, lit=False):
+    """A screen from pier to pier: leaves of pale paper over a timber panel behind a dark lattice; lit, its two middle
+    leaves glow from their room at night."""
+    x0, x1, depth = PIER+1.0, length-PIER-1.0, .7
+    sill, head = (PLINTH+1.2 if base else 3.4), 14.8
+    frame(length, [(x0, x1, sill, head)], base)
+    recess('screen', x0, x1, sill, head, depth, DARK, PAINT)
+    leaves = max(2, round((x1-x0)/4.4))
+    for i in range(leaves):
+        a, b = x0+(x1-x0)*i/leaves+.15, x0+(x1-x0)*(i+1)/leaves-.15
+        add('screen paper', PAINT, PAPER, [(a, depth-.06, sill+.15), (b, depth-.06, sill+.15), (b, depth-.06, head-.15), (a, depth-.06, head-.15)],
+            [(0, 1, 2, 3)], light='night' if lit and abs(i-(leaves-1)/2) < 1 else 'off')
+        panel = sill+(head-sill)*.28
+        add('screen panel', PAINT, TIMBER, [(a, depth-.1, sill+.15), (b, depth-.1, sill+.15), (b, depth-.1, panel), (a, depth-.1, panel)], [(0, 1, 2, 3)])
+        # A lattice of two by two over the panel, its bars broad: thin ones break into dashes at the board's zoom.
+        for p, q, z0, z1 in (((a+b)/2-.4, (a+b)/2+.4, panel, head-.15), (a, b, (panel+head)/2-.4, (panel+head)/2+.4)):
+            add('screen lattice', PAINT, DARK, [(p, depth-.14, z0), (q, depth-.14, z0), (q, depth-.14, z1), (p, depth-.14, z1)], [(0, 1, 2, 3)])
+    for i in range(1, leaves):
+        x = x0+(x1-x0)*i/leaves
+        cuboid('screen post', x-.3, x+.3, depth-.25, depth-.05, sill, head, PAINT, DARK, omit='bk')
+
+
+def arcade(rng, length=W):
+    """An arcade's bay on the ground, as the Commercial Center's: lacquer columns standing clear of a shopfront set deep
+    behind them, its glass lit over a granite stall, a dark sign band over it, a lantern hanging in the opening."""
+    x0, x1, top, depth = COLUMN, length-COLUMN, 13.4, 4.4
+    frame(length, [(x0, x1, 0, top)], True, red=True, back=depth+.1)
+    recess('arcade', x0, x1, 0, top, depth, PIER_TONE, STONE)
+    back, head, band = depth-.06, top-2.6, top-4.4
+    # The arcade's own paving: the kit's floor starts behind the shopfront.
+    cuboid('arcade floor', x0, x1, -.2, depth, 0, .45, STONE, COURSE_TONE, omit='bk')
+    cuboid('shop stall', x0, x1, depth-.5, depth, .45, 1.6, CAST, GRANITE, omit='bk')
+    count = max(1, round((x1-x0)/5.25))
+    for i in range(count):
+        a, b = x0+(x1-x0)*i/count+.1, x0+(x1-x0)*(i+1)/count-.1
+        pane('shop glass', a, b, 1.6, band-.1, back, True)
+        pane('shop glass', a, b, band+.1, head, back, True, shop=True)  # Its lit band: the glow kept high.
+        cuboid('shop mullion', a-.25, a+.05, depth-.3, depth-.05, 1.6, head, PAINT, DARK, omit='bk')
+    cuboid('shop mullion', x0, x1, depth-.3, depth-.05, band-.1, band+.1, PAINT, DARK, omit='bk')
+    cuboid('shop sign', x0, x1, depth-.5, depth, head, top, PAINT, DARK, omit='bk')
+    cuboid('shop sign line', x0, x1, depth-.58, depth-.5, head, head+.2, PAINT, BRONZE, omit='bk', detail=True)
+    mid = length/2
+    cuboid('lantern', mid-.6, mid+.6, .9, 2.1, top-5.2, top-1.6, PAINT, LANTERN, omit='', light=c.AMBER_LIGHT)
+    cuboid('lantern cap', mid-.8, mid+.8, .7, 2.3, top-1.6, top, PAINT, DARK, omit='t', detail=True)
 
 
 def shop(rng, kind, length=W):
@@ -295,13 +354,10 @@ def lip(x0, x1, y, z):
     cuboid('eave edge', x0, x1, y-.35, y+.15, z-FASCIA, z+.35, PAINT, BRONZE, omit='lr')
 
 
-def skirt_rows(x0, x1, curb=True):
-    """The skirt from its second row up, along x: roofing, and with its curb the curb's bronze cap and its inner face
-    down to the deck."""
-    for (y0, z0), (y1, z1) in zip(EAVE[1:], EAVE[2:] if curb else EAVE[2:-1]):
+def skirt_rows(x0, x1, first=1):
+    """The skirt from row `first` up, along x: roofing, the curb's bronze cap and its inner face down to the deck."""
+    for (y0, z0), (y1, z1) in zip(EAVE[first:], EAVE[first+1:]):
         add('eave roofing', SEAMED, (1, 1, 1), [(x0, y0, z0), (x1, y0, z0), (x1, y1, z1), (x0, y1, z1)], [(0, 1, 2, 3)])
-    if not curb:
-        return
     top = EAVE[-1]
     add('curb cap', PAINT, BRONZE, [(x0, top[0], top[1]), (x1, top[0], top[1]), (x1, SKIRT, top[1]), (x0, SKIRT, top[1])], [(0, 1, 2, 3)])
     add('curb', PAINT, DARK, [(x1, SKIRT, 0), (x1, SKIRT, top[1]), (x0, SKIRT, top[1]), (x0, SKIRT, 0)], [(3, 2, 1, 0)])
@@ -319,8 +375,8 @@ def eave(rng, length=W):
 
 def eave_corner(rng, length=k.ROUND):
     """The roof on the facet that cuts a convex corner: the skirt, its eave run out and turned up to a tip at the facet's
-    middle. The kit stretches the piece over the facet and on past both its ends, where the walls' skirts trim it; it
-    stops short of the curb, where the two trims have crossed and the walls' own skirts meet."""
+    middle. The kit stretches the piece over the facet and on past both its ends, where the walls' skirts trim it to a
+    wedge that closes just past the curb: its curb joins the walls'."""
     (y0, z0), (y1, z1) = EAVE[:2]
     mid = length/2
     xs = [0.0, mid-1.0, mid, mid+1.0, length]
@@ -331,14 +387,55 @@ def eave_corner(rng, length=k.ROUND):
         add('eave edge', PAINT, BRONZE, [(a[0], a[1], z0-FASCIA), (b[0], b[1], z0-FASCIA), (b[0], b[1], b[2]+.35), (a[0], a[1], a[2]+.35)], [(0, 1, 2, 3)])
         add('eave edge', PAINT, BRONZE, [(a[0], a[1], a[2]+.35), (b[0], b[1], b[2]+.35), (b[0], b[1]+.5, b[2]+.2), (a[0], a[1]+.5, a[2]+.2)], [(0, 1, 2, 3)])
         add('eave soffit', PAINT, SOFFIT, [(a[0], a[1], z0-FASCIA), (a[0], .3, -1.6), (b[0], .3, -1.6), (b[0], b[1], z0-FASCIA)], [(0, 1, 2, 3)])
-    skirt_rows(0, length, curb=False)
+    skirt_rows(0, length)
 
 
-def corner(rng, base=False, length=k.ROUND):
+def eave_point(rng, length=k.ROUND):
+    """The roof on a corner's facet, pointed: the eave is drawn out along the corner's line and swept up to a tip
+    (POINT), a dark hip running back from it up the skirt; the rows behind lift a little under it. At the facet's ends
+    it meets the walls' eaves as eave_corner does."""
+    (y0, z0), (y1, z1), (y2, z2) = EAVE[:3]
+    mid, scale = length/2, length/(CORNER+2*REACH)  # Along the wall the kit stretches the piece: its parts that much narrower.
+    half = [(CORNER/2+REACH, 0.0, 0.0)]+POINT
+    columns = [(mid-x*scale, out, up) for x, out, up in half]+[(mid+x*scale, out, up) for x, out, up in half[-2::-1]]
+    low = lambda p: (p[0], p[1], p[2]-FASCIA)
+    lip = lambda p: (p[0], p[1], p[2]+.35)
+    for (xa, oa, ua), (xb, ob, ub) in zip(columns, columns[1:]):
+        a, b = (xa, y0-oa, z0+ua), (xb, y0-ob, z0+ub)
+        ra, rb = (xa, y1, z1+ua*.3), (xb, y1, z1+ub*.3)
+        # The tip itself is a bronze shoe: seen nearly edge on, seamed roofing there breaks up into teeth.
+        add('eave roofing', *((PAINT, SHOE) if max(ua, ub) >= POINT[-1][2] else (SEAMED, (1, 1, 1))), [a, b, rb, ra], [(0, 1, 2, 3)])
+        add('eave roofing', SEAMED, (1, 1, 1), [ra, rb, (xb, y2, z2), (xa, y2, z2)], [(0, 1, 2, 3)])
+        add('eave edge', PAINT, BRONZE, [low(a), low(b), lip(b), lip(a)], [(0, 1, 2, 3)])
+        add('eave edge', PAINT, BRONZE, [lip(a), lip(b), b, a], [(0, 1, 2, 3)])  # Its back, where it stands over the roofing.
+        add('eave soffit', PAINT, SOFFIT, [low(a), (xa, .3, -1.6), (xb, .3, -1.6), low(b)], [(0, 1, 2, 3)])
+    skirt_rows(0, length, first=2)
+    tip_out, tip_up = POINT[-1][1:]
+    path, wide = [(y0-tip_out+.3, z0+tip_up), (y1, z1+tip_up*.3), *EAVE[2:]], .18*scale
+    for (ya, za), (yb, zb) in zip(path, path[1:]):
+        for side in (-1, 1):
+            verts = [(mid+side*wide, ya, za), (mid, ya, za+.5), (mid, yb, zb+.5), (mid+side*wide, yb, zb)]
+            add('eave hip', PAINT, RIB, verts, [k.facing(verts, (side, 0, .2))])
+
+
+def corner(rng, base=False, length=k.ROUND, red=False):
     """A wall's corner facet: a stone pier with the storey's course, a slit of glass in a dark frame up its middle; on
-    the ground its granite foot and a lantern in the slit's place. The kit stretches the piece nearly five times along
-    the wall (over the facet and on past both its ends), so its parts are that much narrower here."""
+    the ground its granite foot and a lantern in the slit's place. Red, a lacquer post on the pier, bronze at its foot
+    and head. The kit
+    stretches the piece nearly five times along the wall (over the facet and on past both its ends), so its parts are
+    that much narrower here."""
     low, mid = (PLINTH if base else 0.0), length/2
+    if red:
+        cuboid('pier', 0, length, -PIER_OUT, 0, low, COURSE, STONE, PIER_TONE, omit='bktlr')
+        if base:
+            cuboid('pier foot', 0, length, -PIER_OUT-.3, 0, 0, low, CAST, GRANITE, omit='bklr')
+        half = COLUMN*length/(CORNER+2*REACH)  # As wide as a bay's column, on a facet the kit stretches.
+        cuboid('column', mid-half, mid+half, -COLUMN_OUT, -PIER_OUT, low, COURSE, PAINT, LACQUER, omit='bk')
+        for z in (low, COURSE-.8):
+            cuboid('column band', mid-half*1.08, mid+half*1.08, -COLUMN_OUT-.12, -PIER_OUT, z, z+.8, PAINT, BRONZE, omit='bk', detail=True)
+        course(length)
+        back_wall(length, 0, LEVEL)
+        return
     cuboid('pier', 0, length, -PIER_OUT, 0, low, COURSE, STONE, PIER_TONE, omit='bktlr')
     if base:
         cuboid('pier foot', 0, length, -PIER_OUT-.3, 0, 0, low, CAST, GRANITE, omit='bklr')
@@ -446,16 +543,16 @@ def warm(obj):
         shared.emissive(obj, NIGHT, night=True)
 
 
-def finished(builder):
-    """builder's piece as theme_kits.build takes it, its roofing's seams laid down the slopes: the kit lays a wall's
-    roofing along the wall (its planar materials); fittings and viewers of the pieces GLB take these."""
+def finished(builder, roofing={SEAMED: SEAM_REPEAT}):
+    """builder's piece as theme_kits.build takes it, its roofing (material: repeat) laid down the slopes: the kit lays a
+    wall's roofing along the wall (its planar materials); fittings and viewers of the pieces GLB take these."""
     def build(rng):
         before = len(shared.objects)
         builder(rng)
         h.flush()
         for obj in shared.objects[before:]:
-            if obj['board_material'] == SEAMED:
-                roof_uvs(obj)
+            if obj['board_material'] in roofing:
+                roof_uvs(obj, roofing[obj['board_material']])
             warm(obj)
     return build
 
@@ -465,6 +562,10 @@ PIECES = {name: finished(builder) for name, builder in {
     **{kind: (lambda rng, kind=kind: bay(rng, kind)) for kind in BAYS},
     **{'base-'+kind: (lambda rng, kind=kind: bay(rng, kind, base=True)) for kind in BAYS},
     'curtain': curtain, 'base-curtain': lambda rng: curtain(rng, base=True),
+    'red-curtain': lambda rng: curtain(rng, pier=COLUMN, red=True), 'lattice': lattice, 'base-lattice': lambda rng: lattice(rng, base=True),
+    'lattice-lit': lambda rng: lattice(rng, lit=True), 'base-lattice-lit': lambda rng: lattice(rng, base=True, lit=True),
+    'base-arcade': arcade, 'eave-point': eave_point,
+    'corner-red': lambda rng: corner(rng, red=True), 'corner-red-base': lambda rng: corner(rng, base=True, red=True),
     'red-window': red_window, 'red-balcony': balcony,
     'base-shop': lambda rng: shop(rng, 'narrow'), 'base-shop-wide': lambda rng: shop(rng, 'wide'), 'base-service': service,
     'entrance': lambda rng: entrance(rng, 'plain'), 'entrance-med': lambda rng: entrance(rng, 'med'),
@@ -496,7 +597,7 @@ DOOR = k.door((k.SECTIONAL, (.50, .52, .54)), (PAINT, LACQUER), jamb=2.0, header
               windows=k.door_windows(3.4, 1.2, 7.4, 6.0), threshold=(CAST, (.46, .46, .46)), apron=4.0)
 
 
-def variant(name, bases, floors, door, layouts=FITTINGS):
+def variant(name, bases, floors, door, layouts=FITTINGS, corners=('corner-base', 'corner'), tip='eave-corner'):
     based = lambda bays: [bay if bay.startswith('base-') else 'base-'+bay for bay in bays]
     return {
         'name': name, 'style': 'bays', 'pieces': 'imperial-pieces.glb', 'lone': k.LONE, 'bandEnd': 1.75,
@@ -505,11 +606,11 @@ def variant(name, bases, floors, door, layouts=FITTINGS):
         'floors': {'material': STONE, 'repeat': STONE_REPEAT, 'inset': 3.0, 'heights': [0.05]},
         'sidewalk': {'material': STONE, 'repeat': STONE_REPEAT, 'width': 5.0, 'kerb': 0.4},
         'modules': {
-            'base0': k.run(based(bases[0]), PLANAR, door, 'corner-base'),
-            'base1': k.run(based(bases[1]), PLANAR, door, 'corner-base'),
-            'floor0': k.run(floors[0], PLANAR, round_piece='corner'),
-            'floor1': k.run(floors[1], PLANAR, round_piece='corner'),
-            'roof0': k.run(['eave'], PLANAR, round_piece='eave-corner'),
+            'base0': k.run(based(bases[0]), PLANAR, door, corners[0]),
+            'base1': k.run(based(bases[1]), PLANAR, door, corners[0]),
+            'floor0': k.run(floors[0], PLANAR, round_piece=corners[1]),
+            'floor1': k.run(floors[1], PLANAR, round_piece=corners[1]),
+            'roof0': k.run(['eave'], PLANAR, round_piece=tip),
         },
         'fittings': layouts,
         'varyBays': True,
@@ -532,6 +633,12 @@ VARIANTS = [
     # A hall of plain stone panels and louvres. A hangar-class building draws it unless told otherwise.
     variant('hangar', (['panel', 'louvre', 'panel', 'service'], ['panel', 'panel', 'louvre', 'panel']),
             (['panel', 'clerestory', 'panel', 'panel'], ['clerestory', 'panel', 'louvre', 'panel']), 'entrance', HALL_FITTINGS),
+    # The authored buildings' forms, under roofs with pointed corners.
+    variant('pavilion', (['arcade', 'arcade', 'lattice', 'arcade'], ['lattice-lit', 'arcade', 'arcade', 'shop-wide']),
+            (['red-curtain', 'lattice', 'red-curtain', 'red-balcony'], ['lattice-lit', 'red-curtain', 'red-balcony', 'red-curtain']), 'entrance',
+            corners=('corner-red-base', 'corner-red'), tip='eave-point'),
+    variant('residence', (['lattice', 'pair', 'lattice-lit', 'slit'], ['pair', 'lattice', 'window', 'lattice']),
+            (['lattice', 'red-balcony', 'lattice', 'pair'], ['red-balcony', 'lattice-lit', 'pair', 'lattice']), 'entrance', tip='eave-point'),
 ]
 
 

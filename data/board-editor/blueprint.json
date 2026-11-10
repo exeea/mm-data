@@ -256,7 +256,8 @@
         "civic",
         "utopia",
         "frontier",
-        "imperial"
+        "imperial",
+        "heritage"
       ],
       "subcategories": {
         "rooftop": [
@@ -274,6 +275,9 @@
         "imperial": [
           "imperial"
         ],
+        "heritage": [
+          "heritage"
+        ],
         "colony": [
           "colony"
         ]
@@ -282,7 +286,8 @@
         "civic": "looks",
         "utopia": "looks",
         "frontier": "looks",
-        "imperial": "looks"
+        "imperial": "looks",
+        "heritage": "looks"
       }
     },
     {
@@ -4432,6 +4437,13 @@
       "section": "buildings/imperial"
     },
     {
+      "id": "building/heritage",
+      "label": "Heritage (Modular)",
+      "owner": "building",
+      "asset": "buildings/heritage/heritage",
+      "section": "buildings/heritage"
+    },
+    {
       "id": "building/glass-dome",
       "label": "Glass dome",
       "owner": "building",
@@ -7133,6 +7145,36 @@
       "label": "Industrial Works",
       "kind": "prop",
       "section": "buildings/imperial"
+    },
+    {
+      "id": "buildings/authored/heritage-government-hall",
+      "label": "Government Hall",
+      "kind": "prop",
+      "section": "buildings/heritage"
+    },
+    {
+      "id": "buildings/authored/heritage-administrative-offices",
+      "label": "Administrative Offices",
+      "kind": "prop",
+      "section": "buildings/heritage"
+    },
+    {
+      "id": "buildings/authored/heritage-transit-terminal",
+      "label": "Transit Terminal",
+      "kind": "prop",
+      "section": "buildings/heritage"
+    },
+    {
+      "id": "buildings/authored/heritage-medical-center",
+      "label": "Medical Center",
+      "kind": "prop",
+      "section": "buildings/heritage"
+    },
+    {
+      "id": "buildings/authored/heritage-commercial-center",
+      "label": "Commercial Center",
+      "kind": "prop",
+      "section": "buildings/heritage"
     },
     {
       "id": "buildings/authored/civic-tower",
