@@ -276,6 +276,59 @@ def arcade(rng, length=W):
     cuboid('lantern cap', mid-.8, mid+.8, .7, 2.3, top-1.6, top, PAINT, DARK, omit='t', detail=True)
 
 
+def hall(rng, kind, base=False, length=W, top=False):
+    """A hall's bay: stone between lacquer columns, storey on storey without a course, so columns and strips run the
+    hall's whole height. Up its middle one strip: glass in a dark frame, dark louvres, or a deep sunk panel of stone
+    slabs; door, on the ground, a steel door under a lantern. The top storey ends its strip under a lacquer beam from
+    column to column and a dark frieze under the eave."""
+    low, mid = (PLINTH if base else 0.0), length/2
+    head = LEVEL-3.2 if top else LEVEL
+    half = {'glass': 4.6, 'louvre': 1.8, 'panel': length/2-COLUMN-2.6, 'door': 0}[kind]
+    x0, x1 = mid-half, mid+half
+    holes = [(x0, x1, low, head)] if kind in ('glass', 'panel') else [(4.8, 9.2, 0, 9.0)] if kind == 'door' else []
+    facade('wall', holes, low, LEVEL, length, WALL, du=12, dv=9, key=STONE)
+    for a, b in ((0, COLUMN), (length-COLUMN, length)):
+        cuboid('column', a, b, -COLUMN_OUT, 0, low, LEVEL, PAINT, LACQUER, omit='bkt')
+        if base:
+            cuboid('pier foot', a, b, -COLUMN_OUT-.3, 0, 0, low, CAST, GRANITE, omit='bk')
+    if base:
+        plinth(length, [hole[:2] for hole in holes if hole[2] < PLINTH])
+    if top:
+        cuboid('hall beam', COLUMN, length-COLUMN, -COLUMN_OUT+.5, 0, head+.4, LEVEL-1.0, PAINT, LACQUER, omit='klr')
+        cuboid('hall frieze', COLUMN, length-COLUMN, -.5, 0, LEVEL-1.0, LEVEL, PAINT, DARK, omit='klr')
+    depth = .8 if kind == 'glass' else 1.1
+    if kind in ('glass', 'panel'):
+        tone, key = (DARK, PAINT) if kind == 'glass' else ((.66, .65, .63), STONE)
+        add('hall reveal', key, tone, [(x0, 0, low), (x0, depth, low), (x0, depth, head), (x0, 0, head)], [(0, 1, 2, 3)])
+        add('hall reveal', key, tone, [(x1, depth, low), (x1, 0, low), (x1, 0, head), (x1, depth, head)], [(0, 1, 2, 3)])
+        if base:
+            add('hall sill', key, tone, [(x0, 0, low), (x1, 0, low), (x1, depth, low), (x0, depth, low)], [(0, 1, 2, 3)])
+        if top:
+            add('hall soffit', key, tone, [(x0, 0, head), (x1, 0, head), (x1, depth, head), (x0, depth, head)], [(3, 2, 1, 0)])
+    rows = [(low+.3, 12.0), (12.3, head)] if base else [(.3, 6.0), (6.3, 12.0), (12.3, head)]
+    if kind == 'panel':
+        add('hall panel', STONE, (.86, .85, .83), [(x0, depth, low), (x1, depth, low), (x1, depth, head), (x0, depth, head)], [(0, 1, 2, 3)])
+        for z0, _ in rows:  # The slabs' open joints.
+            add('hall joint', PAINT, (.42, .41, .39), [(x0, depth-.02, z0-.3), (x1, depth-.02, z0-.3), (x1, depth-.02, z0), (x0, depth-.02, z0)],
+                [(0, 1, 2, 3)])
+    elif kind == 'glass':
+        add('hall back', PAINT, k.DARK_BACK, [(x0, depth, low), (x1, depth, low), (x1, depth, head), (x0, depth, head)], [(0, 1, 2, 3)])
+        for z0, z1 in rows:
+            for a, b in ((x0+.1, mid-.15), (mid+.15, x1-.1)):
+                pane('hall glass', a, b, z0, z1, depth-.06, rng.random() < .35)
+            cuboid('hall bar', x0, x1, depth-.3, depth-.05, z0-.3, z0, PAINT, DARK, omit='bk')
+        cuboid('hall post', mid-.15, mid+.15, depth-.3, depth-.05, low, head, PAINT, DARK, omit='bkt')
+    elif kind == 'louvre':
+        c.louvre('louvre', front, x0, x1, low+.5, head-.5)
+    else:
+        recess('service', 4.8, 9.2, 0, 9.0, .5, DARK, PAINT)
+        add('service door', PAINT, (.34, .35, .36), [(5.0, .44, .2), (9.0, .44, .2), (9.0, .44, 8.8), (5.0, .44, 8.8)], [(0, 1, 2, 3)])
+        lantern(7.0, 10.2)
+        for x, width, height in ((14.2, 2.6, 5.2), (17.8, 3.2, 4.2)):
+            cuboid('service cabinet', x-width/2, x+width/2, -1.9, -.6, 0, height, PAINT, (.42, .43, .44), omit='bk')
+    back_wall(length, 0, LEVEL)
+
+
 def shop(rng, kind, length=W):
     """A shopfront between red lacquer columns: lit glass over a granite stall, a dark sign band with bronze lines over
     it; wide, two panes; door, glass doors in its middle."""
@@ -363,17 +416,25 @@ def skirt_rows(x0, x1, first=1):
     add('curb', PAINT, DARK, [(x1, SKIRT, 0), (x1, SKIRT, top[1]), (x0, SKIRT, top[1]), (x0, SKIRT, 0)], [(3, 2, 1, 0)])
 
 
-def eave(rng, length=W):
+def hall_row(x0, x1):
+    """A hall's eave from its second row up: the one row that carries the flare up to the roof that spans the hall."""
+    (y0, z0), (y1, z1) = EAVE[1:3]
+    add('eave roofing', SEAMED, (1, 1, 1), [(x0, y0, z0), (x1, y0, z0), (x1, y1, z1), (x0, y1, z1)], [(0, 1, 2, 3)])
+    # Its back, down onto the roof: seen from the far side nothing shows through between the two.
+    add('eave back', PAINT, DARK, [(x1, y1, 0), (x0, y1, 0), (x0, y1, z1), (x1, y1, z1)], [(0, 1, 2, 3)])
+
+
+def eave(rng, length=W, hall=False):
     """The roof along a wall: a seamed skirt from the bronze-edged eave, over a soffit, up to the bronze-capped curb round
-    the deck."""
+    the deck; a hall's, the flared eave alone, under the roof that spans it."""
     (y0, z0), (y1, z1) = EAVE[:2]
     add('eave roofing', SEAMED, (1, 1, 1), [(0, y0, z0), (length, y0, z0), (length, y1, z1), (0, y1, z1)], [(0, 1, 2, 3)])
     lip(0, length, y0, z0)
     add('eave soffit', PAINT, SOFFIT, [(0, y0, z0-FASCIA), (0, .3, -1.6), (length, .3, -1.6), (length, y0, z0-FASCIA)], [(0, 1, 2, 3)])
-    skirt_rows(0, length)
+    hall_row(0, length) if hall else skirt_rows(0, length)
 
 
-def eave_corner(rng, length=k.ROUND):
+def eave_corner(rng, length=k.ROUND, hall=False):
     """The roof on the facet that cuts a convex corner: the skirt, its eave run out and turned up to a tip at the facet's
     middle. The kit stretches the piece over the facet and on past both its ends, where the walls' skirts trim it to a
     wedge that closes just past the curb: its curb joins the walls'."""
@@ -387,7 +448,7 @@ def eave_corner(rng, length=k.ROUND):
         add('eave edge', PAINT, BRONZE, [(a[0], a[1], z0-FASCIA), (b[0], b[1], z0-FASCIA), (b[0], b[1], b[2]+.35), (a[0], a[1], a[2]+.35)], [(0, 1, 2, 3)])
         add('eave edge', PAINT, BRONZE, [(a[0], a[1], a[2]+.35), (b[0], b[1], b[2]+.35), (b[0], b[1]+.5, b[2]+.2), (a[0], a[1]+.5, a[2]+.2)], [(0, 1, 2, 3)])
         add('eave soffit', PAINT, SOFFIT, [(a[0], a[1], z0-FASCIA), (a[0], .3, -1.6), (b[0], .3, -1.6), (b[0], b[1], z0-FASCIA)], [(0, 1, 2, 3)])
-    skirt_rows(0, length)
+    hall_row(0, length) if hall else skirt_rows(0, length)
 
 
 def eave_point(rng, length=k.ROUND):
@@ -418,7 +479,7 @@ def eave_point(rng, length=k.ROUND):
             add('eave hip', PAINT, RIB, verts, [k.facing(verts, (side, 0, .2))])
 
 
-def corner(rng, base=False, length=k.ROUND, red=False):
+def corner(rng, base=False, length=k.ROUND, red=False, banded=True):
     """A wall's corner facet: a stone pier with the storey's course, a slit of glass in a dark frame up its middle; on
     the ground its granite foot and a lantern in the slit's place. Red, a lacquer post on the pier, bronze at its foot
     and head. The kit
@@ -426,14 +487,16 @@ def corner(rng, base=False, length=k.ROUND, red=False):
     that much narrower here."""
     low, mid = (PLINTH if base else 0.0), length/2
     if red:
-        cuboid('pier', 0, length, -PIER_OUT, 0, low, COURSE, STONE, PIER_TONE, omit='bktlr')
+        top = COURSE if banded else LEVEL  # A hall's: without the course, post on post up the hall's height.
+        cuboid('pier', 0, length, -PIER_OUT, 0, low, top, STONE, PIER_TONE, omit='bktlr')
         if base:
             cuboid('pier foot', 0, length, -PIER_OUT-.3, 0, 0, low, CAST, GRANITE, omit='bklr')
         half = COLUMN*length/(CORNER+2*REACH)  # As wide as a bay's column, on a facet the kit stretches.
-        cuboid('column', mid-half, mid+half, -COLUMN_OUT, -PIER_OUT, low, COURSE, PAINT, LACQUER, omit='bk')
-        for z in (low, COURSE-.8):
-            cuboid('column band', mid-half*1.08, mid+half*1.08, -COLUMN_OUT-.12, -PIER_OUT, z, z+.8, PAINT, BRONZE, omit='bk', detail=True)
-        course(length)
+        cuboid('column', mid-half, mid+half, -COLUMN_OUT, -PIER_OUT, low, top, PAINT, LACQUER, omit='bkt' if not banded else 'bk')
+        if banded:
+            for z in (low, COURSE-.8):
+                cuboid('column band', mid-half*1.08, mid+half*1.08, -COLUMN_OUT-.12, -PIER_OUT, z, z+.8, PAINT, BRONZE, omit='bk', detail=True)
+            course(length)
         back_wall(length, 0, LEVEL)
         return
     cuboid('pier', 0, length, -PIER_OUT, 0, low, COURSE, STONE, PIER_TONE, omit='bktlr')
@@ -567,10 +630,15 @@ PIECES = {name: finished(builder) for name, builder in {
     'base-arcade': arcade, 'eave-point': eave_point,
     'corner-red': lambda rng: corner(rng, red=True), 'corner-red-base': lambda rng: corner(rng, base=True, red=True),
     'red-window': red_window, 'red-balcony': balcony,
+    **{'hall-'+kind: (lambda rng, kind=kind: hall(rng, kind)) for kind in ('glass', 'louvre', 'panel')},
+    **{'base-hall-'+kind: (lambda rng, kind=kind: hall(rng, kind, base=True)) for kind in ('glass', 'louvre', 'panel', 'door')},
+    **{'hall-top-'+kind: (lambda rng, kind=kind: hall(rng, kind, top=True)) for kind in ('glass', 'louvre', 'panel')},
+    'hall-corner': lambda rng: corner(rng, red=True, banded=False), 'hall-corner-base': lambda rng: corner(rng, base=True, red=True, banded=False),
     'base-shop': lambda rng: shop(rng, 'narrow'), 'base-shop-wide': lambda rng: shop(rng, 'wide'), 'base-service': service,
     'entrance': lambda rng: entrance(rng, 'plain'), 'entrance-med': lambda rng: entrance(rng, 'med'),
     'entrance-shop': lambda rng: shop(rng, 'door'),
-    'eave': eave, 'eave-corner': eave_corner, 'corner': corner, 'corner-base': lambda rng: corner(rng, base=True),
+    'eave': eave, 'eave-corner': eave_corner, 'hall-eave': lambda rng: eave(rng, hall=True), 'hall-eave-corner': lambda rng: eave_corner(rng, hall=True),
+    'corner': corner, 'corner-base': lambda rng: corner(rng, base=True),
     'plant': plant, 'tier': tier, 'monitor': monitor, 'pavilion': pavilion, 'hatch': hatch, 'vent': vent,
 }.items()}
 
@@ -597,7 +665,18 @@ DOOR = k.door((k.SECTIONAL, (.50, .52, .54)), (PAINT, LACQUER), jamb=2.0, header
               windows=k.door_windows(3.4, 1.2, 7.4, 6.0), threshold=(CAST, (.46, .46, .46)), apron=4.0)
 
 
-def variant(name, bases, floors, door, layouts=FITTINGS, corners=('corner-base', 'corner'), tip='eave-corner'):
+# A hall's roof: charcoal standing seam bowed over the hall on dark ribs, its gable ends dark as the roof (the eave runs
+# round them too: stone there would read as a gap in it).
+HALL = {'material': SEAMED, 'repeat': SEAM_REPEAT, 'inset': 0.0, 'heights': [0.3], 'aol': True,
+        'vault': k.vault('bow', 8.0, (1, 1, 1), ('structures/common/painted-steel', (.26, .27, .28)), ('structures/common/painted-steel', (.20, .21, .22)),
+                         rib=(1.4, .5))}
+
+
+HALL_BAYS = ['hall-glass', 'hall-panel', 'hall-glass', 'hall-louvre']
+HALL_TOPS = [bay.replace('hall-', 'hall-top-') for bay in HALL_BAYS]  # The storey under the eave: the strips' heads under a beam.
+
+
+def variant(name, bases, floors, door, layouts=FITTINGS, corners=('corner-base', 'corner'), tip='eave-corner', hall=False):
     based = lambda bays: [bay if bay.startswith('base-') else 'base-'+bay for bay in bays]
     return {
         'name': name, 'style': 'bays', 'pieces': 'imperial-pieces.glb', 'lone': k.LONE, 'bandEnd': 1.75,
@@ -610,9 +689,12 @@ def variant(name, bases, floors, door, layouts=FITTINGS, corners=('corner-base',
             'base1': k.run(based(bases[1]), PLANAR, door, corners[0]),
             'floor0': k.run(floors[0], PLANAR, round_piece=corners[1]),
             'floor1': k.run(floors[1], PLANAR, round_piece=corners[1]),
+            **({'top0': k.run(HALL_TOPS, PLANAR, round_piece=corners[1])} if hall else {}),
             'roof0': k.run(['eave'], PLANAR, round_piece=tip),
         },
         'fittings': layouts,
+        # A hangar's roof, unless its building chooses the flat one: the seamed vault over the flared eave alone.
+        **({'vaulted': k.vaulted(HALL, k.run(['hall-eave'], PLANAR, round_piece='hall-eave-corner'))} if hall else {}),
         'varyBays': True,
         'door': DOOR,
     }
@@ -630,9 +712,11 @@ VARIANTS = [
             (['ribbon', 'ribbon', 'window'], ['ribbon', 'window', 'ribbon']), 'entrance-med'),
     variant('industrial', (['service', 'louvre', 'clerestory', 'panel'], ['clerestory', 'service', 'panel', 'louvre']),
             (['clerestory', 'louvre', 'clerestory', 'panel'], ['panel', 'clerestory', 'clerestory', 'louvre']), 'entrance', HALL_FITTINGS),
-    # A hall of plain stone panels and louvres. A hangar-class building draws it unless told otherwise.
-    variant('hangar', (['panel', 'louvre', 'panel', 'service'], ['panel', 'panel', 'louvre', 'panel']),
-            (['panel', 'clerestory', 'panel', 'panel'], ['clerestory', 'panel', 'louvre', 'panel']), 'entrance', HALL_FITTINGS),
+    # A hall: lacquer columns and strips of glass, louvres and sunk panels up its whole height (every storey lays the
+    # same bays, so they stack). A hangar-class building draws it unless told otherwise, under a seamed roof that spans
+    # it unless it chooses the look's eave and deck.
+    variant('hangar', (HALL_BAYS, HALL_BAYS), (HALL_BAYS, HALL_BAYS), 'base-hall-door', HALL_FITTINGS, corners=('hall-corner-base', 'hall-corner'),
+            hall=True),
     # The authored buildings' forms, under roofs with pointed corners.
     variant('pavilion', (['arcade', 'arcade', 'lattice', 'arcade'], ['lattice-lit', 'arcade', 'arcade', 'shop-wide']),
             (['red-curtain', 'lattice', 'red-curtain', 'red-balcony'], ['lattice-lit', 'red-curtain', 'red-balcony', 'red-curtain']), 'entrance',

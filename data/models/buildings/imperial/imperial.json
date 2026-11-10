@@ -2665,19 +2665,19 @@
       "base0": [
         {
           "bays": [
-            "base-panel",
-            "base-louvre",
-            "base-panel",
-            "base-service"
+            "base-hall-glass",
+            "base-hall-panel",
+            "base-hall-glass",
+            "base-hall-louvre"
           ],
           "bay": 24.0,
           "planar": {
             "structures/imperial/stone-cladding": 18.0,
             "structures/imperial/standing-seam": 16.0
           },
-          "door": "entrance",
+          "door": "base-hall-door",
           "round": {
-            "piece": "corner-base",
+            "piece": "hall-corner-base",
             "length": 6.0
           }
         }
@@ -2685,19 +2685,19 @@
       "base1": [
         {
           "bays": [
-            "base-panel",
-            "base-panel",
-            "base-louvre",
-            "base-panel"
+            "base-hall-glass",
+            "base-hall-panel",
+            "base-hall-glass",
+            "base-hall-louvre"
           ],
           "bay": 24.0,
           "planar": {
             "structures/imperial/stone-cladding": 18.0,
             "structures/imperial/standing-seam": 16.0
           },
-          "door": "entrance",
+          "door": "base-hall-door",
           "round": {
-            "piece": "corner-base",
+            "piece": "hall-corner-base",
             "length": 6.0
           }
         }
@@ -2705,10 +2705,10 @@
       "floor0": [
         {
           "bays": [
-            "panel",
-            "clerestory",
-            "panel",
-            "panel"
+            "hall-glass",
+            "hall-panel",
+            "hall-glass",
+            "hall-louvre"
           ],
           "bay": 24.0,
           "planar": {
@@ -2716,7 +2716,7 @@
             "structures/imperial/standing-seam": 16.0
           },
           "round": {
-            "piece": "corner",
+            "piece": "hall-corner",
             "length": 6.0
           }
         }
@@ -2724,10 +2724,10 @@
       "floor1": [
         {
           "bays": [
-            "clerestory",
-            "panel",
-            "louvre",
-            "panel"
+            "hall-glass",
+            "hall-panel",
+            "hall-glass",
+            "hall-louvre"
           ],
           "bay": 24.0,
           "planar": {
@@ -2735,7 +2735,26 @@
             "structures/imperial/standing-seam": 16.0
           },
           "round": {
-            "piece": "corner",
+            "piece": "hall-corner",
+            "length": 6.0
+          }
+        }
+      ],
+      "top0": [
+        {
+          "bays": [
+            "hall-top-glass",
+            "hall-top-panel",
+            "hall-top-glass",
+            "hall-top-louvre"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/imperial/stone-cladding": 18.0,
+            "structures/imperial/standing-seam": 16.0
+          },
+          "round": {
+            "piece": "hall-corner",
             "length": 6.0
           }
         }
@@ -2954,6 +2973,71 @@
           }
         ]
       }
+    },
+    "vaulted": {
+      "roof": {
+        "material": "structures/imperial/standing-seam",
+        "repeat": 16.0,
+        "inset": 0.0,
+        "heights": [
+          0.3
+        ],
+        "aol": true,
+        "vault": {
+          "shape": "bow",
+          "rise": 8.0,
+          "segments": [
+            6,
+            3
+          ],
+          "gable": {
+            "material": "structures/common/painted-steel",
+            "repeat": 12.0,
+            "tint": [
+              0.055,
+              0.059,
+              0.064
+            ]
+          },
+          "trim": {
+            "material": "structures/common/painted-steel",
+            "repeat": 12.0,
+            "tint": [
+              0.033,
+              0.036,
+              0.04
+            ]
+          },
+          "verge": 0.9,
+          "ribPitch": 24.0,
+          "ribWidth": 1.4,
+          "ribHeight": 0.5,
+          "tint": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "modules": {
+        "roof0": [
+          {
+            "bays": [
+              "hall-eave"
+            ],
+            "bay": 24.0,
+            "planar": {
+              "structures/imperial/stone-cladding": 18.0,
+              "structures/imperial/standing-seam": 16.0
+            },
+            "round": {
+              "piece": "hall-eave-corner",
+              "length": 6.0
+            }
+          }
+        ]
+      },
+      "fittings": null
     },
     "varyBays": true,
     "door": {

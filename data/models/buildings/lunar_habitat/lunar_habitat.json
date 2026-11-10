@@ -141,6 +141,15 @@
     "cornerRadius": 6.0,
     "cornerSegments": 4,
     "parapet": { "height": 4.2, "width": 3.2 },
+    "vaulted": {
+      "parapet": null,
+      "vault": {
+        "shape": "arch", "rise": 9.0, "segments": [6, 3],
+        "gable": { "material": "structures/lunar/colony-panel", "repeat": 18.0, "tint": [1.0, 1.0, 1.0] },
+        "trim": { "material": "structures/lunar/habitat-pier", "repeat": 18.0, "tint": [1.0, 1.0, 1.0] },
+        "verge": 0.9, "ribPitch": 24.0, "ribWidth": 2.4, "ribHeight": 0.6, "tint": [1.0, 1.0, 1.0]
+      }
+    },
     "skirt": { "height": 3.0, "out": 2.4 },
     "piers": { "joint": "pier", "corner": "pier-corner" },
     "tops": { "joint": "pier-top", "corner": "pier-corner-top" },

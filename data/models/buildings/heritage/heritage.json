@@ -3578,10 +3578,10 @@
       "base0": [
         {
           "bays": [
-            "base-works",
-            "base-brick-panel",
-            "base-works",
-            "base-brick-service"
+            "base-hall-window",
+            "base-hall-panel",
+            "base-hall-window",
+            "base-hall-louvre"
           ],
           "bay": 24.0,
           "planar": {
@@ -3590,9 +3590,9 @@
             "structures/heritage/slate": 12.0,
             "structures/heritage/copper": 16.0
           },
-          "door": "entrance",
+          "door": "base-hall-door",
           "round": {
-            "piece": "quoins-base",
+            "piece": "hall-quoins-base",
             "length": 6.0
           }
         }
@@ -3600,10 +3600,10 @@
       "base1": [
         {
           "bays": [
-            "base-works",
-            "base-brick-louvre",
-            "base-works",
-            "base-brick-panel"
+            "base-hall-window",
+            "base-hall-panel",
+            "base-hall-window",
+            "base-hall-louvre"
           ],
           "bay": 24.0,
           "planar": {
@@ -3612,9 +3612,9 @@
             "structures/heritage/slate": 12.0,
             "structures/heritage/copper": 16.0
           },
-          "door": "entrance",
+          "door": "base-hall-door",
           "round": {
-            "piece": "quoins-base",
+            "piece": "hall-quoins-base",
             "length": 6.0
           }
         }
@@ -3622,10 +3622,10 @@
       "floor0": [
         {
           "bays": [
-            "works",
-            "brick-panel",
-            "works",
-            "brick-louvre"
+            "hall-window",
+            "hall-panel",
+            "hall-window",
+            "hall-louvre"
           ],
           "bay": 24.0,
           "planar": {
@@ -3635,7 +3635,7 @@
             "structures/heritage/copper": 16.0
           },
           "round": {
-            "piece": "quoins",
+            "piece": "hall-quoins",
             "length": 6.0
           }
         }
@@ -3643,10 +3643,10 @@
       "floor1": [
         {
           "bays": [
-            "works",
-            "brick-louvre",
-            "works",
-            "brick-sash"
+            "hall-window",
+            "hall-panel",
+            "hall-window",
+            "hall-louvre"
           ],
           "bay": 24.0,
           "planar": {
@@ -3656,7 +3656,28 @@
             "structures/heritage/copper": 16.0
           },
           "round": {
-            "piece": "quoins",
+            "piece": "hall-quoins",
+            "length": 6.0
+          }
+        }
+      ],
+      "top0": [
+        {
+          "bays": [
+            "hall-top-window",
+            "hall-top-panel",
+            "hall-top-window",
+            "hall-top-louvre"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/heritage/limestone": 18.0,
+            "structures/heritage/brick": 18.0,
+            "structures/heritage/slate": 12.0,
+            "structures/heritage/copper": 16.0
+          },
+          "round": {
+            "piece": "hall-quoins",
             "length": 6.0
           }
         }
@@ -4084,6 +4105,73 @@
         "paint": false
       },
       "apron": 4.0
+    },
+    "vaulted": {
+      "roof": {
+        "material": "structures/heritage/copper",
+        "repeat": 16.0,
+        "inset": 0.0,
+        "heights": [
+          0.3
+        ],
+        "aol": true,
+        "vault": {
+          "shape": "bow",
+          "rise": 9.0,
+          "segments": [
+            6,
+            3
+          ],
+          "gable": {
+            "material": "structures/heritage/brick",
+            "repeat": 18.0,
+            "tint": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "trim": {
+            "material": "structures/common/painted-steel",
+            "repeat": 12.0,
+            "tint": [
+              0.015,
+              0.017,
+              0.02
+            ]
+          },
+          "verge": 0.9,
+          "ribPitch": 24.0,
+          "ribWidth": 1.2,
+          "ribHeight": 0.5,
+          "tint": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "modules": {
+        "roof0": [
+          {
+            "bays": [
+              "hall-eave"
+            ],
+            "bay": 24.0,
+            "planar": {
+              "structures/heritage/limestone": 18.0,
+              "structures/heritage/brick": 18.0,
+              "structures/heritage/slate": 12.0,
+              "structures/heritage/copper": 16.0
+            },
+            "round": {
+              "piece": "hall-eave-corner",
+              "length": 6.0
+            }
+          }
+        ]
+      },
+      "fittings": null
     }
   },
   {

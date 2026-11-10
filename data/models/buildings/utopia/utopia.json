@@ -1266,6 +1266,69 @@
         "paint": false
       },
       "apron": 5.0
+    },
+    "vaulted": {
+      "roof": {
+        "material": "structures/common/white-stone",
+        "repeat": 54.0,
+        "inset": 0.0,
+        "heights": [
+          0.3
+        ],
+        "vault": {
+          "shape": "arch",
+          "rise": 9.0,
+          "segments": [
+            6,
+            3
+          ],
+          "gable": {
+            "material": "structures/common/white-stone",
+            "repeat": 54.0,
+            "tint": [
+              1.0,
+              0.966,
+              0.911
+            ]
+          },
+          "trim": {
+            "material": "structures/common/white-stone",
+            "repeat": 54.0,
+            "tint": [
+              0.748,
+              0.729,
+              0.692
+            ]
+          },
+          "verge": 0.9,
+          "ribPitch": 24.0,
+          "ribWidth": 1.6,
+          "ribHeight": 0.4,
+          "tint": [
+            1.0,
+            0.966,
+            0.911
+          ]
+        }
+      },
+      "modules": {
+        "roof0": [
+          {
+            "bays": [
+              "hall-eave"
+            ],
+            "bay": 24.0,
+            "planar": {
+              "structures/common/white-stone": 54.0
+            },
+            "round": {
+              "piece": "hall-eave-round",
+              "length": 6.0
+            }
+          }
+        ]
+      },
+      "fittings": null
     }
   }
 ]

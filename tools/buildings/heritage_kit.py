@@ -310,6 +310,86 @@ def panel(rng, base=False, length=W, brick=False, kind='plain'):
     add('blind arch back', key, dark, outline, [tuple(range(len(outline)))])
 
 
+HALL_PLINTH, BUTTRESS, BUTTRESS_OUT = 5.2, 1.5, 1.4  # A hall's stone foot; half its buttress, and how far that stands out.
+HALL_ROOM = (.16, .20, .25)  # A hall's pane that shows no sky: dark blue, never the black of a broken one.
+
+
+def hall(rng, kind, base=False, length=W, top=False):
+    """A hall's bay: brick over a stone foot between stone buttresses, storey on storey without a course, so buttresses
+    and strips run the hall's whole height. Up its middle one strip: a window of small panes in an iron frame between
+    stone jambs, louvres between stone jambs, or a sunk brick panel; door, on the ground, a steel door under a lamp.
+    The top storey ends its strip under the eave: the window in a round arch under a keystone, the louvres under a
+    stone lintel, the panel in the wall."""
+    low, mid = (HALL_PLINTH if base else 0.0), length/2
+    half = {'window': 4.2, 'louvre': 2.4, 'panel': length/2-BUTTRESS-2.4, 'door': 0}[kind]
+    x0, x1 = mid-half, mid+half
+    arched = top and kind in ('window', 'panel')
+    spring = LEVEL-half-2.4  # An arched head's springing: its crown 2.4 under the eave.
+    head = LEVEL-2.4 if top else LEVEL  # Where a top storey's other strips end.
+    holes = ([arch_hole(mid, half, 0, spring)] if arched else [(x0, x1, low, head)] if kind in ('window', 'panel')
+             else [(4.6, 9.0, 0, 9.2)] if kind == 'door' else [])
+    facade('wall', holes, low, LEVEL, length, BRICK_TONE, du=12, dv=9, key=BRICK)
+    if base:
+        facade('foot', [hole for hole in holes if hole[2] < low], 0, low, length, RUSTIC, du=12, dv=9, key=STONE)
+        cuboid('foot course', 0, length, -.5, 0, low-.7, low, STONE, DRESSING, omit='klr')
+    shoulder = LEVEL-3.4 if top else LEVEL  # Under the eave a buttress weathers back into the wall.
+    for a, b in ((0, BUTTRESS), (length-BUTTRESS, length)):
+        cuboid('buttress', a, b, -BUTTRESS_OUT, 0, 0, shoulder, STONE, DRESSING, omit='bkt')
+        if top:
+            verts = [(a, -BUTTRESS_OUT, shoulder), (b, -BUTTRESS_OUT, shoulder), (b, 0, shoulder+2.2), (a, 0, shoulder+2.2)]
+            add('buttress', STONE, DRESSING, verts, [k.facing(verts, (0, -1, 1))])
+        if base:
+            cuboid('buttress foot', a, b, -BUTTRESS_OUT-.5, 0, 0, low, STONE, RUSTIC, omit='bk')
+    if kind in ('window', 'louvre'):
+        for a in (x0-.8, x1):  # Stone jambs up the strip.
+            cuboid('hall jamb', a, a+.8, -.4, 0, low, spring if arched else head, STONE, DRESSING, omit='bk' if top else 'bkt')
+    depth = .8 if kind == 'window' else .5
+    if kind in ('window', 'panel') and not arched:
+        tone, key = (REVEAL, STONE) if kind == 'window' else (tuple(v*.8 for v in BRICK_TONE), BRICK)
+        add('hall reveal', key, tone, [(x0, 0, low), (x0, depth, low), (x0, depth, head), (x0, 0, head)], [(0, 1, 2, 3)])
+        add('hall reveal', key, tone, [(x1, depth, low), (x1, 0, low), (x1, 0, head), (x1, depth, head)], [(0, 1, 2, 3)])
+        if base:
+            add('hall sill', STONE, DRESSING, [(x0, 0, low), (x1, 0, low), (x1, depth, low), (x0, depth, low)], [(0, 1, 2, 3)])
+        if top:
+            add('hall soffit', key, tone, [(x0, 0, head), (x1, 0, head), (x1, depth, head), (x0, depth, head)], [(3, 2, 1, 0)])
+    outline = arch('hall arch', mid, half, 0, spring, BRICK, BRICK_TONE, depth) if arched else None
+    if kind == 'panel':
+        dark = tuple(v*.66 for v in BRICK_TONE)
+        top_z = spring if arched else head
+        add('hall panel', BRICK, dark, [(x0, depth, low), (x1, depth, low), (x1, depth, top_z), (x0, depth, top_z)], [(0, 1, 2, 3)])
+        if arched:
+            add('hall panel', BRICK, dark, outline, [tuple(range(len(outline)))])
+    elif kind == 'window':
+        crown = spring+half if arched else LEVEL
+        add('hall back', PAINT, k.DARK_BACK, [(x0, depth, low), (x1, depth, low), (x1, depth, crown), (x0, depth, crown)], [(0, 1, 2, 3)])
+        rows = [(low+.25, 12.0), (12.25, LEVEL)] if base else [(.25, 6.0), (6.25, spring)] if arched else [(.25, 6.0), (6.25, 12.0), (12.25, LEVEL)]
+        for z0, z1 in rows:
+            for i in range(3):
+                ik.pane('hall glass', x0+2*half*i/3+.1, x0+2*half*(i+1)/3-.1, z0, z1, depth-.06, rng.random() < .3, dark=NAVY, room=HALL_ROOM)
+            cuboid('hall bar', x0, x1, depth-.3, depth-.05, z0-.25, z0, PAINT, IRON, omit='bk')
+        for i in (1, 2):
+            x = x0+2*half*i/3
+            cuboid('hall post', x-.12, x+.12, depth-.3, depth-.05, low, spring if arched else LEVEL, PAINT, IRON, omit='bkt')
+        if arched:
+            add('hall glass', PALE_GLASS, NAVY, outline, [tuple(range(len(outline)))], light='night' if rng.random() < .5 else 'off')
+            cuboid('hall bar', x0, x1, depth-.3, depth-.05, spring-.12, spring+.13, PAINT, IRON, omit='bk')
+            for turn in (60, 120):  # The head's bars, from the springing's middle.
+                px, pz = mid+(half-.15)*math.cos(math.radians(turn)), spring+(half-.15)*math.sin(math.radians(turn))
+                verts = [(mid-.12, depth-.1, spring), (mid+.12, depth-.1, spring), (px+.12, depth-.1, pz), (px-.12, depth-.1, pz)]
+                add('hall post', PAINT, IRON, verts, [k.facing(verts, (0, -1, 0))])
+    elif kind == 'louvre':
+        c.louvre('louvre', front, x0, x1, low+.5, head-.5)
+        if top:
+            cuboid('lintel', x0-1.0, x1+1.0, -.5, 0, head, head+1.3, STONE, DRESSING, omit='k')
+    else:
+        recess('service', 4.6, 9.0, 0, 9.2, .5, IRON, PAINT)
+        add('service door', PAINT, (.30, .33, .32), [(4.8, .44, .2), (8.8, .44, .2), (8.8, .44, 9.0), (4.8, .44, 9.0)], [(0, 1, 2, 3)])
+        cuboid('lintel', 3.9, 9.7, -.5, 0, 9.2, 10.6, STONE, DRESSING, omit='k')
+        lamp(6.8, 11.4)
+        cuboid('service cabinet', 14.4, 17.6, -1.7, -.5, 0, 4.6, PAINT, (.38, .42, .40), omit='bk')
+    back_wall(length, 0, LEVEL)
+
+
 def works(rng, base=False, length=W):
     """A works' bay of brick: one tall arched window of small panes in an iron frame, stone at its sill, springing and
     key."""
@@ -365,21 +445,22 @@ def entrance(rng, kind='plain'):
 
 # -- Corners ----------------------------------------------------------------------------------------
 
-def quoins(rng, base=False, length=k.ROUND):
+def quoins(rng, base=False, length=k.ROUND, banded=True):
     """A wall's corner facet: a pier of quoins, long and short by turns, a shadow in each joint, with the storey's
-    course."""
-    low = PLINTH if base else 0.0
-    cuboid('pier', 0, length, -PILASTER_OUT, 0, low, COURSE, STONE, tuple(v*.9 for v in (RUSTIC if base else WALL)), omit='bktlr')
+    course; a hall's, without the course: quoins up the hall's whole height."""
+    low, top = (PLINTH if base else 0.0), (COURSE if banded else LEVEL)
+    cuboid('pier', 0, length, -PILASTER_OUT, 0, low, top, STONE, tuple(v*.9 for v in (RUSTIC if base else WALL)), omit='bktlr')
     if base:
         cuboid('pier foot', 0, length, -PILASTER_OUT-.3, 0, 0, low, STONE, RUSTIC, omit='bklr')
     mid, tall = length/2, 2.4
-    for i in range(int((COURSE-low-.2)//tall)):
+    for i in range(int((top-low-.2)//tall)):
         half = length*(.34 if i % 2 else .2)
         cuboid('quoin', mid-half, mid+half, -PILASTER_OUT-.45, -PILASTER_OUT, low+.3+i*tall, low+tall+i*tall, STONE, DRESSING, omit='k')
         add('quoin joint', PAINT, QUOIN_JOINT, [(mid-half, -PILASTER_OUT-.46, low+.1+i*tall), (mid+half, -PILASTER_OUT-.46, low+.1+i*tall),
                                          (mid+half, -PILASTER_OUT-.46, low+.3+i*tall), (mid-half, -PILASTER_OUT-.46, low+.3+i*tall)], [(0, 1, 2, 3)],
             detail=True)
-    course(length)
+    if banded:
+        course(length)
     back_wall(length, 0, LEVEL)
 
 
@@ -538,6 +619,13 @@ def mansard_corner(rng, length=k.ROUND):
             add('mansard hip', COPPER, (.8, .8, .8), verts, [k.facing(verts, (side, 0, .2))])
 
 
+def hall_eave(rng, length=W):
+    """A hall's eave under the roof that spans it: a stone cornice along the wall's top, a copper gutter on it."""
+    cuboid('cornice', 0, length, -2.6, .4, -1.0, .3, STONE, DRESSING, omit='lr')
+    cuboid('cornice bed', 0, length, -1.4, 0, -2.0, -1.0, STONE, DRESSING, omit='klr')
+    cuboid('gutter', 0, length, -2.3, -.5, .3, .7, PAINT, (.33, .42, .39), omit='blr')
+
+
 def battlement(rng, length=W, merlons=True):
     """The roof along a wall: a corbelled stone parapet under a coping, round a flat roof; with merlons, a
     battlement."""
@@ -652,6 +740,10 @@ PIECES = {name: ik.finished(builder, ROOFING) for name, builder in {
     **{name: (lambda rng, wall=wall: wall[0](rng, **wall[1])) for name, wall in WALLS.items()},
     **{'base-'+name: (lambda rng, wall=wall: wall[0](rng, True, **wall[1])) for name, wall in WALLS.items()},
     'balcony': balcony,
+    **{'hall-'+kind: (lambda rng, kind=kind: hall(rng, kind)) for kind in ('window', 'louvre', 'panel')},
+    **{'base-hall-'+kind: (lambda rng, kind=kind: hall(rng, kind, base=True)) for kind in ('window', 'louvre', 'panel', 'door')},
+    **{'hall-top-'+kind: (lambda rng, kind=kind: hall(rng, kind, top=True)) for kind in ('window', 'louvre', 'panel')},
+    'hall-quoins': lambda rng: quoins(rng, banded=False), 'hall-quoins-base': lambda rng: quoins(rng, True, banded=False),
     'base-arcade': arcade, 'base-shop': lambda rng: arcade(rng, 'shop'),
     'base-service': lambda rng: panel(rng, True, kind='service'), 'base-brick-service': lambda rng: panel(rng, True, brick=True, kind='service'),
     'entrance': entrance, 'entrance-med': lambda rng: entrance(rng, 'med'),
@@ -660,6 +752,7 @@ PIECES = {name: ik.finished(builder, ROOFING) for name, builder in {
     'mansard-turret': lambda rng: turret_top(rng, mansard_corner),
     'battlement': battlement, 'battlement-corner': battlement_corner, 'battlement-turret': lambda rng: turret_top(rng, battlement_corner),
     'parapet': lambda rng: battlement(rng, merlons=False), 'parapet-corner': parapet_corner,
+    'hall-eave': hall_eave, 'hall-eave-corner': lambda rng: hall_eave(rng, k.ROUND),
     'chimney': chimney, 'cupola': cupola, 'skylight': skylight, 'plant': plant, 'duct': duct, 'tank': tank,
     'hatch': hatch, 'vent': vent,
 }.items()}
@@ -688,11 +781,20 @@ DOOR = k.door((k.SECTIONAL, (.34, .42, .38)), (PAINT, IRON), jamb=2.0, header=2.
               windows=k.door_windows(3.4, 1.2, 7.4, 6.0), threshold=(CAST, (.46, .46, .46)), apron=4.0)
 MANSARD = {'material': ROOF_DECK, 'repeat': 18.0, 'inset': SKIRT-.1, 'heights': [DECK], 'aol': True}
 FLAT = {'material': ROOF_DECK, 'repeat': 18.0, 'inset': PARAPET_DEEP-.1, 'heights': [.6], 'aol': True}
+# A hall's roof: verdigris copper bowed over the hall on iron ribs, its gable ends in the walls' brick.
+HALL = {'material': COPPER, 'repeat': COPPER_REPEAT, 'inset': 0.0, 'heights': [0.3], 'aol': True,
+        'vault': k.vault('bow', 9.0, (1, 1, 1), (BRICK, BRICK_TONE, REPEAT), ('structures/common/painted-steel', IRON), rib=(1.2, .5))}
 
 
-def variant(name, bases, floors, door, roof='mansard', turrets=False, layouts=FITTINGS):
+HALL_BAYS = ['hall-window', 'hall-panel', 'hall-window', 'hall-louvre']
+HALL_TOPS = [bay.replace('hall-', 'hall-top-') for bay in HALL_BAYS]  # The storey under the eave: the strips' heads.
+
+
+def variant(name, bases, floors, door, roof='mansard', turrets=False, layouts=FITTINGS, hall=False):
+    """hall: its corners a hall's quoins, without the storeys' course; the storey under its roof (the kit's `top` module)
+    ends its strips: windows in round arches."""
     based = lambda bays: [bay if bay.startswith('base-') else 'base-'+bay for bay in bays]
-    corner = 'turret' if turrets else 'quoins'
+    corner = 'turret' if turrets else 'hall-quoins' if hall else 'quoins'
     top = k.run([roof], PLANAR, round_piece=roof+('-turret' if turrets else '-corner'))
     if roof == 'mansard':
         # Dormers keep off a wall's ends, where it turns a corner or runs on into another roof: those stretches are plain.
@@ -717,11 +819,14 @@ def variant(name, bases, floors, door, roof='mansard', turrets=False, layouts=FI
             'base1': run(based(bases[1]), door, corner+'-base', 'quoins-base'),
             'floor0': run(floors[0]),
             'floor1': run(floors[1]),
+            **({'top0': run(HALL_TOPS)} if hall else {}),
             'roof0': top,
         },
         'fittings': layouts,
         'varyBays': True,
         'door': DOOR,
+        # A hangar's roof, unless its building chooses the flat one: the copper vault over a cornice.
+        **({'vaulted': k.vaulted(HALL, k.run(['hall-eave'], PLANAR, round_piece='hall-eave-corner'))} if hall else {}),
     }
 
 
@@ -740,10 +845,10 @@ VARIANTS = [
     variant('industrial', (['works', 'brick-panel', 'works', 'brick-service'], ['brick-panel', 'works', 'brick-service', 'works']),
             (['works', 'brick-louvre', 'works', 'brick-panel'], ['brick-panel', 'works', 'works', 'brick-louvre']), 'entrance',
             roof='parapet', layouts=HALL_FITTINGS),
-    # A hall of works windows between brick panels. A hangar-class building draws it unless told otherwise.
-    variant('hangar', (['works', 'brick-panel', 'works', 'brick-service'], ['works', 'brick-louvre', 'works', 'brick-panel']),
-            (['works', 'brick-panel', 'works', 'brick-louvre'], ['works', 'brick-louvre', 'works', 'brick-sash']), 'entrance',
-            roof='parapet', layouts=HALL_FITTINGS),
+    # A hall: stone buttresses and strips of iron-framed windows, louvres and sunk panels up its whole height (every
+    # storey lays the same bays, so they stack; the top one ends them in round arches). A hangar-class building draws it
+    # unless told otherwise, under a copper roof that spans it unless it chooses the flat roof and parapet.
+    variant('hangar', (HALL_BAYS, HALL_BAYS), (HALL_BAYS, HALL_BAYS), 'base-hall-door', roof='parapet', layouts=HALL_FITTINGS, hall=True),
     variant('armoury', (['arch', 'panel', 'arch', 'service'], ['panel', 'arch', 'panel', 'arch']),
             (['arch', 'panel', 'sash', 'arch'], ['sash', 'arch', 'arch', 'panel']), 'entrance', roof='battlement', turrets=True,
             layouts=HALL_FITTINGS),

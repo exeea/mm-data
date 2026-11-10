@@ -121,6 +121,15 @@ def door(leaf, frame, **more):
     return result
 
 
+def vault(shape, rise, sheeting, gable, trim, rib=(2.0, .5)):
+    """A roof that spans its hall (BayKit's vault), as a hangar's does: its `shape` (gable, bow or arch) and rise, its
+    sheeting's sRGB tint, its gable ends and its trim (verge and ribs) as (material, sRGB tint, repeat), its ribs' width
+    and height."""
+    surface = lambda material, tint, repeat=12.0: {'material': material, 'repeat': repeat, 'tint': lin(tint)}
+    return {'shape': shape, 'rise': rise, 'segments': [6, 3], 'gable': surface(*gable), 'trim': surface(*trim), 'verge': .9, 'ribPitch': W,
+            'ribWidth': rib[0], 'ribHeight': rib[1], 'tint': lin(sheeting)}
+
+
 def door_windows(width, height, sill, pitch, glow=(.05, .04, .02), material=DOOR_GLASS):
     """A row of panes in each leaf, lit faintly at night."""
     return {'glass': {'material': material, 'repeat': 12.0, 'tint': [1, 1, 1], 'glow': list(glow)}, 'width': width, 'height': height,
@@ -258,6 +267,11 @@ def civic_fins(rng, kind):
     if kind == 'shade':
         cuboid('fins sunshade', 0, W, -3.2, -1.2, 14.6, 15.2, PANELS, TONES[0], omit='bk')
     back_wall(W, 0, LEVEL, 2.3)
+
+
+def civic_hall_eave(rng):
+    """A hall's eave under its shell roof: a concrete edge beam along the wall's top."""
+    cuboid('eave beam', 0, W, -.9, 0, -1.6, .5, CAST, TONES[2], omit='klr')
 
 
 def civic_parapet(rng, kind):
@@ -450,6 +464,11 @@ def utopia_rim(rng, kind, length=W):
         plants(0, length, 3.6, 2.0, rng, size=(3.5, 6))
     else:
         rail('rim rail', (0, .7, 2.4), (length, .7, 2.4), 2.6, 8)
+
+
+def utopia_hall_eave(rng, length=W):
+    """A hall's eave under its shell roof: the rounded white rim alone."""
+    nose('rim', 0, length, -1.0, .8, 1.6)
 
 
 # Utopia's roof fittings.
@@ -926,6 +945,7 @@ CIVIC_PIECES = {
     **kinds('ribbon', civic_ribbon, ('plain', 'lit', 'panel', 'balcony')),
     **kinds('fins', civic_fins, ('glass', 'louvre', 'blank', 'shade')),
     **kinds('parapet', civic_parapet, ('plain', 'rail', 'tall')),
+    'hall-eave': civic_hall_eave,
     'fan-unit': civic_fan_unit, 'louvre-cage': civic_louvre_cage, 'plant-room': civic_plant_room, 'vent-stack': civic_vent_stack,
     'water-tank': civic_water_tank, 'hatch': civic_hatch,
 }
@@ -939,6 +959,7 @@ UTOPIA_PIECES = {
     'band-round': lambda rng: utopia_band(rng, 'glass', ROUND),
     **kinds('rim', utopia_rim, ('garden', 'rail')),
     'rim-round': lambda rng: utopia_rim(rng, 'garden', ROUND),
+    'hall-eave': utopia_hall_eave, 'hall-eave-round': lambda rng: utopia_hall_eave(rng, ROUND),
     'skylight': utopia_skylight, 'tree': utopia_tree, 'pergola': utopia_pergola, 'solar': utopia_solar, 'bed': utopia_bed,
     'pavilion': utopia_pavilion,
 }
@@ -1027,11 +1048,21 @@ CIVIC_DOOR = door((SLATS, SHUTTER, 4.0), (PANELS, TONES[1], 18.0), jamb=2.4, hea
 SHOPS = (['shop-narrow', 'shop-wide', 'shop-closed', 'plinth-louvre', 'shop-narrow'], ['plinth-slots', 'shop-wide', 'plinth-billboard', 'plinth-louvre', 'shop-closed'])
 
 
-def civic_variant(name, floors, bases=SHOPS):
+def vaulted(roof, eave):
+    """A variant's `vaulted`: what it draws in place of its own under the roof that spans its hall (a hangar's, unless
+    its building chooses the flat one): that roof, the eave its walls carry under it, no fittings."""
+    return {'roof': roof, 'modules': {'roof0': eave}, 'fittings': None}
+
+
+def civic_variant(name, floors, bases=SHOPS, hall=False):
+    """hall: a hangar may stand under a thin concrete shell that spans it, in place of the flat roof with its parapets
+    and plant."""
     p = CIVIC_PLANAR
+    flat = {'material': CAST, 'repeat': 12.0, 'inset': 0.0, 'heights': [0.3], 'aol': True}
+    shell = {**flat, 'vault': vault('arch', 9.0, (.80, .80, .77), (CAST, TONES[1]), (CAST, TONES[2]), rib=(2.4, .6))}
     return {
         'name': name, 'style': 'bays', 'pieces': 'civic-pieces.glb', 'lone': LONE, 'bandEnd': 1.75,
-        'roof': {'material': CAST, 'repeat': 12.0, 'inset': 0.0, 'heights': [0.3], 'aol': True},
+        'roof': flat,
         'floors': {'material': CAST, 'repeat': 12.0, 'inset': 3.0, 'heights': [0.05]},
         'sidewalk': {'material': CAST, 'repeat': 12.0, 'width': 5.0, 'kerb': 0.4},
         'modules': {
@@ -1044,6 +1075,7 @@ def civic_variant(name, floors, bases=SHOPS):
         'fittings': CIVIC_FITTINGS,
         'varyBays': True,
         'door': CIVIC_DOOR,
+        **({'vaulted': vaulted(shell, run(['hall-eave'], p))} if hall else {}),
     }
 
 
@@ -1053,8 +1085,12 @@ UTOPIA_DOOR = door((WHITE_STONE, SLAT, 6.0), (WHITE_STONE, STONE_TINT, float(STO
 ARCADES = (['arcade-arch', 'arcade-planted', 'arcade-arch', 'arcade-arch'], ['arcade-planted', 'arcade-arch', 'arcade-planted'])
 
 
-def utopia_variant(name, floors, round_piece, bases=ARCADES):
+def utopia_variant(name, floors, round_piece, bases=ARCADES, hall=False):
+    """hall: a hangar may stand under a white shell that spans it, in place of the roof garden."""
     p = UTOPIA_PLANAR
+    shell = {'material': WHITE_STONE, 'repeat': float(STONE_REPEAT), 'inset': 0.0, 'heights': [0.3],
+             'vault': vault('arch', 9.0, STONE_TINT, (WHITE_STONE, STONE_TINT, float(STONE_REPEAT)), (WHITE_STONE, STONE_SHADE, float(STONE_REPEAT)),
+                            rib=(1.6, .4))}
     return {
         'name': name, 'style': 'bays', 'pieces': 'utopia-pieces.glb', 'lone': LONE, 'bandEnd': 1.75,
         'cornerRadius': 10.0, 'cornerSegments': 3,
@@ -1070,6 +1106,7 @@ def utopia_variant(name, floors, round_piece, bases=ARCADES):
         },
         'fittings': UTOPIA_FITTINGS,
         'door': UTOPIA_DOOR,
+        **({'vaulted': vaulted(shell, run(['hall-eave'], p, round_piece='hall-eave-round'))} if hall else {}),
     }
 
 
@@ -1114,9 +1151,11 @@ KITS = {
         civic_variant('ribbons', (['ribbon-plain', 'ribbon-lit', 'ribbon-balcony', 'ribbon-plain', 'ribbon-panel'],
                                   ['ribbon-lit', 'ribbon-panel', 'ribbon-plain', 'ribbon-balcony'])),
         civic_variant('offices', (['fins-glass', 'fins-louvre', 'fins-glass', 'fins-blank'], ['fins-shade', 'fins-glass', 'fins-shade', 'fins-blank'])),
-        # A hall: blank precast panels and louvres over a closed plinth. A hangar-class building draws it unless told otherwise.
+        # A hall: blank precast panels and louvres over a closed plinth. A hangar-class building draws it unless told
+        # otherwise, under a concrete shell unless it chooses the look's flat roof.
         civic_variant('hangar', (['ribbon-panel', 'ribbon-panel', 'fins-louvre', 'ribbon-panel'], ['ribbon-panel', 'fins-louvre', 'ribbon-panel']),
-                      (['plinth-slots', 'plinth-louvre', 'shop-closed', 'plinth-slots'], ['plinth-louvre', 'plinth-slots', 'plinth-billboard', 'shop-closed'])),
+                      (['plinth-slots', 'plinth-louvre', 'shop-closed', 'plinth-slots'], ['plinth-louvre', 'plinth-slots', 'plinth-billboard', 'shop-closed']),
+                      hall=True),
     ]),
     'frontier': (FRONTIER_PIECES, [
         frontier_variant('habitat', (['pair', 'single', 'four', 'pair', 'vent'], ['wide', 'pair', 'single', 'four']),
@@ -1136,9 +1175,10 @@ KITS = {
         utopia_variant('terraces', (['terrace-dense', 'terrace-sparse', 'terrace-pier', 'terrace-dense', 'terrace-oval'],
                                     ['terrace-sparse', 'terrace-rail', 'terrace-dense', 'terrace-oval', 'terrace-pier']), 'terrace-round'),
         utopia_variant('bands', (['band-fins', 'band-glass', 'band-fins', 'band-slats'], ['band-glass', 'band-fins', 'band-slats', 'band-glass']), 'band-round'),
-        # A hall behind white slats over a planted plinth. A hangar-class building draws it unless told otherwise.
+        # A hall behind white slats over a planted plinth. A hangar-class building draws it unless told otherwise, under a
+        # white shell unless it chooses the look's roof garden.
         utopia_variant('hangar', (['band-slats', 'band-slats', 'band-fins', 'band-slats'], ['band-slats', 'band-fins', 'band-slats']), 'band-round',
-                       (['arcade-planted', 'arcade-planted', 'arcade-arch'], ['arcade-planted', 'arcade-arch', 'arcade-planted'])),
+                       (['arcade-planted', 'arcade-planted', 'arcade-arch'], ['arcade-planted', 'arcade-arch', 'arcade-planted']), hall=True),
     ]),
 }
 
