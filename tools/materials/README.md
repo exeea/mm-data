@@ -144,6 +144,19 @@ Stored vertex colours stay at or below 1, because Blender's exporter clips anyth
 model. A material that would need more is too dark: raise it here with a `Lighten` node and bring down every model that
 uses it by the same factor. `glb_geometry.write_glb` fits stray values and `test_glb_materials` scans every stored model.
 
+`structures/imperial/` holds the Imperial buildings' three finishes, all from `structures/common` photographs.
+`stone-cladding`: the cast concrete photograph cleaned as `white-stone` is, tinted a warm beige and cut into panels two
+across and three up a repeat (9 by 6 units at the kit's 18), each with a shade of its own, their joints sunk in the normal
+map. `standing-seam`: the painted steel photograph tinted charcoal, in pans eight across a repeat with a raised seam
+between; lay it with the seams down the slope (`imperial_kit.roof_uvs`). `roof-pavers`: the stone cladding's graph in
+a calm mid grey with faint joints, for the kit's roof decks (a kit's slab takes a material as it is, without a tint).
+
+`structures/heritage/` holds the Heritage buildings' four finishes, from the same photographs. `limestone`: pale warm
+ashlar in running bond, blocks three across and six up a repeat (6 by 3 units at the kit's 18). `brick`: brown-red brick,
+six across and eighteen up (larger than life, so the bond reads at the board's zoom). `slate`: blue-grey slates in broken
+level courses (12 units a repeat). `copper`: the standing-seam graph in a grey verdigris, near non-metallic. Lay slate
+with its courses level and copper with its seams down the slope (`imperial_kit.roof_uvs`).
+
 `structures/lunar/` holds the lunar base's multi-hex buildings (models/buildings/README.md). From photographic studies,
 image projects (sources/ albedo, orm, normal, and emission where they glow): `habitat-wall` (two storeys of dark ribbed
 cladding, a bolted band at each storey's top and a window strip below it, lit; three window bays across a repeat),

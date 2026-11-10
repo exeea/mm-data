@@ -32,6 +32,30 @@ the Frontier kit's own pieces ([theme_kits.py](theme_kits.py)): each module is a
 corner facets and roof borders (`lay` clips each piece at the mitres), its roof the kit's plating along the module; hip roofs,
 lanterns, control rooms, masts, radiators, glass vaults, gables and the landing deck are modelled here in the same finishes. A
 volume stops under its building's lowest visible roof, so no runtime floor stands through a pitched roof or glass.
+[imperial_buildings.py](imperial_buildings.py) builds the seven `imperial-*` buildings from their sheets in `references/` out of
+the Imperial kit's bays ([imperial_kit.py](imperial_kit.py)), each laid at its own width (a bay builder takes its length, so nothing
+is stretched) with a pier closing every corner. Its `hip` makes their roofs: seamed, flared at the eave, the eave run out and
+turned up to a tip at each corner (but those named `level`, where another roof takes over), a bronze lip along the eave, dark
+ribs up the hips, a bronze fin at each end of a ridge; it closes in a ridge or stops at a ring, for a deck of pavers with the
+plant behind a pale louvred screen, a lantern of glass, or a second tier. Ranges as deep as each other that meet (the
+Courtyard Habitat's U) take a roof each from the same eave line: they share their planes at the corners and part in valleys.
+Every build prints the hexes its volumes cover (`HEX` lines: a hex counts from half).
+
+[heritage_buildings.py](heritage_buildings.py) builds the five `heritage-*` landmarks likewise, out of the Heritage kit's
+bays ([heritage_kit.py](heritage_kit.py)): Government Hall, Transit Terminal, Administrative Offices, Commercial Center and
+Medical Center. Its own parts are steep slate roofs (`pitched`, `gabled`), tower spires, a hall's great arched window
+(`great`: round or pointed, with doors at its foot), glass vaults on iron ribs, and clock faces; the kit's own roofs (its
+mansard, parapet and battlement) run round the lower blocks as kit pieces (`kit_roof`). The lineup's other buildings
+(habitats, office tower, industrial works) are the kit's variants.
+
+[kit_blocks.py](kit_blocks.py) holds what the looks' building files share: `block` and `run` lay a look's bays along walls
+(the look names its pieces with `use`), `volume` and the hexes report, the plant screen, steps, paving and planters, and
+the export of the three levels of detail.
+
+[look_accessories.py](look_accessories.py) builds each look's accessories: small props in the look's own finishes (gates,
+lanterns, benches, fountains, street lights, containers...), written to `data/models/board/scenery/<look>/<name>.glb` in
+two levels of detail. They are decoration only: no volumes, no building hexes. The editor lists them under the look's
+buildings (blueprint section `buildings/<look>-accessories`); a new one takes its id from `tools/move_model.py --stamp`.
 
 ## Building with repeated floors
 
