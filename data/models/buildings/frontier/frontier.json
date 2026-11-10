@@ -419,6 +419,88 @@
           }
         ]
       }
+    },
+    "door": {
+      "leaf": {
+        "material": "structures/common/sectional-door",
+        "repeat": 12.0,
+        "tint": [
+          0.342,
+          0.393,
+          0.448
+        ],
+        "paint": false
+      },
+      "frame": {
+        "material": "structures/common/painted-steel",
+        "repeat": 12.0,
+        "tint": [
+          0.711,
+          0.107,
+          0.007
+        ],
+        "paint": false
+      },
+      "jamb": 1.8,
+      "header": 2.4,
+      "out": 1.2,
+      "depth": 3.2,
+      "recess": 0.6,
+      "lintel": 3.3,
+      "panel": 3.0,
+      "section": 12.0,
+      "seam": {
+        "material": "structures/common/painted-steel",
+        "repeat": 12.0,
+        "tint": [
+          0.025,
+          0.027,
+          0.03
+        ],
+        "paint": false
+      },
+      "stripe": {
+        "material": "structures/common/hazard-stripes",
+        "repeat": 4.0,
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "paint": false
+      },
+      "stripeHeight": 1.4,
+      "windows": {
+        "glass": {
+          "material": "structures/buildings/fortress-glass",
+          "repeat": 12.0,
+          "tint": [
+            1,
+            1,
+            1
+          ],
+          "glow": [
+            0.05,
+            0.04,
+            0.02
+          ]
+        },
+        "width": 3.4,
+        "height": 1.2,
+        "sill": 7.4,
+        "pitch": 6.0
+      },
+      "threshold": {
+        "material": "structures/common/diamond-plate",
+        "repeat": 12.0,
+        "tint": [
+          0.604,
+          0.604,
+          0.604
+        ],
+        "paint": false
+      },
+      "apron": 3.0
     }
   },
   {
@@ -836,6 +918,88 @@
           }
         ]
       }
+    },
+    "door": {
+      "leaf": {
+        "material": "structures/common/sectional-door",
+        "repeat": 12.0,
+        "tint": [
+          0.342,
+          0.393,
+          0.448
+        ],
+        "paint": false
+      },
+      "frame": {
+        "material": "structures/common/painted-steel",
+        "repeat": 12.0,
+        "tint": [
+          0.711,
+          0.107,
+          0.007
+        ],
+        "paint": false
+      },
+      "jamb": 1.8,
+      "header": 2.4,
+      "out": 1.2,
+      "depth": 3.2,
+      "recess": 0.6,
+      "lintel": 3.3,
+      "panel": 3.0,
+      "section": 12.0,
+      "seam": {
+        "material": "structures/common/painted-steel",
+        "repeat": 12.0,
+        "tint": [
+          0.025,
+          0.027,
+          0.03
+        ],
+        "paint": false
+      },
+      "stripe": {
+        "material": "structures/common/hazard-stripes",
+        "repeat": 4.0,
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "paint": false
+      },
+      "stripeHeight": 1.4,
+      "windows": {
+        "glass": {
+          "material": "structures/buildings/fortress-glass",
+          "repeat": 12.0,
+          "tint": [
+            1,
+            1,
+            1
+          ],
+          "glow": [
+            0.05,
+            0.04,
+            0.02
+          ]
+        },
+        "width": 3.4,
+        "height": 1.2,
+        "sill": 7.4,
+        "pitch": 6.0
+      },
+      "threshold": {
+        "material": "structures/common/diamond-plate",
+        "repeat": 12.0,
+        "tint": [
+          0.604,
+          0.604,
+          0.604
+        ],
+        "paint": false
+      },
+      "apron": 3.0
     }
   },
   {
@@ -1253,6 +1417,88 @@
           }
         ]
       }
+    },
+    "door": {
+      "leaf": {
+        "material": "structures/common/sectional-door",
+        "repeat": 12.0,
+        "tint": [
+          0.342,
+          0.393,
+          0.448
+        ],
+        "paint": false
+      },
+      "frame": {
+        "material": "structures/common/painted-steel",
+        "repeat": 12.0,
+        "tint": [
+          0.711,
+          0.107,
+          0.007
+        ],
+        "paint": false
+      },
+      "jamb": 1.8,
+      "header": 2.4,
+      "out": 1.2,
+      "depth": 3.2,
+      "recess": 0.6,
+      "lintel": 3.3,
+      "panel": 3.0,
+      "section": 12.0,
+      "seam": {
+        "material": "structures/common/painted-steel",
+        "repeat": 12.0,
+        "tint": [
+          0.025,
+          0.027,
+          0.03
+        ],
+        "paint": false
+      },
+      "stripe": {
+        "material": "structures/common/hazard-stripes",
+        "repeat": 4.0,
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "paint": false
+      },
+      "stripeHeight": 1.4,
+      "windows": {
+        "glass": {
+          "material": "structures/buildings/fortress-glass",
+          "repeat": 12.0,
+          "tint": [
+            1,
+            1,
+            1
+          ],
+          "glow": [
+            0.05,
+            0.04,
+            0.02
+          ]
+        },
+        "width": 3.4,
+        "height": 1.2,
+        "sill": 7.4,
+        "pitch": 6.0
+      },
+      "threshold": {
+        "material": "structures/common/diamond-plate",
+        "repeat": 12.0,
+        "tint": [
+          0.604,
+          0.604,
+          0.604
+        ],
+        "paint": false
+      },
+      "apron": 3.0
     }
   },
   {
@@ -1596,6 +1842,535 @@
           }
         ]
       }
+    },
+    "door": {
+      "leaf": {
+        "material": "structures/common/sectional-door",
+        "repeat": 12.0,
+        "tint": [
+          0.342,
+          0.393,
+          0.448
+        ],
+        "paint": false
+      },
+      "frame": {
+        "material": "structures/common/painted-steel",
+        "repeat": 12.0,
+        "tint": [
+          0.711,
+          0.107,
+          0.007
+        ],
+        "paint": false
+      },
+      "jamb": 1.8,
+      "header": 2.4,
+      "out": 1.2,
+      "depth": 3.2,
+      "recess": 0.6,
+      "lintel": 3.3,
+      "panel": 3.0,
+      "section": 12.0,
+      "seam": {
+        "material": "structures/common/painted-steel",
+        "repeat": 12.0,
+        "tint": [
+          0.025,
+          0.027,
+          0.03
+        ],
+        "paint": false
+      },
+      "stripe": {
+        "material": "structures/common/hazard-stripes",
+        "repeat": 4.0,
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "paint": false
+      },
+      "stripeHeight": 1.4,
+      "windows": {
+        "glass": {
+          "material": "structures/buildings/fortress-glass",
+          "repeat": 12.0,
+          "tint": [
+            1,
+            1,
+            1
+          ],
+          "glow": [
+            0.05,
+            0.04,
+            0.02
+          ]
+        },
+        "width": 3.4,
+        "height": 1.2,
+        "sill": 7.4,
+        "pitch": 6.0
+      },
+      "threshold": {
+        "material": "structures/common/diamond-plate",
+        "repeat": 12.0,
+        "tint": [
+          0.604,
+          0.604,
+          0.604
+        ],
+        "paint": false
+      },
+      "apron": 3.0
+    }
+  },
+  {
+    "name": "hangar",
+    "style": "bays",
+    "pieces": "frontier-pieces.glb",
+    "lone": [
+      [
+        -20.78125,
+        -34.25
+      ],
+      [
+        20.78125,
+        -34.25
+      ],
+      [
+        20.78125,
+        34.25
+      ],
+      [
+        -20.78125,
+        34.25
+      ]
+    ],
+    "bandEnd": 1.75,
+    "cornerRadius": 5.0,
+    "cornerSegments": 1,
+    "roof": {
+      "material": "structures/frontier/plating",
+      "repeat": 30.0,
+      "inset": 2.4,
+      "heights": [
+        0.3
+      ],
+      "underlay": false,
+      "aol": true
+    },
+    "floors": {
+      "material": "structures/common/diamond-plate",
+      "repeat": 12.0,
+      "inset": 3.0,
+      "heights": [
+        0.05
+      ]
+    },
+    "modules": {
+      "base0": [
+        {
+          "bays": [
+            "base-ribbed",
+            "base-louvre",
+            "base-ribbed",
+            "base-boxes"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/frontier/plating": 18.0
+          },
+          "door": "airlock",
+          "round": {
+            "piece": "corner-base",
+            "length": 6.0
+          },
+          "joints": {
+            "start": "base-joint-start",
+            "end": "base-joint-end",
+            "length": 2.4
+          }
+        }
+      ],
+      "base1": [
+        {
+          "bays": [
+            "base-ribbed",
+            "base-ribbed",
+            "base-pipes",
+            "base-ribbed"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/frontier/plating": 18.0
+          },
+          "door": "airlock",
+          "round": {
+            "piece": "corner-base",
+            "length": 6.0
+          },
+          "joints": {
+            "start": "base-joint-start",
+            "end": "base-joint-end",
+            "length": 2.4
+          }
+        }
+      ],
+      "floor0": [
+        {
+          "bays": [
+            "ribbed",
+            "slit",
+            "ribbed",
+            "ribbed"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/frontier/plating": 18.0
+          },
+          "round": {
+            "piece": "corner",
+            "length": 6.0
+          },
+          "joints": {
+            "start": "joint-start",
+            "end": "joint-end",
+            "length": 2.4
+          }
+        }
+      ],
+      "floor1": [
+        {
+          "bays": [
+            "slit",
+            "ribbed",
+            "vent",
+            "ribbed"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/frontier/plating": 18.0
+          },
+          "round": {
+            "piece": "corner",
+            "length": 6.0
+          },
+          "joints": {
+            "start": "joint-start",
+            "end": "joint-end",
+            "length": 2.4
+          }
+        }
+      ],
+      "roof0": [
+        {
+          "bays": [
+            "roof-plain",
+            "roof-pipe",
+            "roof-plain",
+            "roof-grille"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/frontier/plating": 18.0
+          },
+          "round": {
+            "piece": "roof-corner",
+            "length": 6.0
+          },
+          "seam": {
+            "piece": "roof-seam",
+            "length": 24.0
+          }
+        }
+      ],
+      "roof1": [
+        {
+          "bays": [
+            "roof-pipe",
+            "roof-light",
+            "roof-plain"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/frontier/plating": 18.0
+          },
+          "round": {
+            "piece": "roof-corner",
+            "length": 6.0
+          },
+          "seam": {
+            "piece": "roof-seam",
+            "length": 24.0
+          }
+        }
+      ]
+    },
+    "fittings": {
+      "square": {
+        "hatch": "hatch",
+        "vent": "hvac",
+        "layouts": [
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "hvac": [
+                [
+                  -6,
+                  5,
+                  0
+                ]
+              ],
+              "hatch": [
+                [
+                  8,
+                  -6,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "solar": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {}
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "radome": [
+                [
+                  -9,
+                  8,
+                  0
+                ]
+              ],
+              "hvac": [
+                [
+                  6,
+                  -5,
+                  90
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "beacon": [
+                [
+                  10,
+                  -9,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "hatch": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "angled": {
+        "hatch": "hatch",
+        "vent": "hvac",
+        "layouts": [
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "hvac": [
+                [
+                  -6,
+                  5,
+                  0
+                ]
+              ],
+              "hatch": [
+                [
+                  8,
+                  -6,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "solar": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {}
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "radome": [
+                [
+                  -9,
+                  8,
+                  0
+                ]
+              ],
+              "hvac": [
+                [
+                  6,
+                  -5,
+                  90
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "beacon": [
+                [
+                  10,
+                  -9,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "hatch": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "door": {
+      "leaf": {
+        "material": "structures/common/sectional-door",
+        "repeat": 12.0,
+        "tint": [
+          0.342,
+          0.393,
+          0.448
+        ],
+        "paint": false
+      },
+      "frame": {
+        "material": "structures/common/painted-steel",
+        "repeat": 12.0,
+        "tint": [
+          0.711,
+          0.107,
+          0.007
+        ],
+        "paint": false
+      },
+      "jamb": 1.8,
+      "header": 2.4,
+      "out": 1.2,
+      "depth": 3.2,
+      "recess": 0.6,
+      "lintel": 3.3,
+      "panel": 3.0,
+      "section": 12.0,
+      "seam": {
+        "material": "structures/common/painted-steel",
+        "repeat": 12.0,
+        "tint": [
+          0.025,
+          0.027,
+          0.03
+        ],
+        "paint": false
+      },
+      "stripe": {
+        "material": "structures/common/hazard-stripes",
+        "repeat": 4.0,
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "paint": false
+      },
+      "stripeHeight": 1.4,
+      "windows": {
+        "glass": {
+          "material": "structures/buildings/fortress-glass",
+          "repeat": 12.0,
+          "tint": [
+            1,
+            1,
+            1
+          ],
+          "glow": [
+            0.05,
+            0.04,
+            0.02
+          ]
+        },
+        "width": 3.4,
+        "height": 1.2,
+        "sill": 7.4,
+        "pitch": 6.0
+      },
+      "threshold": {
+        "material": "structures/common/diamond-plate",
+        "repeat": 12.0,
+        "tint": [
+          0.604,
+          0.604,
+          0.604
+        ],
+        "paint": false
+      },
+      "apron": 3.0
     }
   }
 ]

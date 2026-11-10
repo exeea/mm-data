@@ -24,94 +24,540 @@
     "bandEnd": 1.75,
     "varyBays": true,
     "roof": {
-      "material": "structures/buildings/debug-roof",
+      "material": "structures/common/corrugated",
       "repeat": 12.0,
       "inset": 0.0,
       "heights": [
-        1.0
+        0.3
       ],
-      "aol": true
+      "aol": true,
+      "vault": {
+        "shape": "bow",
+        "rise": 8.0,
+        "segments": [
+          6,
+          3
+        ],
+        "gable": {
+          "material": "structures/common/painted-steel#paint",
+          "repeat": 12.0,
+          "tint": [
+            0.674,
+            0.711,
+            0.711
+          ]
+        },
+        "trim": {
+          "material": "structures/common/painted-steel",
+          "repeat": 12.0,
+          "tint": [
+            0.073,
+            0.095,
+            0.119
+          ]
+        },
+        "verge": 0.9,
+        "ribPitch": 24.0,
+        "ribWidth": 2.0,
+        "ribHeight": 0.5,
+        "tint": [
+          0.233,
+          0.253,
+          0.263
+        ]
+      }
     },
     "floors": {
-      "material": "structures/buildings/debug-floor",
+      "material": "structures/common/cast-concrete",
       "repeat": 12.0,
-      "inset": 0.6,
+      "inset": 1.3,
       "heights": [
         0.05
       ]
-    },
-    "sidewalk": {
-      "material": "structures/buildings/debug-floor",
-      "repeat": 12.0,
-      "width": 4.0,
-      "kerb": 0.3
     },
     "modules": {
       "base0": [
         {
           "bays": [
-            "base0-bay0",
-            "base0-bay1",
-            "base0-bay2",
-            "base0-bay3",
-            "base0-bay4",
-            "base0-bay5"
+            "hall-base-plain",
+            "hall-base-vent",
+            "hall-base-plain",
+            "hall-base-plain"
           ],
-          "bay": 24.0
+          "bay": 24.0,
+          "planar": {
+            "structures/common/painted-steel": 12.0
+          },
+          "door": "hall-base-door"
         }
       ],
       "base1": [
         {
           "bays": [
-            "base1-bay0",
-            "base1-bay1",
-            "base1-bay2",
-            "base1-bay3",
-            "base1-bay4",
-            "base1-bay5"
+            "hall-base-plain",
+            "hall-base-plain",
+            "hall-base-vent"
           ],
-          "bay": 24.0
+          "bay": 24.0,
+          "planar": {
+            "structures/common/painted-steel": 12.0
+          },
+          "door": "hall-base-door"
         }
       ],
       "floor0": [
         {
           "bays": [
-            "floor0-bay0",
-            "floor0-bay1",
-            "floor0-bay2",
-            "floor0-bay3",
-            "floor0-bay4",
-            "floor0-bay5"
+            "hall-windows",
+            "hall-plain",
+            "hall-windows"
           ],
-          "bay": 24.0
+          "bay": 24.0,
+          "planar": {
+            "structures/common/painted-steel": 12.0
+          }
         }
       ],
       "floor1": [
         {
           "bays": [
-            "floor1-bay0",
-            "floor1-bay1",
-            "floor1-bay2",
-            "floor1-bay3",
-            "floor1-bay4",
-            "floor1-bay5"
+            "hall-plain",
+            "hall-windows",
+            "hall-vent",
+            "hall-windows"
           ],
-          "bay": 24.0
+          "bay": 24.0,
+          "planar": {
+            "structures/common/painted-steel": 12.0
+          }
         }
       ],
       "roof0": [
         {
           "bays": [
-            "roof0-bay0",
-            "roof0-bay1",
-            "roof0-bay2",
-            "roof0-bay3",
-            "roof0-bay4",
-            "roof0-bay5"
+            "hall-eave"
           ],
-          "bay": 24.0
+          "bay": 24.0,
+          "planar": {
+            "structures/common/painted-steel": 12.0
+          }
         }
       ]
+    },
+    "door": {
+      "leaf": {
+        "material": "structures/common/sectional-door",
+        "repeat": 12.0,
+        "tint": [
+          0.711,
+          0.729,
+          0.711
+        ],
+        "paint": true
+      },
+      "frame": {
+        "material": "structures/common/painted-steel",
+        "repeat": 12.0,
+        "tint": [
+          0.073,
+          0.095,
+          0.119
+        ],
+        "paint": false
+      },
+      "jamb": 2.0,
+      "header": 2.6,
+      "out": 1.0,
+      "depth": 3.2,
+      "recess": 0.7,
+      "lintel": 0.8,
+      "panel": 3.0,
+      "section": 18.0,
+      "stripe": {
+        "material": "structures/common/hazard-stripes",
+        "repeat": 4.0,
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "paint": false
+      },
+      "stripeHeight": 1.6,
+      "windows": {
+        "glass": {
+          "material": "structures/buildings/fortress-glass",
+          "repeat": 12.0,
+          "tint": [
+            1,
+            1,
+            1
+          ],
+          "glow": [
+            0.05,
+            0.04,
+            0.02
+          ]
+        },
+        "width": 4.0,
+        "height": 1.5,
+        "sill": 7.2,
+        "pitch": 6.0
+      },
+      "threshold": {
+        "material": "structures/common/cast-concrete",
+        "repeat": 12.0,
+        "tint": [
+          0.448,
+          0.448,
+          0.406
+        ],
+        "paint": false
+      },
+      "apron": 3.5
+    }
+  },
+  {
+    "name": "alternative",
+    "style": "bays",
+    "pieces": "hangar_medium_a-pieces.glb",
+    "lone": [
+      [
+        -20.78125,
+        -34.25
+      ],
+      [
+        20.78125,
+        -34.25
+      ],
+      [
+        20.78125,
+        34.25
+      ],
+      [
+        -20.78125,
+        34.25
+      ]
+    ],
+    "bandEnd": 1.75,
+    "varyBays": true,
+    "roof": {
+      "material": "structures/buildings/light-roof",
+      "repeat": 18.0,
+      "inset": 0.0,
+      "heights": [
+        0.3
+      ],
+      "aol": true
+    },
+    "floors": {
+      "material": "structures/common/cast-concrete",
+      "repeat": 12.0,
+      "inset": 3.0,
+      "heights": [
+        0.05
+      ]
+    },
+    "modules": {
+      "base0": [
+        {
+          "bays": [
+            "base-plain",
+            "base-vent",
+            "base-sign",
+            "base-plain"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/common/painted-steel": 12.0
+          },
+          "door": "base-door"
+        }
+      ],
+      "base1": [
+        {
+          "bays": [
+            "base-sign",
+            "base-plain",
+            "base-plain",
+            "base-vent"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/common/painted-steel": 12.0
+          },
+          "door": "base-door"
+        }
+      ],
+      "floor0": [
+        {
+          "bays": [
+            "windows",
+            "plain",
+            "windows",
+            "vent"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/common/painted-steel": 12.0
+          }
+        }
+      ],
+      "floor1": [
+        {
+          "bays": [
+            "plain",
+            "windows",
+            "windows",
+            "plain"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/common/painted-steel": 12.0
+          }
+        }
+      ],
+      "roof0": [
+        {
+          "bays": [
+            "fascia-plain",
+            "fascia-lights",
+            "fascia-plain"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/common/painted-steel": 12.0
+          }
+        }
+      ]
+    },
+    "fittings": {
+      "square": {
+        "hatch": "stack",
+        "vent": "hvac",
+        "layouts": [
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "hvac": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "skylights": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "stack": [
+                [
+                  -8,
+                  7,
+                  0
+                ]
+              ],
+              "skylights": [
+                [
+                  3,
+                  -2,
+                  90
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "hvac": [
+                [
+                  -4,
+                  5,
+                  90
+                ]
+              ],
+              "stack": [
+                [
+                  9,
+                  -8,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {}
+          }
+        ]
+      },
+      "angled": {
+        "hatch": "stack",
+        "vent": "hvac",
+        "layouts": [
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "hvac": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "skylights": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "stack": [
+                [
+                  -8,
+                  7,
+                  0
+                ]
+              ],
+              "skylights": [
+                [
+                  3,
+                  -2,
+                  90
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "hvac": [
+                [
+                  -4,
+                  5,
+                  90
+                ]
+              ],
+              "stack": [
+                [
+                  9,
+                  -8,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {}
+          }
+        ]
+      }
+    },
+    "door": {
+      "leaf": {
+        "material": "structures/common/sectional-door",
+        "repeat": 12.0,
+        "tint": [
+          0.711,
+          0.729,
+          0.711
+        ],
+        "paint": true
+      },
+      "frame": {
+        "material": "structures/common/painted-steel",
+        "repeat": 12.0,
+        "tint": [
+          0.047,
+          0.055,
+          0.064
+        ],
+        "paint": false
+      },
+      "jamb": 1.8,
+      "header": 2.6,
+      "out": 0.6,
+      "depth": 3.2,
+      "recess": 0.7,
+      "lintel": 1.8,
+      "panel": 3.0,
+      "section": 18.0,
+      "stripe": {
+        "material": "structures/common/hazard-stripes",
+        "repeat": 4.0,
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "paint": false
+      },
+      "stripeHeight": 1.6,
+      "windows": {
+        "glass": {
+          "material": "structures/buildings/fortress-glass",
+          "repeat": 12.0,
+          "tint": [
+            1,
+            1,
+            1
+          ],
+          "glow": [
+            0.05,
+            0.04,
+            0.02
+          ]
+        },
+        "width": 4.0,
+        "height": 1.5,
+        "sill": 7.2,
+        "pitch": 6.0
+      },
+      "threshold": {
+        "material": "structures/common/cast-concrete",
+        "repeat": 12.0,
+        "tint": [
+          0.448,
+          0.448,
+          0.406
+        ],
+        "paint": false
+      },
+      "apron": 3.5
     }
   }
 ]

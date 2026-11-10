@@ -1,0 +1,512 @@
+{
+	"connections": [
+		{
+			"from": "transform2",
+			"from_port": 0,
+			"to": "normal_map2",
+			"to_port": 0
+		},
+		{
+			"from": "transform2",
+			"from_port": 0,
+			"to": "profile_depth",
+			"to_port": 0
+		},
+		{
+			"from": "paint_mottle",
+			"from_port": 0,
+			"to": "paint",
+			"to_port": 0
+		},
+		{
+			"from": "streak_noise",
+			"from_port": 0,
+			"to": "streaks",
+			"to_port": 0
+		},
+		{
+			"from": "paint",
+			"from_port": 0,
+			"to": "weathered",
+			"to_port": 0
+		},
+		{
+			"from": "rust",
+			"from_port": 0,
+			"to": "weathered",
+			"to_port": 1
+		},
+		{
+			"from": "streaks",
+			"from_port": 0,
+			"to": "weathered",
+			"to_port": 2
+		},
+		{
+			"from": "rust_roughness",
+			"from_port": 0,
+			"to": "finish_roughness",
+			"to_port": 1
+		},
+		{
+			"from": "streaks",
+			"from_port": 0,
+			"to": "finish_roughness",
+			"to_port": 2
+		},
+		{
+			"from": "transform2",
+			"from_port": 0,
+			"to": "valley",
+			"to_port": 0
+		},
+		{
+			"from": "valley",
+			"from_port": 0,
+			"to": "valley_occlusion",
+			"to_port": 0
+		},
+		{
+			"from": "finish_roughness",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 2
+		},
+		{
+			"from": "normal_map2",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 4
+		},
+		{
+			"from": "valley_occlusion",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 5
+		},
+		{
+			"from": "profile_depth",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 6
+		},
+		{
+			"from": "paint_roughness",
+			"from_port": 0,
+			"to": "finish_roughness",
+			"to_port": 0
+		},
+		{
+			"from": "bricks3",
+			"from_port": 0,
+			"to": "profile",
+			"to_port": 0
+		},
+		{
+			"from": "ribs",
+			"from_port": 0,
+			"to": "profile",
+			"to_port": 1
+		},
+		{
+			"from": "profile",
+			"from_port": 0,
+			"to": "transform2",
+			"to_port": 0
+		},
+		{
+			"from": "weathered",
+			"from_port": 0,
+			"to": "joint_shade",
+			"to_port": 0
+		},
+		{
+			"from": "valley_occlusion",
+			"from_port": 0,
+			"to": "joint_shade",
+			"to_port": 1
+		},
+		{
+			"from": "joint_shade",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		}
+	],
+	"label": "Corrugated steel",
+	"longdesc": "",
+	"name": "sectional-door",
+	"node_position": {
+		"x": 0.0,
+		"y": 0.0
+	},
+	"nodes": [
+		{
+			"color": {
+				"a": 1.0,
+				"b": 0.0,
+				"g": 0.0,
+				"r": 0.0,
+				"type": "Color"
+			},
+			"name": "About",
+			"node_position": {
+				"x": -1700.0,
+				"y": -950.0
+			},
+			"parameters": {},
+			"seed": 43630.0,
+			"size": {
+				"x": 1000.0,
+				"y": 230.0
+			},
+			"text": "Sectional door panels for hangar and loading doors: four horizontal insulated steel panels a repeat, three pressed ribs in each, a vertical stile where the repeat ends. Opaque paint (metallic 0), satin roughness 0.42, white so that a door's tint colours it; faint rain streaks, joints shaded in the albedo so they read at board zoom. One repeat covers 12 board units on a door (a panel 3 high). Export Godot/Godot 4 Standard into data/models/board/textures/structures/common, then Reload assets.",
+			"title": "About this material",
+			"type": "comment"
+		},
+		{
+			"name": "bricks3",
+			"node_position": {
+				"x": -1400.0,
+				"y": -600.0
+			},
+			"parameters": {
+				"bevel": 0.06,
+				"columns": 1.0,
+				"corner": 0.0,
+				"mortar": 0.035,
+				"pattern": 0.0,
+				"repeat": 1.0,
+				"round": 0.0,
+				"row_offset": 0.0,
+				"rows": 4.0
+			},
+			"seed_int": 0,
+			"type": "bricks3"
+		},
+		{
+			"generic_size": 1,
+			"name": "transform2",
+			"node_position": {
+				"x": -1150.0,
+				"y": -600.0
+			},
+			"parameters": {
+				"mode": 0.0,
+				"rotate": 0.0,
+				"scale_x": 1.0,
+				"scale_y": 1.0,
+				"translate_x": 0.0,
+				"translate_y": 0.0
+			},
+			"seed_int": 0,
+			"type": "transform2"
+		},
+		{
+			"name": "normal_map2",
+			"node_position": {
+				"x": -850.0,
+				"y": -700.0
+			},
+			"parameters": {
+				"buffer": 1.0,
+				"param2": 0.0,
+				"size": 9.0,
+				"strength": 0.25
+			},
+			"seed_int": 0,
+			"type": "normal_map2"
+		},
+		{
+			"name": "profile_depth",
+			"node_position": {
+				"x": -850.0,
+				"y": -550.0
+			},
+			"parameters": {},
+			"seed_int": 0,
+			"type": "invert"
+		},
+		{
+			"name": "paint_mottle",
+			"node_position": {
+				"x": -1400.0,
+				"y": 350.0
+			},
+			"parameters": {
+				"folds": 0.0,
+				"iterations": 6.0,
+				"noise": 1.0,
+				"offset": 0.0,
+				"persistence": 0.5,
+				"scale_x": 6.0,
+				"scale_y": 6.0
+			},
+			"seed_int": 31337,
+			"type": "fbm3"
+		},
+		{
+			"name": "paint",
+			"node_position": {
+				"x": -1150.0,
+				"y": 350.0
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.889999985694885,
+							"g": 0.899999976158142,
+							"pos": 0.0,
+							"r": 0.899999976158142
+						},
+						{
+							"a": 1.0,
+							"b": 0.939999997615814,
+							"g": 0.949999988079071,
+							"pos": 0.5,
+							"r": 0.949999988079071
+						},
+						{
+							"a": 1.0,
+							"b": 1.0,
+							"g": 1.0,
+							"pos": 1.0,
+							"r": 1.0
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"name": "streak_noise",
+			"node_position": {
+				"x": -1400.0,
+				"y": 550.0
+			},
+			"parameters": {
+				"folds": 0.0,
+				"iterations": 3.0,
+				"noise": 1.0,
+				"offset": 0.0,
+				"persistence": 0.4,
+				"scale_x": 12.0,
+				"scale_y": 2.0
+			},
+			"seed_int": 90210,
+			"type": "fbm3"
+		},
+		{
+			"name": "streaks",
+			"node_position": {
+				"x": -1150.0,
+				"y": 550.0
+			},
+			"parameters": {
+				"invert": false,
+				"value": 0.62,
+				"width": 0.35
+			},
+			"seed_int": 0,
+			"type": "tones_step"
+		},
+		{
+			"name": "rust",
+			"node_position": {
+				"x": -1150.0,
+				"y": 700.0
+			},
+			"parameters": {
+				"color": {
+					"a": 1.0,
+					"b": 0.28999999165535,
+					"g": 0.319999992847443,
+					"r": 0.340000003576279,
+					"type": "Color"
+				}
+			},
+			"seed_int": 0,
+			"type": "uniform"
+		},
+		{
+			"generic_size": 1,
+			"name": "weathered",
+			"node_position": {
+				"x": -800.0,
+				"y": 450.0
+			},
+			"parameters": {
+				"amount1": 0.2,
+				"blend_type1": 0.0
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "paint_roughness",
+			"node_position": {
+				"x": -900.0,
+				"y": 250.0
+			},
+			"parameters": {
+				"color": {
+					"a": 1.0,
+					"b": 0.419999986886978,
+					"g": 0.419999986886978,
+					"r": 0.419999986886978,
+					"type": "Color"
+				}
+			},
+			"seed_int": 0,
+			"type": "uniform"
+		},
+		{
+			"name": "rust_roughness",
+			"node_position": {
+				"x": -650.0,
+				"y": 330.0
+			},
+			"parameters": {
+				"color": {
+					"a": 1.0,
+					"b": 0.860000014305115,
+					"g": 0.860000014305115,
+					"r": 0.860000014305115,
+					"type": "Color"
+				}
+			},
+			"seed_int": 0,
+			"type": "uniform"
+		},
+		{
+			"generic_size": 1,
+			"name": "finish_roughness",
+			"node_position": {
+				"x": -350.0,
+				"y": 200.0
+			},
+			"parameters": {
+				"amount1": 0.15,
+				"blend_type1": 0.0
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "valley",
+			"node_position": {
+				"x": -850.0,
+				"y": -400.0
+			},
+			"parameters": {
+				"clamp": true,
+				"default_in1": 0.0,
+				"default_in2": 0.28,
+				"op": 2.0
+			},
+			"seed_int": 0,
+			"type": "math"
+		},
+		{
+			"name": "valley_occlusion",
+			"node_position": {
+				"x": -650.0,
+				"y": -400.0
+			},
+			"parameters": {
+				"clamp": true,
+				"default_in1": 0.0,
+				"default_in2": 0.72,
+				"op": 0.0
+			},
+			"seed_int": 0,
+			"type": "math"
+		},
+		{
+			"export_paths": {},
+			"name": "Material",
+			"node_position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1.0,
+					"b": 1.0,
+					"g": 1.0,
+					"r": 1.0,
+					"type": "Color"
+				},
+				"ao": 1.0,
+				"depth_scale": 0.06,
+				"emission_energy": 1.0,
+				"flags_transparent": false,
+				"metallic": 0.0,
+				"normal": 1.0,
+				"roughness": 1.0,
+				"size": 8.0,
+				"sss": 0.0
+			},
+			"seed_int": 0,
+			"type": "material"
+		},
+		{
+			"name": "ribs",
+			"node_position": {
+				"x": -520.0,
+				"y": 160.0
+			},
+			"parameters": {
+				"bevel": 0.05,
+				"columns": 1.0,
+				"corner": 0.0,
+				"mortar": 0.02,
+				"pattern": 0.0,
+				"repeat": 1.0,
+				"round": 0.0,
+				"row_offset": 0.0,
+				"rows": 12.0
+			},
+			"seed_int": 0,
+			"type": "bricks3"
+		},
+		{
+			"generic_size": 1,
+			"name": "profile",
+			"node_position": {
+				"x": -260.0,
+				"y": 80.0
+			},
+			"parameters": {
+				"amount1": 0.3,
+				"blend_type1": 2.0
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"generic_size": 1,
+			"name": "joint_shade",
+			"node_position": {
+				"x": 520.0,
+				"y": -120.0
+			},
+			"parameters": {
+				"amount1": 0.5,
+				"blend_type1": 2.0
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		}
+	],
+	"parameters": {},
+	"project_thumbnail": "UklGRnoFAABXRUJQVlA4WAoAAAAQAAAALwAALwAAQUxQSJQCAAANoCNteyJJevXrV9HAMpNX7Q9UrMd4gGEea5ksZmYGi3n3AG12ZIzVFT0X4BmrrOXdqqiUUlooyNIJImICmFOsBzh//bn89tcvAK6K1C9SVmbLdb1uM1Y0ZXysX6yVaIx1aRmvObyDqe3OZd3edRt/+PQkGmqR5K945gZIFWIwJFLELu3cv/LMWWPifFry8D0QxFomGoxAjK2Dj374ZtIwjxtd9BN4dcwrksL6lzZvGzg/mxtu+gavDeo0msLNn+xZdX4WN7z2PXyHuo36S5fvP+L8NB1teo/QZoEuNIv7VzVMkvKibwgtFqqhubxnIHFC4id8mwWrv/STbYn/q38Y32Hhzt+8+U0NIOUV96BkqLz04VmJSHwa38jB+PWPPCtRymtuQMlSObhyUmx1GN/Iw/jOvk+tNzuwZGrZ+UPJFlI2kpY2rnEdVTZU9rqCHln3+nSRfITusfObmHwMl43XR7LuyLkVJh9Du0n2vzXbyWSTzGj8l3TIeRh/GV+WTDbJDOBYN0o2UY5Bv0fOfSius/lYCljbuBQlk2iP/YErf9hZ2Uwq+z2u4tN9nWSySA3/FVXUkysHg2YR9HO0JPLsI+uTySA1xq8QIerZD18KmkHQx9ASCObNzTd7tzDfKY4az/9N2vbJpUEXFNo/34lJE6IO9iw3gy4ktKo70JLJwa3eXzS9W4BvV9fhRkz37sj9y5d6NTWl0Pn5DtyQWb1b3fPJzXg1NaTQ0OJO3JDZvQ62bX5pPUFkjhidjh87io6YN0h688NHD7ZIFWIwJFLEWgmfv4wxJfNH9OwzK/t3LlkmGozAse+/BPWJWoPIyU9/2Hhdr3tZp81oODjWL/4AjSV1xyi2XCv6x8bSZBz5v6tKZgdWUDggwAIAAHAPAJ0BKjAAMAA+kTyYSaWjIiEqtVwAsBIJaQDSd24PCesBuD5e092REU0z6hP+X51PoT/j+4P/LP6J/uOt5+u3sAfq8OmaTk18EQnLHJcsVrRpNbuIKbEkif2LucFrOUdTgNNmuXU2zgrrAyWeHwhykAkDoAGv/09uu8FIdnMy43m+AAD+/VPuXvFH1evoAdEbBaOWHLtX8FAmOOyWpeT1H6V4OFXYdqMTLaMN9ehuI+qoFnDWeSC1ZlNFLxPGRq0hZmXBglCkXQnp8skiC+qgXyeb5L4YKjccb8jTjPy3EmnSfT/YB4RmWURaXgGKOXjHQURM73DGXnkzQfLbCXcyFDhsgo3uYDvXfgwZwoUPXPCI2nLAZ3X5HHflJxsgL6if+3ZyudcE8R+tJR38qwX3FYlb0L3EPbCCaNQ7WR3H5QsQ9W/KLp4yERpDjk6BpINkAzcM42L/+VBpVd7Kz/ZfnU6OzMNVEvdM3+ALfsXKGB9tnfDUq7yC9MW5ktr6oaMgCxIIptXDB/Xr0cSi0QbzbfOLx6jlhQFKey4RJx1wIYyKQWiMupDN6JRLGL0POflpP/jt/mHb6Nln/S8ks77kBcP73crTQyMx3aLaJNYyGxielTgODsj+J5Bwjlvj8NnTH8Gv8NGspmb9yQdQw5eyISbLOhBwIImosyc5oedh/EbzLxEbLBGmTSaW9tfl7AqLdGevjesDdjIWTGGeWQ0ugQSJvhL/uB8JliopZwaMpnZHKgPTttUx2P/m4NIubLQRsPd9TuE2bEG6b4zZA/NcTp/li2ybqNbRRXq3ea3oN+wq/ZtoAGXWmVlSsYEemgBboAQcduSrWNVv3bjfkKIRUQ4zfKWcMM1TwOHQdNDgDIjcipkZraBgR3h6V/dYSu1IMWQwjZFfEBLdLnDsheWuwVeSsaBC9gNtl1RQgAAA",
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}

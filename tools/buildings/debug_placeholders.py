@@ -83,7 +83,7 @@ def main():
         (DATA / f'models/board/textures/structures/buildings/{image}.png').write_bytes(png)
     template = json.loads((BUILDINGS / 'building_light/building_light.json').read_text())
     paths = []
-    for family in ('building', 'fortress', 'hangar', 'gun_emplacement'):
+    for family in ('building', 'fortress', 'gun_emplacement'):  # The hangars are kits of their own (hangar_kits.py).
         for weight in ('light', 'medium', 'heavy', 'hard'):
             if weight == 'light' and family in ('building', 'fortress'):
                 continue

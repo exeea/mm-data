@@ -17,7 +17,7 @@
         "y": 230
       },
       "title": "About this material",
-      "text": "Bare corrugated steel for unpainted light walls, a remix of corrugated_steel. Models tint the near-white steel with their vertex colours. Painted seaport containers use the separate corrugated-painted material: opaque dielectric satin paint without a tiled chip mask. One repeat holds 10 corrugations along U; models map it 6.5 m across (18 units), so a corrugation is 0.65 m, which still reads at play zoom, and lay frames on the flat top of a ridge. The sheet keeps a metallic response across its surface (0.93-1 before weathering), with satin roughness 0.32. Broad, low-frequency weathering varies metallic response by at most 10 percent and blends 15 percent toward rust roughness 0.86. Keep these variations subtle: high-contrast, fine streaks in the finish become wood-like bright trails when the light catches the sheet. Wear varies the steel colour at ridge edges and where the chip noise rises. Depth is the profile, about 10 cm deep at that size: Depth scale is that depth as a percentage of the repeat over 25 (tools/materials/README.md). Node names become shader identifiers: none may be called albedo, depth or the like. Export: File > Export material > Godot > Godot 4 Standard into data/models/board/textures/structures/common, then Reload assets in the Tuning panel."
+      "text": "Bare corrugated steel for unpainted light walls and shed roofs, a remix of corrugated_steel: weathered galvanised sheet. Models tint the near-white steel with their vertex colours. Painted seaport containers use the separate corrugated-painted material: opaque dielectric satin paint without a tiled chip mask. One repeat holds 10 corrugations along U; models map it 6.5 m across (18 units), so a corrugation is 0.65 m, which still reads at play zoom, and lay frames on the flat top of a ridge. The sheet is dull, patinated zinc, not polished metal: metallic 0.55-0.65 before weathering, roughness 0.8. That roughness also stands for the corrugations themselves: from the distance the board is seen at, the normal map averages to a flat sheet, and a flat satin sheet mirrors the sun or moon over a whole roof at once, where real ribs spread the reflection. Worn ridge edges are a little smoother (0.58-0.7). Broad, low-frequency weathering varies metallic response by at most 10 percent and blends 15 percent toward rust roughness 0.86. Keep these variations subtle: high-contrast, fine streaks in the finish become wood-like bright trails when the light catches the sheet. Wear varies the steel colour at ridge edges and where the chip noise rises. Depth is the profile, about 10 cm deep at that size: Depth scale is that depth as a percentage of the repeat over 25 (tools/materials/README.md). Node names become shader identifiers: none may be called albedo, depth or the like. Export: File > Export material > Godot > Godot 4 Standard into data/models/board/textures/structures/common, then Reload assets in the Tuning panel."
     },
     {
       "name": "bricks3",
@@ -162,21 +162,21 @@
       "parameters": {
         "gradient": {
           "type": "Gradient",
-          "interpolation": 1,
+          "interpolation": 1.0,
           "points": [
             {
-              "pos": 0,
-              "r": 0.93,
-              "g": 0.93,
-              "b": 0.93,
-              "a": 1
+              "pos": 0.0,
+              "r": 0.55,
+              "g": 0.55,
+              "b": 0.55,
+              "a": 1.0
             },
             {
-              "pos": 1,
-              "r": 1,
-              "g": 1,
-              "b": 1,
-              "a": 1
+              "pos": 1.0,
+              "r": 0.65,
+              "g": 0.65,
+              "b": 0.65,
+              "a": 1.0
             }
           ]
         }
@@ -231,21 +231,21 @@
       "parameters": {
         "gradient": {
           "type": "Gradient",
-          "interpolation": 1,
+          "interpolation": 1.0,
           "points": [
             {
-              "pos": 0,
-              "r": 0.344,
-              "g": 0.344,
-              "b": 0.344,
-              "a": 1
+              "pos": 0.0,
+              "r": 0.7,
+              "g": 0.7,
+              "b": 0.7,
+              "a": 1.0
             },
             {
-              "pos": 1,
-              "r": 0.172,
-              "g": 0.172,
-              "b": 0.172,
-              "a": 1
+              "pos": 1.0,
+              "r": 0.58,
+              "g": 0.58,
+              "b": 0.58,
+              "a": 1.0
             }
           ]
         }
@@ -520,9 +520,9 @@
       "parameters": {
         "color": {
           "type": "Color",
-          "r": 0.32,
-          "g": 0.32,
-          "b": 0.32,
+          "r": 0.8,
+          "g": 0.8,
+          "b": 0.8,
           "a": 1.0
         }
       },

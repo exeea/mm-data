@@ -24,94 +24,518 @@
     "bandEnd": 1.75,
     "varyBays": true,
     "roof": {
-      "material": "structures/buildings/debug-roof",
-      "repeat": 12.0,
+      "material": "structures/buildings/fortress-concrete",
+      "repeat": 18.0,
       "inset": 0.0,
       "heights": [
-        1.0
+        0.3
       ],
-      "aol": true
+      "aol": true,
+      "vault": {
+        "shape": "arch",
+        "rise": 9.0,
+        "segments": [
+          6,
+          3
+        ],
+        "gable": {
+          "material": "structures/buildings/fortress-concrete#paint",
+          "repeat": 18.0,
+          "tint": [
+            0.933,
+            0.89,
+            0.807
+          ]
+        },
+        "trim": {
+          "material": "structures/buildings/fortress-concrete",
+          "repeat": 12.0,
+          "tint": [
+            0.748,
+            0.711,
+            0.638
+          ]
+        },
+        "verge": 0.9,
+        "ribPitch": 24.0,
+        "ribWidth": 2.5,
+        "ribHeight": 0.9,
+        "tint": [
+          0.787,
+          0.748,
+          0.674
+        ]
+      }
     },
     "floors": {
-      "material": "structures/buildings/debug-floor",
+      "material": "structures/common/cast-concrete",
       "repeat": 12.0,
-      "inset": 0.6,
+      "inset": 1.3,
       "heights": [
         0.05
       ]
-    },
-    "sidewalk": {
-      "material": "structures/buildings/debug-floor",
-      "repeat": 12.0,
-      "width": 4.0,
-      "kerb": 0.3
     },
     "modules": {
       "base0": [
         {
           "bays": [
-            "base0-bay0",
-            "base0-bay1",
-            "base0-bay2",
-            "base0-bay3",
-            "base0-bay4",
-            "base0-bay5"
+            "hall-base-plain",
+            "hall-base-hazard",
+            "hall-base-plain"
           ],
-          "bay": 24.0
+          "bay": 24.0,
+          "planar": {
+            "structures/buildings/fortress-concrete": 18.0
+          },
+          "door": "hall-base-door"
         }
       ],
       "base1": [
         {
           "bays": [
-            "base1-bay0",
-            "base1-bay1",
-            "base1-bay2",
-            "base1-bay3",
-            "base1-bay4",
-            "base1-bay5"
+            "hall-base-hazard",
+            "hall-base-plain",
+            "hall-base-plain"
           ],
-          "bay": 24.0
+          "bay": 24.0,
+          "planar": {
+            "structures/buildings/fortress-concrete": 18.0
+          },
+          "door": "hall-base-door"
         }
       ],
       "floor0": [
         {
           "bays": [
-            "floor0-bay0",
-            "floor0-bay1",
-            "floor0-bay2",
-            "floor0-bay3",
-            "floor0-bay4",
-            "floor0-bay5"
+            "hall-slit",
+            "hall-plain",
+            "hall-vent"
           ],
-          "bay": 24.0
+          "bay": 24.0,
+          "planar": {
+            "structures/buildings/fortress-concrete": 18.0
+          }
         }
       ],
       "floor1": [
         {
           "bays": [
-            "floor1-bay0",
-            "floor1-bay1",
-            "floor1-bay2",
-            "floor1-bay3",
-            "floor1-bay4",
-            "floor1-bay5"
+            "hall-plain",
+            "hall-slit",
+            "hall-plain"
           ],
-          "bay": 24.0
+          "bay": 24.0,
+          "planar": {
+            "structures/buildings/fortress-concrete": 18.0
+          }
         }
       ],
       "roof0": [
         {
           "bays": [
-            "roof0-bay0",
-            "roof0-bay1",
-            "roof0-bay2",
-            "roof0-bay3",
-            "roof0-bay4",
-            "roof0-bay5"
+            "hall-eave"
           ],
-          "bay": 24.0
+          "bay": 24.0,
+          "planar": {
+            "structures/buildings/fortress-concrete": 18.0
+          }
         }
       ]
+    },
+    "door": {
+      "leaf": {
+        "material": "structures/buildings/fortress-steel",
+        "repeat": 18.0,
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "paint": false
+      },
+      "frame": {
+        "material": "structures/buildings/fortress-concrete",
+        "repeat": 18.0,
+        "tint": [
+          0.748,
+          0.711,
+          0.638
+        ],
+        "paint": false
+      },
+      "jamb": 2.5,
+      "header": 4.0,
+      "out": 3.5,
+      "depth": 4.0,
+      "recess": 1.2,
+      "lintel": 0.8,
+      "panel": 6.0,
+      "section": 10.0,
+      "seam": {
+        "material": "structures/common/safety-yellow",
+        "repeat": 6.0,
+        "tint": [
+          0.523,
+          0.448,
+          0.263
+        ],
+        "paint": false
+      },
+      "stripe": {
+        "material": "structures/common/hazard-stripes",
+        "repeat": 6.0,
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "paint": false
+      },
+      "stripeHeight": 2.4,
+      "threshold": {
+        "material": "structures/common/cast-concrete",
+        "repeat": 12.0,
+        "tint": [
+          0.448,
+          0.448,
+          0.406
+        ],
+        "paint": false
+      },
+      "apron": 5.0
+    }
+  },
+  {
+    "name": "alternative",
+    "style": "bays",
+    "pieces": "hangar_hard_a-pieces.glb",
+    "lone": [
+      [
+        -20.78125,
+        -34.25
+      ],
+      [
+        20.78125,
+        -34.25
+      ],
+      [
+        20.78125,
+        34.25
+      ],
+      [
+        -20.78125,
+        34.25
+      ]
+    ],
+    "bandEnd": 1.75,
+    "varyBays": true,
+    "roof": {
+      "material": "structures/buildings/fortress-roof",
+      "repeat": 24.0,
+      "inset": 0.0,
+      "heights": [
+        0.3
+      ],
+      "aol": true
+    },
+    "floors": {
+      "material": "structures/common/cast-concrete",
+      "repeat": 12.0,
+      "inset": 3.0,
+      "heights": [
+        0.05
+      ]
+    },
+    "modules": {
+      "base0": [
+        {
+          "bays": [
+            "base-plain",
+            "base-rib",
+            "base-hazard",
+            "base-plain"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/buildings/fortress-concrete": 18.0
+          },
+          "door": "base-door"
+        }
+      ],
+      "base1": [
+        {
+          "bays": [
+            "base-hazard",
+            "base-plain",
+            "base-rib",
+            "base-plain"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/buildings/fortress-concrete": 18.0
+          },
+          "door": "base-door"
+        }
+      ],
+      "floor0": [
+        {
+          "bays": [
+            "slit",
+            "plain",
+            "rib",
+            "vent"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/buildings/fortress-concrete": 18.0
+          }
+        }
+      ],
+      "floor1": [
+        {
+          "bays": [
+            "plain",
+            "slit",
+            "plain",
+            "rib"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/buildings/fortress-concrete": 18.0
+          }
+        }
+      ],
+      "roof0": [
+        {
+          "bays": [
+            "slab-plain",
+            "slab-lamps",
+            "slab-plain"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/buildings/fortress-concrete": 18.0
+          }
+        }
+      ]
+    },
+    "fittings": {
+      "square": {
+        "hatch": "hatch",
+        "vent": "vent-block",
+        "layouts": [
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "cupola": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "vent-block": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "hatch": [
+                [
+                  -7,
+                  6,
+                  0
+                ]
+              ],
+              "vent-block": [
+                [
+                  6,
+                  -6,
+                  90
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "cupola": [
+                [
+                  -6,
+                  -5,
+                  0
+                ]
+              ],
+              "hatch": [
+                [
+                  8,
+                  8,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {}
+          }
+        ]
+      },
+      "angled": {
+        "hatch": "hatch",
+        "vent": "vent-block",
+        "layouts": [
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "cupola": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "vent-block": [
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "hatch": [
+                [
+                  -7,
+                  6,
+                  0
+                ]
+              ],
+              "vent-block": [
+                [
+                  6,
+                  -6,
+                  90
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {
+              "cupola": [
+                [
+                  -6,
+                  -5,
+                  0
+                ]
+              ],
+              "hatch": [
+                [
+                  8,
+                  8,
+                  0
+                ]
+              ]
+            }
+          },
+          {
+            "hatches": [],
+            "vents": [],
+            "pieces": {}
+          }
+        ]
+      }
+    },
+    "door": {
+      "leaf": {
+        "material": "structures/buildings/fortress-steel",
+        "repeat": 18.0,
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "paint": false
+      },
+      "frame": {
+        "material": "structures/buildings/fortress-concrete",
+        "repeat": 18.0,
+        "tint": [
+          0.787,
+          0.748,
+          0.674
+        ],
+        "paint": false
+      },
+      "jamb": 3.4,
+      "header": 4.2,
+      "out": 4.4,
+      "depth": 4.2,
+      "recess": 1.4,
+      "lintel": 1.0,
+      "panel": 6.0,
+      "section": 10.0,
+      "seam": {
+        "material": "structures/common/safety-yellow",
+        "repeat": 6.0,
+        "tint": [
+          0.523,
+          0.448,
+          0.263
+        ],
+        "paint": false
+      },
+      "stripe": {
+        "material": "structures/common/hazard-stripes",
+        "repeat": 6.0,
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "paint": false
+      },
+      "stripeHeight": 2.4,
+      "threshold": {
+        "material": "structures/common/cast-concrete",
+        "repeat": 12.0,
+        "tint": [
+          0.448,
+          0.448,
+          0.406
+        ],
+        "paint": false
+      },
+      "apron": 4.7
     }
   }
 ]
