@@ -1800,34 +1800,6 @@
     ],
     "source": "tools/board-models/foliage/build_shrubs.py"
   },
-  "vegetation/foliage-tussock": {
-    "mesh": "vegetation/foliage-tussock.glb",
-    "triangles": 408,
-    "vertices": 360,
-    "texture": "textures/vegetation/tundra-tussock_albedo.png",
-    "lods": [
-      {
-        "node": "foliage-tussock-lod0",
-        "triangles": 408,
-        "vertices": 360
-      },
-      {
-        "node": "foliage-tussock-lod1",
-        "triangles": 128,
-        "vertices": 146
-      },
-      {
-        "node": "foliage-tussock-lod2",
-        "triangles": 48,
-        "vertices": 68
-      },
-      {
-        "node": "foliage-tussock-lod3",
-        "triangles": 2,
-        "vertices": 4
-      }
-    ]
-  },
   "vegetation/foliage-desert-2": {
     "mesh": "vegetation/foliage-desert-2.glb",
     "lods": [
