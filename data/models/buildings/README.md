@@ -1,11 +1,13 @@
 # Modular building kits
 
 Store a modelled kit as `<family>/<name>.glb`, for example `fuel_tanks/fuel_tank_light.glb`, and a generated kit as
-`<family>/<name>.json` beside its pieces, `<name>-pieces.glb`, for example `fortress_light/fortress_light_a.json`.
-Do not nest this catalog under the source tileset's `saxarba` directory. Generic buildings select the kit by
-gameplay weight and class, including when imported from a legacy `.board`. Old roof artwork is no longer a
-3D design. Fuel-tank tileset keys such as `fuel_tank_light_NN` still resolve the shared
-`fuel_tanks/fuel_tank_light.glb`; the kit follows the hex's connections.
+a JSON file beside its pieces GLB: the standard kits as `standard/<class>-<weight>.json` with
+`<class>-<weight>-pieces.glb` (classes `building`, `fortress`, `hangar`, `gun-emplacement`; weights `light`, `medium`,
+`heavy`, `hard`), a look's kit as `<look>/<look>.json`, for example `heritage/heritage.json`.
+An asset `buildings/<family>/<name>` names its file here. Generic buildings select the standard kit by gameplay class
+and weight (`TilesetScenery.genericBuilding`), including when imported from a legacy `.board`. Old roof artwork is no
+longer a 3D design. A fuel tank selects `buildings/fuel_tanks/fuel_tank_<weight>` the same way
+(`TilesetScenery.genericFuelTank`); the kit follows the hex's connections.
 
 Each file contains one building: an identity `<name>-lod0` group and, normally, optional `<name>-lod1`.
 Author no more than two levels for this work; simple kits (especially under 200 triangles) can use just `lod0`.
@@ -28,11 +30,11 @@ roof projection). Keep notches and courtyards in those surfaces.
 
 ## Editor palette and legacy import
 
-**Buildings**, **Fortresses**, **Hangars** and **Gun Emplacements** each expose Light, Medium, Heavy and
-Hardened directly. **Walls** has Civilian, Light, Medium, Heavy, Hardened and Castle Brian. **Looks** holds
+**Buildings**, **Fortresses**, **Hangars**, **Gun Emplacements** and **Walls** each expose Civilian, Light, Medium,
+Heavy, Hardened and Castle Brian directly. **Looks** holds
 Lunar habitat, Glass dome and Biodome; **Specials** holds authored buildings; **Utilities** holds elevators.
-All sixteen building class/weight combinations have kits, including the diagnostic placeholders described below.
-The four hangars are finished kits (`hangar_<weight>/`, below).
+All twenty-four building class/weight combinations have kits, including the diagnostic placeholders described below.
+The light, medium, heavy and hardened hangars are finished kits (`standard/hangar-<weight>.json`, below).
 
 Legacy `.board` import preserves a building's weight, class, height and construction factor while discarding
 its old roof-art choice. Lunar buildings use the current lunar looks; the old Mars/volcano sealed look becomes
@@ -65,10 +67,10 @@ window mask is baked from the near windows via Blender MCP (`tools/buildings/bak
 `light-far` Material Maker project's sources. Diagnostic kits without windows remain unlit.
 
 `tools/buildings/debug_placeholders.py` supplies flat diagnostic kits for the missing medium/heavy/hardened buildings
-and fortresses, and all gun emplacements. They use the light building's `bays` JSON layout and inexpensive
+and fortresses, all gun emplacements, and the civilian and Castle Brian weight of every class (`standard/`). They use the light building's spec and inexpensive
 box panels: bay indices 0–5 are red, orange, yellow, green, cyan and violet; alternate base/floor modules are lighter.
 Roofs are yellow and floor/sidewalk slabs grey. These are placeholders, not weight-specific finished artwork. Each
-family has its own JSON and pieces GLB so artists can replace it independently. The script preserves existing asset
+kit has its own JSON and pieces GLB so artists can replace it independently. The script preserves existing asset
 UIDs, and registers new kit IDs once. It leaves the original light building, light fortress and lunar habitat intact.
 
 Buildings and fuel tanks connect across the hexsides their exits name. A neighbour of the same structure (building or
@@ -100,8 +102,8 @@ connections tags its mesh nodes after the module:
   is drawn as authored on it. A one-tag `link` piece ends on its edge line, within one unit.
 - Names are checked when the kit loads: Blender's `.001` suffixes and unknown tags are errors.
 
-Walls (`walls/README.md`), fuel tanks (`fuel_tanks/`), the lunar habitat (`lunar_habitat/`), the light building
-(`building_light/`) and the light fortress (`fortress_light/`) are connected kits.
+Walls (`walls/README.md`), fuel tanks (`fuel_tanks/`), the lunar habitat (`lunar_habitat/`) and every
+generated kit (`standard/` and the looks') are connected kits.
 
 A building kit comes in two footprints, chosen per connected building in the board editor's Footprint row and stored
 as the hex appearance `footprint` (`HexAppearance.Footprint`):
@@ -114,9 +116,41 @@ as the hex appearance `footprint` (`HexAppearance.Footprint`):
   as wide as a hexside, always stands; the cell beside each slanted hexside fills where the hex connects that way, so
   connected neighbours' cells meet in one rectangle.
 
-A generated kit (`GeneratedKit`) builds both footprints from its JSON spec: an array of named variants, the first the
-default (one without variants lists one, `default`); each variant's `style` dresses the footprint's walls, `habitat` or
-`bays`. The walls are split where they cross a corner piece's cut, each end a cut, joint, corner (mitred), round or
+A generated kit (`GeneratedKit`) builds both footprints from its JSON spec, one file per pieces GLB (Heritage, shortened):
+
+```json
+{
+  "style": "bays",
+  "pieces": "heritage-pieces.glb",
+  "shared": {"bay": 12.0, "sidewalk": {"width": 4.0}},
+  "roofs": {
+    "mansard": {"material": "structures/heritage/slate", "runs": [{"bays": ["mansard"], "far": {"bays": ["mansard-far"]}}]},
+    "parapet": {"material": "structures/heritage/slate", "runs": [{"bays": ["parapet"]}]},
+    "vault": {"material": "structures/heritage/copper", "vault": {"shape": "bow", "rise": 9.0}, "runs": [{"bays": ["cornice"]}]}
+  },
+  "variants": [
+    {"name": "habitat", "roof": "mansard", "base": [{"bays": ["shop"], "entrance": "porch"}], "floor": [{"bays": ["sash"]}]},
+    {"name": "hangar", "class": "hangar", "roof": "parapet", "vaulted": "vault", "base": [{"bays": ["hall"]}], "floor": [{"bays": ["hall"]}]}
+  ]
+}
+```
+
+- `style` dresses the footprint's walls: `bays` (`BayKit`) or `habitat` (`HabitatKit`). `pieces` names the pieces GLB
+  beside the file. A field the style does not know is an error when the kit loads.
+- `variants` are the kit's named looks, the first the default (a kit with one look lists one, `default`). The editor's
+  Variant row (shown where a kit has more than one) gives a connected building one, stored in its hexes' appearance
+  (`kitVariant`); a name the spec no longer lists draws the first.
+- `shared` is written like a variant and lies under every variant: a variant states only what differs. Objects merge
+  key by key, any other value replaces the shared one. A storey role's object in `shared` (`base`, `floor`, `top`) lies
+  under each of that role's runs, and `planar` and `bay` in `shared` are every run's where it states none.
+- `roofs` are the kit's roofs by name. A variant's `roof` names the one it draws; its `vaulted` names its other one
+  (below).
+- A variant's `class` (`hangar`, `fortress`, `gun-emplacement`) makes it the one a building of that class draws where its
+  author chose none: a look's hall for hangars, its armoury for fortresses. Standard kits need none: the class chooses
+  the file.
+- Colours are `tint`s written `#rrggbb` (sRGB).
+
+The walls are split where they cross a corner piece's cut, each end a cut, joint, corner (mitred), round or
 open end; bands along a wall (sidewalk, skirt, parapet, eave) are mitred where it turns. Where a cut runs slanted across a
 straight wall, both pieces show the same bays there: each lays on, past its cut, the bays the other lays.
 
@@ -130,7 +164,7 @@ material that blends is BLEND (the exporter writes it for a transparent `.tres` 
 no sun shadow, in kits and authored GLBs alike. A piece's x runs along its wall, left to right seen from outside, from the piece's start; its facade faces -y (Blender's
 front view), the wall line at y 0; z up from its storey's floor.
 
-- `building_light/building_light.json` (`bays`): the light building, its pieces the hand-made art's window bays
+- `standard/building-light.json` (`bays`): the light building, its pieces the hand-made art's window bays
   (`tools/buildings/art/building_light_00.glb`), six per module (`base0`, `base1`, `floor0`, `floor1`, `roof0`, the
   roof's carrying the cornice), one pier to pier per 24 of wall; a sidewalk along the ground storey.
 - `civic/civic.json` and `utopia/utopia.json` (`bays`, built with their pieces by `tools/buildings/theme_kits.py`): the
@@ -182,20 +216,23 @@ front view), the wall line at y 0; z up from its storey's floor.
   roof over a stone cornice), `armoury` (stone, battlement, turrets). Roofs
   carry two or three fittings a hex: chimney stacks, a copper cupola, skylights, fan units behind a louvred screen, duct
   runs, water tanks, ventilators, hatches.
-- `fortress_light/fortress_light_a.json` (`bays`): the light fortress, its storeys' stretches the art's wall rebuilt
+- `standard/fortress-light.json` (`bays`): the light fortress, its storeys' stretches the art's wall rebuilt
   low-poly to its measurements (`tools/buildings/art/fortress_light_a_52.glb`: panel face, joints, band, window recess
   and frame, door, base course) in the dark wall concrete (`structures/buildings/fortress-wall`, the art's far facade's
   tone), plain masonry at each wall's ends, the art's merlons along the roof in the light concrete; far away one panel
   face per wall with its windows, and a plain parapet.
 
-A `bays` variant: its `pieces`; the Angled `lone` outline (counter-clockwise from its front) and `bandEnd`; the `roof`
-and `floors` slabs (a board material on the board's axes, its `repeat`, an `inset` off the walls, `heights` per level
-of detail; a glass roof's `underlay`, the biodome's planted bed just under it; a roof's `aol`, aviation obstruction
-lights, below; a roof's `vault`, below); the ground storey's `sidewalk` (`width`, `kerb`; none without); and its `modules` by role, one run per level
-of detail (the last for any further). A run lays whole `bay`s of its `bays` pieces (several: chosen by the wall's place)
+A `bays` variant: the Angled `lone` outline (counter-clockwise from its front) and `bandEnd`; its `floors` slab and
+its roof's (a board material on the board's axes, its `repeat`, an `inset` off the walls, `heights` per level
+of detail; a glass roof's `underlay`, the biodome's planted bed just under it; a roof's `aviationLights`, below; a
+roof's `vault`, below); the ground storey's `sidewalk` (`width`, `kerb`; none without); and its storeys by role, each a
+list of runs the game picks among by placement: `base` (the ground storey), `floor` (those above) and `top` (the storey
+under the roof of a building two or more levels tall, where it lists any). A roof lists its own `runs`. A run's `far` is
+the whole run its second level of detail lays (and any further); a run without one lays the same on every level.
+A run lays whole `bay`s of its `bays` pieces (several: chosen by the wall's place)
 stretched to fit between a `margin` at each end, along each whole side of the outline (the nearest count; with the
 variant's `varyBays`, a bay fewer or more by the wall's place where both stretch between 0.7 and 1.5: civic, Imperial, the light
-building and fortress, the placeholders; not Frontier or Utopia), a ground storey's `door` piece in a hub face's first bay and next to
+building and fortress, the placeholders; not Frontier or Utopia), a ground storey's `entrance` piece in a hub face's first bay and next to
 the middle of a whole hex's front; with no margin a bay more goes on past an end where the wall goes on. Whole `ends`
 stretches (`piece`, `length`) fill the margins, one `under` stretch lies along the whole wall, and `planar` materials
 are textured along the wall's line (units a repeat). `cornerRadius` and `cornerSegments` round convex corners into
@@ -214,21 +251,21 @@ A storey carries a sill (its `-sill`, a kit without joints) over each hex corner
 drawn where the storey standing on it closes a link it keeps itself and rounds that corner, which would open the storey
 to the roofs beside it. A run's `margin` keeps its bays that far off a wall's ends; whole `ends` stretches fill the
 margins and the wall's going on past an inside corner (Utopia's, where a bay cut short would show through its recess).
-Roof `fittings` are the habitat's (below); a layout's `pieces` also
-places any named piece (`[x, y, turn in degrees]`), and each roof module comes once per layout. Bay kits without
+Roof `fittings` are a list of layouts, one drawn per hex by its place: each names pieces of the pieces GLB and where
+they stand on the roof (`{"chimney": [[x, y], [x, y, turn in degrees]]}`; `{}` a bare roof), and
+each roof module comes once per layout. Where the two footprints lay differently, `fittings` holds a list for each
+(`{"square": [...], "angled": [...]}`). A vaulted roof carries none. Bay kits without
 fittings are turned: their Angled corner pieces are built once and turned by the runtime.
 - `lunar_habitat/lunar_habitat.json`: the lunar habitat, a kit the game generates from this spec (`HabitatKit`, both
   footprints): facades, steel piers at corners and joints, a battered steel skirt, the roof's edge rounded down into
-  the walls (variant `rounded`) or a parapet (`parapet`); convex corners rounded. The spec is an array of named
-  variants, the first the default: the editor's Variant row (shown where a kit has more than one) gives a connected
-  building one, stored in its hexes' appearance (`kitVariant`); a name the spec no longer lists draws the first. Each
-  variant's look is data: its `name`, `style` (`habitat`), board materials by role, `pieces` (the GLB of its modelled pieces, below),
-  `cornerRadius` and `cornerSegments` (plan rounding), `parapet` (`height`, `width`, or `null`), `eave` (the roof's
+  the walls (variant `rounded`) or a parapet (`parapet`); convex corners rounded. A `habitat` variant's look is data: its
+  `name`, board `materials` by role (`wall`, `roof`, `pier`, `concrete`),
+  `cornerRadius` and `cornerSegments` (plan rounding), its roof (`parapet`: `height`, `width`; `eave`, the roof's
   rounded edge: `radius` and `segments` per level of detail; with a parapet it rounds the parapet's outer top edge,
-  without one a rim curves from the wall onto the roof; `null` square), `skirt`, the pieces at walls' joints and convex
-  corners (`piers`, their roof `tops`, `footings`: a `joint` and a `corner` piece name each, or `null` for none), the
-  Angled `lone` hex and single link band, the `storeys` above the ground (`windows` lit or dim, `shift` along) and the
-  roofs' `fittings` per footprint (a `hatch` and a `vent` piece, and the `layouts` placing them). Its pieces stand in
+  without one a rim curves from the wall onto the roof; neither: square; or a `vault`, below), `skirt`, the pieces at
+  walls' joints and convex corners (`piers`, their roof `tops`, `footings`: a `joint` and a `corner` piece name each;
+  none without), the Angled `lone` hex and single link band, the `storeys` above the ground (`windows` lit or dim,
+  `shift` along) and the roofs' `fittings` per footprint (boxes on the Square roof, drums on the Angled). Its pieces stand in
   all six corners (not turned) because its roof fittings stand in the hex's middle; an Angled piece lays its plating
   along its building, mitred where arms meet (its linkless roof corners have `-bend` twins). The game reads a kit's
   JSON where no GLB of its name exists; the asset's `-square` names the Square footprint.
@@ -237,7 +274,7 @@ fittings are turned: their Angled corner pieces are built once and turned by the
   over it; a footing likewise on the ground, as modelled; a hatch or vent on the roof surface at its centre, as
   modelled.
 
-- `hangar_light/`, `hangar_medium/`, `hangar_heavy/`, `hangar_hard/` (`hangar_<weight>_a.json`, `bays`, built with their pieces
+- `standard/hangar-light.json`, `hangar-medium.json`, `hangar-heavy.json`, `hangar-hard.json` (`bays`, built with their pieces
   by `tools/buildings/hangar_kits.py`): halls, no storey showing rooms, each in two variants. `default`: the designers'
   halls, their wall bays read from `tools/buildings/art/hangar_<weight>_a-proposal.glb` (bays between frames; the
   hardened one's ground frames battered buttresses) and dressed by the script in board materials, with kerbs, louvres,
@@ -248,7 +285,7 @@ fittings are turned: their Angled corner pieces are built once and turned by the
   (medium), precast concrete between buttresses under a ring beam (heavy), a bunker with a battered ground storey and
   embrasures under a burster slab (hardened). Their walls take a building's tint.
 
-A roof's `vault` (bays kits; a habitat kit takes one as its spec's `vault`, in its roof material, in place of its flat roof, rim, pier tops and fittings) is a roof that spans its hall, as a hangar's does, in place of the flat slab: a hexside
+A roof's `vault` (a habitat kit's in its roof material, in place of its flat roof, rim and pier tops) is a roof that spans its hall, as a hangar's does, in place of the flat slab: a hexside
 wide, rising `rise` (half a level, 9, at the most) over the roof's height in the `shape` of a `gable`, a `bow` (a circle's segment, a bowstring roof),
 an `arch` (half an ellipse, a barrel vault) or `plates` (a bow of flat plates, their edges hard), in `segments` facets a side per level of detail. It follows the hall. A
 Square hex's runs north to south along its column: a column's hexes share one roof, and columns side by side meet in
@@ -258,15 +295,15 @@ at a tee. Where the hexes across two links are one building with it (three hexes
 this roof's height), the corner keeps the crown's height in place of a valley (a roof corner piece's `-crown` twin,
 `ConnectedKit.CROWN`): a cluster or a wide hall has one roof, vaulted along its edges and level inside. A lone hex's runs north to south. Every wall under the roof is filled up to it in the `gable` surface (a board
 `material`, which may carry its pieces' finish as `...#paint` so it takes the building's tint with the walls, `repeat`,
-a linear `tint`), a `verge` high band of the `trim` surface along its top; ribs of the trim surface cross the roof every
+a `tint`), a `verge` high band of the `trim` surface along its top; ribs of the trim surface cross the roof every
 `ribPitch` along it (`ribWidth`, `ribHeight`), where a hall's wall bays meet; `tint` is the sheeting's. Such a kit's
 pieces stand in all six corners (not turned). Doors in a gable end stand under the gable.
 
-A kit variant's `vaulted` object is its other roof, drawn for a hangar-class building unless its author chooses the
-flat one (`building.appearance.roof` in a `.board2`, `vaulted` or `flat`; the board editor's Roof choice, shown for the
-hangar class where the variant has both). Its fields replace the variant's own: `roof`, `fittings`, `parapet`
-(`null` removes one), `vault` (a habitat kit), and `modules` by role, here the eave under the vault. Buildings of other classes keep the
-variant's roof. Every look kit's `hangar` has one, and the lunar habitat's.
+A kit variant's `vaulted` names its other roof among the kit's `roofs`, drawn for a hangar-class building unless its
+author chooses the flat one (`building.appearance.roof` in a `.board2`, `vaulted` or `flat`; the board editor's Roof
+choice, shown for the hangar class where the variant has both). Buildings of other classes keep the variant's `roof`.
+Every look kit's `hangar` has one, and the lunar habitat's. A standard hangar's variants name one roof each: `default`
+the kit's `vault`, `alternative` its `flat` one.
 
 A unit on a generated kit's roof is drawn standing on the roof's own surface (the slab, plating or vault the generator
 lays, its parts keyed `<material>#deck`), up to half a level over the roof's game height, where the unit plays. Parapets
@@ -278,7 +315,7 @@ building's roof for a unit is its volumes' top, the game's height.
 A building hex may have a large door on any hexside its building does not continue across, as a hangar has them
 (`building.appearance.doors` in a `.board2`: a height in levels by direction, `{"n": 3, "se": 2}`; the board editor's
 Hangar doors section, shown for the hangar class). A hangar-class building has no interior floors by default, and draws
-its kit's variant named `hangar` where the kit lists one (every look kit) unless the author chooses another. Only generated kits draw doors (`KitDoors`). Rules and the 2D views ignore them.
+its kit's variant of `class` `hangar` where the kit lists one (every look kit) unless the author chooses another. Only generated kits draw doors (`KitDoors`). Rules and the 2D views ignore them.
 
 - A door stands in the footprint's wall towards its hexside: the longest straight stretch of wall within that sixth of
   the hex, with a remainder of the wall up to 12.5 beside it. Square footprints give long straight walls (a column's east
@@ -288,8 +325,8 @@ its kit's variant named `hangar` where the kit lists one (every look kit) unless
 - The hex's kit pieces are cut open over the door, from the ground to its top level's line less the `lintel`, through the
   wall's `depth` and 9 out of the wall line (canopies, planters, sidewalks), and the door is generated in the opening.
   Such a hex has a mesh of its own; when it falls, it falls in whole storeys.
-- A kit variant's `door` is its look, every value optional (a plain steel door without): the `leaf` and `frame` surfaces
-  (a board `material`, `repeat` units a repeat, a linear `tint`; `paint`: it takes the building's tint; `glow`: a linear
+- A kit variant's `largeDoor` is its look, every value optional (a plain steel door without): the `leaf` and `frame` surfaces
+  (a board `material`, `repeat` units a repeat, a `tint`; `paint`: it takes the building's tint; `glow`: a linear
   colour it lights up in at night); the frame's `jamb` width, `header` height, how far it stands `out` of the wall line
   and its `depth` into the building; the leaf's `recess`; the `lintel`; the `margin` kept to a wall's corner; the leaf's
   `panel` height (grooves between) and the width of its vertical `section`s (joints in the `seam` surface); a `stripe`
@@ -300,7 +337,7 @@ its kit's variant named `hangar` where the kit lists one (every look kit) unless
 - `structures/common/sectional-door` (Material Maker, 256 px) is the shared leaf of sectional panels: four panels a
   repeat, one repeat over 12 units.
 
-Aviation obstruction lights (`"aol": true` in a bays variant's `roof`, at a habitat variant's top level): every
+Aviation obstruction lights (`"aviationLights": true` in a bays kit's roof, in a habitat variant): every
 modular kit's roofs but Utopia's; walls carry their own red lamps. They stand on hexes 7 levels high or more (about 40
 m; `ConnectedKit.LIT_LEVELS`), each roof twin's lights a node of their own (`<twin>-aol`) beside it. A light stands on
 each outer (convex) corner of a roof, never an inside one: 2.5 in from both walls, at a rounded corner's middle, and on an Angled roof's outer elbow

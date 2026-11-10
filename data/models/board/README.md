@@ -24,6 +24,13 @@ The model draws its own floor and walls and stands on its hex's ground as it was
 `tools/board-models/manifest.json` is tool data: budgets, levels and sources keyed by these paths. It is not
 shipped and the game does not read it.
 
+## Editor thumbnails
+
+The board editor's palette shows a model's picture from `data/board-editor/thumbnails/<entry id>.png`. After changing a
+model the palette shows, run `gradlew bakeEditorThumbnails` in megamek (it needs OpenGL): it draws them all again,
+rewrites only the pictures that changed and removes those of no entry. Nothing else notices a picture older than its
+model. An entry without a picture is drawn once in the editor, which keeps the picture in `mmconf/board-editor-thumbnails`.
+
 ## Scenery folders
 
 Scenery meshes live in topic folders under `scenery/`, with kebab-case names:
