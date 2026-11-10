@@ -12,7 +12,9 @@ Author no more than two levels for this work; simple kits (especially under 200 
 This is an asset budget: if an existing kit supplies `<name>-lod2`, the loader uses that additional level.
 Each group contains mesh nodes ending in `-base#`, `-floor#`, and `-roof#`, with at least one variant of each.
 Number variants from 0; sparse numbers are also supported. Roles must match across LODs.
-For N levels, the runtime chooses one base, N-1 independently chosen floors (including `floor0`), and one roof.
+For N levels, the runtime chooses one base, N-1 independently chosen floors (including `floor0`), and one roof. A kit
+with `topN` modules draws one of them, in place of a floor, as the storey under the roof of a building two or more
+levels tall: the storey that ends a wall's windows, under an arch or a beam.
 Choices are stable for each placement; changing height preserves the base, roof, and existing lower floors.
 
 Base and floor meshes are exactly 18 units high in authoring Z-up space. Enterable buildings have hollow walls.
@@ -30,6 +32,7 @@ roof projection). Keep notches and courtyards in those surfaces.
 Hardened directly. **Walls** has Civilian, Light, Medium, Heavy, Hardened and Castle Brian. **Looks** holds
 Lunar habitat, Glass dome and Biodome; **Specials** holds authored buildings; **Utilities** holds elevators.
 All sixteen building class/weight combinations have kits, including the diagnostic placeholders described below.
+The four hangars are finished kits (`hangar_<weight>/`, below).
 
 Legacy `.board` import preserves a building's weight, class, height and construction factor while discarding
 its old roof-art choice. Lunar buildings use the current lunar looks; the old Mars/volcano sealed look becomes
@@ -62,7 +65,7 @@ window mask is baked from the near windows via Blender MCP (`tools/buildings/bak
 `light-far` Material Maker project's sources. Diagnostic kits without windows remain unlit.
 
 `tools/buildings/debug_placeholders.py` supplies flat diagnostic kits for the missing medium/heavy/hardened buildings
-and fortresses, all hangars, and all gun emplacements. They use the light building's `bays` JSON layout and inexpensive
+and fortresses, and all gun emplacements. They use the light building's `bays` JSON layout and inexpensive
 box panels: bay indices 0–5 are red, orange, yellow, green, cyan and violet; alternate base/floor modules are lighter.
 Roofs are yellow and floor/sidewalk slabs grey. These are placeholders, not weight-specific finished artwork. Each
 family has its own JSON and pieces GLB so artists can replace it independently. The script preserves existing asset
@@ -139,7 +142,46 @@ front view), the wall line at y 0; z up from its storey's floor.
   plating, every module edge bevelled in light steel (modules meet in V grooves at joints, between storeys and across
   the roof), chamfered steel corners, skids on the ground; variants `habitat` (numbered window modules, airlock),
   `medical` (teal stripe, MED airlock), `industrial` (louvres, pipes, a roll-up door) and `greenhouse` (dusty frontier glass over the biodome's planted bed);
-  roofs with solar panels, radomes, HVAC units, hatches and beacons.
+  roofs with solar panels, radomes, HVAC units, hatches and beacons. Its `hangar` variant is a hall of strapped
+  modules, those under its roof (`top`) with round-headed ports either side of the strap, under the modules' flat roofs
+  or, vaulted, a lid of flat plating plates with steel hoops (`plates`), a module's bevel grown to a roof. Civic's and Utopia's `hangar`
+  is a hall whose every storey lays the same bays, so its strips run from the ground to the storey under the roof
+  (`top`), where they end in round arches: Civic's deep concrete fins every 6 from a battered foot, blank precast,
+  louvres and dark glass between them, the fins joined in arches; Utopia's white stone round one tall opening a bay
+  (white slats, glass between fins, a sunk panel) over a planted plinth. Under the look's flat roof or, vaulted, under a
+  roof that spans it (a thin concrete shell; a white shell).
+- `imperial/imperial.json` (`bays`, built with its pieces by `tools/buildings/imperial_kit.py`): the Imperial look. Warm
+  stone cladding over a dark granite plinth, dark teal glass, red lacquer columns and portals, wall lanterns; every bay
+  runs between half piers, and every storey ends in a stone course. Its convex corners are cut by one facet
+  (`cornerRadius` 6): on the walls a stone pier with a slit of glass (a lantern on the ground), and on the roof the
+  piece that runs the eave out and up to a tip. Its roof module is the eave: a charcoal standing-seam skirt flaring 6
+  out past the walls to a bronze lip and rising to a bronze-capped curb 10 in (no farther than a wall's pieces go on
+  past an inside corner, so two skirts meet there in a valley), round a deck of grey paving 3 over the roof's line (the
+  slab's `inset` and height; a unit on the roof is drawn on the deck), so a roof of any outline reads as hipped with
+  upturned corners. Variants `offices`, `tower` (glass from pier to pier),
+  `habitat` (loggias between red columns), `commercial` (shopfronts), `medical`, `industrial`, `hangar` (a hall: lacquer columns and strips of glass, louvres and sunk panels up its whole height, every storey
+  laying the same bays, the strips ending under a lacquer beam and a dark frieze in its `top` storey; under the look's
+  eave or, vaulted, a charcoal seamed bow roof); `pavilion` (an arcade under glass between lacquer columns, a lacquer post on each
+  corner) and `residence` (paper screens behind dark lattices) draw their roof corners out to swept-up points
+  (`eave-point` in place of `eave-corner`). Roofs with a second tier of glass under its own hipped roof, fan units behind a pale
+  louvred screen, glass monitors, stair pavilions, hatches and vents. Its panes differ one by one (dark teal, sky, a warm
+  room); lit ones glow amber at night, and shopfronts glow faintly all day.
+- `heritage/heritage.json` (`bays`, pieces from `tools/buildings/heritage_kit.py`): the Heritage look. Pale limestone
+  ashlar over a channelled ground storey, brick with stone dressings on its works; bays of round-arched pairs, tall
+  sashes, iron balconies, deep ground arcades (shops under awnings), blind arches, louvres, works windows of small panes
+  and glass oriels in steel frames; the entrance under a columned porch. Three roofs: `mansard` (a stone cornice, a
+  slate skirt 9 tall with dormers up to a copper curb round a deck of pavers half a level up; its run keeps the dormers
+  off a wall's ends with `margin` 4 and plain `ends`), `parapet` (a coped wall round a flat roof) and `battlement`
+  (that with merlons). A facet cuts each convex corner: a pier of quoins (`cornerRadius` 6) or, with `cornerRadius` 15, a
+  round turret that stands out of both walls, storey on storey, and ends over the roof in a bell-cast copper cone
+  (`mansard-turret`) or merlons of its own (`battlement-turret`); a turret stands only where the walls turn 75 degrees or
+  more, a hex's own shallower corners taking the quoins (the runs' `shallow`). The turrets are drawn only: units stand on
+  the deck, which they leave out. Variants `habitat` and `tower` (mansard, turrets), `offices`, `commercial` and `medical`
+  (mansard, quoins), `industrial` (brick under a parapet), `hangar` (a brick hall: stone buttresses and strips of iron-framed windows, louvres and sunk brick panels up its whole
+  height, the windows and panels ending in round arches in its `top` storey; under a parapet or, vaulted, a copper bow
+  roof over a stone cornice), `armoury` (stone, battlement, turrets). Roofs
+  carry two or three fittings a hex: chimney stacks, a copper cupola, skylights, fan units behind a louvred screen, duct
+  runs, water tanks, ventilators, hatches.
 - `fortress_light/fortress_light_a.json` (`bays`): the light fortress, its storeys' stretches the art's wall rebuilt
   low-poly to its measurements (`tools/buildings/art/fortress_light_a_52.glb`: panel face, joints, band, window recess
   and frame, door, base course) in the dark wall concrete (`structures/buildings/fortress-wall`, the art's far facade's
@@ -149,10 +191,10 @@ front view), the wall line at y 0; z up from its storey's floor.
 A `bays` variant: its `pieces`; the Angled `lone` outline (counter-clockwise from its front) and `bandEnd`; the `roof`
 and `floors` slabs (a board material on the board's axes, its `repeat`, an `inset` off the walls, `heights` per level
 of detail; a glass roof's `underlay`, the biodome's planted bed just under it; a roof's `aol`, aviation obstruction
-lights, below); the ground storey's `sidewalk` (`width`, `kerb`; none without); and its `modules` by role, one run per level
+lights, below; a roof's `vault`, below); the ground storey's `sidewalk` (`width`, `kerb`; none without); and its `modules` by role, one run per level
 of detail (the last for any further). A run lays whole `bay`s of its `bays` pieces (several: chosen by the wall's place)
 stretched to fit between a `margin` at each end, along each whole side of the outline (the nearest count; with the
-variant's `varyBays`, a bay fewer or more by the wall's place where both stretch between 0.7 and 1.5: civic, the light
+variant's `varyBays`, a bay fewer or more by the wall's place where both stretch between 0.7 and 1.5: civic, Imperial, the light
 building and fortress, the placeholders; not Frontier or Utopia), a ground storey's `door` piece in a hub face's first bay and next to
 the middle of a whole hex's front; with no margin a bay more goes on past an end where the wall goes on. Whole `ends`
 stretches (`piece`, `length`) fill the margins, one `under` stretch lies along the whole wall, and `planar` materials
@@ -163,6 +205,15 @@ it or its outline turns into a joint (Angled: each linked hexside; Square: a nor
 diagonal link's cell, a module of its own, along its column edges), and goes on along a joint that continues it; a
 cap's wall leaves that room to the walls beside it. Its roof runs' `seam` stretch lies along each joint, the roof slab
 kept its `inset` off it, and its roofs come closed above lower neighbours (`-closed-N`) rather than rimmed by caps.
+Where a roof's edge closing one link ends at a hex corner against the hex across its other link, it goes on round that
+inside corner (not a seamed, jointed or vaulted roof's): mitred with that hex's edge where the two roofs stand level,
+eaves in a valley (`-valley`), or run on into that hex's wall where it stands taller (`-wall`).
+A run's `shallow` names the piece a rounded corner takes in place of `round` where its walls turn less than 75 degrees.
+A wall too short for one bay within its `margin`s is laid with its `ends` stretch alone.
+A storey carries a sill (its `-sill`, a kit without joints) over each hex corner it turns only where it closes links,
+drawn where the storey standing on it closes a link it keeps itself and rounds that corner, which would open the storey
+to the roofs beside it. A run's `margin` keeps its bays that far off a wall's ends; whole `ends` stretches fill the
+margins and the wall's going on past an inside corner (Utopia's, where a bay cut short would show through its recess).
 Roof `fittings` are the habitat's (below); a layout's `pieces` also
 places any named piece (`[x, y, turn in degrees]`), and each roof module comes once per layout. Bay kits without
 fittings are turned: their Angled corner pieces are built once and turned by the runtime.
@@ -185,6 +236,69 @@ fittings are turned: their Angled corner pieces are built once and turned by the
   and is stretched to the storey (18 high); a pier top likewise on the roof, stretched to the parapet (or eave) and .6
   over it; a footing likewise on the ground, as modelled; a hatch or vent on the roof surface at its centre, as
   modelled.
+
+- `hangar_light/`, `hangar_medium/`, `hangar_heavy/`, `hangar_hard/` (`hangar_<weight>_a.json`, `bays`, built with their pieces
+  by `tools/buildings/hangar_kits.py`): halls, no storey showing rooms, each in two variants. `default`: the designers'
+  halls, their wall bays read from `tools/buildings/art/hangar_<weight>_a-proposal.glb` (bays between frames; the
+  hardened one's ground frames battered buttresses) and dressed by the script in board materials, with kerbs, louvres,
+  strip windows, side doors and a far level, under a roof `vault` (below) with the frames running on over it as ribs: a
+  low corrugated gable (light), bowstring roofs (medium, heavy), a concrete arch (hardened, a hardened aircraft
+  shelter's). `alternative`: a corrugated steel shed on portal frames with wind braces and
+  daylight strips (light), insulated steel panels over a concrete plinth with a band and strip windows under the eave
+  (medium), precast concrete between buttresses under a ring beam (heavy), a bunker with a battered ground storey and
+  embrasures under a burster slab (hardened). Their walls take a building's tint.
+
+A roof's `vault` (bays kits; a habitat kit takes one as its spec's `vault`, in its roof material, in place of its flat roof, rim, pier tops and fittings) is a roof that spans its hall, as a hangar's does, in place of the flat slab: a hexside
+wide, rising `rise` (half a level, 9, at the most) over the roof's height in the `shape` of a `gable`, a `bow` (a circle's segment, a bowstring roof),
+an `arch` (half an ellipse, a barrel vault) or `plates` (a bow of flat plates, their edges hard), in `segments` facets a side per level of detail. It follows the hall. A
+Square hex's runs north to south along its column: a column's hexes share one roof, and columns side by side meet in
+level valleys, a hall of parallel bays. An Angled hex's runs out along each of its links: two links' roofs meet in a
+valley, and round the hex's unlinked sides the roof turns in hipped facets, so it bends where the hall does and branches
+at a tee. Where the hexes across two links are one building with it (three hexes round a corner, all linked, standing to
+this roof's height), the corner keeps the crown's height in place of a valley (a roof corner piece's `-crown` twin,
+`ConnectedKit.CROWN`): a cluster or a wide hall has one roof, vaulted along its edges and level inside. A lone hex's runs north to south. Every wall under the roof is filled up to it in the `gable` surface (a board
+`material`, which may carry its pieces' finish as `...#paint` so it takes the building's tint with the walls, `repeat`,
+a linear `tint`), a `verge` high band of the `trim` surface along its top; ribs of the trim surface cross the roof every
+`ribPitch` along it (`ribWidth`, `ribHeight`), where a hall's wall bays meet; `tint` is the sheeting's. Such a kit's
+pieces stand in all six corners (not turned). Doors in a gable end stand under the gable.
+
+A kit variant's `vaulted` object is its other roof, drawn for a hangar-class building unless its author chooses the
+flat one (`building.appearance.roof` in a `.board2`, `vaulted` or `flat`; the board editor's Roof choice, shown for the
+hangar class where the variant has both). Its fields replace the variant's own: `roof`, `fittings`, `parapet`
+(`null` removes one), `vault` (a habitat kit), and `modules` by role, here the eave under the vault. Buildings of other classes keep the
+variant's roof. Every look kit's `hangar` has one, and the lunar habitat's.
+
+A unit on a generated kit's roof is drawn standing on the roof's own surface (the slab, plating or vault the generator
+lays, its parts keyed `<material>#deck`), up to half a level over the roof's game height, where the unit plays. Parapets
+and other roof run pieces, fittings and aviation lights never raise it: it stands among or through them. An authored
+building's roof for a unit is its volumes' top, the game's height.
+
+## Large doors
+
+A building hex may have a large door on any hexside its building does not continue across, as a hangar has them
+(`building.appearance.doors` in a `.board2`: a height in levels by direction, `{"n": 3, "se": 2}`; the board editor's
+Hangar doors section, shown for the hangar class). A hangar-class building has no interior floors by default, and draws
+its kit's variant named `hangar` where the kit lists one (every look kit) unless the author chooses another. Only generated kits draw doors (`KitDoors`). Rules and the 2D views ignore them.
+
+- A door stands in the footprint's wall towards its hexside: the longest straight stretch of wall within that sixth of
+  the hex, with a remainder of the wall up to 12.5 beside it. Square footprints give long straight walls (a column's east
+  wall is two doors a hex); an Angled hex's facets are 24 long.
+- Doors of one height side by side along a straight wall, in one hex or the next, are one wide door: jambs stand only at
+  its ends, each hex's part is a leaf of its own.
+- The hex's kit pieces are cut open over the door, from the ground to its top level's line less the `lintel`, through the
+  wall's `depth` and 9 out of the wall line (canopies, planters, sidewalks), and the door is generated in the opening.
+  Such a hex has a mesh of its own; when it falls, it falls in whole storeys.
+- A kit variant's `door` is its look, every value optional (a plain steel door without): the `leaf` and `frame` surfaces
+  (a board `material`, `repeat` units a repeat, a linear `tint`; `paint`: it takes the building's tint; `glow`: a linear
+  colour it lights up in at night); the frame's `jamb` width, `header` height, how far it stands `out` of the wall line
+  and its `depth` into the building; the leaf's `recess`; the `lintel`; the `margin` kept to a wall's corner; the leaf's
+  `panel` height (grooves between) and the width of its vertical `section`s (joints in the `seam` surface); a `stripe`
+  along its foot, `stripeHeight` high; `windows` (`glass`, `width`, `height`, `sill`, `pitch`: a row of panes in each
+  leaf); a `threshold` plate reaching `apron` out; and `pieces` of the pieces GLB that stand in for the generated frame:
+  a `jamb` (stretched to the opening's height, mirrored at the door's end), a `header` (laid across in stretches of
+  `headerLength`) and a `crown` (on the header over each leaf's middle).
+- `structures/common/sectional-door` (Material Maker, 256 px) is the shared leaf of sectional panels: four panels a
+  repeat, one repeat over 12 units.
 
 Aviation obstruction lights (`"aol": true` in a bays variant's `roof`, at a habitat variant's top level): every
 modular kit's roofs but Utopia's; walls carry their own red lamps. They stand on hexes 7 levels high or more (about 40
