@@ -36,8 +36,8 @@ HALL_GLASS = (.80, .88, .92)  # The halls' great windows and lancets: pale glass
 # Stained glass, dark from outside by day: deep blues, then ruby, a little amber and green. At night most panes glow
 # in their own tone (finish).
 BLUE, RUBY = ((.09, .13, .32), (.07, .10, .26)), ((.30, .07, .06), (.24, .06, .08))
-JEWELS = (*BLUE, *BLUE, *RUBY, (.30, .20, .07), (.08, .21, .14))
-LIT_PANES = .78  # The share of a stained window's panes that glow at night.
+JEWELS = (*BLUE, *BLUE, *BLUE, *RUBY, (.30, .20, .07), (.08, .21, .14))
+LIT_PANES = .9  # The share of a stained window's panes that glow at night.
 steps = partial(kb.steps, stone=(STONE, DRESSING))
 planter = partial(kb.planter, stone=(STONE, DRESSING))
 screen = partial(kb.screen, louvre=hk.PALE_LOUVRE)
@@ -175,16 +175,16 @@ def stained(name, verts, rng):
 
 def lancet(rng, length, part, glass=lit_glass):
     """A tower's tall pointed window, two storeys high: `low`, its foot (the opening runs on up through the storey's top,
-    which has no course); `high`, its head. glass: what lays a pane (name, verts, rng)."""
+    which has no course); `high`, its head; `one`, a window of one storey over a sill. glass: what lays a pane (name, verts, rng)."""
     half, depth = min(2.8, length/2-PILASTER-1.4), 1.0
     centres = [length/2] if length < 20 else [PILASTER+(length-2*PILASTER)*.27, PILASTER+(length-2*PILASTER)*.73]
-    z0, z1 = (6.0, LEVEL) if part == 'low' else (0.0, 8.6)
+    z0, z1 = {'low': (6.0, LEVEL), 'high': (0.0, 8.6), 'one': (4.6, 9.2)}[part]
     if part == 'low':
         facade('wall', [(cx-half, cx+half, z0, LEVEL) for cx in centres], 0, LEVEL, length, WALL, du=12, dv=9, key=STONE)
         for a, b, inner in ((0, PILASTER, 'l'), (length-PILASTER, length, 'r')):
             cuboid('pilaster', a, b, -PILASTER_OUT, 0, 0, LEVEL, STONE, DRESSING, omit='bkt'+inner)
     else:
-        hk.frame(length, [hk.arch_hole(cx, half, 0, z1, True) for cx in centres], False)
+        hk.frame(length, [hk.arch_hole(cx, half, z0, z1, True) for cx in centres], False)
     for cx in centres:
         x0, x1 = cx-half, cx+half
         if part == 'low':
@@ -193,8 +193,8 @@ def lancet(rng, length, part, glass=lit_glass):
                 verts = [(x, 0, z0), (x, depth, z0), (x, depth, z1), (x, 0, z1)]
                 add('lancet reveal', STONE, hk.REVEAL, verts, [k.facing(verts, (inner, 0, 0))])
         else:
-            glass('lancet', hk.arch('lancet', cx, half, 0, z1, STONE, WALL, depth, pointed=True), rng)
-        top = z1+(6 if part == 'high' else 0)
+            glass('lancet', hk.arch('lancet', cx, half, z0, z1, STONE, WALL, depth, pointed=True), rng)
+        top = z1+(0 if part == 'low' else 6)
         add('lancet back', PAINT, k.DARK_BACK, [(x0, depth, z0), (x1, depth, z0), (x1, depth, top), (x0, depth, top)], [(0, 1, 2, 3)])
         for a, b in ((x0+.1, cx-.3), (cx+.3, x1-.1)):
             rows = 2 if glass is stained else 1  # Stained lights change tone up their height.
@@ -232,6 +232,7 @@ def piece(kind, base, rng, length):
             'blank': lambda: blank(rng, base, length), 'slit': lambda: slit(rng, base, length), 'belfry': lambda: belfry(rng, length),
             'lancet-low': lambda: lancet(rng, length, 'low'), 'lancet-high': lambda: lancet(rng, length, 'high'),
             'stained-low': lambda: lancet(rng, length, 'low', stained), 'stained-high': lambda: lancet(rng, length, 'high', stained),
+            'stained-one': lambda: lancet(rng, length, 'one', stained),
             'mansard': lambda: hk.mansard(rng, length), 'mansard-plain': lambda: hk.mansard(rng, length, dormers=False),
             'battlement': lambda: hk.battlement(rng, length), 'parapet': lambda: hk.battlement(rng, length, merlons=False),
             'gallery': lambda: gallery(rng, length, BUTTRESS), 'pier': lambda: fill(length, base), 'skip': lambda: None}[kind]
@@ -911,9 +912,21 @@ def buttress(low, top, size=1.0):
     pinnacles('buttress', [(0, -1.7*size)], top, half=1.5*size, shaft=4.2*size, tip=7.5*size, inset=0)
 
 
-def lean_to(name, side, a, b, y0, y1, z, rise):
+def east_roof(name, walls, y1, eave, ridge):
+    """The slate roof over a polygonal east end, `walls` its ring from one side of the nave round to the other: a facet
+    a side from the eave up to the nave's ridge at (0, y1), a copper roll on each hip."""
+    top = [(x*(1+.8/math.hypot(x, y-y1)), y1+(y-y1)*(1+.8/math.hypot(x, y-y1))) for x, y in walls]
+    for a, b in zip(top, top[1:]):
+        facing(name+' roof', SLATE, (1, 1, 1), [(*a, eave-1.0), (*b, eave-1.0), (0, y1, ridge)], (*f.outward(a, b), 1))
+    for point in top:
+        kb.bar(name+' hip', [(*point, eave-.8), (0, y1, ridge+.15)], .32, VERDIGRIS, fine=False)
+
+
+def lean_to(name, side, a, b, y0, y1, z, rise, ends=()):
     """A lean-to roof of slate along y from the wall at x side*a, `z` tall, up `rise` to the wall at side*b: a stone
-    cornice, a lead flashing at its head."""
+    cornice, a lead flashing at its head, a stone end under it at each of `ends` (y, the way it faces)."""
+    for y, way in ends:
+        facing(name+' roof end', STONE, WALL, [(side*a, y, z), (side*(a+1.7), y, z+1.5), (side*b, y, z+rise), (side*b, y, z)], (0, way, 0))
     cuboid(name+' cornice', *sorted((side*a, side*(a+1.4))), y0, y1, z, z+1.4, STONE, DRESSING, omit='b')
     facing(name+' roof', SLATE, (1, 1, 1), [(side*(a+1.7), y0, z+1.5), (side*(a+1.7), y1, z+1.5), (side*b, y1, z+rise), (side*b, y0, z+rise)], (side, 0, 1))
     cuboid(name+' roof head', *sorted((side*b, side*(b+1.2))), y0, y1, z+rise-.2, z+rise+.8, PAINT, LEAD, omit='b')
@@ -992,10 +1005,12 @@ def cathedral():
     buttresses over each aisle; a double ambulatory round the choir; the west front five bays wide, a portal in each,
     the towers over the outermost. It fills three columns of hexes. No figures, crosses or emblems."""
     rng = random.Random(81)
-    nave, inner, outer, y0, y1 = 22.0, 46.0, 74.0, -2.0, 200.0  # Half the nave's width; the aisles' walls; the nave's ends.
+    nave, inner, outer, y0, y1 = 22.0, 46.0, 74.0, 10.0, 200.0  # Half the nave's width; the aisles' walls; the nave's ends.
     low, mid, high = 2*LEVEL, 4*LEVEL, 6*LEVEL  # The walls' tops: the outer aisles', the inner aisles', the nave's.
     rise, count, span = 12.0, 8, y1-y0  # How far a lean-to roof climbs.
-    front, face, width = -32.0, -28.0, 30.0  # The towers' front; the bays' between them; a tower's width.
+    # The towers' front (a hex's middle row lies at y -36: a unit in a tower's hex stands on the apron before it); the
+    # bays' between them; a tower's width.
+    front, face, width = -20.0, -16.0, 30.0
 
     def upper(above):
         """A wall that shows over a lean-to roof from storey `above`: a plain storey behind the roof, windows over it."""
@@ -1016,9 +1031,7 @@ def cathedral():
         block(f.rect(*sorted((side*nave, side*inner)), y0, y1), {edge: upper(2)}, 4, seed=82+side, ground=False, **walls)
         block(f.rect(*sorted((side*inner, side*outer)), y0, y1), {edge: lancets}, 2, seed=84+side, ground=True, **walls)
         lean_to('outer aisle', side, outer, inner, y0, y1, low, rise)
-        lean_to('inner aisle', side, inner, nave, y0, y1, mid, rise)
-        # Its roof's end over the front's inner bay.
-        facing('inner aisle end', STONE, WALL, [(side*inner, y0, mid), (side*nave, y0, mid), (side*nave, y0, mid+rise)], (0, -1, 0))
+        lean_to('inner aisle', side, inner, nave, y0, y1, mid, rise, ((y0, -1),))  # Its end shows over the front's inner bay.
         for i in range(1, count+1):
             tiers((0, y0+span*i/count), (side, 0), (0, side))
         # The nave's side between the front and its first bay, over the front's inner bay.
@@ -1046,11 +1059,7 @@ def cathedral():
             facing('ambulatory roof', SLATE, (1, 1, 1), [(*eave[i], z+1.5), (*eave[i+1], z+1.5), (*head[i+1], z+rise), (*head[i], z+rise)], (nx, ny, 1))
             facing('ambulatory cornice', STONE, DRESSING, [(ax+nx*1.4, ay+ny*1.4, z), (bx+nx*1.4, by+ny*1.4, z), (bx+nx*1.4, by+ny*1.4, z+1.4),
                                                            (ax+nx*1.4, ay+ny*1.4, z+1.4)], (nx, ny, 0))
-    top = grown(ring(nave), 1+.8/nave)
-    for i in range(5):
-        facing('choir roof', SLATE, (1, 1, 1), [(*top[i], high-1.0), (*top[i+1], high-1.0), (0, y1, ridge)], (*f.outward(top[i], top[i+1]), 1))
-    for point in top:
-        kb.bar('choir hip', [(*point, high-.8), (0, y1, ridge+.15)], .32, VERDIGRIS, fine=False)
+    east_roof('choir', ring(nave), y1, high, ridge)
     for a in turns[1:5]:
         tiers((0, y1), (math.cos(a), math.sin(a)), (-math.sin(a), math.cos(a)))
     # The west front: the towers over its outermost bays; between them the nave's bay and an inner bay each side.
@@ -1060,7 +1069,7 @@ def cathedral():
         near, far = side*(outer-width), side*outer
         tower_ring = f.rect(*sorted((near, far)), front, y0)
         # Its inner side stands behind the front's inner bay for four storeys; its back behind the outer aisle for two,
-        # plain over that aisle's roof for two more, and behind the inner aisle (the last 4 of it) for all four.
+        # plain over that aisle's roof for two more, and behind the inner aisle (the last 2 of it) for all four.
         between = lambda s, kind, side=side: kind if s >= 4 else ([('pier', face-front), ('skip', y0-face)][::-side])
         behind = lambda s, kind, side=side: kind if s >= 4 else [('skip', width)] if s < 2 else [('blank', outer-inner), ('skip', inner-outer+width)][::side]
         faces = {0: lambda s, kind: [('skip', width)] if s < 2 else kind, 1 if side < 0 else 3: between, 2: behind}
@@ -1075,20 +1084,20 @@ def cathedral():
         for a, b in ((-1.2, BUTTRESS), (deep-BUTTRESS, deep)) if side > 0 else ((0, BUTTRESS), (deep-BUTTRESS, deep+1.2)):
             f.lay(lambda: front_buttress(a, b, steps), origin, along, 0)
         volume('west tower %d' % side, tower_ring, 0, len(stages)*LEVEL)
-        # The inner bay: a portal, a gallery and a window under a coping, its roof a lead flat before the aisle's.
+        # The inner bay: a portal, a gallery and a window under a coping, its roof a paved flat before the aisle's.
         x0, wide = min(side*nave, near), outer-width-nave
         f.lay(lambda: portal(wide, 5.5, 9.0, 2*LEVEL), (x0, face), (1, 0), 0)
         f.lay(lambda: gallery(rng, wide), (x0, face), (1, 0), 2*LEVEL)
         f.lay(piece('stained-high', False, rng, wide), (x0, face), (1, 0), 3*LEVEL)
         cuboid('bay coping', x0, x0+wide, face-1.6, face+1.6, mid, mid+1.0, STONE, DRESSING, omit='b')
-        f.cap('bay roof', f.rect(x0, x0+wide, face, y0), mid-.4, PAINT, LEAD)
+        f.cap('bay roof', f.rect(x0, x0+wide, face, y0), mid-.05, PAVERS, DECK_TONE)
         f.lay(lambda: front_buttress(*sorted((-1.2*side, BUTTRESS*side)), steps[:2]), (side*nave, face), (1, 0), 0)
     f.lay(lambda: portal(2*nave, 10.0, 12.0, 2*LEVEL, post=True), (-nave, face), (1, 0), 0)
     f.lay(lambda: gallery(rng, 2*nave), (-nave, face), (1, 0), 2*LEVEL)
     f.lay(lambda: rose(rng, 2*nave, 3*LEVEL, 19.0), (-nave, face), (1, 0), 3*LEVEL)
     f.lay(lambda: gallery(rng, 2*nave), (-nave, face), (1, 0), high)
     front_gable(nave, face, high)
-    paving(-88, 88, -72, face+3.4, .3)  # In under the portals' leaves.
+    paving(-88, 88, front-44, face+3.4, .3)  # In under the portals' leaves.
     for x in (-59, -33, 0, 33, 59):
         h.fixtures.append((x, front-6, 9))
     volume('nave', f.rect(-nave, nave, face, y1), 0, high)
@@ -1098,7 +1107,7 @@ def cathedral():
 
 def church():
     """A town church in the cathedral's manner, one hex wide: a single tower before its nave, a gabled portal in its
-    foot and a rose over it, a blind arcade and a belfry under a slate spire between pinnacles; a nave of tall stained
+    foot and a rose over it, tall lancets up its flanks, a blind arcade and a belfry under a slate spire between pinnacles; a nave of tall stained
     lancets over low aisles under lean-to roofs, small pier buttresses with pinnacles between their bays; a three-sided
     apse. No figures, crosses or emblems."""
     rng = random.Random(91)
@@ -1108,42 +1117,35 @@ def church():
     block(f.rect(-nave, nave, y0, y1), {i: (lambda s: [('skip', span)] if s == 0 else ['blank', 'stained-low', 'stained-high'][s-1:s]*count) for i in (1, 3)},
           4, hidden={0, 2}, butt={(1, 0), (1, 1), (3, 0), (3, 1)}, seed=91, ground=False)
     ridge = gabled('nave roof', -nave, nave, y0, y1, high, pitch=1.25, fronts=())
-    wide = aisle-nave
     for side in (-1, 1):
         ring = f.rect(*sorted((side*nave, side*aisle)), y0, y1)
         # Its front beside the tower, its outer wall and its east end; the nave stands along its fourth side.
-        west = [('skip', half-nave), ('stained-high', aisle-half)][::side]
+        west = [('skip', half-nave), ('stained-one', aisle-half)][::side]
         outer, inner = (1, 3) if side > 0 else (3, 1)
-        block(ring, {0: west, outer: ['stained-high']*count, 2: 'stained-high'}, 1, hidden={inner}, butt={(0, 0), (2, 1)} if side > 0 else {(0, 1), (2, 0)},
+        block(ring, {0: west, outer: ['stained-one']*count, 2: 'stained-one'}, 1, hidden={inner}, butt={(0, 0), (2, 1)} if side > 0 else {(0, 1), (2, 0)},
               seed=92+side, ground=True)
-        lean_to('aisle', side, aisle, nave, y0, y1, low, rise)
-        for y, way in ((y0, -1), (y1, 1)):  # The roof's ends over the aisle's end walls.
-            facing('aisle roof end', STONE, WALL, [(side*aisle, y, low), (side*nave, y, low), (side*nave, y, low+rise)], (0, way, 0))
+        lean_to('aisle', side, aisle, nave, y0, y1, low, rise, ((y0, -1), (y1, 1)))
         for i in range(count+1):
             f.lay(lambda: buttress(low-5, low+8, .6), (side*aisle, y0+span*i/count), (0, side), 0)
         volume('aisle %d' % side, ring, 0, low)
-    # The apse: three sides, the nave's lancets round it.
+    # The apse: three sides, a window low in each and the nave's lancets over it.
     turns = [math.radians(60*i) for i in range(4)]
     apse = [(nave*math.cos(a), y1+nave*math.sin(a)) for a in turns]
-    block(apse, {i: (lambda s: 'blank' if s < 2 else ('stained-low', 'stained-high')[s-2]) for i in range(3)}, 4, hidden={3}, butt={(0, 0), (2, 1)}, seed=94,
+    block(apse, {i: (lambda s: ('stained-one', 'blank', 'stained-low', 'stained-high')[s]) for i in range(3)}, 4, hidden={3}, butt={(0, 0), (2, 1)}, seed=94,
           ground=False)
-    top = [(x*(1+.8/nave), y1+(y-y1)*(1+.8/nave)) for x, y in apse]
-    for i in range(3):
-        facing('apse roof', SLATE, (1, 1, 1), [(*top[i], high-1.0), (*top[i+1], high-1.0), (0, y1, ridge)], (*f.outward(top[i], top[i+1]), 1))
-    for point in top:
-        kb.bar('apse hip', [(*point, high-.8), (0, y1, ridge+.15)], .3, VERDIGRIS, fine=False)
+    east_roof('apse', apse, y1, high, ridge)
     for a in turns[1:3]:
         f.lay(lambda: buttress(2*LEVEL+4, 3*LEVEL+8, .6), (nave*math.cos(a), y1+nave*math.sin(a)), (-math.sin(a), math.cos(a)), 0)
     volume('apse', apse, 0, high)
     # The tower: the portal and the rose in its front, plain flanks, the arcade and the belfry clear of the nave's roof.
     ring = f.rect(-half, half, front, y0)
-    stages = ['blank', 'blank', 'slit', 'slit', 'gallery', 'belfry']
+    stages = ['blank', 'slit', 'stained-low', 'stained-high', 'gallery', 'belfry']
     faces = {0: lambda s, kind: [('skip', 2*half)] if s < 4 else kind,
              2: lambda s, kind: kind if s > 4 else 'blank' if s == 4 else [('pier', half-nave), ('skip', 2*nave), ('pier', half-nave)]}
     z = tower('tower', ring, stages, faces, seed=95, ground=False)
     f.lay(lambda: portal(2*half, 6.0, 9.0, 2*LEVEL), (-half, front), (1, 0), 0)
     f.lay(lambda: rose(rng, 2*half, 2*LEVEL, 9.0), (-half, front), (1, 0), 2*LEVEL)
-    spire('spire', ring, z, 54.0)
+    spire('spire', ring, z, 70.0)
     pinnacles('tower', f.inset(ring, -.6), z+hk.CORNICE, half=1.6, shaft=6.0, tip=9.0, inset=0)
     steps, reach, deep = [(0, 2*LEVEL, 3.6), (2*LEVEL, high, 2.4), (high, 5*LEVEL, 1.4)], 3.6, y0-front
     for side in (-1, 1):  # A buttress each way at both front corners.
@@ -1158,7 +1160,7 @@ def church():
 
 BUILDINGS = {'cathedral': cathedral, 'church': church, 'government-hall': government_hall, 'transit-terminal': transit_terminal, 'administrative-offices': administrative_offices,
              'commercial-center': commercial_center, 'medical-center': medical_center}
-FINE = ('portal shaft', 'portal order', 'rose tracery', 'rose spoke', 'fleche louvre', 'fleche post', 'mullion', 'transom', 'lamp cap', 'baluster', 'channel', 'course shadow', 'quoin', 'impost', 'fan', 'fanlight bar',
+FINE = ('flyer', 'buttress pinnacle', 'portal shaft', 'portal order', 'rose tracery', 'rose spoke', 'fleche louvre', 'fleche post', 'mullion', 'transom', 'lamp cap', 'baluster', 'channel', 'course shadow', 'quoin', 'impost', 'fan', 'fanlight bar',
         'dormer bar', 'keystone', 'sill', 'downpipe', 'hand', 'duct foot', 'tank leg')
 
 
