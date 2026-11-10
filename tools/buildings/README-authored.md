@@ -41,15 +41,15 @@ plant behind a pale louvred screen, a lantern of glass, or a second tier. Ranges
 Courtyard Habitat's U) take a roof each from the same eave line: they share their planes at the corners and part in valleys.
 Every build prints the hexes its volumes cover (`HEX` lines: a hex counts from half).
 
-[heritage_buildings.py](heritage_buildings.py) builds the six `heritage-*` landmarks likewise, out of the Heritage kit's
+[heritage_buildings.py](heritage_buildings.py) builds the seven `heritage-*` landmarks likewise, out of the Heritage kit's
 bays ([heritage_kit.py](heritage_kit.py)): Government Hall, Transit Terminal, Administrative Offices, Commercial Center,
-Medical Center and Cathedral. Its own parts are steep slate roofs (`pitched`, `gabled`), tower spires, a hall's great arched window
+Medical Center, Cathedral and Church. Its own parts are steep slate roofs (`pitched`, `gabled`), tower spires, a hall's great arched window
 (`great`: round or pointed, with doors at its foot), glass vaults on iron ribs, and clock faces; the kit's own roofs (its
 mansard, parapet and battlement) run round the lower blocks as kit pieces (`kit_roof`). The lineup's other buildings
-(habitats, office tower, industrial works) are the kit's variants. The Cathedral (`cathedral`, after a sheet the user
-supplied; French Gothic, no transept) adds gabled portals in stepped orders, blind arcades (`gallery`), a rose and
-lancets of stained glass (`stained`: dark jewel tones by day, glowing at night), pier and flying buttresses, a lead
-fleche. It carries no figures, crosses or emblems: finials are plain spikes.
+(habitats, office tower, industrial works) are the kit's variants. The Cathedral (`cathedral`; French Gothic after Bourges, no transept: double aisles, five portals, two towers; ten
+hexes, three columns wide) and the Church (`church`: one tower before a nave with low aisles and an apse; two hexes in
+a column) add gabled portals in stepped orders, blind arcades (`gallery`), a rose and lancets of stained glass
+(`stained`: dark jewel tones by day, glowing at night), pier and flying buttresses, a lead fleche. They carry no figures, crosses or emblems: finials are plain spikes.
 
 [kit_blocks.py](kit_blocks.py) holds what the looks' building files share: `block` and `run` lay a look's bays along walls
 (the look names its pieces with `use`), `volume` and the hexes report, the plant screen, steps, paving and planters, and
