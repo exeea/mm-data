@@ -759,82 +759,91 @@ PIECES = {name: ik.finished(builder, ROOFING) for name, builder in {
 
 PLANAR = {STONE: REPEAT, BRICK: REPEAT, SLATE: SLATE_REPEAT, COPPER: COPPER_REPEAT}
 # Roofs crowded as a working building's: two or three things a hex.
-FITTINGS = k.fittings('hatch', 'vent', [
+FITTINGS = [
     {'chimney': [[-7, 7, 0]], 'plant': [[0, -6, 0]], 'vent': [[8, 8, 0]]},
     {'cupola': [[0, 3, 0]], 'duct': [[0, -9, 0]]},
     {'skylight': [[0, 6, 0]], 'tank': [[-7, -7, 0]], 'vent': [[7, -6, 0]]},
     {'chimney': [[-7, 2, 90], [7, 2, 90]], 'hatch': [[0, -8, 0]], 'duct': [[0, 10, 0]]},
     {'plant': [[0, 6, 0]], 'vent': [[-6, -7, 0], [6, -7, 0]], 'hatch': [[0, -13, 0]]},
     {'tank': [[6, 5, 0]], 'chimney': [[-7, 5, 0]], 'duct': [[0, -8, 0]]},
-])
-HALL_FITTINGS = k.fittings('hatch', 'vent', [
+]
+HALL_FITTINGS = [
     {'skylight': [[0, 5, 0]], 'vent': [[-8, -7, 0], [0, -7, 0], [8, -7, 0]]},
     {'plant': [[0, -5, 0]], 'tank': [[0, 8, 0]]},
     {'duct': [[0, 6, 0], [0, -6, 0]], 'hatch': [[0, 13, 0]]},
     {'skylight': [[0, -6, 0]], 'plant': [[0, 6, 0]]},
     {'tank': [[-7, 4, 0]], 'vent': [[6, 6, 0], [6, -6, 0]], 'duct': [[0, -10, 0]]},
     {'plant': [[0, 5, 0]], 'chimney': [[7, -6, 0]], 'hatch': [[-7, -8, 0]]},
-])
+]
 # A works door: a dark green sectional leaf with a row of panes in an iron frame.
 DOOR = k.door((k.SECTIONAL, (.34, .42, .38)), (PAINT, IRON), jamb=2.0, header=2.6, out=1.0, depth=3.2, recess=.8, lintel=LEVEL-COURSE+1.8,
               panel=3.0, section=12.0, seam=(PAINT, IRON), stripe=(HAZARD, (1, 1, 1), 4.0), stripeHeight=1.4,
               windows=k.door_windows(3.4, 1.2, 7.4, 6.0), threshold=(CAST, (.46, .46, .46)), apron=4.0)
-MANSARD = {'material': ROOF_DECK, 'repeat': 18.0, 'inset': SKIRT-.1, 'heights': [DECK], 'aol': True}
-FLAT = {'material': ROOF_DECK, 'repeat': 18.0, 'inset': PARAPET_DEEP-.1, 'heights': [.6], 'aol': True}
-# A hall's roof: verdigris copper bowed over the hall on iron ribs, its gable ends in the walls' brick.
-HALL = {'material': COPPER, 'repeat': COPPER_REPEAT, 'inset': 0.0, 'heights': [0.3], 'aol': True,
-        'vault': k.vault('bow', 9.0, (1, 1, 1), (BRICK, BRICK_TONE, REPEAT), ('structures/common/painted-steel', IRON), rib=(1.2, .5))}
+MANSARD = {'material': ROOF_DECK, 'repeat': 18.0, 'inset': SKIRT-.1, 'heights': [DECK], 'aviationLights': True}
+FLAT = {'material': ROOF_DECK, 'repeat': 18.0, 'inset': PARAPET_DEEP-.1, 'heights': [.6], 'aviationLights': True}
+
+
+def roof(slab, edge, turrets=False):
+    """A roof of `slab`, the `edge` piece along its walls and `<edge>-corner` on its corners; with turrets, `<edge>-turret`
+    on a square corner and the plain corner on a hex's own, shallower one (BayKit's `shallow`)."""
+    run = k.run([edge], PLANAR, round_piece=edge+('-turret' if turrets else '-corner'))
+    if edge == 'mansard':
+        # Dormers keep off a wall's ends, where it turns a corner or runs on into another roof: those stretches are plain.
+        run.update({'margin': 4.0, 'ends': {'piece': 'mansard-plain', 'length': 12.0}})
+    if turrets:
+        run['shallow'] = {'piece': edge+'-corner', 'length': k.ROUND}
+    return {**slab, 'runs': [run]}
+
+
+ROOFS = {
+    'mansard': roof(MANSARD, 'mansard'),
+    'mansard-turrets': roof(MANSARD, 'mansard', True),
+    'parapet': roof(FLAT, 'parapet'),
+    'battlement': roof(FLAT, 'battlement', True),
+    # A hall's roof: verdigris copper bowed over the hall on iron ribs over a cornice, its gable ends in the walls' brick.
+    'vault': {'material': COPPER, 'repeat': COPPER_REPEAT, 'inset': 0.0, 'heights': [0.3], 'aviationLights': True,
+              'vault': k.vault('bow', 9.0, (1, 1, 1), (BRICK, BRICK_TONE, REPEAT), ('structures/common/painted-steel', IRON), rib=(1.2, .5)),
+              'runs': [k.run(['hall-eave'], PLANAR, round_piece='hall-eave-corner')]},
+}
 
 
 HALL_BAYS = ['hall-window', 'hall-panel', 'hall-window', 'hall-louvre']
 HALL_TOPS = [bay.replace('hall-', 'hall-top-') for bay in HALL_BAYS]  # The storey under the eave: the strips' heads.
 
 
-def variant(name, bases, floors, door, roof='mansard', turrets=False, layouts=FITTINGS, hall=False):
-    """hall: its corners a hall's quoins, without the storeys' course; the storey under its roof (the kit's `top` module)
-    ends its strips: windows in round arches."""
+def variant(name, bases, floors, door, roof='mansard', turrets=False, layouts=FITTINGS, hall=False, building_class=None):
+    """bases, floors: the runs its storeys pick among, as bay lists. roof: its roof's name. turrets: on its square
+    corners (its roof's too). hall: the look's hall (theme_kits' hall_roof): its corners a hall's quoins, without the
+    storeys' course; the storey under its roof ends its strips: windows in round arches. building_class: the class of
+    building that draws it unless told otherwise."""
     based = lambda bays: [bay if bay.startswith('base-') else 'base-'+bay for bay in bays]
     corner = 'turret' if turrets else 'hall-quoins' if hall else 'quoins'
-    top = k.run([roof], PLANAR, round_piece=roof+('-turret' if turrets else '-corner'))
-    if roof == 'mansard':
-        # Dormers keep off a wall's ends, where it turns a corner or runs on into another roof: those stretches are plain.
-        top[0].update({'margin': 4.0, 'ends': {'piece': 'mansard-plain', 'length': 12.0}})
 
     def run(bays, door=None, piece=corner, plain='quoins'):
         result = k.run(bays, PLANAR, door, piece)
         if turrets:
             # A turret stands on a square corner; a hex's own, shallower, takes the quoins (BayKit's `shallow`).
-            result[0]['shallow'] = {'piece': plain, 'length': k.ROUND}
+            result['shallow'] = {'piece': plain, 'length': k.ROUND}
         return result
-    if turrets:
-        top[0]['shallow'] = {'piece': roof+'-corner', 'length': k.ROUND}
     return {
-        'name': name, 'style': 'bays', 'pieces': 'heritage-pieces.glb', 'lone': k.LONE, 'bandEnd': 1.75,
-        'cornerRadius': TURRET_CORNER if turrets else CORNER, 'cornerSegments': 1,
-        'roof': MANSARD if roof == 'mansard' else FLAT,
+        'name': name, **k.hall_roof(hall), **({'class': building_class} if building_class else {}), 'roof': roof,
+        'lone': k.LONE, 'bandEnd': 1.75, 'cornerRadius': TURRET_CORNER if turrets else CORNER, 'cornerSegments': 1,
         'floors': {'material': STONE, 'repeat': REPEAT, 'inset': 3.0, 'heights': [0.05]},
         'sidewalk': {'material': ROOF_DECK, 'repeat': 18.0, 'width': 5.0, 'kerb': 0.4},
-        'modules': {
-            'base0': run(based(bases[0]), door, corner+'-base', 'quoins-base'),
-            'base1': run(based(bases[1]), door, corner+'-base', 'quoins-base'),
-            'floor0': run(floors[0]),
-            'floor1': run(floors[1]),
-            **({'top0': run(HALL_TOPS)} if hall else {}),
-            'roof0': top,
-        },
         'fittings': layouts,
         'varyBays': True,
-        'door': DOOR,
-        # A hangar's roof, unless its building chooses the flat one: the copper vault over a cornice.
-        **({'vaulted': k.vaulted(HALL, k.run(['hall-eave'], PLANAR, round_piece='hall-eave-corner'))} if hall else {}),
+        'largeDoor': DOOR,
+        'base': [run(based(bays), door, corner+'-base', 'quoins-base') for bays in bases],
+        'floor': [run(bays) for bays in floors],
+        **({'top': [run(HALL_TOPS)]} if hall else {}),
     }
 
 
 VARIANTS = [
     variant('habitat', (['arcade', 'arcade', 'sash', 'arcade'], ['arcade', 'sash', 'arcade', 'arcade']),
-            (['balcony', 'sash', 'balcony', 'arch'], ['sash', 'balcony', 'arch', 'balcony']), 'entrance', turrets=True),
+            (['balcony', 'sash', 'balcony', 'arch'], ['sash', 'balcony', 'arch', 'balcony']), 'entrance', 'mansard-turrets', True),
     variant('tower', (['arcade', 'arch', 'arcade'], ['arch', 'arcade', 'arch']), (['glass', 'arch', 'glass'], ['arch', 'glass', 'arch']), 'entrance',
-            turrets=True),
+            'mansard-turrets', True),
     variant('offices', (['arch', 'sash', 'arch', 'service'], ['sash', 'arch', 'arch', 'sash']),
             (['sash', 'arch', 'sash', 'glass'], ['arch', 'sash', 'glass', 'sash']), 'entrance'),
     # Stone storeys and brick ones by turns: never bay by bay.
@@ -848,15 +857,15 @@ VARIANTS = [
     # A hall: stone buttresses and strips of iron-framed windows, louvres and sunk panels up its whole height (every
     # storey lays the same bays, so they stack; the top one ends them in round arches). A hangar-class building draws it
     # unless told otherwise, under a copper roof that spans it unless it chooses the flat roof and parapet.
-    variant('hangar', (HALL_BAYS, HALL_BAYS), (HALL_BAYS, HALL_BAYS), 'base-hall-door', roof='parapet', layouts=HALL_FITTINGS, hall=True),
+    variant('hangar', (HALL_BAYS,), (HALL_BAYS,), 'base-hall-door', roof='parapet', layouts=HALL_FITTINGS, hall=True),
     variant('armoury', (['arch', 'panel', 'arch', 'service'], ['panel', 'arch', 'panel', 'arch']),
             (['arch', 'panel', 'sash', 'arch'], ['sash', 'arch', 'arch', 'panel']), 'entrance', roof='battlement', turrets=True,
-            layouts=HALL_FITTINGS),
+            layouts=HALL_FITTINGS, building_class='fortress'),
 ]
 
 
 def build():
-    k.KITS['heritage'] = (PIECES, VARIANTS)
+    k.KITS['heritage'] = (PIECES, ROOFS, VARIANTS)
     # Limestone takes a building's tint; brick, slate, copper, iron and glass keep theirs.
     k.build('heritage', painted=lambda obj: obj['board_material'] == STONE)
 

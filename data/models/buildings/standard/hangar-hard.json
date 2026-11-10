@@ -1,0 +1,107 @@
+{
+  "style": "bays",
+  "pieces": "hangar-hard-pieces.glb",
+  "shared": {
+    "planar": {"structures/buildings/fortress-concrete": 18.0},
+    "bay": 24.0,
+    "lone": [[-20.78125, -34.25], [20.78125, -34.25], [20.78125, 34.25], [-20.78125, 34.25]],
+    "bandEnd": 1.75,
+    "varyBays": true
+  },
+  "roofs": {
+    "vault": {
+      "material": "structures/buildings/fortress-concrete",
+      "repeat": 18.0,
+      "inset": 0.0,
+      "heights": [0.3],
+      "aviationLights": true,
+      "vault": {
+        "shape": "arch",
+        "rise": 9.0,
+        "segments": [6, 3],
+        "gable": {"material": "structures/buildings/fortress-concrete#paint", "repeat": 18.0, "tint": "#f7f2e8"},
+        "trim": {"material": "structures/buildings/fortress-concrete", "repeat": 12.0, "tint": "#e0dbd1"},
+        "verge": 0.9,
+        "ribPitch": 24.0,
+        "ribWidth": 2.5,
+        "ribHeight": 0.9,
+        "tint": "#e6e0d6"
+      },
+      "runs": [{"bays": ["hall-eave"]}]
+    },
+    "flat": {
+      "material": "structures/buildings/fortress-roof",
+      "repeat": 24.0,
+      "inset": 0.0,
+      "heights": [0.3],
+      "aviationLights": true,
+      "runs": [{"bays": ["slab-plain", "slab-lamps", "slab-plain"]}]
+    }
+  },
+  "variants": [
+    {
+      "name": "default",
+      "roof": "vault",
+      "floors": {"material": "structures/common/cast-concrete", "repeat": 12.0, "inset": 1.3, "heights": [0.05]},
+      "largeDoor": {
+        "leaf": {"material": "structures/buildings/fortress-steel", "repeat": 18.0, "tint": "#ffffff"},
+        "frame": {"material": "structures/buildings/fortress-concrete", "repeat": 18.0, "tint": "#e0dbd1"},
+        "jamb": 2.5,
+        "header": 4.0,
+        "out": 3.5,
+        "depth": 4.0,
+        "recess": 1.2,
+        "lintel": 0.8,
+        "panel": 6.0,
+        "section": 10.0,
+        "seam": {"material": "structures/common/safety-yellow", "repeat": 6.0, "tint": "#bfb28c"},
+        "stripe": {"material": "structures/common/hazard-stripes", "repeat": 6.0, "tint": "#ffffff"},
+        "stripeHeight": 2.4,
+        "threshold": {"material": "structures/common/cast-concrete", "repeat": 12.0, "tint": "#b2b2ab"},
+        "apron": 5.0
+      },
+      "base": [
+        {"bays": ["hall-base-plain", "hall-base-hazard", "hall-base-plain"], "entrance": "hall-base-door"},
+        {"bays": ["hall-base-hazard", "hall-base-plain", "hall-base-plain"], "entrance": "hall-base-door"}
+      ],
+      "floor": [
+        {"bays": ["hall-slit", "hall-plain", "hall-vent"]},
+        {"bays": ["hall-plain", "hall-slit", "hall-plain"]}
+      ]
+    },
+    {
+      "name": "alternative",
+      "roof": "flat",
+      "floors": {"material": "structures/common/cast-concrete", "repeat": 12.0, "inset": 3.0, "heights": [0.05]},
+      "fittings": [
+        {"cupola": [[0, 0, 0]]},
+        {"vent-block": [[0, 0, 0]]},
+        {"hatch": [[-7, 6, 0]], "vent-block": [[6, -6, 90]]},
+        {"cupola": [[-6, -5, 0]], "hatch": [[8, 8, 0]]},
+        {}
+      ],
+      "largeDoor": {
+        "leaf": {"material": "structures/buildings/fortress-steel", "repeat": 18.0, "tint": "#ffffff"},
+        "frame": {"material": "structures/buildings/fortress-concrete", "repeat": 18.0, "tint": "#e6e0d6"},
+        "jamb": 3.4,
+        "header": 4.2,
+        "out": 4.4,
+        "depth": 4.2,
+        "recess": 1.4,
+        "lintel": 1.0,
+        "panel": 6.0,
+        "section": 10.0,
+        "seam": {"material": "structures/common/safety-yellow", "repeat": 6.0, "tint": "#bfb28c"},
+        "stripe": {"material": "structures/common/hazard-stripes", "repeat": 6.0, "tint": "#ffffff"},
+        "stripeHeight": 2.4,
+        "threshold": {"material": "structures/common/cast-concrete", "repeat": 12.0, "tint": "#b2b2ab"},
+        "apron": 4.7
+      },
+      "base": [
+        {"bays": ["base-plain", "base-rib", "base-hazard", "base-plain"], "entrance": "base-door"},
+        {"bays": ["base-hazard", "base-plain", "base-rib", "base-plain"], "entrance": "base-door"}
+      ],
+      "floor": [{"bays": ["slit", "plain", "rib", "vent"]}, {"bays": ["plain", "slit", "plain", "rib"]}]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 """The four hangars as connected building kits: their pieces GLBs and kit JSONs.
 
 Run: blender -b --factory-startup --python hangar_kits.py -- [light|medium|heavy|hard ...]
-Writes data/models/buildings/hangar_<weight>/hangar_<weight>_a-pieces.glb and hangar_<weight>_a.json, for the game's bays
+Writes data/models/buildings/standard/hangar-<weight>-pieces.glb and hangar-<weight>.json, for the game's bays
 kit (GeneratedKit, BayKit), as theme_kits writes the looks' (its piece frame, levels of detail and export).
 
 A hangar is a hall: no storey of it has windows of rooms. Each kit has two variants. `default`, the designers' halls
@@ -442,24 +442,20 @@ def bays(builder, kinds):
     return result
 
 
-def variant(name, weight, base, upper, roofs, roof, planar, fit, large_door, prefix='', inset=3.0, vault=None):
-    """A variant: its ground bays (two modules' lists, a side door among each), its upper storeys', its roof's; its roof
-    slab (material, repeat) and the vault over it, if any; its floors kept `inset` off the wall line, the wall's depth."""
-    run = lambda names, door=None: [{'bays': [prefix+n for n in names], 'bay': W, 'planar': planar, **({'door': prefix+door} if door else {})}]
+def variant(name, base, upper, roofs, roof, planar, fit, large_door, prefix='', inset=3.0, vault=None):
+    """A variant and its roof (`vault`, or `flat` without one): its ground bays (the lists its ground storey picks among, a
+    side door among each), its upper storeys', its roof's edge; its roof slab (material, repeat) and the vault over it,
+    if any; its floors kept `inset` off the wall line, the wall's depth."""
+    run = lambda names, entrance=None: k.run([prefix+n for n in names], planar, entrance and prefix+entrance)
     return {
-        'name': name, 'style': 'bays', 'pieces': f'hangar_{weight}_a-pieces.glb', 'lone': k.LONE, 'bandEnd': 1.75, 'varyBays': True,
-        'roof': {'material': roof[0], 'repeat': roof[1], 'inset': 0.0, 'heights': [0.3], 'aol': True, **({'vault': vault} if vault else {})},
+        'name': name, 'roof': 'vault' if vault else 'flat', 'lone': k.LONE, 'bandEnd': 1.75, 'varyBays': True,
         'floors': {'material': CAST, 'repeat': 12.0, 'inset': inset, 'heights': [0.05]},
-        'modules': {
-            'base0': run(['base-'+n for n in base[0]], 'base-door'),
-            'base1': run(['base-'+n for n in base[1]], 'base-door'),
-            'floor0': run(upper[0]),
-            'floor1': run(upper[1]),
-            'roof0': [{'bays': roofs, 'bay': W, 'planar': planar}],
-        },
         **({'fittings': fit} if fit else {}),
-        'door': large_door,
-    }
+        'largeDoor': large_door,
+        'base': [run(['base-'+n for n in names], 'base-door') for names in base],
+        'floor': [run(names) for names in upper],
+    }, {'material': roof[0], 'repeat': roof[1], 'inset': 0.0, 'heights': [0.3], 'aviationLights': True, **({'vault': vault} if vault else {}),
+        'runs': [k.run(roofs, planar)]}
 
 
 def hall(weight, base, upper, large_door):
@@ -467,11 +463,9 @@ def hall(weight, base, upper, large_door):
     ends in the walls' finish (they take the building's tint with them), its frames running on over it as ribs."""
     look = HALLS[weight]
     material, repeat, pigment, shape, rise = look['roof']
-    surface = lambda key, colour, units: {'material': key, 'repeat': units, 'tint': k.lin(colour)}
-    vault = {'shape': shape, 'rise': rise, 'segments': [6, 3], 'gable': surface(look['wall'][0]+'#paint', look['wall'][1], look['repeat']),
-             'trim': surface(*look['frame'], 12.0), 'verge': .9, 'ribPitch': W, 'ribWidth': look['rib'], 'ribHeight': look['crown'],
-             'tint': k.lin(pigment)}
-    return variant('default', weight, base, upper, ['hall-eave'], (material, repeat), {look['wall'][0]: look['repeat']}, None, large_door,
+    vault = k.vault(shape, rise, pigment, (look['wall'][0]+'#paint', look['wall'][1], look['repeat']), look['frame'],
+                    rib=(look['rib'], look['crown']))
+    return variant('default', base, upper, ['hall-eave'], (material, repeat), {look['wall'][0]: look['repeat']}, None, large_door,
                    prefix='hall-', inset=1.3, vault=vault)
 
 
@@ -495,11 +489,11 @@ KITS = {
         hall('light', (['plain', 'vent', 'plain', 'plain'], ['plain', 'plain', 'vent']), (['windows', 'plain', 'windows'], ['plain', 'windows', 'vent', 'plain']),
              k.door((DOOR, (.80, .84, .82), 12.0, True), (MATTE, FRAME), jamb=1.5, header=2.0, out=.5, depth=3.2, recess=.5, lintel=.8,
                     panel=3.0, section=12.0, stripe=STRIPE, stripeHeight=1.4, windows=k.door_windows(3.2, 1.3, 7.3, 6.0), threshold=SILL, apron=3.0)),
-        variant('alternative', 'light', (['plain', 'vent', 'plain', 'brace'], ['brace', 'plain', 'vent', 'plain']),
+        variant('alternative', (['plain', 'vent', 'plain', 'brace'], ['brace', 'plain', 'vent', 'plain']),
                 (['daylight', 'plain', 'daylight', 'vent'], ['plain', 'daylight', 'brace', 'daylight']), ['eave-plain', 'eave-pipe', 'eave-plain'],
                 (TIN_ROOF, 12.0), {CORRUGATED: 12.0},
-                k.fittings('fan', 'ridge-vent', [{'ridge-vent': [[0, 0, 0]]}, {'skylight': [[0, -6, 0], [0, 6, 0]]}, {'fan': [[-8, 6, 0]], 'skylight': [[3, -5, 0]]},
-                                                {'ridge-vent': [[0, 8, 0]], 'fan': [[7, -8, 0]]}, {}]),
+                [{'ridge-vent': [[0, 0, 0]]}, {'skylight': [[0, -6, 0], [0, 6, 0]]}, {'fan': [[-8, 6, 0]], 'skylight': [[3, -5, 0]]},
+                 {'ridge-vent': [[0, 8, 0]], 'fan': [[7, -8, 0]]}, {}],
                 k.door((DOOR, (.80, .84, .82), 12.0, True), (SHEET, FRAME), jamb=1.5, header=2.0, out=.7, depth=3.2, recess=.5, lintel=1.2,
                        panel=3.0, section=12.0, stripe=STRIPE, stripeHeight=1.4, windows=k.door_windows(3.2, 1.3, 7.3, 6.0), threshold=SILL, apron=3.0)),
     ]),
@@ -507,11 +501,11 @@ KITS = {
         hall('medium', (['plain', 'vent', 'plain', 'plain'], ['plain', 'plain', 'vent']), (['windows', 'plain', 'windows'], ['plain', 'windows', 'vent', 'windows']),
              k.door((DOOR, (.86, .87, .86), 12.0, True), (SHEET, (.30, .34, .38)), jamb=2.0, header=2.6, out=1.0, depth=3.2, recess=.7, lintel=.8,
                     panel=3.0, section=18.0, stripe=STRIPE, stripeHeight=1.6, windows=k.door_windows(4.0, 1.5, 7.2, 6.0), threshold=SILL, apron=3.5)),
-        variant('alternative', 'medium', (['plain', 'vent', 'sign', 'plain'], ['sign', 'plain', 'plain', 'vent']),
+        variant('alternative', (['plain', 'vent', 'sign', 'plain'], ['sign', 'plain', 'plain', 'vent']),
                 (['windows', 'plain', 'windows', 'vent'], ['plain', 'windows', 'windows', 'plain']), ['fascia-plain', 'fascia-lights', 'fascia-plain'],
                 ('structures/buildings/light-roof', 18.0), {SHEET: 12.0},
-                k.fittings('stack', 'hvac', [{'hvac': [[0, 0, 0]]}, {'skylights': [[0, 0, 0]]}, {'stack': [[-8, 7, 0]], 'skylights': [[3, -2, 90]]},
-                                             {'hvac': [[-4, 5, 90]], 'stack': [[9, -8, 0]]}, {}]),
+                [{'hvac': [[0, 0, 0]]}, {'skylights': [[0, 0, 0]]}, {'stack': [[-8, 7, 0]], 'skylights': [[3, -2, 90]]},
+                                             {'hvac': [[-4, 5, 90]], 'stack': [[9, -8, 0]]}, {}],
                 k.door((DOOR, (.86, .87, .86), 12.0, True), (SHEET, (.24, .26, .28)), jamb=1.8, header=2.6, out=.6, depth=3.2, recess=.7, lintel=1.8,
                        panel=3.0, section=18.0, stripe=STRIPE, stripeHeight=1.6, windows=k.door_windows(4.0, 1.5, 7.2, 6.0), threshold=SILL, apron=3.5)),
     ]),
@@ -519,11 +513,11 @@ KITS = {
         hall('heavy', (['plain', 'vent', 'lamp', 'plain'], ['lamp', 'plain', 'vent']), (['windows', 'plain', 'plain'], ['plain', 'windows', 'vent', 'plain']),
              k.door((MATTE, (.50, .53, .55)), (PANELS, (.80, .79, .75)), jamb=2.5, header=3.4, out=1.5, depth=3.4, recess=1.0, lintel=.8,
                     panel=0.0, section=9.0, seam=(MATTE, (.26, .27, .28)), stripe=(HAZARD, (1, 1, 1), 5.0), stripeHeight=2.0, threshold=SILL, apron=4.0)),
-        variant('alternative', 'heavy', (['plain', 'louvre', 'lamp', 'plain'], ['lamp', 'plain', 'plain', 'louvre']),
+        variant('alternative', (['plain', 'louvre', 'lamp', 'plain'], ['lamp', 'plain', 'plain', 'louvre']),
                 (['slits', 'plain', 'slits', 'louvre'], ['plain', 'slits', 'plain', 'slits']), ['parapet-plain', 'parapet-plain', 'parapet-tall'],
                 (DARK_ROOF, 24.0), {PANELS: 18.0},
-                k.fittings('vents', 'plant', [{'plant': [[0, 0, 0]]}, {'vents': [[0, 0, 0]]}, {'tank': [[0, 5, 0]], 'vents': [[0, -8, 0]]},
-                                              {'plant': [[-3, 4, 90]]}, {}]),
+                [{'plant': [[0, 0, 0]]}, {'vents': [[0, 0, 0]]}, {'tank': [[0, 5, 0]], 'vents': [[0, -8, 0]]},
+                                              {'plant': [[-3, 4, 90]]}, {}],
                 k.door((MATTE, (.50, .53, .55)), (PANELS, (.80, .79, .75)), jamb=2.6, header=3.4, out=1.5, depth=3.4, recess=1.0, lintel=1.4,
                        panel=0.0, section=9.0, seam=(MATTE, (.26, .27, .28)), stripe=(HAZARD, (1, 1, 1), 5.0), stripeHeight=2.0, threshold=SILL, apron=4.0)),
     ]),
@@ -532,11 +526,11 @@ KITS = {
              k.door((ARMOUR, (1, 1, 1), 18.0), (BUNKER, (.88, .86, .82), 18.0), jamb=2.5, header=4.0, out=3.5, depth=4.0, recess=1.2, lintel=.8,
                     panel=6.0, section=10.0, seam=(YELLOW, (.75, .70, .55), 6.0), stripe=(HAZARD, (1, 1, 1), 6.0), stripeHeight=2.4,
                     threshold=SILL, apron=5.0)),
-        variant('alternative', 'hard', (['plain', 'rib', 'hazard', 'plain'], ['hazard', 'plain', 'rib', 'plain']),
+        variant('alternative', (['plain', 'rib', 'hazard', 'plain'], ['hazard', 'plain', 'rib', 'plain']),
                 (['slit', 'plain', 'rib', 'vent'], ['plain', 'slit', 'plain', 'rib']), ['slab-plain', 'slab-lamps', 'slab-plain'],
                 (DARK_ROOF, 24.0), {BUNKER: 18.0},
-                k.fittings('hatch', 'vent-block', [{'cupola': [[0, 0, 0]]}, {'vent-block': [[0, 0, 0]]}, {'hatch': [[-7, 6, 0]], 'vent-block': [[6, -6, 90]]},
-                                                   {'cupola': [[-6, -5, 0]], 'hatch': [[8, 8, 0]]}, {}]),
+                [{'cupola': [[0, 0, 0]]}, {'vent-block': [[0, 0, 0]]}, {'hatch': [[-7, 6, 0]], 'vent-block': [[6, -6, 90]]},
+                                                   {'cupola': [[-6, -5, 0]], 'hatch': [[8, 8, 0]]}, {}],
                 k.door((ARMOUR, (1, 1, 1), 18.0), (BUNKER, (.90, .88, .84), 18.0), jamb=3.4, header=4.2, out=BATTER+1.2, depth=4.2, recess=1.4, lintel=1.0,
                        panel=6.0, section=10.0, seam=(YELLOW, (.75, .70, .55), 6.0), stripe=(HAZARD, (1, 1, 1), 6.0), stripeHeight=2.4,
                        threshold=SILL, apron=BATTER+1.5)),
@@ -546,10 +540,10 @@ KITS = {
 
 def build(weight):
     pieces, variants = KITS[weight]
-    name = f'hangar_{weight}_a'
-    k.KITS[name] = (pieces, variants)
+    name = f'hangar-{weight}'
+    k.KITS[name] = (pieces, {variant['roof']: roof for variant, roof in variants}, [variant for variant, roof in variants])
     # Walls take a building's tint; frames, concrete trims, roofs and equipment keep theirs.
-    k.build(name, folder=f'hangar_{weight}', painted=lambda obj: obj.name.startswith('wall'))
+    k.build(name, folder='standard', painted=lambda obj: obj.name.startswith('wall'))
 
 
 if __name__ == '__main__' and '--' in sys.argv:

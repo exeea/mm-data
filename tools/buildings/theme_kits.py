@@ -1,7 +1,8 @@
 """The civic and Utopia looks as connected building kits: their pieces GLBs and kit JSONs.
 
 Run: blender -b --factory-startup --python theme_kits.py -- <civic|utopia> ...
-Writes data/models/buildings/<kit>/<kit>-pieces.glb and <kit>.json, for the game's bays kit (GeneratedKit, BayKit).
+Writes data/models/buildings/<kit>/<kit>-pieces.glb and <kit>.json (kit_json lays the file out), for the game's bays
+kit (GeneratedKit, BayKit).
 
 A piece's x runs along its wall, left to right seen from outside, from 0 to its length; its facade faces -y (out of the
 wall line at y 0), z up from its storey's floor; a storey is 18 high, a roof piece stands on the roof. Each piece is built
@@ -13,7 +14,6 @@ edges, bands, canopy heights) and differ in their bays, laid by the wall's place
 storey type. Utopia rounds its convex corners: a short piece lies along each facet of the arc. Roofs carry fittings,
 laid out about the hex's middle.
 """
-import json
 import math
 import random
 import sys
@@ -27,6 +27,7 @@ import authored_examples as shared
 import civic_blocks as c
 import civic_buildings as cb
 import civic_habitat as h
+import kit_json
 import utopia_buildings as u
 from civic_blocks import COPING, HAZARD, SHUTTER, SOUTH, TEAL_GLASS
 from civic_citadel import GLAZING
@@ -116,20 +117,16 @@ def plants(x0, x1, y, z, rng, size=(4, 7), spacing=3.4):
     u.plant_band('planter', np.c_[xs, np.full(len(xs), y)], z, range(1, len(xs)-1), rng, spacing=spacing, size=size, deep=.3)
 
 
-# -- Large doors (KitDoors.Style in a variant's `door`) ------------------------------------------------
+# -- Large doors (KitDoors.Style in a variant's `largeDoor`) -------------------------------------------
 SECTIONAL = 'structures/common/sectional-door'
 DOOR_GLASS = 'structures/buildings/fortress-glass'
-
-
-def lin(colour):
-    """An sRGB pigment as the linear tint a door's JSON takes."""
-    return [round(v/12.92 if v <= .04045 else ((v+.055)/1.055)**2.4, 3) for v in colour]
 
 
 def door(leaf, frame, **more):
     """A kit's large doors, as a hangar has them: the leaf and frame as (material, sRGB tint, repeat, paint), then any
     other value of the style; a surface as such a tuple."""
-    part = lambda material, tint, repeat=12.0, paint=False: {'material': material, 'repeat': repeat, 'tint': lin(tint), 'paint': paint}
+    part = lambda material, tint, repeat=12.0, paint=False: {'material': material, 'repeat': repeat, 'tint': kit_json.colour(tint),
+                                                             **({'paint': True} if paint else {})}
     result = {'leaf': part(*leaf), 'frame': part(*frame)}
     for name, value in more.items():
         result[name] = part(*value) if isinstance(value, tuple) else value
@@ -140,14 +137,14 @@ def vault(shape, rise, sheeting, gable, trim, rib=(2.0, .5), segments=(6, 3)):
     """A roof that spans its hall (BayKit's vault), as a hangar's does: its `shape` (gable, bow, arch or plates) and rise,
     its sheeting's sRGB tint, its gable ends and its trim (verge and ribs) as (material, sRGB tint, repeat), its ribs'
     width and height, its facets a side per level of detail."""
-    surface = lambda material, tint, repeat=12.0: {'material': material, 'repeat': repeat, 'tint': lin(tint)}
+    surface = lambda material, tint, repeat=12.0: {'material': material, 'repeat': repeat, 'tint': kit_json.colour(tint)}
     return {'shape': shape, 'rise': rise, 'segments': list(segments), 'gable': surface(*gable), 'trim': surface(*trim), 'verge': .9, 'ribPitch': W,
-            'ribWidth': rib[0], 'ribHeight': rib[1], 'tint': lin(sheeting)}
+            'ribWidth': rib[0], 'ribHeight': rib[1], 'tint': kit_json.colour(sheeting)}
 
 
 def door_windows(width, height, sill, pitch, glow=(.05, .04, .02), material=DOOR_GLASS):
     """A row of panes in each leaf, lit faintly at night."""
-    return {'glass': {'material': material, 'repeat': 12.0, 'tint': [1, 1, 1], 'glow': list(glow)}, 'width': width, 'height': height,
+    return {'glass': {'material': material, 'repeat': 12.0, 'tint': '#ffffff', 'glow': list(glow)}, 'width': width, 'height': height,
             'sill': sill, 'pitch': pitch}
 
 
@@ -1169,61 +1166,57 @@ UTOPIA_PLANAR = {WHITE_STONE: float(STONE_REPEAT)}
 FRONTIER_PLANAR = {PLATING: 18.0}
 
 
-def run(bays, planar, door=None, round_piece=None, joints=None, seam=None, margin=0.0):
-    """A module's run. margin: its bays keep that far off a wall's ends, stretches of its round piece filling the margins
-    and the wall's going on past an inside corner, where a bay cut short would show through its recess."""
+def run(bays, planar, entrance=None, round_piece=None, joints=None, seam=None, margin=0.0):
+    """A run: how a storey or a roof's edge lays a wall. entrance: a ground storey's door piece. margin: its bays keep that
+    far off a wall's ends, stretches of its round piece filling the margins and the wall's going on past an inside
+    corner, where a bay cut short would show through its recess."""
     result = {'bays': bays, 'bay': W, 'planar': planar}
     if margin:
         result['margin'], result['ends'] = margin, {'piece': round_piece, 'length': ROUND}
-    if door:
-        result['door'] = door
+    if entrance:
+        result['entrance'] = entrance
     if round_piece:
         result['round'] = {'piece': round_piece, 'length': ROUND}
     if joints:
         result['joints'] = {'start': joints+'-start', 'end': joints+'-end', 'length': CHAMFER}
     if seam:
         result['seam'] = {'piece': seam, 'length': W}
-    return [result]
+    return result
 
 
-def fittings(hatch, vent, groups):
-    """The same layouts for both footprints: each a dict of piece name -> [x, y, turn]."""
-    layouts = [{'hatches': [], 'vents': [], 'pieces': group} for group in groups]
-    return {footprint: {'hatch': hatch, 'vent': vent, 'layouts': layouts} for footprint in ('square', 'angled')}
-
-
-CIVIC_FITTINGS = fittings('hatch', 'vent-stack', [
+# A flat roof's fittings, the same for both footprints: its layouts, each a dict of piece name -> [x, y, turn].
+CIVIC_FITTINGS = [
     {'fan-unit': [[0, 0, 0]]},
     {'plant-room': [[-6, 4, 0]], 'vent-stack': [[11, -9, 0]]},
     {'louvre-cage': [[5, -4, 30]], 'hatch': [[-10, 9, 0]]},
     {'water-tank': [[-8, -5, 0]], 'fan-unit': [[9, 8, 90]]},
     {'hatch': [[4, 6, 0]]},
     {'vent-stack': [[0, 10, 90]], 'hatch': [[-7, -9, 0], [9, -8, 0]]},
-])
-UTOPIA_FITTINGS = fittings('bed', 'skylight', [
+]
+UTOPIA_FITTINGS = [
     {'skylight': [[0, 0, 0]]},
     {'tree': [[-7, 4, 0]], 'bed': [[8, -7, 30]]},
     {'pergola': [[0, 0, 30]]},
     {'solar': [[5, -4, 0]], 'tree': [[-9, 9, 0]]},
     {'bed': [[0, 0, 90]], 'skylight': [[-2, 11, 60]]},
     {'pavilion': [[-3, 2, 0]]},
-])
-FRONTIER_FITTINGS = fittings('hatch', 'hvac', [
+]
+FRONTIER_FITTINGS = [
     {'solar': [[-5, 5, 0]], 'radome': [[8, -9, 0]]},
     {'hvac': [[0, 0, 0]]},
     {'solar': [[0, -6.5, 0], [0, 8, 0]]},
     {'radome': [[-9, 7, 0]], 'hatch': [[8, -6, 0]]},
     {'hatch': [[0, 2, 0]], 'beacon': [[10, -9, 0]]},
     {'hvac': [[-6, -5, 90]], 'solar': [[7, 8, 0]]},
-])
-GREENHOUSE_FITTINGS = fittings('hatch', 'hvac', [
+]
+GREENHOUSE_FITTINGS = [
     {'hvac': [[0, 0, 0]]},
     {'hatch': [[-6, 4, 0], [8, -6, 0]]},
     {},
     {'hvac': [[-7, 6, 90]]},
     {'beacon': [[0, 10, 0]]},
     {'hatch': [[0, 0, 0]]},
-])
+]
 LONE = [[-20.78125, -34.25], [20.78125, -34.25], [20.78125, 34.25], [-20.78125, 34.25]]  # As the light building's.
 
 
@@ -1233,36 +1226,36 @@ CIVIC_DOOR = door((SLATS, SHUTTER, 4.0), (PANELS, TONES[1], 18.0), jamb=2.4, hea
 SHOPS = (['shop-narrow', 'shop-wide', 'shop-closed', 'plinth-louvre', 'shop-narrow'], ['plinth-slots', 'shop-wide', 'plinth-billboard', 'plinth-louvre', 'shop-closed'])
 
 
-def vaulted(roof, eave, roles=('roof0',)):
-    """A variant's `vaulted`: what it draws in place of its own under the roof that spans its hall (a hangar's, unless
-    its building chooses the flat one): that roof, the eave its walls carry under it (in place of each of its roof
-    `roles`), no fittings."""
-    return {'roof': roof, 'modules': {role: eave for role in roles}, 'fittings': None}
+def hall_roof(hall):
+    """What makes a variant its look's hall: a hangar-class building draws it unless told otherwise, under the roof
+    named `vault`, which spans it, unless the building chooses the variant's flat one."""
+    return {'class': 'hangar', 'vaulted': 'vault'} if hall else {}
+
+
+# A roof by name: its slab, the runs its edge picks among, the vault over it if it spans its hall.
+CIVIC_SLAB = {'material': CAST, 'repeat': 12.0, 'inset': 0.0, 'heights': [0.3], 'aviationLights': True}
+CIVIC_ROOFS = {
+    'flat': {**CIVIC_SLAB, 'runs': [run(['parapet-plain', 'parapet-rail', 'parapet-plain', 'parapet-tall'], CIVIC_PLANAR)]},
+    # A thin concrete shell, in place of the flat roof with its parapets and plant.
+    'vault': {**CIVIC_SLAB, 'vault': vault('arch', 9.0, (.80, .80, .77), (CAST, TONES[1]), (CAST, TONES[2]), rib=(2.4, .6)),
+              'runs': [run(['hall-eave'], CIVIC_PLANAR)]},
+}
 
 
 def civic_variant(name, floors, bases=SHOPS, doors=('shop-door', 'plinth-door'), tops=None, hall=False):
-    """tops: a hall's bays in the storey under its roof (the kit's `top` module). hall: a hangar may stand under a thin
-    concrete shell that spans it, in place of the flat roof with its parapets and plant."""
+    """floors, bases: the runs its storeys pick among, as bay lists (doors: each base's entrance). tops: a hall's bays
+    in the storey under its roof. hall: the look's hall (hall_roof)."""
     p = CIVIC_PLANAR
-    flat = {'material': CAST, 'repeat': 12.0, 'inset': 0.0, 'heights': [0.3], 'aol': True}
-    shell = {**flat, 'vault': vault('arch', 9.0, (.80, .80, .77), (CAST, TONES[1]), (CAST, TONES[2]), rib=(2.4, .6))}
     return {
-        'name': name, 'style': 'bays', 'pieces': 'civic-pieces.glb', 'lone': LONE, 'bandEnd': 1.75,
-        'roof': flat,
+        'name': name, **hall_roof(hall), 'roof': 'flat', 'lone': LONE, 'bandEnd': 1.75,
         'floors': {'material': CAST, 'repeat': 12.0, 'inset': 3.0, 'heights': [0.05]},
         'sidewalk': {'material': CAST, 'repeat': 12.0, 'width': 5.0, 'kerb': 0.4},
-        'modules': {
-            'base0': run(bases[0], p, door=doors[0]),
-            'base1': run(bases[1], p, door=doors[1]),
-            'floor0': run(floors[0], p),
-            'floor1': run(floors[1], p),
-            **({'top0': run(tops, p)} if tops else {}),
-            'roof0': run(['parapet-plain', 'parapet-rail', 'parapet-plain', 'parapet-tall'], p),
-        },
         'fittings': CIVIC_FITTINGS,
         'varyBays': True,
-        'door': CIVIC_DOOR,
-        **({'vaulted': vaulted(shell, run(['hall-eave'], p))} if hall else {}),
+        'largeDoor': CIVIC_DOOR,
+        'base': [run(bays, p, entrance) for bays, entrance in zip(bases, doors)],
+        'floor': [run(bays, p) for bays in floors],
+        **({'top': [run(tops, p)]} if tops else {}),
     }
 
 
@@ -1273,30 +1266,31 @@ ENDS = 3.0  # How far Utopia's bays keep off a wall's ends.
 ARCADES = (['arcade-arch', 'arcade-planted', 'arcade-arch', 'arcade-arch'], ['arcade-planted', 'arcade-arch', 'arcade-planted'])
 
 
+UTOPIA_ROOFS = {
+    'garden': {'material': LAWN, 'repeat': float(LAWN_REPEAT), 'inset': 0.0, 'heights': [0.3],
+               'runs': [run(['rim-garden', 'rim-rail', 'rim-garden'], UTOPIA_PLANAR, round_piece='rim-round')]},
+    # A white shell, in place of the roof garden.
+    'vault': {'material': WHITE_STONE, 'repeat': float(STONE_REPEAT), 'inset': 0.0, 'heights': [0.3],
+              'vault': vault('arch', 9.0, STONE_TINT, (WHITE_STONE, STONE_TINT, float(STONE_REPEAT)),
+                             (WHITE_STONE, STONE_SHADE, float(STONE_REPEAT)), rib=(1.6, .4)),
+              'runs': [run(['hall-eave'], UTOPIA_PLANAR, round_piece='hall-eave-round')]},
+}
+
+
 def utopia_variant(name, floors, round_piece, bases=ARCADES, door='arcade-door', base_round='arcade-round', tops=None, hall=False):
-    """tops: a hall's bays in the storey under its roof and their rounded corner's piece (the kit's `top` module). hall:
-    a hangar may stand under a white shell that spans it, in place of the roof garden."""
+    """floors, bases: the runs its storeys pick among, as bay lists. tops: a hall's bays in the storey under its roof
+    and their rounded corner's piece. hall: the look's hall (hall_roof)."""
     p = UTOPIA_PLANAR
-    shell = {'material': WHITE_STONE, 'repeat': float(STONE_REPEAT), 'inset': 0.0, 'heights': [0.3],
-             'vault': vault('arch', 9.0, STONE_TINT, (WHITE_STONE, STONE_TINT, float(STONE_REPEAT)), (WHITE_STONE, STONE_SHADE, float(STONE_REPEAT)),
-                            rib=(1.6, .4))}
     return {
-        'name': name, 'style': 'bays', 'pieces': 'utopia-pieces.glb', 'lone': LONE, 'bandEnd': 1.75,
+        'name': name, **hall_roof(hall), 'roof': 'garden', 'lone': LONE, 'bandEnd': 1.75,
         'cornerRadius': 10.0, 'cornerSegments': 3,
-        'roof': {'material': LAWN, 'repeat': float(LAWN_REPEAT), 'inset': 0.0, 'heights': [0.3]},
         'floors': {'material': WHITE_STONE, 'repeat': 12.0, 'inset': 3.0, 'heights': [0.05]},
         'sidewalk': {'material': WHITE_STONE, 'repeat': 12.0, 'width': 5.0, 'kerb': 0.3},
-        'modules': {
-            'base0': run(bases[0], p, door, base_round, margin=ENDS),
-            'base1': run(bases[1], p, door, base_round, margin=ENDS),
-            'floor0': run(floors[0], p, round_piece=round_piece, margin=ENDS),
-            'floor1': run(floors[1], p, round_piece=round_piece, margin=ENDS),
-            **({'top0': run(tops[0], p, round_piece=tops[1], margin=ENDS)} if tops else {}),
-            'roof0': run(['rim-garden', 'rim-rail', 'rim-garden'], p, round_piece='rim-round'),
-        },
         'fittings': UTOPIA_FITTINGS,
-        'door': UTOPIA_DOOR,
-        **({'vaulted': vaulted(shell, run(['hall-eave'], p, round_piece='hall-eave-round'))} if hall else {}),
+        'largeDoor': UTOPIA_DOOR,
+        'base': [run(bays, p, door, base_round, margin=ENDS) for bays in bases],
+        'floor': [run(bays, p, round_piece=round_piece, margin=ENDS) for bays in floors],
+        **({'top': [run(tops[0], p, round_piece=tops[1], margin=ENDS)]} if tops else {}),
     }
 
 
@@ -1305,48 +1299,55 @@ FRONTIER_DOOR = door((SECTIONAL, (.62, .66, .70)), (PAINT, ORANGE), jamb=1.8, he
                      panel=3.0, section=12.0, seam=(PAINT, DARK), stripe=(HAZARD, (1, 1, 1), 4.0), stripeHeight=1.4,
                      windows=door_windows(3.4, 1.2, 7.4, 6.0), threshold=(DECK, (.80, .80, .80)), apron=3.0)
 LID_RISE, LID_PLATES = 6.0, (3,)  # A hall's lid: its rise, its plates a side at every level of detail.
-HALL_FITTINGS = fittings('hatch', 'hvac', [
+HALL_FITTINGS = [
     {'hvac': [[-6, 5, 0]], 'hatch': [[8, -6, 0]]},
     {'solar': [[0, 0, 0]]},
     {},
     {'radome': [[-9, 8, 0]], 'hvac': [[6, -5, 90]]},
     {'beacon': [[10, -9, 0]]},
     {'hatch': [[0, 0, 0]]},
-])
+]
 
 
-def frontier_variant(name, bases, floors, door, roof=PLATING, layouts=FRONTIER_FITTINGS, tops=None, hall=False):
-    """tops: a hall's bays in the storey under its roof (the kit's `top` module). hall: a hangar may stand under a lid of
-    flat plates that spans it, a module's bevel grown to a roof, in place of the modules' flat roofs."""
+def module_roof(material, **more):
+    """Frontier's flat roof of `material`, a module's: a seam along each joint between modules."""
+    edge = lambda bays: run(bays, FRONTIER_PLANAR, round_piece='roof-corner', seam='roof-seam')
+    return {'material': material, 'repeat': 30.0, 'inset': CHAMFER, 'heights': [0.3], **more, 'aviationLights': True,
+            'runs': [edge(['roof-plain', 'roof-pipe', 'roof-plain', 'roof-grille']), edge(['roof-pipe', 'roof-light', 'roof-plain'])]}
+
+
+FRONTIER_ROOFS = {
+    'plating': module_roof(PLATING),
+    'glass': module_roof(DUSTY_GLASS, underlay=True),  # A greenhouse's: a planted bed shows under it.
+    # A lid of flat plates, a module's bevel grown to a roof, in place of the modules' flat roofs.
+    'vault': {'material': PLATING, 'repeat': 30.0, 'inset': 0.0, 'heights': [0.3],
+              'vault': vault('plates', LID_RISE, (1, 1, 1), (PLATING, (1, 1, 1), 18.0), (MATTE, FRAME), rib=(1.8, .35), segments=LID_PLATES),
+              'runs': [run(['lid'], FRONTIER_PLANAR, round_piece='lid-corner')]},
+}
+
+
+def frontier_variant(name, bases, floors, door, roof='plating', layouts=FRONTIER_FITTINGS, tops=None, hall=False):
+    """bases, floors: the runs its storeys pick among, as bay lists. tops: a hall's bays in the storey under its roof.
+    hall: the look's hall (hall_roof)."""
     p = FRONTIER_PLANAR
-    lid = {'material': PLATING, 'repeat': 30.0, 'inset': 0.0, 'heights': [0.3],
-           'vault': vault('plates', LID_RISE, (1, 1, 1), (PLATING, (1, 1, 1), 18.0), (MATTE, FRAME), rib=(1.8, .35), segments=LID_PLATES)}
     return {
-        'name': name, 'style': 'bays', 'pieces': 'frontier-pieces.glb', 'lone': LONE, 'bandEnd': 1.75,
+        'name': name, **hall_roof(hall), 'roof': roof, 'lone': LONE, 'bandEnd': 1.75,
         'cornerRadius': 5.0, 'cornerSegments': 1,
-        'roof': {'material': roof, 'repeat': 30.0, 'inset': CHAMFER, 'heights': [0.3], 'underlay': roof == DUSTY_GLASS,
-                 'aol': True},
         'floors': {'material': DECK, 'repeat': 12.0, 'inset': 3.0, 'heights': [0.05]},
-        'modules': {
-            'base0': run(['base-'+bay for bay in bases[0]], p, door, 'corner-base', 'base-joint'),
-            'base1': run(['base-'+bay for bay in bases[1]], p, door, 'corner-base', 'base-joint'),
-            'floor0': run(floors[0], p, round_piece='corner', joints='joint'),
-            'floor1': run(floors[1], p, round_piece='corner', joints='joint'),
-            **({'top0': run(tops, p, round_piece='corner', joints='joint')} if tops else {}),
-            'roof0': run(['roof-plain', 'roof-pipe', 'roof-plain', 'roof-grille'], p, round_piece='roof-corner', seam='roof-seam'),
-            'roof1': run(['roof-pipe', 'roof-light', 'roof-plain'], p, round_piece='roof-corner', seam='roof-seam'),
-        },
         'fittings': layouts,
-        'door': FRONTIER_DOOR,
-        **({'vaulted': vaulted(lid, run(['lid'], p, round_piece='lid-corner'), ('roof0', 'roof1'))} if hall else {}),
+        'largeDoor': FRONTIER_DOOR,
+        'base': [run(['base-'+bay for bay in bays], p, door, 'corner-base', 'base-joint') for bays in bases],
+        'floor': [run(bays, p, round_piece='corner', joints='joint') for bays in floors],
+        **({'top': [run(tops, p, round_piece='corner', joints='joint')]} if tops else {}),
     }
 
 
 CIVIC_HALL = ['hall-blank', 'hall-louvre', 'hall-blank', 'hall-glass']  # A hall's bays, alike on every storey so its strips stack.
 UTOPIA_HALL = ['hall-slats', 'hall-glass', 'hall-slats', 'hall-blank']
 
+# A kit: its pieces, its roofs by name, its variants.
 KITS = {
-    'civic': (CIVIC_PIECES, [
+    'civic': (CIVIC_PIECES, CIVIC_ROOFS, [
         civic_variant('galleries', (['gallery-a', 'gallery-b', 'gallery-c', 'gallery-d'], ['gallery-b', 'gallery-d', 'gallery-a', 'gallery-c'])),
         civic_variant('ribbons', (['ribbon-plain', 'ribbon-lit', 'ribbon-balcony', 'ribbon-plain', 'ribbon-panel'],
                                   ['ribbon-lit', 'ribbon-panel', 'ribbon-plain', 'ribbon-balcony'])),
@@ -1354,10 +1355,10 @@ KITS = {
         # A hall: concrete fins from a battered foot to the roof, where they join in arches, blank precast, louvres and
         # dark glass between them, every storey laying the same bays. A hangar-class building draws it unless told
         # otherwise, under a concrete shell unless it chooses the look's flat roof.
-        civic_variant('hangar', (CIVIC_HALL, CIVIC_HALL), (['base-'+bay for bay in CIVIC_HALL],)*2, ('base-hall-door',)*2,
+        civic_variant('hangar', (CIVIC_HALL,), (['base-'+bay for bay in CIVIC_HALL],), ('base-hall-door',),
                       [bay.replace('hall-', 'hall-top-') for bay in CIVIC_HALL], hall=True),
     ]),
-    'frontier': (FRONTIER_PIECES, [
+    'frontier': (FRONTIER_PIECES, FRONTIER_ROOFS, [
         frontier_variant('habitat', (['pair', 'single', 'four', 'pair', 'vent'], ['wide', 'pair', 'single', 'four']),
                          (['pair', 'four', 'single', 'pair', 'vent'], ['wide', 'pair', 'four', 'single', 'vent']), 'airlock'),
         frontier_variant('medical', (['med-pair', 'med-triple', 'med-single'], ['med-triple', 'med-pair', 'med-single']),
@@ -1366,21 +1367,21 @@ KITS = {
         frontier_variant('industrial', (['louvre', 'pipes', 'boxes'], ['boxes', 'louvre', 'slit']),
                          (['slit', 'louvre', 'pipes', 'slit'], ['louvre', 'slit', 'boxes', 'vent']), 'rollup'),
         frontier_variant('greenhouse', (['glass', 'glass-vent', 'glass'], ['glass-vent', 'glass', 'glass']),
-                         (['glass', 'glass-vent', 'glass'], ['glass', 'glass', 'glass-vent']), 'airlock', DUSTY_GLASS, GREENHOUSE_FITTINGS),
+                         (['glass', 'glass-vent', 'glass'], ['glass', 'glass', 'glass-vent']), 'airlock', 'glass', GREENHOUSE_FITTINGS),
         # A hall of strapped modules without rooms' windows, a pair of round-headed ports in one bay in four under its roof. A hangar-class
         # building draws it unless told otherwise, under a plated lid unless it chooses the modules' flat roofs.
         frontier_variant('hangar', (['ribbed', 'louvre', 'ribbed', 'boxes'], ['ribbed', 'ribbed', 'pipes', 'ribbed']),
                          (['ribbed', 'slit', 'ribbed', 'ribbed'], ['slit', 'ribbed', 'vent', 'ribbed']), 'airlock', layouts=HALL_FITTINGS,
                          tops=['ribbed-arch', 'ribbed', 'ribbed', 'ribbed'], hall=True),
     ]),
-    'utopia': (UTOPIA_PIECES, [
+    'utopia': (UTOPIA_PIECES, UTOPIA_ROOFS, [
         utopia_variant('terraces', (['terrace-dense', 'terrace-sparse', 'terrace-pier', 'terrace-dense', 'terrace-oval'],
                                     ['terrace-sparse', 'terrace-rail', 'terrace-dense', 'terrace-oval', 'terrace-pier']), 'terrace-round'),
         utopia_variant('bands', (['band-fins', 'band-glass', 'band-fins', 'band-slats'], ['band-glass', 'band-fins', 'band-slats', 'band-glass']), 'band-round'),
         # A hall: white stone round tall openings of slats and glass that run from a planted plinth up through the storeys
         # and end in round arches under the roof, every storey laying the same bays. A hangar-class building draws it
         # unless told otherwise, under a white shell unless it chooses the look's roof garden.
-        utopia_variant('hangar', (UTOPIA_HALL, UTOPIA_HALL), 'hall-round', (['base-'+bay for bay in UTOPIA_HALL],)*2, 'base-hall-door',
+        utopia_variant('hangar', (UTOPIA_HALL,), 'hall-round', (['base-'+bay for bay in UTOPIA_HALL],), 'base-hall-door',
                        'base-hall-round', ([bay.replace('hall-', 'hall-top-') for bay in UTOPIA_HALL], 'hall-top-round'), hall=True),
     ]),
 }
@@ -1391,7 +1392,7 @@ KITS = {
 def build(kit, folder=None, painted=None):
     """Builds a kit's pieces GLB and JSON into data/models/buildings/<folder, else the kit's name>; `painted` says which of
     its objects take a building's tint."""
-    pieces, variants = KITS[kit]
+    pieces, roofs, variants = KITS[kit]
     shared.fresh(kit+'-pieces')
     levels = {level: {'meshes': [], 'nodes': [], 'materials': []} for level in (0, 1, 2)}
     counts = {}
@@ -1446,7 +1447,7 @@ def build(kit, folder=None, painted=None):
     folder = DATA/'models/buildings'/(folder or kit)
     folder.mkdir(parents=True, exist_ok=True)
     write_glb(folder/f'{kit}-pieces.glb', levels=levels)
-    (folder/f'{kit}.json').write_text(json.dumps(variants, indent=2)+'\n', encoding='utf-8')
+    kit_json.write(folder/f'{kit}.json', 'bays', f'{kit}-pieces.glb', roofs, variants)
     for name in pieces:
         print(f'PIECE {kit} {name:16s}', *(f'lod{level} {counts[name, level]:5d}' for level in levels))
     print('RESULT', kit, len(pieces), 'pieces')

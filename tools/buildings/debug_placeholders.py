@@ -1,4 +1,4 @@
-"""Flat, colour-coded building kits using the light building's existing bays format.
+"""Flat, colour-coded standard kits, laid out as the light building's spec.
 
 Run with Python (standard library only): python tools/buildings/debug_placeholders.py
 The existing light building, light fortress and lunar habitat are not overwritten.
@@ -16,6 +16,7 @@ from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TOOLS))
+import kit_json
 from glb_geometry import write_glb
 
 DATA = TOOLS.parent / 'data'
@@ -81,38 +82,38 @@ def main():
     png += chunk(b'IDAT', zlib.compress(b'\x00\xff\xff\xff\xff')) + chunk(b'IEND', b'')
     for image in ('debug-white', 'debug-floor_albedo', 'debug-panels_albedo', 'debug-roof_albedo'):
         (DATA / f'models/board/textures/structures/buildings/{image}.png').write_bytes(png)
-    template = json.loads((BUILDINGS / 'building_light/building_light.json').read_text())
+    folder = BUILDINGS / 'standard'
+    template = json.loads((folder / 'building-light.json').read_text())
     paths = []
-    for family in ('building', 'fortress', 'gun_emplacement'):  # The hangars are kits of their own (hangar_kits.py).
+    for family in ('building', 'fortress', 'gun-emplacement'):  # The hangars are kits of their own (hangar_kits.py).
         for weight in ('light', 'medium', 'heavy', 'hard'):
             if weight == 'light' and family in ('building', 'fortress'):
                 continue
-            directory = f'{family}_{weight}'
-            name = directory + ('' if family == 'building' else '_a')
-            folder = BUILDINGS / directory
-            folder.mkdir(parents=True, exist_ok=True)
+            name = f'{family}-{weight}'
             spec = copy.deepcopy(template)
-            for variant in spec:
-                variant.pop('wallInsets', None)  # Flat diagnostic panels stand on the wall line.
-                variant['pieces'] = f'{name}-pieces.glb'
-                variant['roof']['material'] = 'structures/buildings/debug-roof'
+            spec['pieces'] = f'{name}-pieces.glb'
+            # A single flat LOD is sufficient for these diagnostic panels.
+            for roof in spec['roofs'].values():
+                roof['material'] = 'structures/buildings/debug-roof'
+                roof['heights'] = roof['heights'][:1]
+            for variant in spec['variants']:
                 variant['floors']['material'] = 'structures/buildings/debug-floor'
                 variant['floors']['inset'] = 0.6  # Meet the 1.25-unit solid panels.
+                variant['floors']['heights'] = variant['floors']['heights'][:1]
                 variant['sidewalk']['material'] = 'structures/buildings/debug-floor'
-                # A single flat LOD is sufficient for these diagnostic panels.
-                for key in ('roof', 'floors'):
-                    variant[key]['heights'] = variant[key]['heights'][:1]
-                for role, runs in variant['modules'].items():
-                    variant['modules'][role] = runs[:1]
-            (folder / f'{name}.json').write_text(json.dumps(spec, indent=2) + '\n', encoding='utf-8')
+            for part in (*spec['roofs'].values(), *spec['variants']):
+                for role in ('runs', *kit_json.ROLES):
+                    for run in part.get(role, ()):
+                        run.pop('far', None)
+            (folder / f'{name}.json').write_text(kit_json.dumps(spec) + '\n', encoding='utf-8')
             panels(folder / f'{name}-pieces.glb')
-            paths.append(f'buildings/{directory}/{name}')
+            paths.append(f'buildings/standard/{name}')
     paths.append('buildings/debug/debug-authored')
     # Asset IDs are assigned once, never regenerated when a kit is rebuilt.
     index_path = DATA / 'models/board/uids.json'
     index = json.loads(index_path.read_text())
     registered = set(index.values())
-    for path in paths + ['buildings/building_light/building_light', 'buildings/fortress_light/fortress_light_a',
+    for path in paths + ['buildings/standard/building-light', 'buildings/standard/fortress-light',
                          'buildings/lunar_habitat/lunar_habitat']:
         if path in registered:
             continue

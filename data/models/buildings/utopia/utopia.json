@@ -1,398 +1,27 @@
-[
-  {
-    "name": "terraces",
-    "style": "bays",
-    "pieces": "utopia-pieces.glb",
-    "lone": [
-      [
-        -20.78125,
-        -34.25
-      ],
-      [
-        20.78125,
-        -34.25
-      ],
-      [
-        20.78125,
-        34.25
-      ],
-      [
-        -20.78125,
-        34.25
-      ]
-    ],
+{
+  "style": "bays",
+  "pieces": "utopia-pieces.glb",
+  "shared": {
+    "planar": {"structures/common/white-stone": 54.0},
+    "bay": 24.0,
+    "roof": "garden",
+    "lone": [[-20.78125, -34.25], [20.78125, -34.25], [20.78125, 34.25], [-20.78125, 34.25]],
     "bandEnd": 1.75,
     "cornerRadius": 10.0,
     "cornerSegments": 3,
-    "roof": {
-      "material": "terrain/surfaces/grassland-ground",
-      "repeat": 36.0,
-      "inset": 0.0,
-      "heights": [
-        0.3
-      ]
-    },
-    "floors": {
-      "material": "structures/common/white-stone",
-      "repeat": 12.0,
-      "inset": 3.0,
-      "heights": [
-        0.05
-      ]
-    },
-    "sidewalk": {
-      "material": "structures/common/white-stone",
-      "repeat": 12.0,
-      "width": 5.0,
-      "kerb": 0.3
-    },
-    "modules": {
-      "base0": [
-        {
-          "bays": [
-            "arcade-arch",
-            "arcade-planted",
-            "arcade-arch",
-            "arcade-arch"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "arcade-round",
-            "length": 6.0
-          },
-          "door": "arcade-door",
-          "round": {
-            "piece": "arcade-round",
-            "length": 6.0
-          }
-        }
-      ],
-      "base1": [
-        {
-          "bays": [
-            "arcade-planted",
-            "arcade-arch",
-            "arcade-planted"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "arcade-round",
-            "length": 6.0
-          },
-          "door": "arcade-door",
-          "round": {
-            "piece": "arcade-round",
-            "length": 6.0
-          }
-        }
-      ],
-      "floor0": [
-        {
-          "bays": [
-            "terrace-dense",
-            "terrace-sparse",
-            "terrace-pier",
-            "terrace-dense",
-            "terrace-oval"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "terrace-round",
-            "length": 6.0
-          },
-          "round": {
-            "piece": "terrace-round",
-            "length": 6.0
-          }
-        }
-      ],
-      "floor1": [
-        {
-          "bays": [
-            "terrace-sparse",
-            "terrace-rail",
-            "terrace-dense",
-            "terrace-oval",
-            "terrace-pier"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "terrace-round",
-            "length": 6.0
-          },
-          "round": {
-            "piece": "terrace-round",
-            "length": 6.0
-          }
-        }
-      ],
-      "roof0": [
-        {
-          "bays": [
-            "rim-garden",
-            "rim-rail",
-            "rim-garden"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "round": {
-            "piece": "rim-round",
-            "length": 6.0
-          }
-        }
-      ]
-    },
-    "fittings": {
-      "square": {
-        "hatch": "bed",
-        "vent": "skylight",
-        "layouts": [
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "skylight": [
-                [
-                  0,
-                  0,
-                  0
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "tree": [
-                [
-                  -7,
-                  4,
-                  0
-                ]
-              ],
-              "bed": [
-                [
-                  8,
-                  -7,
-                  30
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "pergola": [
-                [
-                  0,
-                  0,
-                  30
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "solar": [
-                [
-                  5,
-                  -4,
-                  0
-                ]
-              ],
-              "tree": [
-                [
-                  -9,
-                  9,
-                  0
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "bed": [
-                [
-                  0,
-                  0,
-                  90
-                ]
-              ],
-              "skylight": [
-                [
-                  -2,
-                  11,
-                  60
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "pavilion": [
-                [
-                  -3,
-                  2,
-                  0
-                ]
-              ]
-            }
-          }
-        ]
-      },
-      "angled": {
-        "hatch": "bed",
-        "vent": "skylight",
-        "layouts": [
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "skylight": [
-                [
-                  0,
-                  0,
-                  0
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "tree": [
-                [
-                  -7,
-                  4,
-                  0
-                ]
-              ],
-              "bed": [
-                [
-                  8,
-                  -7,
-                  30
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "pergola": [
-                [
-                  0,
-                  0,
-                  30
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "solar": [
-                [
-                  5,
-                  -4,
-                  0
-                ]
-              ],
-              "tree": [
-                [
-                  -9,
-                  9,
-                  0
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "bed": [
-                [
-                  0,
-                  0,
-                  90
-                ]
-              ],
-              "skylight": [
-                [
-                  -2,
-                  11,
-                  60
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "pavilion": [
-                [
-                  -3,
-                  2,
-                  0
-                ]
-              ]
-            }
-          }
-        ]
-      }
-    },
-    "door": {
-      "leaf": {
-        "material": "structures/common/white-stone",
-        "repeat": 6.0,
-        "tint": [
-          0.869,
-          0.848,
-          0.807
-        ],
-        "paint": false
-      },
-      "frame": {
-        "material": "structures/common/white-stone",
-        "repeat": 54.0,
-        "tint": [
-          1.0,
-          0.966,
-          0.911
-        ],
-        "paint": false
-      },
+    "floors": {"material": "structures/common/white-stone", "repeat": 12.0, "inset": 3.0, "heights": [0.05]},
+    "sidewalk": {"material": "structures/common/white-stone", "repeat": 12.0, "width": 5.0, "kerb": 0.3},
+    "fittings": [
+      {"skylight": [[0, 0, 0]]},
+      {"tree": [[-7, 4, 0]], "bed": [[8, -7, 30]]},
+      {"pergola": [[0, 0, 30]]},
+      {"solar": [[5, -4, 0]], "tree": [[-9, 9, 0]]},
+      {"bed": [[0, 0, 90]], "skylight": [[-2, 11, 60]]},
+      {"pavilion": [[-3, 2, 0]]}
+    ],
+    "largeDoor": {
+      "leaf": {"material": "structures/common/white-stone", "repeat": 6.0, "tint": "#f0ede8"},
+      "frame": {"material": "structures/common/white-stone", "repeat": 54.0, "tint": "#fffbf5"},
       "jamb": 2.2,
       "header": 2.8,
       "out": 1.0,
@@ -401,1020 +30,139 @@
       "lintel": 1.6,
       "panel": 2.0,
       "section": 12.0,
-      "seam": {
-        "material": "structures/common/satin-steel",
-        "repeat": 12.0,
-        "tint": [
-          0.342,
-          0.342,
-          0.319
-        ],
-        "paint": false
-      },
+      "seam": {"material": "structures/common/satin-steel", "repeat": 12.0, "tint": "#9e9e99"},
       "windows": {
         "glass": {
           "material": "structures/buildings/tower-glass",
           "repeat": 12.0,
-          "tint": [
-            1,
-            1,
-            1
-          ],
-          "glow": [
-            0.2,
-            0.15,
-            0.08
-          ]
+          "tint": "#ffffff",
+          "glow": [0.2, 0.15, 0.08]
         },
         "width": 8.0,
         "height": 2.4,
         "sill": 9.0,
         "pitch": 12.0
       },
-      "threshold": {
-        "material": "structures/common/white-stone",
-        "repeat": 12.0,
-        "tint": [
-          0.748,
-          0.729,
-          0.692
-        ],
-        "paint": false
-      },
+      "threshold": {"material": "structures/common/white-stone", "repeat": 12.0, "tint": "#e0ded9"},
       "apron": 5.0
+    },
+    "base": {"margin": 3.0},
+    "floor": {"margin": 3.0}
+  },
+  "roofs": {
+    "garden": {
+      "material": "terrain/surfaces/grassland-ground",
+      "repeat": 36.0,
+      "inset": 0.0,
+      "heights": [0.3],
+      "runs": [{"bays": ["rim-garden", "rim-rail", "rim-garden"], "round": {"piece": "rim-round", "length": 6.0}}]
+    },
+    "vault": {
+      "material": "structures/common/white-stone",
+      "repeat": 54.0,
+      "inset": 0.0,
+      "heights": [0.3],
+      "vault": {
+        "shape": "arch",
+        "rise": 9.0,
+        "segments": [6, 3],
+        "gable": {"material": "structures/common/white-stone", "repeat": 54.0, "tint": "#fffbf5"},
+        "trim": {"material": "structures/common/white-stone", "repeat": 54.0, "tint": "#e0ded9"},
+        "verge": 0.9,
+        "ribPitch": 24.0,
+        "ribWidth": 1.6,
+        "ribHeight": 0.4,
+        "tint": "#fffbf5"
+      },
+      "runs": [{"bays": ["hall-eave"], "round": {"piece": "hall-eave-round", "length": 6.0}}]
     }
   },
-  {
-    "name": "bands",
-    "style": "bays",
-    "pieces": "utopia-pieces.glb",
-    "lone": [
-      [
-        -20.78125,
-        -34.25
-      ],
-      [
-        20.78125,
-        -34.25
-      ],
-      [
-        20.78125,
-        34.25
-      ],
-      [
-        -20.78125,
-        34.25
-      ]
-    ],
-    "bandEnd": 1.75,
-    "cornerRadius": 10.0,
-    "cornerSegments": 3,
-    "roof": {
-      "material": "terrain/surfaces/grassland-ground",
-      "repeat": 36.0,
-      "inset": 0.0,
-      "heights": [
-        0.3
-      ]
-    },
-    "floors": {
-      "material": "structures/common/white-stone",
-      "repeat": 12.0,
-      "inset": 3.0,
-      "heights": [
-        0.05
-      ]
-    },
-    "sidewalk": {
-      "material": "structures/common/white-stone",
-      "repeat": 12.0,
-      "width": 5.0,
-      "kerb": 0.3
-    },
-    "modules": {
-      "base0": [
+  "variants": [
+    {
+      "name": "terraces",
+      "base": [
         {
-          "bays": [
-            "arcade-arch",
-            "arcade-planted",
-            "arcade-arch",
-            "arcade-arch"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "arcade-round",
-            "length": 6.0
-          },
-          "door": "arcade-door",
-          "round": {
-            "piece": "arcade-round",
-            "length": 6.0
-          }
-        }
-      ],
-      "base1": [
-        {
-          "bays": [
-            "arcade-planted",
-            "arcade-arch",
-            "arcade-planted"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "arcade-round",
-            "length": 6.0
-          },
-          "door": "arcade-door",
-          "round": {
-            "piece": "arcade-round",
-            "length": 6.0
-          }
-        }
-      ],
-      "floor0": [
-        {
-          "bays": [
-            "band-fins",
-            "band-glass",
-            "band-fins",
-            "band-slats"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "band-round",
-            "length": 6.0
-          },
-          "round": {
-            "piece": "band-round",
-            "length": 6.0
-          }
-        }
-      ],
-      "floor1": [
-        {
-          "bays": [
-            "band-glass",
-            "band-fins",
-            "band-slats",
-            "band-glass"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "band-round",
-            "length": 6.0
-          },
-          "round": {
-            "piece": "band-round",
-            "length": 6.0
-          }
-        }
-      ],
-      "roof0": [
-        {
-          "bays": [
-            "rim-garden",
-            "rim-rail",
-            "rim-garden"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "round": {
-            "piece": "rim-round",
-            "length": 6.0
-          }
-        }
-      ]
-    },
-    "fittings": {
-      "square": {
-        "hatch": "bed",
-        "vent": "skylight",
-        "layouts": [
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "skylight": [
-                [
-                  0,
-                  0,
-                  0
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "tree": [
-                [
-                  -7,
-                  4,
-                  0
-                ]
-              ],
-              "bed": [
-                [
-                  8,
-                  -7,
-                  30
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "pergola": [
-                [
-                  0,
-                  0,
-                  30
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "solar": [
-                [
-                  5,
-                  -4,
-                  0
-                ]
-              ],
-              "tree": [
-                [
-                  -9,
-                  9,
-                  0
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "bed": [
-                [
-                  0,
-                  0,
-                  90
-                ]
-              ],
-              "skylight": [
-                [
-                  -2,
-                  11,
-                  60
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "pavilion": [
-                [
-                  -3,
-                  2,
-                  0
-                ]
-              ]
-            }
-          }
-        ]
-      },
-      "angled": {
-        "hatch": "bed",
-        "vent": "skylight",
-        "layouts": [
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "skylight": [
-                [
-                  0,
-                  0,
-                  0
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "tree": [
-                [
-                  -7,
-                  4,
-                  0
-                ]
-              ],
-              "bed": [
-                [
-                  8,
-                  -7,
-                  30
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "pergola": [
-                [
-                  0,
-                  0,
-                  30
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "solar": [
-                [
-                  5,
-                  -4,
-                  0
-                ]
-              ],
-              "tree": [
-                [
-                  -9,
-                  9,
-                  0
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "bed": [
-                [
-                  0,
-                  0,
-                  90
-                ]
-              ],
-              "skylight": [
-                [
-                  -2,
-                  11,
-                  60
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "pavilion": [
-                [
-                  -3,
-                  2,
-                  0
-                ]
-              ]
-            }
-          }
-        ]
-      }
-    },
-    "door": {
-      "leaf": {
-        "material": "structures/common/white-stone",
-        "repeat": 6.0,
-        "tint": [
-          0.869,
-          0.848,
-          0.807
-        ],
-        "paint": false
-      },
-      "frame": {
-        "material": "structures/common/white-stone",
-        "repeat": 54.0,
-        "tint": [
-          1.0,
-          0.966,
-          0.911
-        ],
-        "paint": false
-      },
-      "jamb": 2.2,
-      "header": 2.8,
-      "out": 1.0,
-      "depth": 4.6,
-      "recess": 1.2,
-      "lintel": 1.6,
-      "panel": 2.0,
-      "section": 12.0,
-      "seam": {
-        "material": "structures/common/satin-steel",
-        "repeat": 12.0,
-        "tint": [
-          0.342,
-          0.342,
-          0.319
-        ],
-        "paint": false
-      },
-      "windows": {
-        "glass": {
-          "material": "structures/buildings/tower-glass",
-          "repeat": 12.0,
-          "tint": [
-            1,
-            1,
-            1
-          ],
-          "glow": [
-            0.2,
-            0.15,
-            0.08
-          ]
+          "bays": ["arcade-arch", "arcade-planted", "arcade-arch", "arcade-arch"],
+          "ends": {"piece": "arcade-round", "length": 6.0},
+          "entrance": "arcade-door",
+          "round": {"piece": "arcade-round", "length": 6.0}
         },
-        "width": 8.0,
-        "height": 2.4,
-        "sill": 9.0,
-        "pitch": 12.0
-      },
-      "threshold": {
-        "material": "structures/common/white-stone",
-        "repeat": 12.0,
-        "tint": [
-          0.748,
-          0.729,
-          0.692
-        ],
-        "paint": false
-      },
-      "apron": 5.0
-    }
-  },
-  {
-    "name": "hangar",
-    "style": "bays",
-    "pieces": "utopia-pieces.glb",
-    "lone": [
-      [
-        -20.78125,
-        -34.25
-      ],
-      [
-        20.78125,
-        -34.25
-      ],
-      [
-        20.78125,
-        34.25
-      ],
-      [
-        -20.78125,
-        34.25
-      ]
-    ],
-    "bandEnd": 1.75,
-    "cornerRadius": 10.0,
-    "cornerSegments": 3,
-    "roof": {
-      "material": "terrain/surfaces/grassland-ground",
-      "repeat": 36.0,
-      "inset": 0.0,
-      "heights": [
-        0.3
-      ]
-    },
-    "floors": {
-      "material": "structures/common/white-stone",
-      "repeat": 12.0,
-      "inset": 3.0,
-      "heights": [
-        0.05
-      ]
-    },
-    "sidewalk": {
-      "material": "structures/common/white-stone",
-      "repeat": 12.0,
-      "width": 5.0,
-      "kerb": 0.3
-    },
-    "modules": {
-      "base0": [
         {
-          "bays": [
-            "base-hall-slats",
-            "base-hall-glass",
-            "base-hall-slats",
-            "base-hall-blank"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "base-hall-round",
-            "length": 6.0
-          },
-          "door": "base-hall-door",
-          "round": {
-            "piece": "base-hall-round",
-            "length": 6.0
-          }
+          "bays": ["arcade-planted", "arcade-arch", "arcade-planted"],
+          "ends": {"piece": "arcade-round", "length": 6.0},
+          "entrance": "arcade-door",
+          "round": {"piece": "arcade-round", "length": 6.0}
         }
       ],
-      "base1": [
+      "floor": [
         {
-          "bays": [
-            "base-hall-slats",
-            "base-hall-glass",
-            "base-hall-slats",
-            "base-hall-blank"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "base-hall-round",
-            "length": 6.0
-          },
-          "door": "base-hall-door",
-          "round": {
-            "piece": "base-hall-round",
-            "length": 6.0
-          }
-        }
-      ],
-      "floor0": [
-        {
-          "bays": [
-            "hall-slats",
-            "hall-glass",
-            "hall-slats",
-            "hall-blank"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "hall-round",
-            "length": 6.0
-          },
-          "round": {
-            "piece": "hall-round",
-            "length": 6.0
-          }
-        }
-      ],
-      "floor1": [
-        {
-          "bays": [
-            "hall-slats",
-            "hall-glass",
-            "hall-slats",
-            "hall-blank"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "hall-round",
-            "length": 6.0
-          },
-          "round": {
-            "piece": "hall-round",
-            "length": 6.0
-          }
-        }
-      ],
-      "top0": [
-        {
-          "bays": [
-            "hall-top-slats",
-            "hall-top-glass",
-            "hall-top-slats",
-            "hall-top-blank"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "margin": 3.0,
-          "ends": {
-            "piece": "hall-top-round",
-            "length": 6.0
-          },
-          "round": {
-            "piece": "hall-top-round",
-            "length": 6.0
-          }
-        }
-      ],
-      "roof0": [
-        {
-          "bays": [
-            "rim-garden",
-            "rim-rail",
-            "rim-garden"
-          ],
-          "bay": 24.0,
-          "planar": {
-            "structures/common/white-stone": 54.0
-          },
-          "round": {
-            "piece": "rim-round",
-            "length": 6.0
-          }
-        }
-      ]
-    },
-    "fittings": {
-      "square": {
-        "hatch": "bed",
-        "vent": "skylight",
-        "layouts": [
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "skylight": [
-                [
-                  0,
-                  0,
-                  0
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "tree": [
-                [
-                  -7,
-                  4,
-                  0
-                ]
-              ],
-              "bed": [
-                [
-                  8,
-                  -7,
-                  30
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "pergola": [
-                [
-                  0,
-                  0,
-                  30
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "solar": [
-                [
-                  5,
-                  -4,
-                  0
-                ]
-              ],
-              "tree": [
-                [
-                  -9,
-                  9,
-                  0
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "bed": [
-                [
-                  0,
-                  0,
-                  90
-                ]
-              ],
-              "skylight": [
-                [
-                  -2,
-                  11,
-                  60
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "pavilion": [
-                [
-                  -3,
-                  2,
-                  0
-                ]
-              ]
-            }
-          }
-        ]
-      },
-      "angled": {
-        "hatch": "bed",
-        "vent": "skylight",
-        "layouts": [
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "skylight": [
-                [
-                  0,
-                  0,
-                  0
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "tree": [
-                [
-                  -7,
-                  4,
-                  0
-                ]
-              ],
-              "bed": [
-                [
-                  8,
-                  -7,
-                  30
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "pergola": [
-                [
-                  0,
-                  0,
-                  30
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "solar": [
-                [
-                  5,
-                  -4,
-                  0
-                ]
-              ],
-              "tree": [
-                [
-                  -9,
-                  9,
-                  0
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "bed": [
-                [
-                  0,
-                  0,
-                  90
-                ]
-              ],
-              "skylight": [
-                [
-                  -2,
-                  11,
-                  60
-                ]
-              ]
-            }
-          },
-          {
-            "hatches": [],
-            "vents": [],
-            "pieces": {
-              "pavilion": [
-                [
-                  -3,
-                  2,
-                  0
-                ]
-              ]
-            }
-          }
-        ]
-      }
-    },
-    "door": {
-      "leaf": {
-        "material": "structures/common/white-stone",
-        "repeat": 6.0,
-        "tint": [
-          0.869,
-          0.848,
-          0.807
-        ],
-        "paint": false
-      },
-      "frame": {
-        "material": "structures/common/white-stone",
-        "repeat": 54.0,
-        "tint": [
-          1.0,
-          0.966,
-          0.911
-        ],
-        "paint": false
-      },
-      "jamb": 2.2,
-      "header": 2.8,
-      "out": 1.0,
-      "depth": 4.6,
-      "recess": 1.2,
-      "lintel": 1.6,
-      "panel": 2.0,
-      "section": 12.0,
-      "seam": {
-        "material": "structures/common/satin-steel",
-        "repeat": 12.0,
-        "tint": [
-          0.342,
-          0.342,
-          0.319
-        ],
-        "paint": false
-      },
-      "windows": {
-        "glass": {
-          "material": "structures/buildings/tower-glass",
-          "repeat": 12.0,
-          "tint": [
-            1,
-            1,
-            1
-          ],
-          "glow": [
-            0.2,
-            0.15,
-            0.08
-          ]
+          "bays": ["terrace-dense", "terrace-sparse", "terrace-pier", "terrace-dense", "terrace-oval"],
+          "ends": {"piece": "terrace-round", "length": 6.0},
+          "round": {"piece": "terrace-round", "length": 6.0}
         },
-        "width": 8.0,
-        "height": 2.4,
-        "sill": 9.0,
-        "pitch": 12.0
-      },
-      "threshold": {
-        "material": "structures/common/white-stone",
-        "repeat": 12.0,
-        "tint": [
-          0.748,
-          0.729,
-          0.692
-        ],
-        "paint": false
-      },
-      "apron": 5.0
-    },
-    "vaulted": {
-      "roof": {
-        "material": "structures/common/white-stone",
-        "repeat": 54.0,
-        "inset": 0.0,
-        "heights": [
-          0.3
-        ],
-        "vault": {
-          "shape": "arch",
-          "rise": 9.0,
-          "segments": [
-            6,
-            3
-          ],
-          "gable": {
-            "material": "structures/common/white-stone",
-            "repeat": 54.0,
-            "tint": [
-              1.0,
-              0.966,
-              0.911
-            ]
-          },
-          "trim": {
-            "material": "structures/common/white-stone",
-            "repeat": 54.0,
-            "tint": [
-              0.748,
-              0.729,
-              0.692
-            ]
-          },
-          "verge": 0.9,
-          "ribPitch": 24.0,
-          "ribWidth": 1.6,
-          "ribHeight": 0.4,
-          "tint": [
-            1.0,
-            0.966,
-            0.911
-          ]
+        {
+          "bays": ["terrace-sparse", "terrace-rail", "terrace-dense", "terrace-oval", "terrace-pier"],
+          "ends": {"piece": "terrace-round", "length": 6.0},
+          "round": {"piece": "terrace-round", "length": 6.0}
         }
-      },
-      "modules": {
-        "roof0": [
-          {
-            "bays": [
-              "hall-eave"
-            ],
-            "bay": 24.0,
-            "planar": {
-              "structures/common/white-stone": 54.0
-            },
-            "round": {
-              "piece": "hall-eave-round",
-              "length": 6.0
-            }
-          }
-        ]
-      },
-      "fittings": null
+      ]
+    },
+    {
+      "name": "bands",
+      "base": [
+        {
+          "bays": ["arcade-arch", "arcade-planted", "arcade-arch", "arcade-arch"],
+          "ends": {"piece": "arcade-round", "length": 6.0},
+          "entrance": "arcade-door",
+          "round": {"piece": "arcade-round", "length": 6.0}
+        },
+        {
+          "bays": ["arcade-planted", "arcade-arch", "arcade-planted"],
+          "ends": {"piece": "arcade-round", "length": 6.0},
+          "entrance": "arcade-door",
+          "round": {"piece": "arcade-round", "length": 6.0}
+        }
+      ],
+      "floor": [
+        {
+          "bays": ["band-fins", "band-glass", "band-fins", "band-slats"],
+          "ends": {"piece": "band-round", "length": 6.0},
+          "round": {"piece": "band-round", "length": 6.0}
+        },
+        {
+          "bays": ["band-glass", "band-fins", "band-slats", "band-glass"],
+          "ends": {"piece": "band-round", "length": 6.0},
+          "round": {"piece": "band-round", "length": 6.0}
+        }
+      ]
+    },
+    {
+      "name": "hangar",
+      "class": "hangar",
+      "vaulted": "vault",
+      "base": [
+        {
+          "bays": ["base-hall-slats", "base-hall-glass", "base-hall-slats", "base-hall-blank"],
+          "ends": {"piece": "base-hall-round", "length": 6.0},
+          "entrance": "base-hall-door",
+          "round": {"piece": "base-hall-round", "length": 6.0}
+        }
+      ],
+      "floor": [
+        {
+          "bays": ["hall-slats", "hall-glass", "hall-slats", "hall-blank"],
+          "ends": {"piece": "hall-round", "length": 6.0},
+          "round": {"piece": "hall-round", "length": 6.0}
+        }
+      ],
+      "top": [
+        {
+          "bays": ["hall-top-slats", "hall-top-glass", "hall-top-slats", "hall-top-blank"],
+          "margin": 3.0,
+          "ends": {"piece": "hall-top-round", "length": 6.0},
+          "round": {"piece": "hall-top-round", "length": 6.0}
+        }
+      ]
     }
-  }
-]
+  ]
+}

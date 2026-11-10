@@ -1,203 +1,97 @@
-[
-  {
-    "name": "rounded",
-    "style": "habitat",
-    "aol": true,
+{
+  "style": "habitat",
+  "pieces": "lunar_habitat-pieces.glb",
+  "shared": {
     "materials": {
       "wall": "structures/lunar/habitat-wall",
       "roof": "structures/lunar/habitat-roof",
       "pier": "structures/lunar/habitat-pier",
       "concrete": "structures/lunar/regolith-concrete"
     },
-    "pieces": "lunar_habitat-pieces.glb",
-    "cornerRadius": 10.0,
-    "cornerSegments": 6,
-    "eave": { "radius": 6.0, "segments": [6, 3] },
-    "skirt": { "height": 3.0, "out": 2.4 },
-    "piers": { "joint": "pier", "corner": "pier-corner" },
-    "tops": { "joint": "pier-top", "corner": "pier-corner-top" },
-    "footings": { "joint": "footing", "corner": "footing-corner" },
-    "lone": { "halfLength": 34.25, "bandEnd": 1.75 },
-    "door": {
-      "leaf": { "material": "structures/common/sectional-door", "repeat": 12.0, "tint": [0.147, 0.179, 0.233] },
-      "frame": { "material": "structures/lunar/habitat-pier", "repeat": 18.0, "tint": [1.0, 1.0, 1.0] },
-      "seam": { "material": "structures/lunar/habitat-pier", "repeat": 18.0, "tint": [0.3, 0.3, 0.3] },
-      "stripe": { "material": "structures/common/hazard-stripes", "repeat": 4.0, "tint": [1.0, 1.0, 1.0] },
-      "threshold": { "material": "structures/lunar/regolith-concrete", "repeat": 12.0, "tint": [1.0, 1.0, 1.0] },
-      "windows": {
-        "glass": { "material": "structures/buildings/fortress-glass", "repeat": 12.0, "tint": [1.0, 1.0, 1.0], "glow": [0.03, 0.05, 0.06] },
-        "width": 3.4, "height": 1.2, "sill": 7.4, "pitch": 6.0
-      },
-      "jamb": 2.0, "header": 2.6, "out": 1.0, "depth": 3.4, "recess": 0.7, "lintel": 1.6, "panel": 3.0, "section": 12.0,
-      "stripeHeight": 1.4, "apron": 3.0
-    },
-    "storeys": [
-      { "windows": "lit" },
-      { "windows": "dim" },
-      { "windows": "lit", "shift": 0.3333333333 }
-    ],
+    "aviationLights": true,
+    "skirt": {"height": 3.0, "out": 2.4},
+    "piers": {"joint": "pier", "corner": "pier-corner"},
+    "tops": {"joint": "pier-top", "corner": "pier-corner-top"},
+    "footings": {"joint": "footing", "corner": "footing-corner"},
+    "lone": {"halfLength": 34.25, "bandEnd": 1.75},
+    "storeys": [{"windows": "lit"}, {"windows": "dim"}, {"windows": "lit", "shift": 0.3333333333}],
     "fittings": {
-      "square": {
-        "hatch": "hatch-box",
-        "vent": "vent-box",
-        "layouts": [
-          { "hatches": [[0.0, 0.0]], "vents": [[-9.0, 18.0], [9.0, -16.0]] },
-          { "hatches": [[6.0, -10.0]], "vents": [[-10.0, 14.0]] },
-          { "hatches": [], "vents": [[0.0, -14.0], [0.0, 0.0], [0.0, 14.0]] },
-          { "hatches": [], "vents": [] },
-          { "hatches": [], "vents": [[12.0, 8.0]] },
-          { "hatches": [[-10.0, -6.0]], "vents": [[8.0, 16.0]] }
-        ]
+      "square": [
+        {"hatch-box": [[0.0, 0.0]], "vent-box": [[-9.0, 18.0], [9.0, -16.0]]},
+        {"hatch-box": [[6.0, -10.0]], "vent-box": [[-10.0, 14.0]]},
+        {"vent-box": [[0.0, -14.0], [0.0, 0.0], [0.0, 14.0]]},
+        {},
+        {"vent-box": [[12.0, 8.0]]},
+        {"hatch-box": [[-10.0, -6.0]], "vent-box": [[8.0, 16.0]]}
+      ],
+      "angled": [
+        {"hatch-round": [[0.0, 0.0]], "vent-drum": [[0.0, 10.0], [-8.660254, -5.0], [8.660254, -5.0]]},
+        {"vent-drum": [[7.763139, -1.25], [-1.763139, -1.25], [3.0, -9.5]]},
+        {"hatch-round": [[-4.0, 3.0]]},
+        {},
+        {"vent-drum": [[5.0, 5.0]]},
+        {"hatch-round": [[-3.0, -5.0]], "vent-drum": [[6.0, 4.0]]}
+      ]
+    },
+    "largeDoor": {
+      "leaf": {"material": "structures/common/sectional-door", "repeat": 12.0, "tint": "#6b7585"},
+      "frame": {"material": "structures/lunar/habitat-pier", "repeat": 18.0, "tint": "#ffffff"},
+      "seam": {"material": "structures/lunar/habitat-pier", "repeat": 18.0, "tint": "#959595"},
+      "stripe": {"material": "structures/common/hazard-stripes", "repeat": 4.0, "tint": "#ffffff"},
+      "threshold": {"material": "structures/lunar/regolith-concrete", "repeat": 12.0, "tint": "#ffffff"},
+      "windows": {
+        "glass": {
+          "material": "structures/buildings/fortress-glass",
+          "repeat": 12.0,
+          "tint": "#ffffff",
+          "glow": [0.03, 0.05, 0.06]
+        },
+        "width": 3.4,
+        "height": 1.2,
+        "sill": 7.4,
+        "pitch": 6.0
       },
-      "angled": {
-        "hatch": "hatch-round",
-        "vent": "vent-drum",
-        "layouts": [
-          { "hatches": [[0.0, 0.0]], "vents": [[0.0, 10.0], [-8.660254, -5.0], [8.660254, -5.0]] },
-          { "hatches": [], "vents": [[7.763139, -1.25], [-1.763139, -1.25], [3.0, -9.5]] },
-          { "hatches": [[-4.0, 3.0]], "vents": [] },
-          { "hatches": [], "vents": [] },
-          { "hatches": [], "vents": [[5.0, 5.0]] },
-          { "hatches": [[-3.0, -5.0]], "vents": [[6.0, 4.0]] }
-        ]
-      }
+      "jamb": 2.0,
+      "header": 2.6,
+      "out": 1.0,
+      "depth": 3.4,
+      "recess": 0.7,
+      "lintel": 1.6,
+      "panel": 3.0,
+      "section": 12.0,
+      "stripeHeight": 1.4,
+      "apron": 3.0
     }
   },
-  {
-    "name": "parapet",
-    "style": "habitat",
-    "aol": true,
-    "materials": {
-      "wall": "structures/lunar/habitat-wall",
-      "roof": "structures/lunar/habitat-roof",
-      "pier": "structures/lunar/habitat-pier",
-      "concrete": "structures/lunar/regolith-concrete"
-    },
-    "pieces": "lunar_habitat-pieces.glb",
-    "cornerRadius": 6.0,
-    "cornerSegments": 4,
-    "parapet": { "height": 4.2, "width": 3.2 },
-    "skirt": { "height": 3.0, "out": 2.4 },
-    "piers": { "joint": "pier", "corner": "pier-corner" },
-    "tops": { "joint": "pier-top", "corner": "pier-corner-top" },
-    "footings": { "joint": "footing", "corner": "footing-corner" },
-    "lone": { "halfLength": 34.25, "bandEnd": 1.75 },
-    "door": {
-      "leaf": { "material": "structures/common/sectional-door", "repeat": 12.0, "tint": [0.147, 0.179, 0.233] },
-      "frame": { "material": "structures/lunar/habitat-pier", "repeat": 18.0, "tint": [1.0, 1.0, 1.0] },
-      "seam": { "material": "structures/lunar/habitat-pier", "repeat": 18.0, "tint": [0.3, 0.3, 0.3] },
-      "stripe": { "material": "structures/common/hazard-stripes", "repeat": 4.0, "tint": [1.0, 1.0, 1.0] },
-      "threshold": { "material": "structures/lunar/regolith-concrete", "repeat": 12.0, "tint": [1.0, 1.0, 1.0] },
-      "windows": {
-        "glass": { "material": "structures/buildings/fortress-glass", "repeat": 12.0, "tint": [1.0, 1.0, 1.0], "glow": [0.03, 0.05, 0.06] },
-        "width": 3.4, "height": 1.2, "sill": 7.4, "pitch": 6.0
-      },
-      "jamb": 2.0, "header": 2.6, "out": 1.0, "depth": 3.4, "recess": 0.7, "lintel": 1.6, "panel": 3.0, "section": 12.0,
-      "stripeHeight": 1.4, "apron": 3.0
-    },
-    "storeys": [
-      { "windows": "lit" },
-      { "windows": "dim" },
-      { "windows": "lit", "shift": 0.3333333333 }
-    ],
-    "fittings": {
-      "square": {
-        "hatch": "hatch-box",
-        "vent": "vent-box",
-        "layouts": [
-          { "hatches": [[0.0, 0.0]], "vents": [[-9.0, 18.0], [9.0, -16.0]] },
-          { "hatches": [[6.0, -10.0]], "vents": [[-10.0, 14.0]] },
-          { "hatches": [], "vents": [[0.0, -14.0], [0.0, 0.0], [0.0, 14.0]] },
-          { "hatches": [], "vents": [] },
-          { "hatches": [], "vents": [[12.0, 8.0]] },
-          { "hatches": [[-10.0, -6.0]], "vents": [[8.0, 16.0]] }
-        ]
-      },
-      "angled": {
-        "hatch": "hatch-round",
-        "vent": "vent-drum",
-        "layouts": [
-          { "hatches": [[0.0, 0.0]], "vents": [[0.0, 10.0], [-8.660254, -5.0], [8.660254, -5.0]] },
-          { "hatches": [], "vents": [[7.763139, -1.25], [-1.763139, -1.25], [3.0, -9.5]] },
-          { "hatches": [[-4.0, 3.0]], "vents": [] },
-          { "hatches": [], "vents": [] },
-          { "hatches": [], "vents": [[5.0, 5.0]] },
-          { "hatches": [[-3.0, -5.0]], "vents": [[6.0, 4.0]] }
-        ]
-      }
-    }
-  },
-  {
-    "name": "hangar",
-    "style": "habitat",
-    "aol": true,
-    "materials": {
-      "wall": "structures/lunar/colony-panel",
-      "roof": "structures/lunar/habitat-roof",
-      "pier": "structures/lunar/habitat-pier",
-      "concrete": "structures/lunar/regolith-concrete"
-    },
-    "pieces": "lunar_habitat-pieces.glb",
-    "cornerRadius": 6.0,
-    "cornerSegments": 4,
-    "parapet": { "height": 4.2, "width": 3.2 },
-    "vaulted": {
-      "parapet": null,
+  "roofs": {
+    "eave": {"eave": {"radius": 6.0, "segments": [6, 3]}},
+    "parapet": {"parapet": {"height": 4.2, "width": 3.2}},
+    "vault": {
       "vault": {
-        "shape": "arch", "rise": 9.0, "segments": [6, 3],
-        "gable": { "material": "structures/lunar/colony-panel", "repeat": 18.0, "tint": [1.0, 1.0, 1.0] },
-        "trim": { "material": "structures/lunar/habitat-pier", "repeat": 18.0, "tint": [1.0, 1.0, 1.0] },
-        "verge": 0.9, "ribPitch": 24.0, "ribWidth": 2.4, "ribHeight": 0.6, "tint": [1.0, 1.0, 1.0]
-      }
-    },
-    "skirt": { "height": 3.0, "out": 2.4 },
-    "piers": { "joint": "pier", "corner": "pier-corner" },
-    "tops": { "joint": "pier-top", "corner": "pier-corner-top" },
-    "footings": { "joint": "footing", "corner": "footing-corner" },
-    "lone": { "halfLength": 34.25, "bandEnd": 1.75 },
-    "door": {
-      "leaf": { "material": "structures/common/sectional-door", "repeat": 12.0, "tint": [0.147, 0.179, 0.233] },
-      "frame": { "material": "structures/lunar/habitat-pier", "repeat": 18.0, "tint": [1.0, 1.0, 1.0] },
-      "seam": { "material": "structures/lunar/habitat-pier", "repeat": 18.0, "tint": [0.3, 0.3, 0.3] },
-      "stripe": { "material": "structures/common/hazard-stripes", "repeat": 4.0, "tint": [1.0, 1.0, 1.0] },
-      "threshold": { "material": "structures/lunar/regolith-concrete", "repeat": 12.0, "tint": [1.0, 1.0, 1.0] },
-      "windows": {
-        "glass": { "material": "structures/buildings/fortress-glass", "repeat": 12.0, "tint": [1.0, 1.0, 1.0], "glow": [0.03, 0.05, 0.06] },
-        "width": 3.4, "height": 1.2, "sill": 7.4, "pitch": 6.0
-      },
-      "jamb": 2.0, "header": 2.6, "out": 1.0, "depth": 3.4, "recess": 0.7, "lintel": 1.6, "panel": 3.0, "section": 12.0,
-      "stripeHeight": 1.4, "apron": 3.0
-    },
-    "storeys": [
-      { "windows": "lit" },
-      { "windows": "dim" },
-      { "windows": "lit", "shift": 0.3333333333 }
-    ],
-    "fittings": {
-      "square": {
-        "hatch": "hatch-box",
-        "vent": "vent-box",
-        "layouts": [
-          { "hatches": [[0.0, 0.0]], "vents": [[-9.0, 18.0], [9.0, -16.0]] },
-          { "hatches": [[6.0, -10.0]], "vents": [[-10.0, 14.0]] },
-          { "hatches": [], "vents": [[0.0, -14.0], [0.0, 0.0], [0.0, 14.0]] },
-          { "hatches": [], "vents": [] },
-          { "hatches": [], "vents": [[12.0, 8.0]] },
-          { "hatches": [[-10.0, -6.0]], "vents": [[8.0, 16.0]] }
-        ]
-      },
-      "angled": {
-        "hatch": "hatch-round",
-        "vent": "vent-drum",
-        "layouts": [
-          { "hatches": [[0.0, 0.0]], "vents": [[0.0, 10.0], [-8.660254, -5.0], [8.660254, -5.0]] },
-          { "hatches": [], "vents": [[7.763139, -1.25], [-1.763139, -1.25], [3.0, -9.5]] },
-          { "hatches": [[-4.0, 3.0]], "vents": [] },
-          { "hatches": [], "vents": [] },
-          { "hatches": [], "vents": [[5.0, 5.0]] },
-          { "hatches": [[-3.0, -5.0]], "vents": [[6.0, 4.0]] }
-        ]
+        "shape": "arch",
+        "rise": 9.0,
+        "segments": [6, 3],
+        "gable": {"material": "structures/lunar/colony-panel", "repeat": 18.0, "tint": "#ffffff"},
+        "trim": {"material": "structures/lunar/habitat-pier", "repeat": 18.0, "tint": "#ffffff"},
+        "verge": 0.9,
+        "ribPitch": 24.0,
+        "ribWidth": 2.4,
+        "ribHeight": 0.6,
+        "tint": "#ffffff"
       }
     }
-  }
-]
+  },
+  "variants": [
+    {"name": "rounded", "roof": "eave", "cornerRadius": 10.0, "cornerSegments": 6},
+    {"name": "parapet", "roof": "parapet", "cornerRadius": 6.0, "cornerSegments": 4},
+    {
+      "name": "hangar",
+      "class": "hangar",
+      "roof": "parapet",
+      "vaulted": "vault",
+      "cornerRadius": 6.0,
+      "cornerSegments": 4,
+      "materials": {"wall": "structures/lunar/colony-panel"}
+    }
+  ]
+}

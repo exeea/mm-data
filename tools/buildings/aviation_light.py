@@ -1,4 +1,4 @@
-"""The aviation obstruction light a generated building kit stands on its roof's convex corners ("aol" in its JSON).
+"""The aviation obstruction light a generated building kit stands on its roof's convex corners ("aviationLights" in its JSON).
 
 Run with Python (standard library only): python tools/buildings/aviation_light.py
 Writes data/models/buildings/fittings/aviation-light.glb: one node, aol-lod0, at the roof's deck with z up. A thin steel

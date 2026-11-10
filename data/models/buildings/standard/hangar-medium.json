@@ -1,0 +1,132 @@
+{
+  "style": "bays",
+  "pieces": "hangar-medium-pieces.glb",
+  "shared": {
+    "planar": {"structures/common/painted-steel": 12.0},
+    "bay": 24.0,
+    "lone": [[-20.78125, -34.25], [20.78125, -34.25], [20.78125, 34.25], [-20.78125, 34.25]],
+    "bandEnd": 1.75,
+    "varyBays": true
+  },
+  "roofs": {
+    "vault": {
+      "material": "structures/common/corrugated",
+      "repeat": 12.0,
+      "inset": 0.0,
+      "heights": [0.3],
+      "aviationLights": true,
+      "vault": {
+        "shape": "bow",
+        "rise": 8.0,
+        "segments": [6, 3],
+        "gable": {"material": "structures/common/painted-steel#paint", "repeat": 12.0, "tint": "#d6dbdb"},
+        "trim": {"material": "structures/common/painted-steel", "repeat": 12.0, "tint": "#4c5761"},
+        "verge": 0.9,
+        "ribPitch": 24.0,
+        "ribWidth": 2.0,
+        "ribHeight": 0.5,
+        "tint": "#858a8c"
+      },
+      "runs": [{"bays": ["hall-eave"]}]
+    },
+    "flat": {
+      "material": "structures/buildings/light-roof",
+      "repeat": 18.0,
+      "inset": 0.0,
+      "heights": [0.3],
+      "aviationLights": true,
+      "runs": [{"bays": ["fascia-plain", "fascia-lights", "fascia-plain"]}]
+    }
+  },
+  "variants": [
+    {
+      "name": "default",
+      "roof": "vault",
+      "floors": {"material": "structures/common/cast-concrete", "repeat": 12.0, "inset": 1.3, "heights": [0.05]},
+      "largeDoor": {
+        "leaf": {"material": "structures/common/sectional-door", "repeat": 12.0, "tint": "#dbdedb", "paint": true},
+        "frame": {"material": "structures/common/painted-steel", "repeat": 12.0, "tint": "#4c5761"},
+        "jamb": 2.0,
+        "header": 2.6,
+        "out": 1.0,
+        "depth": 3.2,
+        "recess": 0.7,
+        "lintel": 0.8,
+        "panel": 3.0,
+        "section": 18.0,
+        "stripe": {"material": "structures/common/hazard-stripes", "repeat": 4.0, "tint": "#ffffff"},
+        "stripeHeight": 1.6,
+        "windows": {
+          "glass": {
+            "material": "structures/buildings/fortress-glass",
+            "repeat": 12.0,
+            "tint": "#ffffff",
+            "glow": [0.05, 0.04, 0.02]
+          },
+          "width": 4.0,
+          "height": 1.5,
+          "sill": 7.2,
+          "pitch": 6.0
+        },
+        "threshold": {"material": "structures/common/cast-concrete", "repeat": 12.0, "tint": "#b2b2ab"},
+        "apron": 3.5
+      },
+      "base": [
+        {
+          "bays": ["hall-base-plain", "hall-base-vent", "hall-base-plain", "hall-base-plain"],
+          "entrance": "hall-base-door"
+        },
+        {"bays": ["hall-base-plain", "hall-base-plain", "hall-base-vent"], "entrance": "hall-base-door"}
+      ],
+      "floor": [
+        {"bays": ["hall-windows", "hall-plain", "hall-windows"]},
+        {"bays": ["hall-plain", "hall-windows", "hall-vent", "hall-windows"]}
+      ]
+    },
+    {
+      "name": "alternative",
+      "roof": "flat",
+      "floors": {"material": "structures/common/cast-concrete", "repeat": 12.0, "inset": 3.0, "heights": [0.05]},
+      "fittings": [
+        {"hvac": [[0, 0, 0]]},
+        {"skylights": [[0, 0, 0]]},
+        {"stack": [[-8, 7, 0]], "skylights": [[3, -2, 90]]},
+        {"hvac": [[-4, 5, 90]], "stack": [[9, -8, 0]]},
+        {}
+      ],
+      "largeDoor": {
+        "leaf": {"material": "structures/common/sectional-door", "repeat": 12.0, "tint": "#dbdedb", "paint": true},
+        "frame": {"material": "structures/common/painted-steel", "repeat": 12.0, "tint": "#3d4247"},
+        "jamb": 1.8,
+        "header": 2.6,
+        "out": 0.6,
+        "depth": 3.2,
+        "recess": 0.7,
+        "lintel": 1.8,
+        "panel": 3.0,
+        "section": 18.0,
+        "stripe": {"material": "structures/common/hazard-stripes", "repeat": 4.0, "tint": "#ffffff"},
+        "stripeHeight": 1.6,
+        "windows": {
+          "glass": {
+            "material": "structures/buildings/fortress-glass",
+            "repeat": 12.0,
+            "tint": "#ffffff",
+            "glow": [0.05, 0.04, 0.02]
+          },
+          "width": 4.0,
+          "height": 1.5,
+          "sill": 7.2,
+          "pitch": 6.0
+        },
+        "threshold": {"material": "structures/common/cast-concrete", "repeat": 12.0, "tint": "#b2b2ab"},
+        "apron": 3.5
+      },
+      "base": [
+        {"bays": ["base-plain", "base-vent", "base-sign", "base-plain"], "entrance": "base-door"},
+        {"bays": ["base-sign", "base-plain", "base-plain", "base-vent"], "entrance": "base-door"}
+      ],
+      "floor": [{"bays": ["windows", "plain", "windows", "vent"]}, {"bays": ["plain", "windows", "windows", "plain"]}]
+    }
+  ]
+}

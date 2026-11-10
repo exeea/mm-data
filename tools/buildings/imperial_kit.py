@@ -643,67 +643,72 @@ PIECES = {name: finished(builder) for name, builder in {
 }.items()}
 
 PLANAR = {STONE: STONE_REPEAT, SEAMED: SEAM_REPEAT}  # Panels run on from bay to bay; seams run down the skirt.
-FITTINGS = k.fittings('hatch', 'vent', [
+FITTINGS = [
     {'tier': [[0, 0, 0]]},
     {'plant': [[0, 0, 0]]},
     {'pavilion': [[0, 3, 0]], 'vent': [[2, -8, 0]]},
     {'tier': [[0, 3, 0]], 'hatch': [[2, -8, 0]]},
     {'monitor': [[0, 0, 0]]},
     {'plant': [[0, 4, 0]], 'vent': [[0, -6, 0]]},
-])
-HALL_FITTINGS = k.fittings('hatch', 'vent', [
+]
+HALL_FITTINGS = [
     {'monitor': [[0, 0, 0]]},
     {'vent': [[-3, 5, 0]], 'hatch': [[3, -6, 0]]},
     {'plant': [[0, 0, 0]]},
     {'monitor': [[0, 4, 0]], 'vent': [[0, -7, 0]]},
     {'tier': [[0, 0, 0]]},
     {'hatch': [[0, 0, 0]]},
-])
+]
 # The sheets' works door: a grey sectional leaf with a row of panes and hazard marks in a red lacquer frame.
 DOOR = k.door((k.SECTIONAL, (.50, .52, .54)), (PAINT, LACQUER), jamb=2.0, header=2.6, out=1.0, depth=3.2, recess=.8, lintel=LEVEL-COURSE+1.8,
               panel=3.0, section=12.0, seam=(PAINT, DARK), stripe=(HAZARD, (1, 1, 1), 4.0), stripeHeight=1.4,
               windows=k.door_windows(3.4, 1.2, 7.4, 6.0), threshold=(CAST, (.46, .46, .46)), apron=4.0)
 
 
-# A hall's roof: charcoal standing seam bowed over the hall on dark ribs, its gable ends dark as the roof (the eave runs
-# round them too: stone there would read as a gap in it).
-HALL = {'material': SEAMED, 'repeat': SEAM_REPEAT, 'inset': 0.0, 'heights': [0.3], 'aol': True,
-        'vault': k.vault('bow', 8.0, (1, 1, 1), ('structures/common/painted-steel', (.26, .27, .28)), ('structures/common/painted-steel', (.20, .21, .22)),
-                         rib=(1.4, .5))}
+def eave(corner):
+    """The look's roof: a flared eave round a deck, the `corner` piece on its corners."""
+    return {'material': ROOF_DECK, 'repeat': 18.0, 'inset': SKIRT-.1, 'heights': [DECK], 'aviationLights': True,
+            'runs': [k.run(['eave'], PLANAR, round_piece=corner)]}
+
+
+ROOFS = {
+    'eave': eave('eave-corner'),
+    'pointed-eave': eave('eave-point'),  # The authored buildings': its corners pointed.
+    # A hall's roof: charcoal standing seam bowed over the hall on dark ribs over the flared eave alone, its gable ends dark
+    # as the roof (the eave runs round them too: stone there would read as a gap in it).
+    'vault': {'material': SEAMED, 'repeat': SEAM_REPEAT, 'inset': 0.0, 'heights': [0.3], 'aviationLights': True,
+              'vault': k.vault('bow', 8.0, (1, 1, 1), ('structures/common/painted-steel', (.26, .27, .28)),
+                               ('structures/common/painted-steel', (.20, .21, .22)), rib=(1.4, .5)),
+              'runs': [k.run(['hall-eave'], PLANAR, round_piece='hall-eave-corner')]},
+}
 
 
 HALL_BAYS = ['hall-glass', 'hall-panel', 'hall-glass', 'hall-louvre']
 HALL_TOPS = [bay.replace('hall-', 'hall-top-') for bay in HALL_BAYS]  # The storey under the eave: the strips' heads under a beam.
 
 
-def variant(name, bases, floors, door, layouts=FITTINGS, corners=('corner-base', 'corner'), tip='eave-corner', hall=False):
+def variant(name, bases, floors, door, layouts=FITTINGS, corners=('corner-base', 'corner'), roof='eave', hall=False):
+    """bases, floors: the runs its storeys pick among, as bay lists. roof: its roof's name. hall: the look's hall
+    (theme_kits' hall_roof)."""
     based = lambda bays: [bay if bay.startswith('base-') else 'base-'+bay for bay in bays]
     return {
-        'name': name, 'style': 'bays', 'pieces': 'imperial-pieces.glb', 'lone': k.LONE, 'bandEnd': 1.75,
+        'name': name, **k.hall_roof(hall), 'roof': roof, 'lone': k.LONE, 'bandEnd': 1.75,
         'cornerRadius': CORNER, 'cornerSegments': 1,
-        'roof': {'material': ROOF_DECK, 'repeat': 18.0, 'inset': SKIRT-.1, 'heights': [DECK], 'aol': True},
         'floors': {'material': STONE, 'repeat': STONE_REPEAT, 'inset': 3.0, 'heights': [0.05]},
         'sidewalk': {'material': STONE, 'repeat': STONE_REPEAT, 'width': 5.0, 'kerb': 0.4},
-        'modules': {
-            'base0': k.run(based(bases[0]), PLANAR, door, corners[0]),
-            'base1': k.run(based(bases[1]), PLANAR, door, corners[0]),
-            'floor0': k.run(floors[0], PLANAR, round_piece=corners[1]),
-            'floor1': k.run(floors[1], PLANAR, round_piece=corners[1]),
-            **({'top0': k.run(HALL_TOPS, PLANAR, round_piece=corners[1])} if hall else {}),
-            'roof0': k.run(['eave'], PLANAR, round_piece=tip),
-        },
         'fittings': layouts,
-        # A hangar's roof, unless its building chooses the flat one: the seamed vault over the flared eave alone.
-        **({'vaulted': k.vaulted(HALL, k.run(['hall-eave'], PLANAR, round_piece='hall-eave-corner'))} if hall else {}),
         'varyBays': True,
-        'door': DOOR,
+        'largeDoor': DOOR,
+        'base': [k.run(based(bays), PLANAR, door, corners[0]) for bays in bases],
+        'floor': [k.run(bays, PLANAR, round_piece=corners[1]) for bays in floors],
+        **({'top': [k.run(HALL_TOPS, PLANAR, round_piece=corners[1])]} if hall else {}),
     }
 
 
 VARIANTS = [
     variant('offices', (['window', 'pair', 'window', 'slit'], ['pair', 'window', 'window', 'louvre']),
             (['window', 'pair', 'window', 'window'], ['pair', 'window', 'pair', 'window']), 'entrance'),
-    variant('tower', (['curtain', 'curtain', 'window'], ['curtain', 'window', 'curtain']), (['curtain'], ['curtain']), 'entrance'),
+    variant('tower', (['curtain', 'curtain', 'window'], ['curtain', 'window', 'curtain']), (['curtain'],), 'entrance'),
     variant('habitat', (['pair', 'window', 'pair', 'slit'], ['window', 'pair', 'pair', 'window']),
             (['red-balcony', 'pair', 'red-balcony', 'pair'], ['pair', 'red-balcony', 'pair', 'red-balcony']), 'entrance'),
     variant('commercial', (['shop', 'shop-wide', 'shop'], ['shop-wide', 'shop', 'shop']),
@@ -715,19 +720,19 @@ VARIANTS = [
     # A hall: lacquer columns and strips of glass, louvres and sunk panels up its whole height (every storey lays the
     # same bays, so they stack). A hangar-class building draws it unless told otherwise, under a seamed roof that spans
     # it unless it chooses the look's eave and deck.
-    variant('hangar', (HALL_BAYS, HALL_BAYS), (HALL_BAYS, HALL_BAYS), 'base-hall-door', HALL_FITTINGS, corners=('hall-corner-base', 'hall-corner'),
+    variant('hangar', (HALL_BAYS,), (HALL_BAYS,), 'base-hall-door', HALL_FITTINGS, corners=('hall-corner-base', 'hall-corner'),
             hall=True),
     # The authored buildings' forms, under roofs with pointed corners.
     variant('pavilion', (['arcade', 'arcade', 'lattice', 'arcade'], ['lattice-lit', 'arcade', 'arcade', 'shop-wide']),
             (['red-curtain', 'lattice', 'red-curtain', 'red-balcony'], ['lattice-lit', 'red-curtain', 'red-balcony', 'red-curtain']), 'entrance',
-            corners=('corner-red-base', 'corner-red'), tip='eave-point'),
+            corners=('corner-red-base', 'corner-red'), roof='pointed-eave'),
     variant('residence', (['lattice', 'pair', 'lattice-lit', 'slit'], ['pair', 'lattice', 'window', 'lattice']),
-            (['lattice', 'red-balcony', 'lattice', 'pair'], ['red-balcony', 'lattice-lit', 'pair', 'lattice']), 'entrance', tip='eave-point'),
+            (['lattice', 'red-balcony', 'lattice', 'pair'], ['red-balcony', 'lattice-lit', 'pair', 'lattice']), 'entrance', roof='pointed-eave'),
 ]
 
 
 def build():
-    k.KITS['imperial'] = (PIECES, VARIANTS)
+    k.KITS['imperial'] = (PIECES, ROOFS, VARIANTS)
     # Stone takes a building's tint; granite, lacquer, bronze, glass and roofs keep theirs.
     k.build('imperial', painted=lambda obj: obj['board_material'] == STONE)
 

@@ -74,7 +74,7 @@ print('SHIPPED_LISTS_OK', files)
 with tempfile.TemporaryDirectory(prefix='.mm-game-test-', dir=MODELS / 'buildings') as temp:
     temp = Path(temp)
     pieces = temp / 'test-pieces.glb'
-    shutil.copy2(MODELS / 'buildings/building_hard/building_hard-pieces.glb', pieces)
+    shutil.copy2(MODELS / 'buildings/standard/building-hard-pieces.glb', pieces)
 
     # A kit's pieces: Edit Mode makes one copy per object, and the flags reach them all.
     addon.open_glb(bpy.context, pieces)
