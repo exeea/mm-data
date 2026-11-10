@@ -456,7 +456,7 @@
       ],
       "components": {
         "bridge": {
-          "type": "light",
+          "weight": "light",
           "connections": [
             "n",
             "s"
@@ -729,7 +729,7 @@
       ],
       "components": {
         "bridge": {
-          "type": "hardened",
+          "weight": "hardened",
           "connections": [
             "n",
             "s"

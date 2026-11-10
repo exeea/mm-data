@@ -472,5 +472,13 @@
   "zi66t80u": "vegetation/willow",
   "szjygvft": "vegetation/willow-arching",
   "8xceow2u": "vegetation/willow-broad",
-  "ie7t46qz": "vegetation/willow-snow"
+  "ie7t46qz": "vegetation/willow-snow",
+  "53470526": "buildings/standard/building-civilian",
+  "7f1cd08d": "buildings/standard/building-castle-brian",
+  "2a3e37cc": "buildings/standard/fortress-civilian",
+  "6e650acc": "buildings/standard/fortress-castle-brian",
+  "595a71d4": "buildings/standard/gun-emplacement-civilian",
+  "178d7232": "buildings/standard/gun-emplacement-castle-brian",
+  "605d7bb9": "buildings/standard/hangar-civilian",
+  "2b98bf43": "buildings/standard/hangar-castle-brian"
 }

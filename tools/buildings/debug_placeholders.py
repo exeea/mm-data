@@ -85,9 +85,11 @@ def main():
     folder = BUILDINGS / 'standard'
     template = json.loads((folder / 'building-light.json').read_text())
     paths = []
-    for family in ('building', 'fortress', 'gun-emplacement'):  # The hangars are kits of their own (hangar_kits.py).
-        for weight in ('light', 'medium', 'heavy', 'hard'):
-            if weight == 'light' and family in ('building', 'fortress'):
+    for family in ('building', 'fortress', 'gun-emplacement', 'hangar'):
+        for weight in ('civilian', 'light', 'medium', 'heavy', 'hard', 'castle-brian'):
+            # Finished kits: the light building and fortress, and the four hangars of the rules' weights (hangar_kits.py).
+            if weight in ('light', 'medium', 'heavy', 'hard') and (family == 'hangar'
+                                                                 or weight == 'light' and family in ('building', 'fortress')):
                 continue
             name = f'{family}-{weight}'
             spec = copy.deepcopy(template)
