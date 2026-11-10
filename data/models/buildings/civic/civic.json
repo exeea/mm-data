@@ -1328,42 +1328,42 @@
       "base0": [
         {
           "bays": [
-            "plinth-slots",
-            "plinth-louvre",
-            "shop-closed",
-            "plinth-slots"
+            "base-hall-blank",
+            "base-hall-louvre",
+            "base-hall-blank",
+            "base-hall-glass"
           ],
           "bay": 24.0,
           "planar": {
             "structures/common/concrete-panels": 18.0,
             "structures/common/cast-concrete": 12.0
           },
-          "door": "plinth-door"
+          "door": "base-hall-door"
         }
       ],
       "base1": [
         {
           "bays": [
-            "plinth-louvre",
-            "plinth-slots",
-            "plinth-billboard",
-            "shop-closed"
+            "base-hall-blank",
+            "base-hall-louvre",
+            "base-hall-blank",
+            "base-hall-glass"
           ],
           "bay": 24.0,
           "planar": {
             "structures/common/concrete-panels": 18.0,
             "structures/common/cast-concrete": 12.0
           },
-          "door": "plinth-door"
+          "door": "base-hall-door"
         }
       ],
       "floor0": [
         {
           "bays": [
-            "ribbon-panel",
-            "ribbon-panel",
-            "fins-louvre",
-            "ribbon-panel"
+            "hall-blank",
+            "hall-louvre",
+            "hall-blank",
+            "hall-glass"
           ],
           "bay": 24.0,
           "planar": {
@@ -1375,9 +1375,25 @@
       "floor1": [
         {
           "bays": [
-            "ribbon-panel",
-            "fins-louvre",
-            "ribbon-panel"
+            "hall-blank",
+            "hall-louvre",
+            "hall-blank",
+            "hall-glass"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/common/concrete-panels": 18.0,
+            "structures/common/cast-concrete": 12.0
+          }
+        }
+      ],
+      "top0": [
+        {
+          "bays": [
+            "hall-top-blank",
+            "hall-top-louvre",
+            "hall-top-blank",
+            "hall-top-glass"
           ],
           "bay": 24.0,
           "planar": {

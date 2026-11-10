@@ -2064,6 +2064,29 @@
           }
         }
       ],
+      "top0": [
+        {
+          "bays": [
+            "ribbed-arch",
+            "ribbed",
+            "ribbed-arch",
+            "ribbed-arch"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/frontier/plating": 18.0
+          },
+          "round": {
+            "piece": "corner",
+            "length": 6.0
+          },
+          "joints": {
+            "start": "joint-start",
+            "end": "joint-end",
+            "length": 2.4
+          }
+        }
+      ],
       "roof0": [
         {
           "bays": [
@@ -2371,6 +2394,83 @@
         "paint": false
       },
       "apron": 3.0
+    },
+    "vaulted": {
+      "roof": {
+        "material": "structures/frontier/plating",
+        "repeat": 30.0,
+        "inset": 0.0,
+        "heights": [
+          0.3
+        ],
+        "vault": {
+          "shape": "plates",
+          "rise": 6.0,
+          "segments": [
+            3
+          ],
+          "gable": {
+            "material": "structures/frontier/plating",
+            "repeat": 18.0,
+            "tint": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "trim": {
+            "material": "structures/common/matte-steel",
+            "repeat": 12.0,
+            "tint": [
+              0.507,
+              0.538,
+              0.57
+            ]
+          },
+          "verge": 0.9,
+          "ribPitch": 24.0,
+          "ribWidth": 1.8,
+          "ribHeight": 0.35,
+          "tint": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "modules": {
+        "roof0": [
+          {
+            "bays": [
+              "lid"
+            ],
+            "bay": 24.0,
+            "planar": {
+              "structures/frontier/plating": 18.0
+            },
+            "round": {
+              "piece": "lid-corner",
+              "length": 6.0
+            }
+          }
+        ],
+        "roof1": [
+          {
+            "bays": [
+              "lid"
+            ],
+            "bay": 24.0,
+            "planar": {
+              "structures/frontier/plating": 18.0
+            },
+            "round": {
+              "piece": "lid-corner",
+              "length": 6.0
+            }
+          }
+        ]
+      },
+      "fittings": null
     }
   }
 ]

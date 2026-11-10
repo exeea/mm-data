@@ -898,17 +898,18 @@
       "base0": [
         {
           "bays": [
-            "arcade-planted",
-            "arcade-planted",
-            "arcade-arch"
+            "base-hall-slats",
+            "base-hall-glass",
+            "base-hall-slats",
+            "base-hall-blank"
           ],
           "bay": 24.0,
           "planar": {
             "structures/common/white-stone": 54.0
           },
-          "door": "arcade-door",
+          "door": "base-hall-door",
           "round": {
-            "piece": "arcade-round",
+            "piece": "base-hall-round",
             "length": 6.0
           }
         }
@@ -916,17 +917,18 @@
       "base1": [
         {
           "bays": [
-            "arcade-planted",
-            "arcade-arch",
-            "arcade-planted"
+            "base-hall-slats",
+            "base-hall-glass",
+            "base-hall-slats",
+            "base-hall-blank"
           ],
           "bay": 24.0,
           "planar": {
             "structures/common/white-stone": 54.0
           },
-          "door": "arcade-door",
+          "door": "base-hall-door",
           "round": {
-            "piece": "arcade-round",
+            "piece": "base-hall-round",
             "length": 6.0
           }
         }
@@ -934,17 +936,17 @@
       "floor0": [
         {
           "bays": [
-            "band-slats",
-            "band-slats",
-            "band-fins",
-            "band-slats"
+            "hall-slats",
+            "hall-glass",
+            "hall-slats",
+            "hall-blank"
           ],
           "bay": 24.0,
           "planar": {
             "structures/common/white-stone": 54.0
           },
           "round": {
-            "piece": "band-round",
+            "piece": "hall-round",
             "length": 6.0
           }
         }
@@ -952,16 +954,35 @@
       "floor1": [
         {
           "bays": [
-            "band-slats",
-            "band-fins",
-            "band-slats"
+            "hall-slats",
+            "hall-glass",
+            "hall-slats",
+            "hall-blank"
           ],
           "bay": 24.0,
           "planar": {
             "structures/common/white-stone": 54.0
           },
           "round": {
-            "piece": "band-round",
+            "piece": "hall-round",
+            "length": 6.0
+          }
+        }
+      ],
+      "top0": [
+        {
+          "bays": [
+            "hall-top-slats",
+            "hall-top-glass",
+            "hall-top-slats",
+            "hall-top-blank"
+          ],
+          "bay": 24.0,
+          "planar": {
+            "structures/common/white-stone": 54.0
+          },
+          "round": {
+            "piece": "hall-top-round",
             "length": 6.0
           }
         }
