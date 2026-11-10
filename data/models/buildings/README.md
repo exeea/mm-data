@@ -275,15 +275,17 @@ fittings are turned: their Angled corner pieces are built once and turned by the
   modelled.
 
 - `standard/hangar-light.json`, `hangar-medium.json`, `hangar-heavy.json`, `hangar-hard.json` (`bays`, built with their pieces
-  by `tools/buildings/hangar_kits.py`): halls, no storey showing rooms, each in two variants. `default`: the designers'
-  halls, their wall bays read from `tools/buildings/art/hangar_<weight>_a-proposal.glb` (bays between frames; the
-  hardened one's ground frames battered buttresses) and dressed by the script in board materials, with kerbs, louvres,
-  strip windows, side doors and a far level, under a roof `vault` (below) with the frames running on over it as ribs: a
-  low corrugated gable (light), bowstring roofs (medium, heavy), a concrete arch (hardened, a hardened aircraft
-  shelter's). `alternative`: a corrugated steel shed on portal frames with wind braces and
-  daylight strips (light), insulated steel panels over a concrete plinth with a band and strip windows under the eave
-  (medium), precast concrete between buttresses under a ring beam (heavy), a bunker with a battered ground storey and
-  embrasures under a burster slab (hardened). Their walls take a building's tint.
+  by `tools/buildings/hangar_kits.py`): halls, no storey showing rooms, each in two variants, which are its walls and
+  doors. `default`: the designers' halls, their wall bays read from `tools/buildings/art/hangar_<weight>_a-proposal.glb`
+  (bays between frames; the hardened one's ground frames battered buttresses) and dressed by the script in board
+  materials, with kerbs, louvres, strip windows, side doors and a far level. `alternative`: a corrugated steel shed on
+  portal frames with wind braces and daylight strips (light), insulated steel panels over a concrete plinth with a band
+  and strip windows (medium), precast concrete between buttresses (heavy), a bunker with a battered ground storey and
+  embrasures (hardened). Their walls take a building's tint. Each kit has two roofs, and either variant draws either
+  (`shared` names both): `vault` (below), with frames running on over it as ribs, a low corrugated gable (light),
+  bowstring roofs (medium, heavy), a concrete arch (hardened, a hardened aircraft shelter's); and `flat`, with the
+  kit's roof fittings, a corrugated deck under an eave (light), a membrane roof under a fascia (medium), a dark roof
+  under a parapet (heavy) or a burster slab (hardened).
 
 A roof's `vault` (a habitat kit's in its roof material, in place of its flat roof, rim and pier tops) is a roof that spans its hall, as a hangar's does, in place of the flat slab: a hexside
 wide, rising `rise` (half a level, 9, at the most) over the roof's height in the `shape` of a `gable`, a `bow` (a circle's segment, a bowstring roof),
@@ -302,8 +304,8 @@ pieces stand in all six corners (not turned). Doors in a gable end stand under t
 A kit variant's `vaulted` names its other roof among the kit's `roofs`, drawn for a hangar-class building unless its
 author chooses the flat one (`building.appearance.roof` in a `.board2`, `vaulted` or `flat`; the board editor's Roof
 choice, shown for the hangar class where the variant has both). Buildings of other classes keep the variant's `roof`.
-Every look kit's `hangar` has one, and the lunar habitat's. A standard hangar's variants name one roof each: `default`
-the kit's `vault`, `alternative` its `flat` one.
+Every look kit's `hangar` has one, and the lunar habitat's, and both variants of the light, medium, heavy and hardened
+standard hangars: a variant and a roof are separate choices.
 
 A unit on a generated kit's roof is drawn standing on the roof's own surface (the slab, plating or vault the generator
 lays, its parts keyed `<material>#deck`), up to half a level over the roof's game height, where the unit plays. Parapets

@@ -4,14 +4,16 @@ Run: blender -b --factory-startup --python hangar_kits.py -- [light|medium|heavy
 Writes data/models/buildings/standard/hangar-<weight>-pieces.glb and hangar-<weight>.json, for the game's bays
 kit (GeneratedKit, BayKit), as theme_kits writes the looks' (its piece frame, levels of detail and export).
 
-A hangar is a hall: no storey of it has windows of rooms. Each kit has two variants. `default`, the designers' halls
-(art/hangar_<weight>_a-proposal.glb, their wall bays between frames; the hardened one's frames battered buttresses),
-dressed here in the board's materials with kerbs, louvres, strip windows, side doors and a far level, under a roof that
-spans the hall as a hangar's does (BayKit's vault: a low gable, a bowstring roof, a concrete arch), the frames running on
-over it as ribs. `alternative`: a corrugated steel shed on portal frames (light),
-insulated steel panels over a concrete plinth (medium), precast concrete between buttresses (heavy), a battered bunker
-under a burster slab (hardened). Each variant's `door` in the JSON is its large doors' look (KitDoors.Style): the game
-cuts them into these walls where the board's author puts them.
+A hangar is a hall: no storey of it has windows of rooms. Each kit has two variants, which are its walls and doors.
+`default`, the designers' halls (art/hangar_<weight>_a-proposal.glb, their wall bays between frames; the hardened one's
+frames battered buttresses), dressed here in the board's materials with kerbs, louvres, strip windows, side doors and a
+far level. `alternative`: a corrugated steel shed on portal frames (light), insulated steel panels over a concrete plinth
+(medium), precast concrete between buttresses (heavy), a battered bunker (hardened). Each variant's `largeDoor` in the
+JSON is its large doors' look (KitDoors.Style): the game cuts them into these walls where the board's author puts them.
+
+Each kit has two roofs, and either variant draws either: `vault`, a roof that spans the hall as a hangar's does (BayKit's
+vault: a low gable, a bowstring roof, a concrete arch), frames running on over it as ribs; and `flat`, a slab with its
+edge and roof fittings (the hardened one a burster slab). A hangar is vaulted unless its author chooses the flat roof.
 """
 import json
 import math
@@ -443,14 +445,15 @@ def bays(builder, kinds):
 
 
 def variant(name, base, upper, roofs, roof, planar, fit, large_door, prefix='', inset=3.0, vault=None):
-    """A variant and its roof (`vault`, or `flat` without one): its ground bays (the lists its ground storey picks among, a
-    side door among each), its upper storeys', its roof's edge; its roof slab (material, repeat) and the vault over it,
-    if any; its floors kept `inset` off the wall line, the wall's depth."""
+    """A variant, and the roof built with it (the kit's `vault`, or its `flat` one without a vault; build() puts both on
+    every variant): the variant's ground bays (the lists its ground storey picks among, a side door among each), its
+    upper storeys'; the roof's edge, slab (material, repeat), the vault over it, if any, and the fittings `fit` on a flat
+    one; the variant's floors kept `inset` off the wall line, the wall's depth."""
     run = lambda names, entrance=None: k.run([prefix+n for n in names], planar, entrance and prefix+entrance)
     return {
-        'name': name, 'roof': 'vault' if vault else 'flat', 'lone': k.LONE, 'bandEnd': 1.75, 'varyBays': True,
+        'name': name, 'roof': 'flat', 'vaulted': 'vault', 'lone': k.LONE, 'bandEnd': 1.75, 'varyBays': True,
         'floors': {'material': CAST, 'repeat': 12.0, 'inset': inset, 'heights': [0.05]},
-        **({'fittings': fit} if fit else {}),
+        'fittings': fit,
         'largeDoor': large_door,
         'base': [run(['base-'+n for n in names], 'base-door') for names in base],
         'floor': [run(names) for names in upper],
@@ -459,7 +462,7 @@ def variant(name, base, upper, roofs, roof, planar, fit, large_door, prefix='', 
 
 
 def hall(weight, base, upper, large_door):
-    """The designers' hall, a kit's first variant, under the roof that spans it: its sheeting, shape and rise, its gable
+    """The designers' hall, a kit's first variant, and the roof that spans a hall: its sheeting, shape and rise, its gable
     ends in the walls' finish (they take the building's tint with them), its frames running on over it as ribs."""
     look = HALLS[weight]
     material, repeat, pigment, shape, rise = look['roof']
@@ -541,7 +544,10 @@ KITS = {
 def build(weight):
     pieces, variants = KITS[weight]
     name = f'hangar-{weight}'
-    k.KITS[name] = (pieces, {variant['roof']: roof for variant, roof in variants}, [variant for variant, roof in variants])
+    # A variant is walls and doors. Each draws either of the kit's roofs: the flat one, with its fittings, or the vault.
+    roofs = {'vault' if 'vault' in roof else 'flat': roof for variant, roof in variants}
+    fittings = next(variant['fittings'] for variant, roof in variants if variant['fittings'])
+    k.KITS[name] = (pieces, roofs, [{**variant, 'fittings': fittings} for variant, roof in variants])
     # Walls take a building's tint; frames, concrete trims, roofs and equipment keep theirs.
     k.build(name, folder='standard', painted=lambda obj: obj.name.startswith('wall'))
 

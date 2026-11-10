@@ -4,9 +4,18 @@
   "shared": {
     "planar": {"structures/buildings/fortress-concrete": 18.0},
     "bay": 24.0,
+    "roof": "flat",
+    "vaulted": "vault",
     "lone": [[-20.78125, -34.25], [20.78125, -34.25], [20.78125, 34.25], [-20.78125, 34.25]],
     "bandEnd": 1.75,
-    "varyBays": true
+    "varyBays": true,
+    "fittings": [
+      {"cupola": [[0, 0, 0]]},
+      {"vent-block": [[0, 0, 0]]},
+      {"hatch": [[-7, 6, 0]], "vent-block": [[6, -6, 90]]},
+      {"cupola": [[-6, -5, 0]], "hatch": [[8, 8, 0]]},
+      {}
+    ]
   },
   "roofs": {
     "vault": {
@@ -41,7 +50,6 @@
   "variants": [
     {
       "name": "default",
-      "roof": "vault",
       "floors": {"material": "structures/common/cast-concrete", "repeat": 12.0, "inset": 1.3, "heights": [0.05]},
       "largeDoor": {
         "leaf": {"material": "structures/buildings/fortress-steel", "repeat": 18.0, "tint": "#ffffff"},
@@ -71,15 +79,7 @@
     },
     {
       "name": "alternative",
-      "roof": "flat",
       "floors": {"material": "structures/common/cast-concrete", "repeat": 12.0, "inset": 3.0, "heights": [0.05]},
-      "fittings": [
-        {"cupola": [[0, 0, 0]]},
-        {"vent-block": [[0, 0, 0]]},
-        {"hatch": [[-7, 6, 0]], "vent-block": [[6, -6, 90]]},
-        {"cupola": [[-6, -5, 0]], "hatch": [[8, 8, 0]]},
-        {}
-      ],
       "largeDoor": {
         "leaf": {"material": "structures/buildings/fortress-steel", "repeat": 18.0, "tint": "#ffffff"},
         "frame": {"material": "structures/buildings/fortress-concrete", "repeat": 18.0, "tint": "#e6e0d6"},
