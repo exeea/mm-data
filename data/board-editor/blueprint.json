@@ -257,26 +257,36 @@
         "utopia",
         "frontier",
         "imperial",
-        "heritage"
+        "heritage",
+        "civic-accessories",
+        "utopia-accessories",
+        "frontier-accessories",
+        "imperial-accessories",
+        "heritage-accessories"
       ],
       "subcategories": {
         "rooftop": [
           "rooftop"
         ],
         "civic": [
-          "civic"
+          "civic",
+          "civic-accessories"
         ],
         "utopia": [
-          "utopia"
+          "utopia",
+          "utopia-accessories"
         ],
         "frontier": [
-          "frontier"
+          "frontier",
+          "frontier-accessories"
         ],
         "imperial": [
-          "imperial"
+          "imperial",
+          "imperial-accessories"
         ],
         "heritage": [
-          "heritage"
+          "heritage",
+          "heritage-accessories"
         ],
         "colony": [
           "colony"
@@ -7145,6 +7155,228 @@
       "label": "Industrial Works",
       "kind": "prop",
       "section": "buildings/imperial"
+    },
+    {
+      "id": "scenery/civic/bus-shelter",
+      "label": "Bus shelter",
+      "kind": "prop",
+      "section": "buildings/civic-accessories"
+    },
+    {
+      "id": "scenery/civic/kiosk",
+      "label": "Kiosk",
+      "kind": "prop",
+      "section": "buildings/civic-accessories"
+    },
+    {
+      "id": "scenery/civic/monolith",
+      "label": "Monolith",
+      "kind": "prop",
+      "section": "buildings/civic-accessories"
+    },
+    {
+      "id": "scenery/civic/street-light",
+      "label": "Street light",
+      "kind": "prop",
+      "section": "buildings/civic-accessories"
+    },
+    {
+      "id": "scenery/civic/bollards",
+      "label": "Bollards",
+      "kind": "prop",
+      "section": "buildings/civic-accessories"
+    },
+    {
+      "id": "scenery/civic/planter",
+      "label": "Planter",
+      "kind": "prop",
+      "section": "buildings/civic-accessories"
+    },
+    {
+      "id": "scenery/civic/bench",
+      "label": "Bench",
+      "kind": "prop",
+      "section": "buildings/civic-accessories"
+    },
+    {
+      "id": "scenery/utopia/garden-pavilion",
+      "label": "Garden pavilion",
+      "kind": "prop",
+      "section": "buildings/utopia-accessories"
+    },
+    {
+      "id": "scenery/utopia/pergola",
+      "label": "Pergola",
+      "kind": "prop",
+      "section": "buildings/utopia-accessories"
+    },
+    {
+      "id": "scenery/utopia/reflecting-pool",
+      "label": "Reflecting pool",
+      "kind": "prop",
+      "section": "buildings/utopia-accessories"
+    },
+    {
+      "id": "scenery/utopia/ring-garden",
+      "label": "Ring garden",
+      "kind": "prop",
+      "section": "buildings/utopia-accessories"
+    },
+    {
+      "id": "scenery/utopia/flower-bed",
+      "label": "Flower bed",
+      "kind": "prop",
+      "section": "buildings/utopia-accessories"
+    },
+    {
+      "id": "scenery/utopia/curved-bench",
+      "label": "Curved bench",
+      "kind": "prop",
+      "section": "buildings/utopia-accessories"
+    },
+    {
+      "id": "scenery/utopia/light-column",
+      "label": "Light column",
+      "kind": "prop",
+      "section": "buildings/utopia-accessories"
+    },
+    {
+      "id": "scenery/frontier/comms-mast",
+      "label": "Comms mast",
+      "kind": "prop",
+      "section": "buildings/frontier-accessories"
+    },
+    {
+      "id": "scenery/frontier/cargo-container",
+      "label": "Cargo container",
+      "kind": "prop",
+      "section": "buildings/frontier-accessories"
+    },
+    {
+      "id": "scenery/frontier/storage-tank",
+      "label": "Storage tank",
+      "kind": "prop",
+      "section": "buildings/frontier-accessories"
+    },
+    {
+      "id": "scenery/frontier/generator",
+      "label": "Generator",
+      "kind": "prop",
+      "section": "buildings/frontier-accessories"
+    },
+    {
+      "id": "scenery/frontier/supply-crates",
+      "label": "Supply crates",
+      "kind": "prop",
+      "section": "buildings/frontier-accessories"
+    },
+    {
+      "id": "scenery/frontier/solar-array",
+      "label": "Solar array",
+      "kind": "prop",
+      "section": "buildings/frontier-accessories"
+    },
+    {
+      "id": "scenery/frontier/floodlight",
+      "label": "Floodlight",
+      "kind": "prop",
+      "section": "buildings/frontier-accessories"
+    },
+    {
+      "id": "scenery/frontier/beacon-mast",
+      "label": "Beacon mast",
+      "kind": "prop",
+      "section": "buildings/frontier-accessories"
+    },
+    {
+      "id": "scenery/imperial/torii-gate",
+      "label": "Torii gate",
+      "kind": "prop",
+      "section": "buildings/imperial-accessories"
+    },
+    {
+      "id": "scenery/imperial/roofed-gate",
+      "label": "Roofed gate",
+      "kind": "prop",
+      "section": "buildings/imperial-accessories"
+    },
+    {
+      "id": "scenery/imperial/tea-pavilion",
+      "label": "Tea pavilion",
+      "kind": "prop",
+      "section": "buildings/imperial-accessories"
+    },
+    {
+      "id": "scenery/imperial/footbridge",
+      "label": "Footbridge",
+      "kind": "prop",
+      "section": "buildings/imperial-accessories"
+    },
+    {
+      "id": "scenery/imperial/koi-pond",
+      "label": "Koi pond",
+      "kind": "prop",
+      "section": "buildings/imperial-accessories"
+    },
+    {
+      "id": "scenery/imperial/rock-garden",
+      "label": "Rock garden",
+      "kind": "prop",
+      "section": "buildings/imperial-accessories"
+    },
+    {
+      "id": "scenery/imperial/stone-lantern",
+      "label": "Stone lantern",
+      "kind": "prop",
+      "section": "buildings/imperial-accessories"
+    },
+    {
+      "id": "scenery/heritage/bandstand",
+      "label": "Bandstand",
+      "kind": "prop",
+      "section": "buildings/heritage-accessories"
+    },
+    {
+      "id": "scenery/heritage/fountain",
+      "label": "Fountain",
+      "kind": "prop",
+      "section": "buildings/heritage-accessories"
+    },
+    {
+      "id": "scenery/heritage/gateway",
+      "label": "Gateway",
+      "kind": "prop",
+      "section": "buildings/heritage-accessories"
+    },
+    {
+      "id": "scenery/heritage/balustrade",
+      "label": "Balustrade",
+      "kind": "prop",
+      "section": "buildings/heritage-accessories"
+    },
+    {
+      "id": "scenery/heritage/iron-fence",
+      "label": "Iron fence",
+      "kind": "prop",
+      "section": "buildings/heritage-accessories"
+    },
+    {
+      "id": "scenery/heritage/obelisk",
+      "label": "Obelisk",
+      "kind": "prop",
+      "section": "buildings/heritage-accessories"
+    },
+    {
+      "id": "scenery/heritage/street-lamp",
+      "label": "Street lamp",
+      "kind": "prop",
+      "section": "buildings/heritage-accessories"
+    },
+    {
+      "id": "scenery/heritage/park-bench",
+      "label": "Park bench",
+      "kind": "prop",
+      "section": "buildings/heritage-accessories"
     },
     {
       "id": "buildings/authored/heritage-government-hall",
