@@ -260,8 +260,9 @@ def civic_ribbon(rng, kind):
 
 
 FINS, FIN, FIN_OUT, FIN_IN = 4, .9, 1.2, 2.2  # Fins to a bay; a fin's half width, how far it stands out and reaches in.
-FIN_HEAD = 15.8  # Where a storey's fins end under its head; the crown of the arches that join a hall's under its roof.
-FIN_SPRING = FIN_HEAD-(W/FINS/2-FIN)
+FIN_HEAD = 15.8  # Where a storey's fins end under its head.
+ARCADE = 14.4  # The crown of the arches that join a hall's fins under its roof: clear of the eave's beam.
+FIN_SPRING = ARCADE-(W/FINS/2-FIN)
 
 
 def fins(z0, z1, omit='bk'):
@@ -278,7 +279,7 @@ def fin_arches():
     step, half = W/FINS, W/FINS/2-FIN
     for k in range(FINS):
         arch_head('fins arch', (k+.5)*step, half, FIN_SPRING, FIN_SPRING, LEVEL, (PANELS, TONES[1]), (PANELS, TONES[0]), FIN_OUT+FIN_IN,
-                  y=-FIN_OUT)
+                  y=-FIN_OUT, sides=6)
     for k in range(FINS+1):
         x0, x1 = max(0, k*step-FIN), min(W, k*step+FIN)
         add('fins arch wall', PANELS, TONES[1], [(x0, -FIN_OUT, FIN_SPRING), (x1, -FIN_OUT, FIN_SPRING), (x1, -FIN_OUT, LEVEL), (x0, -FIN_OUT, LEVEL)],
@@ -315,24 +316,27 @@ def civic_hall(rng, kind, base=False, top=False):
     them strips of blank precast, louvres or dark glass, laid alike on every storey. Under the roof the fins join in
     round arches. door: on the ground, a service door up a step."""
     low = PLINTH if base else 0.0
-    head = FIN_HEAD if top else LEVEL  # A strip's top: behind the arches' wall, or the storey's.
+    head = ARCADE if top else LEVEL  # A strip's top: behind the arches' wall, or the storey's.
     c.face('hall back', plane(FIN_IN), 0, W, low, LEVEL, 8, 9, DARK_BACK)
     if base:
         c.extrude('plinth batter', [(0, 0), (2.4, 0), (0, PLINTH)], front, 0, W, PANELS, TONES[1])
+        add('plinth top', PANELS, TONES[1], [(0, 0, PLINTH), (W, 0, PLINTH), (W, FIN_IN, PLINTH), (0, FIN_IN, PLINTH)], [(0, 1, 2, 3)])
     step = W/FINS
     for k, what in enumerate({'blank': 'bbbb', 'louvre': 'blbb', 'glass': 'bggb', 'door': 'bbbb'}[kind]):
         x0, x1 = k*step+FIN, (k+1)*step-FIN
         if what == 'b':
             c.face('hall panel', plane(.4), x0, x1, low, head, 4.2, 9, TONES[0])
         elif what == 'l':
-            c.louvre('hall louvre', plane(2.1), x0+.5, x1-.5, low+.5, head-.5)
+            # Frame and slats run on from storey to storey.
+            c.quad('hall louvre frame', plane(2.1), x0, x1, low, head, .03, PANELS, (.40, .40, .38))
+            c.quad('hall louvre', plane(2.1), x0+.5, x1-.5, low, head, .06, SLATS, LOUVRE)
         else:
             glass('hall glass', x0, x1, low, head, 2.14, rng.random() < .2)
             cuboid('hall transom', x0, x1, 1.9, 2.14, low, low+.3, STEEL, (.32, .33, .33), omit='bk', detail=True)
     if kind == 'door':
         h.door('hall service', 1.5*step, .4, PLINTH, SOUTH, lit=False)
         cuboid('hall step', step+FIN, 2*step-FIN, -2.4, 0, 0, PLINTH, PANELS, TONES[2], omit='bk')
-    fins(low, FIN_SPRING if top else LEVEL, 'bk' if top else 'bkt')
+    fins(low, FIN_SPRING if top else LEVEL, 'bkt')
     if top:
         fin_arches()
     back_wall(W, 0, LEVEL, 2.3)
@@ -555,7 +559,7 @@ def utopia_hall(rng, kind, base=False, top=False, length=W):
     else:
         add('hall reveal', *shade, [(x0, 0, low), (x0, depth, low), (x0, depth, LEVEL), (x0, 0, LEVEL)], [(0, 1, 2, 3)])
         add('hall reveal', *shade, [(x1, 0, LEVEL), (x1, depth, LEVEL), (x1, depth, low), (x1, 0, low)], [(0, 1, 2, 3)])
-    if base:
+    if base and kind != 'door':
         add('hall sill', *shade, [(x0, 0, low), (x1, 0, low), (x1, depth, low), (x0, depth, low)], [(0, 1, 2, 3)])
     reach = lambda x: spring+math.sqrt(max(0.0, half*half-(x-cx)**2)) if top else LEVEL  # The opening's top over x.
     if kind == 'blank':
@@ -564,21 +568,20 @@ def utopia_hall(rng, kind, base=False, top=False, length=W):
             fan('hall panel', curve, depth, WHITE_STONE, STONE_SHADE)
     else:
         add('hall back', PAINT, DARK_BACK, [(x0, depth, low), (x1, depth, low), (x1, depth, LEVEL), (x0, depth, LEVEL)], [(0, 1, 2, 3)])
-    if kind == 'slats':
+    if kind == 'slats':  # Inside the reveal: the arch's stone stands before their ends.
         for i in range(round(LEVEL/SLAT_PITCH)):
             z = .6+i*SLAT_PITCH
-            narrow = half-math.sqrt(max(0.0, half*half-(z+.6-spring)**2)) if top and z+.6 > spring else 0.0
             if z > low+.3 and z+.6 < reach(cx)-.3:
-                c.extrude('hall slat', [(-1.3, z), (.2, z+.25), (.2, z+.6), (-1.3, z+.35)], front, x0+narrow+.05, x1-narrow-.05, WHITE_STONE, SLAT)
+                c.extrude('hall slat', [(.1, z), (1.5, z+.25), (1.5, z+.6), (.1, z+.35)], front, x0, x1, WHITE_STONE, SLAT)
     elif kind == 'glass':
-        panes = 3
+        panes, lit = 3, rng.random() < .3
         for i in range(panes):
-            window('hall glass', x0+2*half*i/panes+.1, x0+2*half*(i+1)/panes-.1, low, head, back, rng.random() < .3)
+            window('hall glass', x0+2*half*i/panes+.1, x0+2*half*(i+1)/panes-.1, low, head, back, lit)
         for i in range(1, panes):
             x = x0+2*half*i/panes
             cuboid('hall fin', x-.35, x+.35, -.5, depth, low, reach(x)-(.1 if top else 0), WHITE_STONE, STONE_TINT, omit='bk' if top else 'bkt')
         if top:
-            fan('hall glass', curve, back, U_GLASS, GLASS_TINT, light='night' if rng.random() < .3 else 'off')
+            fan('hall glass', curve, back, U_GLASS, GLASS_TINT, light='night' if lit else 'off')
             cuboid('hall transom', x0, x1, depth-.4, depth-.05, spring-.15, spring+.15, RAIL, RAIL_TINT, omit='bk', detail=True)
         elif not base:
             cuboid('hall transom', x0, x1, depth-.4, depth-.05, 0, .3, RAIL, RAIL_TINT, omit='bk', detail=True)
@@ -769,15 +772,14 @@ def port(name, x0, x1, z0, z1, rng, lit=None):
         cuboid(name+' frame', a0, a1, -.12, 0, b0, b1, PAINT, DARK, omit='bk')
 
 
-def arch_port(name, x0, x1, z0, crown, rng):
-    """A round-headed window in a dark steel frame, as port(): the plating round its head, which module_face() left open
-    as a box up to the crown."""
+def arch_port(name, x0, x1, z0, crown):
+    """A hall's round-headed port in a dark steel frame, as port(), unlit (a hall has no rooms): the plating round its
+    head, which module_face() left open as a box up to the crown."""
     cx, half = (x0+x1)/2, (x1-x0)/2
-    curve = arch_head(name, cx, half, z0, crown-half, crown, (PLATING, (1, 1, 1)), (PAINT, DARK), .8)
+    curve = arch_head(name, cx, half, z0, crown-half, crown, (PLATING, (1, 1, 1)), (PAINT, DARK), .8, sides=6)
     add(name+' reveal', PAINT, DARK, [(x0, 0, z0), (x1, 0, z0), (x1, .8, z0), (x0, .8, z0)], [(0, 1, 2, 3)])
     outline = [(x0, z0), (x1, z0)]+curve[::-1]
-    add(name+' glass', h.DARK_GLASS, GLAZING, [(x, .74, z) for x, z in outline], [tuple(range(len(outline)))],
-        light='night' if rng.random() < .45 else 'off')
+    add(name+' glass', h.DARK_GLASS, GLAZING, [(x, .74, z) for x, z in outline], [tuple(range(len(outline)))], light='off')
     grown = [(cx+(x-cx)*(half+.45)/half, crown-half+(z-(crown-half))*(half+.45)/half) for x, z in curve]
     for (a, b), (p, q) in zip(zip(curve, curve[1:]), zip(grown, grown[1:])):
         add(name+' frame', PAINT, DARK, [(a[0], -.12, a[1]), (b[0], -.12, b[1]), (q[0], -.12, q[1]), (p[0], -.12, p[1])], [(0, 1, 2, 3)])
@@ -832,7 +834,7 @@ BAY_WINDOWS = {
     'three': [(2.5, 7.5), (9.5, 14.5), (16.5, 21.5)],
     'big': [(5, 19, 6.2, 13.4)],
 }
-# Round-headed windows, in the same band: a hall's modules under its roof have them, either side of their strap.
+# Round-headed ports, in the windows' band: some of a hall's modules under its roof have them, either side of their strap.
 BAY_ARCHES = {'ribbed-arch': [(3.2, 8.2), (15.8, 20.8)]}
 ARCH_TOP = WINDOWS[1]+.4
 LABELS = {'pair': '01', 'single': '02', 'wide': '03', 'vent': '04'}  # A habitat module's number, by its windows.
@@ -847,7 +849,7 @@ def frontier_bay(rng, kind, base=False, length=W):
     arches = BAY_ARCHES.get(kind, ())
     module_face(length, holes+[(x0, x1, WINDOWS[0], ARCH_TOP) for x0, x1 in arches], foot=FOOT if base else 0.0)
     for x0, x1 in arches:
-        arch_port('window', x0, x1, WINDOWS[0], ARCH_TOP, rng)
+        arch_port('window', x0, x1, WINDOWS[0], ARCH_TOP)
     for x0, x1, a, b in holes:
         port('window', x0, x1, a, b, rng)
         if x1-x0 > 12:
@@ -1167,8 +1169,12 @@ UTOPIA_PLANAR = {WHITE_STONE: float(STONE_REPEAT)}
 FRONTIER_PLANAR = {PLATING: 18.0}
 
 
-def run(bays, planar, door=None, round_piece=None, joints=None, seam=None):
+def run(bays, planar, door=None, round_piece=None, joints=None, seam=None, margin=0.0):
+    """A module's run. margin: its bays keep that far off a wall's ends, stretches of its round piece filling the margins
+    and the wall's going on past an inside corner, where a bay cut short would show through its recess."""
     result = {'bays': bays, 'bay': W, 'planar': planar}
+    if margin:
+        result['margin'], result['ends'] = margin, {'piece': round_piece, 'length': ROUND}
     if door:
         result['door'] = door
     if round_piece:
@@ -1263,6 +1269,7 @@ def civic_variant(name, floors, bases=SHOPS, doors=('shop-door', 'plinth-door'),
 UTOPIA_DOOR = door((WHITE_STONE, SLAT, 6.0), (WHITE_STONE, STONE_TINT, float(STONE_REPEAT)), jamb=2.2, header=2.8, out=1.0, depth=4.6, recess=1.2,
                    lintel=1.6, panel=2.0, section=12.0, seam=(RAIL, RAIL_TINT), windows=door_windows(8.0, 2.4, 9.0, 12.0, (.20, .15, .08), U_GLASS),
                    threshold=(WHITE_STONE, STONE_SHADE), apron=5.0)
+ENDS = 3.0  # How far Utopia's bays keep off a wall's ends.
 ARCADES = (['arcade-arch', 'arcade-planted', 'arcade-arch', 'arcade-arch'], ['arcade-planted', 'arcade-arch', 'arcade-planted'])
 
 
@@ -1280,11 +1287,11 @@ def utopia_variant(name, floors, round_piece, bases=ARCADES, door='arcade-door',
         'floors': {'material': WHITE_STONE, 'repeat': 12.0, 'inset': 3.0, 'heights': [0.05]},
         'sidewalk': {'material': WHITE_STONE, 'repeat': 12.0, 'width': 5.0, 'kerb': 0.3},
         'modules': {
-            'base0': run(bases[0], p, door, base_round),
-            'base1': run(bases[1], p, door, base_round),
-            'floor0': run(floors[0], p, round_piece=round_piece),
-            'floor1': run(floors[1], p, round_piece=round_piece),
-            **({'top0': run(tops[0], p, round_piece=tops[1])} if tops else {}),
+            'base0': run(bases[0], p, door, base_round, margin=ENDS),
+            'base1': run(bases[1], p, door, base_round, margin=ENDS),
+            'floor0': run(floors[0], p, round_piece=round_piece, margin=ENDS),
+            'floor1': run(floors[1], p, round_piece=round_piece, margin=ENDS),
+            **({'top0': run(tops[0], p, round_piece=tops[1], margin=ENDS)} if tops else {}),
             'roof0': run(['rim-garden', 'rim-rail', 'rim-garden'], p, round_piece='rim-round'),
         },
         'fittings': UTOPIA_FITTINGS,
@@ -1360,11 +1367,11 @@ KITS = {
                          (['slit', 'louvre', 'pipes', 'slit'], ['louvre', 'slit', 'boxes', 'vent']), 'rollup'),
         frontier_variant('greenhouse', (['glass', 'glass-vent', 'glass'], ['glass-vent', 'glass', 'glass']),
                          (['glass', 'glass-vent', 'glass'], ['glass', 'glass', 'glass-vent']), 'airlock', DUSTY_GLASS, GREENHOUSE_FITTINGS),
-        # A hall of strapped modules without rooms' windows, round-headed ports in the ones under its roof. A hangar-class
+        # A hall of strapped modules without rooms' windows, a pair of round-headed ports in one bay in four under its roof. A hangar-class
         # building draws it unless told otherwise, under a plated lid unless it chooses the modules' flat roofs.
         frontier_variant('hangar', (['ribbed', 'louvre', 'ribbed', 'boxes'], ['ribbed', 'ribbed', 'pipes', 'ribbed']),
                          (['ribbed', 'slit', 'ribbed', 'ribbed'], ['slit', 'ribbed', 'vent', 'ribbed']), 'airlock', layouts=HALL_FITTINGS,
-                         tops=['ribbed-arch', 'ribbed', 'ribbed-arch', 'ribbed-arch'], hall=True),
+                         tops=['ribbed-arch', 'ribbed', 'ribbed', 'ribbed'], hall=True),
     ]),
     'utopia': (UTOPIA_PIECES, [
         utopia_variant('terraces', (['terrace-dense', 'terrace-sparse', 'terrace-pier', 'terrace-dense', 'terrace-oval'],

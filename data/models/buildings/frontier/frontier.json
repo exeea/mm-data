@@ -2069,8 +2069,8 @@
           "bays": [
             "ribbed-arch",
             "ribbed",
-            "ribbed-arch",
-            "ribbed-arch"
+            "ribbed",
+            "ribbed"
           ],
           "bay": 24.0,
           "planar": {

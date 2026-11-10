@@ -59,6 +59,11 @@
           "planar": {
             "structures/common/white-stone": 54.0
           },
+          "margin": 3.0,
+          "ends": {
+            "piece": "arcade-round",
+            "length": 6.0
+          },
           "door": "arcade-door",
           "round": {
             "piece": "arcade-round",
@@ -76,6 +81,11 @@
           "bay": 24.0,
           "planar": {
             "structures/common/white-stone": 54.0
+          },
+          "margin": 3.0,
+          "ends": {
+            "piece": "arcade-round",
+            "length": 6.0
           },
           "door": "arcade-door",
           "round": {
@@ -97,6 +107,11 @@
           "planar": {
             "structures/common/white-stone": 54.0
           },
+          "margin": 3.0,
+          "ends": {
+            "piece": "terrace-round",
+            "length": 6.0
+          },
           "round": {
             "piece": "terrace-round",
             "length": 6.0
@@ -115,6 +130,11 @@
           "bay": 24.0,
           "planar": {
             "structures/common/white-stone": 54.0
+          },
+          "margin": 3.0,
+          "ends": {
+            "piece": "terrace-round",
+            "length": 6.0
           },
           "round": {
             "piece": "terrace-round",
@@ -484,6 +504,11 @@
           "planar": {
             "structures/common/white-stone": 54.0
           },
+          "margin": 3.0,
+          "ends": {
+            "piece": "arcade-round",
+            "length": 6.0
+          },
           "door": "arcade-door",
           "round": {
             "piece": "arcade-round",
@@ -501,6 +526,11 @@
           "bay": 24.0,
           "planar": {
             "structures/common/white-stone": 54.0
+          },
+          "margin": 3.0,
+          "ends": {
+            "piece": "arcade-round",
+            "length": 6.0
           },
           "door": "arcade-door",
           "round": {
@@ -521,6 +551,11 @@
           "planar": {
             "structures/common/white-stone": 54.0
           },
+          "margin": 3.0,
+          "ends": {
+            "piece": "band-round",
+            "length": 6.0
+          },
           "round": {
             "piece": "band-round",
             "length": 6.0
@@ -538,6 +573,11 @@
           "bay": 24.0,
           "planar": {
             "structures/common/white-stone": 54.0
+          },
+          "margin": 3.0,
+          "ends": {
+            "piece": "band-round",
+            "length": 6.0
           },
           "round": {
             "piece": "band-round",
@@ -907,6 +947,11 @@
           "planar": {
             "structures/common/white-stone": 54.0
           },
+          "margin": 3.0,
+          "ends": {
+            "piece": "base-hall-round",
+            "length": 6.0
+          },
           "door": "base-hall-door",
           "round": {
             "piece": "base-hall-round",
@@ -925,6 +970,11 @@
           "bay": 24.0,
           "planar": {
             "structures/common/white-stone": 54.0
+          },
+          "margin": 3.0,
+          "ends": {
+            "piece": "base-hall-round",
+            "length": 6.0
           },
           "door": "base-hall-door",
           "round": {
@@ -945,6 +995,11 @@
           "planar": {
             "structures/common/white-stone": 54.0
           },
+          "margin": 3.0,
+          "ends": {
+            "piece": "hall-round",
+            "length": 6.0
+          },
           "round": {
             "piece": "hall-round",
             "length": 6.0
@@ -963,6 +1018,11 @@
           "planar": {
             "structures/common/white-stone": 54.0
           },
+          "margin": 3.0,
+          "ends": {
+            "piece": "hall-round",
+            "length": 6.0
+          },
           "round": {
             "piece": "hall-round",
             "length": 6.0
@@ -980,6 +1040,11 @@
           "bay": 24.0,
           "planar": {
             "structures/common/white-stone": 54.0
+          },
+          "margin": 3.0,
+          "ends": {
+            "piece": "hall-top-round",
+            "length": 6.0
           },
           "round": {
             "piece": "hall-top-round",
