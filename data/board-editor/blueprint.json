@@ -255,7 +255,8 @@
         "colony",
         "civic",
         "utopia",
-        "frontier"
+        "frontier",
+        "imperial"
       ],
       "subcategories": {
         "rooftop": [
@@ -270,6 +271,9 @@
         "frontier": [
           "frontier"
         ],
+        "imperial": [
+          "imperial"
+        ],
         "colony": [
           "colony"
         ]
@@ -277,7 +281,8 @@
       "subcategoryShelf": {
         "civic": "looks",
         "utopia": "looks",
-        "frontier": "looks"
+        "frontier": "looks",
+        "imperial": "looks"
       }
     },
     {
@@ -4420,6 +4425,13 @@
       "section": "buildings/frontier"
     },
     {
+      "id": "building/imperial",
+      "label": "Imperial (Modular)",
+      "owner": "building",
+      "asset": "buildings/imperial/imperial",
+      "section": "buildings/imperial"
+    },
+    {
       "id": "building/glass-dome",
       "label": "Glass dome",
       "owner": "building",
@@ -7079,6 +7091,48 @@
       "label": "Medical Center",
       "kind": "prop",
       "section": "buildings/frontier"
+    },
+    {
+      "id": "buildings/authored/imperial-administrative-offices",
+      "label": "Administrative Offices",
+      "kind": "prop",
+      "section": "buildings/imperial"
+    },
+    {
+      "id": "buildings/authored/imperial-government-hall",
+      "label": "Government Hall",
+      "kind": "prop",
+      "section": "buildings/imperial"
+    },
+    {
+      "id": "buildings/authored/imperial-transit-terminal",
+      "label": "Transit Terminal",
+      "kind": "prop",
+      "section": "buildings/imperial"
+    },
+    {
+      "id": "buildings/authored/imperial-medical-center",
+      "label": "Medical Center",
+      "kind": "prop",
+      "section": "buildings/imperial"
+    },
+    {
+      "id": "buildings/authored/imperial-courtyard-habitat",
+      "label": "Courtyard Habitat",
+      "kind": "prop",
+      "section": "buildings/imperial"
+    },
+    {
+      "id": "buildings/authored/imperial-commercial-center",
+      "label": "Commercial Center",
+      "kind": "prop",
+      "section": "buildings/imperial"
+    },
+    {
+      "id": "buildings/authored/imperial-industrial-works",
+      "label": "Industrial Works",
+      "kind": "prop",
+      "section": "buildings/imperial"
     },
     {
       "id": "buildings/authored/civic-tower",
