@@ -39,8 +39,8 @@ Scenery meshes live in topic folders under `scenery/`, with kebab-case names:
 |---|---|
 | `roofs/` | rooftop objects: bevel, ledge, roof grille, chimney stack, skylight, glass roof and dome, landing beacons |
 | `parks/` | bench, picnic table, garden bed, pillar, hex plaza, fountain, plaza variants, formal gardens, grandstand; `tree-cluster-1`-`5.png`, the tree-cluster stamps' thumbnails, rendered from their rows |
-| `pools/` | sport pools (deck, main and wading basins), rectangular, round and freeform pools; a pond is a pool in pond colours |
-| `vehicles/` | the car (its paint is a colour slot), parking barrier, parking shelters |
+| `pools/` | sport pools (deck, main and wading basins), rectangular, round and freeform pools |
+| `vehicles/` | four cars (`car` the saloon, `car-hatchback`, `car-wagon`, `car-minivan`; their paint is a colour slot), parking barrier, parking shelters |
 | `road/` | stop sign, three-aspect pole signal and curved mast-arm signal gantry; facing +Y with pole bases at Z=0; generated road-junction controls; `roadside-trees.png`, the roadside-trees stamp's thumbnail, rendered from its rows over its half-transparent road |
 | `construction/` | crawler crane, bulldozer, concrete debris, excavation site, concrete pipe |
 | `farm/` | one mesh per animal and pose: cow, pig, horse, bison, hen and rooster; coats are colour slots |
@@ -85,7 +85,7 @@ are one mesh each:
 
 | Mesh (`scenery/...`) | Slots | Base meshes (as colours) |
 |---|---|---|
-| `vehicles/car` | Paint | 19 `car-<paint>` (red is the default) |
+| `vehicles/car`, `car-hatchback`, `car-wagon`, `car-minivan` | Paint | 19 `car-<paint>` (red is the default); a car park's layout rows name each car's kind |
 | `farm/hen` | Plumage | 6 hens (white is the default) |
 | `farm/rooster` | Plumage, Wings | 3 roosters (red) |
 | `farm/horse` | Coat, Mane and tail, Muzzle | chestnut, dun, sorrel |
@@ -93,12 +93,12 @@ are one mesh each:
 | `farm/cow` | Patches | brown, black patches |
 | `farm/pig` | Skin, Spots | pink spotted (default), pink, brown spotted |
 | `farm/bison` | Coat | dark, light |
-| `pools/*` | Wall, Coping, Deck, Water | `parks/pond-1`, `-2`, `-4` are `pools/freeform`, `sport-2`, `sport-4` in the 'Pond' colours |
+| `pools/*` | Wall, Coping, Deck, Water | a pond (`parks/pond-1`, `-2`, `-4`) is a model of its own, in the outline of `pools/freeform`, `sport-2`, `sport-4` |
 | `seaport/yard/container`, `container-stack-2`, `container-stack-3`, `yard-truck` | Paint; Bottom, Top; Bottom, Middle, Top; Container | one mesh each, the 11 legacy container paints as presets |
 | `military/cargo-crate` | Paint | olive (default), woodland, desert, grey, navy, winter, oxide red |
 
 Every vertex whose colour differs between a family's coats belongs to the slot
-that reproduces it for every coat; each car and pond row names its colours.
+that reproduces it for every coat; each car row names its colours.
 Coats that differ only in colour share one mesh with colour slots, so there are
 12 animal meshes.
 
@@ -116,6 +116,13 @@ triangles; heavy rows use 1868/1264/660, ultra rows 2940/1980/1020, and ultra ga
 Each yard container mesh is capped at 3000/2000/1100 triangles, excluding separately placed cranes/vehicles.
 All levels retain colour slots, placement and existing machinery. The props' existing screen-size LOD selection
 chooses the three levels.
+The yard's quay crane and gantries are painted steel with glazed cabs: `tools/board-models/rematerial.py` gave their
+vertex-coloured faces the board's weathered paint and glass, as it did the plain roof pieces and the maglev platform.
+The straddle carrier, reach stacker and yard truck are photographic, as are the cars, the bulldozer, the crawler crane and
+the car park's shelters and barrier: each face shows the view it faces of the vehicle's orthographic reference sheet
+(`tools/vehicle-assets/<name>/sheet.png`, with the prompt that made it), packed into the vehicle's own material
+(`textures/structures/vehicles/<name>`, a Material Maker project); wheels, tyre tread and glass are shared materials.
+`tools/vehicle-assets/build.py picture` packs the pictures and `build.py model` builds the GLBs.
 Authoring sources and the reproducible build are in `tools/board-models/seaport/`; rerun that build after changing
 the source container or exporting its underlying Material Maker materials.
 
@@ -163,9 +170,9 @@ embedded stencil atlas.
 | `parks/plaza-hedge` | `fluff/square3` | yes, one row |
 | `parks/plaza-pillars` | `fluff/square2` | yes, one row |
 | `parks/plaza-pond` | `fluff/square4` | yes, one row |
-| `pools/freeform` in pond colours | `components/lake-freeform-01` | - |
-| `pools/sport-2` in pond colours | `components/lake-freeform-02` | - |
-| `pools/sport-4` in pond colours | `components/lake-freeform-04` | - |
+| `parks/pond-1` | `components/lake-freeform-01` | - |
+| `parks/pond-2` | `components/lake-freeform-02` | - |
+| `parks/pond-4` | `components/lake-freeform-04` | - |
 | `pools/freeform` | `components/pool-garden-freeform` | - |
 | `pools/rectangular` | `components/pool` | - |
 | `pools/rectangular-no-deck` | `components/pool-rectangular-no-deck` | - |
@@ -471,8 +478,7 @@ Palette rules, checked by `BoardSceneryDecodeDataTest`:
 - A mesh that only imported objects use is `palette: false` and keeps its
   label (sport-pool parts, plaza ornaments, the second debris pile, the rooster
   and the other animal poses: one visible animal per species). Coats and paints
-  are colours, not entries. An entry may place another `model` in `colours`: the
-  three ponds are pools in the pond colours. The five `-snow` trees that keep their
+  are colours, not entries. The five `-snow` trees that keep their
   own GLB are `palette: false` too: a tree takes its winter form on a snow surface,
   and its Snow toggle keeps it bare.
 - No visible ID is a layouts key. Transport shows the two routes, Maglev and Rail, the crossing signal and the

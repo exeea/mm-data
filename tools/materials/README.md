@@ -136,7 +136,7 @@ sloping back from its lip into a dark gap, at 64 pixels because nothing in it va
 also take `satin-steel`, `matte-steel`, `painted-steel`, `grille`, `cast-concrete`, `concrete-panels`,
 `chain-link` and `barbed-wire`; their projects without a Material Maker graph of their own read
 their maps from `sources/`. `white-stone` is the Utopia buildings' clean stone: `cast-concrete`'s photograph with its
-contrast cut and lifted to white. The cargo crate's maps are baked from steel, iron and the hazard stripes. The corrugated
+contrast cut and lifted to white. The standard buildings take seven finishes whose maps `facade_sources.py` makes from photographic studies (its header gives the recipe; courses meet across the tile's edges): `clapboard` and `painted-render` (near white: a building tints them), `timber-planks`, `timber-shingles`, `roofing-felt`, `hollow-brick` and `ferrocrete` (pale concrete cast in blocks two across and four up a repeat). The cargo crate's maps are baked from steel, iron and the hazard stripes. The corrugated
 finish, the three wall steels, the grille, the worn plate, the weathered paint and the vent slots are near white or
 flat: each model tints them with its vertex colours or colour slots.
 
