@@ -1,33 +1,158 @@
 {
   "style": "bays",
   "pieces": "building-castle-brian-pieces.glb",
-  "shared": {"bay": 24.0},
+  "shared": {
+    "planar": {"structures/common/ferrocrete": 18.0, "structures/common/cast-concrete": 12.0},
+    "bay": 24.0,
+    "lone": [[-20.78125, -34.25], [20.78125, -34.25], [20.78125, 34.25], [-20.78125, 34.25]],
+    "bandEnd": 1.75,
+    "varyBays": true,
+    "floors": {"material": "structures/common/cast-concrete", "repeat": 12.0, "inset": 3.0, "heights": [0.05]},
+    "sidewalk": {"material": "structures/buildings/light-sidewalk", "repeat": 12.0, "width": 5.0, "kerb": 0.25},
+    "base": {"margin": 1.9},
+    "floor": {"margin": 1.9}
+  },
   "roofs": {
-    "flat": {
-      "material": "structures/buildings/debug-roof",
-      "repeat": 12.0,
+    "parapet": {
+      "material": "structures/buildings/fortress-roof",
+      "repeat": 24.0,
       "inset": 0.0,
-      "heights": [1.0],
+      "heights": [0.3],
       "aviationLights": true,
-      "runs": [{"bays": ["roof0-bay0", "roof0-bay1", "roof0-bay2", "roof0-bay3", "roof0-bay4", "roof0-bay5"]}]
+      "runs": [
+        {
+          "bays": ["parapet-plain", "parapet-lamps", "parapet-plain"],
+          "margin": 1.9,
+          "ends": {"piece": "parapet-end", "length": 6.0},
+          "round": {"piece": "parapet-end", "length": 6.0}
+        }
+      ]
+    },
+    "edge": {
+      "material": "structures/buildings/fortress-roof",
+      "repeat": 24.0,
+      "inset": 0.0,
+      "heights": [0.3],
+      "aviationLights": true,
+      "runs": [
+        {
+          "bays": ["edge-plain", "edge-lamps", "edge-plain"],
+          "margin": 1.9,
+          "ends": {"piece": "edge-end", "length": 6.0},
+          "round": {"piece": "edge-end", "length": 6.0}
+        }
+      ]
     }
   },
   "variants": [
     {
-      "name": "default",
-      "roof": "flat",
-      "lone": [[-20.78125, -34.25], [20.78125, -34.25], [20.78125, 34.25], [-20.78125, 34.25]],
-      "bandEnd": 1.75,
-      "varyBays": true,
-      "floors": {"material": "structures/buildings/debug-floor", "repeat": 12.0, "inset": 0.6, "heights": [0.05]},
-      "sidewalk": {"material": "structures/buildings/debug-floor", "repeat": 12.0, "width": 4.0, "kerb": 0.3},
+      "name": "terraces",
+      "roof": "parapet",
+      "fittings": [
+        {"roof-garden": [[0, -6, 0]], "vent-cowl": [[-7, 8, 0]]},
+        {"plant": [[0, 2, 0]]},
+        {"roof-garden": [[-4, 5, 90]], "hatch": [[9, -8, 0]]},
+        {"vent-cowl": [[6, 6, 90], [-8, -7, 0]]},
+        {"roof-garden": [[0, 0, 0]]},
+        {"hatch": [[0, 0, 0]]}
+      ],
       "base": [
-        {"bays": ["base0-bay0", "base0-bay1", "base0-bay2", "base0-bay3", "base0-bay4", "base0-bay5"]},
-        {"bays": ["base1-bay0", "base1-bay1", "base1-bay2", "base1-bay3", "base1-bay4", "base1-bay5"]}
+        {
+          "bays": ["terrace-base-glacis", "terrace-base-louvre", "terrace-base-glacis", "terrace-base-core"],
+          "ends": {"piece": "terrace-base-end", "length": 6.0},
+          "entrance": "terrace-base-entrance",
+          "round": {"piece": "terrace-base-end", "length": 6.0}
+        },
+        {
+          "bays": ["terrace-base-louvre", "terrace-base-glacis", "terrace-base-glacis"],
+          "ends": {"piece": "terrace-base-end", "length": 6.0},
+          "entrance": "terrace-base-entrance",
+          "round": {"piece": "terrace-base-end", "length": 6.0}
+        }
       ],
       "floor": [
-        {"bays": ["floor0-bay0", "floor0-bay1", "floor0-bay2", "floor0-bay3", "floor0-bay4", "floor0-bay5"]},
-        {"bays": ["floor1-bay0", "floor1-bay1", "floor1-bay2", "floor1-bay3", "floor1-bay4", "floor1-bay5"]}
+        {
+          "bays": ["terrace-garden", "terrace-planted", "terrace-strip", "terrace-garden-b"],
+          "ends": {"piece": "terrace-end", "length": 6.0},
+          "round": {"piece": "terrace-end", "length": 6.0}
+        },
+        {
+          "bays": [
+            "terrace-garden-b",
+            "terrace-shutter",
+            "terrace-strip",
+            "terrace-shutter-b",
+            "terrace-strip-b",
+            "terrace-core"
+          ],
+          "ends": {"piece": "terrace-end", "length": 6.0},
+          "round": {"piece": "terrace-end", "length": 6.0}
+        },
+        {
+          "bays": ["terrace-planted-b", "terrace-strip-b", "terrace-planted", "terrace-strip"],
+          "ends": {"piece": "terrace-end", "length": 6.0},
+          "round": {"piece": "terrace-end", "length": 6.0}
+        },
+        {
+          "bays": [
+            "terrace-garden",
+            "terrace-strip-b",
+            "terrace-planted-b",
+            "terrace-planted",
+            "terrace-shutter-b",
+            "terrace-core"
+          ],
+          "ends": {"piece": "terrace-end", "length": 6.0},
+          "round": {"piece": "terrace-end", "length": 6.0}
+        }
+      ]
+    },
+    {
+      "name": "exoskeleton",
+      "roof": "edge",
+      "fittings": [
+        {"vent-cowl": [[-7, 8, 0]], "hatch": [[8, -7, 0]]},
+        {"plant": [[0, 2, 0]]},
+        {"vent-cowl": [[6, 6, 90], [-8, -7, 0]]},
+        {"hatch": [[0, 0, 0]]},
+        {"plant": [[-4, -5, 90]], "vent-cowl": [[9, 9, 0]]},
+        {}
+      ],
+      "base": [
+        {
+          "bays": ["frame-base-plinth", "frame-base-brace-up", "frame-base-plinth", "frame-base-brace-down"],
+          "ends": {"piece": "frame-base-end", "length": 6.0},
+          "entrance": "frame-base-vault",
+          "round": {"piece": "frame-base-end", "length": 6.0}
+        },
+        {
+          "bays": ["frame-base-brace-down", "frame-base-plinth", "frame-base-brace-up", "frame-base-plinth"],
+          "ends": {"piece": "frame-base-end", "length": 6.0},
+          "entrance": "frame-base-vault",
+          "round": {"piece": "frame-base-end", "length": 6.0}
+        }
+      ],
+      "floor": [
+        {
+          "bays": ["frame-brace-down", "frame-brace-up", "frame-frame", "frame-brace-down-b"],
+          "ends": {"piece": "frame-end", "length": 6.0},
+          "round": {"piece": "frame-end", "length": 6.0}
+        },
+        {
+          "bays": ["frame-brace-down-b", "frame-shutter", "frame-frame", "frame-shutter-b", "frame-frame-b"],
+          "ends": {"piece": "frame-end", "length": 6.0},
+          "round": {"piece": "frame-end", "length": 6.0}
+        },
+        {
+          "bays": ["frame-brace-up-b", "frame-frame-b", "frame-brace-up", "frame-frame"],
+          "ends": {"piece": "frame-end", "length": 6.0},
+          "round": {"piece": "frame-end", "length": 6.0}
+        },
+        {
+          "bays": ["frame-brace-down", "frame-frame-b", "frame-brace-up-b", "frame-brace-up", "frame-shutter-b"],
+          "ends": {"piece": "frame-end", "length": 6.0},
+          "round": {"piece": "frame-end", "length": 6.0}
+        }
       ]
     }
   ]

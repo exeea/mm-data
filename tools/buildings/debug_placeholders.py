@@ -1,7 +1,8 @@
 """Flat, colour-coded standard kits, laid out as the light building's spec.
 
 Run with Python (standard library only): python tools/buildings/debug_placeholders.py
-The existing light building, light fortress and lunar habitat are not overwritten.
+Finished kits are not overwritten: the buildings, the light fortress, the hangars of the rules' weights and the
+lunar habitat.
 Panel index 0..5 is red, orange, yellow, green, cyan, violet. Alternate base/floor
 modules use lighter shades. Roof slabs are yellow; floors/sidewalks are grey.
 The separate two-hex authored slicing demo is built in Blender by debug_authored.py.
@@ -87,9 +88,10 @@ def main():
     paths = []
     for family in ('building', 'fortress', 'gun-emplacement', 'hangar'):
         for weight in ('civilian', 'light', 'medium', 'heavy', 'hard', 'castle-brian'):
-            # Finished kits: the light building and fortress, and the four hangars of the rules' weights (hangar_kits.py).
-            if weight in ('light', 'medium', 'heavy', 'hard') and (family == 'hangar'
-                                                                 or weight == 'light' and family in ('building', 'fortress')):
+            # Finished kits: every building (the light one's art, standard_buildings.py), the light fortress and the four
+            # hangars of the rules' weights (hangar_kits.py).
+            if family == 'building' or weight == 'light' and family == 'fortress' or (
+                    family == 'hangar' and weight in ('light', 'medium', 'heavy', 'hard')):
                 continue
             name = f'{family}-{weight}'
             spec = copy.deepcopy(template)

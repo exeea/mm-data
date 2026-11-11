@@ -43,7 +43,8 @@ def _cut(cost, starts=32):
     return best_path
 
 
-def _across(stack, weights, broad=24.0, band=96, feather=1.5):
+def across(stack, weights, broad=24.0, band=96, feather=1.5):
+    """The stack made seamless across its columns alone."""
     height, width, channels = stack.shape
     rolled = np.roll(stack, width // 2, axis=1)
     low = np.stack([gaussian_filter(stack[..., c], broad, mode='wrap') for c in range(channels)], -1)
@@ -63,8 +64,8 @@ def _across(stack, weights, broad=24.0, band=96, feather=1.5):
 
 
 def seamless(stack, weights):
-    out = _across(stack, weights)
-    return np.transpose(_across(np.transpose(out, (1, 0, 2)), weights), (1, 0, 2))
+    out = across(stack, weights)
+    return np.transpose(across(np.transpose(out, (1, 0, 2)), weights), (1, 0, 2))
 
 
 def wrap_report(image):

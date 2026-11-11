@@ -82,15 +82,16 @@ def recess(name, x0, x1, z0, z1, depth, colour=TONES[1], key=PANELS):
     add(name+' back', PAINT, DARK_BACK, [(x0, depth, z0), (x1, depth, z0), (x1, depth, z1), (x0, depth, z1)], [(0, 1, 2, 3)])
 
 
-def facade(name, holes, z0, z1, length=W, colour=TONES[0], du=8, dv=9, key=PANELS, start=0.0):
-    """The facade plane from start to length and z0 to z1 less rectangular holes (x0, x1, za, zb), in strips."""
+def facade(name, holes, z0, z1, length=W, colour=TONES[0], du=8, dv=9, key=PANELS, start=0.0, **grime):
+    """The facade plane from start to length and z0 to z1 less rectangular holes (x0, x1, za, zb), in strips; `grime`:
+    how weathered (civic_blocks.face: `amount`, a splashed `foot`)."""
     xs = sorted({start, length, *[min(max(v, start), length) for hole in holes for v in hole[:2]]})
     for xa, xb in zip(xs, xs[1:]):
         inside = [hole for hole in holes if hole[0] <= xa+1e-6 and hole[1] >= xb-1e-6]
         zs = sorted({z0, z1, *[v for hole in inside for v in hole[2:]]})
         for za, zb in zip(zs, zs[1:]):
             if not any(hole[2] <= za+1e-6 and hole[3] >= zb-1e-6 for hole in inside):
-                c.face(name, front, xa, xb, za, zb, du, dv, colour, key=key, top=z1)
+                c.face(name, front, xa, xb, za, zb, du, dv, colour, key=key, top=z1, **grime)
 
 
 def arch_head(name, cx, half, sill, spring, top, wall, reveal, depth, rise=None, y=0.0, sides=8):

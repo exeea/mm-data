@@ -1,15 +1,15 @@
 {
   "style": "bays",
   "pieces": "building-medium-pieces.glb",
-  "shared": {"bay": 24.0},
+  "shared": {"planar": {"structures/common/white-stone": 18.0, "structures/common/cast-concrete": 12.0}, "bay": 24.0},
   "roofs": {
     "flat": {
-      "material": "structures/buildings/debug-roof",
-      "repeat": 12.0,
+      "material": "structures/buildings/light-roof",
+      "repeat": 18.0,
       "inset": 0.0,
       "heights": [1.0],
       "aviationLights": true,
-      "runs": [{"bays": ["roof0-bay0", "roof0-bay1", "roof0-bay2", "roof0-bay3", "roof0-bay4", "roof0-bay5"]}]
+      "runs": [{"bays": ["roof"]}]
     }
   },
   "variants": [
@@ -19,15 +19,72 @@
       "lone": [[-20.78125, -34.25], [20.78125, -34.25], [20.78125, 34.25], [-20.78125, 34.25]],
       "bandEnd": 1.75,
       "varyBays": true,
-      "floors": {"material": "structures/buildings/debug-floor", "repeat": 12.0, "inset": 0.6, "heights": [0.05]},
-      "sidewalk": {"material": "structures/buildings/debug-floor", "repeat": 12.0, "width": 4.0, "kerb": 0.3},
+      "fittings": [
+        {"hvac": [[0, 0, 0]]},
+        {"skylights": [[0, 0, 0]]},
+        {"stack": [[-8, 7, 0]], "skylights": [[3, -2, 90]]},
+        {"hvac": [[-4, 5, 90]], "stack": [[9, -8, 0]]},
+        {}
+      ],
+      "floors": {"material": "structures/common/cast-concrete", "repeat": 12.0, "inset": 1.25, "heights": [0.05]},
+      "sidewalk": {"material": "structures/buildings/light-sidewalk", "repeat": 12.0, "width": 5.0, "kerb": 0.25},
       "base": [
-        {"bays": ["base0-bay0", "base0-bay1", "base0-bay2", "base0-bay3", "base0-bay4", "base0-bay5"]},
-        {"bays": ["base1-bay0", "base1-bay1", "base1-bay2", "base1-bay3", "base1-bay4", "base1-bay5"]}
+        {
+          "bays": ["base-bay1", "base-bay5", "base-bay4", "base-bay2", "base-bay1", "base-bay3"],
+          "entrance": "base-bay0"
+        },
+        {
+          "bays": ["base-bay4", "base-bay3", "base-bay1", "base-bay5", "base-bay2", "base-bay4"],
+          "entrance": "base-bay0"
+        }
       ],
       "floor": [
-        {"bays": ["floor0-bay0", "floor0-bay1", "floor0-bay2", "floor0-bay3", "floor0-bay4", "floor0-bay5"]},
-        {"bays": ["floor1-bay0", "floor1-bay1", "floor1-bay2", "floor1-bay3", "floor1-bay4", "floor1-bay5"]}
+        {
+          "bays": [
+            "floor-bay5",
+            "floor-bay2",
+            "floor-bay6",
+            "floor-bay3-b",
+            "floor-bay0",
+            "floor-bay1",
+            "floor-bay1-b"
+          ]
+        },
+        {
+          "bays": [
+            "floor-bay5",
+            "floor-bay2-b",
+            "floor-bay0",
+            "floor-bay1-b",
+            "floor-bay3",
+            "floor-bay4-b",
+            "floor-bay1",
+            "floor-bay5-b"
+          ]
+        },
+        {
+          "bays": [
+            "floor-bay6",
+            "floor-bay1",
+            "floor-bay3",
+            "floor-bay5-b",
+            "floor-bay1-b",
+            "floor-bay6-b",
+            "floor-bay0"
+          ]
+        },
+        {
+          "bays": [
+            "floor-bay6-b",
+            "floor-bay2-b",
+            "floor-bay1",
+            "floor-bay3",
+            "floor-bay5-b",
+            "floor-bay0",
+            "floor-bay6",
+            "floor-bay1-b"
+          ]
+        }
       ]
     }
   ]

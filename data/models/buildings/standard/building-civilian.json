@@ -1,33 +1,199 @@
 {
   "style": "bays",
   "pieces": "building-civilian-pieces.glb",
-  "shared": {"bay": 24.0},
+  "shared": {
+    "bay": 24.0,
+    "lone": [[-20.78125, -34.25], [20.78125, -34.25], [20.78125, 34.25], [-20.78125, 34.25]],
+    "bandEnd": 1.75,
+    "varyBays": true,
+    "base": {"margin": 1.9},
+    "floor": {"margin": 1.9}
+  },
   "roofs": {
-    "flat": {
-      "material": "structures/buildings/debug-roof",
-      "repeat": 12.0,
+    "felt": {
+      "material": "structures/common/roofing-felt",
+      "repeat": 24.0,
       "inset": 0.0,
       "heights": [1.0],
-      "aviationLights": true,
-      "runs": [{"bays": ["roof0-bay0", "roof0-bay1", "roof0-bay2", "roof0-bay3", "roof0-bay4", "roof0-bay5"]}]
+      "aviationLights": false,
+      "runs": [
+        {
+          "bays": ["eave-plain", "eave-pipe", "eave-plain"],
+          "planar": {"structures/common/clapboard": 18.0, "structures/common/painted-render": 18.0}
+        }
+      ]
+    },
+    "slab": {
+      "material": "structures/common/cast-concrete",
+      "repeat": 12.0,
+      "inset": 0.0,
+      "heights": [0.3],
+      "aviationLights": false,
+      "runs": [
+        {
+          "bays": ["parapet-low", "parapet-wall", "parapet-part", "parapet-low", "parapet-part"],
+          "planar": {
+            "structures/common/painted-render": 18.0,
+            "structures/common/hollow-brick": 12.0,
+            "structures/common/cast-concrete": 12.0
+          }
+        }
+      ]
     }
   },
   "variants": [
     {
-      "name": "default",
-      "roof": "flat",
-      "lone": [[-20.78125, -34.25], [20.78125, -34.25], [20.78125, 34.25], [-20.78125, 34.25]],
-      "bandEnd": 1.75,
-      "varyBays": true,
-      "floors": {"material": "structures/buildings/debug-floor", "repeat": 12.0, "inset": 0.6, "heights": [0.05]},
-      "sidewalk": {"material": "structures/buildings/debug-floor", "repeat": 12.0, "width": 4.0, "kerb": 0.3},
+      "name": "timber",
+      "roof": "felt",
+      "floors": {"material": "structures/common/timber-planks", "repeat": 18.0, "inset": 1.0, "heights": [0.05]},
+      "fittings": [
+        {"stovepipe": [[-6, 5, 0]]},
+        {"washing": [[0, -3, 0]], "stovepipe": [[9, 10, 0]]},
+        {"barrels": [[-8, -7, 0]], "roof-hatch": [[6, 6, 0]]},
+        {"stovepipe": [[5, -8, 0], [-9, 8, 0]]},
+        {"roof-hatch": [[0, 0, 0]], "washing": [[0, 9, 0]]},
+        {}
+      ],
       "base": [
-        {"bays": ["base0-bay0", "base0-bay1", "base0-bay2", "base0-bay3", "base0-bay4", "base0-bay5"]},
-        {"bays": ["base1-bay0", "base1-bay1", "base1-bay2", "base1-bay3", "base1-bay4", "base1-bay5"]}
+        {
+          "bays": ["timber-base-pair", "timber-base-yard", "timber-base-pair", "timber-base-porch"],
+          "planar": {"structures/common/clapboard": 18.0, "structures/common/painted-render": 18.0},
+          "ends": {"piece": "timber-base-end", "length": 6.0},
+          "entrance": "timber-base-porch",
+          "round": {"piece": "timber-base-end", "length": 6.0}
+        },
+        {
+          "bays": ["timber-base-yard", "timber-base-pair", "timber-base-porch", "timber-base-pair"],
+          "planar": {"structures/common/clapboard": 18.0, "structures/common/painted-render": 18.0},
+          "ends": {"piece": "timber-base-end", "length": 6.0},
+          "entrance": "timber-base-porch",
+          "round": {"piece": "timber-base-end", "length": 6.0}
+        }
       ],
       "floor": [
-        {"bays": ["floor0-bay0", "floor0-bay1", "floor0-bay2", "floor0-bay3", "floor0-bay4", "floor0-bay5"]},
-        {"bays": ["floor1-bay0", "floor1-bay1", "floor1-bay2", "floor1-bay3", "floor1-bay4", "floor1-bay5"]}
+        {
+          "bays": ["timber-balcony", "timber-mixed", "timber-pair", "timber-balcony-b"],
+          "planar": {"structures/common/clapboard": 18.0, "structures/common/painted-render": 18.0},
+          "ends": {"piece": "timber-end", "length": 6.0},
+          "round": {"piece": "timber-end", "length": 6.0}
+        },
+        {
+          "bays": ["timber-balcony-b", "timber-triple", "timber-pair", "timber-triple-b", "timber-pair-b"],
+          "planar": {"structures/common/clapboard": 18.0, "structures/common/painted-render": 18.0},
+          "ends": {"piece": "timber-end", "length": 6.0},
+          "round": {"piece": "timber-end", "length": 6.0}
+        },
+        {
+          "bays": ["timber-mixed-b", "timber-pair-b", "timber-mixed", "timber-pair"],
+          "planar": {"structures/common/clapboard": 18.0, "structures/common/painted-render": 18.0},
+          "ends": {"piece": "timber-end", "length": 6.0},
+          "round": {"piece": "timber-end", "length": 6.0}
+        },
+        {
+          "bays": ["timber-balcony", "timber-pair-b", "timber-mixed-b", "timber-mixed", "timber-triple-b"],
+          "planar": {"structures/common/clapboard": 18.0, "structures/common/painted-render": 18.0},
+          "ends": {"piece": "timber-end", "length": 6.0},
+          "round": {"piece": "timber-end", "length": 6.0}
+        }
+      ]
+    },
+    {
+      "name": "masonry",
+      "roof": "slab",
+      "floors": {"material": "structures/common/cast-concrete", "repeat": 12.0, "inset": 1.0, "heights": [0.05]},
+      "fittings": [
+        {"water-tank": [[-7, 6, 0]]},
+        {"roof-shack": [[2, 3, 0]], "dish-mast": [[-11, -9, 0]]},
+        {"washing": [[0, -5, 0]], "water-tank": [[8, 9, 0]]},
+        {"brick-pile": [[-6, -6, 30]], "water-tank": [[7, 5, 0]]},
+        {"roof-shack": [[-4, -2, 90]], "water-tank": [[10, 10, 0]]},
+        {"dish-mast": [[6, -8, 0]], "brick-pile": [[-5, 7, 0]]}
+      ],
+      "base": [
+        {
+          "bays": [
+            "masonry-base-plain",
+            "masonry-base-shop",
+            "masonry-base-render",
+            "masonry-base-door",
+            "masonry-base-plain"
+          ],
+          "planar": {
+            "structures/common/painted-render": 18.0,
+            "structures/common/hollow-brick": 12.0,
+            "structures/common/cast-concrete": 12.0
+          },
+          "ends": {"piece": "masonry-base-end", "length": 6.0},
+          "entrance": "masonry-base-door",
+          "round": {"piece": "masonry-base-end", "length": 6.0}
+        },
+        {
+          "bays": ["masonry-base-render", "masonry-base-plain", "masonry-base-shop", "masonry-base-plain"],
+          "planar": {
+            "structures/common/painted-render": 18.0,
+            "structures/common/hollow-brick": 12.0,
+            "structures/common/cast-concrete": 12.0
+          },
+          "ends": {"piece": "masonry-base-end", "length": 6.0},
+          "entrance": "masonry-base-door",
+          "round": {"piece": "masonry-base-end", "length": 6.0}
+        }
+      ],
+      "floor": [
+        {
+          "bays": ["masonry-balcony-b", "masonry-balcony", "masonry-render-b", "masonry-brick-b", "masonry-mixed-b"],
+          "planar": {
+            "structures/common/painted-render": 18.0,
+            "structures/common/hollow-brick": 12.0,
+            "structures/common/cast-concrete": 12.0
+          },
+          "ends": {"piece": "masonry-end", "length": 6.0},
+          "round": {"piece": "masonry-end", "length": 6.0}
+        },
+        {
+          "bays": [
+            "masonry-patched-b",
+            "masonry-render",
+            "masonry-mixed-b",
+            "masonry-brick-b",
+            "masonry-brick",
+            "masonry-balcony-b"
+          ],
+          "planar": {
+            "structures/common/painted-render": 18.0,
+            "structures/common/hollow-brick": 12.0,
+            "structures/common/cast-concrete": 12.0
+          },
+          "ends": {"piece": "masonry-end", "length": 6.0},
+          "round": {"piece": "masonry-end", "length": 6.0}
+        },
+        {
+          "bays": ["masonry-mixed", "masonry-brick", "masonry-render-b", "masonry-patched", "masonry-patched-b"],
+          "planar": {
+            "structures/common/painted-render": 18.0,
+            "structures/common/hollow-brick": 12.0,
+            "structures/common/cast-concrete": 12.0
+          },
+          "ends": {"piece": "masonry-end", "length": 6.0},
+          "round": {"piece": "masonry-end", "length": 6.0}
+        },
+        {
+          "bays": [
+            "masonry-brick-b",
+            "masonry-patched-b",
+            "masonry-brick",
+            "masonry-balcony",
+            "masonry-mixed-b",
+            "masonry-render"
+          ],
+          "planar": {
+            "structures/common/painted-render": 18.0,
+            "structures/common/hollow-brick": 12.0,
+            "structures/common/cast-concrete": 12.0
+          },
+          "ends": {"piece": "masonry-end", "length": 6.0},
+          "round": {"piece": "masonry-end", "length": 6.0}
+        }
       ]
     }
   ]

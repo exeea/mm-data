@@ -321,11 +321,11 @@ HALLS = {
 }
 
 
-def proposal(weight, cache={}):
-    """The designers' pieces for a hangar (art/hangar_<weight>_a-proposal.glb): each node's triangles in a piece's frame
-    (x along the wall, the facade towards -y, z up), as (corners, normal). Their bays are alike within a storey."""
-    if weight not in cache:
-        data = (ART/f'hangar_{weight}_a-proposal.glb').read_bytes()
+def proposal(name, cache={}):
+    """The designers' pieces of art/<name>.glb: each node's triangles in a piece's frame (x along the wall, the facade
+    towards -y, z up), as (corners, normal)."""
+    if name not in cache:
+        data = (ART/f'{name}.glb').read_bytes()
         size = struct.unpack_from('<I', data, 12)[0]
         gltf = json.loads(data[20:20+size])
         binary = data[28+size:]
@@ -349,15 +349,15 @@ def proposal(weight, cache={}):
                     indices = [i[0] for i in read(primitive['indices'])]
                     triangles += [([corners[i] for i in indices[t:t+3]], normals[indices[t]]) for t in range(0, len(indices), 3)]
                 nodes[node['name']] = triangles
-        cache[weight] = nodes
-    return cache[weight]
+        cache[name] = nodes
+    return cache[name]
 
 
 def hall_body(weight, node):
     """A proposal wall piece in its hall's finishes: its frames (the ends of a bay) and its sheeting between them; without
     its underside and top, which lie on other pieces."""
     look = HALLS[weight]
-    for corners, n in proposal(weight)[node]:
+    for corners, n in proposal(f'hangar_{weight}_a-proposal')[node]:
         xs = [corner[0] for corner in corners]
         if abs(n[2]) > .9:
             continue
