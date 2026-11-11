@@ -78,11 +78,12 @@ One JSON spec per pieces GLB (`GeneratedKit`). A field the style does not know i
   "shared": {"bay": 12.0, "sidewalk": {"width": 4.0}},
   "roofs": {
     "mansard": {"material": "structures/heritage/slate", "runs": [{"bays": ["mansard"], "far": {"bays": ["mansard-far"]}}]},
+    "parapet": {"material": "structures/heritage/slate", "runs": [{"bays": ["parapet"]}]},
     "vault": {"material": "structures/heritage/copper", "vault": {"shape": "bow", "rise": 9.0}, "runs": [{"bays": ["cornice"]}]}
   },
   "variants": [
     {"name": "habitat", "roof": "mansard", "base": [{"bays": ["shop"], "entrance": "porch"}], "floor": [{"bays": ["sash"]}]},
-    {"name": "hangar", "class": "hangar", "roof": "mansard", "vaulted": "vault", "base": [{"bays": ["hall"]}], "floor": [{"bays": ["hall"]}]}
+    {"name": "hangar", "class": "hangar", "roof": "parapet", "vaulted": "vault", "base": [{"bays": ["hall"]}], "floor": [{"bays": ["hall"]}]}
   ]
 }
 ```
@@ -174,21 +175,19 @@ the `shape` of a `gable`, `bow`, `arch` or `plates`, in `segments` facets a side
 
 ## Kits
 
-| Kit | Style | Built by | Variants and roofs |
-| --- | --- | --- | --- |
-| `standard/building-light` | bays | hand-made art (`art/building_light_00.glb`) | one |
-| `standard/building-civilian` | bays | `standard_buildings.py` | `timber`, `masonry` |
-| `standard/building-medium`, `-heavy`, `-hard` | bays | `standard_buildings.py`, from `art/building_<weight>-proposal.glb` | one each |
-| `standard/building-castle-brian` | bays | `standard_buildings.py` | `terraces`, `exoskeleton` |
-| `standard/hangar-light`, `-medium`, `-heavy`, `-hard` | bays | `hangar_kits.py`, from `art/hangar_<weight>_a-proposal.glb` | `default`, `alternative`; roofs `vault`, `flat` |
-| `standard/fortress-light` | bays | hand-made art (`art/fortress_light_a_52.glb`) | one |
-| other `standard/` kits (fortresses, gun emplacements, civilian and Castle Brian hangars) | bays | `debug_placeholders.py` | diagnostic placeholders: flat panels, one colour a bay index |
-| `civic/civic` | bays | `theme_kits.py` | `galleries`, `ribbons`, `offices`, `hangar` |
-| `utopia/utopia` | bays | `theme_kits.py` | `terraces`, `bands`, `hangar` |
-| `frontier/frontier` | bays | `theme_kits.py` | `habitat`, `medical`, `industrial`, `greenhouse`, `hangar` |
-| `imperial/imperial` | bays | `imperial_kit.py` | `offices`, `tower`, `habitat`, `commercial`, `medical`, `industrial`, `hangar`, `pavilion`, `residence` |
-| `heritage/heritage` | bays | `heritage_kit.py` | `habitat`, `tower`, `offices`, `commercial`, `medical`, `industrial`, `hangar`, `armoury`; roofs `mansard`, `parapet`, `battlement` |
-| `lunar_habitat/lunar_habitat` | habitat | the JSON alone | `rounded`, `parapet` |
+A kit's variants and roofs are those its JSON lists.
+
+| Kit | Style | Built by |
+| --- | --- | --- |
+| `standard/building-light` | bays | hand-made art (`art/building_light_00.glb`) |
+| the other `standard/building-<weight>` | bays | `standard_buildings.py`; medium, heavy and hardened from `art/building_<weight>-proposal.glb` |
+| `standard/hangar-light`, `-medium`, `-heavy`, `-hard` | bays | `hangar_kits.py`, from `art/hangar_<weight>_a-proposal.glb` |
+| `standard/fortress-light` | bays | hand-made art (`art/fortress_light_a_52.glb`) |
+| the remaining `standard/` kits (fortresses, gun emplacements, civilian and Castle Brian hangars) | bays | `debug_placeholders.py`: diagnostic placeholders, flat panels in one colour a bay index |
+| `civic/civic`, `utopia/utopia`, `frontier/frontier` | bays | `theme_kits.py` |
+| `imperial/imperial` | bays | `imperial_kit.py` |
+| `heritage/heritage` | bays | `heritage_kit.py` |
+| `lunar_habitat/lunar_habitat` | habitat | the JSON alone |
 
 Every surface is a board material (Material Maker projects in `tools/materials/structures/`).
 
