@@ -3049,7 +3049,25 @@
     },
     {
       "id": "scenery/vehicles/car",
-      "label": "Car",
+      "label": "Saloon car",
+      "kind": "prop",
+      "section": "transportation/parking"
+    },
+    {
+      "id": "scenery/vehicles/car-hatchback",
+      "label": "Hatchback",
+      "kind": "prop",
+      "section": "transportation/parking"
+    },
+    {
+      "id": "scenery/vehicles/car-wagon",
+      "label": "Station wagon",
+      "kind": "prop",
+      "section": "transportation/parking"
+    },
+    {
+      "id": "scenery/vehicles/car-minivan",
+      "label": "Minivan",
       "kind": "prop",
       "section": "transportation/parking"
     },
@@ -3074,13 +3092,6 @@
     {
       "id": "scenery/parks/pond-1",
       "label": "Kidney pond",
-      "model": "scenery/pools/freeform",
-      "colours": [
-        "#63753d",
-        "#63753d",
-        "#63753d",
-        "#94c7ab"
-      ],
       "kind": "prop",
       "section": "parks/pools-sport",
       "family": "Pool or pond"
@@ -3088,13 +3099,6 @@
     {
       "id": "scenery/parks/pond-2",
       "label": "Freeform pond",
-      "model": "scenery/pools/sport-2",
-      "colours": [
-        "#63753d",
-        "#63753d",
-        "#63753d",
-        "#94c7ab"
-      ],
       "kind": "prop",
       "section": "parks/pools-sport",
       "family": "Pool or pond"
@@ -3102,13 +3106,6 @@
     {
       "id": "scenery/parks/pond-4",
       "label": "Twin-lobed pond",
-      "model": "scenery/pools/sport-4",
-      "colours": [
-        "#63753d",
-        "#63753d",
-        "#63753d",
-        "#94c7ab"
-      ],
       "kind": "prop",
       "section": "parks/pools-sport",
       "family": "Pool or pond"

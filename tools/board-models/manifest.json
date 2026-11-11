@@ -644,8 +644,8 @@
     "road_end": 18
   },
   "rough/dragon-tooth": {
-    "triangles": 28,
-    "vertices": 48
+    "triangles": 20,
+    "vertices": 40
   },
   "rough/felled-trunk": {
     "triangles": 442,

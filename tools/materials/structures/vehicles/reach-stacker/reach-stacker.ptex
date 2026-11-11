@@ -1,0 +1,488 @@
+{
+	"connections": [
+		{
+			"from": "PigmentSource",
+			"from_port": 0,
+			"to": "Pigment",
+			"to_port": 0
+		},
+		{
+			"from": "Pigment",
+			"from_port": 0,
+			"to": "PigmentPNG8",
+			"to_port": 0
+		},
+		{
+			"from": "PigmentPNG8",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "PigmentSource",
+			"from_port": 0,
+			"to": "Alpha",
+			"to_port": 0
+		},
+		{
+			"from": "Alpha",
+			"from_port": 3,
+			"to": "Material",
+			"to_port": 7
+		}
+	],
+	"label": "Fan — authored RGB",
+	"longdesc": "",
+	"name": "reach-stacker",
+	"node_position": {
+		"x": 0.0,
+		"y": 0.0
+	},
+	"nodes": [
+		{
+			"color": {
+				"a": 1.0,
+				"b": 0.300000011920929,
+				"g": 0.25,
+				"r": 0.200000002980232,
+				"type": "Color"
+			},
+			"name": "About",
+			"node_position": {
+				"x": 0.0,
+				"y": -300.0
+			},
+			"parameters": {},
+			"seed": -300.0,
+			"size": {
+				"x": 900.0,
+				"y": 166.0
+			},
+			"text": "The reach stacker's own picture: the side, front, top and rear views of its reference sheet (tools/vehicle-assets/reach-stacker/sheet.png), packed by tools/vehicle-assets/build.py, which also lays its model's faces on them. Alpha is clear where the sheet is background: railings, ladders and ropes are cut out of it. Colour artwork from sources/artwork.png, 512 px, from an ImageGen study. Pigment adjusts hue, saturation and value; the defaults keep the artwork as it is. The ...PNG8 groups and the nodes after them only store exact file values; leave them. Export: File > Export material > Godot > Godot 4 Standard into data/models/board/textures/structures/vehicles, then Reload assets in the game's Tuning panel.",
+			"title": "About this material",
+			"type": "comment"
+		},
+		{
+			"name": "PigmentSource",
+			"node_position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"parameters": {
+				"clamp": false,
+				"filter": true,
+				"fix_ar": false,
+				"image": "%PROJECT_PATH%/sources/artwork.png"
+			},
+			"seed_int": 0,
+			"seed_locked": true,
+			"type": "image"
+		},
+		{
+			"connections": [
+				{
+					"from": "DecodePigment",
+					"from_port": 0,
+					"to": "PigmentControls",
+					"to_port": 0
+				},
+				{
+					"from": "PigmentControls",
+					"from_port": 0,
+					"to": "EncodePigment",
+					"to_port": 0
+				},
+				{
+					"from": "gen_inputs",
+					"from_port": 0,
+					"to": "DecodePigment",
+					"to_port": 0
+				},
+				{
+					"from": "EncodePigment",
+					"from_port": 0,
+					"to": "gen_outputs",
+					"to_port": 0
+				}
+			],
+			"label": "Authored color controls (neutral defaults)",
+			"longdesc": "",
+			"name": "Pigment",
+			"node_position": {
+				"x": 350.0,
+				"y": 0.0
+			},
+			"nodes": [
+				{
+					"name": "gen_inputs",
+					"node_position": {
+						"x": 100.0,
+						"y": 0.0
+					},
+					"parameters": {},
+					"ports": [
+						{
+							"group_size": 0.0,
+							"name": "sRGB pigment",
+							"type": "rgba"
+						}
+					],
+					"seed_int": 0,
+					"seed_locked": true,
+					"type": "ios"
+				},
+				{
+					"name": "gen_outputs",
+					"node_position": {
+						"x": 900.0,
+						"y": 0.0
+					},
+					"parameters": {},
+					"ports": [
+						{
+							"group_size": 0.0,
+							"name": "sRGB pigment",
+							"type": "rgba"
+						}
+					],
+					"seed_int": 0,
+					"type": "ios"
+				},
+				{
+					"name": "gen_parameters",
+					"node_position": {
+						"x": 100.0,
+						"y": 200.0
+					},
+					"parameters": {
+						"Hue": 0.0,
+						"Saturation": 1.0,
+						"Value": 1.0
+					},
+					"seed_int": 0,
+					"type": "remote",
+					"widgets": [
+						{
+							"label": "Hue",
+							"linked_widgets": [
+								{
+									"node": "PigmentControls",
+									"widget": "hue"
+								}
+							],
+							"name": "Hue",
+							"shortdesc": "Hue",
+							"type": "linked_control"
+						},
+						{
+							"label": "Saturation",
+							"linked_widgets": [
+								{
+									"node": "PigmentControls",
+									"widget": "saturation"
+								}
+							],
+							"name": "Saturation",
+							"shortdesc": "Saturation",
+							"type": "linked_control"
+						},
+						{
+							"label": "Value",
+							"linked_widgets": [
+								{
+									"node": "PigmentControls",
+									"widget": "value"
+								}
+							],
+							"name": "Value",
+							"shortdesc": "Value",
+							"type": "linked_control"
+						}
+					]
+				},
+				{
+					"name": "DecodePigment",
+					"node_position": {
+						"x": 250.0,
+						"y": 0.0
+					},
+					"parameters": {
+						"mode": 1.0
+					},
+					"seed_int": 0,
+					"seed_locked": true,
+					"type": "color_conversion"
+				},
+				{
+					"name": "PigmentControls",
+					"node_position": {
+						"x": 500.0,
+						"y": 0.0
+					},
+					"parameters": {
+						"hue": 0.0,
+						"saturation": 1.0,
+						"value": 1.0
+					},
+					"seed_int": 0,
+					"seed_locked": true,
+					"type": "adjust_hsv"
+				},
+				{
+					"name": "EncodePigment",
+					"node_position": {
+						"x": 750.0,
+						"y": 0.0
+					},
+					"parameters": {
+						"mode": 0.0
+					},
+					"seed_int": 0,
+					"seed_locked": true,
+					"type": "color_conversion"
+				}
+			],
+			"parameters": {
+				"Hue": 0.0,
+				"Saturation": 1.0,
+				"Value": 1.0
+			},
+			"seed_int": 0,
+			"shortdesc": "",
+			"type": "graph"
+		},
+		{
+			"connections": [
+				{
+					"from": "gen_inputs",
+					"from_port": 0,
+					"to": "RGBValidRange",
+					"to_port": 0
+				},
+				{
+					"from": "RGBValidRange",
+					"from_port": 0,
+					"to": "RGBCodes",
+					"to_port": 0
+				},
+				{
+					"from": "RGBCodes",
+					"from_port": 0,
+					"to": "RGBNearestCode",
+					"to_port": 0
+				},
+				{
+					"from": "RGBNearestCode",
+					"from_port": 0,
+					"to": "RGBBinCenter",
+					"to_port": 0
+				},
+				{
+					"from": "RGBBinCenter",
+					"from_port": 0,
+					"to": "RGBPNGValue",
+					"to_port": 0
+				},
+				{
+					"from": "RGBPNGValue",
+					"from_port": 0,
+					"to": "gen_outputs",
+					"to_port": 0
+				}
+			],
+			"label": "Final pigment PNG8 storage",
+			"longdesc": "",
+			"name": "PigmentPNG8",
+			"node_position": {
+				"x": 1400.0,
+				"y": -250.0
+			},
+			"nodes": [
+				{
+					"name": "gen_inputs",
+					"node_position": {
+						"x": 0.0,
+						"y": 0.0
+					},
+					"parameters": {},
+					"ports": [
+						{
+							"group_size": 0.0,
+							"name": "Unencoded numeric value",
+							"type": "rgb"
+						}
+					],
+					"seed_int": 0,
+					"seed_locked": true,
+					"type": "ios"
+				},
+				{
+					"name": "gen_outputs",
+					"node_position": {
+						"x": 1800.0,
+						"y": 0.0
+					},
+					"parameters": {},
+					"ports": [
+						{
+							"group_size": 0.0,
+							"name": "PNG bin center",
+							"type": "rgb"
+						}
+					],
+					"seed_int": 0,
+					"seed_locked": true,
+					"type": "ios"
+				},
+				{
+					"name": "RGBValidRange",
+					"node_position": {
+						"x": 250.0,
+						"y": 0.0
+					},
+					"parameters": {
+						"clamp": true,
+						"d_in1_x": 0.0,
+						"d_in1_y": 0.0,
+						"d_in1_z": 0.0,
+						"d_in2_x": 0.0,
+						"d_in2_y": 0.0,
+						"d_in2_z": 0.0,
+						"op": 0.0
+					},
+					"seed_int": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBCodes",
+					"node_position": {
+						"x": 500.0,
+						"y": 0.0
+					},
+					"parameters": {
+						"clamp": false,
+						"d_in1_x": 0.0,
+						"d_in1_y": 0.0,
+						"d_in1_z": 0.0,
+						"d_in2_x": 255.0,
+						"d_in2_y": 255.0,
+						"d_in2_z": 255.0,
+						"op": 2.0
+					},
+					"seed_int": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBNearestCode",
+					"node_position": {
+						"x": 750.0,
+						"y": 0.0
+					},
+					"parameters": {
+						"clamp": false,
+						"d_in1_x": 0.0,
+						"d_in1_y": 0.0,
+						"d_in1_z": 0.0,
+						"d_in2_x": 0.0,
+						"d_in2_y": 0.0,
+						"d_in2_z": 0.0,
+						"op": 8.0
+					},
+					"seed_int": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBBinCenter",
+					"node_position": {
+						"x": 1000.0,
+						"y": 0.0
+					},
+					"parameters": {
+						"clamp": false,
+						"d_in1_x": 0.0,
+						"d_in1_y": 0.0,
+						"d_in1_z": 0.0,
+						"d_in2_x": 0.5,
+						"d_in2_y": 0.5,
+						"d_in2_z": 0.5,
+						"op": 0.0
+					},
+					"seed_int": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				},
+				{
+					"name": "RGBPNGValue",
+					"node_position": {
+						"x": 1250.0,
+						"y": 0.0
+					},
+					"parameters": {
+						"clamp": true,
+						"d_in1_x": 0.0,
+						"d_in1_y": 0.0,
+						"d_in1_z": 0.0,
+						"d_in2_x": 255.0,
+						"d_in2_y": 255.0,
+						"d_in2_z": 255.0,
+						"op": 3.0
+					},
+					"seed_int": 0,
+					"seed_locked": true,
+					"type": "math_v3"
+				}
+			],
+			"parameters": {},
+			"seed_int": 0,
+			"seed_locked": true,
+			"shortdesc": "",
+			"type": "graph"
+		},
+		{
+			"export_paths": {},
+			"name": "Material",
+			"node_position": {
+				"x": 2950.0,
+				"y": 0.0
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1.0,
+					"b": 1.0,
+					"g": 1.0,
+					"r": 1.0,
+					"type": "Color"
+				},
+				"ao": 1.0,
+				"depth_scale": 0.5,
+				"emission_energy": 1.0,
+				"flags_transparent": false,
+				"metallic": 0.0,
+				"normal": 1.0,
+				"roughness": 0.7,
+				"size": 9.0,
+				"sss": 0.0
+			},
+			"seed_int": 0,
+			"type": "material"
+		},
+		{
+			"name": "Alpha",
+			"node_position": {
+				"x": -200.0,
+				"y": 260.0
+			},
+			"parameters": {},
+			"seed_int": 0,
+			"type": "decompose"
+		}
+	],
+	"parameters": {},
+	"project_thumbnail": "UklGRj4FAABXRUJQVlA4WAoAAAAQAAAALwAALwAAQUxQSJQCAAANoCNteyJJevXrV9HAMpNX7Q9UrMd4gGEea5ksZmYGi3n3AG12ZIzVFT0X4BmrrOXdqqiUUlooyNIJImICmFOsBzh//bn89tcvAK6K1C9SVmbLdb1uM1Y0ZXysX6yVaIx1aRmvObyDqe3OZd3edRt/+PQkGmqR5K945gZIFWIwJFLELu3cv/LMWWPifFry8D0QxFomGoxAjK2Dj374ZtIwjxtd9BN4dcwrksL6lzZvGzg/mxtu+gavDeo0msLNn+xZdX4WN7z2PXyHuo36S5fvP+L8NB1teo/QZoEuNIv7VzVMkvKibwgtFqqhubxnIHFC4id8mwWrv/STbYn/q38Y32Hhzt+8+U0NIOUV96BkqLz04VmJSHwa38jB+PWPPCtRymtuQMlSObhyUmx1GN/Iw/jOvk+tNzuwZGrZ+UPJFlI2kpY2rnEdVTZU9rqCHln3+nSRfITusfObmHwMl43XR7LuyLkVJh9Du0n2vzXbyWSTzGj8l3TIeRh/GV+WTDbJDOBYN0o2UY5Bv0fOfSius/lYCljbuBQlk2iP/YErf9hZ2Uwq+z2u4tN9nWSySA3/FVXUkysHg2YR9HO0JPLsI+uTySA1xq8QIerZD18KmkHQx9ASCObNzTd7tzDfKY4az/9N2vbJpUEXFNo/34lJE6IO9iw3gy4ktKo70JLJwa3eXzS9W4BvV9fhRkz37sj9y5d6NTWl0Pn5DtyQWb1b3fPJzXg1NaTQ0OJO3JDZvQ62bX5pPUFkjhidjh87io6YN0h688NHD7ZIFWIwJFLEWgmfv4wxJfNH9OwzK/t3LlkmGozAse+/BPWJWoPIyU9/2Hhdr3tZp81oODjWL/4AjSV1xyi2XCv6x8bSZBz5v6tKZgdWUDgghAIAALARAJ0BKjAAMAA+hTSWR6UjIiEuLmCgEIlsAK5PhPtfsG+AmZfoF7xzgNsB+gHqA/R39YPfH/gH6Ada7/busA9AD9APRx/bz4Q/2N/Xb2pLugSYywNKngZ+ndmbeivYD6Jf6l+wB+xw8xRtSqMqRDGNnvMD9g+VC7jdVRNob9qsmaMSVnd5qiAA/L8xqnyiDuHs2CM1AAD+/VPYD0455oe+YfnbFqIPIcFm36yW8G3+LmyCrGNxJUiwUprqkgKMz1cWGdtX+Y5vVhqn7xamWTju9CO1P4GLgj1kL+rj7vu3nEIm31DlsJSDnTqX9swf0+0n21sA0l5HkCyfBmOqfqZxxFCBdFkGAnIYFu3DPlEW2CnjIuO1wgqS4+7SXaJ1QLhCPfMMtAfyjNK1dPRRtCwq8aAwAcxnquaZlD28GQ8bxyx5F0sriMx5Hm/e+/xeK131sig+6IZCvPrvNNZPuIkoaxwT5EtG1O+U3fDGUA5t02XMUTgxCgkde6pQT6rpMGxClJrT47ghD0oL0BAZqMbq9GRIT7ikDGse8H31qeP5YWHNYvtv+Bw9+tU5ehfSDZm2JhlTVsz49w8YhZUncfm8w8Q8Erf0bdxR+TDYyh7376QbhvDe9azSx6BDrr34HCD7q9S4aud8KSBZnm5gaLgFK34irrZYal29MLGjZHzn9q/BPgMOyefQFZrfC3f+SzeuNYYDErLkK4LwwCXlBfn7oPRkN5qZ0X3WVrwaOjhO45alowx3xOYCVflYDCYmhNSbSIEtLlcAjq1FwE29YI2pjPvFZ+wRPCncMZgA2yux9X2v63Vv6lU1WoXbt78jsWInDaX8M5ktuXBwKZF8FwvtQbAA",
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}
