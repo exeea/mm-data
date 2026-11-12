@@ -199,12 +199,15 @@ class Shell:
 
     # -- Shared parts --------------------------------------------------------------------------------
 
-    def wheel(self, x, y, radius, wide, outward, material, sides, back=True):
-        """A wheel on an axle along x: its picture on the outer face, tread round it, a dark inner face."""
+    def wheel(self, x, y, radius, wide, outward, material, sides, back=True, lowest=False):
+        """A wheel on an axle along x: its picture on the outer face, tread round it, a dark inner face. With `lowest`,
+        a corner stands at its foot, so that a coarse ring still reaches the ground and the wheel's full height."""
+        start = -TAU/4 if lowest else 0
+
         def ring(px):
-            return [(px, y+radius*math.cos(TAU*k/sides), radius+radius*math.sin(TAU*k/sides)) for k in range(sides)]
+            return [(px, y+radius*math.cos(start+TAU*k/sides), radius+radius*math.sin(start+TAU*k/sides)) for k in range(sides)]
         outer, inner = ring(x+outward*wide/2), ring(x-outward*wide/2)
-        uvs = [(.5+.5*outward*math.cos(TAU*k/sides), .5-.5*math.sin(TAU*k/sides)) for k in range(sides)]
+        uvs = [(.5+.5*outward*math.cos(start+TAU*k/sides), .5-.5*math.sin(start+TAU*k/sides)) for k in range(sides)]
         if outward > 0:
             self.face(material, outer, uvs)
         else:

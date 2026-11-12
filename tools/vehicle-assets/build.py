@@ -59,7 +59,7 @@ def straddle_carrier(lod):
             tail = (1285, 905, 1345, 960) if left else (1080, 905, 1140, 960)
             shell.prism(outline, x-1.12, x+1.12, at, {5: ('front', nose), 0: ('front', nose), 2: ('rear', tail), 3: ('rear', tail)})
             for px in (224, 316):
-                shell.wheel(x, y(px+shift), 1.42, 2.3, sx, HEAVY_WHEEL, sides, back=lod < 2)
+                shell.wheel(x, y(px+shift), 1.42, 2.3, sx, HEAVY_WHEEL, sides, back=lod < 2, lowest=lod == 2)
             px0, px1 = (232, 292) if front else (735, 785)
             shell.box(x-.95, x+.95, y(px0), y(px1), z(412), z(157), side=(px0, 157, px1, 412),
                       front=(1135, 150, 1085, 405) if left else (1340, 150, 1297, 405),
@@ -80,8 +80,7 @@ def straddle_carrier(lod):
               top=(715, 735, 792, 868))
     shell.box(2.3, 5.8, y(160), y(272), z(136), z(33), side=(160, 33, 272, 136), front=(1157, 40, 1062, 135), rear=(1262, 560, 1340, 640),
               top=(168, 822, 272, 905))
-    if lod < 2:
-        shell.tube(RUSTED, (1.7, y(802), z(122)), (1.7, y(802), z(14)), .34, 6)
+    shell.tube(RUSTED, (1.7, y(802), z(122)), (1.7, y(802), z(14)), .34, (6, 6, 4)[lod])  # The stack: the machine's top.
     # The spreader: its beam along the container, a head across each end, on its ropes.
     shell.box(-.55, .55, y(340), y(690), z(312), z(285), side=(340, 285, 690, 312), top=(375, 772, 670, 800))
     for px0, px1, cap in ((322, 342, (330, 738, 350, 848)), (688, 710, (700, 738, 715, 848))):
@@ -184,9 +183,9 @@ def yard_truck(lod):
     shell = Shell(TRUCK)
     sides = (10, 8, 6)[lod]
     for sx in (1, -1):
-        shell.wheel(sx*2.5, y(240), 1.485, 1.0, sx, HEAVY_WHEEL, sides, back=lod < 2)
+        shell.wheel(sx*2.5, y(240), 1.485, 1.0, sx, HEAVY_WHEEL, sides, back=lod < 2, lowest=lod == 2)
         for px in (565, 672):
-            shell.wheel(sx*2.3, y(px), 1.485, 1.45, sx, HEAVY_WHEEL, sides, back=lod < 2)
+            shell.wheel(sx*2.3, y(px), 1.485, 1.45, sx, HEAVY_WHEEL, sides, back=lod < 2, lowest=lod == 2)
     shell.prism([(114, 297), (123, 229), (148, 147), (176, 129), (298, 129), (298, 297)], -2.95, 2.95, at,
                 {0: ('front', (1117, 229, 1286, 297)), 1: ('front', (1117, 147, 1286, 229)), 2: ('top', (110, 679, 150, 860)),
                  3: ('top', (150, 679, 295, 860)), 4: ('rear', (1126, 640, 1286, 761))})
@@ -196,9 +195,9 @@ def yard_truck(lod):
     shell.box(-2.3, 2.3, y(700), y(739), z(366), z(300), side=(700, 300, 739, 366), rear=(1107, 800, 1305, 869))
     if lod < 2:
         shell.box(-2.4, 2.4, y(298), y(318), z(292), z(150), side=(298, 150, 318, 292), rear=(1126, 655, 1286, 761))
-    if lod == 0:
-        shell.box(2.82, 3.52, y(108), y(122), z(225), z(160), front=(1288, 165, 1311, 225), rear=(1288, 165, 1311, 225))
-        shell.box(-3.52, -2.82, y(108), y(122), z(225), z(160), front=(1093, 165, 1115, 225), rear=(1093, 165, 1115, 225))
+    # The mirrors: the cab's widest point at every level.
+    shell.box(2.82, 3.52, y(108), y(122), z(225), z(160), front=(1288, 165, 1311, 225), rear=(1288, 165, 1311, 225))
+    shell.box(-3.52, -2.82, y(108), y(122), z(225), z(160), front=(1093, 165, 1115, 225), rear=(1093, 165, 1115, 225))
     return shell.half_turn()
 
 
