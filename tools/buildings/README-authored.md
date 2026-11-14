@@ -133,6 +133,12 @@ Use the shared `role` field and `export_model()` in [authored_examples.py](autho
   plates and lattices shred that way, so author their far shapes; `hpg_headquarters.py` does for its dish, antenna and generators,
   `civic_buildings.py` for its arena. An authored far shape must enclose the finer levels: the shadow map picks its casters'
   level by its own texel, so a finer part standing above the shape would shade it.
+  [authored_far.py](authored_far.py), run with the system Python after a look building's script, replaces the far levels
+  of the look buildings it lists (`BUILDINGS`): a closed hull a quarter of a pixel outside the near level at the largest
+  size the level shows, closed over gaps under three pixels and over the hollow inside no camera view sees, simplified to
+  within a third of a pixel, in one material whose atlas, embedded in the GLB, is baked by rays from the hull in to the
+  near level (albedo dimmed by the sky the near level hides, the paint's share in its alpha, the lit windows' night glow
+  as the camera's views see it, roughness and metallic, normals). Its underside stays open, as the near level's.
 - **Floors:** a volume more than one level tall gets the game's own tan floor at each level, 18 units apart. Keep visible
   decks above a floor that falls inside their volume, or the floor lies over the deck and buries what stands on it.
 
