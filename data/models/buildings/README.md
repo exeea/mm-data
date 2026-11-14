@@ -99,7 +99,9 @@ One JSON spec per pieces GLB (`GeneratedKit`). A field the style does not know i
 | variant `class` | `hangar`, `fortress` or `gun-emplacement`: the variant a building of that class draws where its author chose none. Standard kits need none |
 
 Colours are `tint`s written `#rrggbb` (sRGB). A surface is a board `material` with its `repeat` (units a repeat),
-textured from the board position, so floors and roofs run on across pieces without a seam.
+textured from the board position, so floors run on across pieces without a seam. A flat roof's texture follows the
+building as a real roof's courses do: each wing along its run, turning in valleys and hips at bends, and on the board's
+axes only at corners inside a wider building.
 
 ### `bays` variants
 
@@ -113,6 +115,7 @@ textured from the board position, so floors and roofs run on across pieces witho
 | `cornerRadius`, `cornerSegments` | round convex corners into facets, each laid with the run's `round` stretch |
 | `wallInsets` | per level of detail, where facade skins sit behind the wall line (default 0) |
 | `largeDoor` | see [Large doors](#large-doors) |
+| `hull` | its far level is a closed outer hull ([Far level](#far-level)): past the near level no roof body is laid |
 
 A roof has the slab fields of `floors`, its own `runs`, and optionally `underlay` (a surface just under a glass roof),
 `fittings`, `aviationLights` and `vault`.
@@ -173,14 +176,32 @@ the `shape` of a `gable`, `bow`, `arch` or `plates`, in `segments` facets a side
 - A cutout (alpha mode MASK) stays alpha tested. Glass on a blending board material is BLEND: drawn blended, casting
   no sun shadow.
 
+### Far level
+
+The `standard/building-<weight>` kits (`far_levels.py`, after `standard_buildings.py` where that builds the kit) draw a
+closed outer hull from 80 pixels down (`TreeLod.PROPS`), their pieces GLB's `lod1`, and say so with `hull` in the kit's
+`shared`; no run of theirs has a `far` of its own:
+
+- Each wall piece is one face on its storey's plane: the median of its pieces' own outermost planes, so a porch or a
+  canopy in one bay is drawn on the face. A ground storey standing further out closes its top with a ledge.
+- A roof's edge piece is its outer face (out to the storey under it), its top and its face towards the roof; a fitting
+  one box, or its near mesh where that fills less than 40% of the box from above or the front (a washing line, a dish
+  mast). No wall thickness, no reveals, frames, sills or mullions.
+- Every far face samples the kit's far atlas, the board material `structures/buildings/<kit>-far` (512 pixels, 2 a
+  unit). It holds what the near piece shows through the face from the iso camera's height, head on: albedo dimmed by
+  the sky the piece hides, the near `#paint` surfaces as a paint mask (`mmPaintMask`; its mip levels keep the painted
+  share of their luminance), roughness, metallic and normals, and the lit windows' night glow: 0.6 of what the windows
+  show on average 15, 45 and 75 degrees aside.
+- A piece no variant lays has no far node. `aviation-light.glb`'s far level is its lamp alone.
+
 ## Kits
 
 A kit's variants and roofs are those its JSON lists.
 
 | Kit | Style | Built by |
 | --- | --- | --- |
-| `standard/building-light` | bays | hand-made art (`art/building_light_00.glb`) |
-| the other `standard/building-<weight>` | bays | `standard_buildings.py`; medium, heavy and hardened from `art/building_<weight>-proposal.glb` |
+| `standard/building-light` | bays | hand-made art (`art/building_light_00.glb`); its far level `far_levels.py` |
+| the other `standard/building-<weight>` | bays | `standard_buildings.py`; medium, heavy and hardened from `art/building_<weight>-proposal.glb`; their far level `far_levels.py` |
 | `standard/hangar-light`, `-medium`, `-heavy`, `-hard` | bays | `hangar_kits.py`, from `art/hangar_<weight>_a-proposal.glb` |
 | `standard/fortress-light` | bays | hand-made art (`art/fortress_light_a_52.glb`) |
 | the remaining `standard/` kits (fortresses, gun emplacements, civilian and Castle Brian hangars) | bays | `debug_placeholders.py`: diagnostic placeholders, flat panels in one colour a bay index |
