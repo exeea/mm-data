@@ -137,8 +137,9 @@ Use the shared `role` field and `export_model()` in [authored_examples.py](autho
   of the look buildings it lists (`BUILDINGS`): a closed hull a quarter of a pixel outside the near level at the largest
   size the level shows, closed over gaps under three pixels and over the hollow inside no camera view sees, simplified to
   within a third of a pixel, in one material whose atlas, embedded in the GLB, is baked by rays from the hull in to the
-  near level (albedo dimmed by the sky the near level hides, the paint's share in its alpha, the lit windows' night glow
-  as the camera's views see it, roughness and metallic, normals). Its underside stays open, as the near level's.
+  near level (albedo dimmed by the sky the near level hides, the paint's share in its alpha, glow, roughness and metallic,
+  normals). The near level's lit panes lying at most a pixel inside the hull stand on it as geometry in their own
+  materials, so a lit window lights as it does near. Its underside stays open, as the near level's.
 - **Floors:** a volume more than one level tall gets the game's own tan floor at each level, 18 units apart. Keep visible
   decks above a floor that falls inside their volume, or the floor lies over the deck and buries what stands on it.
 

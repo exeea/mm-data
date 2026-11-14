@@ -11,9 +11,10 @@ view sees, offset OFFSET pixels outward (it encloses the near level, as the shad
 one darkens), found on a grid of VOXEL pixels and simplified to within ERROR pixels; its underside stays open, as the near
 level's. Its faces are grouped into nearly flat charts, laid flat in one atlas for both levels (512 texels at most), and
 baked by rays from the hull in to the near level: albedo, dimmed by the sky the near level's own parts hide (as its shadows
-do), the building paint's share of it (the alpha, mmPaintMask), the lit windows' night glow, roughness and metallic, and the
-near level's normals. The atlas's images are the GLB's own. The near level, the volumes and the file's extras stay as they
-are.
+do), the building paint's share of it (the alpha, mmPaintMask), its glow, roughness and metallic, and the near level's
+normals. The atlas's images are the GLB's own. The near level's lit panes stand on each far hull as geometry in their own
+materials (panes), so a lit window lights there as it does near; the atlas has no glow where they stand. The near level,
+the volumes and the file's extras stay as they are.
 """
 import heapq
 import io
@@ -28,14 +29,15 @@ from scipy.spatial import cKDTree
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent/'blender/mm_materials'))
+import building_lod  # noqa: E402
 import far_levels as fl  # noqa: E402
 import glb  # noqa: E402
 
 AUTHORED = HERE.parents[1]/'data/models/buildings/authored'
-# The buildings whose far levels this makes: those whose switches it brings within the old merge levels' (pop_views).
-BUILDINGS = ('heritage-administrative-offices', 'heritage-cathedral', 'heritage-church', 'heritage-government-hall',
-             'heritage-medical-center', 'imperial-courtyard-habitat', 'imperial-government-hall', 'imperial-transit-terminal',
-             'frontier-power-plant')
+# The buildings whose far levels this makes: those whose level switches it brings close to the near level by day and night.
+BUILDINGS = ('heritage-administrative-offices', 'heritage-cathedral', 'heritage-church', 'heritage-commercial-center',
+             'heritage-government-hall', 'heritage-medical-center', 'imperial-courtyard-habitat', 'imperial-government-hall',
+             'imperial-industrial-works', 'imperial-transit-terminal', 'frontier-power-plant', 'frontier-trade-exchange')
 LEVEL_PIXELS = {1: 88.0, 2: 26.4}  # The largest size each level shows: TreeLod.PROPS and its 10 % hysteresis.
 PROPS_SIDE = 415.0  # The longest side that counts (TreeLod.PROPS_SIDE).
 VOXEL = .4  # The grid, in pixels.
@@ -56,8 +58,7 @@ PAD = 2  # Texels round each chart, its edge texels repeated.
 FRONT = .75  # How far in front of the hull a near surface may lie and still be what a ray meets, in pixels.
 BACK = 3.0  # How far behind it, in pixels.
 THROUGH = 12.0  # How far behind blended glass, in pixels.
-# The camera's directions (elevation, azimuth in degrees): the four iso views (BoardCamera.ISOMETRIC_TILT) and the top.
-CAMERA = [(90-54.73561, a) for a in (45, 135, 225, 315)]+[(89.9, 0)]
+PANE_DEPTH = 1.0  # A lit pane at most this far inside the hull stands on it (panes), in pixels.
 
 
 # -- The near level -------------------------------------------------------------------------------------------------
@@ -512,15 +513,14 @@ def emission(finishes, key):
     return mode
 
 
-def rays(far, chart, near, blended, ray=None):
+def rays(far, chart, near, blended):
     """A chart's samples: where its hull lies (covered), the hull's normal there, and the near triangle and barycentrics
-    each ray from it meets (index -1 for none), opaque and, in front of that, blended. The rays run against the chart's
-    normal, or along `ray`; either way the samples lie on the chart's plane, each covering the same area of it."""
+    each ray from it against the chart's normal meets (index -1 for none), opaque and, in front of that, blended."""
     width, height = chart.size(far.density)
     scale = far.density*SUBSAMPLES
     shape = (height*SUBSAMPLES, width*SUBSAMPLES)
-    # A point is o + a*u + b*w + t*ray, o on the chart's plane: (a, b) on that plane, t along the ray.
-    frame = np.linalg.inv(np.column_stack([chart.u, chart.w, -chart.n if ray is None else ray]))
+    # A point is o + a*u + b*w - t*n, o on the chart's plane: (a, b) on that plane, t along the ray.
+    frame = np.linalg.inv(np.column_stack([chart.u, chart.w, -chart.n]))
     origin = chart.n*float(np.mean(far.vertices[far.faces[chart.faces]]@chart.n))
     corners = (far.vertices[far.faces[chart.faces]]-origin)@frame.T
     index, depth, bary = fl.raster(corners[..., :2], corners[..., 2], chart.low, shape[1], shape[0], scale)
@@ -531,7 +531,7 @@ def rays(far, chart, near, blended, ray=None):
     local = (near['pos']-origin)@frame.T
     xy, along = local[..., :2], local[..., 2]
     top = chart.low+np.array([width, height])/far.density
-    facing = near['out']@(chart.n if ray is None else -ray) > 0
+    facing = near['out']@chart.n > 0
     chosen = (facing & np.all(xy.max(axis=1) >= chart.low, axis=1) & np.all(xy.min(axis=1) <= top, axis=1)
               & (along.max(axis=1) >= front[covered].min(initial=np.inf))
               & (along.min(axis=1) <= back[covered].max(initial=-np.inf)+(THROUGH*far.pixel if blended.any() else 0)))
@@ -551,27 +551,6 @@ def rays(far, chart, near, blended, ray=None):
     return result
 
 
-def seen_glow(far, chart, near, blended, finishes):
-    """The share of a chart's glow the camera sees, against what its head-on rays see (at most 1): the glow its rays meet
-    along each of CAMERA's directions that faces the chart, by the share of the screen the chart takes so. A recessed
-    window shows less of its glass aside, as far_levels' GLOW_AZIMUTHS measure for the kits."""
-    def glow(ray):
-        sampled = rays(far, chart, near, blended, ray)
-        tri = sampled['opaque'][0]
-        hit = tri >= 0
-        return float(surface(near, finishes, tri[hit], sampled['opaque'][2][hit])['glow'].sum()) if hit.any() else 0.0
-    head_on = glow(None)
-    total = weight = 0.0
-    for elevation, azimuth in CAMERA:
-        e, a = math.radians(elevation), math.radians(azimuth)
-        ray = np.array([-math.sin(a)*math.cos(e), math.cos(a)*math.cos(e), -math.sin(e)])
-        share = -(ray@chart.n)
-        if share > .05:
-            total += share*glow(ray)
-            weight += share
-    return min(1.0, total/weight/head_on) if weight and head_on > 0 else 1.0
-
-
 def glass(near, materials):
     """Which near triangles are blended glass."""
     return np.isin(near['mat'], [m['id'] for m in materials if m.get('alphaMode') == 'BLEND'])
@@ -582,9 +561,10 @@ def opaque(near, materials):
     return {key: value[~glass(near, materials)] for key, value in near.items()}
 
 
-def bake(fars, near, materials):
+def bake(fars, near, materials, paned):
     """Every far level's charts baked into one atlas: its maps as 8-bit images, its size, how far its density had to
-    shrink to fit, and how many charts no ray from met the near level."""
+    shrink to fit, and how many charts no ray from met the near level. A level's charts bake no glow where the near
+    triangles paned[level] stand as panes (panes)."""
     finishes = fl.Finishes(materials)
     blended = glass(near, materials)
     every = [(far, chart) for far in fars for chart in far.charts]
@@ -609,6 +589,10 @@ def bake(fars, near, materials):
     seen['albedo'] *= (1-fl.DIRECT*(1-light))[:, None]
     # The atlas glows at night alone: what glows all day too (lamps, skylights) is as bright by day in its albedo.
     seen['albedo'] = np.where(seen.pop('always')[:, None], np.minimum(1, seen['albedo']+seen['glow']), seen['albedo'])
+    # The panes light themselves.
+    level = np.concatenate([np.full(int(h.sum()), far.level) for (far, _), h in zip(every, hits)])
+    for far in fars:
+        seen['glow'][paned[far.level][tri] & (level == far.level)] = 0
     # Blended glass in front: its own colour over what lies behind it, by its opacity.
     ahead = np.concatenate([s['glass'][0][h] for s, h in zip(sampled, hits)])
     if (ahead >= 0).any():
@@ -657,8 +641,7 @@ def bake(fars, near, materials):
             return array.reshape((rows, SUBSAMPLES, columns, SUBSAMPLES)+array.shape[2:]).mean(axis=(1, 3))
         lum = grid['albedo']@fl.LUMINANCE
         whole = average(lum)
-        shown = fl.GLOW_SCALE*(seen_glow(far, chart, near, blended, finishes) if grid['glow'].any() else 1)
-        texels = {'albedo': average(grid['albedo']), 'glow': average(grid['glow'])*shown,
+        texels = {'albedo': average(grid['albedo']), 'glow': average(grid['glow']),
                   'paint': np.where(whole > 1e-6, average(lum*grid['paint'])/np.maximum(whole, 1e-6), average(grid['paint'])),
                   'rough': average(grid['rough']), 'metal': average(grid['metal']), 'normal': average(local)}
         texels['normal'] /= np.maximum(np.linalg.norm(texels['normal'], axis=-1, keepdims=True), 1e-9)
@@ -690,6 +673,84 @@ def level_model(far, atlas):
     return unique, inverse.reshape(-1, 3)
 
 
+# -- Lit panes --------------------------------------------------------------------------------------------------------
+
+def hits(origins, direction, triangles):
+    """How far each ray from origins along direction (both (N,3)) runs before it meets one of the triangles (M,3,3), inf
+    for none (Moller and Trumbore)."""
+    a, e1, e2 = triangles[:, 0], triangles[:, 1]-triangles[:, 0], triangles[:, 2]-triangles[:, 0]
+    result = np.full(len(origins), np.inf)
+    for start in range(0, len(origins), 64):
+        o, d = origins[start:start+64, None], direction[start:start+64, None]
+        p = np.cross(d, e2[None])
+        det = np.einsum('rmc,mc->rm', p, e1)
+        ok = np.abs(det) > 1e-12
+        inv = np.where(ok, 1/np.where(ok, det, 1), 0)
+        s = o-a[None]
+        u = np.einsum('rmc,rmc->rm', s, p)*inv
+        q = np.cross(s, e1[None])
+        v = np.einsum('rmc,rmc->rm', d, q)*inv
+        t = np.einsum('rmc,mc->rm', q, e2)*inv
+        result[start:start+64] = np.where(ok & (u >= 0) & (v >= 0) & (u+v <= 1) & (t > 0), t, np.inf).min(axis=1)
+    return result
+
+
+def panes(near, finishes, far):
+    """The near level's lit panes as geometry just outside a far level's hull, in their own near materials: every flat
+    piece of a material that glows (a lit window, a skylight, a lit sign), out along its normal to a tenth of a pixel past
+    the hull, when it lies at most PANE_DEPTH inside it. A texture at a texel a pixel blurs and dims a window a few pixels
+    wide; the pane itself lights as the near one does, its edge as sharp. A rectangular piece is one quad. Returns ({material: (vertices, triangles)}, which near
+    triangles they stand for); a piece that is not flat (a lamp's body) stays in the atlas."""
+    glowing = [key for key in np.unique(near['mat']).tolist() if finishes.material(key)['glow'].any()]
+    hull = far.vertices[far.faces]
+    made, paned = {}, np.zeros(len(near['mat']), dtype=bool)
+    for key in glowing:
+        chosen = np.flatnonzero(near['mat'] == key)
+        piece = building_lod.connected_pieces(near['pos'][chosen].reshape(-1, 3), np.arange(3*len(chosen)).reshape(-1, 3))[::3]
+        for one in np.unique(piece):
+            mine = chosen[piece == one]
+            tri = near['pos'][mine]
+            out = near['out'][mine]
+            area = np.linalg.norm(out, axis=1)
+            n = out.sum(axis=0)
+            if np.linalg.norm(n) < .95*area.sum():
+                continue
+            n /= np.linalg.norm(n)
+            up = np.array([0, 0, 1.0]) if abs(n[2]) < .9 else np.array([0, 1.0, 0])
+            u = np.cross(up, n)
+            u /= np.linalg.norm(u)
+            w = np.cross(n, u)
+            corners = tri.reshape(-1, 3)
+            reach = hits(corners-n*.01, np.broadcast_to(n, corners.shape).copy(), hull)
+            reach = reach[np.isfinite(reach)].max() if np.isfinite(reach).any() else 0
+            if reach > PANE_DEPTH*far.pixel:
+                # Deep in a recess the hull closes over (a window behind a colonnade): brought out, it would light
+                # where the near level shows columns.
+                continue
+            lift = n*(reach+.1*far.pixel)
+            a, b = corners@u, corners@w
+            rows = np.concatenate([near['pos'][mine], near['nrm'][mine], near['col'][mine], near['uv'][mine]], axis=-1).reshape(-1, 12)
+            rows[:, 3:6] = n
+            if len(mine) > 2 and area.sum()/2 >= .9*np.ptp(a)*np.ptp(b):
+                # A rectangle: its box, the near UVs fitted to the plane.
+                box = np.array([(a.min(), b.min()), (a.max(), b.min()), (a.max(), b.max()), (a.min(), b.max())])
+                fit, *_ = np.linalg.lstsq(np.column_stack([a, b, np.ones(len(a))]), rows[:, 10:12], rcond=None)
+                depth = float(np.mean(corners@n))
+                quad = np.column_stack([box[:, :1]*u+box[:, 1:]*w+depth*n, np.broadcast_to(n, (4, 3)),
+                                        np.broadcast_to(rows[:, 6:10].mean(axis=0), (4, 4)), np.column_stack([box, np.ones(4)])@fit])
+                rows, triangles = quad, np.array([[0, 1, 2], [0, 2, 3]])
+            else:
+                triangles = np.arange(len(rows)).reshape(-1, 3)
+            rows[:, :3] += lift
+            # Colours as stored: linear.
+            rows[:, 6:9] = fl.srgb_linear(np.clip(rows[:, 6:9], 0, 1))
+            vertices, faces = made.setdefault(key, ([], []))
+            faces.append(triangles+sum(len(v) for v in vertices))
+            vertices.append(rows)
+            paned[mine] = True
+    return {key: (np.concatenate(v), np.concatenate(f)) for key, (v, f) in made.items()}, paned
+
+
 # -- The file ---------------------------------------------------------------------------------------------------------
 
 def png(image):
@@ -701,8 +762,9 @@ def png(image):
 
 
 def rewrite(path, levels, images):
-    """The file with its far levels replaced: {level: (vertices, triangles)} in one material of the atlas images, its
-    own. Everything the scene's other roots reach (the near level, the volumes) is copied unchanged, the rest goes."""
+    """The file with its far levels replaced: {level: [(vertices, triangles, material)]}, material None for the one of
+    the atlas images, else a near material's id. Everything the scene's other roots reach (the near level, the volumes) is
+    copied unchanged, the rest goes."""
     doc, binary = glb.read_glb(path)
     stem = path.stem
     out = {key: value for key, value in doc.items() if key not in ('nodes', 'meshes', 'materials', 'textures', 'images',
@@ -800,27 +862,33 @@ def rewrite(path, levels, images):
             'emissiveFactor': [1, 1, 1], 'extras': {'mmBuildingPaint': True, 'mmPaintMask': True, 'mmEmission': 'night'}})
         return len(out['materials'])-1
 
-    def far_node(level, vertices, triangles):
+    def far_node(level, parts):
+        """A far level's node: parts [(vertices, triangles, material: None for the atlas's, else a near material's id)]."""
         name = f'{stem}-lod{level}-shell'
-        # glTF is Y up.
-        position = np.column_stack((vertices[:, 0], vertices[:, 2], -vertices[:, 1])).astype('<f4')
-        normal = np.column_stack((vertices[:, 3], vertices[:, 5], -vertices[:, 4])).astype('<f4')
-        attributes = {}
-        for key, array, kind in (('POSITION', position, 'VEC3'), ('NORMAL', normal, 'VEC3'),
-                                 ('COLOR_0', vertices[:, 6:10].astype('<f4'), 'VEC4'), ('TEXCOORD_0', vertices[:, 10:12].astype('<f4'), 'VEC2')):
-            out['accessors'].append({'bufferView': view(array.tobytes(), 34962), 'componentType': 5126, 'count': len(array), 'type': kind})
-            if key == 'POSITION':
-                out['accessors'][-1].update(min=array.min(axis=0).tolist(), max=array.max(axis=0).tolist())
-            attributes[key] = len(out['accessors'])-1
-        component, dtype = (5123, '<u2') if len(vertices) <= 65535 else (5125, '<u4')
-        out['accessors'].append({'bufferView': view(triangles.astype(dtype).tobytes(), 34963), 'componentType': component,
-                                 'count': triangles.size, 'type': 'SCALAR'})
-        out['meshes'].append({'name': name, 'primitives': [{'attributes': attributes, 'indices': len(out['accessors'])-1,
-                                                             'mode': 4, 'material': atlas, 'extras': {'mmPart': name+'-0'}}]})
+        primitives = []
+        for k, (vertices, triangles, key) in enumerate(parts):
+            # glTF is Y up.
+            position = np.column_stack((vertices[:, 0], vertices[:, 2], -vertices[:, 1])).astype('<f4')
+            normal = np.column_stack((vertices[:, 3], vertices[:, 5], -vertices[:, 4])).astype('<f4')
+            attributes = {}
+            for role, array, kind in (('POSITION', position, 'VEC3'), ('NORMAL', normal, 'VEC3'),
+                                      ('COLOR_0', vertices[:, 6:10].astype('<f4'), 'VEC4'), ('TEXCOORD_0', vertices[:, 10:12].astype('<f4'), 'VEC2')):
+                out['accessors'].append({'bufferView': view(array.tobytes(), 34962), 'componentType': 5126, 'count': len(array), 'type': kind})
+                if role == 'POSITION':
+                    out['accessors'][-1].update(min=array.min(axis=0).tolist(), max=array.max(axis=0).tolist())
+                attributes[role] = len(out['accessors'])-1
+            component, dtype = (5123, '<u2') if len(vertices) <= 65535 else (5125, '<u4')
+            out['accessors'].append({'bufferView': view(triangles.astype(dtype).tobytes(), 34963), 'componentType': component,
+                                     'count': triangles.size, 'type': 'SCALAR'})
+            primitives.append({'attributes': attributes, 'indices': len(out['accessors'])-1, 'mode': 4,
+                               'material': atlas if key is None else table('materials', names[key], material),
+                               'extras': {'mmPart': f'{name}-{k}'}})
+        out['meshes'].append({'name': name, 'primitives': primitives})
         out['nodes'].append({'name': name, 'mesh': len(out['meshes'])-1})
         out['nodes'].append({'name': f'{stem}-lod{level}', 'children': [len(out['nodes'])-1]})
         return len(out['nodes'])-1
 
+    names = {source['name']: index for index, source in enumerate(doc['materials'])}
     far = {f'{stem}-lod{level}' for level in (1, 2, 3)}
     roots = [index for index in doc['scenes'][doc.get('scene', 0)]['nodes'] if doc['nodes'][index].get('name') not in far]
     assert doc['nodes'][roots[0]]['name'] == f'{stem}-lod0'
@@ -828,8 +896,8 @@ def rewrite(path, levels, images):
         out['scenes'][0]['nodes'].append(node(index))
         if doc['nodes'][index]['name'] == f'{stem}-lod0':
             atlas = far_material()
-            for level, (vertices, triangles) in sorted(levels.items()):
-                out['scenes'][0]['nodes'].append(far_node(level, vertices, triangles))
+            for level, parts in sorted(levels.items()):
+                out['scenes'][0]['nodes'].append(far_node(level, parts))
     out['buffers'] = [{'byteLength': len(blob)}]
     out = {key: value for key, value in out.items() if value != []}
     glb.validate(out, path, AUTHORED.parents[1])
@@ -855,11 +923,15 @@ def build(stem, hulls=hull):
     points = near['pos'].reshape(-1, 3)
     side = float(max(np.ptp(points[:, 0]), np.ptp(points[:, 1])))
     fars = [Far(level, *hulls(near['pos'], level, side)) for level in (1, 2)]
-    images, atlas, shrink, empty = bake(fars, near, materials)
-    levels = {far.level: level_model(far, atlas) for far in fars}
+    finishes = fl.Finishes(materials)
+    lit = {far.level: panes(near, finishes, far) for far in fars}
+    images, atlas, shrink, empty = bake(fars, near, materials, {level: mask for level, (_, mask) in lit.items()})
+    levels = {far.level: [(*level_model(far, atlas), None)]+[(vertices, triangles, key) for key, (vertices, triangles)
+                                                             in sorted(lit[far.level][0].items())] for far in fars}
     rewrite(path, levels, images)
-    return {'near': len(near['pos']), **{f'lod{level}': len(triangles) for level, (_, triangles) in levels.items()},
-            'atlas': atlas, 'shrink': round(shrink, 3), 'empty charts': empty, 'charts': [len(far.charts) for far in fars]}
+    return {'near': len(near['pos']), **{f'lod{level}': sum(len(t) for _, t, _ in parts) for level, parts in levels.items()},
+            'panes': sum(len(t) for _, t in lit[1][0].values()), 'atlas': atlas, 'shrink': round(shrink, 3),
+            'empty charts': empty, 'charts': [len(far.charts) for far in fars]}
 
 
 if __name__ == '__main__':
