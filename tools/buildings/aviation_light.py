@@ -1,9 +1,10 @@
 """The aviation obstruction light a generated building kit stands on its roof's convex corners ("aviationLights" in its JSON).
 
 Run with Python (standard library only): python tools/buildings/aviation_light.py
-Writes data/models/buildings/fittings/aviation-light.glb: one node, aol-lod0, at the roof's deck with z up. A thin steel
-stick runs from well under the deck (it stays buried where a rounded or bevelled edge drops away) up to a square red
-lamp, whose emission blinks (mmEmission "blink"). 20 triangles.
+Writes data/models/buildings/fittings/aviation-light.glb: one node a level of detail, aol-lod<n>, at the roof's deck with
+z up. A thin steel stick runs from well under the deck (it stays buried where a rounded or bevelled edge drops away) up to
+a square red lamp, whose emission blinks (mmEmission "blink"): 20 triangles. The far level is the lamp alone, the stick
+under a pixel wide there: 10 triangles.
 """
 import sys
 from pathlib import Path
@@ -39,23 +40,28 @@ def box(vertices, indices, x, y, z0, z1, colour, faces):
 
 
 def main():
-    vertices, stick, lamp = [], [], []
+    vertices, stick, lamp, far_vertices, far = [], [], [], [], []
     walls = ('south', 'east', 'north', 'west')
     box(vertices, stick, STICK, STICK, BOTTOM, TOP, (.42, .43, .44), walls)
     box(vertices, lamp, HEAD, HEAD, TOP, TOP + 2 * HEAD, (.55, .06, .05), walls + ('top', 'bottom'))
-    mesh = {'attributes': ['POSITION', 'NORMAL', 'COLOR', 'TEXCOORD0'], 'vertices': vertices,
+    box(far_vertices, far, HEAD, HEAD, TOP, TOP + 2 * HEAD, (.55, .06, .05), walls + ('top',))
+    attributes = ['POSITION', 'NORMAL', 'COLOR', 'TEXCOORD0']
+    mesh = {'attributes': attributes, 'vertices': vertices,
             'parts': [{'id': 'stick', 'type': 'TRIANGLES', 'indices': stick},
                       {'id': 'lamp', 'type': 'TRIANGLES', 'indices': lamp}]}
-    node = {'id': 'aol-lod0', 'translation': [0, 0, 0],
+    far_mesh = {'attributes': attributes, 'vertices': far_vertices, 'parts': [{'id': 'lamp-far', 'type': 'TRIANGLES', 'indices': far}]}
+    near = {'id': 'aol-lod0', 'translation': [0, 0, 0],
             'parts': [{'meshpartid': 'stick', 'materialid': STEEL}, {'meshpartid': 'lamp', 'materialid': LAMP}]}
+    distant = {'id': 'aol-lod1', 'translation': [0, 0, 0], 'parts': [{'meshpartid': 'lamp-far', 'materialid': LAMP}]}
     steel = {'id': STEEL, 'diffuse': [1, 1, 1], 'roughness': .6, 'metallic': .3,
              'textures': [{'type': 'DIFFUSE', 'filename': TEXTURE}]}
     lens = {'id': LAMP, 'diffuse': [1, 1, 1], 'roughness': .35, 'metallic': 0, 'emissive': [1, .04, .02],
             'extras': {'mmEmission': 'blink'}, 'textures': [{'type': 'DIFFUSE', 'filename': TEXTURE}]}
     folder = DATA / 'models/buildings/fittings'
     folder.mkdir(parents=True, exist_ok=True)
-    write_glb(folder / 'aviation-light.glb', levels={0: {'meshes': [mesh], 'nodes': [node], 'materials': [steel, lens]}})
-    print('aviation-light.glb', (len(stick) + len(lamp)) // 3, 'triangles')
+    write_glb(folder / 'aviation-light.glb', levels={0: {'meshes': [mesh], 'nodes': [near], 'materials': [steel, lens]},
+                                                     1: {'meshes': [far_mesh], 'nodes': [distant], 'materials': [lens]}})
+    print('aviation-light.glb', (len(stick) + len(lamp)) // 3, 'triangles,', len(far) // 3, 'far')
 
 
 if __name__ == '__main__':

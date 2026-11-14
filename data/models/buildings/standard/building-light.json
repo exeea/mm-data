@@ -1,20 +1,15 @@
 {
   "style": "bays",
   "pieces": "building-light-pieces.glb",
-  "shared": {"bay": 24.0},
+  "shared": {"bay": 24.0, "hull": true},
   "roofs": {
     "flat": {
       "material": "structures/buildings/light-roof",
       "repeat": 12.0,
       "inset": 0.0,
-      "heights": [1.0, 0.0],
+      "heights": [1.0],
       "aviationLights": true,
-      "runs": [
-        {
-          "bays": ["roof0-bay0", "roof0-bay1", "roof0-bay2", "roof0-bay3", "roof0-bay4", "roof0-bay5"],
-          "far": {"bays": []}
-        }
-      ]
+      "runs": [{"bays": ["roof0-bay0", "roof0-bay1", "roof0-bay2", "roof0-bay3", "roof0-bay4", "roof0-bay5"]}]
     }
   },
   "variants": [

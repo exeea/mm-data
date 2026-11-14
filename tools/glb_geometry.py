@@ -396,6 +396,8 @@ def read_glb(path, level=0, *, linear_colors=False):
             result['alphaTest'] = source.get('alphaCutoff', .5)
         elif source.get('alphaMode') == 'BLEND':
             result['alphaMode'] = 'BLEND'
+        if source.get('doubleSided'):
+            result['doubleSided'] = True
         if source.get('extras'):
             result['extras'] = source['extras']
         for kind, info in (('DIFFUSE', pbr.get('baseColorTexture')), ('NORMAL', source.get('normalTexture')),

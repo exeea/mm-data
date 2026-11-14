@@ -2,7 +2,8 @@
 
 Run: blender -b --factory-startup --python standard_buildings.py -- [medium|heavy|hard ...]
 Writes data/models/buildings/standard/building-<weight>-pieces.glb and building-<weight>.json, for the game's bays kit
-(GeneratedKit, BayKit), as theme_kits writes the looks' (its piece frame, levels of detail and export).
+(GeneratedKit, BayKit), as theme_kits writes the looks' (its piece frame, levels of detail and export). Then
+`python far_levels.py building-<weight>` (the system Python) replaces the far level with its closed hull and far atlas.
 
 A building is a habitat: people live and work in it, so every weight shows rooms' windows and doors (a fortress is the
 fortress class's kit). Medium, heavy and hardened are the designers' buildings (art/building_<weight>-proposal.glb:

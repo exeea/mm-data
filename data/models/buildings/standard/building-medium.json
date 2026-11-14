@@ -1,7 +1,11 @@
 {
   "style": "bays",
   "pieces": "building-medium-pieces.glb",
-  "shared": {"planar": {"structures/common/white-stone": 18.0, "structures/common/cast-concrete": 12.0}, "bay": 24.0},
+  "shared": {
+    "planar": {"structures/common/white-stone": 18.0, "structures/common/cast-concrete": 12.0},
+    "bay": 24.0,
+    "hull": true
+  },
   "roofs": {
     "flat": {
       "material": "structures/buildings/light-roof",

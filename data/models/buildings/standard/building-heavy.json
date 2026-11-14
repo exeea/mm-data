@@ -3,7 +3,8 @@
   "pieces": "building-heavy-pieces.glb",
   "shared": {
     "planar": {"structures/common/concrete-panels": 18.0, "structures/common/cast-concrete": 12.0},
-    "bay": 24.0
+    "bay": 24.0,
+    "hull": true
   },
   "roofs": {
     "flat": {

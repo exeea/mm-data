@@ -10,7 +10,8 @@
     "floors": {"material": "structures/common/cast-concrete", "repeat": 12.0, "inset": 3.0, "heights": [0.05]},
     "sidewalk": {"material": "structures/buildings/light-sidewalk", "repeat": 12.0, "width": 5.0, "kerb": 0.25},
     "base": {"margin": 1.9},
-    "floor": {"margin": 1.9}
+    "floor": {"margin": 1.9},
+    "hull": true
   },
   "roofs": {
     "parapet": {
