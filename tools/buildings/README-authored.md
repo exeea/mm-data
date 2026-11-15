@@ -134,12 +134,16 @@ Use the shared `role` field and `export_model()` in [authored_examples.py](autho
   `civic_buildings.py` for its arena. An authored far shape must enclose the finer levels: the shadow map picks its casters'
   level by its own texel, so a finer part standing above the shape would shade it.
   [authored_far.py](authored_far.py), run with the system Python after a look building's script, replaces the far levels
-  of the look buildings it lists (`BUILDINGS`): a closed hull a quarter of a pixel outside the near level at the largest
-  size the level shows, closed over gaps under three pixels and over the hollow inside no camera view sees, simplified to
-  within a third of a pixel, in one material whose atlas, embedded in the GLB, is baked by rays from the hull in to the
-  near level (albedo dimmed by the sky the near level hides, the paint's share in its alpha, glow, roughness and metallic,
-  normals). The near level's lit panes lying at most a pixel inside the hull stand on it as geometry in their own
-  materials, so a lit window lights as it does near. Its underside stays open, as the near level's.
+  of the look buildings it lists (`BUILDINGS`). LOD1 is the near level's own triangles that some camera view sees (depth
+  buffers from ten degrees below the horizon to straight down, every 15 degrees round), in their own materials, less the
+  specks no longer than two pixels (what glows stays): at its switch it looks as the near level, whose crisp
+  edges there are sub-pixel relief lit face by face, which no baked texture reproduces. LOD2 is a closed hull a quarter
+  of a pixel outside the near level at the largest size it shows, closed over gaps under three pixels and over the
+  hollow inside no camera view sees, simplified to within a third of a pixel, in one material whose atlas, embedded in
+  the GLB, is baked by rays from the hull in to the near level (albedo dimmed by the sky the near level hides, the
+  paint's share in its alpha, glow, roughness and metallic, normals). The near level's lit panes lying at most a pixel
+  inside the hull stand on it as geometry in their own materials, so a lit window lights as it does near. Its underside
+  stays open, as the near level's.
 - **Floors:** a volume more than one level tall gets the game's own tan floor at each level, 18 units apart. Keep visible
   decks above a floor that falls inside their volume, or the floor lies over the deck and buries what stands on it.
 

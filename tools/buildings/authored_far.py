@@ -1,4 +1,5 @@
-"""Far levels of authored buildings: a closed hull just outside the near level, its faces textured from a baked atlas.
+"""Far levels of authored buildings: the near level's own triangles that a camera can see (LOD1), and a closed hull just
+outside the near level, its faces textured from a baked atlas (LOD2).
 
 Run after the building's own script, with the system Python (numpy, Pillow, SciPy):
     python authored_far.py [heritage-cathedral ...]
@@ -6,21 +7,32 @@ Without names it makes BUILDINGS' far levels, replacing those the script wrote.
 
 A far level draws while the building's larger side, counting at most five hexes, is under 80 pixels (LOD1) or 24 (LOD2):
 TreeLod.PROPS, each shown up to 10 % past that, so at the largest size a level shows a pixel is that side over
-LEVEL_PIXELS. The hull is the near level closed over gaps narrower than 2*CLOSE pixels and over the hollow inside no camera
-view sees, offset OFFSET pixels outward (it encloses the near level, as the shadow map needs: a far surface inside the near
-one darkens), found on a grid of VOXEL pixels and simplified to within ERROR pixels; its underside stays open, as the near
-level's. Its faces are grouped into nearly flat charts, laid flat in one atlas for both levels (512 texels at most), and
-baked by rays from the hull in to the near level: albedo, dimmed by the sky the near level's own parts hide (as its shadows
-do), the building paint's share of it (the alpha, mmPaintMask), its glow, roughness and metallic, and the near level's
-normals. The atlas's images are the GLB's own. The near level's lit panes stand on each far hull as geometry in their own
-materials (panes), so a lit window lights there as it does near; the atlas has no glow where they stand. The near level,
-the volumes and the file's extras stay as they are.
+LEVEL_PIXELS. An authored building changes level by the kits' 0.25 s dissolve (TreeLod.DISSOLVE), but for one with
+blended glass, which switches at once.
+
+LOD1 keeps the near level's look at its switch: a building's crisp edges there are its sub-pixel relief (frames, sills,
+piers) lit face by face, which no baked texture reproduces. It is the near triangles some view of SIGHTS shows (depth
+buffers of SIGHT_SAMPLES samples a pixel), in their own materials and attributes, but for specks no longer than
+FAINTEST pixels (what glows stays). The rest (backs, insides, faces against the walls, specks) goes.
+
+LOD2 is the hull: the near level closed over gaps narrower than 2*CLOSE pixels and over the hollow inside no camera view
+sees, offset OFFSET pixels outward (it encloses the near level, as the shadow map needs: a far surface inside the near one
+darkens), found on a grid of VOXEL pixels and simplified to within ERROR pixels; its underside stays open, as the near
+level's. Its faces are grouped into nearly flat charts, laid flat in one atlas (512 texels at most), and baked by rays
+from the hull in to the near level: albedo, dimmed by the sky the near level's own parts hide (as its shadows do), the
+building paint's share of it (the alpha, mmPaintMask), its glow, roughness and metallic, and the near level's normals.
+The atlas's images are the GLB's own. The near level's lit panes stand on the hull as geometry in their own materials
+(panes), so a lit window lights there as it does near; the atlas has no glow where they stand. The near level, the
+volumes and the file's extras stay as they are.
 """
 import heapq
 import io
 import json
 import math
+import os
 import sys
+from concurrent.futures import ProcessPoolExecutor
+from functools import partial
 from pathlib import Path
 
 import numpy as np
@@ -34,10 +46,14 @@ import far_levels as fl  # noqa: E402
 import glb  # noqa: E402
 
 AUTHORED = HERE.parents[1]/'data/models/buildings/authored'
-# The buildings whose far levels this makes: those whose level switches it brings close to the near level by day and night.
+# The buildings whose far levels this makes.
 BUILDINGS = ('heritage-administrative-offices', 'heritage-cathedral', 'heritage-church', 'heritage-commercial-center',
-             'heritage-government-hall', 'heritage-medical-center', 'imperial-courtyard-habitat', 'imperial-government-hall',
-             'imperial-industrial-works', 'imperial-transit-terminal', 'frontier-power-plant', 'frontier-trade-exchange')
+             'heritage-government-hall', 'heritage-medical-center', 'heritage-transit-terminal',
+             'imperial-administrative-offices', 'imperial-commercial-center', 'imperial-courtyard-habitat',
+             'imperial-government-hall', 'imperial-industrial-works', 'imperial-medical-center', 'imperial-transit-terminal',
+             'frontier-cargo-terminal', 'frontier-command-comms', 'frontier-fabrication-workshop', 'frontier-hydroponics',
+             'frontier-medical-center', 'frontier-power-plant', 'frontier-trade-exchange', 'civic-commercial-center',
+             'civic-habitat2', 'civic-industrial-works', 'civic-medical-center', 'civic-offices')
 LEVEL_PIXELS = {1: 88.0, 2: 26.4}  # The largest size each level shows: TreeLod.PROPS and its 10 % hysteresis.
 PROPS_SIDE = 415.0  # The longest side that counts (TreeLod.PROPS_SIDE).
 VOXEL = .4  # The grid, in pixels.
@@ -53,12 +69,19 @@ SMALLEST = 3  # In atlas texels across.
 SMOOTH_ANGLE = 35  # A vertex's normal averages the faces round it within this angle of each face, in degrees.
 TEXELS = 2.0  # Atlas texels a pixel at the largest size a level shows.
 SUBSAMPLES = 2  # Rays a texel, along each side.
-ATLASES = (128, 256, 512)  # The atlas takes the smallest that holds both levels.
+ATLASES = (128, 256, 512)  # The atlas takes the smallest that holds the hull's charts.
 PAD = 2  # Texels round each chart, its edge texels repeated.
 FRONT = .75  # How far in front of the hull a near surface may lie and still be what a ray meets, in pixels.
 BACK = 3.0  # How far behind it, in pixels.
 THROUGH = 12.0  # How far behind blended glass, in pixels.
 PANE_DEPTH = 1.0  # A lit pane at most this far inside the hull stands on it (panes), in pixels.
+# Where a camera looks at a building from at the first far level's sizes, (elevation, azimuth) in degrees: the orbit
+# camera's 10 to 90 degrees and a free-flight eye's gaze up to 10 degrees from below, every 15 degrees round.
+SIGHTS = [(e, a) for e in (-10, -5, 0, 10, 20, 35.26, 50, 65, 80) for a in range(0, 360, 15)]+[(90, 0)]
+SIGHT_SAMPLES = 4  # Depth samples a pixel along each side, at the largest size the first far level shows.
+FAINTEST = 2.0  # A piece no longer than this corner to corner, in pixels, is left out of the first far level.
+# Buildings whose switch shows at FAINTEST, and what they keep instead: a garden under glass is specks, together an area.
+FAINTER = {'civic-offices': 1.0, 'frontier-hydroponics': 0.0}
 
 
 # -- The near level -------------------------------------------------------------------------------------------------
@@ -80,15 +103,20 @@ def surface_points(pos, spacing):
 
 # -- The hull ---------------------------------------------------------------------------------------------------------
 
+def frame(elevation, azimuth):
+    """A view from (elevation, azimuth) in degrees: its forward, right and up axes."""
+    e, a = math.radians(elevation), math.radians(azimuth)
+    forward = np.array([-math.sin(a)*math.cos(e), math.cos(a)*math.cos(e), -math.sin(e)])
+    right = np.cross(forward, (0, 0, 1.0)) if elevation < 90 else np.array([1.0, 0, 0])
+    right /= np.linalg.norm(right)
+    return forward, right, np.cross(right, forward)
+
+
 def seen(pos, points, voxel):
     """Whether each point lies in front of the near level's triangles (N,3,3) along at least one of VIEWS."""
     result = np.zeros(len(points), dtype=bool)
     for elevation, azimuth in VIEWS:
-        e, a = math.radians(elevation), math.radians(azimuth)
-        forward = np.array([-math.sin(a)*math.cos(e), math.cos(a)*math.cos(e), -math.sin(e)])
-        right = np.cross(forward, (0, 0, 1.0)) if elevation < 90 else np.array([1.0, 0, 0])
-        right /= np.linalg.norm(right)
-        up = np.cross(right, forward)
+        forward, right, up = frame(elevation, azimuth)
         xy = np.stack([pos@right, pos@up], axis=-1)
         low = xy.reshape(-1, 2).min(axis=0)-voxel
         width, height = np.ceil((xy.reshape(-1, 2).max(axis=0)+voxel-low)/voxel).astype(int)+1
@@ -429,6 +457,105 @@ def hull(pos, level, side):
     return vertices[used], faces.reshape(-1, 3), pixel
 
 
+# -- The first far level ----------------------------------------------------------------------------------------------
+
+def covering(px, width, height):
+    """The samples of a width x height grid (centres at half units) that triangles projected to (N,3,2) cover, in chunks:
+    (the chunk's triangles, each one's samples by index into the grid, whether it covers each, its barycentrics there)."""
+    low = np.floor(px.min(axis=1)).astype(int)
+    span = np.ceil(np.log2(np.maximum(1, (np.ceil(px.max(axis=1)).astype(int)-low).max(axis=1)+1))).astype(int)
+    area = (px[:, 1, 0]-px[:, 0, 0])*(px[:, 2, 1]-px[:, 0, 1])-(px[:, 2, 0]-px[:, 0, 0])*(px[:, 1, 1]-px[:, 0, 1])
+    for size in np.unique(span):
+        side = 1 << size
+        gx, gy = (g.ravel() for g in np.meshgrid(np.arange(side), np.arange(side)))
+        members = np.flatnonzero((span == size) & (np.abs(area) > 1e-12))
+        step = max(1, 2_000_000//side**2)
+        for start in range(0, len(members), step):
+            t = members[start:start+step]
+            x, y = low[t, :1]+gx, low[t, 1:]+gy
+            (ax, ay), (bx, by), (cx, cy) = (px[t, k].T[..., None] for k in range(3))
+            w0 = ((bx-x-.5)*(cy-y-.5)-(cx-x-.5)*(by-y-.5))/area[t, None]
+            w1 = ((cx-x-.5)*(ay-y-.5)-(ax-x-.5)*(cy-y-.5))/area[t, None]
+            w2 = 1-w0-w1
+            inside = (w0 >= -1e-9) & (w1 >= -1e-9) & (w2 >= -1e-9) & (x >= 0) & (x < width) & (y >= 0) & (y < height)
+            yield t, np.clip(y*width+x, 0, width*height-1), inside, (w0, w1, w2)
+
+
+def nearest(pos, chosen, hides, forward, right, up, scale, tolerance):
+    """One view's depth buffer over the triangles chosen (indices into pos, (N,3,3)), drawn by those of them that hide:
+    whether each chosen triangle is the nearest (or as near, within tolerance) at a sample or at its centroid."""
+    xy = np.stack([pos[chosen]@right, pos[chosen]@up], axis=-1)*scale
+    corner = xy.reshape(-1, 2).min(axis=0)-1
+    xy -= corner
+    width, height = np.ceil(xy.reshape(-1, 2).max(axis=0)).astype(int)+2
+    depth = pos[chosen]@forward
+    closest = np.full(width*height, np.inf)
+    hiding = np.flatnonzero(hides[chosen])
+    for t, sample, inside, w in covering(xy[hiding], width, height):
+        t = hiding[t]
+        np.minimum.at(closest, sample[inside], sum(w[k]*depth[t, k, None] for k in range(3))[inside])
+    c = pos[chosen].mean(axis=1)
+    at = (np.clip(((c@up)*scale-corner[1]).astype(int), 0, height-1)*width
+          + np.clip(((c@right)*scale-corner[0]).astype(int), 0, width-1))
+    shown = c@forward <= closest[at]+tolerance
+    for t, sample, inside, w in covering(xy, width, height):
+        d = sum(w[k]*depth[t, k, None] for k in range(3))
+        shown[t] |= (inside & (d <= closest[sample]+tolerance)).any(axis=1)
+    return shown
+
+
+def seen_from(pos, front, hides, both, ground, pixel, chosen):
+    """in_sight for the sights chosen."""
+    shown = np.zeros(len(pos), dtype=bool)
+    for elevation, azimuth in chosen:
+        forward, right, up = frame(elevation, azimuth)
+        facing = np.flatnonzero(((front@forward < 0) | both) & ~ground)
+        shown[facing[nearest(pos, facing, hides, forward, right, up, SIGHT_SAMPLES/pixel, .02*pixel)]] = True
+    return shown
+
+
+def in_sight(near, materials, pixel):
+    """Which near triangles some sight (SIGHTS) shows, at SIGHT_SAMPLES depth samples a pixel: the nearest (or as near,
+    within a fiftieth of a pixel) at a sample or at its centroid. A face is the side its winding makes
+    (counter-clockwise), as GL culls; a double-sided material shows both. What lets the sky through (blended glass,
+    cut-out leaves) hides nothing; the underside of the ground floor shows to no eye. The sights run in parallel."""
+    pos = near['pos']
+    front = np.cross(pos[:, 1]-pos[:, 0], pos[:, 2]-pos[:, 0])
+    hides = ~np.isin(near['mat'], [m['id'] for m in materials if m.get('alphaMode') == 'BLEND' or 'alphaTest' in m])
+    both = np.isin(near['mat'], [m['id'] for m in materials if m.get('doubleSided')])
+    ground = (pos[..., 2].max(axis=1) <= pos[..., 2].min()+1e-3*pixel) & (front[:, 2] < 0)
+    workers = min(8, os.cpu_count() or 1)
+    with ProcessPoolExecutor(workers) as pool:
+        return np.logical_or.reduce(list(pool.map(partial(seen_from, pos, front, hides, both, ground, pixel),
+                                                  [SIGHTS[k::workers] for k in range(workers)])))
+
+
+def first_level(near, materials, finishes, side, faintest, sights=in_sight):
+    """The first far level: the near triangles some sight shows, in their own materials ([(vertices, triangles,
+    material)] as rewrite takes them), but for specks: pieces (welded, connected triangles) no longer than `faintest`
+    pixels corner to corner, which draw a few pixels at most; what glows (a lamp, a lit window) stays whatever its size.
+    A thin piece stays when it is long: a mast a tenth of a pixel wide still draws a line where it crosses pixel
+    centres."""
+    pixel = min(side, PROPS_SIDE)/LEVEL_PIXELS[1]
+    pos = near['pos']
+    piece = building_lod.connected_pieces(pos.reshape(-1, 3), np.arange(pos.size//3).reshape(-1, 3))[::3]
+    _, piece = np.unique(piece, return_inverse=True)
+    low, high = np.full((piece.max()+1, 3), np.inf), np.full((piece.max()+1, 3), -np.inf)
+    np.minimum.at(low, piece, pos.min(axis=1))
+    np.maximum.at(high, piece, pos.max(axis=1))
+    long = (np.linalg.norm(high-low, axis=1) > faintest*pixel)[piece]
+    kept = sights(near, materials, pixel) & (long | np.isin(near['mat'], glowing(near, finishes)))
+    parts = []
+    for key in np.unique(near['mat'][kept]).tolist():
+        chosen = kept & (near['mat'] == key)
+        rows = np.concatenate([near[k][chosen] for k in ('pos', 'nrm', 'col', 'uv')], axis=-1).reshape(-1, 12)
+        # Colours as stored: linear.
+        rows[:, 6:9] = fl.srgb_linear(np.clip(rows[:, 6:9], 0, 1))
+        vertices, triangles = np.unique(rows, axis=0, return_inverse=True)
+        parts.append((vertices, triangles.reshape(-1, 3), key))
+    return parts
+
+
 # -- The atlas --------------------------------------------------------------------------------------------------------
 
 class Far:
@@ -561,25 +688,22 @@ def opaque(near, materials):
     return {key: value[~glass(near, materials)] for key, value in near.items()}
 
 
-def bake(fars, near, materials, paned):
-    """Every far level's charts baked into one atlas: its maps as 8-bit images, its size, how far its density had to
-    shrink to fit, and how many charts no ray from met the near level. A level's charts bake no glow where the near
-    triangles paned[level] stand as panes (panes)."""
-    finishes = fl.Finishes(materials)
+def bake(far, near, materials, finishes, paned):
+    """The hull's charts baked into its atlas: its maps as 8-bit images, its size, how far its density had to shrink to
+    fit, and how many charts no ray from met the near level. The charts bake no glow where the near triangles paned
+    stand as panes (panes)."""
     blended = glass(near, materials)
-    every = [(far, chart) for far in fars for chart in far.charts]
-    # The smallest atlas that holds every chart at its level's density, else the largest at a lower density.
+    # The smallest atlas that holds every chart at the level's density, else the largest at a lower density.
     shrink = 1.0
     while True:
-        for far in fars:
-            far.density = TEXELS/far.pixel*shrink
-        sizes = [tuple(chart.size(far.density)) for far, chart in every]
+        far.density = TEXELS/far.pixel*shrink
+        sizes = [tuple(chart.size(far.density)) for chart in far.charts]
         places = next((p for p in (pack(sizes, atlas) for atlas in ATLASES) if p), None)
         if places:
             atlas = next(atlas for atlas in ATLASES if pack(sizes, atlas))
             break
         shrink *= .9
-    sampled = [rays(far, chart, near, blended) for far, chart in every]
+    sampled = [rays(far, chart, near, blended) for chart in far.charts]
     # What the rays met, all at once: the sky the near level hides needs every point together. Glass lets it through.
     hits = [s['opaque'][0] >= 0 for s in sampled]
     tri = np.concatenate([s['opaque'][0][h] for s, h in zip(sampled, hits)])
@@ -590,9 +714,7 @@ def bake(fars, near, materials, paned):
     # The atlas glows at night alone: what glows all day too (lamps, skylights) is as bright by day in its albedo.
     seen['albedo'] = np.where(seen.pop('always')[:, None], np.minimum(1, seen['albedo']+seen['glow']), seen['albedo'])
     # The panes light themselves.
-    level = np.concatenate([np.full(int(h.sum()), far.level) for (far, _), h in zip(every, hits)])
-    for far in fars:
-        seen['glow'][paned[far.level][tri] & (level == far.level)] = 0
+    seen['glow'][paned[tri]] = 0
     # Blended glass in front: its own colour over what lies behind it, by its opacity.
     ahead = np.concatenate([s['glass'][0][h] for s, h in zip(sampled, hits)])
     if (ahead >= 0).any():
@@ -606,7 +728,7 @@ def bake(fars, near, materials, paned):
             'rough': np.ones((atlas, atlas)), 'metal': np.zeros((atlas, atlas)), 'normal': np.zeros((atlas, atlas, 3))}
     placed = np.zeros((atlas, atlas), dtype=bool)
     start, empty = 0, 0
-    for (far, chart), s, h, (x, y) in zip(every, sampled, hits, places):
+    for chart, s, h, (x, y) in zip(far.charts, sampled, hits, places):
         count = int(h.sum())
         grid = {}
         for key, value in seen.items():
@@ -695,16 +817,20 @@ def hits(origins, direction, triangles):
     return result
 
 
+def glowing(near, finishes):
+    """The near level's materials that glow (lit windows, lamps, signs), by day or night."""
+    return [key for key in np.unique(near['mat']).tolist() if finishes.material(key)['glow'].any()]
+
+
 def panes(near, finishes, far):
     """The near level's lit panes as geometry just outside a far level's hull, in their own near materials: every flat
     piece of a material that glows (a lit window, a skylight, a lit sign), out along its normal to a tenth of a pixel past
     the hull, when it lies at most PANE_DEPTH inside it. A texture at a texel a pixel blurs and dims a window a few pixels
     wide; the pane itself lights as the near one does, its edge as sharp. A rectangular piece is one quad. Returns ({material: (vertices, triangles)}, which near
     triangles they stand for); a piece that is not flat (a lamp's body) stays in the atlas."""
-    glowing = [key for key in np.unique(near['mat']).tolist() if finishes.material(key)['glow'].any()]
     hull = far.vertices[far.faces]
     made, paned = {}, np.zeros(len(near['mat']), dtype=bool)
-    for key in glowing:
+    for key in glowing(near, finishes):
         chosen = np.flatnonzero(near['mat'] == key)
         piece = building_lod.connected_pieces(near['pos'][chosen].reshape(-1, 3), np.arange(3*len(chosen)).reshape(-1, 3))[::3]
         for one in np.unique(piece):
@@ -915,23 +1041,24 @@ def near_level(path):
     return near, model['materials']
 
 
-def build(stem, hulls=hull):
+def build(stem, hulls=hull, sights=in_sight):
     """Writes the far levels of data/models/buildings/authored/<stem>.glb; returns what it made. hulls(pos, level, side)
-    makes each level's hull."""
+    makes the second level's hull, sights(near, materials, pixel) tells what the first shows (in_sight)."""
     path = AUTHORED/(stem+'.glb')
     near, materials = near_level(path)
     points = near['pos'].reshape(-1, 3)
     side = float(max(np.ptp(points[:, 0]), np.ptp(points[:, 1])))
-    fars = [Far(level, *hulls(near['pos'], level, side)) for level in (1, 2)]
+    far = Far(2, *hulls(near['pos'], 2, side))
     finishes = fl.Finishes(materials)
-    lit = {far.level: panes(near, finishes, far) for far in fars}
-    images, atlas, shrink, empty = bake(fars, near, materials, {level: mask for level, (_, mask) in lit.items()})
-    levels = {far.level: [(*level_model(far, atlas), None)]+[(vertices, triangles, key) for key, (vertices, triangles)
-                                                             in sorted(lit[far.level][0].items())] for far in fars}
+    lit, paned = panes(near, finishes, far)
+    images, atlas, shrink, empty = bake(far, near, materials, finishes, paned)
+    levels = {1: first_level(near, materials, finishes, side, FAINTER.get(stem, FAINTEST), sights),
+              2: [(*level_model(far, atlas), None)]+[(vertices, triangles, key) for key, (vertices, triangles)
+                                                     in sorted(lit.items())]}
     rewrite(path, levels, images)
     return {'near': len(near['pos']), **{f'lod{level}': sum(len(t) for _, t, _ in parts) for level, parts in levels.items()},
-            'panes': sum(len(t) for _, t in lit[1][0].values()), 'atlas': atlas, 'shrink': round(shrink, 3),
-            'empty charts': empty, 'charts': [len(far.charts) for far in fars]}
+            'panes': sum(len(t) for _, t in lit.values()), 'atlas': atlas, 'shrink': round(shrink, 3),
+            'empty charts': empty, 'charts': len(far.charts)}
 
 
 if __name__ == '__main__':
