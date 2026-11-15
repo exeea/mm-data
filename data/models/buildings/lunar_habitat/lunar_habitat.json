@@ -9,6 +9,7 @@
       "concrete": "structures/lunar/regolith-concrete"
     },
     "aviationLights": true,
+    "hull": true,
     "skirt": {"height": 3.0, "out": 2.4},
     "piers": {"joint": "pier", "corner": "pier-corner"},
     "tops": {"joint": "pier-top", "corner": "pier-corner-top"},
