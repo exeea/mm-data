@@ -136,8 +136,11 @@ Use the shared `role` field and `export_model()` in [authored_examples.py](autho
   [authored_far.py](authored_far.py), run with the system Python after a look building's script, replaces the far levels
   of the look buildings it lists (`BUILDINGS`). LOD1 is the near level's own triangles that some camera view sees (depth
   buffers from ten degrees below the horizon to straight down, every 15 degrees round), in their own materials, less the
-  specks no longer than two pixels (what glows stays): at its switch it looks as the near level, whose crisp
-  edges there are sub-pixel relief lit face by face, which no baked texture reproduces. LOD2 is a closed hull a quarter
+  specks no longer than the building's speck length: two, three or four pixels, the lightest that still looks as the
+  near level at the switch (`FAINTER`; what glows stays; frontier-hydroponics keeps every speck, its garden under
+  glass). At its switch it looks as the near level, whose crisp edges there are sub-pixel relief lit face by face,
+  which no baked texture reproduces. Five buildings (`THEME` in `FAINTER`) keep the LOD1 their theme script wrote,
+  which looks as their near level with fewer triangles. LOD2 is a closed hull a quarter
   of a pixel outside the near level at the largest size it shows, closed over gaps under three pixels and over the
   hollow inside no camera view sees, simplified to within a third of a pixel, in one material whose atlas, embedded in
   the GLB, is baked by rays from the hull in to the near level (albedo dimmed by the sky the near level hides, the

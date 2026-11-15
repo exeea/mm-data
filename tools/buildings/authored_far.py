@@ -13,7 +13,8 @@ blended glass, which switches at once.
 LOD1 keeps the near level's look at its switch: a building's crisp edges there are its sub-pixel relief (frames, sills,
 piers) lit face by face, which no baked texture reproduces. It is the near triangles some view of SIGHTS shows (depth
 buffers of SIGHT_SAMPLES samples a pixel), in their own materials and attributes, but for specks no longer than
-FAINTEST pixels (what glows stays). The rest (backs, insides, faces against the walls, specks) goes.
+FAINTEST pixels, or the building's own length in FAINTER (what glows stays). The rest (backs, insides, faces against the
+walls, specks) goes. A building that FAINTER gives THEME keeps the first far level its theme script wrote instead.
 
 LOD2 is the hull: the near level closed over gaps narrower than 2*CLOSE pixels and over the hollow inside no camera view
 sees, offset OFFSET pixels outward (it encloses the near level, as the shadow map needs: a far surface inside the near one
@@ -80,8 +81,16 @@ PANE_DEPTH = 1.0  # A lit pane at most this far inside the hull stands on it (pa
 SIGHTS = [(e, a) for e in (-10, -5, 0, 10, 20, 35.26, 50, 65, 80) for a in range(0, 360, 15)]+[(90, 0)]
 SIGHT_SAMPLES = 4  # Depth samples a pixel along each side, at the largest size the first far level shows.
 FAINTEST = 2.0  # A piece no longer than this corner to corner, in pixels, is left out of the first far level.
-# Buildings whose switch shows at FAINTEST, and what they keep instead: a garden under glass is specks, together an area.
-FAINTER = {'civic-offices': 1.0, 'frontier-hydroponics': 0.0}
+# Each building's lightest first far level that looks as its near level at the switch, measured against the near level
+# by day and by night: its own speck length (a garden under glass is specks, together an area), or THEME.
+THEME = 'theme'
+FAINTER = {'civic-commercial-center': THEME, 'civic-habitat2': 3.0, 'civic-industrial-works': 3.0,
+           'civic-medical-center': 3.0, 'civic-offices': THEME, 'frontier-cargo-terminal': 4.0,
+           'frontier-command-comms': 3.0, 'frontier-fabrication-workshop': 3.0, 'frontier-hydroponics': 0.0,
+           'frontier-medical-center': 3.0, 'frontier-power-plant': 4.0, 'frontier-trade-exchange': 4.0,
+           'heritage-church': 3.0, 'heritage-transit-terminal': THEME, 'imperial-administrative-offices': THEME,
+           'imperial-commercial-center': 3.0, 'imperial-courtyard-habitat': 3.0, 'imperial-government-hall': 3.0,
+           'imperial-industrial-works': 3.0, 'imperial-medical-center': THEME}
 
 
 # -- The near level -------------------------------------------------------------------------------------------------
@@ -1041,6 +1050,35 @@ def near_level(path):
     return near, model['materials']
 
 
+def theme_level(path):
+    """The first far level the file holds, as its theme script wrote it, in the form rewrite takes ([(vertices, triangles,
+    material)]): each primitive with only the vertices its triangles use (the theme scripts' levels share one buffer)."""
+    doc, binary = glb.read_glb(path)
+    root = next(i for i in doc['scenes'][0]['nodes'] if doc['nodes'][i].get('name') == f'{path.stem}-lod1')
+
+    def data(index):
+        a = doc['accessors'][index]
+        view = doc['bufferViews'][a['bufferView']]
+        width = {'SCALAR': 1, 'VEC2': 2, 'VEC3': 3, 'VEC4': 4}[a['type']]
+        dtype = {5126: '<f4', 5125: '<u4', 5123: '<u2', 5121: 'u1'}[a['componentType']]
+        assert a['componentType'] in (5125, 5123, 5121) or (a['componentType'] == 5126 and not a.get('normalized'))
+        start = view.get('byteOffset', 0)+a.get('byteOffset', 0)
+        return np.frombuffer(binary, dtype, a['count']*width, start).reshape(a['count'], width)
+
+    parts = []
+    for child in doc['nodes'][root].get('children', []):
+        node = doc['nodes'][child]
+        assert not {'translation', 'rotation', 'scale', 'matrix', 'children'} & node.keys()
+        for primitive in doc['meshes'][node['mesh']]['primitives']:
+            pos, nrm, col, uv = (data(primitive['attributes'][key]).astype(float)
+                                 for key in ('POSITION', 'NORMAL', 'COLOR_0', 'TEXCOORD_0'))
+            used, triangles = np.unique(data(primitive['indices']).ravel(), return_inverse=True)
+            # glTF is Y up.
+            vertices = np.column_stack((pos[:, 0], -pos[:, 2], pos[:, 1], nrm[:, 0], -nrm[:, 2], nrm[:, 1], col, uv))[used]
+            parts.append((vertices, triangles.reshape(-1, 3), doc['materials'][primitive['material']]['name']))
+    return parts
+
+
 def build(stem, hulls=hull, sights=in_sight):
     """Writes the far levels of data/models/buildings/authored/<stem>.glb; returns what it made. hulls(pos, level, side)
     makes the second level's hull, sights(near, materials, pixel) tells what the first shows (in_sight)."""
@@ -1052,7 +1090,8 @@ def build(stem, hulls=hull, sights=in_sight):
     finishes = fl.Finishes(materials)
     lit, paned = panes(near, finishes, far)
     images, atlas, shrink, empty = bake(far, near, materials, finishes, paned)
-    levels = {1: first_level(near, materials, finishes, side, FAINTER.get(stem, FAINTEST), sights),
+    faintest = FAINTER.get(stem, FAINTEST)
+    levels = {1: theme_level(path) if faintest == THEME else first_level(near, materials, finishes, side, faintest, sights),
               2: [(*level_model(far, atlas), None)]+[(vertices, triangles, key) for key, (vertices, triangles)
                                                      in sorted(lit.items())]}
     rewrite(path, levels, images)
