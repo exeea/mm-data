@@ -1,6 +1,7 @@
 {
   "style": "bays",
   "pieces": "fortress-light-pieces.glb",
+  "shared": {"hull": true},
   "roofs": {
     "battlement": {
       "material": "structures/buildings/fortress-roof",
@@ -8,9 +9,7 @@
       "inset": 0.0,
       "heights": [0.65],
       "aviationLights": true,
-      "runs": [
-        {"bays": ["merlon"], "bay": 13.54, "far": {"bays": [], "under": {"piece": "far-parapet", "length": 4.0}}}
-      ]
+      "runs": [{"bays": ["merlon"], "bay": 13.54}]
     }
   },
   "variants": [
@@ -40,20 +39,7 @@
             "structures/buildings/fortress-dark": 12.0,
             "structures/buildings/fortress-glass": 12.0
           },
-          "entrance": "ground-door",
-          "far": {
-            "bays": ["far-window"],
-            "bay": 9.67,
-            "margin": 2.3,
-            "under": {"piece": "ground-face", "length": 4.6},
-            "planar": {
-              "structures/buildings/fortress-wall": 12.0,
-              "structures/buildings/fortress-steel": 12.0,
-              "structures/buildings/fortress-dark": 12.0,
-              "structures/buildings/fortress-glass": 12.0
-            },
-            "entrance": "far-door"
-          }
+          "entrance": "ground-door"
         }
       ],
       "floor": [
@@ -67,18 +53,6 @@
             "structures/buildings/fortress-steel": 12.0,
             "structures/buildings/fortress-dark": 12.0,
             "structures/buildings/fortress-glass": 12.0
-          },
-          "far": {
-            "bays": ["far-window"],
-            "bay": 9.67,
-            "margin": 2.3,
-            "under": {"piece": "face", "length": 4.6},
-            "planar": {
-              "structures/buildings/fortress-wall": 12.0,
-              "structures/buildings/fortress-steel": 12.0,
-              "structures/buildings/fortress-dark": 12.0,
-              "structures/buildings/fortress-glass": 12.0
-            }
           }
         }
       ]
