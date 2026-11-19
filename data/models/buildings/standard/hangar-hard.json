@@ -15,7 +15,8 @@
       {"hatch": [[-7, 6, 0]], "vent-block": [[6, -6, 90]]},
       {"cupola": [[-6, -5, 0]], "hatch": [[8, 8, 0]]},
       {}
-    ]
+    ],
+    "hull": true
   },
   "roofs": {
     "vault": {

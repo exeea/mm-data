@@ -12,7 +12,7 @@ far level. `alternative`: a corrugated steel shed on portal frames (light), insu
 JSON is its large doors' look (KitDoors.Style): the game cuts them into these walls where the board's author puts them.
 
 Each kit has two roofs, and either variant draws either: `vault`, a roof that spans the hall as a hangar's does (BayKit's
-vault: a low gable, a bowstring roof, a concrete arch), frames running on over it as ribs; and `flat`, a slab with its
+vault: a low gable, a bowstring roof, a concrete arch), pale frames running on over it as ribs; and `flat`, a slab with its
 edge and roof fittings (the hardened one a burster slab). A hangar is vaulted unless its author chooses the flat roof.
 """
 import json
@@ -307,16 +307,17 @@ def hard_hatch(rng):
 # -- The designers' halls ---------------------------------------------------------------------------------
 ART = Path(__file__).resolve().parent/'art'
 # A hall's finishes: its frames' width at each end of a bay and how high they stand on its roof, (material, pigment) of
-# its walls and frames, its roof (material, repeat, pigment, shape, rise: half a level, 9, at the most, since a unit on
+# its walls and frames, the pigment of its frames over the roof (pale: dark ones read as rows of dark pixels there at a
+# far zoom), its roof (material, repeat, pigment, shape, rise: half a level, 9, at the most, since a unit on
 # the roof plays at its eaves' level) and its walls' repeat along them.
 HALLS = {
-    'light': {'rib': 1.5, 'crown': .4, 'wall': (CORRUGATED, SAGE), 'frame': (MATTE, FRAME), 'roof': (TIN_ROOF, 12.0, (.80, .82, .82), 'gable', 6.0),
+    'light': {'rib': 1.5, 'crown': .4, 'over': (.80, .82, .82), 'wall': (CORRUGATED, SAGE), 'frame': (MATTE, FRAME), 'roof': (TIN_ROOF, 12.0, (.80, .82, .82), 'gable', 6.0),
               'repeat': 12.0},
-    'medium': {'rib': 2.0, 'crown': .5, 'wall': (SHEET, PALE), 'frame': (SHEET, (.30, .34, .38)), 'roof': (TIN_ROOF, 12.0, (.52, .54, .55), 'bow', 8.0),
+    'medium': {'rib': 2.0, 'crown': .5, 'over': PALE, 'wall': (SHEET, PALE), 'frame': (SHEET, (.30, .34, .38)), 'roof': (TIN_ROOF, 12.0, (.52, .54, .55), 'bow', 8.0),
                'repeat': 12.0},
-    'heavy': {'rib': 2.5, 'crown': .7, 'wall': (PANELS, PRECAST), 'frame': (PANELS, (.80, .79, .75)), 'roof': (TIN_ROOF, 12.0, (.40, .42, .44), 'bow', 9.0),
+    'heavy': {'rib': 2.5, 'crown': .7, 'over': (.80, .79, .75), 'wall': (PANELS, PRECAST), 'frame': (PANELS, (.80, .79, .75)), 'roof': (TIN_ROOF, 12.0, (.40, .42, .44), 'bow', 9.0),
               'repeat': 18.0},
-    'hard': {'rib': 2.5, 'crown': .9, 'wall': (BUNKER, RAW), 'frame': (BUNKER, (.88, .86, .82)), 'roof': (BUNKER, 18.0, (.90, .88, .84), 'arch', 9.0),
+    'hard': {'rib': 2.5, 'crown': .9, 'over': (.88, .86, .82), 'wall': (BUNKER, RAW), 'frame': (BUNKER, (.88, .86, .82)), 'roof': (BUNKER, 18.0, (.90, .88, .84), 'arch', 9.0),
              'repeat': 18.0},
 }
 
@@ -417,11 +418,11 @@ def hall_bay(rng, weight, kind, base):
 
 
 def hall_eave(rng, weight):
-    """A hall's eave: a gutter along the wall's top under the roof's edge, in its frames' finish; across a gable end, the
-    tie under the gable."""
-    key, colour = HALLS[weight]['frame']
+    """A hall's eave: a gutter along the wall's top under the roof's edge, in its frames' material and its roof's colour
+    (the roof's edge; the frames' dark finish read as a row of dark pixels along it at a far zoom); across a gable end,
+    the tie under the gable."""
     out = .6 if weight in ('light', 'medium') else 1.0
-    cuboid('gutter', 0, W, -out, 0, -1.0, .2, key, colour, omit='klr')
+    cuboid('gutter', 0, W, -out, 0, -1.0, .2, HALLS[weight]['frame'][0], HALLS[weight]['roof'][2], omit='klr')
 
 
 def hall_pieces(weight, kinds):
@@ -463,10 +464,11 @@ def variant(name, base, upper, roofs, roof, planar, fit, large_door, prefix='', 
 
 def hall(weight, base, upper, large_door):
     """The designers' hall, a kit's first variant, and the roof that spans a hall: its sheeting, shape and rise, its gable
-    ends in the walls' finish (they take the building's tint with them), its frames running on over it as ribs."""
+    ends in the walls' finish (they take the building's tint with them), its frames running on over it as ribs, they
+    and the verge in the frames' material and a pale colour ('over')."""
     look = HALLS[weight]
     material, repeat, pigment, shape, rise = look['roof']
-    vault = k.vault(shape, rise, pigment, (look['wall'][0]+'#paint', look['wall'][1], look['repeat']), look['frame'],
+    vault = k.vault(shape, rise, pigment, (look['wall'][0]+'#paint', look['wall'][1], look['repeat']), (look['frame'][0], look['over']),
                     rib=(look['rib'], look['crown']))
     return variant('default', base, upper, ['hall-eave'], (material, repeat), {look['wall'][0]: look['repeat']}, None, large_door,
                    prefix='hall-', inset=1.3, vault=vault)

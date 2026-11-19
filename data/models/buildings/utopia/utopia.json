@@ -47,7 +47,8 @@
       "apron": 5.0
     },
     "base": {"margin": 3.0},
-    "floor": {"margin": 3.0}
+    "floor": {"margin": 3.0},
+    "hull": true
   },
   "roofs": {
     "garden": {

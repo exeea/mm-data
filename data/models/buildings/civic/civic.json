@@ -33,7 +33,8 @@
       "stripeHeight": 1.6,
       "threshold": {"material": "structures/common/cast-concrete", "repeat": 12.0, "tint": "#9e9e94"},
       "apron": 5.0
-    }
+    },
+    "hull": true
   },
   "roofs": {
     "flat": {

@@ -147,9 +147,12 @@ footprints differ. A kit without fittings or a vault has its Angled corner piece
 `name`; board `materials` by role (`wall`, `roof`, `pier`, `concrete`); `cornerRadius` and `cornerSegments`; the roof:
 a `parapet` (`height`, `width`), an `eave` (the rounded edge: `radius` and `segments` per level of detail) or a
 `vault`; `skirt`; `piers`, their roof `tops` and `footings` (a `joint` and a `corner` piece each); the Angled `lone`
-hex and single link band; the `storeys` above the ground (`windows` lit or dim, `shift`); and `fittings` per
-footprint. In the pieces GLB a pier stands on its storey's floor at the wall line and is stretched to the storey; a
-pier top likewise on the roof; a footing, hatch or vent stands as modelled.
+hex and single link band; the `storeys` above the ground (`windows` lit or dim, `shift`); `fittings` per
+footprint; and `hull`, as a bays kit's: its far level is a closed outer hull, with no wall or roof body (but under a
+parapet), its near level alone enterable. In the pieces GLB a pier stands on its storey's floor at the wall line and is
+stretched to the storey; a pier top likewise on the roof; a footing, hatch or vent stands as modelled. The lunar
+habitat's round fittings are eight-sided prisms round the near ones at its far level (`lunar_habitat_far.py` writes
+them into the pieces GLB's `lod1`).
 
 ### Vaults
 
@@ -161,7 +164,8 @@ the `shape` of a `gable`, `bow`, `arch` or `plates`, in `segments` facets a side
   of one height keep the crown's height at their shared corner (`-crown`). A lone hex's runs north to south.
 - Walls under it are filled up to it in the `gable` surface (`material`, which may carry `#paint`, `repeat`, `tint`),
   with a `verge` high band of the `trim` surface; ribs of the trim cross it every `ribPitch` (`ribWidth`,
-  `ribHeight`).
+  `ribHeight`, 0: none). The four standard hangars' ribs and verge are pale and their gutter takes the roof's colour: dark ones read as rows
+  of dark pixels along the roof at a far zoom.
 - A variant's `vaulted` roof is drawn for a hangar-class building unless its author chooses the flat one
   (`building.appearance.roof`: `vaulted` or `flat`; editor: Roof). Other classes keep the variant's `roof`.
 
@@ -178,20 +182,56 @@ the `shape` of a `gable`, `bow`, `arch` or `plates`, in `segments` facets a side
 
 ### Far level
 
-The `standard/building-<weight>` kits (`far_levels.py`, after `standard_buildings.py` where that builds the kit) draw a
-closed outer hull from 80 pixels down (`TreeLod.PROPS`), their pieces GLB's `lod1`, and say so with `hull` in the kit's
-`shared`; no run of theirs has a `far` of its own:
+The bays kits but the placeholders (the [Kits](#kits) whose far level `far_levels.py` builds, after the script that builds
+the kit) draw a closed outer hull from 80 pixels down (`TreeLod.PROPS`), their pieces GLB's `lod1`, and say so with `hull`
+in the kit's `shared`; no run of theirs has a `far` of its own:
 
-- Each wall piece is one face on its storey's plane: the median of its pieces' own outermost planes, so a porch or a
-  canopy in one bay is drawn on the face. A ground storey standing further out closes its top with a ledge.
-- A roof's edge piece is its outer face (out to the storey under it), its top and its face towards the roof; a fitting
-  one box, or its near mesh where that fills less than 40% of the box from above or the front (a washing line, a dish
-  mast). No wall thickness, no reveals, frames, sills or mullions.
+- Each wall piece (a bay, an entrance, an end, a module's joint, a rounded corner's facet) is one face on its storey's
+  face: the median of its pieces' own outermost planes, so a porch or a canopy in one bay is drawn on the face; sloped
+  where the storey leans out 1 or more over its height (a battered plinth). Storeys sharing a piece share one face. A
+  storey standing out from the one on it by 0.5 or more closes its top with a ledge; less, and the one on it stands on its
+  face. A ledge over a strip the near piece leaves hollow takes its storey face's colour, column by column; a roof edge strip whose view meets nothing (a hangar's step outside its gutter, where the near piece has nothing) is left out. A face more than 3 out of its wall line has the same face on the wall line behind it, which closes what shows
+  where it meets the next hex's at a corner they turn round. Shapes follow a piece's solid surfaces: its cutouts (a
+  planter's shrubs) are drawn on them.
+- A roof's edge pieces (those of roofs sharing one together) take one profile round their section: the convex hull of the
+  middle depth of the rows their bays cover half of, at most three faces (an eave's fascia and slope, a mansard's slope),
+  then a face towards the roof, and a lid under it at the storey's top, which closes its section where the kit cuts the
+  piece. Where it stands back from the storey under it, a step out closes that storey's top. A seam takes its own.
+- What stands 1.5 or more out of a piece's far face, 9 or more high and filling half its bounds there (a turret, a
+  spire), is a loft of up to three octagonal frusta, each side as close as encloses it; a rounded corner's piece is
+  shaped as the kit stretches it along its facet. A roof fitting is one box where its mesh fills 60% of the box from
+  above and the front, else a loft of up to two (a mast on a hut, a tree), or its near mesh where that is fewer
+  triangles. A joint's fill keeps its near mesh. No wall thickness, no reveals, frames, sills or mullions.
+- Past the near level a `hull` kit lays no roof body (`BayKit`).
+- A wall piece whose lit glass lies 2 or more behind its far face (between fins, in deep reveals) and that has at most
+  120 triangles keeps its near mesh at the far level.
+- A wall or roof edge piece's lit panes (each flat part of a material that glows: a lit window, a sign; on a facade lit
+  by its emission map, each lit window of it) within 8 of its far surface stand just outside it as geometry in their own
+  near material, drawn in to what the iso camera sees of them past the near piece (15, 45 and 75 degrees aside): a lit
+  window keeps its colour, brightness and edge, but does not hide behind fins or a grille as the view turns. A pane
+  three-quarters hidden head on (behind a column or a grille) or deeper has none. A kit's panes grow towards their
+  windows' full size, or shrink, by its `PANE_GROW` (`building-light` 0.65, `building-civilian` -0.4), so the far level
+  lights as many window pixels as the near at the switch.
+- Where the near's lit glass is under about 1.5 pixels wide at the switch (slits behind bars), its lit pixels are
+  sub-pixel noise: which windows light depends on where they fall between pixel centres, and changes on a half-pixel
+  pan. A far level is then matched to the supersampled near (rendered at 4 times the size and box-averaged down) by lit
+  energy, not to one frame's lit pixels. Such a kit (`ATLAS_GLOW`: `fortress-light`, whose slits show their glass
+  between bars) has no panes: its glass glows in the far atlas as the far faces' own texels (filtered by the atlas's
+  mips, so steady on a pan, and no triangles), times the kit's share, in the supersampled near's lit colour, and falls
+  with the view as the near's slits do: the far material's `metadata/mmEmissionView = "scale offset"` multiplies its
+  emission by clamp(scale (N.V - offset), 0, 1); share and pair are fitted to the supersampled near's lit energy at a
+  hex's six rotations (`ATLAS_GLOW`); a material without the metadata glows as before.
+- The far level's scene objects stay resident beside the near's, so the switch is instant: on the 48x48 city the live
+  heap after load is 0.67-0.70 GB with these far levels, 0.63-0.66 GB with the kits before them (far levels for the six
+  building kits only): 37-42 MB more (2026-11-19).
+- Roof pieces a kit keeps at their near meshes (`NEAR_ROOF`): the roof fittings for `civic`; the roof fittings and every
+  roof edge piece (planting, railings, eaves, dormers) for `utopia`, `frontier`, `imperial` and `heritage`.
 - Every far face samples the kit's far atlas, the board material `structures/buildings/<kit>-far` (512 pixels, 2 a
   unit). It holds what the near piece shows through the face from the iso camera's height, head on: albedo dimmed by
-  the sky the piece hides, the near `#paint` surfaces as a paint mask (`mmPaintMask`; its mip levels keep the painted
-  share of their luminance), roughness, metallic and normals, and the lit windows' night glow: 0.6 of what the windows
-  show on average 15, 45 and 75 degrees aside.
+  the sky the piece hides, times the kit's measured gain (`TONE`) and sharpened (an unsharp mask), the near `#paint`
+  surfaces as a paint mask (`mmPaintMask`; its mip levels keep the painted share of their luminance), roughness,
+  metallic and normals; no glow (a wall's or roof edge's light is its panes'). The game samples it with anisotropic
+  filtering (`ModelTextures`).
 - A piece no variant lays has no far node. `aviation-light.glb`'s far level is its lamp alone.
 
 ## Kits
@@ -202,13 +242,13 @@ A kit's variants and roofs are those its JSON lists.
 | --- | --- | --- |
 | `standard/building-light` | bays | hand-made art (`art/building_light_00.glb`); its far level `far_levels.py` |
 | the other `standard/building-<weight>` | bays | `standard_buildings.py`; medium, heavy and hardened from `art/building_<weight>-proposal.glb`; their far level `far_levels.py` |
-| `standard/hangar-light`, `-medium`, `-heavy`, `-hard` | bays | `hangar_kits.py`, from `art/hangar_<weight>_a-proposal.glb` |
-| `standard/fortress-light` | bays | hand-made art (`art/fortress_light_a_52.glb`) |
+| `standard/hangar-light`, `-medium`, `-heavy`, `-hard` | bays | `hangar_kits.py`, from `art/hangar_<weight>_a-proposal.glb`; their far level `far_levels.py` |
+| `standard/fortress-light` | bays | hand-made art (`art/fortress_light_a_52.glb`); its far level `far_levels.py` |
 | the remaining `standard/` kits (fortresses, gun emplacements, civilian and Castle Brian hangars) | bays | `debug_placeholders.py`: diagnostic placeholders, flat panels in one colour a bay index |
-| `civic/civic`, `utopia/utopia`, `frontier/frontier` | bays | `theme_kits.py` |
-| `imperial/imperial` | bays | `imperial_kit.py` |
-| `heritage/heritage` | bays | `heritage_kit.py` |
-| `lunar_habitat/lunar_habitat` | habitat | the JSON alone |
+| `civic/civic`, `utopia/utopia`, `frontier/frontier` | bays | `theme_kits.py`; their far level `far_levels.py` |
+| `imperial/imperial` | bays | `imperial_kit.py`; its far level `far_levels.py` |
+| `heritage/heritage` | bays | `heritage_kit.py`; its far level `far_levels.py` |
+| `lunar_habitat/lunar_habitat` | habitat | the JSON alone; its pieces GLB's far round fittings `lunar_habitat_far.py` |
 
 Every surface is a board material (Material Maker projects in `tools/materials/structures/`).
 

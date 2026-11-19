@@ -15,7 +15,8 @@
       {"stack": [[-8, 7, 0]], "skylights": [[3, -2, 90]]},
       {"hvac": [[-4, 5, 90]], "stack": [[9, -8, 0]]},
       {}
-    ]
+    ],
+    "hull": true
   },
   "roofs": {
     "vault": {
@@ -29,7 +30,7 @@
         "rise": 8.0,
         "segments": [6, 3],
         "gable": {"material": "structures/common/painted-steel#paint", "repeat": 12.0, "tint": "#d6dbdb"},
-        "trim": {"material": "structures/common/painted-steel", "repeat": 12.0, "tint": "#4c5761"},
+        "trim": {"material": "structures/common/painted-steel", "repeat": 12.0, "tint": "#d6dbdb"},
         "verge": 0.9,
         "ribPitch": 24.0,
         "ribWidth": 2.0,

@@ -43,7 +43,8 @@
       },
       "threshold": {"material": "structures/common/cast-concrete", "repeat": 12.0, "tint": "#757575"},
       "apron": 4.0
-    }
+    },
+    "hull": true
   },
   "roofs": {
     "mansard": {

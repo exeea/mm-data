@@ -45,7 +45,8 @@
     "floor": {
       "round": {"piece": "corner", "length": 6.0},
       "joints": {"start": "joint-start", "end": "joint-end", "length": 2.4}
-    }
+    },
+    "hull": true
   },
   "roofs": {
     "plating": {
