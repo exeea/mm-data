@@ -622,8 +622,8 @@
     "mesh": "vegetation/tree-dead-snow.glb"
   },
   "scenery/road/road-tunnel": {
-    "triangles": 289,
-    "vertices": 867,
+    "triangles": 309,
+    "vertices": 927,
     "opening_width": 19.0,
     "opening_height": 15.5,
     "depth": 18,
@@ -633,8 +633,8 @@
     "road_end": 18
   },
   "scenery/road/road-tunnel-bridge": {
-    "triangles": 273,
-    "vertices": 819,
+    "triangles": 293,
+    "vertices": 859,
     "opening_width": 19.0,
     "opening_height": 15.5,
     "depth": 18,
@@ -3622,5 +3622,200 @@
     "triangles": 32,
     "vertices": 96,
     "source": "tools/board-models/crystal/build_crystals.py"
+  },
+  "scenery/road/road-tunnel-long-wings": {
+    "triangles": 309,
+    "vertices": 927,
+    "opening_width": 19.0,
+    "opening_height": 15.5,
+    "depth": 18,
+    "wing_walls": true,
+    "road_width": 15,
+    "road_start": 2.75,
+    "road_end": 18
+  },
+  "scatter/bush-0-levels": {
+    "mesh": "scatter/bush-0-levels.glb",
+    "lods": [
+      {
+        "node": "bush-0-lod0",
+        "triangles": 660,
+        "vertices": 1980
+      },
+      {
+        "node": "bush-0-lod1",
+        "triangles": 79,
+        "vertices": 237
+      },
+      {
+        "node": "bush-0-lod2",
+        "triangles": 31,
+        "vertices": 93
+      }
+    ],
+    "source": "tools/board-models/scatter_lods.py",
+    "triangles": 660,
+    "vertices": 1980
+  },
+  "scatter/bush-1-levels": {
+    "mesh": "scatter/bush-1-levels.glb",
+    "lods": [
+      {
+        "node": "bush-1-lod0",
+        "triangles": 660,
+        "vertices": 1978
+      },
+      {
+        "node": "bush-1-lod1",
+        "triangles": 79,
+        "vertices": 237
+      },
+      {
+        "node": "bush-1-lod2",
+        "triangles": 33,
+        "vertices": 99
+      }
+    ],
+    "source": "tools/board-models/scatter_lods.py",
+    "triangles": 660,
+    "vertices": 1978
+  },
+  "scatter/bush-2-levels": {
+    "mesh": "scatter/bush-2-levels.glb",
+    "lods": [
+      {
+        "node": "bush-2-lod0",
+        "triangles": 660,
+        "vertices": 1980
+      },
+      {
+        "node": "bush-2-lod1",
+        "triangles": 79,
+        "vertices": 237
+      },
+      {
+        "node": "bush-2-lod2",
+        "triangles": 33,
+        "vertices": 99
+      }
+    ],
+    "source": "tools/board-models/scatter_lods.py",
+    "triangles": 660,
+    "vertices": 1980
+  },
+  "scatter/bush-3-levels": {
+    "mesh": "scatter/bush-3-levels.glb",
+    "lods": [
+      {
+        "node": "bush-3-lod0",
+        "triangles": 660,
+        "vertices": 1980
+      },
+      {
+        "node": "bush-3-lod1",
+        "triangles": 79,
+        "vertices": 237
+      },
+      {
+        "node": "bush-3-lod2",
+        "triangles": 33,
+        "vertices": 99
+      }
+    ],
+    "source": "tools/board-models/scatter_lods.py",
+    "triangles": 660,
+    "vertices": 1980
+  },
+  "scatter/bush-4-levels": {
+    "mesh": "scatter/bush-4-levels.glb",
+    "lods": [
+      {
+        "node": "bush-4-lod0",
+        "triangles": 792,
+        "vertices": 2374
+      },
+      {
+        "node": "bush-4-lod1",
+        "triangles": 79,
+        "vertices": 237
+      },
+      {
+        "node": "bush-4-lod2",
+        "triangles": 33,
+        "vertices": 99
+      }
+    ],
+    "source": "tools/board-models/scatter_lods.py",
+    "triangles": 792,
+    "vertices": 2374
+  },
+  "scatter/bush-5-levels": {
+    "mesh": "scatter/bush-5-levels.glb",
+    "lods": [
+      {
+        "node": "bush-5-lod0",
+        "triangles": 792,
+        "vertices": 2376
+      },
+      {
+        "node": "bush-5-lod1",
+        "triangles": 79,
+        "vertices": 237
+      },
+      {
+        "node": "bush-5-lod2",
+        "triangles": 33,
+        "vertices": 99
+      }
+    ],
+    "source": "tools/board-models/scatter_lods.py",
+    "triangles": 792,
+    "vertices": 2376
+  },
+  "scatter/bush-6-levels": {
+    "mesh": "scatter/bush-6-levels.glb",
+    "lods": [
+      {
+        "node": "bush-6-lod0",
+        "triangles": 792,
+        "vertices": 2376
+      },
+      {
+        "node": "bush-6-lod1",
+        "triangles": 79,
+        "vertices": 237
+      },
+      {
+        "node": "bush-6-lod2",
+        "triangles": 33,
+        "vertices": 99
+      }
+    ],
+    "source": "tools/board-models/scatter_lods.py",
+    "triangles": 792,
+    "vertices": 2376
+  },
+  "scatter/bush-7-levels": {
+    "mesh": "scatter/bush-7-levels.glb",
+    "lods": [
+      {
+        "node": "bush-7-lod0",
+        "triangles": 792,
+        "vertices": 2376
+      },
+      {
+        "node": "bush-7-lod1",
+        "triangles": 79,
+        "vertices": 237
+      },
+      {
+        "node": "bush-7-lod2",
+        "triangles": 33,
+        "vertices": 99
+      }
+    ],
+    "source": "tools/board-models/scatter_lods.py",
+    "triangles": 792,
+    "vertices": 2376
   }
 }
