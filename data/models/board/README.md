@@ -527,21 +527,26 @@ from it (`RigidGlb.source`). `pine-tall`, `tree-dead`, `willow`, `tree-forked` a
 - `rocks/outcrop-N.glb` (N = 0..7) are bedrock formations used by zero-gravity
   rough and dry natural rough on exposed ridges, in the same layout (`outcrop-N-lod0` to `-lod2`; 92, 44
   and 22 triangles).
-- `scatter/` contains 25 independently editable GLBs: `stone-block-N.glb` and
+- `scatter/` contains 33 independently editable GLBs: `stone-block-N.glb` and
   `stone-boulder-N.glb` (N = 0..7, eight triangles each, open base), `bush-N.glb`
-  (N = 0..7, shrub masses, 660 triangles dry and 792 green) and `grass.glb` (six
-  triangles). The small scatter plant is the first bush of its biome (`bush-0`
-  dry, `bush-4` green).
-  Each file contains only its `<shape>-lod0` root mesh (for example, `grass-lod0`)
-  and that mesh's vertices.
+  (N = 0..7, shrub masses, 660 triangles dry and 792 green), `bush-N-levels.glb`
+  (N = 0..7, each bush's levels) and `grass.glb` (six triangles). The small scatter
+  plant is the first bush of its biome (`bush-0` dry, `bush-4` green).
+  Each shape's file contains only its `<shape>-lod0` root mesh (for example,
+  `grass-lod0`) and that mesh's vertices. A bush's levels live in its own
+  `bush-N-levels.glb`, which `tools/board-models/scatter_lods.py` makes from
+  `bush-N.glb` (never changing it): nodes `bush-N-levels-lod0` to `-lod2` over the
+  meshes `bush-N-lod0-mesh` (lod0 as is), `-lod1-mesh` (79 triangles) and
+  `-lod2-mesh` (31 to 33). Bushes draw in the scatter stand (instanced, like trees)
+  at those levels by their size on screen, dissolving into nothing below 2 pixels.
   The complete scatter kit has 5,942 triangles. Grass and bushes have explicit
   back faces; green and dry grass share geometry.
 
 For terrain rocks, LOD0 is the most detailed version. LOD1 and LOD2 are optional;
 the loader resolves missing levels once as LOD2 -> LOD1 -> LOD0, sharing the
 existing mesh. LOD0 is required. Fallback stays within one shape and file,
-so a scatter stone can never select a larger terrain rock. Scatter uses only
-LOD0 and does not load additional levels. Terrain's first two sampling bands use
+so a scatter stone can never select a larger terrain rock. Stones and grass use
+only LOD0; bushes take the three levels of their `bush-N-levels.glb`. Terrain's first two sampling bands use
 rock LOD0; subsequent bands use rock LOD1 and LOD2, preserving the established
 screen-size thresholds.
 
