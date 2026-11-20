@@ -171,11 +171,13 @@ cloud the glass); its Material node's Opacity is connected and carries the stock
 `blend_mode = 4`, premultiplied alpha.
 
 `structures/buildings/` holds the connected building kits' materials (models/buildings/README.md): the hand-made art's
-atlases and textures as image projects (`light-cornices`, `light-walls`, `light-frames`, `light-far`,
+atlases and textures as image projects (`light-cornices`, `light-walls`, `light-frames`,
 `fortress-concrete`, `fortress-roof` with the art's tint baked in, `fortress-far`), `fortress-wall` (the concrete in
 the far facade's tone, the storeys' walls), the fortress's flat colours
 (`fortress-steel`, `fortress-dark`, `fortress-glass`), and the light building's `light-roof` (a bitumen membrane) and
-`light-sidewalk` (concrete paving), tileable on the board's axes (the kit JSON's `repeat`).
+`light-sidewalk` (concrete paving), tileable on the board's axes (the kit JSON's `repeat`). The bays kits'
+far atlases (`<kit>-far`: `building-<weight>-far`, `hangar-<weight>-far`, `fortress-light-far`, `civic-far`, `utopia-far`,
+`frontier-far`, `imperial-far`, `heritage-far`) are image projects over the sources `tools/buildings/far_levels.py` bakes.
 
 The plant cutouts made from photographic studies (`creosote-cutout`, `sagebrush-cutout`, `twig-cutout`,
 `date-palm-frond-cutout`, `willow-cutout`, `cactus-flower-cutout`, `orchard-cutout`, `volcano/cinder-cutout`) and the
