@@ -265,6 +265,7 @@
 		<useTransfers>true</useTransfers>
 		<mekWarriorDefaultKit>Clothing, Fatigues/Civilian/Non-Armored</mekWarriorDefaultKit>
 		<vehicleCrewDefaultKit>Clothing, Fatigues/Civilian/Non-Armored</vehicleCrewDefaultKit>
+		<spaceCrewDefaultKit>Clothing, Fatigues/Civilian/Non-Armored</spaceCrewDefaultKit>
 		<aircraftDefaultKit>Clothing, Fatigues/Civilian/Non-Armored</aircraftDefaultKit>
 		<mekTechDefaultToolKit></mekTechDefaultToolKit>
 		<mechanicDefaultToolKit></mechanicDefaultToolKit>
@@ -896,7 +897,7 @@
 			<vetLvl>5</vetLvl>
 			<eliteLvl>6</eliteLvl>
 			<heroicLvl>7</heroicLvl>
-			<legendaryLvl>9</legendaryLvl>
+			<legendaryLvl>8</legendaryLvl>
 			<costs>20,10,20,30,40,50,60,70,80,90,100</costs>
 			<naturalAptitudeCost>300</naturalAptitudeCost>
 		</skillType>
@@ -1072,7 +1073,7 @@
 			<vetLvl>5</vetLvl>
 			<eliteLvl>6</eliteLvl>
 			<heroicLvl>7</heroicLvl>
-			<legendaryLvl>9</legendaryLvl>
+			<legendaryLvl>8</legendaryLvl>
 			<costs>20,10,20,30,40,50,60,70,80,90,100</costs>
 			<naturalAptitudeCost>500</naturalAptitudeCost>
 		</skillType>
@@ -1232,7 +1233,7 @@
 			<vetLvl>5</vetLvl>
 			<eliteLvl>6</eliteLvl>
 			<heroicLvl>7</heroicLvl>
-			<legendaryLvl>9</legendaryLvl>
+			<legendaryLvl>8</legendaryLvl>
 			<costs>20,10,20,30,40,50,60,70,80,90,100</costs>
 			<naturalAptitudeCost>500</naturalAptitudeCost>
 		</skillType>
@@ -1248,7 +1249,7 @@
 			<vetLvl>5</vetLvl>
 			<eliteLvl>6</eliteLvl>
 			<heroicLvl>7</heroicLvl>
-			<legendaryLvl>9</legendaryLvl>
+			<legendaryLvl>8</legendaryLvl>
 			<costs>20,10,20,30,40,50,60,70,80,90,100</costs>
 			<naturalAptitudeCost>500</naturalAptitudeCost>
 		</skillType>
@@ -1264,7 +1265,7 @@
 			<vetLvl>5</vetLvl>
 			<eliteLvl>6</eliteLvl>
 			<heroicLvl>7</heroicLvl>
-			<legendaryLvl>9</legendaryLvl>
+			<legendaryLvl>8</legendaryLvl>
 			<costs>20,10,20,30,40,50,60,70,80,90,100</costs>
 			<naturalAptitudeCost>500</naturalAptitudeCost>
 		</skillType>
@@ -1280,7 +1281,7 @@
 			<vetLvl>5</vetLvl>
 			<eliteLvl>6</eliteLvl>
 			<heroicLvl>7</heroicLvl>
-			<legendaryLvl>9</legendaryLvl>
+			<legendaryLvl>8</legendaryLvl>
 			<costs>20,10,20,30,40,50,60,70,80,90,100</costs>
 			<naturalAptitudeCost>500</naturalAptitudeCost>
 		</skillType>
@@ -1296,7 +1297,7 @@
 			<vetLvl>5</vetLvl>
 			<eliteLvl>6</eliteLvl>
 			<heroicLvl>7</heroicLvl>
-			<legendaryLvl>9</legendaryLvl>
+			<legendaryLvl>8</legendaryLvl>
 			<costs>20,10,20,30,40,50,60,70,80,90,100</costs>
 			<naturalAptitudeCost>500</naturalAptitudeCost>
 		</skillType>
@@ -1312,7 +1313,7 @@
 			<vetLvl>5</vetLvl>
 			<eliteLvl>6</eliteLvl>
 			<heroicLvl>7</heroicLvl>
-			<legendaryLvl>9</legendaryLvl>
+			<legendaryLvl>8</legendaryLvl>
 			<costs>20,10,20,30,40,50,60,70,80,90,100</costs>
 			<naturalAptitudeCost>500</naturalAptitudeCost>
 		</skillType>
@@ -1328,7 +1329,7 @@
 			<vetLvl>5</vetLvl>
 			<eliteLvl>6</eliteLvl>
 			<heroicLvl>7</heroicLvl>
-			<legendaryLvl>9</legendaryLvl>
+			<legendaryLvl>8</legendaryLvl>
 			<costs>20,10,20,30,40,50,60,70,80,90,100</costs>
 			<naturalAptitudeCost>500</naturalAptitudeCost>
 		</skillType>
@@ -1776,7 +1777,7 @@
 			<vetLvl>5</vetLvl>
 			<eliteLvl>6</eliteLvl>
 			<heroicLvl>7</heroicLvl>
-			<legendaryLvl>9</legendaryLvl>
+			<legendaryLvl>8</legendaryLvl>
 			<costs>20,10,20,30,40,50,60,70,80,90,100</costs>
 			<naturalAptitudeCost>500</naturalAptitudeCost>
 		</skillType>
@@ -1808,7 +1809,7 @@
 			<vetLvl>5</vetLvl>
 			<eliteLvl>6</eliteLvl>
 			<heroicLvl>7</heroicLvl>
-			<legendaryLvl>9</legendaryLvl>
+			<legendaryLvl>8</legendaryLvl>
 			<costs>20,10,20,30,40,50,60,70,80,90,100</costs>
 			<naturalAptitudeCost>500</naturalAptitudeCost>
 		</skillType>
@@ -2272,7 +2273,7 @@
 			<vetLvl>5</vetLvl>
 			<eliteLvl>6</eliteLvl>
 			<heroicLvl>7</heroicLvl>
-			<legendaryLvl>9</legendaryLvl>
+			<legendaryLvl>8</legendaryLvl>
 			<costs>20,10,20,30,40,50,60,70,80,90,100</costs>
 			<naturalAptitudeCost>300</naturalAptitudeCost>
 		</skillType>
