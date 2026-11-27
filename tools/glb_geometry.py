@@ -319,10 +319,13 @@ def read_glb(path, level=0, *, linear_colors=False):
         item = document['accessors'][index]
         view = document['bufferViews'][item['bufferView']]
         size = {'SCALAR': 1, 'VEC2': 2, 'VEC3': 3, 'VEC4': 4}[item['type']]
-        code = {5126: 'f', 5123: 'H', 5125: 'I'}[item['componentType']]
+        code = {5126: 'f', 5121: 'B', 5123: 'H', 5125: 'I'}[item['componentType']]
         stride = view.get('byteStride', struct.calcsize('<' + code) * size)
         offset = view.get('byteOffset', 0) + item.get('byteOffset', 0)
-        return [list(struct.unpack_from('<' + code * size, binary, offset + i * stride))
+        # A normalized integer accessor (Blender's vertex colours) stands for 0 to 1.
+        scale = 1 / {'B': 255, 'H': 65535}[code] if item.get('normalized') else 1
+        return [[v * scale for v in struct.unpack_from('<' + code * size, binary, offset + i * stride)] if scale != 1
+                else list(struct.unpack_from('<' + code * size, binary, offset + i * stride))
                 for i in range(item['count'])]
 
     roots = document['scenes'][document.get('scene', 0)]['nodes']
