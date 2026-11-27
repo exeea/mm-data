@@ -6,7 +6,7 @@ class and weight (`TilesetScenery.genericBuilding`), a fuel tank `fuel_tanks/fue
 
 | Folder | Holds | Built by (`tools/buildings/`) |
 | --- | --- | --- |
-| `standard/` | `<class>-<weight>.json` and `<class>-<weight>-pieces.glb`: classes `building`, `fortress`, `hangar`, `gun-emplacement`; weights `civilian`, `light`, `medium`, `heavy`, `hard`, `castle-brian` | see [Kits](#kits) |
+| `standard/` | `<class>-<weight>.json` and `<class>-<weight>-pieces.glb`: classes `building`, `fortress`, `hangar`; weights `civilian`, `light`, `medium`, `heavy`, `hard`, `castle-brian`. `gun-emplacement-<weight>.glb`: modelled kits, one hex and one level, their deck the roof's lowest surface, in the materials and tints of the wall of their weight | see [Kits](#kits); the gun emplacements are modelled in Blender |
 | `civic/`, `utopia/`, `frontier/`, `imperial/`, `heritage/`, `lunar_habitat/` | a look's kit, `<look>.json` and `<look>-pieces.glb` | see [Kits](#kits) |
 | `fuel_tanks/` | `fuel_tank_<weight>.glb`, modelled connected kits, three levels of detail | `fuel_tanks.py [weight ...]` |
 | `walls/` | wall kits by weight | `walls/README.md` |
